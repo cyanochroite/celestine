@@ -11,7 +11,7 @@ class attribute:
     def checked(value):
         return _boolean('checked', value)
 
-    def C_ASS():
+    def C_ASS():  # class. this one hard
         return ''
 
     def disabled(value):
@@ -20,7 +20,7 @@ class attribute:
     def height(value):
         return attribute._attribute('height', value)
 
-    def href():
+    def href():  # this one hard
         return ''
 
     def id(value):

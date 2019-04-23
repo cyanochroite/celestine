@@ -35,11 +35,7 @@ def element_void(tag, arg):  # {# void element
 # }
 
 
-def canvas(list):  # {
-    height = list.pop(0)
-    width = list.pop(0)
-    line("canvas", " height=\"{}\" width=\"{}\"".format(height, width))
-# }
+
 
 
 def title(text):  # {
@@ -128,8 +124,8 @@ def work():  # {
     tr([td, ["money"]])
     td(["money"])
 
-    canvas([48, 32])
-    canvas([112, 335])
+    element.canvas([48, 32])
+    element.canvas([112, 335])
     print("<script src=\"type.js\" type=\"text/javascript\"></script>")
     print("<script src=\"index.js\" type=\"text/javascript\"></script>")
     print("</body>")

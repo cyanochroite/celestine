@@ -32,12 +32,14 @@ class element:
             attribute.value(value)
         ])
 
-    def canvas(height, width):
+    def canvas(list):
+        height = list.pop(0)
+        width = list.pop(0)
         element._text(2, 'canvas', [
             attribute.height(height),
             attribute.width(width)
         ])
 
 
-element.hiddeno(id='puss', name='piggy', tab=3, value='turky')
-element.canvas(57, 85)
+#element.hiddeno(id='puss', name='piggy', tab=3, value='turky')
+#element.canvas(57, 85)
