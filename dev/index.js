@@ -1,8 +1,10 @@
+/* JSLint edition 2019-01-31 */
 /*jslint
     browser:true
 */
 /*global
-    Image, Math, bounding, build_bounding, document, draw_image, event_click, getPosition, get_box, load, main, make_handler, viewport
+    Image, Math, bounding, build_bounding, document, draw_image, event_click,
+    getPosition, get_box, load, main, make_handler, viewport
 */
 /*property
     addEventListener, clientX, clientY, drawImage, getBoundingClientRect,
@@ -60,9 +62,9 @@ var load = [
 
 function draw_image(box, see) {
     "use strict";
-	if (see === undefined) {
-		see = load[0];
-	}
+    if (see === undefined) {
+        see = load[0];
+    }
     if (see.ready) {
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
