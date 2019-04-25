@@ -3,13 +3,15 @@
     browser:true
 */
 /*global
-    Image, Math, bounding, build_bounding, document, draw_image, event_click,
-    getPosition, get_box, load, main, make_handler, viewport
+    Image, Math, bounding, build_bounding, build_image, click_in_box, document,
+    draw_image, draw_image2, event_click, getPosition, get_box, get_click, load,
+    main, make_handler, viewport
 */
 /*property
-    addEventListener, clientX, clientY, drawImage, getBoundingClientRect,
-    getContext, getElementById, height, item, left, length, max, onload, path,
-    push, ready, size_x, size_y, src, top, width, x, y
+    addEventListener, bounding_box, box, clientX, clientY, currentTarget,
+    dimension, drawImage, getBoundingClientRect, getContext, getElementById,
+    height, item, left, length, max, min, onload, path, position, push, ready,
+    size_x, size_y, src, top, width, x, y
 */
 
 
@@ -24,6 +26,24 @@ viewport.size_y = 2048;
 var bounding = [];
 
 
+function build_image(position, dimension) {
+    "use strict";
+    var image = {};
+    image.position = {};
+    image.position.x = position.x;
+    image.position.y = position.y;
+    image.dimension = {};
+    image.dimension.x = dimension.x;
+    image.dimension.y = dimension.y;
+    image.bounding_box = {};
+    image.bounding_box.x = {};
+    image.bounding_box.x.min = position.x;
+    image.bounding_box.x.max = position.x + dimension.x;
+    image.bounding_box.y = {};
+    image.bounding_box.y.min = position.y;
+    image.bounding_box.y.max = position.y + dimension.y;
+    return image;
+}
 
 function build_bounding(count) {
     "use strict";
@@ -32,19 +52,19 @@ function build_bounding(count) {
     var count_x = count;
     var count_y = count * 2;
     var object;
+    var position = {};
+    var dimension = {};
     index_y = count * 2;
     while (index_y > 0) {
         index_y -= 1;
         index_x = count;
         while (index_x > 0) {
             index_x -= 1;
-            object = {};
-            object.x = viewport.size_x + index_x * 1024 / count_x;
-            object.y = index_y * 2048 / count_y;
-            object.size_x = 1024 / count_x;
-            object.size_y = 2048 / count_y;	
-//            object.x_max = object.x_min + object.size_x;
-//            object.y_max = index_y * 2048 / count_y;
+            position.x = viewport.size_x + index_x * 1024 / count_x;
+            position.y = index_y * 2048 / count_y;
+            dimension.x = 1024 / count_x;
+            dimension.y = 2048 / count_y;
+            object = build_image(position, dimension);
             bounding.push(object);
         }
     }
@@ -62,6 +82,30 @@ var load = [
     {"ready": "false", "path": "demo.png"}
 ];
 
+function draw_image2(context, see, image, box) {
+    "use strict";
+    var source_position_x = 0;
+    var source_position_y = 0;
+    var source_dimension_x = image.dimension.x;
+    var source_dimension_y = image.dimension.y;
+    var destination_position_x = box.position.x;
+    var destination_position_y = box.position.y;
+    var destination_dimension_x = box.dimension.x;
+    var destination_dimension_y = box.dimension.y;
+    return context.drawImage(
+        see,
+        source_position_x,
+        source_position_y,
+        source_dimension_x,
+        source_dimension_y,
+        destination_position_x,
+        destination_position_y,
+        destination_dimension_x,
+        destination_dimension_y
+    );
+}
+
+
 function draw_image(box, see) {
     "use strict";
     if (see === undefined) {
@@ -71,32 +115,43 @@ function draw_image(box, see) {
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
         var image = see.item;
-        context.drawImage(
+        var position = {};
+        position.x = 0;
+        position.y = 0;
+        var dimension = {};
+        dimension.x = image.width * Math.max(image.height / image.width, 1);
+        dimension.y = image.width * Math.max(image.height / image.width, 1);
+        var source = build_image(position, dimension);
+        draw_image2(context, image, source, box);
+/*
+context.drawImage(
             image,
             0,
             0,
             image.width * Math.max(image.height / image.width, 1),
             image.height * Math.max(image.width / image.height, 1),
+            box.position.x,
+            box.position.y,
+            box.dimension.x,
+            box.dimension.y
+*/
+/*
             box.x,
             box.y,
             box.size_x,
             box.size_y
-        );
+*/
+//        );
     }
 }
 
 
-function get_box2(click, box) {
+function click_in_box(mouse_click, bounding_box) {
     "use strict";
-    if (
-        click.x >= box.x
-        && click.y >= box.y
-        && click.x <= box.x + box.size_x
-        && click.y <= box.y + box.size_y
-    ) {
-        return true;
-    }
-    return false;
+    var min = bounding_box.box.min;
+    var max = bounding_box.box.max;
+    var hit = mouse_click;
+    return min.x <= hit.x && hit.x < max.x && min.y <= hit.y && hit.y < max.y;
 }
 
 function get_click(event) {
@@ -116,7 +171,7 @@ function get_box(event) {
     var index = bounding.length;
     while (index > 0) {
         index -= 1;
-        if (get_box2(click, bounding[index])) {
+        if (click_in_box(click, bounding[index])) {
             item = index;
         }
     }
