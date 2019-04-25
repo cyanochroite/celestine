@@ -42,7 +42,9 @@ function build_bounding(count) {
             object.x = viewport.size_x + index_x * 1024 / count_x;
             object.y = index_y * 2048 / count_y;
             object.size_x = 1024 / count_x;
-            object.size_y = 2048 / count_y;
+            object.size_y = 2048 / count_y;	
+//            object.x_max = object.x_min + object.size_x;
+//            object.y_max = index_y * 2048 / count_y;
             bounding.push(object);
         }
     }
@@ -83,22 +85,38 @@ function draw_image(box, see) {
     }
 }
 
+
+function get_box2(click, box) {
+    "use strict";
+    if (
+        click.x >= box.x
+        && click.y >= box.y
+        && click.x <= box.x + box.size_x
+        && click.y <= box.y + box.size_y
+    ) {
+        return true;
+    }
+    return false;
+}
+
+function get_click(event) {
+    "use strict";
+    var canvas = event.currentTarget;
+    var rect = canvas.getBoundingClientRect();
+    var click = {};
+    click.x = event.clientX - rect.left;
+    click.y = event.clientY - rect.top;
+    return click;
+}
+
 function get_box(event) {
     "use strict";
-    var canvas = document.getElementById("canvas");
-    var rect = canvas.getBoundingClientRect();
-    var x = event.clientX - rect.left;
-    var y = event.clientY - rect.top;
+    var click = get_click(event);
     var item = 0;
     var index = bounding.length;
     while (index > 0) {
         index -= 1;
-        if (
-            x >= bounding[index].x
-            && y >= bounding[index].y
-            && x <= bounding[index].x + bounding[index].size_x
-            && y <= bounding[index].y + bounding[index].size_y
-        ) {
+        if (get_box2(click, bounding[index])) {
             item = index;
         }
     }
@@ -134,6 +152,8 @@ function main() {
     "use strict";
     var canvas = document.getElementById("canvas");
     canvas.addEventListener("click", getPosition, false);
+    //event_click_one_run("#canvas", getPosition);
+
     build_bounding(3);
 
     var image;
