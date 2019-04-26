@@ -3,17 +3,16 @@
     browser:true
 */
 /*global
-    Image, Math, bounding, build_bounding, build_image, click_in_box, document,
-    draw_image, draw_image2, event_click, getPosition, get_box, get_click, load,
-    main, make_handler, viewport
+    Image, Math, bounding, build_bounding, build_image_region, build_region,
+    click_in_box, document, draw_image, draw_image2, event_click, getPosition,
+    get_box, get_click, load, main, make_handler, viewport
 */
 /*property
-    addEventListener, bounding_box, box, clientX, clientY, currentTarget,
-    dimension, drawImage, getBoundingClientRect, getContext, getElementById,
-    height, item, left, length, max, min, onload, path, position, push, ready,
-    size_x, size_y, src, top, width, x, y
+    addEventListener, bounding_box, clientX, clientY, currentTarget, dimension,
+    drawImage, getBoundingClientRect, getContext, getElementById, height, item,
+    left, length, max, min, onload, path, position, push, ready, src, top,
+    width, x, y
 */
-
 
 
 //        {"path": "https://mdn.mozillademos.org/files/5397/rhino.jpg"},
@@ -22,23 +21,35 @@ var viewport = {};
 var bounding = [];
 
 
-function build_image(position, dimension) {
+function build_region(position, dimension) {
     "use strict";
-    var image = {};
-    image.position = {};
-    image.position.x = position.x;
-    image.position.y = position.y;
-    image.dimension = {};
-    image.dimension.x = dimension.x;
-    image.dimension.y = dimension.y;
-    image.bounding_box = {};
-    image.bounding_box.x = {};
-    image.bounding_box.x.min = position.x;
-    image.bounding_box.x.max = position.x + dimension.x;
-    image.bounding_box.y = {};
-    image.bounding_box.y.min = position.y;
-    image.bounding_box.y.max = position.y + dimension.y;
-    return image;
+    var region = {};
+    region.position = {};
+    region.position.x = position.x;
+    region.position.y = position.y;
+    region.dimension = {};
+    region.dimension.x = dimension.x;
+    region.dimension.y = dimension.y;
+    region.bounding_box = {};
+    region.bounding_box.x = {};
+    region.bounding_box.x.min = position.x;
+    region.bounding_box.x.max = position.x + dimension.x;
+    region.bounding_box.y = {};
+    region.bounding_box.y.min = position.y;
+    region.bounding_box.y.max = position.y + dimension.y;
+    return region;
+}
+
+function build_image_region(width, height) {
+    "use strict";
+    var position = {};
+    position.x = 0;
+    position.y = 0;
+    var dimension = {};
+    var max = Math.max(width, height);
+    dimension.x = max;
+    dimension.y = max;
+    return build_region(position, dimension);
 }
 
 function build_bounding(count) {
@@ -60,21 +71,10 @@ function build_bounding(count) {
             position.y = index_y * 2048 / count_y;
             dimension.x = 1024 / count_x;
             dimension.y = 2048 / count_y;
-            object = build_image(position, dimension);
+            object = build_region(position, dimension);
             bounding.push(object);
         }
     }
-}
-
-function build_viewport() {
-    "use strict";
-    var position = {};
-    position.x = 0;
-    position.y = 0;
-    var dimension = {};
-    dimension.x = 2048;
-    dimension.y = 2048;
-    viewport = build_image(position, dimension);
 }
 
 var load = [
@@ -86,12 +86,13 @@ var load = [
     {"ready": "false", "path": "test3.png"},
     {"ready": "false", "path": "test4.gif"},
     {"ready": "false", "path": "test0.jpg"},
-    {"ready": "false", "path": "demo.png"}
+    {"ready": "false", "path": "demo.png"},
+    {"ready": "false", "path": "skyrim.jpg"}
 ];
 
 function draw_image2(context, image, source, destination) {
     "use strict";
-    return context.drawImage(
+    context.drawImage(
         image,
         source.position.x,
         source.position.y,
@@ -114,24 +115,18 @@ function draw_image(box, see) {
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
         var image = see.item;
-        var position = {};
-        position.x = 0;
-        position.y = 0;
-        var dimension = {};
-        dimension.x = image.width * Math.max(image.height / image.width, 1);
-        dimension.y = image.width * Math.max(image.height / image.width, 1);
-        var source = build_image(position, dimension);
+        var source = build_image_region(image.width, image.height);
         draw_image2(context, image, source, box);
     }
 }
 
 
-function click_in_box(mouse_click, bounding_box) {
+function click_in_box(mouse_click, image) {
     "use strict";
-    var min = bounding_box.box.min;
-    var max = bounding_box.box.max;
+    var x = image.bounding_box.x;
+    var y = image.bounding_box.y;
     var hit = mouse_click;
-    return min.x <= hit.x && hit.x < max.x && min.y <= hit.y && hit.y < max.y;
+    return x.min <= hit.x && hit.x < x.max && y.min <= hit.y && hit.y < y.max;
 }
 
 function get_click(event) {
@@ -189,7 +184,7 @@ function main() {
     canvas.addEventListener("click", getPosition, false);
     //event_click_one_run("#canvas", getPosition);
 
-    build_viewport();
+    viewport = build_image_region(2048, 2048);
     build_bounding(3);
 
     var image;
