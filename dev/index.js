@@ -19,10 +19,6 @@
 //        {"path": "https://mdn.mozillademos.org/files/5397/rhino.jpg"},
 
 var viewport = {};
-viewport.x = 0;
-viewport.y = 0;
-viewport.size_x = 2048;
-viewport.size_y = 2048;
 var bounding = [];
 
 
@@ -60,7 +56,7 @@ function build_bounding(count) {
         index_x = count;
         while (index_x > 0) {
             index_x -= 1;
-            position.x = viewport.size_x + index_x * 1024 / count_x;
+            position.x = viewport.dimension.x + index_x * 1024 / count_x;
             position.y = index_y * 2048 / count_y;
             dimension.x = 1024 / count_x;
             dimension.y = 2048 / count_y;
@@ -68,6 +64,17 @@ function build_bounding(count) {
             bounding.push(object);
         }
     }
+}
+
+function build_viewport() {
+    "use strict";
+    var position = {};
+    position.x = 0;
+    position.y = 0;
+    var dimension = {};
+    dimension.x = 2048;
+    dimension.y = 2048;
+    viewport = build_image(position, dimension);
 }
 
 var load = [
@@ -82,26 +89,18 @@ var load = [
     {"ready": "false", "path": "demo.png"}
 ];
 
-function draw_image2(context, see, image, box) {
+function draw_image2(context, image, source, destination) {
     "use strict";
-    var source_position_x = 0;
-    var source_position_y = 0;
-    var source_dimension_x = image.dimension.x;
-    var source_dimension_y = image.dimension.y;
-    var destination_position_x = box.position.x;
-    var destination_position_y = box.position.y;
-    var destination_dimension_x = box.dimension.x;
-    var destination_dimension_y = box.dimension.y;
     return context.drawImage(
-        see,
-        source_position_x,
-        source_position_y,
-        source_dimension_x,
-        source_dimension_y,
-        destination_position_x,
-        destination_position_y,
-        destination_dimension_x,
-        destination_dimension_y
+        image,
+        source.position.x,
+        source.position.y,
+        source.dimension.x,
+        source.dimension.y,
+        destination.position.x,
+        destination.position.y,
+        destination.dimension.x,
+        destination.dimension.y
     );
 }
 
@@ -123,25 +122,6 @@ function draw_image(box, see) {
         dimension.y = image.width * Math.max(image.height / image.width, 1);
         var source = build_image(position, dimension);
         draw_image2(context, image, source, box);
-/*
-context.drawImage(
-            image,
-            0,
-            0,
-            image.width * Math.max(image.height / image.width, 1),
-            image.height * Math.max(image.width / image.height, 1),
-            box.position.x,
-            box.position.y,
-            box.dimension.x,
-            box.dimension.y
-*/
-/*
-            box.x,
-            box.y,
-            box.size_x,
-            box.size_y
-*/
-//        );
     }
 }
 
@@ -209,6 +189,7 @@ function main() {
     canvas.addEventListener("click", getPosition, false);
     //event_click_one_run("#canvas", getPosition);
 
+    build_viewport();
     build_bounding(3);
 
     var image;
