@@ -17,6 +17,22 @@ var index_y = 0;
 var data;
 var view;
 
+var element = document.getElementsByTagName("canvas");
+spat(element[0]);
+spat(element[1]);
+spat(element[2]);
+spat(element[3]);
+spat(element[4]);
+spat(element[5]);
+spat(element[6]);
+spat(element[7]);
+main(element[3]);
+
+
+/**
+    @param {number} hi
+    @param {number} lo
+*/
 function int(hi, lo) {
     "use strict";
     var out = {};
@@ -25,28 +41,15 @@ function int(hi, lo) {
     return out;
 }
 
-function load(element, path) {
-    "use strict";
-    var img = new Image();
-    var width = element.width;
-    var height = element.height;
-    img.src = path;
-    var ctx = element.getContext("2d");
-    img.onload = function () {
-        var x = 0;
-        var y = height - img.height;
-        x += Math.max(0, width - img.width) / 2;
-        y -= Math.max(0, height - img.height) / 2;
-        ctx.drawImage(img, x, y);
-    };
-}
-
+/**
+ * @param {HTMLCanvasElement} element
+ */
 function spat(element) {
     "use strict";
     var context = element.getContext("2d");
     var width = element.width;
     var height = element.height;
-    var imageData = context.createImageData(width, height);
+    var image_data = context.createImageData(width, height);
     var y = height;
     var x;
     var index;
@@ -55,21 +58,24 @@ function spat(element) {
         x = width;
         while (x > 0) {
             x -= 1;
-            index = (x + y * imageData.width) * 4;
-            imageData.data[index + 0] = Math.random() * 256;
-            imageData.data[index + 1] = Math.random() * 256;
-            imageData.data[index + 2] = Math.random() * 256;
-            imageData.data[index + 3] = 255;
+            index = (x + y * image_data.width) * 4;
+            image_data.data[index + 0] = Math.random() * 256;
+            image_data.data[index + 1] = Math.random() * 256;
+            image_data.data[index + 2] = Math.random() * 256;
+            image_data.data[index + 3] = 255;
         }
     }
-    context.putImageData(imageData, 0, 0);
-    return imageData;
+    context.putImageData(image_data, 0, 0);
+    return image_data;
     //index_x = 25;
     //index_y = 25;
     //context.putImageData(imageData, 0, 0, index_x, index_y, 8, 8);
 }
 
 
+/**
+ * @param {any[] | Uint8Array} art
+ */
 function draw(art) {
     "use strict";
     var a = ((((((0x100 - index_y) << 0x3) - 0x1) << 0x8) + index_x) << 0x5);
@@ -80,6 +86,9 @@ function draw(art) {
     }
     view.putImageData(data, 0, 0);
 }
+/**
+ * @param {any[] | Uint8Array} art
+ */
 function buff(art) {
     "use strict";
     var a = ((((((0x100 - index_y) << 0x3) - 0x1) << 0x8) + index_x) << 0x5);
@@ -90,17 +99,10 @@ function buff(art) {
     }
 }
 
-var element = document.getElementsByTagName("canvas");
-spat(element[0], 100);
-spat(element[1], 10000);
-spat(element[2], 10000);
-spat(element[3], 10000);
 
-spat(element[4], 100);
-spat(element[5], 10000);
-spat(element[6], 10000);
-spat(element[7], 100000);
-
+/**
+ * @param {HTMLCanvasElement} element
+ */
 function main(element) {
     "use strict";
     view = element.getContext("2d");
@@ -108,11 +110,17 @@ function main(element) {
     data = spat(element);
 }
 
-main(element[3]);
 
-function type(key) {
+/**
+ * @param {string} key
+ */
+function glyph_from_keycode(key) {
     "use strict";
-    var out = {};
+    var out = font[key];
+    if (font !== undefined) {
+        return out;
+    }
+    out = {};
     out.hi = 0x00000000;
     out.lo = 0x00000000;
     switch (key) {
@@ -272,6 +280,9 @@ function type(key) {
     return out;
 }
 
+/**
+ * @param {{ hi: any; lo: any; }} number
+ */
 function paint(number) {
     "use strict";
     var high = number.hi;
@@ -311,13 +322,18 @@ function paint(number) {
 
 document.addEventListener("keydown", function (item) {
     "use strict";
-    draw(paint(type(item.key)));
+    var glyph = glyph_from_keycode(item.key)
+    draw(paint(glyph));
     //index_x += 0;
     index_y += 1;
 });
 
 var off = 0;
 
+/**
+ * @param {number} high
+ * @param {number} low
+ */
 function out(high, low) {
     "use strict";
     buff(paint(int(high, low)));
@@ -339,4 +355,6 @@ out(0x0202FE02, 0xFA0AFE00);
 out(0xA8A8A8A8, 0xE888FE00);
 out(0xFE0AFA02, 0xFE020200);
 
-view.putImageData(data, 0, 0);
+//view.putImageData(data, 0, 0);
+
+alert(0xFE0AFA02FE020200);
