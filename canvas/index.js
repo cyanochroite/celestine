@@ -318,12 +318,41 @@ function paint(number) {
     return art;
 }
 
-
-
-document.addEventListener("keydown", function (item) {
+/**
+ * @param {number} glyph
+ */
+function paint64(glyph) {
     "use strict";
-    var glyph = glyph_from_keycode(item.key)
-    draw(paint(glyph));
+    var index = 256;
+    var art = new Uint8Array(index);
+    var r = Math.random() * 128 + 128;
+    var g = Math.random() * 128 + 128;
+    var b = Math.random() * 128 + 128;
+    var bit;
+    while (index >= 0) {
+        index -= 4;
+        bit = glyph & 1;
+        art[index + 0] = r * bit;
+        art[index + 1] = g * bit;
+        art[index + 2] = b * bit;
+        art[index + 3] = 255;
+        glyph = glyph >>> 1;
+    }
+    return art;
+}
+
+
+
+document.addEventListener("keypress", function (item) {
+    "use strict";
+    //    var glyph = glyph_from_keycode(item.key)
+    //    draw(paint(glyph));
+    var pig = parseInt(item.key)
+    alert(pig);
+    var glyph = font[item.key];
+    if (glyph !== undefined) {
+        draw(paint64(glyph));
+    }
     //index_x += 0;
     index_y += 1;
 });
