@@ -92,3 +92,123 @@ const FONT = {
     "GRAVE_ACCENT": "0x60"
 };
 
+
+case ",":
+return int(0x007C547C, 0x547C0000);
+case ".":
+return int(0xFEAAFEAA, 0xFEAAFE00);
+case "$":
+return int(0xFE2AFE82, 0xFEA8FE00);
+
+case "?":
+//return int(0xFE888888, 0x8E82BE00);
+return int(0xFE888888, 0xAE223E00);
+case "/":
+return int(0xFE888E82, 0xE2A0B800);
+
+
+case "a":
+return int(0x00000000, 0x00000000);
+case "b":
+return int(0xFE82EE88, 0xE880E000);
+case "c":
+return int(0x00000000, 0x00000000);
+case "d":
+return int(0xFE88EE82, 0xE280E000);
+case "e":
+return int(0xFEA0BEA0, 0xBE808000);
+case "f":
+return int(0xFE888888, 0xBE888E00);
+case "g":
+return int(0xFEA2AEA0, 0xBE808000);
+case "h":
+return int(0x00000000, 0x00000000);
+case "i":
+return int(0x00000000, 0x00000000);
+case "j":
+return int(0x00000000, 0x00000000);
+case "k":
+return int(0x00000000, 0x00000000);
+case "l":
+return int(0x00000000, 0x00000000);
+case "m":
+return int(0x00000000, 0x00000000);
+case "n":
+return int(0x00000000, 0x00000000);
+case "o":
+return int(0x00000000, 0x00000000);
+case "p":
+return int(0x00000000, 0x00000000);
+case "q":
+return int(0x00000000, 0x00000000);
+case "r":
+return int(0xFEA0A0A0, 0xB880FE00);
+case "s":
+return int(0x00000000, 0x00000000);
+case "t":
+return int(0xFE88AAAA, 0xBE808000);
+case "u":
+return int(0x00000000, 0x00000000);
+case "v":
+return int(0x00000000, 0x00000000);
+case "w":
+return int(0x00000000, 0x00000000);
+case "x":
+return int(0x00000000, 0x00000000);
+case "y":
+return int(0xFE888888, 0xBEA2A200);
+case "z":
+return int(0x00000000, 0x00000000);
+////////
+case "A":
+return int(0x00000000, 0x00000000);
+case "B":
+return int(0x00000000, 0x00000000);
+case "C":
+return int(0x00000000, 0x00000000);
+case "D":
+return int(0x00000000, 0x00000000);
+case "E":
+return int(0x00000000, 0x00000000);
+case "F":
+return int(0xFEA0A0A0, 0xB8A0BE00);
+case "G":
+return int(0xFE80F888, 0xB880F800);
+case "H":
+return int(0x00000000, 0x00000000);
+case "I":
+return int(0x00000000, 0x00000000);
+case "J":
+return int(0x00000000, 0x00000000);
+case "K":
+return int(0x00000000, 0x00000000);
+case "L":
+return int(0x00000000, 0x00000000);
+case "M":
+return int(0x00000000, 0x00000000);
+case "N":
+return int(0x00000000, 0x00000000);
+case "O":
+return int(0x00000000, 0x00000000);
+case "P":
+return int(0x00000000, 0x00000000);
+case "Q":
+return int(0x00000000, 0x00000000);
+case "R":
+return int(0xFEA0B880, 0xB888F800);
+case "S":
+return int(0x00000000, 0x00000000);
+case "T":
+return int(0x00000000, 0x00000000);
+case "U":
+return int(0x00000000, 0x00000000);
+case "V":
+return int(0x00000000, 0x00000000);
+case "W":
+return int(0x00000000, 0x00000000);
+case "X":
+return int(0x00000000, 0x00000000);
+case "Y":
+return int(0x00000000, 0x00000000);
+case "Z":
+return int(0x00000000, 0x00000000);
