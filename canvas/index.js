@@ -17,6 +17,10 @@ var index_y = 0;
 var data;
 var view;
 
+/**
+ * @param {(arg0: string) => void} callback
+ */
+
 var element = document.getElementsByTagName("canvas");
 spat(element[0]);
 spat(element[1]);
@@ -110,176 +114,6 @@ function main(element) {
     data = spat(element);
 }
 
-
-/**
- * @param {string} key
- */
-function glyph_from_keycode(key) {
-    "use strict";
-    var out = font[key];
-    if (font !== undefined) {
-        return out;
-    }
-    out = {};
-    out.hi = 0x00000000;
-    out.lo = 0x00000000;
-    switch (key) {
-        case ",":
-            return int(0x007C547C, 0x547C0000);
-        case ".":
-            return int(0xFEAAFEAA, 0xFEAAFE00);
-        case "$":
-            return int(0xFE2AFE82, 0xFEA8FE00);
-
-        case "?":
-            //return int(0xFE888888, 0x8E82BE00);
-            return int(0xFE888888, 0xAE223E00);
-        case "/":
-            return int(0xFE888E82, 0xE2A0B800);
-
-
-        case "a":
-            return int(0x00000000, 0x00000000);
-        case "b":
-            return int(0xFE82EE88, 0xE880E000);
-        case "c":
-            return int(0x00000000, 0x00000000);
-        case "d":
-            return int(0xFE88EE82, 0xE280E000);
-        case "e":
-            return int(0xFEA0BEA0, 0xBE808000);
-        case "f":
-            return int(0xFE888888, 0xBE888E00);
-        case "g":
-            return int(0xFEA2AEA0, 0xBE808000);
-        case "h":
-            return int(0x00000000, 0x00000000);
-        case "i":
-            return int(0x00000000, 0x00000000);
-        case "j":
-            return int(0x00000000, 0x00000000);
-        case "k":
-            return int(0x00000000, 0x00000000);
-        case "l":
-            return int(0x00000000, 0x00000000);
-        case "m":
-            return int(0x00000000, 0x00000000);
-        case "n":
-            return int(0x00000000, 0x00000000);
-        case "o":
-            return int(0x00000000, 0x00000000);
-        case "p":
-            return int(0x00000000, 0x00000000);
-        case "q":
-            return int(0x00000000, 0x00000000);
-        case "r":
-            return int(0xFEA0A0A0, 0xB880FE00);
-        case "s":
-            return int(0x00000000, 0x00000000);
-        case "t":
-            return int(0xFE88AAAA, 0xBE808000);
-        case "u":
-            return int(0x00000000, 0x00000000);
-        case "v":
-            return int(0x00000000, 0x00000000);
-        case "w":
-            return int(0x00000000, 0x00000000);
-        case "x":
-            return int(0x00000000, 0x00000000);
-        case "y":
-            return int(0xFE888888, 0xBEA2A200);
-        case "z":
-            return int(0x00000000, 0x00000000);
-        ////////
-        case "A":
-            return int(0x00000000, 0x00000000);
-        case "B":
-            return int(0x00000000, 0x00000000);
-        case "C":
-            return int(0x00000000, 0x00000000);
-        case "D":
-            return int(0x00000000, 0x00000000);
-        case "E":
-            return int(0x00000000, 0x00000000);
-        case "F":
-            return int(0xFEA0A0A0, 0xB8A0BE00);
-        case "G":
-            return int(0xFE80F888, 0xB880F800);
-        case "H":
-            return int(0x00000000, 0x00000000);
-        case "I":
-            return int(0x00000000, 0x00000000);
-        case "J":
-            return int(0x00000000, 0x00000000);
-        case "K":
-            return int(0x00000000, 0x00000000);
-        case "L":
-            return int(0x00000000, 0x00000000);
-        case "M":
-            return int(0x00000000, 0x00000000);
-        case "N":
-            return int(0x00000000, 0x00000000);
-        case "O":
-            return int(0x00000000, 0x00000000);
-        case "P":
-            return int(0x00000000, 0x00000000);
-        case "Q":
-            return int(0x00000000, 0x00000000);
-        case "R":
-            return int(0xFEA0B880, 0xB888F800);
-        case "S":
-            return int(0x00000000, 0x00000000);
-        case "T":
-            return int(0x00000000, 0x00000000);
-        case "U":
-            return int(0x00000000, 0x00000000);
-        case "V":
-            return int(0x00000000, 0x00000000);
-        case "W":
-            return int(0x00000000, 0x00000000);
-        case "X":
-            return int(0x00000000, 0x00000000);
-        case "Y":
-            return int(0x00000000, 0x00000000);
-        case "Z":
-            return int(0x00000000, 0x00000000);
-        case "0":
-            return int(0x38101010, 0x10101000);
-        case "1":
-            return int(0x7C381010, 0x10101000);
-        case "2":
-            return int(0xFE103810, 0x10101000);
-        case "3":
-            return int(0xFE7C3810, 0x10101000);
-        case "4":
-            return int(0x38101010, 0x38383800);
-        case "5":
-            return int(0x7C381010, 0x38383800);
-        case "6":
-            return int(0xFE103810, 0x38383800);
-        case "7":
-            return int(0xFE7C3810, 0x38383800);
-        case "8":
-            return int(0x38101010, 0x54547C00);
-        case "9":
-            return int(0x7C381010, 0x54547C00);
-        case "End":
-            return int(0xFE103810, 0x54547C00);
-        case "ArrowDown":
-            return int(0xFE7C3810, 0x54547C00);
-        case "PageDown":
-            return int(0x38101010, 0x9292FE00);
-        case "ArrowLeft":
-            return int(0x7C381010, 0x9292FE00);
-        case "Clear":
-            return int(0xFE103810, 0x9292FE00);
-        case "ArrowRight":
-            return int(0xFE7C3810, 0x54547C00);
-
-    }
-    return out;
-}
-
 /**
  * @param {{ hi: any; lo: any; }} number
  */
@@ -345,11 +179,13 @@ function paint64(glyph) {
 
 document.addEventListener("keypress", function (item) {
     "use strict";
-    //    var glyph = glyph_from_keycode(item.key)
-    //    draw(paint(glyph));
-    var pig = parseInt(item.key)
-    alert(pig);
-    var glyph = font[item.key];
+    var key = item.key;
+    var keycode = key.charCodeAt(0);
+    var hex = keycode.toString(16);
+    var value = "0x00" + hex;
+    var name = CHARACTER_NAME[value];
+    var stuff = FONT[name];
+    var glyph = parseInt(stuff, 16);
     if (glyph !== undefined) {
         draw(paint64(glyph));
     }
@@ -360,12 +196,11 @@ document.addEventListener("keypress", function (item) {
 var off = 0;
 
 /**
- * @param {number} high
- * @param {number} low
+ * @param {number} glyph
  */
-function out(high, low) {
+function out(glyph) {
     "use strict";
-    buff(paint(int(high, low)));
+    buff(paint64(glyph));
     index_x += 1;
     off += 1;
     if (off % 8 === 0) {
@@ -378,12 +213,11 @@ function out(high, low) {
         index_x += 9;
     }
 }
-out(0xFEA0BE80, 0xFE808000);
-out(0xFE222E2A, 0x2A2A2A00);
-out(0x0202FE02, 0xFA0AFE00);
-out(0xA8A8A8A8, 0xE888FE00);
-out(0xFE0AFA02, 0xFE020200);
+out(0xFEA0BE80FE808000);
+out(0xFE222E2A2A2A2A00);
+out(0x0202FE02FA0AFE00);
+out(0xA8A8A8A8E888FE00);
+out(0xFE0AFA02FE020200);
 
 //view.putImageData(data, 0, 0);
 
-alert(0xFE0AFA02FE020200);
