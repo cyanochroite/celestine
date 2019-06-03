@@ -1,0 +1,2 @@
+var unicode = {};
+var range = {};

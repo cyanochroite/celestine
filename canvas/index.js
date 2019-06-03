@@ -34,18 +34,6 @@ main(element[3]);
 
 
 /**
-    @param {number} hi
-    @param {number} lo
-*/
-function int(hi, lo) {
-    "use strict";
-    var out = {};
-    out.hi = hi;
-    out.lo = lo;
-    return out;
-}
-
-/**
  * @param {HTMLCanvasElement} element
  */
 function spat(element) {
@@ -114,43 +102,6 @@ function main(element) {
     data = spat(element);
 }
 
-/**
- * @param {{ hi: any; lo: any; }} number
- */
-function paint(number) {
-    "use strict";
-    var high = number.hi;
-    var low = number.lo;
-    //high = high & 0xAA00AA00;
-    //low = low & 0xAA00AA00;
-    //high = high & 0xFEAAFEAA;
-    //low = low & 0xFEAAFE00;
-    var index = 256;
-    var art = new Uint8Array(index);
-    var r = Math.random() * 128 + 128;
-    var g = Math.random() * 128 + 128;
-    var b = Math.random() * 128 + 128;
-    var bit;
-    while (index >= 128) {
-        index -= 4;
-        bit = low & 1;
-        art[index + 0] = r * bit;
-        art[index + 1] = g * bit;
-        art[index + 2] = b * bit;
-        art[index + 3] = 255;
-        low = low >>> 1;
-    }
-    while (index >= 0) {
-        bit = high & 1;
-        art[index + 0] = r * bit;
-        art[index + 1] = g * bit;
-        art[index + 2] = b * bit;
-        art[index + 3] = 255;
-        high = high >>> 1;
-        index -= 4;
-    }
-    return art;
-}
 
 /**
  * @param {number} glyph
@@ -183,7 +134,8 @@ document.addEventListener("keypress", function (item) {
     var keycode = key.charCodeAt(0);
     var hex = keycode.toString(16);
     var value = "0x00" + hex;
-    var name = CHARACTER_NAME[value];
+    //var name = CHARACTER_NAME[value];
+    var name = "moo";
     var stuff = FONT[name];
     var glyph = parseInt(stuff, 16);
     if (glyph !== undefined) {
@@ -221,3 +173,4 @@ out(0xFE0AFA02FE020200);
 
 //view.putImageData(data, 0, 0);
 
+alert(unicode);
