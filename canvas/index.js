@@ -132,11 +132,8 @@ document.addEventListener("keypress", function (item) {
     "use strict";
     var key = item.key;
     var keycode = key.charCodeAt(0);
-    var hex = keycode.toString(16);
-    var value = "0x00" + hex;
-    //var name = CHARACTER_NAME[value];
-    var name = "moo";
-    var stuff = FONT[name];
+    var name = character.code[keycode];
+    var stuff = font.rune[name];
     var glyph = parseInt(stuff, 16);
     if (glyph !== undefined) {
         draw(paint64(glyph));
@@ -172,8 +169,3 @@ out(0xA8A8A8A8E888FE00);
 out(0xFE0AFA02FE020200);
 
 //view.putImageData(data, 0, 0);
-
-alert(character.name);
-alert(character.code);
-
-
