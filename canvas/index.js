@@ -173,4 +173,7 @@ out(0xFE0AFA02FE020200);
 
 //view.putImageData(data, 0, 0);
 
-alert(unicode);
+alert(character.name);
+alert(character.code);
+
+
