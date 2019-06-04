@@ -133,8 +133,7 @@ document.addEventListener("keypress", function (item) {
     var key = item.key;
     var keycode = key.charCodeAt(0);
     var name = character.code[keycode];
-    var stuff = font.rune[name];
-    var glyph = parseInt(stuff, 16);
+    var glyph = font.rune[name]; // use custom font here
     if (glyph !== undefined) {
         draw(paint64(glyph));
     }
