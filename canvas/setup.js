@@ -1,2 +1,0 @@
-var unicode = {};
-var range = {};
