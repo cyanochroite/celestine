@@ -5,63 +5,57 @@
     browser:true
 */
 /*global
-    document, add_event, add_event_blur, add_event_blur_all_now, add_event_blur_all_run,
-    add_event_blur_one_now, add_event_blur_one_run, add_event_change, add_event_change_all_now,
-    add_event_change_all_run, add_event_change_one_now, add_event_change_one_run,
-    add_event_click, add_event_click_all_now, add_event_click_all_run, add_event_click_one_now,
-    add_event_click_one_run, add_event_keydown, add_event_keydown_all_now,
-    add_event_keydown_all_run, add_event_keydown_one_now, add_event_keydown_one_run,
-    add_event_null, add_event_null_all_now, add_event_null_all_run, add_event_null_one_now,
-    add_event_null_one_run
+    element_select_all, element_select_one, event_add, event_blur,
+    event_blur_all_now, event_blur_all_run, event_blur_one_now,
+    event_blur_one_run, event_run, make_event_listener
 */
 /*property
-    addEventListener, classList, contains, currentTarget, key, length,
-    querySelector, querySelectorAll
 */
-/* add_event_blur */
 /**
+ * @param {string} selector
+ * @param {(event: Event | EventTarget) => void} method
  * @param {boolean} do_all
  * @param {boolean} do_now
- * @param {any} selector
- * @param {(arg0: any) => void} method
- */
-function add_event_blur(do_all, do_now, selector, method) {
+**/
+function event_blur(selector, method, do_all, do_now) {
     "use strict";
-    var event_listener = listener_event_make("blur", method, false, true);
-    var selected = listener_selector(do_all, selector);
-    listener_add(event_listener, selected, do_now, method);
-}
-
-
-/**
- * @param {any} selector
- * @param {any} method
- */
-function add_event_blur_all_now(selector, method) {
-    "use strict";
-    add_event_blur(true, true, selector, method);
+    var selected;
+    var event_listener = make_event_listener("blur", method, false, true);
+    if (do_all) {
+        selected = element_select_all(selector);
+    } else {
+        selected = element_select_one(selector);
+    }
+    event_add(selected, event_listener);
+    if (do_now) {
+        event_run(selected, method);
+    }
 }
 /**
- * @param {any} selector
- * @param {any} method
- */
-function add_event_blur_all_run(selector, method) {
-    "use strict";
-    add_event_blur(true, false, selector, method);
+ * @param {string} selector
+ * @param {(event: Event | EventTarget) => void} method
+**/
+function event_blur_all_now(selector, method) {
+    event_blur(selector, method, true, true);
 }
 /**
- * @param {any} selector
- * @param {any} method
- */
-function add_event_blur_one_now(selector, method) {
-    "use strict";
-    add_event_blur(false, true, selector, method);
+ * @param {string} selector
+ * @param {(event: Event | EventTarget) => void} method
+**/
+function event_blur_all_run(selector, method) {
+    event_blur(selector, method, true, false);
 }
 /**
- * @param {any} selector
- * @param {any} method
- */
-function add_event_blur_one_run(selector, method) {
-    "use strict";
-    add_event_blur(false, false, selector, method);
+ * @param {string} selector
+ * @param {(event: Event | EventTarget) => void} method
+**/
+function event_blur_one_now(selector, method) {
+    event_blur(selector, method, false, true);
+}
+/**
+ * @param {string} selector
+ * @param {(event: Event | EventTarget) => void} method
+**/
+function event_blur_one_run(selector, method) {
+    event_blur(selector, method, false, false);
 }
