@@ -5,31 +5,78 @@
     browser:true
 */
 /*global
-    add_event_listener, document, listener, query_selector
+    document, event, listener_add, listener_current_event,
+    listener_current_target, listener_event_add, listener_event_make
 */
 /*property
-    addEventListener, length, listener, querySelector, querySelectorAll, type,
-    use_capture
+    addEventListener, currentTarget, length, listener, querySelector,
+    querySelectorAll, type, use_capture
 */
+/**
+ * @param {(event: Event) => void} method
+**/
+function listener_current_event(method) {
+    var listener =
+        /**
+         * @param {Event} event
+        **/
+        function (event) {
+            method(event);
+        };
+    return listener;
+}
+/**
+ * @param {(target: EventTarget) => void} method
+**/
+function listener_current_target(method) {
+    var listener =
+        /**
+         * @param {Event} event
+        **/
+        function (event) {
+            method(event.currentTarget);
+        };
+    return listener;
+}
+/**
+ * @param {string} type
+ * @param {boolean} use_capture
+ * @param {(event: Event | EventTarget) => void} method
+ * @param {boolean} use_current_target
+**/
+function listener_event_make(type, method, use_capture, use_current_target) {
+    var listener;
+    if (use_current_target) {
+        listener = listener_current_target(method);
+    }
+    else {
+        listener = listener_current_event(method);
+    }
+    var event_listener = {};
+    event_listener.type = type;
+    event_listener.listener = listener;
+    event_listener.use_capture = use_capture;
+    return event_listener;
+}
 /**
  * @param {Element} element
  * @param {{
  *   type: string;
- *   listener: (name: any) => void;
+ *   listener: any;
  *   use_capture: boolean;
- * }} event
+ * }} event_listener
 **/
-function add_event_listener(element, event) {
-    var type = event.type;
-    var listener = event.listener;
-    var use_capture = event.use_capture;
+function listener_event_add(element, event_listener) {
+    var type = event_listener.type;
+    var listener = event_listener.listener;
+    var use_capture = event_listener.use_capture;
     element.addEventListener(type, listener, use_capture);
 }
 /**
  * @param {boolean} select_all
  * @param {string} selector
-**/
-function query_selector(select_all, selector) {
+ */
+function listener_selector(select_all, selector) {
     var element;
     if (select_all) {
         element = document.querySelectorAll(selector);
@@ -40,37 +87,21 @@ function query_selector(select_all, selector) {
 }
 
 /**
- * @param {{
- *    currentTarget: any;
- * }} add_event
- * @param {(arg0: any) => void} method
-**/
-function callback(method, add_event) {
-    method(add_event.currentTarget);
-}
-
-/**
- * @param {{
- *   type: string;
- *   listener: (name: any) => void;
- *   use_capture: boolean;
- * }} event
- * @param {any} select_all
- * @param {any} call_immediately
- * @param {any} selector
- * @param {(arg0: any) => void} method
-**/
-function listener(event, select_all, call_immediately, selector, method) {
+ * @param {boolean} call_immediately
+ * @param {(arg0: Element) => void} [method]
+ * @param {{ type: string; listener: any; use_capture: boolean; }} event_listener
+ * @param {NodeListOf<Element> | Element[]} selected
+ */
+function listener_add(event_listener, selected, call_immediately, method) {
     "use strict";
-    var element = query_selector(select_all, selector);
-    var index = element.length;
+    var index = selected.length;
     while (index) {
         index -= 1;
         if (call_immediately) {
-            method(element[index]);
+            method(selected[index]);
         }
         if (event) {
-            add_event_listener(element[index], event);
+            listener_event_add(selected[index], event_listener);
         }
     }
 }
