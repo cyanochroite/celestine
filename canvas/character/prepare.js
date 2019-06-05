@@ -17,6 +17,7 @@ character.name = {};
  * @param {string} name
  */
 function character_code(name) {
+    "use strict";
     var code = character.name[name];
     if (code === undefined) {
         /* assign default value */
@@ -28,6 +29,7 @@ function character_code(name) {
  * @param {number} code
  */
 function character_name(code) {
+    "use strict";
     var name = character.code[code];
     if (name === undefined) {
         /* assign default value */
