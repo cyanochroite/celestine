@@ -27,21 +27,11 @@
  */
 function add_event_blur(do_all, do_now, selector, method) {
     "use strict";
-    var event = {};
-    event.type = "blur";
-    event.listener = function (add_event) {
-        method(add_event.currentTarget);
-    });
-
-    event.use_capture = false;
-
-    listener("blur", do_all, do_now, selector, method,
-        function (add_event) {
-            method(add_event.currentTarget);
-        });
+    var event_listener = listener_event_make("blur", method, false, true);
+    var selected = listener_selector(do_all, selector);
+    listener_add(event_listener, selected, do_now, method);
 }
 
-event, select_all, call_immediately, selector, method
 
 /**
  * @param {any} selector

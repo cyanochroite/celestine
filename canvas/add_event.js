@@ -8,78 +8,7 @@
     addEventListener, classList, contains, currentTarget, key, length,
     querySelector, querySelectorAll
 */
-
-
-/**
- * @param {HTMLElement} element
- * @param {{
- *   type: string;
- *   listener: (name: any) => void;
- *   use_capture: boolean;
- * }} event
-**/
-function add_event_listener(element, event) {
-    var type = event.type;
-    var listener = event.listener;
-    var use_capture = event.use_capture;
-    element.addEventListener(type, listener, use_capture);
-}
-var car = document.querySelectorAll('fish');
-var pig = {
-    type: "4", listener: function (add_event) {
-        alert(add_event.currentTarget);
-    }, use_capture: false
-}
-add_event_listener(car, pig)
-function action(event_listener, select_all, call_immediately, selector, method) {
-    "use strict";
-    event_listener = {};
-    event_listener.type = "blur";
-    event_listener.listener = "blur";
-    event_listener.use_capture = false;
-    var item;
-    var element = (
-        select_all
-            ? document.querySelectorAll(selector)
-            : [document.querySelector(selector)]
-    );
-    var index = element.length;
-    while (index) {
-        index -= 1;
-        item = element[index];
-        if (item && !item.classList.contains("disabled")) {
-            if (call_immediately) {
-                method(element[index]);
-            }
-            if (event_listener) {
-                add_event_listener(element[index], event_listener);
-            }
-        }
-    }
-}
-function action(type, listener, select_all, call_immediately, selector, method) {
-    "use strict";
-    var item;
-    var element = (
-        select_all
-            ? document.querySelectorAll(selector)
-            : [document.querySelector(selector)]
-    );
-    var index = element.length;
-    while (index) {
-        index -= 1;
-        item = element[index];
-        if (item && !item.classList.contains("disabled")) {
-            if (call_immediately) {
-                method(element[index]);
-            }
-            if (type) {
-                element[index].addEventListener(type, listener, false);
-            }
-        }
-    }
-}
-function action(name, do_all, do_now, selector, method, callback) {
+function add_event(name, do_all, do_now, selector, method, callback) {
     "use strict";
     var item;
     var element = (
