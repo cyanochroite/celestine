@@ -4,29 +4,82 @@
 /*jslint
     browser:true
 */
-/*global
-    document, add_event, add_event_blur, add_event_blur_all_now, add_event_blur_all_run,
-    add_event_blur_one_now, add_event_blur_one_run, add_event_change, add_event_change_all_now,
-    add_event_change_all_run, add_event_change_one_now, add_event_change_one_run,
-    add_event_click, add_event_click_all_now, add_event_click_all_run, add_event_click_one_now,
-    add_event_click_one_run, add_event_keydown, add_event_keydown_all_now,
-    add_event_keydown_all_run, add_event_keydown_one_now, add_event_keydown_one_run,
-    add_event_null, add_event_null_all_now, add_event_null_all_run, add_event_null_one_now,
-    add_event_null_one_run
-*/
 /*property
     addEventListener, classList, contains, currentTarget, key, length,
     querySelector, querySelectorAll
 */
+
+
 /**
- * @param {string} name
- * @param {boolean} do_all
- * @param {boolean} do_now
- * @param {any} selector
- * @param {(arg0: any) => void} method
- * @param {{ (add_event: any): void; (add_event: any): void; (add_event: any): void; (add_event: any): void; (add_event: any): void; }} callback
- */
-function add_event(name, do_all, do_now, selector, method, callback) {
+ * @param {HTMLElement} element
+ * @param {{
+ *   type: string;
+ *   listener: (name: any) => void;
+ *   use_capture: boolean;
+ * }} event
+**/
+function add_event_listener(element, event) {
+    var type = event.type;
+    var listener = event.listener;
+    var use_capture = event.use_capture;
+    element.addEventListener(type, listener, use_capture);
+}
+var car = document.querySelectorAll('fish');
+var pig = {
+    type: "4", listener: function (add_event) {
+        alert(add_event.currentTarget);
+    }, use_capture: false
+}
+add_event_listener(car, pig)
+function action(event_listener, select_all, call_immediately, selector, method) {
+    "use strict";
+    event_listener = {};
+    event_listener.type = "blur";
+    event_listener.listener = "blur";
+    event_listener.use_capture = false;
+    var item;
+    var element = (
+        select_all
+            ? document.querySelectorAll(selector)
+            : [document.querySelector(selector)]
+    );
+    var index = element.length;
+    while (index) {
+        index -= 1;
+        item = element[index];
+        if (item && !item.classList.contains("disabled")) {
+            if (call_immediately) {
+                method(element[index]);
+            }
+            if (event_listener) {
+                add_event_listener(element[index], event_listener);
+            }
+        }
+    }
+}
+function action(type, listener, select_all, call_immediately, selector, method) {
+    "use strict";
+    var item;
+    var element = (
+        select_all
+            ? document.querySelectorAll(selector)
+            : [document.querySelector(selector)]
+    );
+    var index = element.length;
+    while (index) {
+        index -= 1;
+        item = element[index];
+        if (item && !item.classList.contains("disabled")) {
+            if (call_immediately) {
+                method(element[index]);
+            }
+            if (type) {
+                element[index].addEventListener(type, listener, false);
+            }
+        }
+    }
+}
+function action(name, do_all, do_now, selector, method, callback) {
     "use strict";
     var item;
     var element = (
