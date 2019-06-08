@@ -5,57 +5,52 @@
     browser:true
 */
 /*global
-    element_select_all, element_select_one, event_add, event_blur,
-    event_blur_all_now, event_blur_all_run, event_blur_one_now,
-    event_blur_one_run, event_run, make_event_listener
+    element_select_all, element_select_one, event__add, event__blur,
+    event__blur_all_now, event__blur_all_run, event__blur_one_now,
+    event__blur_one_run, event__run, make_event__listener
 */
 /*property
 */
 /**
- * @param {string} selector
+ * @param {Element[]} selected
  * @param {(event: Event | EventTarget) => void} method
- * @param {boolean} do_all
- * @param {boolean} do_now
-**/
-function event_blur(selector, method, do_all, do_now) {
+ */
+function event__blur(selected, method) {
     "use strict";
-    var selected;
-    var event_listener = make_event_listener("blur", method, false, true);
-    if (do_all) {
-        selected = element_select_all(selector);
-    } else {
-        selected = element_select_one(selector);
-    }
-    event_add(selected, event_listener);
-    if (do_now) {
-        event_run(selected, method);
-    }
+    var event_listener = event__make_event_listener("blur", method, false, true);
+    event__add(selected, event_listener);
 }
 /**
  * @param {string} selector
  * @param {(event: Event | EventTarget) => void} method
-**/
-function event_blur_all_now(selector, method) {
-    event_blur(selector, method, true, true);
+ */
+function event__blur_all_now(selector, method) {
+    var selected = event__select_all(selector);
+    event__blur(selected, method);
+    event__run(selected, method);
 }
 /**
  * @param {string} selector
  * @param {(event: Event | EventTarget) => void} method
-**/
-function event_blur_all_run(selector, method) {
-    event_blur(selector, method, true, false);
+ */
+function event__blur_all_run(selector, method) {
+    var selected = event__select_all(selector);
+    event__blur(selected, method);
 }
 /**
  * @param {string} selector
  * @param {(event: Event | EventTarget) => void} method
-**/
-function event_blur_one_now(selector, method) {
-    event_blur(selector, method, false, true);
+ */
+function event__blur_one_now(selector, method) {
+    var selected = event__select_one(selector);
+    event__blur(selected, method);
+    event__run(selected, method);
 }
 /**
  * @param {string} selector
  * @param {(event: Event | EventTarget) => void} method
-**/
-function event_blur_one_run(selector, method) {
-    event_blur(selector, method, false, false);
+ */
+function event__blur_one_run(selector, method) {
+    var selected = event__select_one(selector);
+    event__blur(selected, method);
 }
