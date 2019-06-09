@@ -1,24 +1,17 @@
 /* eslint-disable one-var */
-/* eslint-disable no-extra-parens */
-/* eslint-disable no-param-reassign */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable sort-vars */
 /* eslint-disable no-undef */
-/* eslint-disable prefer-const */
-/* eslint-disable init-declarations */
-/* eslint-disable id-length */
 /* eslint-disable max-statements */
-/* eslint-disable max-params */
 /* eslint-disable no-magic-numbers */
 /* eslint-disable no-bitwise */
-/* eslint-disable no-implicit-globals */
 /* eslint-disable camelcase */
 
+const canvas = document.getElementsByTagName("canvas");
 let index_x = 0,
     index_y = 0,
-    data,
-    view,
-    canvas = document.getElementsByTagName("canvas"),
+    data = null,
+    view = null,
     off = 0;
 
 
@@ -28,21 +21,21 @@ let index_x = 0,
 const spat = function spat (element) {
 
     "use strict";
-    let context = element.getContext("2d"),
+    const context = element.getContext("2d"),
         {width} = element,
         {height} = element,
-        image_data = context.createImageData(width, height),
-        y = height,
-        x,
-        index;
-    while (y > 0) {
+        image_data = context.createImageData(width, height);
+    let yy = height,
+        xx = width,
+        index = (xx + yy * image_data.width) * 4;
+    while (yy > 0) {
 
-        y -= 1;
-        x = width;
-        while (x > 0) {
+        yy -= 1;
+        xx = width;
+        while (xx > 0) {
 
-            x -= 1;
-            index = (x + y * image_data.width) * 4;
+            xx -= 1;
+            index = (xx + yy * image_data.width) * 4;
             image_data.data[index + 0] = Math.random() * 256;
             image_data.data[index + 1] = Math.random() * 256;
             image_data.data[index + 2] = Math.random() * 256;
@@ -91,12 +84,14 @@ main(canvas[3]);
 const draw = function draw (art) {
 
     "use strict";
-    let a = ((((((0x100 - index_y) << 0x3) - 0x1) << 0x8) + index_x) << 0x5),
-        index = 256;
+    // eslint-disable-next-line no-extra-parens
+    const aa = ((((((0x100 - index_y) << 0x3) - 0x1) << 0x8) + index_x) << 0x5);
+    let index = 256;
     while (index > 0) {
 
         index -= 1;
-        data.data[a + (index & 31) - ((index >>> 5) << 13)] = art[index];
+        // eslint-disable-next-line no-extra-parens
+        data.data[aa + (index & 31) - ((index >>> 5) << 13)] = art[index];
 
     }
     view.putImageData(data, 0, 0);
@@ -109,12 +104,14 @@ const draw = function draw (art) {
 const buff = function buff (art) {
 
     "use strict";
-    let a = ((((((0x100 - index_y) << 0x3) - 0x1) << 0x8) + index_x) << 0x5),
-        index = 256;
+    // eslint-disable-next-line no-extra-parens
+    const aa = ((((((0x100 - index_y) << 0x3) - 0x1) << 0x8) + index_x) << 0x5);
+    let index = 256;
     while (index > 0) {
 
         index -= 1;
-        data.data[a + (index & 31) - ((index >>> 5) << 13)] = art[index];
+        // eslint-disable-next-line no-extra-parens
+        data.data[aa + (index & 31) - ((index >>> 5) << 13)] = art[index];
 
     }
 
@@ -122,24 +119,26 @@ const buff = function buff (art) {
 
 
 /**
- * @param {number} glyph
+ * @param {number} input
  */
-const paint64 = function paint64 (glyph) {
+const paint64 = function paint64 (input) {
 
     "use strict";
     let index = 256,
-        art = new Uint8Array(index),
-        r = Math.random() * 128 + 128,
-        g = Math.random() * 128 + 128,
-        b = Math.random() * 128 + 128,
-        bit;
+        bit = input & 1,
+        glyph = input;
+    const art = new Uint8Array(index),
+        rr = Math.random() * 128 + 128,
+        gg = Math.random() * 128 + 128,
+        bb = Math.random() * 128 + 128;
+
     while (index >= 0) {
 
         index -= 4;
         bit = glyph & 1;
-        art[index + 0] = r * bit;
-        art[index + 1] = g * bit;
-        art[index + 2] = b * bit;
+        art[index + 0] = rr * bit;
+        art[index + 1] = gg * bit;
+        art[index + 2] = bb * bit;
         art[index + 3] = 255;
         glyph >>>= 1;
 
@@ -152,7 +151,7 @@ const paint64 = function paint64 (glyph) {
 document.addEventListener("keypress", (item) => {
 
     "use strict";
-    let {key} = item,
+    const {key} = item,
         keycode = key.charCodeAt(0),
         name = character.code[keycode],
         glyph = font.rune[name];
