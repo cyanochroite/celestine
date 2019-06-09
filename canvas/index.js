@@ -1,14 +1,11 @@
 /* eslint-disable one-var */
-/* eslint-disable no-mixed-operators */
 /* eslint-disable max-statements */
 /* eslint-disable no-magic-numbers */
-/* eslint-disable no-bitwise */
-/* eslint-disable camelcase */
 
 const canvas = document.getElementsByTagName("canvas");
 let data = null,
-    index_x = 0,
-    index_y = 0,
+    indexX = 0,
+    indexY = 0,
     off = 0,
     view = null;
 
@@ -22,7 +19,7 @@ const spat = function spat (element) {
     const context = element.getContext("2d"),
         {width} = element,
         {height} = element,
-        image_data = context.createImageData(width, height);
+        imageData = context.createImageData(width, height);
     let yy = height;
     while (yy > 0) {
 
@@ -31,22 +28,25 @@ const spat = function spat (element) {
         while (xx > 0) {
 
             xx -= 1;
-            const index = (xx + yy * image_data.width) * 4;
-            image_data.data[index + 0] = Math.random() * 256;
-            image_data.data[index + 1] = Math.random() * 256;
-            image_data.data[index + 2] = Math.random() * 256;
-            image_data.data[index + 3] = 255;
+            let index = imageData.width;
+            index *= yy;
+            index += xx;
+            index *= 4;
+            imageData.data[index + 0] = Math.random() * 256;
+            imageData.data[index + 1] = Math.random() * 256;
+            imageData.data[index + 2] = Math.random() * 256;
+            imageData.data[index + 3] = 255;
 
         }
 
     }
-    context.putImageData(image_data, 0, 0);
-    return image_data;
+    context.putImageData(imageData, 0, 0);
+    return imageData;
 
     /*
      *Index_x = 25;
-     *index_y = 25;
-     *context.putImageData(imageData, 0, 0, index_x, index_y, 8, 8);
+     *indexY = 25;
+     *context.putImageData(imageData, 0, 0, indexX, indexY, 8, 8);
      */
 
 };
@@ -61,6 +61,7 @@ const main = function main (element) {
     view = element.getContext("2d");
     data = view.createImageData(element.width, element.height);
     data = spat(element);
+    view.putImageData(data, 0, 0);
 
 };
 spat(canvas[0]);
@@ -80,36 +81,31 @@ main(canvas[3]);
 const draw = function draw (art) {
 
     "use strict";
-    // eslint-disable-next-line no-extra-parens
-    const aa = ((((((0x100 - index_y) << 0x3) - 0x1) << 0x8) + index_x) << 0x5);
+    const hold1 = 0x100 - indexY,
+        // eslint-disable-next-line no-bitwise
+        hold2 = hold1 << 0x3,
+        hold3 = hold2 - 0x1,
+        // eslint-disable-next-line no-bitwise
+        hold4 = hold3 << 0x8,
+        hold5 = hold4 + indexX,
+        // eslint-disable-next-line no-bitwise
+        hold6 = hold5 << 0x5,
+        hold7 = hold6;
     let index = 256;
     while (index > 0) {
 
         index -= 1;
-        // eslint-disable-next-line no-extra-parens
-        data.data[aa + (index & 31) - ((index >>> 5) << 13)] = art[index];
+        // eslint-disable-next-line no-bitwise
+        const temp1 = index & 31,
+            // eslint-disable-next-line no-bitwise
+            temp2 = index >>> 5,
+            // eslint-disable-next-line no-bitwise
+            temp3 = temp2 << 13,
+            temp4 = hold7 + temp1 - temp3;
+        data.data[temp4] = art[index];
 
     }
     view.putImageData(data, 0, 0);
-
-};
-
-/**
- * @param {any[] | Uint8Array} art
- */
-const buff = function buff (art) {
-
-    "use strict";
-    // eslint-disable-next-line no-extra-parens
-    const aa = ((((((0x100 - index_y) << 0x3) - 0x1) << 0x8) + index_x) << 0x5);
-    let index = 256;
-    while (index > 0) {
-
-        index -= 1;
-        // eslint-disable-next-line no-extra-parens
-        data.data[aa + (index & 31) - ((index >>> 5) << 13)] = art[index];
-
-    }
 
 };
 
@@ -123,19 +119,27 @@ const paint64 = function paint64 (input) {
     let glyph = input,
         index = 256;
     // eslint-disable-next-line no-undef
-    const art = new Uint8Array(index),
-        bb = Math.random() * 128 + 128,
-        gg = Math.random() * 128 + 128,
-        rr = Math.random() * 128 + 128;
+    const art = new Uint8Array(index);
+    let bb = Math.random(),
+        gg = Math.random(),
+        rr = Math.random();
+    bb *= 128;
+    gg *= 128;
+    rr *= 128;
+    bb += 128;
+    gg += 128;
+    rr += 128;
 
     while (index >= 0) {
 
         index -= 4;
+        // eslint-disable-next-line no-bitwise
         const bit = glyph & 1;
         art[index + 0] = rr * bit;
         art[index + 1] = gg * bit;
         art[index + 2] = bb * bit;
         art[index + 3] = 255;
+        // eslint-disable-next-line no-bitwise
         glyph >>>= 1;
 
     }
@@ -155,8 +159,8 @@ document.addEventListener("keypress", (item) => {
         draw(paint64(glyph));
 
     }
-    // Index_x += 0;
-    index_y += 1;
+    indexX += 0;
+    indexY += 1;
 
 });
 
@@ -167,20 +171,20 @@ document.addEventListener("keypress", (item) => {
 const out = function out (glyph) {
 
     "use strict";
-    buff(paint64(glyph));
-    index_x += 1;
+    draw(paint64(glyph));
+    indexX += 1;
     off += 1;
     if (off % 8 === 0) {
 
         off = 0;
-        index_x -= 8;
-        index_y += 1;
+        indexX -= 8;
+        indexY += 1;
 
     }
-    if (index_y > 254) {
+    if (indexY > 254) {
 
-        index_y = 0;
-        index_x += 9;
+        indexY = 0;
+        indexX += 9;
 
     }
 
@@ -191,4 +195,3 @@ out(0x0202FE02FA0AFE00);
 out(0xA8A8A8A8E888FE00);
 out(0xFE0AFA02FE020200);
 
-// View.putImageData(data, 0, 0);
