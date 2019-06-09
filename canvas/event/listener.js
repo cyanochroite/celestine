@@ -1,6 +1,7 @@
 /**
  * @class
  */
+// eslint-disable-next-line no-unused-vars
 class listener {
 
 
@@ -59,6 +60,7 @@ class listener {
 
     }
 
+
     /**
      * @param {(argument: EventTarget) => void} method
      */
@@ -71,6 +73,5 @@ class listener {
         this.listener = (event) => method(event.currentTarget);
 
     }
-
 
 }

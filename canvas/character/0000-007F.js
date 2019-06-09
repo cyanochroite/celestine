@@ -1,3 +1,6 @@
+/* eslint-disable dot-notation */
+/* eslint-disable no-undef */
+/* eslint-disable no-magic-numbers */
 character.code[0x0000] = "NULL";
 character.code[0x0001] = "START OF HEADING";
 character.code[0x0002] = "START OF TEXT";
