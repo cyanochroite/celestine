@@ -53,34 +53,25 @@ function event__select_all(selector) {
 function event__select_one(selector) {
     return [document.querySelector(selector)];
 }
-/**
- * @param {string} type
- * @param {(event: Event | EventTarget) => void} method
- * @param {boolean} use_capture
- * @param {boolean} use_target
- */
-function event__make_event_listener(type, method, use_capture, use_target) {
-    var listener;
-    if (use_target) {
-        /**
-         * @param {Event} event
-        **/
-        listener = (event) => method(event.currentTarget);
-    } else {
-        /**
-         * @param {Event} event
-        **/
-        listener = (event) => method(event);
-    }
+
+
+function event__listener_make() {
     var event_listener = {};
-    event_listener.type = type;
-    event_listener.listener = listener;
-    event_listener.use_capture = use_capture;
+    event_listener.type = "";
+    /**
+     * @param {Event} event
+     */
+    event_listener.listener = (event) => (event);
+    event_listener.use_capture = false;
     return event_listener;
 }
-
-
-
+/**
+ * @param {string} type
+ * @param {{ type: string; }} event_listener
+ */
+function event__listener_type(event_listener, type) {
+    event_listener.type = type;
+}
 /**
  * @param {{ use_capture: boolean; }} event_listener
  */
@@ -112,4 +103,47 @@ function event__listener_use_target(event_listener, method) {
      * @param {Event} event
      */
     event_listener.listener = (event) => method(event.currentTarget);
+}
+
+
+class listener {
+    constructor() {
+        this._type = "";
+        /**
+         * @param {Event} event
+         */
+        //this._listener = (event) => (event);
+        this._use_capture = false;
+    }
+    /**
+     * @param {string} type
+     */
+    type(type) {
+        this._type = type;
+    }
+    use_bubble() {
+        this._use_capture = false;
+    }
+    use_capture() {
+        this._use_capture = true;
+    }
+    /**
+     * @param {(argument: Event) => void} method
+     */
+    use_event(method) {
+        /**
+         * @param {Event} event
+         */
+        this._listener = (event) => method(event);
+    }
+
+    /**
+     * @param {(argument: EventTarget) => void} method
+     */
+    use_target(method) {
+        /**
+         * @param {Event} event
+         */
+        this._listener = (event) => method(event.currentTarget);
+    }
 }
