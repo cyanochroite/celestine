@@ -1,18 +1,16 @@
 /* eslint-disable one-var */
 /* eslint-disable no-mixed-operators */
-/* eslint-disable sort-vars */
-/* eslint-disable no-undef */
 /* eslint-disable max-statements */
 /* eslint-disable no-magic-numbers */
 /* eslint-disable no-bitwise */
 /* eslint-disable camelcase */
 
 const canvas = document.getElementsByTagName("canvas");
-let index_x = 0,
+let data = null,
+    index_x = 0,
     index_y = 0,
-    data = null,
-    view = null,
-    off = 0;
+    off = 0,
+    view = null;
 
 
 /**
@@ -25,17 +23,15 @@ const spat = function spat (element) {
         {width} = element,
         {height} = element,
         image_data = context.createImageData(width, height);
-    let yy = height,
-        xx = width,
-        index = (xx + yy * image_data.width) * 4;
+    let yy = height;
     while (yy > 0) {
 
         yy -= 1;
-        xx = width;
+        let xx = width;
         while (xx > 0) {
 
             xx -= 1;
-            index = (xx + yy * image_data.width) * 4;
+            const index = (xx + yy * image_data.width) * 4;
             image_data.data[index + 0] = Math.random() * 256;
             image_data.data[index + 1] = Math.random() * 256;
             image_data.data[index + 2] = Math.random() * 256;
@@ -124,18 +120,18 @@ const buff = function buff (art) {
 const paint64 = function paint64 (input) {
 
     "use strict";
-    let index = 256,
-        bit = input & 1,
-        glyph = input;
+    let glyph = input,
+        index = 256;
+    // eslint-disable-next-line no-undef
     const art = new Uint8Array(index),
-        rr = Math.random() * 128 + 128,
+        bb = Math.random() * 128 + 128,
         gg = Math.random() * 128 + 128,
-        bb = Math.random() * 128 + 128;
+        rr = Math.random() * 128 + 128;
 
     while (index >= 0) {
 
         index -= 4;
-        bit = glyph & 1;
+        const bit = glyph & 1;
         art[index + 0] = rr * bit;
         art[index + 1] = gg * bit;
         art[index + 2] = bb * bit;
@@ -152,9 +148,8 @@ document.addEventListener("keypress", (item) => {
 
     "use strict";
     const {key} = item,
-        keycode = key.charCodeAt(0),
-        name = character.code[keycode],
-        glyph = font.rune[name];
+        // eslint-disable-next-line no-undef
+        glyph = font.rune[character.code[key.charCodeAt(0)]];
     if (typeof glyph !== "undefined") {
 
         draw(paint64(glyph));
