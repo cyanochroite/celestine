@@ -17,7 +17,10 @@
  */
 function event__blur(selected, method) {
     "use strict";
-    var event_listener = event__make_event_listener("blur", method, false, true);
+    var event_listener = event__listener_make();
+    event__listener_type(event_listener, "blur");
+    event__listener_use_bubble(event_listener);
+    event__listener_use_target(event_listener, method);
     event__add(selected, event_listener);
 }
 /**
