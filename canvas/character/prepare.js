@@ -1,39 +1,41 @@
-/*
-    JSLint edition 2019-01-31
-*/
-/*jslint
-    browser:true
-*/
-/*global
-    character, character_code, character_name
-*/
-/*property
-    code, name
-*/
-var character = {};
+// eslint-disable-next-line prefer-const
+let character = {};
 character.code = {};
 character.name = {};
-/**
- * @param {string} name
- */
-function character_code(name) {
-    "use strict";
-    var code = character.name[name];
-    if (code === undefined) {
-        /* assign default value */
-        code = 0x0000;
-    }
-    return code;
-}
-/**
- * @param {number} code
- */
-function character_name(code) {
-    "use strict";
-    var name = character.code[code];
-    if (name === undefined) {
-        /* assign default value */
-        name = "NULL";
-    }
-    return name;
-}
+// eslint-disable-next-line no-unused-vars
+const characterCode =
+
+    /**
+     * @param {string} name
+     */
+    function characterCode (name) {
+
+        "use strict";
+        let code = character.name[name];
+        if (typeof code === "undefined") {
+
+            // eslint-disable-next-line no-magic-numbers
+            code = 0x0000;
+
+        }
+        return code;
+
+    },
+    // eslint-disable-next-line no-unused-vars
+    characterName =
+
+        /**
+         * @param {number} code
+         */
+        function characterName (code) {
+
+            "use strict";
+            let name = character.code[code];
+            if (typeof name === "undefined") {
+
+                name = "NULL";
+
+            }
+            return name;
+
+        };

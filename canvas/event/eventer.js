@@ -1,7 +1,8 @@
 /**
  * @class
  */
-class event {
+// eslint-disable-next-line no-unused-vars
+class eventer {
 
 
     /**
@@ -13,6 +14,7 @@ class event {
         this.useCapture = false;
 
     }
+
 
     /**
      * @param {Element[]} selected
@@ -56,11 +58,10 @@ class event {
     static selectAll (selector) {
 
         const array = [];
-
-
         return array.slice.call(document.querySelectorAll(selector));
 
     }
+
 
     /**
      * @param {string} selector
