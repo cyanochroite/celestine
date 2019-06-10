@@ -1,9 +1,9 @@
-import {listener} from "./listener";
+import {EventListener} from "./EventListener";
 
 /**
  * @class
  */
-export class eventBlur extends listener {
+export class eventBlur extends EventListener {
 
 
     /**
@@ -21,6 +21,7 @@ export class eventBlur extends listener {
     /**
      * @param {Element[]} selected
      * @param {(event: Event | EventTarget) => void} method
+     * @returns {void}
      */
     blur (selected, method) {
 
@@ -36,8 +37,9 @@ export class eventBlur extends listener {
     /**
      * @param {string} selector
      * @param {(event: Event | EventTarget) => void} method
+     * @returns {void}
      */
-    all_now (selector, method) {
+    allNow (selector, method) {
 
         const selected = event__select_all(selector);
         event__blur(selected, method);
@@ -48,8 +50,9 @@ export class eventBlur extends listener {
     /**
      * @param {string} selector
      * @param {(event: Event | EventTarget) => void} method
+     * @returns {void}
      */
-    all_run (selector, method) {
+    allRun (selector, method) {
 
         const selected = event__select_all(selector);
         event__blur(selected, method);
@@ -59,8 +62,9 @@ export class eventBlur extends listener {
     /**
      * @param {string} selector
      * @param {(event: Event | EventTarget) => void} method
+     * @returns {void}
      */
-    one_now (selector, method) {
+    oneNow (selector, method) {
 
         const selected = event__select_one(selector);
         event__blur(selected, method);
@@ -71,8 +75,9 @@ export class eventBlur extends listener {
     /**
      * @param {string} selector
      * @param {(event: Event | EventTarget) => void} method
+     * @returns {void}
      */
-    one_run (selector, method) {
+    static oneRun (selector, method) {
 
         const selected = event__select_one(selector);
         event__blur(selected, method);

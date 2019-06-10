@@ -1,34 +1,21 @@
+import {eventListener} from "./eventListener";
+
 /**
  * @class
  */
 // eslint-disable-next-line no-unused-vars
-class eventer extends listener {
-
-
-    /**
-     */
-    constructor () {
-
-        this.type = "";
-        this.listener = null;
-        this.useCapture = false;
-
-    }
+class eventer {
 
 
     /**
      * @param {Element[]} selected
-     * @param {listener} eventListener
+     * @param {eventListener} listener
      */
-    static add (selected, eventListener) {
+    static add (selected, listener) {
 
         selected.forEach((element) => {
 
-            element.addEventListener(
-                eventListener.type,
-                eventListener.listener,
-                eventListener.useCapture
-            );
+            listener.applyToElement(element);
 
         });
 
