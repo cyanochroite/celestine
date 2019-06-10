@@ -2,6 +2,12 @@
 /* eslint-disable max-statements */
 /* eslint-disable no-magic-numbers */
 
+// eslint-disable-next-line capitalized-comments
+// import {listener} from "./event/listener";
+
+// eslint-disable-next-line no-alert
+alert(pig);
+
 const canvas = document.getElementsByTagName("canvas");
 let data = null,
     indexX = 0,
@@ -15,7 +21,7 @@ let data = null,
  */
 const spat = function spat (element) {
 
-    "use strict";
+
     const context = element.getContext("2d"),
         {width} = element,
         {height} = element,
@@ -57,7 +63,7 @@ const spat = function spat (element) {
  */
 const main = function main (element) {
 
-    "use strict";
+
     view = element.getContext("2d");
     data = view.createImageData(element.width, element.height);
     data = spat(element);
@@ -80,7 +86,7 @@ main(canvas[3]);
  */
 const draw = function draw (art) {
 
-    "use strict";
+
     const hold1 = 0x100 - indexY,
         // eslint-disable-next-line no-bitwise
         hold2 = hold1 << 0x3,
@@ -115,7 +121,7 @@ const draw = function draw (art) {
  */
 const paint64 = function paint64 (input) {
 
-    "use strict";
+
     let glyph = input,
         index = 256;
     // eslint-disable-next-line no-undef
@@ -150,7 +156,7 @@ const paint64 = function paint64 (input) {
 
 document.addEventListener("keypress", (item) => {
 
-    "use strict";
+
     const {key} = item,
         // eslint-disable-next-line no-undef
         glyph = font.rune[character.code[key.charCodeAt(0)]];
@@ -170,7 +176,7 @@ document.addEventListener("keypress", (item) => {
  */
 const out = function out (glyph) {
 
-    "use strict";
+
     draw(paint64(glyph));
     indexX += 1;
     off += 1;

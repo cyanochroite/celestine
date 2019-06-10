@@ -1,68 +1,83 @@
+import {listener} from "./listener";
+
 /**
  * @class
  */
-// eslint-disable-next-line no-unused-vars
-class eventBlur {
+export class eventBlur extends listener {
 
-}
 
-/**
- * @param {Element[]} selected
- * @param {(event: Event | EventTarget) => void} method
- */
-function event__blur (selected, method) {
+    /**
+     */
+    constructor () {
 
-    "use strict";
-    let event_listener = event__listener_make();
-    event__listener_type(event_listener, "blur");
-    event__listener_use_bubble(event_listener);
-    event__listener_use_target(event_listener, method);
-    event__add(selected, event_listener);
+        super();
+        this.type = "";
+        this.listener = null;
+        this.useCapture = false;
 
-}
+    }
 
-/**
- * @param {string} selector
- * @param {(event: Event | EventTarget) => void} method
- */
-function event__blur_all_now (selector, method) {
 
-    let selected = event__select_all(selector);
-    event__blur(selected, method);
-    event__run(selected, method);
+    /**
+     * @param {Element[]} selected
+     * @param {(event: Event | EventTarget) => void} method
+     */
+    blur (selected, method) {
 
-}
 
-/**
- * @param {string} selector
- * @param {(event: Event | EventTarget) => void} method
- */
-function event__blur_all_run (selector, method) {
+        const event_listener = event__listener_make();
+        event__listener_type(event_listener, "blur");
+        event__listener_use_bubble(event_listener);
+        event__listener_use_target(event_listener, method);
+        event__add(selected, event_listener);
 
-    let selected = event__select_all(selector);
-    event__blur(selected, method);
+    }
 
-}
+    /**
+     * @param {string} selector
+     * @param {(event: Event | EventTarget) => void} method
+     */
+    all_now (selector, method) {
 
-/**
- * @param {string} selector
- * @param {(event: Event | EventTarget) => void} method
- */
-function event__blur_one_now (selector, method) {
+        const selected = event__select_all(selector);
+        event__blur(selected, method);
+        event__run(selected, method);
 
-    let selected = event__select_one(selector);
-    event__blur(selected, method);
-    event__run(selected, method);
+    }
 
-}
+    /**
+     * @param {string} selector
+     * @param {(event: Event | EventTarget) => void} method
+     */
+    all_run (selector, method) {
 
-/**
- * @param {string} selector
- * @param {(event: Event | EventTarget) => void} method
- */
-function event__blur_one_run (selector, method) {
+        const selected = event__select_all(selector);
+        event__blur(selected, method);
 
-    let selected = event__select_one(selector);
-    event__blur(selected, method);
+    }
+
+    /**
+     * @param {string} selector
+     * @param {(event: Event | EventTarget) => void} method
+     */
+    one_now (selector, method) {
+
+        const selected = event__select_one(selector);
+        event__blur(selected, method);
+        event__run(selected, method);
+
+    }
+
+    /**
+     * @param {string} selector
+     * @param {(event: Event | EventTarget) => void} method
+     */
+    one_run (selector, method) {
+
+        const selected = event__select_one(selector);
+        event__blur(selected, method);
+
+    }
+
 
 }
