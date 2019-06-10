@@ -2,7 +2,7 @@
  * @class
  */
 // eslint-disable-next-line no-unused-vars
-class eventer {
+class eventer extends listener {
 
 
     /**

@@ -1,60 +1,39 @@
 /**
  * @class
  */
-// eslint-disable-next-line no-unused-vars
-class listener {
-
-
-    /**
-     */
-    constructor () {
-
-        this.type = "";
-        this.listener = null;
-        this.useCapture = false;
-
-    }
+export class listener {
 
 
     /**
      * @param {string} type
-     * @returns {void}
+     * @param {(argument: Event | EventTarget) => void} [method]
+     * @param {boolean} [useCapture]
+     * @returns
      */
-    dippers (type) {
+    constructor (type, method, useCapture) {
 
         this.type = type;
 
-    }
-
-
-    /**
-     * @returns {void}
-     */
-    useBubble () {
-
-        this.useCapture = false;
-
-    }
-
-
-    /**
-     * @returns {void}
-     */
-    FuseCapture () {
-
-        this.useCapture = true;
+        /**
+         * @param {Event} event
+         * @returns {void}
+         */
+        this.listener = (event) => method(event);
+        this.useCapture = useCapture;
 
     }
 
 
     /**
      * @param {(argument: Event) => void} method
+     * @returns {void}
      */
-    useEvent (method) {
+    listenerUseEvent (method) {
 
 
         /**
          * @param {Event} event
+         * @returns {void}
          */
         this.listener = (event) => method(event);
 
@@ -63,14 +42,36 @@ class listener {
 
     /**
      * @param {(argument: EventTarget) => void} method
+     * @returns {void}
      */
-    useTarget (method) {
+    listenerUseTarget (method) {
 
 
         /**
          * @param {Event} event
+         * @returns {void}
          */
         this.listener = (event) => method(event.currentTarget);
+
+    }
+
+
+    /**
+     * @returns {void}
+     */
+    propagationUseBubble () {
+
+        this.useCapture = false;
+
+    }
+
+
+    /**
+     * @returns {void}
+     */
+    propagationUseCapture () {
+
+        this.useCapture = true;
 
     }
 

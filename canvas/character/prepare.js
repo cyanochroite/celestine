@@ -10,7 +10,6 @@ const characterCode =
      */
     function characterCode (name) {
 
-        "use strict";
         let code = character.name[name];
         if (typeof code === "undefined") {
 
@@ -29,7 +28,6 @@ const characterCode =
          */
         function characterName (code) {
 
-            "use strict";
             let name = character.code[code];
             if (typeof name === "undefined") {
 
