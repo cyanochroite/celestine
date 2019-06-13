@@ -1,4 +1,4 @@
-export const EventType = Object.freeze({
+export const types = Object.freeze({
     "AnimationEvent": {
         "animationcancel": 0x00,
         "animationend": 0x01,
