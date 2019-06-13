@@ -18,130 +18,15 @@ export class EventListener {
     }
 
     /**
-     * @param {(argument: Event | EventTarget) => void} [method]
-     * @returns {void}
-     */
-    listenerUseEvent (method) {
-
-
-        /**
-         * @param {Event} event
-         * @returns {void}
-         */
-        this.listener = (event) => method(event);
-
-    }
-
-
-    /**
-     * @param {(argument: Event | EventTarget) => void} [method]
-     * @returns {void}
-     */
-    listenerUseTarget (method) {
-
-
-        /**
-         * @param {Event} event
-         * @returns {void}
-         */
-        this.listener = (event) => method(event.currentTarget);
-
-    }
-
-
-    /**
      * @param {string} type
-     * @param {(argument: Event | EventTarget) => void} [method]
-     * @returns {EventListener}
-     */
-    static makeUsingEventAndBubble (type, method) {
-
-        const eventListener = new EventListener(type);
-        eventListener.listenerUseEvent(method);
-        eventListener.propagationUseBubble();
-        return eventListener;
-
-    }
-
-
-    /**
-     * @param {string} type
-     * @param {(argument: Event | EventTarget) => void} [method]
-     * @returns {EventListener}
-     */
-    static makeUsingEventAndCapture (type, method) {
-
-        const eventListener = new EventListener(type);
-        eventListener.listenerUseEvent(method);
-        eventListener.propagationUseCapture();
-        return eventListener;
-
-    }
-
-
-    /**
-     * @param {string} type
-     * @param {(argument: Event | EventTarget) => void} [method]
-     * @returns {EventListener}
-     */
-    static makeUsingTargetAndBubble (type, method) {
-
-        const eventListener = new EventListener(type);
-        eventListener.listenerUseTarget(method);
-        eventListener.propagationUseBubble();
-        return eventListener;
-
-    }
-
-
-    /**
-     * @param {string} type
-     * @param {(argument: Event | EventTarget) => void} [method]
-     * @returns {EventListener}
-     */
-    static makeUsingTargetAndCapture (type, method) {
-
-        const eventListener = new EventListener(type);
-        eventListener.listenerUseTarget(method);
-        eventListener.propagationUseCapture();
-        return eventListener;
-
-    }
-
-    /**
-     * @returns {void}
-     */
-    propagationUseBubble () {
-
-        this.useCapture = false;
-
-    }
-
-
-    /**
-     * @returns {void}
-     */
-    propagationUseCapture () {
-
-        this.useCapture = true;
-
-    }
-
-    /**
-     * @param {string} type
-     * @param {(argument: Event | EventTarget) => void} [method]
-     * @param {boolean} [useCapture]
+     * @param {(argument: Event | EventTarget) => void} listener
+     * @param {boolean} useCapture
      * @returns
      */
-    constructor (type, method, useCapture) {
+    constructor (type, listener, useCapture) {
 
         this.type = type;
-
-        /**
-         * @param {Event} event
-         * @returns {void}
-         */
-        this.listener = (event) => method(event);
+        this.listener = listener;
         this.useCapture = useCapture;
 
     }

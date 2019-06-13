@@ -61,3 +61,11 @@ class eventer {
     }
 
 }
+
+
+const DaysEnum = Object.freeze({
+    "blur": 2,
+    "click": 1,
+    "load": 3
+});
+
