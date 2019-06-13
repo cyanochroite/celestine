@@ -1,267 +1,325 @@
-AnimationEvent
-animationcancel	AnimationEvent
-animationend	AnimationEvent
-animationiteration	AnimationEvent
-animationstart	AnimationEvent
-
-AudioProcessingEvent
-audioprocess	AudioProcessingEvent
-
-BeforeUnloadEvent
-beforeunload	BeforeUnloadEvent
-
-ClipboardEvent
-copy	ClipboardEvent
-cut	ClipboardEvent
-paste	ClipboardEvent
+/* eslint-disable-next-line max-lines */
+/* eslint-disable one-var */
+/* eslint-disable no-unused-vars */
 
 
-CompositionEvent
-compositionend	CompositionEvent
-compositionstart	CompositionEvent
-compositionupdate	CompositionEvent
-
-DeviceMotionEvent
-devicemotion	DeviceMotionEvent
-
-DeviceOrientationEvent
-deviceorientation	DeviceOrientationEvent
-
-DragEvent
-drag	DragEvent
-dragend	DragEvent
-dragenter	DragEvent
-dragleave	DragEvent
-dragover	DragEvent
-dragstart	DragEvent
-drop	DragEvent
-
-Event
-abort	Event
-afterprint	Event
-appinstalled	Event
-audioend 	Event
-audiostart 	Event
-beforeprint	Event
-blocked	Event
-canplay	Event
-canplaythrough	Event
-change	Event
-chargingchange	Event
-chargingtimechange	Event
-close	Event
-complete	Event
-devicechange	Event
-dischargingtimechange	Event
-DOMContentLoaded	Event
-durationchange	Event
-emptied	Event
-end 	Event
-ended	Event
-ended	Event
-error	Event
-error	Event
-error	Event
-error 	Event
-fullscreenchange	Event
-fullscreenerror	Event
-input	Event
-invalid	Event
-languagechange 	Event
-levelchange	Event
-loadeddata	Event
-loadedmetadata	Event
-offline	Event
-online	Event
-open	Event
-open	Event
-orientationchange	Event
-pause	Event
-play	Event
-playing	Event
-pointerlockchange	Event
-pointerlockerror	Event
-ratechange	Event
-readystatechange	Event
-reset	Event
-seeked	Event
-seeking	Event
-selectionchange 	Event
-selectstart 	Event
-slotchange	Event
-soundend 	Event
-soundstart 	Event
-speechend 	Event
-speechstart 	Event
-stalled	Event
-start 	Event
-submit	Event
-success	Event
-suspend	Event
-timeupdate	Event
-upgradeneeded	Event
-versionchange	Event
-visibilitychange	Event
-voiceschanged 	Event
-volumechange	Event
-waiting	Event
+const AnimationEvent = Object.freeze({
+    "animationcancel": 0x0,
+    "animationend": 0x0,
+    "animationiteration": 0x0,
+    "animationstart": 0x0
+});
 
 
-ExtendableMessageEvent
-message 	ExtendableMessageEvent
-
-FocusEvent
-blur	FocusEvent
-focus	FocusEvent
-focusin	FocusEvent
-focusout	FocusEvent
-
-GamepadEvent
-gamepadconnected	GamepadEvent
-gamepaddisconnected	GamepadEvent
-
-HashChangeEvent
-hashchange	HashChangeEvent
-
-KeyboardEvent
-keydown	KeyboardEvent
-keypress	KeyboardEvent
-keyup	KeyboardEvent
-message	MessageEvent
-message	MessageEvent
-message	MessageEvent
-message	MessageEvent
+const AudioProcessingEvent = Object.freeze({
+    "audioprocess": 0x0
+});
 
 
-MessageEvent
-messageerror	MessageEvent
-
-MouseEvent
-click	MouseEvent
-contextmenu	MouseEvent
-dblclick	MouseEvent
-mousedown	MouseEvent
-mouseenter	MouseEvent
-mouseleave	MouseEvent
-mousemove	MouseEvent
-mouseout	MouseEvent
-mouseover	MouseEvent
-mouseup	MouseEvent
-show	MouseEvent
-
-NotificationEvent
-notificationclick	NotificationEvent
-
-OfflineAudioCompletionEvent
-complete	OfflineAudioCompletionEvent
-
-PageTransitionEvent
-pagehide	PageTransitionEvent
-pageshow	PageTransitionEvent
-
-Performance
-resourcetimingbufferfull	Performance
-
-PointerEvent
-gotpointercapture	PointerEvent
-lostpointercapture	PointerEvent
-pointercancel	PointerEvent
-pointerdown	PointerEvent
-pointerenter	PointerEvent
-pointerleave	PointerEvent
-pointermove	PointerEvent
-pointerout	PointerEvent
-pointerover	PointerEvent
-pointerup	PointerEvent
-
-PopStateEvent
-popstate	PopStateEvent
-
-ProgressEvent
-abort	ProgressEvent
-error	ProgressEvent
-load	ProgressEvent
-loadend	ProgressEvent
-loadstart	ProgressEvent
-progress	ProgressEvent
-timeout	ProgressEvent
-
-PushEvent
-push	PushEvent
-pushsubscriptionchange	PushEvent
-
-ServiceWorkerMessageEvent
-message 	ServiceWorkerMessageEvent
-
-SpeechRecognitionEvent
-nomatch 	SpeechRecognitionEvent
-result 	SpeechRecognitionEvent
-
-SpeechSynthesisErrorEvent
-error	SpeechSynthesisErrorEvent
-boundary 	SpeechSynthesisEvent
-end 	SpeechSynthesisEvent
-mark 	SpeechSynthesisEvent
-pause 	SpeechSynthesisEvent
-start	SpeechSynthesisEvent
-resume 	SpeechSynthesisEvent
-
-StorageEvent
-storage	StorageEvent
-
-SVGEvent
-SVGAbort	SVGEvent
-SVGError	SVGEvent
-SVGLoad	SVGEvent
-SVGResize	SVGEvent
-SVGScroll	SVGEvent
-SVGUnload	SVGEvent
-
-SVGZoomEvent
-SVGZoom	SVGZoomEvent
-
-TimeEvent
-beginEvent	TimeEvent
-endEvent	TimeEvent
-repeatEvent	TimeEvent
-
-TouchEvent
-touchcancel	TouchEvent
-touchend	TouchEvent
-touchmove	TouchEvent
-touchstart	TouchEvent
-
-TransitionEvent
-transitionend	TransitionEvent
-
-UIEvent
-abort	UIEvent
-error	UIEvent
-load	UIEvent
-resize	UIEvent
-scroll	UIEvent
-select	UIEvent
-unload	UIEvent
-
-UserProximityEvent
-userproximity	UserProximityEvent
-
-WheelEvent
-wheel	WheelEvent
+const BeforeUnloadEvent = Object.freeze({
+    "beforeunload": 0x0
+});
 
 
+const ClipboardEvent = Object.freeze({
+    "copy": 0x0,
+    "cut": 0x0,
+    "paste": 0x0
+});
 
 
+const CompositionEvent = Object.freeze({
+    "compositionend": 0x0,
+    "compositionstart": 0x0,
+    "compositionupdate": 0x0
+});
 
 
+const DeviceMotionEvent = Object.freeze({
+    "devicemotion": 0x0
+});
 
 
+const DeviceOrientationEvent = Object.freeze({
+    "deviceorientation": 0x0
+});
 
 
+const DragEvent = Object.freeze({
+    "drag": 0x0,
+    "dragend": 0x0,
+    "dragenter": 0x0,
+    "dragleave": 0x0,
+    "dragover": 0x0,
+    "dragstart": 0x0,
+    "drop": 0x0
+});
 
 
+const Event = Object.freeze({
+    "abort": 0x0,
+    "afterprint": 0x0,
+    "appinstalled": 0x0,
+    "audioend": 0x0,
+    "audiostart": 0x0,
+    "beforeprint": 0x0,
+    "blocked": 0x0,
+    "canplay": 0x0,
+    "canplaythrough": 0x0,
+    "change": 0x0,
+    "chargingchange": 0x0,
+    "chargingtimechange": 0x0,
+    "close": 0x0,
+    "complete": 0x0,
+    "devicechange": 0x0,
+    "dischargingtimechange": 0x0,
+    "DOMContentLoaded": 0x0,
+    "durationchange": 0x0,
+    "emptied": 0x0,
+    "end": 0x0,
+    "ended": 0x0,
+    "ended": 0x0,
+    "error": 0x0,
+    "error": 0x0,
+    "error": 0x0,
+    "error": 0x0,
+    "fullscreenchange": 0x0,
+    "fullscreenerror": 0x0,
+    "input": 0x0,
+    "invalid": 0x0,
+    "languagechange": 0x0,
+    "levelchange": 0x0,
+    "loadeddata": 0x0,
+    "loadedmetadata": 0x0,
+    "offline": 0x0,
+    "online": 0x0,
+    "open": 0x0,
+    "open": 0x0,
+    "orientationchange": 0x0,
+    "pause": 0x0,
+    "play": 0x0,
+    "playing": 0x0,
+    "pointerlockchange": 0x0,
+    "pointerlockerror": 0x0,
+    "ratechange": 0x0,
+    "readystatechange": 0x0,
+    "reset": 0x0,
+    "seeked": 0x0,
+    "seeking": 0x0,
+    "selectionchange": 0x0,
+    "selectstart": 0x0,
+    "slotchange": 0x0,
+    "soundend": 0x0,
+    "soundstart": 0x0,
+    "speechend": 0x0,
+    "speechstart": 0x0,
+    "stalled": 0x0,
+    "start": 0x0,
+    "submit": 0x0,
+    "success": 0x0,
+    "suspend": 0x0,
+    "timeupdate": 0x0,
+    "upgradeneeded": 0x0,
+    "versionchange": 0x0,
+    "visibilitychange": 0x0,
+    "voiceschanged": 0x0,
+    "volumechange": 0x0,
+    "waiting": 0x0
+});
 
 
+const ExtendableMessageEvent = Object.freeze({
+    "message": 0x0
+});
 
+
+const FocusEvent = Object.freeze({
+    "blur": 0x0,
+    "focus": 0x0,
+    "focusin": 0x0,
+    "focusout": 0x0
+});
+
+
+const GamepadEvent = Object.freeze({
+    "gamepadconnected": 0x0,
+    "gamepaddisconnected": 0x0
+});
+
+
+const HashChangeEvent = Object.freeze({
+    "hashchange": 0x0
+});
+
+
+const KeyboardEvent = Object.freeze({
+    "keydown": 0x0,
+    "keypress": 0x0,
+    "keyup": 0x0,
+    "message": 0x0,
+    "message": 0x0,
+    "message": 0x0,
+    "message": 0x0
+});
+
+
+const MessageEvent = Object.freeze({
+    "messageerror": 0x0
+});
+
+
+const MouseEvent = Object.freeze({
+    "click": 0x0,
+    "contextmenu": 0x0,
+    "dblclick": 0x0,
+    "mousedown": 0x0,
+    "mouseenter": 0x0,
+    "mouseleave": 0x0,
+    "mousemove": 0x0,
+    "mouseout": 0x0,
+    "mouseover": 0x0,
+    "mouseup": 0x0,
+    "show": 0x0
+});
+
+
+const NotificationEvent = Object.freeze({
+    "notificationclick": 0x0
+});
+
+
+const OfflineAudioCompletionEvent = Object.freeze({
+    "complete": 0x0
+});
+
+
+const PageTransitionEvent = Object.freeze({
+    "pagehide": 0x0,
+    "pageshow": 0x0
+});
+
+
+const Performance = Object.freeze({
+    "resourcetimingbufferfull": 0x0
+});
+
+
+const PointerEvent = Object.freeze({
+    "gotpointercapture": 0x0,
+    "lostpointercapture": 0x0,
+    "pointercancel": 0x0,
+    "pointerdown": 0x0,
+    "pointerenter": 0x0,
+    "pointerleave": 0x0,
+    "pointermove": 0x0,
+    "pointerout": 0x0,
+    "pointerover": 0x0,
+    "pointerup": 0x0
+});
+
+
+const PopStateEvent = Object.freeze({
+    "popstate": 0x0
+});
+
+
+const ProgressEvent = Object.freeze({
+    "abort": 0x0,
+    "error": 0x0,
+    "load": 0x0,
+    "loadend": 0x0,
+    "loadstart": 0x0,
+    "progress": 0x0,
+    "timeout": 0x0
+});
+
+
+const PushEvent = Object.freeze({
+    "push": 0x0,
+    "pushsubscriptionchange": 0x0
+});
+
+
+const ServiceWorkerMessageEvent = Object.freeze({
+    "message": 0x0
+});
+
+
+const SpeechRecognitionEvent = Object.freeze({
+    "nomatch": 0x0,
+    "result": 0x0
+});
+
+
+const SpeechSynthesisErrorEvent = Object.freeze({
+    "error": 0x0,
+    "boundary": 0x0,
+    "end": 0x0,
+    "mark": 0x0,
+    "pause": 0x0,
+    "start": 0x0,
+    "resume": 0x0
+});
+
+
+const StorageEvent = Object.freeze({
+    "storage": 0x0
+});
+
+
+const SVGEvent = Object.freeze({
+    "SVGAbort": 0x0,
+    "SVGError": 0x0,
+    "SVGLoad": 0x0,
+    "SVGResize": 0x0,
+    "SVGScroll": 0x0,
+    "SVGUnload": 0x0
+});
+
+
+const SVGZoomEvent = Object.freeze({
+    "SVGZoom": 0x0
+});
+
+
+const TimeEvent = Object.freeze({
+    "beginEvent": 0x0,
+    "endEvent": 0x0,
+    "repeatEvent": 0x0
+});
+
+
+const TouchEvent = Object.freeze({
+    "touchcancel": 0x0,
+    "touchend": 0x0,
+    "touchmove": 0x0,
+    "touchstart": 0x0
+});
+
+
+const TransitionEvent = Object.freeze({
+    "transitionend": 0x0
+});
+
+
+const UIEvent = Object.freeze({
+    "abort": 0x0,
+    "error": 0x0,
+    "load": 0x0,
+    "resize": 0x0,
+    "scroll": 0x0,
+    "select": 0x0,
+    "unload": 0x0
+});
+
+
+const UserProximityEvent = Object.freeze({
+    "userproximity": 0x0
+});
+
+
+const WheelEvent = Object.freeze({
+    "wheel": 0x0
+});
 
 
