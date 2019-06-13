@@ -1,4 +1,5 @@
 import {EventListener} from "./EventListener";
+import {EventType} from "./EventType";
 
 /**
  * @class
@@ -108,18 +109,14 @@ export class EventListenerBuilder {
     }
 
 
-    static makeUsingEventAndBubble (method, type) {
-    }
+    static demo () {
 
-    static makeUsingEventAndCapture (type, method) {
-    }
+        const arg = EventType.Event.fail;
+        EventListenerBuilder.makeUsingEventAndBubble(arg);
 
-
-    static makeUsingTargetAndBubble (type, method) {
-    }
-
-    static makeUsingTargetAndCapture (type, method) {
     }
 
 
 }
+
+
