@@ -176,6 +176,20 @@ EventType.UIEvent.unload = "unload";
 EventType.UserProximityEvent.userproximity = "userproximity";
 EventType.WheelEvent.wheel = "wheel";
 
+
+// eslint-disable-next-line one-var
+const character = {};
+character.code = {};
+character.name = {};
+character.name.NULL = 0x0000;
+character.name["START OF HEADING"] = 0x0001;
+character.name["START OF TEXT"] = 0x0002;
+character.name["END OF TEXT"] = 0x0003;
+character.name["END OF TRANSMISSION"] = 0x0004;
+// eslint-disable-next-line one-var
+const poop = character.name.NULLy;
+
+
 // eslint-disable-next-line func-style
 function demo () {
 
