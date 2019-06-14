@@ -1,14 +1,23 @@
 export class EventListener {
+    private static addEventListener(selected: Element[], type: string, callback: (event: Event) => void, capture: boolean) {
+        selected.forEach((element: Element) => {
+            element.addEventListener(type, callback, capture);
+        });
+    }
     private static EventTarget(method: (argument: Event) => void) {
         return (event: Event) => method(event);
     }
     private static CurrentTarget(method: (argument: EventTarget) => void) {
         return (event: Event) => method(event.currentTarget);
     }
-    private static InvokeLater(selected, method) {
+    private static InvokeLater(selected: Element[], method: (argument: Event | EventTarget) => void) {
+        method;
+        selected.forEach((element: Element) => {
+            element;
+        });
     }
-    private static InvokeNow(selected, method) {
-        selected.forEach((element) => {
+    private static InvokeNow(selected: Element[], method: (argument: Event | EventTarget) => void) {
+        selected.forEach((element: Element) => {
             method(element);
         });
     }
@@ -18,107 +27,123 @@ export class EventListener {
     private static CapturePhase() {
         return true;
     }
-    private static SelectAll(selector) {
+    private static SelectAll(selector: string) {
         let array = [];
         return array.slice.call(document.querySelectorAll(selector));
     }
-    private static SelectFirst(selector) {
+    private static SelectFirst(selector: string) {
         return [document.querySelector(selector)];
     }
-    public SelectAllEventTargetBubblePhaseInvokeLater(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectAll(method);
+    public SelectAllEventTargetBubblePhaseInvokeLater(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectAll(selector);
         var callback = EventListener.EventTarget(method);
         var capture = EventListener.BubblePhase();
-        EventListener.InvokeLater(null, method);
+        EventListener.InvokeLater(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectAllEventTargetBubblePhaseInvokeNow(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectAll(method);
+    public SelectAllEventTargetBubblePhaseInvokeNow(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectAll(selector);
         var callback = EventListener.EventTarget(method);
         var capture = EventListener.BubblePhase();
-        EventListener.InvokeNow(null, method);
+        EventListener.InvokeNow(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectAllEventTargetCapturePhaseInvokeLater(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectAll(method);
+    public SelectAllEventTargetCapturePhaseInvokeLater(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectAll(selector);
         var callback = EventListener.EventTarget(method);
         var capture = EventListener.CapturePhase();
-        EventListener.InvokeLater(null, method);
+        EventListener.InvokeLater(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectAllEventTargetCapturePhaseInvokeNow(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectAll(method);
+    public SelectAllEventTargetCapturePhaseInvokeNow(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectAll(selector);
         var callback = EventListener.EventTarget(method);
         var capture = EventListener.CapturePhase();
-        EventListener.InvokeNow(null, method);
+        EventListener.InvokeNow(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectAllCurrentTargetBubblePhaseInvokeLater(type: any, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectAll(method);
+    public SelectAllCurrentTargetBubblePhaseInvokeLater(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectAll(selector);
         var callback = EventListener.CurrentTarget(method);
         var capture = EventListener.BubblePhase();
-        EventListener.InvokeLater(null, method);
+        EventListener.InvokeLater(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectAllCurrentTargetBubblePhaseInvokeNow(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectAll(method);
+    public SelectAllCurrentTargetBubblePhaseInvokeNow(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectAll(selector);
         var callback = EventListener.CurrentTarget(method);
         var capture = EventListener.BubblePhase();
-        EventListener.InvokeNow(null, method);
+        EventListener.InvokeNow(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectAllCurrentTargetCapturePhaseInvokeLater(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectAll(method);
+    public SelectAllCurrentTargetCapturePhaseInvokeLater(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectAll(selector);
         var callback = EventListener.CurrentTarget(method);
         var capture = EventListener.CapturePhase();
-        EventListener.InvokeLater(null, method);
+        EventListener.InvokeLater(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectAllCurrentTargetCapturePhaseInvokeNow(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectAll(method);
+    public SelectAllCurrentTargetCapturePhaseInvokeNow(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectAll(selector);
         var callback = EventListener.CurrentTarget(method);
         var capture = EventListener.CapturePhase();
-        EventListener.InvokeNow(null, method);
+        EventListener.InvokeNow(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectFirstEventTargetBubblePhaseInvokeLater(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectFirst(method);
+    public SelectFirstEventTargetBubblePhaseInvokeLater(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectFirst(selector);
         var callback = EventListener.EventTarget(method);
         var capture = EventListener.BubblePhase();
-        EventListener.InvokeLater(null, method);
+        EventListener.InvokeLater(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectFirstEventTargetBubblePhaseInvokeNow(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectFirst(method);
+    public SelectFirstEventTargetBubblePhaseInvokeNow(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectFirst(selector);
         var callback = EventListener.EventTarget(method);
         var capture = EventListener.BubblePhase();
-        EventListener.InvokeNow(null, method);
+        EventListener.InvokeNow(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectFirstEventTargetCapturePhaseInvokeLater(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectFirst(method);
+    public SelectFirstEventTargetCapturePhaseInvokeLater(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectFirst(selector);
         var callback = EventListener.EventTarget(method);
         var capture = EventListener.CapturePhase();
-        EventListener.InvokeLater(null, method);
+        EventListener.InvokeLater(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectFirstEventTargetCapturePhaseInvokeNow(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectFirst(method);
+    public SelectFirstEventTargetCapturePhaseInvokeNow(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectFirst(selector);
         var callback = EventListener.EventTarget(method);
         var capture = EventListener.CapturePhase();
-        EventListener.InvokeNow(null, method);
+        EventListener.InvokeNow(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectFirstCurrentTargetBubblePhaseInvokeLater(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectFirst(method);
+    public SelectFirstCurrentTargetBubblePhaseInvokeLater(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectFirst(selector);
         var callback = EventListener.CurrentTarget(method);
         var capture = EventListener.BubblePhase();
-        EventListener.InvokeLater(null, method);
+        EventListener.InvokeLater(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectFirstCurrentTargetBubblePhaseInvokeNow(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectFirst(method);
+    public SelectFirstCurrentTargetBubblePhaseInvokeNow(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectFirst(selector);
         var callback = EventListener.CurrentTarget(method);
         var capture = EventListener.BubblePhase();
-        EventListener.InvokeNow(null, method);
+        EventListener.InvokeNow(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectFirstCurrentTargetCapturePhaseInvokeLater(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectFirst(method);
+    public SelectFirstCurrentTargetCapturePhaseInvokeLater(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectFirst(selector);
         var callback = EventListener.CurrentTarget(method);
         var capture = EventListener.CapturePhase();
-        EventListener.InvokeLater(null, method);
+        EventListener.InvokeLater(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
-    public SelectFirstCurrentTargetCapturePhaseInvokeNow(type: string, method: (argument: Event | EventTarget) => void) {
-        var selected = EventListener.SelectFirst(method);
+    public SelectFirstCurrentTargetCapturePhaseInvokeNow(selector: string, type: string, method: (argument: Event | EventTarget) => void) {
+        var selected = EventListener.SelectFirst(selector);
         var callback = EventListener.CurrentTarget(method);
         var capture = EventListener.CapturePhase();
-        EventListener.InvokeNow(null, method);
+        EventListener.InvokeNow(selected, method);
+        EventListener.addEventListener(selected, type, callback, capture);
     }
 }
