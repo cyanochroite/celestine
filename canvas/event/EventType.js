@@ -1,201 +1,23 @@
-const EventType = {};
-EventType.AnimationEvent.animationcancel = "animationcancel";
-EventType.AnimationEvent.animationend = "animationend";
-EventType.AnimationEvent.animationiteration = "animationiteration";
-EventType.AnimationEvent.animationstart = "animationstart";
-EventType.AudioProcessingEvent.audioprocess = "audioprocess";
-EventType.BeforeUnloadEvent.beforeunload = "beforeunload";
-EventType.ClipboardEvent.copy = "copy";
-EventType.ClipboardEvent.cut = "cut";
-EventType.ClipboardEvent.paste = "paste";
-EventType.CompositionEvent.compositionend = "compositionend";
-EventType.CompositionEvent.compositionstart = "compositionstart";
-EventType.CompositionEvent.compositionupdate = "compositionupdate";
-EventType.DeviceMotionEvent.devicemotion = "devicemotion";
-EventType.DeviceOrientationEvent.deviceorientation = "deviceorientation";
-EventType.DragEvent.drag = "drag";
-EventType.DragEvent.dragend = "dragend";
-EventType.DragEvent.dragenter = "dragenter";
-EventType.DragEvent.dragleave = "dragleave";
-EventType.DragEvent.dragover = "dragover";
-EventType.DragEvent.dragstart = "dragstart";
-EventType.DragEvent.drop = "drop";
-EventType.Event.abort = "abort";
-EventType.Event.afterprint = "afterprint";
-EventType.Event.appinstalled = "appinstalled";
-EventType.Event.audioend = "audioend ";
-EventType.Event.audiostart = "audiostart ";
-EventType.Event.beforeprint = "beforeprint";
-EventType.Event.blocked = "blocked";
-EventType.Event.canplay = "canplay";
-EventType.Event.canplaythrough = "canplaythrough";
-EventType.Event.change = "change";
-EventType.Event.chargingchange = "chargingchange";
-EventType.Event.chargingtimechange = "chargingtimechange";
-EventType.Event.close = "close";
-EventType.Event.complete = "complete";
-EventType.Event.devicechange = "devicechange";
-EventType.Event.dischargingtimechange = "dischargingtimechange";
-EventType.Event.DOMContentLoaded = "DOMContentLoaded";
-EventType.Event.durationchange = "durationchange";
-EventType.Event.emptied = "emptied";
-EventType.Event.end = "end ";
-EventType.Event.ended = "ended";
-EventType.Event.ended = "ended";
-EventType.Event.error = "error";
-EventType.Event.error = "error";
-EventType.Event.error = "error";
-EventType.Event.error = "error ";
-EventType.Event.fullscreenchange = "fullscreenchange";
-EventType.Event.fullscreenerror = "fullscreenerror";
-EventType.Event.input = "input";
-EventType.Event.invalid = "invalid";
-EventType.Event.languagechange = "languagechange ";
-EventType.Event.levelchange = "levelchange";
-EventType.Event.loadeddata = "loadeddata";
-EventType.Event.loadedmetadata = "loadedmetadata";
-EventType.Event.offline = "offline";
-EventType.Event.online = "online";
-EventType.Event.open = "open";
-EventType.Event.open = "open";
-EventType.Event.orientationchange = "orientationchange";
-EventType.Event.pause = "pause";
-EventType.Event.play = "play";
-EventType.Event.playing = "playing";
-EventType.Event.pointerlockchange = "pointerlockchange";
-EventType.Event.pointerlockerror = "pointerlockerror";
-EventType.Event.ratechange = "ratechange";
-EventType.Event.readystatechange = "readystatechange";
-EventType.Event.reset = "reset";
-EventType.Event.seeked = "seeked";
-EventType.Event.seeking = "seeking";
-EventType.Event.selectionchange = "selectionchange ";
-EventType.Event.selectstart = "selectstart ";
-EventType.Event.slotchange = "slotchange";
-EventType.Event.soundend = "soundend ";
-EventType.Event.soundstart = "soundstart ";
-EventType.Event.speechend = "speechend ";
-EventType.Event.speechstart = "speechstart ";
-EventType.Event.stalled = "stalled";
-EventType.Event.start = "start ";
-EventType.Event.submit = "submit";
-EventType.Event.success = "success";
-EventType.Event.suspend = "suspend";
-EventType.Event.timeupdate = "timeupdate";
-EventType.Event.upgradeneeded = "upgradeneeded";
-EventType.Event.versionchange = "versionchange";
-EventType.Event.visibilitychange = "visibilitychange";
-EventType.Event.voiceschanged = "voiceschanged ";
-EventType.Event.volumechange = "volumechange";
-EventType.Event.waiting = "waiting";
-EventType.ExtendableMessageEvent.message = "message ";
-EventType.FocusEvent.blur = "blur";
-EventType.FocusEvent.focus = "focus";
-EventType.FocusEvent.focusin = "focusin";
-EventType.FocusEvent.focusout = "focusout";
-EventType.GamepadEvent.gamepadconnected = "gamepadconnected";
-EventType.GamepadEvent.gamepaddisconnected = "gamepaddisconnected";
-EventType.HashChangeEvent.hashchange = "hashchange";
-EventType.KeyboardEvent.keydown = "keydown";
-EventType.KeyboardEvent.keypress = "keypress";
-EventType.KeyboardEvent.keyup = "keyup";
-EventType.MessageEvent.message = "message";
-EventType.MessageEvent.message = "message";
-EventType.MessageEvent.message = "message";
-EventType.MessageEvent.message = "message";
-EventType.MessageEvent.messageerror = "messageerror";
-EventType.MouseEvent.click = "click";
-EventType.MouseEvent.contextmenu = "contextmenu";
-EventType.MouseEvent.dblclick = "dblclick";
-EventType.MouseEvent.mousedown = "mousedown";
-EventType.MouseEvent.mouseenter = "mouseenter";
-EventType.MouseEvent.mouseleave = "mouseleave";
-EventType.MouseEvent.mousemove = "mousemove";
-EventType.MouseEvent.mouseout = "mouseout";
-EventType.MouseEvent.mouseover = "mouseover";
-EventType.MouseEvent.mouseup = "mouseup";
-EventType.MouseEvent.show = "show";
-EventType.NotificationEvent.notificationclick = "notificationclick";
-EventType.OfflineAudioCompletionEvent.complete = "complete";
-EventType.PageTransitionEvent.pagehide = "pagehide";
-EventType.PageTransitionEvent.pageshow = "pageshow";
-EventType.Performance.resourcetimingbufferfull = "resourcetimingbufferfull";
-EventType.PointerEvent.gotpointercapture = "gotpointercapture";
-EventType.PointerEvent.lostpointercapture = "lostpointercapture";
-EventType.PointerEvent.pointercancel = "pointercancel";
-EventType.PointerEvent.pointerdown = "pointerdown";
-EventType.PointerEvent.pointerenter = "pointerenter";
-EventType.PointerEvent.pointerleave = "pointerleave";
-EventType.PointerEvent.pointermove = "pointermove";
-EventType.PointerEvent.pointerout = "pointerout";
-EventType.PointerEvent.pointerover = "pointerover";
-EventType.PointerEvent.pointerup = "pointerup";
-EventType.PopStateEvent.popstate = "popstate";
-EventType.ProgressEvent.abort = "abort";
-EventType.ProgressEvent.error = "error";
-EventType.ProgressEvent.load = "load";
-EventType.ProgressEvent.loadend = "loadend";
-EventType.ProgressEvent.loadstart = "loadstart";
-EventType.ProgressEvent.progress = "progress";
-EventType.ProgressEvent.timeout = "timeout";
-EventType.PushEvent.push = "push";
-EventType.PushEvent.pushsubscriptionchange = "pushsubscriptionchange";
-EventType.ServiceWorkerMessageEvent.message = "message ";
-EventType.SpeechRecognitionEvent.nomatch = "nomatch ";
-EventType.SpeechRecognitionEvent.result = "result ";
-EventType.SpeechSynthesisErrorEvent.error = "error";
-EventType.SpeechSynthesisEvent.boundary = "boundary ";
-EventType.SpeechSynthesisEvent.end = "end ";
-EventType.SpeechSynthesisEvent.mark = "mark ";
-EventType.SpeechSynthesisEvent.pause = "pause ";
-EventType.SpeechSynthesisEvent.start = "start";
-EventType.SpeechSynthesisEvent.resume = "resume ";
-EventType.StorageEvent.storage = "storage";
-EventType.SVGEvent.SVGAbort = "SVGAbort";
-EventType.SVGEvent.SVGError = "SVGError";
-EventType.SVGEvent.SVGLoad = "SVGLoad";
-EventType.SVGEvent.SVGResize = "SVGResize";
-EventType.SVGEvent.SVGScroll = "SVGScroll";
-EventType.SVGEvent.SVGUnload = "SVGUnload";
-EventType.SVGZoomEvent.SVGZoom = "SVGZoom";
-EventType.TimeEvent.beginEvent = "beginEvent";
-EventType.TimeEvent.endEvent = "endEvent";
-EventType.TimeEvent.repeatEvent = "repeatEvent";
-EventType.TouchEvent.touchcancel = "touchcancel";
-EventType.TouchEvent.touchend = "touchend";
-EventType.TouchEvent.touchmove = "touchmove";
-EventType.TouchEvent.touchstart = "touchstart";
-EventType.TransitionEvent.transitionend = "transitionend";
-EventType.UIEvent.abort = "abort";
-EventType.UIEvent.error = "error";
-EventType.UIEvent.load = "load";
-EventType.UIEvent.resize = "resize";
-EventType.UIEvent.scroll = "scroll";
-EventType.UIEvent.select = "select";
-EventType.UIEvent.unload = "unload";
-EventType.UserProximityEvent.userproximity = "userproximity";
-EventType.WheelEvent.wheel = "wheel";
+import {EventListener} from "./EventListener";
 
+class EventType {
 
-// eslint-disable-next-line one-var
-const character = {};
-character.code = {};
-character.name = {};
-character.name.NULL = 0x0000;
-character.name["START OF HEADING"] = 0x0001;
-character.name["START OF TEXT"] = 0x0002;
-character.name["END OF TEXT"] = 0x0003;
-character.name["END OF TRANSMISSION"] = 0x0004;
-// eslint-disable-next-line one-var
-const poop = character.name.NULLy;
+    constructor () {
 
+        this.AnimationEvent = {
+            "animationcancel": "animationcancel",
+            "animationend": "animationend",
+            "animationiteration": "animationiteration",
+            "animationstart": "animationstart"
+        };
 
-// eslint-disable-next-line func-style
-function demo () {
-
-    // eslint-disable-next-line no-unused-vars
-    const test = EventType.AnimationEventoeke;
+    }
 
 }
 
-demo();
+new EventListener("blur").SelectFirstCurrentTargetBubblePhaseInvokeLater("#id", (element) => {
+
+    // eslint-disable-next-line no-alert
+    alert(element);
+
+});

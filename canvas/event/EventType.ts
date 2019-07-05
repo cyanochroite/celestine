@@ -240,3 +240,16 @@ class EventType {
         wheel: 0x00
     }
 }
+
+enum aUIEvent {
+    abort = 0x00,
+    error = 0x01,
+    load = 0x02,
+    resize = 0x03,
+    scroll = 0x04,
+    select = 0x05,
+    unload = 0x06
+};
+
+aUIEvent;
+

@@ -1,8 +1,9 @@
+/** @class */
 export class EventListener {
 
-    constructor () {
+    constructor (type) {
 
-        this.type = null;
+        this.type = type;
         this.callback = null;
         this.capture = null;
 
@@ -18,7 +19,7 @@ export class EventListener {
 
     }
 
-    SelectAllEventTargetBubblePhaseInvokeLater (selector, type, method) {
+    SelectAllEventTargetBubblePhaseInvokeLater (selector, method) {
 
         this.callback = EventListener.eventTarget(method);
         this.capture = EventListener.bubblePhase();
@@ -27,7 +28,7 @@ export class EventListener {
 
     }
 
-    SelectAllEventTargetBubblePhaseInvokeNow (selector, type, method) {
+    SelectAllEventTargetBubblePhaseInvokeNow (selector, method) {
 
         this.callback = EventListener.eventTarget(method);
         this.capture = EventListener.bubblePhase();
@@ -37,7 +38,7 @@ export class EventListener {
 
     }
 
-    SelectAllEventTargetCapturePhaseInvokeLater (selector, type, method) {
+    SelectAllEventTargetCapturePhaseInvokeLater (selector, method) {
 
         this.callback = EventListener.eventTarget(method);
         this.capture = EventListener.capturePhase();
@@ -46,7 +47,7 @@ export class EventListener {
 
     }
 
-    SelectAllEventTargetCapturePhaseInvokeNow (selector, type, method) {
+    SelectAllEventTargetCapturePhaseInvokeNow (selector, method) {
 
         this.callback = EventListener.eventTarget(method);
         this.capture = EventListener.capturePhase();
@@ -56,7 +57,7 @@ export class EventListener {
 
     }
 
-    SelectAllCurrentTargetBubblePhaseInvokeLater (selector, type, method) {
+    SelectAllCurrentTargetBubblePhaseInvokeLater (selector, method) {
 
         this.callback = EventListener.currentTarget(method);
         this.capture = EventListener.bubblePhase();
@@ -65,7 +66,7 @@ export class EventListener {
 
     }
 
-    SelectAllCurrentTargetBubblePhaseInvokeNow (selector, type, method) {
+    SelectAllCurrentTargetBubblePhaseInvokeNow (selector, method) {
 
         this.callback = EventListener.currentTarget(method);
         this.capture = EventListener.bubblePhase();
@@ -75,7 +76,7 @@ export class EventListener {
 
     }
 
-    SelectAllCurrentTargetCapturePhaseInvokeLater (selector, type, method) {
+    SelectAllCurrentTargetCapturePhaseInvokeLater (selector, method) {
 
         this.callback = EventListener.currentTarget(method);
         this.capture = EventListener.capturePhase();
@@ -84,7 +85,7 @@ export class EventListener {
 
     }
 
-    SelectAllCurrentTargetCapturePhaseInvokeNow (selector, type, method) {
+    SelectAllCurrentTargetCapturePhaseInvokeNow (selector, method) {
 
         this.callback = EventListener.currentTarget(method);
         this.capture = EventListener.capturePhase();
@@ -94,7 +95,7 @@ export class EventListener {
 
     }
 
-    SelectFirstEventTargetBubblePhaseInvokeLater (selector, type, method) {
+    SelectFirstEventTargetBubblePhaseInvokeLater (selector, method) {
 
         this.callback = EventListener.eventTarget(method);
         this.capture = EventListener.bubblePhase();
@@ -103,7 +104,7 @@ export class EventListener {
 
     }
 
-    SelectFirstEventTargetBubblePhaseInvokeNow (selector, type, method) {
+    SelectFirstEventTargetBubblePhaseInvokeNow (selector, method) {
 
         this.callback = EventListener.eventTarget(method);
         this.capture = EventListener.bubblePhase();
@@ -113,7 +114,7 @@ export class EventListener {
 
     }
 
-    SelectFirstEventTargetCapturePhaseInvokeLater (selector, type, method) {
+    SelectFirstEventTargetCapturePhaseInvokeLater (selector, method) {
 
         this.callback = EventListener.eventTarget(method);
         this.capture = EventListener.capturePhase();
@@ -122,7 +123,7 @@ export class EventListener {
 
     }
 
-    SelectFirstEventTargetCapturePhaseInvokeNow (selector, type, method) {
+    SelectFirstEventTargetCapturePhaseInvokeNow (selector, method) {
 
         this.callback = EventListener.eventTarget(method);
         this.capture = EventListener.capturePhase();
@@ -132,7 +133,7 @@ export class EventListener {
 
     }
 
-    SelectFirstCurrentTargetBubblePhaseInvokeLater (selector, type, method) {
+    SelectFirstCurrentTargetBubblePhaseInvokeLater (selector, method) {
 
         this.callback = EventListener.currentTarget(method);
         this.capture = EventListener.bubblePhase();
@@ -141,7 +142,7 @@ export class EventListener {
 
     }
 
-    SelectFirstCurrentTargetBubblePhaseInvokeNow (selector, type, method) {
+    SelectFirstCurrentTargetBubblePhaseInvokeNow (selector, method) {
 
         this.callback = EventListener.currentTarget(method);
         this.capture = EventListener.bubblePhase();
@@ -151,7 +152,7 @@ export class EventListener {
 
     }
 
-    SelectFirstCurrentTargetCapturePhaseInvokeLater (selector, type, method) {
+    SelectFirstCurrentTargetCapturePhaseInvokeLater (selector, method) {
 
         this.callback = EventListener.currentTarget(method);
         this.capture = EventListener.capturePhase();
@@ -160,11 +161,11 @@ export class EventListener {
 
     }
 
-    SelectFirstCurrentTargetCapturePhaseInvokeNow (selector, type, method) {
+    SelectFirstCurrentTargetCapturePhaseInvokeNow (selector, method) {
 
+        const selected = EventListener.selectFirst(selector);
         this.callback = EventListener.currentTarget(method);
         this.capture = EventListener.capturePhase();
-        const selected = EventListener.selectFirst(selector);
         EventListener.invokeNow(selected, method);
         this.addEventListener(selected);
 
