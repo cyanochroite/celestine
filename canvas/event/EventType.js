@@ -5,8 +5,11 @@
 /* eslint-disable max-len */
 /* eslint-disable max-statements */
 /* eslint-disable no-shadow */
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable one-var */
+// eslint-disable-next-line no-underscore-dangle
+exports.__esModule = true;
 let EventType;
 (function (EventType) {
 
@@ -357,4 +360,4 @@ let EventType;
 
     }(WheelEvent = EventType.WheelEvent || (EventType.WheelEvent = {})));
 
-}(EventType || (EventType = {})));
+}(EventType = exports.EventType || (exports.EventType = {})));

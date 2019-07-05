@@ -14,13 +14,21 @@ namespace enum
 /* eslint-disable max-len */
 /* eslint-disable max-statements */
 /* eslint-disable no-shadow */
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable one-var */
+// eslint-disable-next-line no-underscore-dangle
 
 
 
-
-
+test.ts
+/* eslint-disable max-statements */
+/* eslint-disable no-magic-numbers */
+/* eslint-disable no-undef */
+/* eslint-disable one-var */
+/* eslint-disable prefer-const */
+/* eslint-disable sort-vars */
+// eslint-disable-next-line no-underscore-dangle
 
 
 
