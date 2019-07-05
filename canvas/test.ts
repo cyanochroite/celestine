@@ -1,10 +1,5 @@
-/* eslint-disable one-var */
-/* eslint-disable max-statements */
-/* eslint-disable no-magic-numbers */
-
-// eslint-disable-next-line capitalized-comments
 // import {listener} from "./event/listener";
-
+import { EventType } from "./event/EventType";
 import { font } from "./font/rune";
 
 
