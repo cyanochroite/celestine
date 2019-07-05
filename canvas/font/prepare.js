@@ -1,2 +1,0 @@
-const font = {};
-font.rune = {};

@@ -5,6 +5,8 @@
 // eslint-disable-next-line capitalized-comments
 // import {listener} from "./event/listener";
 
+import { font } from "./font/rune";
+
 
 const canvas = document.getElementsByTagName("canvas");
 let data = null,
@@ -158,7 +160,8 @@ document.addEventListener("keypress", (item) => {
     const { key } = item,
         // eslint-disable-next-line no-undef
         //        glyph = font.rune[character.code[key.charCodeAt(0)]];
-        glyph = 0xFE2AFE82FEA8FE00;
+        glyph = font.rune["DIGIT FOUR"];
+    //glyph = 0xFE2AFE82FEA8FE00;
     if (typeof glyph !== "undefined") {
 
         draw(paint64(glyph));
