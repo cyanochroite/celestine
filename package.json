@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Mem-Dixy/web/issues"
   },
-  "homepage": "https://github.com/Mem-Dixy/web#readme"
+  "homepage": "https://github.com/Mem-Dixy/web#readme",
+  "dependencies": {
+    "eslint": "^6.0.1"
+  },
+  "devDependencies": {}
 }
