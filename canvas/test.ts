@@ -1,6 +1,6 @@
+import { EventListener } from "./event/EventListener";
 import { EventType } from "./event/EventType";
 import { font } from "./font/rune";
-import { EventListener } from "./event/EventListener";
 /* eslint-disable max-statements */
 /* eslint-disable no-magic-numbers */
 /* eslint-disable no-undef */
@@ -154,39 +154,19 @@ const paint64 = function paint64(input) {
 
 };
 
-EventListener.SelectFirstCurrentTargetBubblePhaseInvokeLater("keypress", (item) => {
-    //    const key = item,
-    // eslint-disable-next-line no-undef
-    //        glyph = font.rune[character.code[key.charCodeAt(0)]];
-    const glyph = font.rune["DIGIT FOUR"];
-    //glyph = 0xFE2AFE82FEA8FE00;
+
+EventListener.SelectFirstEventTargetBubblePhaseInvokeLater("body", EventType.KeyboardEvent.keypress, (item) => {
+    const key = item as KeyboardEvent;
+    const char = key.keyCode;
+    // const code = character.code[char];
+    const code = "DIGIT FOUR";
+    const glyph = font.rune[code];
     if (typeof glyph !== "undefined") {
         draw(paint64(glyph));
     }
     indexX += 0;
     indexY += 1;
 });
-
-
-document.addEventListener("keypress", (item) => {
-
-
-    const { key } = item,
-        // eslint-disable-next-line no-undef
-        //        glyph = font.rune[character.code[key.charCodeAt(0)]];
-        glyph = font.rune["DIGIT FOUR"];
-    //glyph = 0xFE2AFE82FEA8FE00;
-    if (typeof glyph !== "undefined") {
-
-        draw(paint64(glyph));
-
-    }
-    indexX += 0;
-    indexY += 1;
-
-});
-
-
 /**
  * @param {number} glyph
  */

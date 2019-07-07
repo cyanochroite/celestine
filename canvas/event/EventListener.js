@@ -29,15 +29,6 @@ let EventListener;
         };
 
     }
-    function invokeNow (selected, method) {
-
-        selected.forEach((element) => {
-
-            method(element);
-
-        });
-
-    }
     function bubblePhase () {
 
         return false;
@@ -58,6 +49,15 @@ let EventListener;
         return [document.querySelector(selector)];
 
     }
+    function invokeNow (selected, method) {
+
+        selected.forEach((element) => {
+
+            method(element);
+
+        });
+
+    }
     function addEventListener (selected, type, callback, capture) {
 
         selected.forEach((element) => {
@@ -67,169 +67,153 @@ let EventListener;
         });
 
     }
-    function SelectAllEventTargetBubblePhaseInvokeLater (selector, method) {
+    function SelectAllEventTargetBubblePhaseInvokeLater (selector, type, method) {
 
         const callback = eventTarget(method),
             capture = bubblePhase(),
-            selected = selectAll(selector),
-            type = "blur";
+            selected = selectAll(selector);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectAllEventTargetBubblePhaseInvokeLater = SelectAllEventTargetBubblePhaseInvokeLater;
-    function SelectAllEventTargetBubblePhaseInvokeNow (selector, method) {
+    function SelectAllEventTargetBubblePhaseInvokeNow (selector, type, method) {
 
         const callback = eventTarget(method),
             capture = bubblePhase(),
-            selected = selectAll(selector),
-            type = "blur";
+            selected = selectAll(selector);
         invokeNow(selected, method);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectAllEventTargetBubblePhaseInvokeNow = SelectAllEventTargetBubblePhaseInvokeNow;
-    function SelectAllEventTargetCapturePhaseInvokeLater (selector, method) {
+    function SelectAllEventTargetCapturePhaseInvokeLater (selector, type, method) {
 
         const callback = eventTarget(method),
             capture = capturePhase(),
-            selected = selectAll(selector),
-            type = "blur";
+            selected = selectAll(selector);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectAllEventTargetCapturePhaseInvokeLater = SelectAllEventTargetCapturePhaseInvokeLater;
-    function SelectAllEventTargetCapturePhaseInvokeNow (selector, method) {
+    function SelectAllEventTargetCapturePhaseInvokeNow (selector, type, method) {
 
         const callback = eventTarget(method),
             capture = capturePhase(),
-            selected = selectAll(selector),
-            type = "blur";
+            selected = selectAll(selector);
         invokeNow(selected, method);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectAllEventTargetCapturePhaseInvokeNow = SelectAllEventTargetCapturePhaseInvokeNow;
-    function SelectAllCurrentTargetBubblePhaseInvokeLater (selector, method) {
+    function SelectAllCurrentTargetBubblePhaseInvokeLater (selector, type, method) {
 
         const callback = currentTarget(method),
             capture = bubblePhase(),
-            selected = selectAll(selector),
-            type = "blur";
+            selected = selectAll(selector);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectAllCurrentTargetBubblePhaseInvokeLater = SelectAllCurrentTargetBubblePhaseInvokeLater;
-    function SelectAllCurrentTargetBubblePhaseInvokeNow (selector, method) {
+    function SelectAllCurrentTargetBubblePhaseInvokeNow (selector, type, method) {
 
         const callback = currentTarget(method),
             capture = bubblePhase(),
-            selected = selectAll(selector),
-            type = "blur";
+            selected = selectAll(selector);
         invokeNow(selected, method);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectAllCurrentTargetBubblePhaseInvokeNow = SelectAllCurrentTargetBubblePhaseInvokeNow;
-    function SelectAllCurrentTargetCapturePhaseInvokeLater (selector, method) {
+    function SelectAllCurrentTargetCapturePhaseInvokeLater (selector, type, method) {
 
         const callback = currentTarget(method),
             capture = capturePhase(),
-            selected = selectAll(selector),
-            type = "blur";
+            selected = selectAll(selector);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectAllCurrentTargetCapturePhaseInvokeLater = SelectAllCurrentTargetCapturePhaseInvokeLater;
-    function SelectAllCurrentTargetCapturePhaseInvokeNow (selector, method) {
+    function SelectAllCurrentTargetCapturePhaseInvokeNow (selector, type, method) {
 
         const callback = currentTarget(method),
             capture = capturePhase(),
-            selected = selectAll(selector),
-            type = "blur";
+            selected = selectAll(selector);
         invokeNow(selected, method);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectAllCurrentTargetCapturePhaseInvokeNow = SelectAllCurrentTargetCapturePhaseInvokeNow;
-    function SelectFirstEventTargetBubblePhaseInvokeLater (selector, method) {
+    function SelectFirstEventTargetBubblePhaseInvokeLater (selector, type, method) {
 
         const callback = eventTarget(method),
             capture = bubblePhase(),
-            selected = selectFirst(selector),
-            type = "blur";
+            selected = selectFirst(selector);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectFirstEventTargetBubblePhaseInvokeLater = SelectFirstEventTargetBubblePhaseInvokeLater;
-    function SelectFirstEventTargetBubblePhaseInvokeNow (selector, method) {
+    function SelectFirstEventTargetBubblePhaseInvokeNow (selector, type, method) {
 
         const callback = eventTarget(method),
             capture = bubblePhase(),
-            selected = selectFirst(selector),
-            type = "blur";
+            selected = selectFirst(selector);
         invokeNow(selected, method);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectFirstEventTargetBubblePhaseInvokeNow = SelectFirstEventTargetBubblePhaseInvokeNow;
-    function SelectFirstEventTargetCapturePhaseInvokeLater (selector, method) {
+    function SelectFirstEventTargetCapturePhaseInvokeLater (selector, type, method) {
 
         const callback = eventTarget(method),
             capture = capturePhase(),
-            selected = selectFirst(selector),
-            type = "blur";
+            selected = selectFirst(selector);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectFirstEventTargetCapturePhaseInvokeLater = SelectFirstEventTargetCapturePhaseInvokeLater;
-    function SelectFirstEventTargetCapturePhaseInvokeNow (selector, method) {
+    function SelectFirstEventTargetCapturePhaseInvokeNow (selector, type, method) {
 
         const callback = eventTarget(method),
             capture = capturePhase(),
-            selected = selectFirst(selector),
-            type = "blur";
+            selected = selectFirst(selector);
         invokeNow(selected, method);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectFirstEventTargetCapturePhaseInvokeNow = SelectFirstEventTargetCapturePhaseInvokeNow;
-    function SelectFirstCurrentTargetBubblePhaseInvokeLater (selector, method) {
+    function SelectFirstCurrentTargetBubblePhaseInvokeLater (selector, type, method) {
 
         const callback = currentTarget(method),
             capture = bubblePhase(),
-            selected = selectFirst(selector),
-            type = "blur";
+            selected = selectFirst(selector);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectFirstCurrentTargetBubblePhaseInvokeLater = SelectFirstCurrentTargetBubblePhaseInvokeLater;
-    function SelectFirstCurrentTargetBubblePhaseInvokeNow (selector, method) {
+    function SelectFirstCurrentTargetBubblePhaseInvokeNow (selector, type, method) {
 
         const callback = currentTarget(method),
             capture = bubblePhase(),
-            selected = selectFirst(selector),
-            type = "blur";
+            selected = selectFirst(selector);
         invokeNow(selected, method);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectFirstCurrentTargetBubblePhaseInvokeNow = SelectFirstCurrentTargetBubblePhaseInvokeNow;
-    function SelectFirstCurrentTargetCapturePhaseInvokeLater (selector, method) {
+    function SelectFirstCurrentTargetCapturePhaseInvokeLater (selector, type, method) {
 
         const callback = currentTarget(method),
             capture = capturePhase(),
-            selected = selectFirst(selector),
-            type = "blur";
+            selected = selectFirst(selector);
         addEventListener(selected, type, callback, capture);
 
     }
     EventListener.SelectFirstCurrentTargetCapturePhaseInvokeLater = SelectFirstCurrentTargetCapturePhaseInvokeLater;
-    function SelectFirstCurrentTargetCapturePhaseInvokeNow (selector, method) {
+    function SelectFirstCurrentTargetCapturePhaseInvokeNow (selector, type, method) {
 
         const callback = currentTarget(method),
             capture = capturePhase(),
-            selected = selectFirst(selector),
-            type = "blur";
+            selected = selectFirst(selector);
         invokeNow(selected, method);
         addEventListener(selected, type, callback, capture);
 

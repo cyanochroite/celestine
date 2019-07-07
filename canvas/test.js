@@ -1,7 +1,8 @@
 
 exports.__esModule = true;
-const rune_1 = exports,
-    EventListener_1 = exports;
+const EventListener_1 = exports,
+    EventType_1 = exports,
+    rune_1 = exports;
 /* eslint-disable max-statements */
 /* eslint-disable no-magic-numbers */
 /* eslint-disable no-undef */
@@ -18,11 +19,11 @@ let data = null,
 /**
  * @param {HTMLCanvasElement} element
  */
-let spat = function spat(element) {
+let spat = function spat (element) {
 
     let context = element.getContext("2d"),
-        { width } = element,
-        { height } = element,
+        {width} = element,
+        {height} = element,
         imageData = context.createImageData(width, height);
     let yy = height;
     while (yy > 0) {
@@ -58,7 +59,7 @@ let spat = function spat(element) {
 /**
  * @param {HTMLCanvasElement} element
  */
-let main = function main(element) {
+let main = function main (element) {
 
     view = element.getContext("2d");
     data = view.createImageData(element.width, element.height);
@@ -79,7 +80,7 @@ main(canvas[3]);
 /**
  * @param {any[] | Uint8Array} art
  */
-let draw = function draw(art) {
+let draw = function draw (art) {
 
     let hold1 = 0x100 - indexY,
         // eslint-disable-next-line no-bitwise
@@ -112,7 +113,7 @@ let draw = function draw(art) {
 /**
  * @param {number} input
  */
-let paint64 = function paint64(input) {
+let paint64 = function paint64 (input) {
 
     let glyph = input,
         index = 256;
@@ -143,29 +144,13 @@ let paint64 = function paint64(input) {
     return art;
 
 };
-EventListener_1.EventListener.SelectFirstCurrentTargetBubblePhaseInvokeLater("keypress", (item) => {
+EventListener_1.EventListener.SelectFirstEventTargetBubblePhaseInvokeLater("body", EventType_1.EventType.KeyboardEvent.keypress, (item) => {
 
-    //    Const key = item,
-    // eslint-disable-next-line no-undef
-    //        Glyph = font.rune[character.code[key.charCodeAt(0)]];
-    let glyph = rune_1.font.rune["DIGIT FOUR"];
-    // Glyph = 0xFE2AFE82FEA8FE00;
-    if (typeof glyph !== "undefined") {
-
-        draw(paint64(glyph));
-
-    }
-    indexX += 0;
-    indexY += 1;
-
-});
-document.addEventListener("keypress", (item) => {
-
-    let { key } = item,
-        // eslint-disable-next-line no-undef
-        //        Glyph = font.rune[character.code[key.charCodeAt(0)]];
-        glyph = rune_1.font.rune["DIGIT FOUR"];
-    // Glyph = 0xFE2AFE82FEA8FE00;
+    let key = item;
+    let char = key.keyCode;
+    // Const code = character.code[char];
+    let code = "DIGIT FOUR";
+    let glyph = rune_1.font.rune[code];
     if (typeof glyph !== "undefined") {
 
         draw(paint64(glyph));
@@ -179,7 +164,7 @@ document.addEventListener("keypress", (item) => {
 /**
  * @param {number} glyph
  */
-let out = function out(glyph) {
+let out = function out (glyph) {
 
     draw(paint64(glyph));
     indexX += 1;
