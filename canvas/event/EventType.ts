@@ -1,3 +1,11 @@
+/* eslint-disable complexity */
+/* eslint-disable func-names */
+/* eslint-disable init-declarations */
+/* eslint-disable max-len */
+/* eslint-disable max-statements */
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
+/* eslint-disable one-var */
 export namespace EventType {
     export enum AnimationEvent {
         animationcancel = "animationcancel",
