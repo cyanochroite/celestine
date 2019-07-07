@@ -1,3 +1,4 @@
+import { character } from "./character/0000-007F";
 import { EventListener } from "./event/EventListener";
 import { EventType } from "./event/EventType";
 import { font } from "./font/rune";
@@ -158,8 +159,7 @@ const paint64 = function paint64(input) {
 EventListener.SelectFirstEventTargetBubblePhaseInvokeLater("body", EventType.KeyboardEvent.keypress, (item) => {
     const key = item as KeyboardEvent;
     const char = key.keyCode;
-    // const code = character.code[char];
-    const code = "DIGIT FOUR";
+    const code = character.range_0000_007F[char];
     const glyph = font.rune[code];
     if (typeof glyph !== "undefined") {
         draw(paint64(glyph));
