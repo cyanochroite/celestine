@@ -1,13 +1,11 @@
 
 exports.__esModule = true;
-/* eslint-disable complexity */
 /* eslint-disable func-names */
 /* eslint-disable init-declarations */
 /* eslint-disable max-len */
 /* eslint-disable max-statements */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
-/* eslint-disable one-var */
 let font;
 (function (font) {
 

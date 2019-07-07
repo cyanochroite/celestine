@@ -1,20 +1,38 @@
-"use strict";
+
 exports.__esModule = true;
-var rune_1 = require("./font/rune");
-var canvas = document.getElementsByTagName("canvas");
-var data = null, indexX = 0, indexY = 0, off = 0, view = null;
+const rune_1 = exports,
+    EventListener_1 = exports;
+/* eslint-disable max-statements */
+/* eslint-disable no-magic-numbers */
+/* eslint-disable no-undef */
+/* eslint-disable one-var */
+/* eslint-disable prefer-const */
+/* eslint-disable sort-vars */
+let canvas = document.getElementsByTagName("canvas");
+let data = null,
+    indexX = 0,
+    indexY = 0,
+    off = 0,
+    view = null;
+
 /**
  * @param {HTMLCanvasElement} element
  */
-var spat = function spat(element) {
-    var context = element.getContext("2d"), width = element.width, height = element.height, imageData = context.createImageData(width, height);
-    var yy = height;
+let spat = function spat(element) {
+
+    let context = element.getContext("2d"),
+        { width } = element,
+        { height } = element,
+        imageData = context.createImageData(width, height);
+    let yy = height;
     while (yy > 0) {
+
         yy -= 1;
-        var xx = width;
+        let xx = width;
         while (xx > 0) {
+
             xx -= 1;
-            var index = imageData.width;
+            let index = imageData.width;
             index *= yy;
             index += xx;
             index *= 4;
@@ -22,24 +40,31 @@ var spat = function spat(element) {
             imageData.data[index + 1] = Math.random() * 256;
             imageData.data[index + 2] = Math.random() * 256;
             imageData.data[index + 3] = 255;
+
         }
+
     }
     context.putImageData(imageData, 0, 0);
     return imageData;
+
     /*
      *Index_x = 25;
      *indexY = 25;
      *context.putImageData(imageData, 0, 0, indexX, indexY, 8, 8);
      */
+
 };
+
 /**
  * @param {HTMLCanvasElement} element
  */
-var main = function main(element) {
+let main = function main(element) {
+
     view = element.getContext("2d");
     data = view.createImageData(element.width, element.height);
     data = spat(element);
     view.putImageData(data, 0, 0);
+
 };
 spat(canvas[0]);
 spat(canvas[1]);
@@ -50,38 +75,52 @@ spat(canvas[5]);
 spat(canvas[6]);
 spat(canvas[7]);
 main(canvas[3]);
+
 /**
  * @param {any[] | Uint8Array} art
  */
-var draw = function draw(art) {
-    var hold1 = 0x100 - indexY, 
-    // eslint-disable-next-line no-bitwise
-    hold2 = hold1 << 0x3, hold3 = hold2 - 0x1, 
-    // eslint-disable-next-line no-bitwise
-    hold4 = hold3 << 0x8, hold5 = hold4 + indexX, 
-    // eslint-disable-next-line no-bitwise
-    hold6 = hold5 << 0x5, hold7 = hold6;
-    var index = 256;
+let draw = function draw(art) {
+
+    let hold1 = 0x100 - indexY,
+        // eslint-disable-next-line no-bitwise
+        hold2 = hold1 << 0x3,
+        hold3 = hold2 - 0x1,
+        // eslint-disable-next-line no-bitwise
+        hold4 = hold3 << 0x8,
+        hold5 = hold4 + indexX,
+        // eslint-disable-next-line no-bitwise
+        hold6 = hold5 << 0x5,
+        hold7 = hold6;
+    let index = 256;
     while (index > 0) {
+
         index -= 1;
         // eslint-disable-next-line no-bitwise
-        var temp1 = index & 31, 
-        // eslint-disable-next-line no-bitwise
-        temp2 = index >>> 5, 
-        // eslint-disable-next-line no-bitwise
-        temp3 = temp2 << 13, temp4 = hold7 + temp1 - temp3;
+        let temp1 = index & 31,
+            // eslint-disable-next-line no-bitwise
+            temp2 = index >>> 5,
+            // eslint-disable-next-line no-bitwise
+            temp3 = temp2 << 13,
+            temp4 = hold7 + temp1 - temp3;
         data.data[temp4] = art[index];
+
     }
     view.putImageData(data, 0, 0);
+
 };
+
 /**
  * @param {number} input
  */
-var paint64 = function paint64(input) {
-    var glyph = input, index = 256;
+let paint64 = function paint64(input) {
+
+    let glyph = input,
+        index = 256;
     // eslint-disable-next-line no-undef
-    var art = new Uint8Array(index);
-    var bb = Math.random(), gg = Math.random(), rr = Math.random();
+    let art = new Uint8Array(index);
+    let bb = Math.random(),
+        gg = Math.random(),
+        rr = Math.random();
     bb *= 128;
     gg *= 128;
     rr *= 128;
@@ -89,65 +128,76 @@ var paint64 = function paint64(input) {
     gg += 128;
     rr += 128;
     while (index >= 0) {
+
         index -= 4;
         // eslint-disable-next-line no-bitwise
-        var bit = glyph & 1;
+        let bit = glyph & 1;
         art[index + 0] = rr * bit;
         art[index + 1] = gg * bit;
         art[index + 2] = bb * bit;
         art[index + 3] = 255;
         // eslint-disable-next-line no-bitwise
         glyph >>>= 1;
+
     }
     return art;
+
 };
-/*
-EventListener.SelectFirstCurrentTargetBubblePhaseInvokeLater("keypress", (item) => {
+EventListener_1.EventListener.SelectFirstCurrentTargetBubblePhaseInvokeLater("keypress", (item) => {
 
-
-    const { key } = item,
-        // eslint-disable-next-line no-undef
-        //        glyph = font.rune[character.code[key.charCodeAt(0)]];
-        glyph = font.rune["DIGIT FOUR"];
-    //glyph = 0xFE2AFE82FEA8FE00;
-    if (typeof glyph !== "undefined") {
-
-        draw(paint64(glyph));
-
-    }
-    indexX += 0;
-    indexY += 1;
-
-);
-*/
-document.addEventListener("keypress", function (item) {
-    var key = item.key, 
+    //    Const key = item,
     // eslint-disable-next-line no-undef
-    //        glyph = font.rune[character.code[key.charCodeAt(0)]];
-    glyph = rune_1.font.rune["DIGIT FOUR"];
-    //glyph = 0xFE2AFE82FEA8FE00;
+    //        Glyph = font.rune[character.code[key.charCodeAt(0)]];
+    let glyph = rune_1.font.rune["DIGIT FOUR"];
+    // Glyph = 0xFE2AFE82FEA8FE00;
     if (typeof glyph !== "undefined") {
+
         draw(paint64(glyph));
+
     }
     indexX += 0;
     indexY += 1;
+
 });
+document.addEventListener("keypress", (item) => {
+
+    let { key } = item,
+        // eslint-disable-next-line no-undef
+        //        Glyph = font.rune[character.code[key.charCodeAt(0)]];
+        glyph = rune_1.font.rune["DIGIT FOUR"];
+    // Glyph = 0xFE2AFE82FEA8FE00;
+    if (typeof glyph !== "undefined") {
+
+        draw(paint64(glyph));
+
+    }
+    indexX += 0;
+    indexY += 1;
+
+});
+
 /**
  * @param {number} glyph
  */
-var out = function out(glyph) {
+let out = function out(glyph) {
+
     draw(paint64(glyph));
     indexX += 1;
     off += 1;
     if (off % 8 === 0) {
+
         off = 0;
         indexX -= 8;
         indexY += 1;
+
     }
     if (indexY > 254) {
+
         indexY = 0;
         indexX += 9;
+
     }
+
 };
 out(0xFEA0BE80FE808000);
 out(0xFE222E2A2A2A2A00);
