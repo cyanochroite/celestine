@@ -1,15 +1,13 @@
-/* eslint-disable max-lines */
+
+exports.__esModule = true;
 /* eslint-disable complexity */
 /* eslint-disable func-names */
 /* eslint-disable init-declarations */
 /* eslint-disable max-len */
 /* eslint-disable max-statements */
 /* eslint-disable no-shadow */
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable one-var */
-// eslint-disable-next-line no-underscore-dangle
-exports.__esModule = true;
 let EventType;
 (function (EventType) {
 

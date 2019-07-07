@@ -1,3 +1,11 @@
+/* eslint-disable complexity */
+/* eslint-disable func-names */
+/* eslint-disable init-declarations */
+/* eslint-disable max-len */
+/* eslint-disable max-statements */
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
+/* eslint-disable one-var */
 export namespace font {
     export enum rune {
         "NULL" = 0x0000000000000000,
