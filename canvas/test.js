@@ -1,6 +1,7 @@
 
 exports.__esModule = true;
-const EventListener_1 = exports,
+const _0000_007F_1 = exports,
+    EventListener_1 = exports,
     EventType_1 = exports,
     rune_1 = exports;
 /* eslint-disable max-statements */
@@ -148,8 +149,7 @@ EventListener_1.EventListener.SelectFirstEventTargetBubblePhaseInvokeLater("body
 
     let key = item;
     let char = key.keyCode;
-    // Const code = character.code[char];
-    let code = "DIGIT FOUR";
+    let code = _0000_007F_1.character.range_0000_007F[char];
     let glyph = rune_1.font.rune[code];
     if (typeof glyph !== "undefined") {
 
