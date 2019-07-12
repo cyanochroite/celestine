@@ -1,42 +1,6 @@
 typescript
-tsc ./canvas/event/EventType.ts
+tsc ./canvas/event/EventType.ts --outDir ./make/
 
 javascript
 eslint ./canvas/event/EventType.js
 
-
-
-namespace enum
-/* eslint-disable complexity */
-/* eslint-disable func-names */
-/* eslint-disable init-declarations */
-/* eslint-disable max-len */
-/* eslint-disable max-statements */
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-vars */
-/* eslint-disable one-var */
-
-
-
-test.ts
-/* eslint-disable max-statements */
-/* eslint-disable no-magic-numbers */
-/* eslint-disable no-undef */
-/* eslint-disable one-var */
-/* eslint-disable prefer-const */
-/* eslint-disable sort-vars */
-// eslint-disable-next-line no-underscore-dangle
-
-
-
-helpful?
-/* eslint-disable no-unused-vars */
-/* eslint-disable func-style */
-/* eslint-disable no-undef */
-/* eslint-disable no-empty-function */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable max-params */
-/* eslint-disable no-shadow */
-/* eslint-disable max-statements */
-/* eslint-disable func-names */
-/* eslint-disable max-len */

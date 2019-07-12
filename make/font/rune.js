@@ -1,4 +1,4 @@
-
+"use strict";
 exports.__esModule = true;
 /* eslint-disable func-names */
 /* eslint-disable init-declarations */
@@ -6,21 +6,19 @@ exports.__esModule = true;
 /* eslint-disable max-statements */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
-let font;
+var font;
 (function (font) {
-
-    let rune;
+    var rune;
     (function (rune) {
-
-        rune[rune.NULL = 0] = "NULL";
+        rune[rune["NULL"] = 0] = "NULL";
         rune[rune["START OF HEADING"] = 0] = "START OF HEADING";
         rune[rune["START OF TEXT"] = 0] = "START OF TEXT";
         rune[rune["END OF TEXT"] = 0] = "END OF TEXT";
         rune[rune["END OF TRANSMISSION"] = 0] = "END OF TRANSMISSION";
-        rune[rune.ENQUIRY = 0] = "ENQUIRY";
-        rune[rune.ACKNOWLEDGE = 0] = "ACKNOWLEDGE";
-        rune[rune.BELL = 0] = "BELL";
-        rune[rune.BACKSPACE = 0] = "BACKSPACE";
+        rune[rune["ENQUIRY"] = 0] = "ENQUIRY";
+        rune[rune["ACKNOWLEDGE"] = 0] = "ACKNOWLEDGE";
+        rune[rune["BELL"] = 0] = "BELL";
+        rune[rune["BACKSPACE"] = 0] = "BACKSPACE";
         rune[rune["CHARACTER TABULATION"] = 0] = "CHARACTER TABULATION";
         rune[rune["LINE FEED (LF)"] = 0] = "LINE FEED (LF)";
         rune[rune["LINE TABULATION"] = 0] = "LINE TABULATION";
@@ -36,30 +34,30 @@ let font;
         rune[rune["NEGATIVE ACKNOWLEDGE"] = 0] = "NEGATIVE ACKNOWLEDGE";
         rune[rune["SYNCHRONOUS IDLE"] = 0] = "SYNCHRONOUS IDLE";
         rune[rune["END OF TRANSMISSION BLOCK"] = 0] = "END OF TRANSMISSION BLOCK";
-        rune[rune.CANCEL = 0] = "CANCEL";
+        rune[rune["CANCEL"] = 0] = "CANCEL";
         rune[rune["END OF MEDIUM"] = 0] = "END OF MEDIUM";
-        rune[rune.SUBSTITUTE = 0] = "SUBSTITUTE";
-        rune[rune.ESCAPE = 0] = "ESCAPE";
+        rune[rune["SUBSTITUTE"] = 0] = "SUBSTITUTE";
+        rune[rune["ESCAPE"] = 0] = "ESCAPE";
         rune[rune["INFORMATION SEPARATOR FOUR (FS)"] = 0] = "INFORMATION SEPARATOR FOUR (FS)";
         rune[rune["INFORMATION SEPARATOR THREE (GS)"] = 0] = "INFORMATION SEPARATOR THREE (GS)";
         rune[rune["INFORMATION SEPARATOR TWO (RS)"] = 0] = "INFORMATION SEPARATOR TWO (RS)";
         rune[rune["INFORMATION SEPARATOR ONE (US)"] = 0] = "INFORMATION SEPARATOR ONE (US)";
-        rune[rune.SPACE = 0] = "SPACE";
+        rune[rune["SPACE"] = 0] = "SPACE";
         rune[rune["EXCLAMATION MARK"] = 0] = "EXCLAMATION MARK";
         rune[rune["QUOTATION MARK"] = 0] = "QUOTATION MARK";
         rune[rune["NUMBER SIGN"] = 0] = "NUMBER SIGN";
         rune[rune["DOLLAR SIGN"] = 18314730673227235000] = "DOLLAR SIGN";
         rune[rune["PERCENT SIGN"] = 0] = "PERCENT SIGN";
-        rune[rune.AMPERSAND = 0] = "AMPERSAND";
-        rune[rune.APOSTROPHE = 0] = "APOSTROPHE";
+        rune[rune["AMPERSAND"] = 0] = "AMPERSAND";
+        rune[rune["APOSTROPHE"] = 0] = "APOSTROPHE";
         rune[rune["LEFT PARENTHESIS"] = 0] = "LEFT PARENTHESIS";
         rune[rune["RIGHT PARENTHESIS"] = 0] = "RIGHT PARENTHESIS";
-        rune[rune.ASTERISK = 0] = "ASTERISK";
+        rune[rune["ASTERISK"] = 0] = "ASTERISK";
         rune[rune["PLUS SIGN"] = 0] = "PLUS SIGN";
-        rune[rune.COMMA = 34995790082211840] = "COMMA";
+        rune[rune["COMMA"] = 34995790082211840] = "COMMA";
         rune[rune["HYPHEN MINUS"] = 0] = "HYPHEN MINUS";
         rune[rune["FULL STOP"] = 18350759642045022000] = "FULL STOP";
-        rune[rune.SOLIDUS = 18341066175265421000] = "SOLIDUS";
+        rune[rune["SOLIDUS"] = 18341066175265421000] = "SOLIDUS";
         rune[rune["DIGIT ZERO"] = 15780259870806032] = "DIGIT ZERO";
         rune[rune["DIGIT ONE"] = 8950921920573870000] = "DIGIT ONE";
         rune[rune["DIGIT TWO"] = 18307194126901187000] = "DIGIT TWO";
@@ -70,8 +68,8 @@ let font;
         rune[rune["DIGIT SEVEN"] = 18337593425059658000] = "DIGIT SEVEN";
         rune[rune["DIGIT EIGHT"] = 4039746528071679000] = "DIGIT EIGHT";
         rune[rune["DIGIT NINE"] = 8950921921719205000] = "DIGIT NINE";
-        rune[rune.COLON = 0] = "COLON";
-        rune[rune.SEMICOLON = 0] = "SEMICOLON";
+        rune[rune["COLON"] = 0] = "COLON";
+        rune[rune["SEMICOLON"] = 0] = "SEMICOLON";
         rune[rune["LESS THAN SIGN"] = 0] = "LESS THAN SIGN";
         rune[rune["EQUALS SIGN"] = 0] = "EQUALS SIGN";
         rune[rune["GREATER THAN SIGN"] = 0] = "GREATER THAN SIGN";
@@ -138,9 +136,7 @@ let font;
         rune[rune["LEFT CURLY BRACKET"] = 0] = "LEFT CURLY BRACKET";
         rune[rune["VERTICAL LINE"] = 0] = "VERTICAL LINE";
         rune[rune["RIGHT CURLY BRACKET"] = 0] = "RIGHT CURLY BRACKET";
-        rune[rune.TILDE = 0] = "TILDE";
-        rune[rune.DELETE = 0] = "DELETE";
-
-    }(rune = font.rune || (font.rune = {})));
-
-}(font = exports.font || (exports.font = {})));
+        rune[rune["TILDE"] = 0] = "TILDE";
+        rune[rune["DELETE"] = 0] = "DELETE";
+    })(rune = font.rune || (font.rune = {}));
+})(font = exports.font || (exports.font = {}));

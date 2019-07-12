@@ -1,4 +1,4 @@
-
+"use strict";
 exports.__esModule = true;
 /* eslint-disable camelcase */
 /* eslint-disable dot-notation */
@@ -9,12 +9,10 @@ exports.__esModule = true;
 /* eslint-disable no-magic-numbers */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
-let character;
+var character;
 (function (character) {
-
-    let range_0000_007F;
+    var range_0000_007F;
     (function (range_0000_007F) {
-
         range_0000_007F[range_0000_007F["NULL"] = 0] = "NULL";
         range_0000_007F[range_0000_007F["START OF HEADING"] = 1] = "START OF HEADING";
         range_0000_007F[range_0000_007F["START OF TEXT"] = 2] = "START OF TEXT";
@@ -143,7 +141,5 @@ let character;
         range_0000_007F[range_0000_007F["RIGHT CURLY BRACKET"] = 125] = "RIGHT CURLY BRACKET";
         range_0000_007F[range_0000_007F["TILDE"] = 126] = "TILDE";
         range_0000_007F[range_0000_007F["DELETE"] = 127] = "DELETE";
-
-    }(range_0000_007F = character.range_0000_007F || (character.range_0000_007F = {})));
-
-}(character = exports.character || (exports.character = {})));
+    })(range_0000_007F = character.range_0000_007F || (character.range_0000_007F = {}));
+})(character = exports.character || (exports.character = {}));
