@@ -1,3 +1,4 @@
+
 exports.__esModule = true;
 const _0000_007F_1 = exports,
     EventListener_1 = exports,
@@ -10,24 +11,25 @@ const _0000_007F_1 = exports,
 /* eslint-disable prefer-const */
 /* eslint-disable sort-vars */
 let canvas = document.getElementsByTagName("canvas");
+let log_font_x = 4;
+let log_font_y = 4;
 let log_glyph_x = 3;
 let log_glyph_y = 3;
 let log_page_x = 8;
 let log_page_y = 8;
 let log_pixel_x = 2;
 let log_pixel_y = 0;
-let size_glyph_x = 8;
-let size_glyph_y = 8;
-let size_page_x = 256;
-let size_page_y = 256;
-let size_pixel_x = 4;
-let size_pixel_y = 1;
-
-/*
- * Const unit_per_page_x = size_page_x * size_glyph_x * size_pixel_x;
- * const unit_per_page_y = size_page_y * size_glyph_y * size_pixel_y;
- * const unit_per_page = unit_per_page_x * unit_per_page_y;
- */
+let size_font_x = Math.pow(2, log_font_x);
+let size_font_y = Math.pow(2, log_font_y);
+let size_glyph_x = Math.pow(2, log_glyph_x);
+let size_glyph_y = Math.pow(2, log_glyph_y);
+let size_page_x = Math.pow(2, log_page_x);
+let size_page_y = Math.pow(2, log_page_y);
+let size_pixel_x = Math.pow(2, log_pixel_x);
+let size_pixel_y = Math.pow(2, log_pixel_y);
+let unit_per_page_x = size_page_x * size_glyph_x * size_pixel_x;
+let unit_per_page_y = size_page_y * size_glyph_y * size_pixel_y;
+let unit_per_page = unit_per_page_x * unit_per_page_y;
 let unit_per_glyph_x = size_glyph_x * size_pixel_x;
 let unit_per_glyph_y = size_glyph_y * size_pixel_y;
 let unit_per_glyph = unit_per_glyph_x * unit_per_glyph_y;
@@ -100,53 +102,42 @@ spat(canvas[5]);
 spat(canvas[6]);
 spat(canvas[7]);
 main(canvas[3]);
+function draw (art) {
 
-/**
- * @param {any[] | Uint8Array} art
- */
-let draw = function draw (art) {
-
-    let hold1 = 0x100 - indexY,
-        // eslint-disable-next-line no-bitwise
-        hold2 = hold1 << 0x3,
-        hold3 = hold2 - 0x1,
-        // eslint-disable-next-line no-bitwise
-        hold4 = hold3 << 0x8,
-        hold5 = hold4 + indexX,
-        // eslint-disable-next-line no-bitwise
-        hold6 = hold5 << 0x5,
-        hold7 = hold6;
-    let index = 256;
-    while (index > 0) {
-
-        index -= 1;
-        // eslint-disable-next-line no-bitwise
-        let position_x = index & 31,
-            // eslint-disable-next-line no-bitwise
-            position_y = index >>> 5,
-            // eslint-disable-next-line no-bitwise
-            temp3 = position_y << 13,
-            temp4 = hold7 + position_x - temp3;
-        data.data[temp4] = art[index];
-
-    }
-    // Hack
     let offset = unit_per_row * indexY;
-    index = unit_per_glyph;
+    let index = unit_per_glyph;
     while (index > 0) {
 
         index -= 1;
-        let extract_x = index & bitwise_extract_number_x;
-        let extract_y = index & bitwise_extract_number_y;
-        let scale_x = extract_x << 0x0;
-        let scale_y = extract_y << log_page_x;
-        let position = offset + scale_x + scale_y;
-        data.data[position] = art[index];
+        let font_x = size_font_x;
+        while (font_x > 0) {
+
+            font_x -= 1;
+            let font_y = size_font_y;
+            while (font_y > 0) {
+
+                font_y -= 1;
+                let extract_w = index & 3;
+                let extract_x = index & 28;
+
+                let extract_y = index & 224;
+                let scale_w = extract_w >>> 0x0;
+                let scale_x = extract_x >>> 0x2;
+                let scale_y = extract_y >>> 0x5;
+                let position_w = scale_w;
+                let position_x = size_pixel_x * (size_font_x * scale_x + font_x);
+                let position_y = unit_per_page_x * (size_font_y * scale_y + font_y);
+                let location_1 = offset + position_x + position_y + position_w;
+                data.data[location_1] = art[index];
+
+            }
+
+        }
 
     }
     view.putImageData(data, 0, 0);
 
-};
+}
 
 /**
  * @param {number} input
@@ -194,7 +185,7 @@ EventListener_1.EventListener.SelectFirstEventTargetBubblePhaseInvokeLater("body
 
     }
     indexX += 0;
-    indexY += 1;
+    indexY += size_font_y;
 
 });
 
