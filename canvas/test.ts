@@ -10,22 +10,28 @@ import { font } from "./font/rune";
 /* eslint-disable sort-vars */
 
 const canvas = document.getElementsByTagName("canvas");
+const log_font_x = 4;
+const log_font_y = 4;
 const log_glyph_x = 3;
 const log_glyph_y = 3;
 const log_page_x = 8;
 const log_page_y = 8;
 const log_pixel_x = 2;
 const log_pixel_y = 0;
-const size_glyph_x = 8;
-const size_glyph_y = 8;
-const size_page_x = 256;
-const size_page_y = 256;
-const size_pixel_x = 4;
-const size_pixel_y = 1;
 
-// const unit_per_page_x = size_page_x * size_glyph_x * size_pixel_x;
-// const unit_per_page_y = size_page_y * size_glyph_y * size_pixel_y;
-// const unit_per_page = unit_per_page_x * unit_per_page_y;
+
+const size_font_x = 2 ** log_font_x;
+const size_font_y = 2 ** log_font_y;
+const size_glyph_x = 2 ** log_glyph_x;
+const size_glyph_y = 2 ** log_glyph_y;
+const size_page_x = 2 ** log_page_x;
+const size_page_y = 2 ** log_page_y;
+const size_pixel_x = 2 ** log_pixel_x;
+const size_pixel_y = 2 ** log_pixel_y;
+
+const unit_per_page_x = size_page_x * size_glyph_x * size_pixel_x;
+const unit_per_page_y = size_page_y * size_glyph_y * size_pixel_y;
+const unit_per_page = unit_per_page_x * unit_per_page_y;
 const unit_per_glyph_x = size_glyph_x * size_pixel_x;
 const unit_per_glyph_y = size_glyph_y * size_pixel_y;
 const unit_per_glyph = unit_per_glyph_x * unit_per_glyph_y;
@@ -113,12 +119,25 @@ function draw(art: Uint8Array) {
     let index = unit_per_glyph;
     while (index > 0) {
         index -= 1;
-        const extract_x = index & bitwise_extract_number_x;
-        const extract_y = index & bitwise_extract_number_y;
-        const scale_x = extract_x << 0x0;
-        const scale_y = extract_y << log_page_x;
-        const position = offset + scale_x + scale_y;
-        data.data[position] = art[index];
+        var font_x = size_font_x;
+        while (font_x > 0) {
+            font_x -= 1;
+            var font_y = size_font_y;
+            while (font_y > 0) {
+                font_y -= 1;
+                const extract_w = index & 0b00000011;
+                const extract_x = index & 0b00011100;;
+                const extract_y = index & 0b11100000;
+                const scale_w = extract_w >>> 0x0;
+                const scale_x = extract_x >>> 0x2;
+                const scale_y = extract_y >>> 0x5;
+                const position_w = scale_w;
+                const position_x = size_pixel_x * (size_font_x * scale_x + font_x);
+                const position_y = unit_per_page_x * (size_font_y * scale_y + font_y);
+                const location = offset + position_x + position_y + position_w;
+                data.data[location] = art[index];
+            }
+        }
     }
     view.putImageData(data, 0, 0);
 }
@@ -171,7 +190,7 @@ EventListener.SelectFirstEventTargetBubblePhaseInvokeLater("body", EventType.Key
         draw(paint64(glyph));
     }
     indexX += 0;
-    indexY += 1;
+    indexY += size_font_y;
 });
 /**
  * @param {number} glyph
