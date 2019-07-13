@@ -9,8 +9,33 @@ import { font } from "./font/rune";
 /* eslint-disable prefer-const */
 /* eslint-disable sort-vars */
 
-
 const canvas = document.getElementsByTagName("canvas");
+const log_glyph_x = 3;
+const log_glyph_y = 3;
+const log_page_x = 8;
+const log_page_y = 8;
+const log_pixel_x = 2;
+const log_pixel_y = 0;
+const size_glyph_x = 8;
+const size_glyph_y = 8;
+const size_page_x = 256;
+const size_page_y = 256;
+const size_pixel_x = 4;
+const size_pixel_y = 1;
+
+// const unit_per_page_x = size_page_x * size_glyph_x * size_pixel_x;
+// const unit_per_page_y = size_page_y * size_glyph_y * size_pixel_y;
+// const unit_per_page = unit_per_page_x * unit_per_page_y;
+const unit_per_glyph_x = size_glyph_x * size_pixel_x;
+const unit_per_glyph_y = size_glyph_y * size_pixel_y;
+const unit_per_glyph = unit_per_glyph_x * unit_per_glyph_y;
+
+const unit_per_row = size_glyph_y * size_pixel_y * size_page_x * size_glyph_x * size_pixel_x;
+
+const bitwise_extract_number_x = unit_per_glyph_x - 1;
+const bitwise_extract_number_y = (unit_per_glyph_y - 1) << (log_glyph_x + log_pixel_x);
+
+
 let data = null,
     indexX = 0,
     indexY = 0,
@@ -83,39 +108,20 @@ spat(canvas[7]);
 main(canvas[3]);
 
 
-/**
- * @param {any[] | Uint8Array} art
- */
-const draw = function draw(art) {
-
-
-    const hold1 = 0x100 - indexY,
-        // eslint-disable-next-line no-bitwise
-        hold2 = hold1 << 0x3,
-        hold3 = hold2 - 0x1,
-        // eslint-disable-next-line no-bitwise
-        hold4 = hold3 << 0x8,
-        hold5 = hold4 + indexX,
-        // eslint-disable-next-line no-bitwise
-        hold6 = hold5 << 0x5,
-        hold7 = hold6;
-    let index = 256;
+function draw(art: Uint8Array) {
+    const offset = unit_per_row * indexY;
+    let index = unit_per_glyph;
     while (index > 0) {
-
         index -= 1;
-        // eslint-disable-next-line no-bitwise
-        const temp1 = index & 31,
-            // eslint-disable-next-line no-bitwise
-            temp2 = index >>> 5,
-            // eslint-disable-next-line no-bitwise
-            temp3 = temp2 << 13,
-            temp4 = hold7 + temp1 - temp3;
-        data.data[temp4] = art[index];
-
+        const extract_x = index & bitwise_extract_number_x;
+        const extract_y = index & bitwise_extract_number_y;
+        const scale_x = extract_x << 0x0;
+        const scale_y = extract_y << log_page_x;
+        const position = offset + scale_x + scale_y;
+        data.data[position] = art[index];
     }
     view.putImageData(data, 0, 0);
-
-};
+}
 
 
 /**

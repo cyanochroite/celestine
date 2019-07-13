@@ -1,4 +1,3 @@
-
 exports.__esModule = true;
 const _0000_007F_1 = exports,
     EventListener_1 = exports,
@@ -11,6 +10,30 @@ const _0000_007F_1 = exports,
 /* eslint-disable prefer-const */
 /* eslint-disable sort-vars */
 let canvas = document.getElementsByTagName("canvas");
+let log_glyph_x = 3;
+let log_glyph_y = 3;
+let log_page_x = 8;
+let log_page_y = 8;
+let log_pixel_x = 2;
+let log_pixel_y = 0;
+let size_glyph_x = 8;
+let size_glyph_y = 8;
+let size_page_x = 256;
+let size_page_y = 256;
+let size_pixel_x = 4;
+let size_pixel_y = 1;
+
+/*
+ * Const unit_per_page_x = size_page_x * size_glyph_x * size_pixel_x;
+ * const unit_per_page_y = size_page_y * size_glyph_y * size_pixel_y;
+ * const unit_per_page = unit_per_page_x * unit_per_page_y;
+ */
+let unit_per_glyph_x = size_glyph_x * size_pixel_x;
+let unit_per_glyph_y = size_glyph_y * size_pixel_y;
+let unit_per_glyph = unit_per_glyph_x * unit_per_glyph_y;
+let unit_per_row = size_glyph_y * size_pixel_y * size_page_x * size_glyph_x * size_pixel_x;
+let bitwise_extract_number_x = unit_per_glyph_x - 1;
+let bitwise_extract_number_y = unit_per_glyph_y - 1 << log_glyph_x + log_pixel_x;
 let data = null,
     indexX = 0,
     indexY = 0,
@@ -98,13 +121,27 @@ let draw = function draw (art) {
 
         index -= 1;
         // eslint-disable-next-line no-bitwise
-        let temp1 = index & 31,
+        let position_x = index & 31,
             // eslint-disable-next-line no-bitwise
-            temp2 = index >>> 5,
+            position_y = index >>> 5,
             // eslint-disable-next-line no-bitwise
-            temp3 = temp2 << 13,
-            temp4 = hold7 + temp1 - temp3;
+            temp3 = position_y << 13,
+            temp4 = hold7 + position_x - temp3;
         data.data[temp4] = art[index];
+
+    }
+    // Hack
+    let offset = unit_per_row * indexY;
+    index = unit_per_glyph;
+    while (index > 0) {
+
+        index -= 1;
+        let extract_x = index & bitwise_extract_number_x;
+        let extract_y = index & bitwise_extract_number_y;
+        let scale_x = extract_x << 0x0;
+        let scale_y = extract_y << log_page_x;
+        let position = offset + scale_x + scale_y;
+        data.data[position] = art[index];
 
     }
     view.putImageData(data, 0, 0);
