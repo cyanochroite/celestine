@@ -1,4 +1,8 @@
 from application import application
+import PIL
+
+
+from list import list
 
 
 class window(application):
@@ -9,7 +13,7 @@ class window(application):
         self.button_next = self._init_button(">>", self._button_next)
         self.button_quit = self._init_button("Exit Program", self.tk.quit)
         self.label_screen = self._init_label(
-            self.image_list.get(), 1024, 1024)
+            self.image_list.get(), 512, 512)
 
         self.create_widgets()
 
@@ -45,8 +49,17 @@ class MainApplication(Frame):
 
         self.statusbar.grid(row=0, column=1)
 
-        self.statusbar.create_widgets()
-        self.left.create_widgets()
+        icon1 = PIL.Image.open("character.jpg")
+        icon2 = PIL.Image.open("logo.jpg")
+        icon3 = PIL.Image.open("victory.jpg")
+
+        image_list = list()
+        image_list.add(icon1)
+        image_list.add(icon2)
+        image_list.add(icon3)
+
+        self.statusbar.create_widgets(image_list)
+        self.left.create_widgets(image_list)
 
         self.left.grid(row=1, column=0)
 
