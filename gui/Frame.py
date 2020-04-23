@@ -3,8 +3,8 @@ import tkinter
 
 class Frame(tkinter.Frame):
     def __init__(self, master=None, cnf={}, **kw):
-        tkinter.Frame.__init__(self, master, cnf, **kw)
-        self.master = master
+        super().__init__(master, cnf, **kw)
+        self.master = self
 
     def _init_button(self, text, command):
         button = tkinter.Button(self.master)
@@ -20,6 +20,3 @@ class Frame(tkinter.Frame):
         if height:
             label["width"] = width
         return label
-
-    def mainloop(self):
-        self.master.mainloop()
