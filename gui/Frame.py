@@ -14,7 +14,8 @@ class Frame(tkinter.Frame):
 
     def _init_label(self, image, width=None, height=None):
         label = tkinter.Label(self.master)
-        label["image"] = image
+        if image:
+            label["image"] = image
         if width:
             label["height"] = height
         if height:
