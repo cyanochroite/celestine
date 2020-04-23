@@ -1,3 +1,4 @@
+from window import window
 from tkinter import *
 from tkinter.ttk import *
 
@@ -8,8 +9,21 @@ from list import list
 
 import functools
 
+
+icon1 = Image.open("character.jpg")
+icon2 = Image.open("logo.jpg")
+icon3 = Image.open("victory.jpg")
+
+image_list = list()
+image_list.add(icon1)
+image_list.add(icon2)
+image_list.add(icon3)
+
+app = window(image_list)
+
+
 root = Tk()
-root.title("A title")
+root.title("A POOOP")
 root.iconbitmap("favicon.ico")
 button_quit = Button(root, text="Exit Program", command=root.quit)
 button_quit.grid(row=0, column=1)
@@ -52,3 +66,6 @@ button_forward.grid(row=2, column=2)
 
 
 root.mainloop()
+
+
+app.mainloop()
