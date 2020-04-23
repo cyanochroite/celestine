@@ -29,3 +29,29 @@ class window(application):
     def _button_next(self):
         self.image_list.next()
         self.reset_image()
+
+
+from Frame import Frame
+from one import one
+import tkinter
+import tkinter.ttk
+
+
+class MainApplication(Frame):
+    def __init__(self, master=None, cnf={}, **kw):
+        super().__init__(master, cnf, **kw)
+        self.statusbar = one(self.master)
+        self.left = one(self.master)
+
+        self.statusbar.grid(row=0, column=1)
+
+        self.statusbar.create_widgets()
+        self.left.create_widgets()
+
+        self.left.grid(row=1, column=0)
+
+
+if __name__ == "__main__":
+    root = tkinter.Tk()
+    MainApplication(root).grid(row=0, column=0)
+    root.mainloop()

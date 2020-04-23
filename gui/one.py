@@ -1,17 +1,12 @@
-import tkinter
-
-import Frame
+from Frame import Frame
 
 
-class one(Frame.Frame):
+class one(Frame):
     def __init__(self, master=None, cnf={}, **kw):
         super().__init__(master, cnf, **kw)
-
         self.button_back = self._init_button("<<", self._button_back)
         self.button_next = self._init_button(">>", self._button_next)
         self.button_quit = self._init_button("Exit Program", self.tk.quit)
-
-        self.create_widgets()
 
     def create_widgets(self):
         self.button_quit.grid(row=0, column=1)
@@ -28,17 +23,3 @@ class one(Frame.Frame):
     def _button_next(self):
         self.image_list.next()
         self.reset_image()
-
-
-class MainApplication(Frame.Frame):
-    def __init__(self, master=None, cnf={}, **kw):
-        super().__init__(master, cnf, **kw)
-
-        self.statusbar = one(self)
-        self.statusbar.grid()
-
-
-if __name__ == "__main__":
-    root = tkinter.Tk()
-    MainApplication(root).grid()
-    root.mainloop()
