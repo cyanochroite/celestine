@@ -1,35 +1,14 @@
-import tkinter
-import tkinter.ttk
-
-from PIL import ImageTk
-from list import list
-
-
-class application():
-    def __init__(self):
-        self.tk = tkinter.Tk()
-        self.tk.title("A title")
-        self.tk.iconbitmap("favicon.ico")
-
-    def _init_button(self, text, command):
-        button = tkinter.Button(self.tk)
-        button["text"] = text
-        button["command"] = command
-        return button
-
-    def mainloop(self):
-        self.tk.mainloop()
+from application import application
 
 
 class window(application):
     def __init__(self, image_list):
-        super().__init__()
-        self.image_list = image_list
+        super().__init__(image_list)
 
         self.button_back = self._init_button("<<", self._button_back)
         self.button_next = self._init_button(">>", self._button_next)
         self.button_quit = self._init_button("Exit Program", self.tk.quit)
-        self.label_screen = tkinter.Label(self.tk)
+        self.label_screen = self._init_label(self.image_list.get())
 
         self.create_widgets()
 
@@ -40,9 +19,7 @@ class window(application):
         self.label_screen.grid(row=1, column=0, columnspan=3)
 
     def reset_image(self):
-        image = self.image_list.get()
-        self.image = ImageTk.PhotoImage(image)
-        self.label_screen["image"] = self.image
+        self.label_screen["image"] = self.image_list.get()
 
     def _button_back(self):
         self.image_list.back()
@@ -51,9 +28,3 @@ class window(application):
     def _button_next(self):
         self.image_list.next()
         self.reset_image()
-
-
-#app = window()
-# app.mainloop()
-
-
