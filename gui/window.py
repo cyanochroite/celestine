@@ -2,7 +2,6 @@ import tkinter
 import tkinter.ttk
 
 from PIL import ImageTk
-from PIL import Image
 from list import list
 
 
@@ -58,15 +57,3 @@ class window(application):
 # app.mainloop()
 
 
-icon1 = Image.open("character.jpg")
-icon2 = Image.open("logo.jpg")
-icon3 = Image.open("victory.jpg")
-
-
-image_list = list()
-image_list.add(icon1)
-image_list.add(icon2)
-image_list.add(icon3)
-
-app = window(image_list)
-app.mainloop()
