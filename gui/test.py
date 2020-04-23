@@ -52,3 +52,33 @@ button_forward.grid(row=2, column=2)
 
 
 root.mainloop()
+
+
+class Navbar(Frame):
+    ...
+
+
+class Toolbar(Frame):
+    ...
+
+
+class Statusbar(Frame):
+    ...
+
+
+class Main(Frame):
+    ...
+
+
+class MainApplication(Frame):
+    def __init__(self, parent, *args, **kwargs):
+        tk.Frame.__init__(self, parent, *args, **kwargs)
+        self.statusbar = Statusbar(self, ...)
+        self.toolbar = Toolbar(self, ...)
+        self.navbar = Navbar(self, ...)
+        self.main = Main(self, ...)
+
+        self.statusbar.pack(side="bottom", fill="x")
+        self.toolbar.pack(side="top", fill="x")
+        self.navbar.pack(side="left", fill="y")
+        self.main.pack(side="right", fill="both", expand=True)
