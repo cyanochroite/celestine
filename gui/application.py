@@ -26,9 +26,13 @@ class application():
         button["command"] = command
         return button
 
-    def _init_label(self, image):
+    def _init_label(self, image, width=None, height=None):
         label = tkinter.Label(self.tk)
         label["image"] = image
+        if width:
+            label["height"] = height
+        if height:
+            label["width"] = width
         return label
 
     def mainloop(self):

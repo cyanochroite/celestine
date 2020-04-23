@@ -1,27 +1,54 @@
-import tkinter as tk
+from tkinter import *
+from tkinter.ttk import *
+
+from PIL import ImageTk
+from PIL import Image
+
+from list import list
+
+import functools
+
+root = Tk()
+root.title("A title")
+root.iconbitmap("favicon.ico")
+button_quit = Button(root, text="Exit Program", command=root.quit)
+button_quit.grid(row=0, column=1)
 
 
-class Application(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self.pack()
-        self.create_widgets()
-
-    def create_widgets(self):
-        self.hi_there = tk.Button(self)
-        self.hi_there["text"] = "Hello World\n(click me)"
-        self.hi_there["command"] = self.say_hi
-        self.hi_there.pack(side="top")
-
-        self.quit = tk.Button(self, text="QUIT", fg="red",
-                              command=self.master.destroy)
-        self.quit.pack(side="bottom")
-
-    def say_hi(self):
-        print("hi there, everyone!")
+def reset_image():
+    laddel["image"] = image_list.get()
 
 
-root = tk.Tk()
-app = Application(master=root)
-app.mainloop()
+def forward():
+    image_list.next()
+    reset_image()
+
+
+def back():
+    image_list.back()
+    reset_image()
+
+
+icon1 = ImageTk.PhotoImage(Image.open("character.jpg"))
+icon2 = ImageTk.PhotoImage(Image.open("logo.jpg"))
+icon3 = ImageTk.PhotoImage(Image.open("victory.jpg"))
+
+image_list = list()
+image_list.add(icon1)
+image_list.add(icon2)
+image_list.add(icon3)
+
+laddel = Label(image=icon1)
+laddel.grid(row=1, column=0, columnspan=3)
+
+back_button = Button(root, text="<<", command=back)
+button_forward = Button(root, text=">>", command=forward)
+
+index = 0
+
+
+back_button.grid(row=2, column=0)
+button_forward.grid(row=2, column=2)
+
+
+root.mainloop()

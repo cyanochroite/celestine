@@ -8,7 +8,8 @@ class window(application):
         self.button_back = self._init_button("<<", self._button_back)
         self.button_next = self._init_button(">>", self._button_next)
         self.button_quit = self._init_button("Exit Program", self.tk.quit)
-        self.label_screen = self._init_label(self.image_list.get())
+        self.label_screen = self._init_label(
+            self.image_list.get(), 1024, 1024)
 
         self.create_widgets()
 
