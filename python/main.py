@@ -35,9 +35,6 @@ def element_void(tag, arg):  # {# void element
 # }
 
 
-
-
-
 def title(text):  # {
     print("<title>")
     print("\t" + text)
