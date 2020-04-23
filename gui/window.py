@@ -3,20 +3,25 @@ import tkinter.ttk
 
 
 class window():
-    # class window(tkinter.Frame):
-    #    def __init__(self, master=None):
-    #        super().__init__(master)
-    #        self.master = master
     def __init__(self):
-        self.tk = tkinter.Tk()
-        tk = tkinter.Tk()
-        tk.title("A title")
-        tk.iconbitmap("favicon.ico")
+        self.tk = self._init_tk()
+        self.button_back = self._init_button("<<", self._button_back)
+        self.button_next = self._init_button(">>", self._button_next)
+        self.button_quit = self._init_button("Exit Program", self.tk.quit)
 
         self.create_widgets()
 
-    def mainloop(self):
-        self.tk.mainloop()
+    def _init_button(self, text, command):
+        button = tkinter.Button(self.tk)
+        button["text"] = text
+        button["command"] = command
+        return button
+
+    def _init_tk(self):
+        tk = tkinter.Tk()
+        tk.title("A title")
+        tk.iconbitmap("favicon.ico")
+        return tk
 
     def create_widgets(self):
         self.button_quit = tkinter.Button(
@@ -25,24 +30,23 @@ class window():
         #
         self.laddel = tkinter.Label()
         self.laddel.grid(row=1, column=0, columnspan=3)
-        #
-        self.back_button = tkinter.Button(
-            self.tk, text="<<", command=self.back)
-        self.button_forward = tkinter.Button(
-            self.tk, text=">>", command=self.forward)
-        self.back_button.grid(row=2, column=0)
-        self.button_forward.grid(row=2, column=2)
+
+        self.button_back.grid(row=2, column=0)
+        self.button_next.grid(row=2, column=2)
 
     def reset_image(self):
         laddel["image"] = image_list.get()
 
-    def forward(self):
+    def _button_back(self):
+        image_list.back()
+        self.reset_image()
+
+    def _button_next(self):
         image_list.next()
         self.reset_image()
 
-    def back(self):
-        image_list.back()
-        self.reset_image()
+    def mainloop(self):
+        self.tk.mainloop()
 
 
 app = window()
