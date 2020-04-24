@@ -21,6 +21,14 @@ class Baz(Bar):
         return super(Baz, self).foo()
 
 
+class demo():
+    def __init__(self, **key):
+        # print(key["stone"])
+        print(key["moo"])
+        print(key)
+
+
 #a = Foo()
 #b = Bar()
 c = Baz().suck()
+n = demo(moo="hy", coo="mo")

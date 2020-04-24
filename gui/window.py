@@ -14,15 +14,15 @@ class MainApplication(Frame):
         self.data = WindowModel()
         super().__init__(master, cnf, **kw)
 
-    def draw(self):
+    def _make(self):
+        self.left_top = one(self.master, data=self.data)
+        self.left_bottom = one(self.master, data=self.data)
+        self.right = two(self.master, data=self.data)
+
+    def _show(self):
         self.left_top.grid(row=0, column=0)
         self.left_bottom.grid(row=1, column=0)
         self.right.grid(row=0, column=1, rowspan=2)
-
-    def make(self):
-        self.left_top = one(self.data, self.master)
-        self.left_bottom = one(self.data, self.master)
-        self.right = two(self.data, self.master)
 
 
 class WindowModel():
