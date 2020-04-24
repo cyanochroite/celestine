@@ -1,10 +1,13 @@
+import abc
 import tkinter
 
 
-class Frame(tkinter.Frame):
+class Frame(tkinter.Frame, metaclass=abc.ABCMeta):
     def __init__(self, master=None, cnf={}, **kw):
         super().__init__(master, cnf, **kw)
         self.master = self
+        self.make()
+        self.draw()
 
     def _init_button(self, text, command):
         button = tkinter.Button(self.master)
@@ -21,3 +24,11 @@ class Frame(tkinter.Frame):
         if height:
             label["width"] = width
         return label
+
+    @abc.abstractmethod
+    def draw(self):
+        pass
+
+    @abc.abstractmethod
+    def make(self):
+        pass

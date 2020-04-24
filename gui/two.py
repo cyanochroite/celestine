@@ -2,12 +2,11 @@ from Frame import Frame
 
 
 class two(Frame):
-    def __init__(self, master=None, cnf={}, **kw):
+    def __init__(self, data, master=None, cnf={}, **kw):
         super().__init__(master, cnf, **kw)
-
-    def create_widgets(self, image_list):
-        self.image_list = image_list
-
+        self.data = data
+        self.image_list = data.image_list
+        #
         self.icon = []
 
         for index in range(0, self.image_list._max + 1):
@@ -26,3 +25,9 @@ class two(Frame):
     def _button_next(self):
         self.image_list.next()
         self.reset_image()
+
+    def draw(self):
+        pass
+
+    def make(self):
+        pass
