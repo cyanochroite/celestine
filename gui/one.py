@@ -1,10 +1,4 @@
 from Frame import Frame
-from list import list
-import tkinter
-import tkinter.ttk
-
-from PIL import ImageTk
-from list import list
 
 
 class one(Frame):
@@ -15,18 +9,7 @@ class one(Frame):
         self.button_quit = self._init_button("Exit Program", self.tk.quit)
 
     def create_widgets(self, image_list):
-        fist = image_list
-        fist.reset()
-        self.image_list = list()
-        self.image_list.add(ImageTk.PhotoImage(fist.get()))
-        fist.next()
-        self.image_list.add(ImageTk.PhotoImage(fist.get()))
-        fist.next()
-        self.image_list.add(ImageTk.PhotoImage(fist.get()))
-        fist.next()
-
-        #self.image_list = image_list
-
+        self.image_list = image_list
         self.label_screen = self._init_label(self.image_list.get(), 512, 512)
         self.button_quit.grid(row=0, column=1)
         self.button_back.grid(row=2, column=0)
