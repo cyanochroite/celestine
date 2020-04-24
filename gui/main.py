@@ -1,19 +1,10 @@
-import PIL
+import tkinter
+import tkinter.ttk
 
-from window import window
-
-from list import list
-
-
-icon1 = PIL.Image.open("character.jpg")
-icon2 = PIL.Image.open("logo.jpg")
-icon3 = PIL.Image.open("victory.jpg")
+from window import MainApplication
 
 
-image_list = list()
-image_list.add(icon1)
-image_list.add(icon2)
-image_list.add(icon3)
-
-app = window(image_list)
-app.mainloop()
+if __name__ == "__main__":
+    root = tkinter.Tk()
+    MainApplication(root).grid(row=0, column=0)
+    root.mainloop()
