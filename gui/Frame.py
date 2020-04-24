@@ -4,6 +4,7 @@ import tkinter
 
 class Frame(tkinter.Frame, metaclass=abc.ABCMeta):
     def __init__(self, master=None, cnf={}, **kw):
+        self.data = kw.pop("data", None)
         super().__init__(master, cnf, **kw)
         self.master = self
         self._make()

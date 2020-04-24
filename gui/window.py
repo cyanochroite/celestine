@@ -11,7 +11,7 @@ from two import two
 
 class MainApplication(Frame):
     def __init__(self, master=None, cnf={}, **kw):
-        self.data = WindowModel()
+        kw["data"] = WindowModel()
         super().__init__(master, cnf, **kw)
 
     def _make(self):
@@ -38,3 +38,16 @@ class WindowModel():
         image_list.add(icon2)
         image_list.add(icon3)
         self.image_list = image_list
+
+    def reset_image(self):
+        self.label_screen["image"] = self.image_list.get()
+
+    def list_get(self):
+        return self.image_list.get()
+
+    def list_back(self):
+        self.image_list.back()
+
+    def list_next(self):
+        self.image_list.next()
+
