@@ -6,8 +6,8 @@ class Frame(tkinter.Frame, metaclass=abc.ABCMeta):
     def __init__(self, master=None, cnf={}, **kw):
         super().__init__(master, cnf, **kw)
         self.master = self
-        self.make()
-        self.draw()
+        self._make()
+        self._show()
 
     def _init_button(self, text, command):
         button = tkinter.Button(self.master)
@@ -26,9 +26,9 @@ class Frame(tkinter.Frame, metaclass=abc.ABCMeta):
         return label
 
     @abc.abstractmethod
-    def draw(self):
+    def _make(self):
         pass
 
     @abc.abstractmethod
-    def make(self):
+    def _show(self):
         pass
