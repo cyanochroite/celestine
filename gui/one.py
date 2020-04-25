@@ -3,14 +3,13 @@ from Frame import Frame
 
 class one(Frame):
     def __init__(self, master=None, cnf={}, **kw):
-        self.data = kw.pop("data", None)
-        super().__init__(master, cnf, **kw)
-
     def _make(self):
-        self.button_back = self._init_button("<<", self._button_back)
-        self.button_next = self._init_button(">>", self._button_next)
-        self.button_quit = self._init_button("Exit Program", self.tk.quit)
-        self.label_screen = self._init_label(self.data.list_get(), 512, 512)
+        self.button_back = self.button(text="<<", command=self._button_back)
+        self.button_next = self.button(text=">>", command=self._button_next)
+        self.button_quit = self.button(
+            text="Exit Program", command=self.tk.quit)
+        self.label_screen = self.label(
+            image=self.data.list_get(), width=512, height=512)
 
     def _show(self):
         self.button_quit.grid(row=0, column=1)

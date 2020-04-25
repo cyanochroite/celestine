@@ -35,7 +35,16 @@ class WindowModel():
         icon3 = PIL.ImageTk.PhotoImage(PIL.Image.open("victory.jpg"))
         image_list = list()
         image_list.add(icon1)
+        image_list.add(icon1)
+        image_list.add(icon1)
+        image_list.add(icon1)
         image_list.add(icon2)
+        image_list.add(icon2)
+        image_list.add(icon2)
+        image_list.add(icon2)
+        image_list.add(icon3)
+        image_list.add(icon3)
+        image_list.add(icon3)
         image_list.add(icon3)
         self.image_list = image_list
 

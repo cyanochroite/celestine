@@ -10,22 +10,6 @@ class Frame(tkinter.Frame, metaclass=abc.ABCMeta):
         self._make()
         self._show()
 
-    def _init_button(self, text, command):
-        button = tkinter.Button(self.master)
-        button["text"] = text
-        button["command"] = command
-        return button
-
-    def _init_label(self, image, width=None, height=None):
-        label = tkinter.Label(self.master)
-        if image:
-            label["image"] = image
-        if width:
-            label["height"] = height
-        if height:
-            label["width"] = width
-        return label
-
     @abc.abstractmethod
     def _make(self):
         pass
@@ -33,3 +17,9 @@ class Frame(tkinter.Frame, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def _show(self):
         pass
+
+    def button(self, **kw):
+        return tkinter.Button(self.master, **kw)
+
+    def label(self, **kw):
+        return tkinter.Label(self.master, **kw)

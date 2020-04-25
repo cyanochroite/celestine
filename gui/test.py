@@ -32,3 +32,6 @@ class demo():
 #b = Bar()
 c = Baz().suck()
 n = demo(moo="hy", coo="mo")
+
+for index in range(4):
+    print(index)
