@@ -17,12 +17,12 @@ class MainApplication(Frame):
     def _make(self):
         self.left_top = one(self.master, data=self.data)
         self.left_bottom = one(self.master, data=self.data)
-        self.right = two(self.master, data=self.data)
+        self.window = two(self.master, data=self.data)
 
     def _show(self):
         self.left_top.grid(row=0, column=0)
         self.left_bottom.grid(row=1, column=0)
-        self.right.grid(row=0, column=1, rowspan=2)
+        self.window.grid(row=0, column=1, rowspan=2)
 
 
 class WindowModel():
@@ -59,4 +59,7 @@ class WindowModel():
 
     def list_next(self):
         self.image_list.next()
+
+    def image_count():
+        return self.image_list._max + 1
 

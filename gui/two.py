@@ -1,4 +1,5 @@
 from Frame import Frame
+import functools
 
 
 class two(Frame):
@@ -12,9 +13,14 @@ class two(Frame):
         self.icon = []
         limit = min(self.count, self.data.image_list._max + 1)
         for index in range(limit):
-            get = self.data.image_list._list[index]
-            but = self.button(width=128, height=128, image=get)
-            self.icon.append(but)
+            self.icon.append(
+                self.button(
+                    command=functools.partial(self.hippo, index),
+                    height=128,
+                    image=self.data.image_list._list[index],
+                    width=128
+                )
+            )
 
     def _show(self):
         limit = min(self.count, self.data.image_list._max + 1)
@@ -22,3 +28,6 @@ class two(Frame):
             row = index // self.column
             column = index % self.column
             self.icon[index].grid(row=row, column=column)
+
+    def hippo(self, index):
+        print(index)
