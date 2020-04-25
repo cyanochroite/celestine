@@ -3,6 +3,8 @@ from Frame import Frame
 
 class one(Frame):
     def __init__(self, master=None, cnf={}, **kw):
+        super().__init__(master, cnf, **kw)
+
     def _make(self):
         self.button_back = self.button(text="<<", command=self._button_back)
         self.button_next = self.button(text=">>", command=self._button_next)
