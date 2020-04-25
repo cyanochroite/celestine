@@ -2,20 +2,18 @@ from Frame import Frame
 
 
 class two(Frame):
-    def __init__(self, master=None, cnf={}, **kw):
-        super().__init__(master, cnf, **kw)
-        self.icon = []
-
     def _make(self):
-        for index in range(0, self.data.image_list._max + 1):
-            get = self.data.image_list._list[index]
-            image = self._init_label(get, 128, 128)
-            image.grid(row=index, column=0)
-            self.icon.append(image)
+        index = 0
+        self.icon = []
+        for row in range(3):
+            self.icon.append([])
+            for column in range(4):
+                get = self.data.image_list._list[index]
+                but = self.button(width=128, height=128, image=get)
+                self.icon[row].append(but)
+                index += 1
 
     def _show(self):
-        for index in range(0, self.data.image_list._max + 1):
-            get = self.data.image_list._list[index]
-            image = self._init_label(get, 128, 128)
-            image.grid(row=index, column=0)
-            self.icon.append(image)
+        for row in range(3):
+            for column in range(4):
+                self.icon[row][column].grid(row=row, column=column)
