@@ -1,7 +1,6 @@
 from mem_dixy.tkinter.Widget import Frame
-
-from .one import one
-from .two import two
+from mem_dixy.tkinter.one import one
+from mem_dixy.tkinter.two import two
 
 
 class MainApplication(Frame):

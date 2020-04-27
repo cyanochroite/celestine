@@ -1,5 +1,5 @@
-import PIL.ImageTk
-import mem_dixy.list
+from mem_dixy.Pillow.ImageTk import PhotoImage
+from mem_dixy.list import list
 
 
 class WindowModel():
@@ -7,10 +7,10 @@ class WindowModel():
         self._init_image_list()
 
     def _init_image_list(self):
-        icon1 = PIL.ImageTk.PhotoImage(PIL.Image.open("character.jpg"))
-        icon2 = PIL.ImageTk.PhotoImage(PIL.Image.open("logo.jpg"))
-        icon3 = PIL.ImageTk.PhotoImage(PIL.Image.open("victory.jpg"))
-        image_list = mem_dixy.list.list()
+        icon1 = PhotoImage("character.jpg")
+        icon2 = PhotoImage("logo.jpg")
+        icon3 = PhotoImage("victory.jpg")
+        image_list = list()
         image_list.add(icon1)
         image_list.add(icon1)
         image_list.add(icon1)
