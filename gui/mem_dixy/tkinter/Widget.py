@@ -1,5 +1,6 @@
 import abc
 import tkinter
+import tkinter.ttk
 
 
 class Frame(tkinter.Frame, metaclass=abc.ABCMeta):
@@ -23,3 +24,7 @@ class Frame(tkinter.Frame, metaclass=abc.ABCMeta):
 
     def label(self, **kw):
         return tkinter.Label(self.master, **kw)
+
+
+def Tk():
+    return tkinter.Tk()

@@ -1,4 +1,5 @@
-from .Frame import Frame
+from mem_dixy.tkinter.Widget import Frame
+
 from .one import one
 from .two import two
 

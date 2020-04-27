@@ -1,4 +1,4 @@
-from .Frame import Frame
+from mem_dixy.tkinter.Widget import Frame
 
 
 class one(Frame):
