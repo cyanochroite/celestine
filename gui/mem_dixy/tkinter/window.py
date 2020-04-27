@@ -3,7 +3,7 @@ from mem_dixy.tkinter.one import one
 from mem_dixy.tkinter.two import two
 
 
-class MainApplication(Frame):
+class Window(Frame):
     def __init__(self, master=None, cnf={}, **kw):
         super().__init__(master, cnf, **kw)
 
