@@ -1,4 +1,4 @@
-from Frame import Frame
+from .Frame import Frame
 
 
 class one(Frame):

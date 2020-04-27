@@ -1,12 +1,12 @@
 import PIL
 
 from PIL import ImageTk
-from list import list
+from mem_dixy.list import list
 
 
-from Frame import Frame
-from one import one
-from two import two
+from .Frame import Frame
+from .one import one
+from .two import two
 
 
 class MainApplication(Frame):
