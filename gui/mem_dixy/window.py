@@ -7,9 +7,9 @@ class WindowModel():
         self._init_image_list()
 
     def _init_image_list(self):
-        icon1 = PhotoImage("character.jpg")
-        icon2 = PhotoImage("logo.jpg")
-        icon3 = PhotoImage("victory.jpg")
+        icon1 = PhotoImage("B:\\project\\web\\gui\\character.jpg")
+        icon2 = PhotoImage("B:\\project\\web\\gui\\logo.jpg")
+        icon3 = PhotoImage("B:\\project\\web\\gui\\victory.jpg")
         image_list = list()
         image_list.add(icon1)
         image_list.add(icon1)
