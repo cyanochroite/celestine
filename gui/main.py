@@ -9,5 +9,3 @@ try:
     root.mainloop()
 except:
     print("fail")
-
-
