@@ -1,3 +1,6 @@
+import os.path
+import sys
+
 from mem_dixy.Pillow.ImageTk import PhotoImage
 from mem_dixy.list import list
 
@@ -7,9 +10,10 @@ class WindowModel():
         self._init_image_list()
 
     def _init_image_list(self):
-        icon1 = PhotoImage("B:\\project\\web\\gui\\character.jpg")
-        icon2 = PhotoImage("B:\\project\\web\\gui\\logo.jpg")
-        icon3 = PhotoImage("B:\\project\\web\\gui\\victory.jpg")
+        path = self.get_path()
+        icon1 = PhotoImage(os.path.join(path, "character.jpg"))
+        icon2 = PhotoImage(os.path.join(path, "logo.jpg"))
+        icon3 = PhotoImage(os.path.join(path, "victory.jpg"))
         image_list = list()
         image_list.add(icon1)
         image_list.add(icon1)
@@ -37,6 +41,15 @@ class WindowModel():
     def list_next(self):
         self.image_list.next()
 
-    def image_count():
+    def image_count(self):
         return self.image_list._max + 1
 
+    def get_path(self):
+        argv = sys.argv
+        path = argv[0]
+        path = os.path.normcase(path)
+        path = os.path.normpath(path)
+        path = os.path.abspath(path)
+        path = os.path.dirname(path)
+        path = os.path.join(path, "file")
+        return path
