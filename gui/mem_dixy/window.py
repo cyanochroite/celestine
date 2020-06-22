@@ -1,7 +1,8 @@
 import os.path
 import sys
 
-from mem_dixy.Pillow.ImageTk import PhotoImage
+from mem_dixy.Pillow.Image import Image
+from mem_dixy.Pillow.ImageTk import ImageTk
 from mem_dixy.list import list
 
 
@@ -11,9 +12,9 @@ class WindowModel():
 
     def _init_image_list(self):
         path = self.get_path()
-        icon1 = PhotoImage(os.path.join(path, "character.jpg"))
-        icon2 = PhotoImage(os.path.join(path, "logo.jpg"))
-        icon3 = PhotoImage(os.path.join(path, "victory.jpg"))
+        icon1 = self._load_image(path, "character.jpg")
+        icon2 = self._load_image(path, "logo.jpg")
+        icon3 = self._load_image(path, "victory.jpg")
         image_list = list()
         image_list.add(icon1)
         image_list.add(icon1)
@@ -28,6 +29,12 @@ class WindowModel():
         image_list.add(icon3)
         image_list.add(icon3)
         self.image_list = image_list
+
+    def _load_image(self, path, name):
+        file = os.path.join(path, name)
+        image = Image.open(file)
+        photo = ImageTk.PhotoImage(image)
+        return photo
 
     def reset_image(self):
         self.label_screen["image"] = self.image_list.get()
