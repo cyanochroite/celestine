@@ -11,6 +11,7 @@ class Frame(tkinter.Frame, metaclass=abc.ABCMeta):
         self.master = self
         self._make()
         self._show()
+        self.END = tkinter.END
 
     @abc.abstractmethod
     def _make(self):
@@ -20,11 +21,20 @@ class Frame(tkinter.Frame, metaclass=abc.ABCMeta):
     def _show(self):
         pass
 
-    def button(self, **kw):
+    def Button(self, **kw):
         return tkinter.Button(self.master, **kw)
 
-    def label(self, **kw):
+    def Entry(self, **kw):
+        return tkinter.Entry(self.master, **kw)
+
+    def Label(self, **kw):
         return tkinter.Label(self.master, **kw)
+
+    def Text(self, **kw):
+        return tkinter.Text(self.master, **kw)
+
+    def StringVar(self, **kw):
+        return tkinter.StringVar()
 
 
 def Tk():

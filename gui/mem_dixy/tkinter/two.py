@@ -15,7 +15,7 @@ class two(Frame):
         limit = min(self.count, self.data.image_list._max + 1)
         for index in range(limit):
             self.icon.append(
-                self.button(
+                self.Button(
                     command=functools.partial(self.hippo, index),
                     height=128,
                     image=self.data.image_list._list[index],

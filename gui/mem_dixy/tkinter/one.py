@@ -6,11 +6,11 @@ class one(Frame):
         super().__init__(master, cnf, **kw)
 
     def _make(self):
-        self.button_back = self.button(text="<<", command=self._button_back)
-        self.button_next = self.button(text=">>", command=self._button_next)
-        self.button_quit = self.button(
+        self.button_back = self.Button(text="<<", command=self._button_back)
+        self.button_next = self.Button(text=">>", command=self._button_next)
+        self.button_quit = self.Button(
             text="Exit Program", command=self.tk.quit)
-        self.label_screen = self.label(
+        self.label_screen = self.Label(
             image=self.data.list_get(), width=512, height=512)
 
     def _show(self):
