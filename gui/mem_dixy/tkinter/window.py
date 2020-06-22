@@ -1,6 +1,7 @@
 from mem_dixy.tkinter.Widget import Frame
 from mem_dixy.tkinter.one import one
 from mem_dixy.tkinter.two import two
+from mem_dixy.tkinter.three import three
 
 
 class Window(Frame):
@@ -11,8 +12,10 @@ class Window(Frame):
         self.left_top = one(self.master, data=self.data)
         self.left_bottom = one(self.master, data=self.data)
         self.window = two(self.master, data=self.data)
+        self.bottom = three(self.master, data=self.data)
 
     def _show(self):
         self.left_top.grid(row=0, column=0)
         self.left_bottom.grid(row=1, column=0)
         self.window.grid(row=0, column=1, rowspan=2)
+        self.bottom.grid(row=2, column=0, columnspan=2)
