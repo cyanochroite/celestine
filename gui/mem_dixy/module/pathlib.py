@@ -3,9 +3,9 @@ import pathlib
 
 class Path:
     @classmethod
-    def Make(self, path):
+    def Make(cls, path):
         return pathlib.Path(path)
 
     @classmethod
-    def Join(self, one, two):
+    def Join(cls, one, two):
         return one.joinpath(two)

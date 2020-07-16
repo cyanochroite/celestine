@@ -27,3 +27,11 @@ class Image():
         if mode not in modes:
             raise ValueError("Invalid value for 'mode' variable.")
         return PIL.Image.new(mode, size, color)
+
+    @classmethod
+    def paste(cls, them):
+        cls.image.paste(them.image)
+
+    @classmethod
+    def save(cls, Path, format):
+        cls.image.save(Path, format)
