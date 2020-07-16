@@ -1,25 +1,38 @@
 from mem_dixy.Pillow.Image import Image
-from mem_dixy.star.mem_hash import mem_hash
-from mem_dixy.star.mem_image import mem_image
-from mem_dixy.star.Path import Path
+from mem_dixy.module.hashlib import Hash
+from mem_dixy.module.pathlib import Path
+from mem_dixy.module.os import OS
 
 print("setup")
 
-load_path = Path.Make(".")
-load_file = Path.Make("todo.png")
-load_this = Path.Join(load_path, load_file)
-save_path = Path.Make(".")
-save_file = Path.Make("demo.png")
-save_this = Path.Join(save_path, save_file)
+
+def work():
+    load_path = Path.Make("todo")
+    load_file = Path.Make("todo.png")
+    load_this = Path.Join(load_path, load_file)
+
+    save_path = Path.Make(".")
+    save_file = Path.Make("demo.png")
+    save_this = Path.Join(save_path, save_file)
+
+    base = Image.open(load_this)
+    image = Image.from_input("RGB", base.size, 0)
+    image.paste(base)
+    image.save(save_this, "PNG")
+
+    cypher = Hash.sha3_512(save_this)
+
+    move_path = Path.Make("done")
+    move_file = Path.Make(cypher + ".png")
+    move_this = Path.Join(move_path, move_file)
+
+    OS.rename(save_this, move_this)
+
 
 print("scan")
 
-base = mem_image(Image.open(load_this))
-image = mem_image(Image.from_input("RGB", base.image.size, 0))
-image.paste(base)
-image.save(save_this, "PNG")
-
 #os_rename(save_path + save_file, save_path)
+work()
 
 print("done")
 
