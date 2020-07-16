@@ -3,12 +3,8 @@ import PIL.Image
 
 class Image():
     @classmethod
-    def open(cls, file):
-        return PIL.Image.open(file)
-
-    @classmethod
-    def from_path(cls, path):
-        fp = path.path
+    def open(cls, Path):
+        fp = Path
         mode = "r"
         return PIL.Image.open(fp, mode)
 
