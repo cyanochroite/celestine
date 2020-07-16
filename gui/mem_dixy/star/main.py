@@ -6,9 +6,9 @@ from mem_dixy.module.os import OS
 print("setup")
 
 
-def work():
+def work(path):
     load_path = Path.Make("todo")
-    load_file = Path.Make("todo.png")
+    load_file = Path.Make(path)
     load_this = Path.Join(load_path, load_file)
 
     save_path = Path.Make(".")
@@ -31,8 +31,21 @@ def work():
 
 print("scan")
 
-#os_rename(save_path + save_file, save_path)
-work()
+import os
+
+
+one = Path.Make(os.path.abspath("."))
+two = Path.Make("todo")
+mypath = Path.Join(one, two)
+print(mypath)
+f = []
+for (dirpath, dirnames, filenames) in os.walk(mypath):
+    f.extend(filenames)
+    break
+
+for (path) in f:
+    print("convert " + path)
+    work(path)
 
 print("done")
 

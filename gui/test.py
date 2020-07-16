@@ -1,4 +1,4 @@
-import os.path
+import os
 
 path = '.'
 path = os.path.abspath(path)
@@ -13,3 +13,15 @@ import sys
 
 print ('Number of arguments:', len(sys.argv), 'arguments.')
 print ('Argument List:', str(sys.argv))
+
+
+mypath = os.path.normpath(path)
+f = []
+for (dirpath, dirnames, filenames) in os.walk(mypath):
+    f.extend(filenames)
+    break
+
+for (path) in f:
+    print("HI " + path)
+
+print(f)
