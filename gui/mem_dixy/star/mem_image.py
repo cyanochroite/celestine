@@ -20,9 +20,8 @@ class mem_image:
     def paste(self, them):
         self.image.paste(them.image)
 
-    def save(self, path, format):
-        fp = path.path
-        self.image.save(fp, format)
+    def save(self, Path, format):
+        self.image.save(Path, format)
 
     def image_save(image, path):  # {
         if os.path.isfile(path):  # {
