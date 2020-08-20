@@ -1,8 +1,8 @@
 import os.path
 import sys
 
-from mem_dixy.Pillow.Image import Image
-from mem_dixy.Pillow.ImageTk import ImageTk
+from mem_dixy.package.Pillow.Image import Image
+from mem_dixy.package.Pillow.ImageTk import ImageTk
 from mem_dixy.list import list
 
 
