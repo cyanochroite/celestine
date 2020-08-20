@@ -1,5 +1,5 @@
-from U0000 import *
-from U0080 import *
+from mem_dixy.Unicode.U0000 import *
+from mem_dixy.Unicode.U0080 import *
 convert = {
     SPACE: SPACE,
 
