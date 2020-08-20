@@ -1,5 +1,8 @@
 from U0000 import *
+from U0080 import *
 convert = {
+    SPACE: SPACE,
+
     DIGIT_ZERO: DIGIT_ZERO,
 
     DIGIT_ONE: DIGIT_ONE,
