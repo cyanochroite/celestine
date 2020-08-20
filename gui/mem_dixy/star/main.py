@@ -1,4 +1,4 @@
-from mem_dixy.Pillow.Image import Image
+from mem_dixy.package.Pillow.Image import Image
 from mem_dixy.module.hashlib import Hash
 from mem_dixy.module.pathlib import Path
 from mem_dixy.module.os import OS
