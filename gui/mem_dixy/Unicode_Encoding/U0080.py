@@ -2,7 +2,7 @@ from mem_dixy.Unicode.U0000 import *
 from mem_dixy.Unicode.U0080 import *
 
 
-Latin_1_Supplement = {
+encoding = {
     U0080: str(),
     U0081: str(),
     BREAK_PERMITTED_HERE: str(),

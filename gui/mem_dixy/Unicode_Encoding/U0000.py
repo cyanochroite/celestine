@@ -1,8 +1,8 @@
 from mem_dixy.Unicode.U0000 import *
-from mem_dixy.Unicode.U0080 import *
+# om mem_dixy.Unicode.UXXXX import *
 
 
-Basic_Latin = {
+encoding = {
     NULL: str(),
     START_OF_HEADING: str(),
     START_OF_TEXT: str(),
