@@ -25,3 +25,13 @@ for (path) in f:
     print("HI " + path)
 
 print(f)
+
+
+array = ["!", "<", "=", ">"]
+for a in array:
+    print("#" + a)
+    for b in array:
+        print("#" + a + b)
+        for c in array:
+            print("#" + a + b + c)
+
