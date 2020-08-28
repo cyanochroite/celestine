@@ -15,56 +15,53 @@ class enum_comparison(Enum):
     ne = 3,
     ge = 4,
     gt = 5,
-    al = 6,
-    no = 7
+    sa = 6,
+    sn = 7
 
 
 final_encoding = {
     enum_comparison.lt: str().join([LESS_THAN_SIGN]),
     enum_comparison.le: str().join([LESS_THAN_SIGN, EQUALS_SIGN]),
-    enum_comparison.eq: str().join([EQUALS_SIGN, EQUALS_SIGN]),
+    enum_comparison.eq: str().join([EQUALS_SIGN]),
     enum_comparison.ne: str().join([EXCLAMATION_MARK, EQUALS_SIGN]),
     enum_comparison.ge: str().join([GREATER_THAN_SIGN, EQUALS_SIGN]),
     enum_comparison.gt: str().join([GREATER_THAN_SIGN]),
-    enum_comparison.al: "?",
-    enum_comparison.no: "~"
+    enum_comparison.sa: str().join([LESS_THAN_SIGN, EQUALS_SIGN, GREATER_THAN_SIGN]),
+    enum_comparison.sn: str().join([EXCLAMATION_MARK]),
 }
 
 
 all_encoding = {
-    0x0: enum_comparison.eq,  # ____
+    0x0: enum_comparison.sa,  # ____
     0x1: enum_comparison.gt,  # ___>
     0x2: enum_comparison.eq,  # __=_
     0x3: enum_comparison.ge,  # __=>
     0x4: enum_comparison.lt,  # _<__
     0x5: enum_comparison.ne,  # _<_>
     0x6: enum_comparison.le,  # _<=_
-    0x7: enum_comparison.al,  # _<=>
-    0x8: enum_comparison.ne,  # !___
+    0x7: enum_comparison.sa,  # _<=>
+    0x8: enum_comparison.sn,  # !___
     0x9: enum_comparison.le,  # !__>
     0xA: enum_comparison.ne,  # !_=_
     0xB: enum_comparison.lt,  # !_=>
     0xC: enum_comparison.ge,  # !<__
     0xD: enum_comparison.eq,  # !<_>
     0xE: enum_comparison.gt,  # !<=_
-    0xF: enum_comparison.no,  # !<=>
+    0xF: enum_comparison.sn,  # !<=>
     128: enum_comparison.lt
 }
 
 
 def add_token(array):
-    a = EXCLAMATION_MARK in array
-    b = LESS_THAN_SIGN in array
-    c = EQUALS_SIGN in array
-    d = GREATER_THAN_SIGN in array
-    a = 8 if a else 0
-    b = 4 if b else 0
-    c = 2 if c else 0
-    d = 1 if d else 0
-    e = a + b + c + d
-    f = all_encoding.get(e)
-    g = final_encoding.get(f)
-    return g
+    index = 0
+    index |= EXCLAMATION_MARK in array
+    index <<= 1
+    index |= LESS_THAN_SIGN in array
+    index <<= 1
+    index |= EQUALS_SIGN in array
+    index <<= 1
+    index |= GREATER_THAN_SIGN in array
+    return all_encoding.get(index)
 
 
 class check_comparison(unittest.TestCase):
@@ -72,14 +69,14 @@ class check_comparison(unittest.TestCase):
     def setUp(self):
         self.NULL = 42
         self.empty = str()
-        self.lt = str().join([LESS_THAN_SIGN])
-        self.le = str().join([LESS_THAN_SIGN, EQUALS_SIGN])
-        self.eq = str().join([EQUALS_SIGN, EQUALS_SIGN])
-        self.ne = str().join([EXCLAMATION_MARK, EQUALS_SIGN])
-        self.ge = str().join([GREATER_THAN_SIGN, EQUALS_SIGN])
-        self.gt = str().join([GREATER_THAN_SIGN])
-        self.al = "?"
-        self.no = "~"
+        self.lt = enum_comparison.lt
+        self.le = enum_comparison.le
+        self.eq = enum_comparison.eq
+        self.ne = enum_comparison.ne
+        self.ge = enum_comparison.ge
+        self.gt = enum_comparison.gt
+        self.sa = enum_comparison.sa
+        self.sn = enum_comparison.sn
 
     def tearDown(self):
         self.empty = None
@@ -92,7 +89,7 @@ class check_comparison(unittest.TestCase):
 
     def test_EMPTY(self):
         t = []
-        self.assertTrue(add_token(t) == self.eq)
+        self.assertTrue(add_token(t) == self.sa)
 
     def test_EQUALS_SIGN(self):
         t = [EQUALS_SIGN]
@@ -109,7 +106,7 @@ class check_comparison(unittest.TestCase):
     def test_EQUALS_SIGN__EXCLAMATION_MARK__GREATER_THAN_SIGN__LESS_THAN_SIGN(self):
         t = [EQUALS_SIGN, EXCLAMATION_MARK,
              GREATER_THAN_SIGN, LESS_THAN_SIGN]
-        self.assertTrue(add_token(t) == self.no)
+        self.assertTrue(add_token(t) == self.sn)
 
     def test_EQUALS_SIGN__EXCLAMATION_MARK__LESS_THAN_SIGN(self):
         t = [EQUALS_SIGN, EXCLAMATION_MARK, LESS_THAN_SIGN]
@@ -121,7 +118,7 @@ class check_comparison(unittest.TestCase):
 
     def test_EQUALS_SIGN__GREATER_THAN_SIGN__LESS_THAN_SIGN(self):
         t = [EQUALS_SIGN, GREATER_THAN_SIGN, LESS_THAN_SIGN]
-        self.assertTrue(add_token(t) == self.al)
+        self.assertTrue(add_token(t) == self.sa)
 
     def test_EQUALS_SIGN__LESS_THAN_SIGN(self):
         t = [EQUALS_SIGN, LESS_THAN_SIGN]
@@ -129,7 +126,7 @@ class check_comparison(unittest.TestCase):
 
     def test_EXCLAMATION_MARK(self):
         t = [EXCLAMATION_MARK]
-        self.assertTrue(add_token(t) == self.ne)
+        self.assertTrue(add_token(t) == self.sn)
 
     def test_EXCLAMATION_MARK__GREATER_THAN_SIGN(self):
         t = [EXCLAMATION_MARK, GREATER_THAN_SIGN]
