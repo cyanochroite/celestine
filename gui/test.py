@@ -1,31 +1,3 @@
-import os
-
-path = '.'
-path = os.path.abspath(path)
-
-print(path)
-print(os.path.basename(path))
-print(os.path.dirname(path))
-print(os.path.normpath(path))
-print(os.path.normpath('.'))
-
-import sys
-
-print ('Number of arguments:', len(sys.argv), 'arguments.')
-print ('Argument List:', str(sys.argv))
-
-
-mypath = os.path.normpath(path)
-f = []
-for (dirpath, dirnames, filenames) in os.walk(mypath):
-    f.extend(filenames)
-    break
-
-for (path) in f:
-    print("HI " + path)
-
-print(f)
-
 import PIL
 from mem_dixy.package.Pillow.Image import Image
 
@@ -62,3 +34,18 @@ j.DATE_TIME = "moo"
 
 print(k)
 
+
+import pathlib
+
+
+class Path:
+    @classmethod
+    def Make(cls, path):
+        return pathlib.Path(path)
+
+    @classmethod
+    def Join(cls, one, two):
+        return one.joinpath(two)
+
+
+print(Path.Make("hippo\dippo"))
