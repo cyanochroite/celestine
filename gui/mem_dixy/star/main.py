@@ -48,4 +48,3 @@ for (path) in f:
     work(path)
 
 print("done")
-
