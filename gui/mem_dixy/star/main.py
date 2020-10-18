@@ -2,20 +2,19 @@ from mem_dixy.package.Pillow.Image import Image
 from mem_dixy.module.hashlib import Hash
 from mem_dixy.module.pathlib import Path
 from mem_dixy.module.os import OS
+from mem_dixy.utility.path import Path as PP
 
 print("setup")
 
 
 def work(path):
-    load_path = Path.Make("todo")
-    load_file = Path.Make(path)
-    load_this = Path.Join(load_path, load_file)
-
+    #save = PP(file="demo.png")
+    # save.change_directory("done")
     save_path = Path.Make(".")
     save_file = Path.Make("demo.png")
     save_this = Path.Join(save_path, save_file)
 
-    base = Image.open(load_this)
+    base = Image.open(path)
     image = Image.from_input("RGB", base.size, 0)
     image.paste(base)
     image.save(save_this, "PNG")
@@ -33,15 +32,10 @@ print("scan")
 
 import os
 
-
-one = Path.Make(os.path.abspath("."))
-two = Path.Make("todo")
-mypath = Path.Join(one, two)
-print(mypath)
-f = []
-for (dirpath, dirnames, filenames) in os.walk(mypath):
-    f.extend(filenames)
-    break
+# current
+dirr = PP()
+dirr.change_directory("todo")
+f = OS.filenames(dirr.get_path())
 
 for (path) in f:
     print("convert " + path)

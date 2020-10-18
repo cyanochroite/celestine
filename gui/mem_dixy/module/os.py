@@ -3,8 +3,13 @@ import os
 
 class OS:
     @classmethod
-    def getcwd(cls):
+    def working_directory(cls):
+        # one = Path.Make(os.path.abspath("."))
         return os.getcwd()
+
+    @classmethod
+    def join_path(cls, one, two):
+        return os.path.join(one, two)
 
     def remove(cls, path):
         if os.path.isfile(path):
@@ -16,7 +21,7 @@ class OS:
             os.rename(source, destination)
 
     @classmethod
-    def walk(cls, path):
+    def filenames(cls, path):
         file = []
         for (dirpath, dirnames, filenames) in os.walk(path):
             for name in filenames:
