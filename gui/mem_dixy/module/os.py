@@ -33,3 +33,20 @@ class OS:
             os.remove(path)
         with open(path, "wb") as file:
             image.save(file, "PNG", optimize=True)
+
+
+class Path:
+    def __init__(self, path=None, file=None):
+        self.path = OS.working_directory()
+        if path is not None:
+            self.change_directory(path)
+        self.file = file
+
+    def change_directory(self, path):
+        self.path = OS.join_path(self.path, path)
+
+    def get_path(self):
+        return self.path
+
+    def get_file(self):
+        return OS.join_path(self.path, self.file)
