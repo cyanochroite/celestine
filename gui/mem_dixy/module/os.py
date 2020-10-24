@@ -34,12 +34,16 @@ class OS:
         with open(path, "wb") as file:
             image.save(file, "PNG", optimize=True)
 
-    def walk_directory(top):
+    def walk_directory(top='.'):
         directory = []
         for (dirpath, dirnames, filenames) in os.walk(top):
             for dirname in dirnames:
                 directory.append(os.path.join(dirpath, dirname))
         return directory
+
+    def makedirs(paths):
+        for path in paths:
+            os.mkdir(path)
 
 
 class Path:
