@@ -22,16 +22,28 @@ def scan():
     return directory
 
 
-pwd = os.getcwd()
-os.chdir(path)
-print(scan())
-os.chdir(pwd)
+def chdir(path, call):
+    cwd = os.getcwd()
+    os.chdir(path)
+    ring = call()
+    os.chdir(cwd)
+    return ring
 
 
+sceen = chdir("todo", scan)
+print(sceen)
+
+meow = chdir("done", OS.walk_directory)
+print(meow)
+
+
+chdir("done", OS.walk_directory)
+
 pwd = os.getcwd()
-os.chdir(path)
-print("meow")
-print(OS.walk_directory('.'))
+os.chdir("done")
+for item in sceen:
+    os.mkdir(item)
+
 os.chdir(pwd)
 
 
@@ -83,17 +95,21 @@ j.DATE_TIME = "moo"
 print(k)
 
 
-import pathlib
+from mem_dixy.package.Pillow.Image import Image
+from mem_dixy.module.hashlib import Hash
+from mem_dixy.module.os import OS
+from mem_dixy.module.os import Path
 
 
-class Path:
-    @classmethod
-    def Make(cls, path):
-        return pathlib.Path(path)
+def skip():
+    print("setup")
 
-    @classmethod
-    def Join(cls, one, two):
-        return one.joinpath(two)
+    save_this = Path(file="demo.png").get_file()
 
+    load_this = "todo/todo.png"
+    save_this = "a/b/done.png"
 
-print(Path.Make("hippo\dippo"))
+    base = Image.open(load_this)
+    image = Image.from_input("RGB", base.size, 0)
+    image.paste(base)
+    image.save(save_this, "PNG")
