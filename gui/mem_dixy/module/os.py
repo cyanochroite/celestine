@@ -35,6 +35,8 @@ class OS:
             image.save(file, "PNG", optimize=True)
 
     def walk_directory(top='.'):
+        print("cherry")
+        print(top)
         directory = []
         for (dirpath, dirnames, filenames) in os.walk(top):
             for dirname in dirnames:
