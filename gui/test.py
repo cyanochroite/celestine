@@ -3,48 +3,79 @@ from mem_dixy.package.Pillow.Image import Image
 
 from mem_dixy.module.os import OS
 import os
-path = "todo"
 
 
-def get_directory(path):
-    directory = []
-    with os.scandir(path) as entries:
-        for entry in entries:
-            if entry.is_dir(follow_symlinks=False):
-                directory.append(entry.path)
-    return directory
-
-
-def scan():
-    directory = get_directory('.')
-    for path in directory:
-        directory.extend(get_directory(path))
-    return directory
-
-
-def chdir(path, call):
+def chdir(path, call, *args):
     cwd = os.getcwd()
     os.chdir(path)
-    ring = call()
+    ring = call(*args)
     os.chdir(cwd)
     return ring
 
 
-sceen = chdir("todo", scan)
-print(sceen)
-
-meow = chdir("done", OS.walk_directory)
+meow = chdir("todo", OS.walk_directory, '.')
 print(meow)
 
 
-chdir("done", OS.walk_directory)
+def Delegate(call,
+             _0=None,
+             _1=None,
+             _2=None,
+             _3=None,
+             _4=None,
+             _5=None,
+             _6=None,
+             _7=None,
+             _8=None,
+             _9=None,
+             _A=None,
+             _B=None,
+             _C=None,
+             _D=None,
+             _E=None,
+             _F=None
+             ):
+    if _0 is None:
+        return call()
+    if _1 is None:
+        return call(_0)
+    if _2 is None:
+        return call(_0, _1)
+    if _3 is None:
+        return call(_0, _1, _2)
+    if _4 is None:
+        return call(_0, _1, _2, _3)
+    if _5 is None:
+        return call(_0, _1, _2, _3, _4)
+    if _6 is None:
+        return call(_0, _1, _2, _3, _4, _5)
+    if _7 is None:
+        return call(_0, _1, _2, _3, _4, _5, _6)
+    if _8 is None:
+        return call(_0, _1, _2, _3, _4, _5, _6, _7)
+    if _9 is None:
+        return call(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9)
+    if _A is None:
+        return call(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _A)
+    if _B is None:
+        return call(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _A, _B)
+    if _C is None:
+        return call(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _A, _B, _C)
+    if _D is None:
+        return call(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _A, _B, _C, _D)
+    if _E is None:
+        return call(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _A, _B, _C, _D, _E)
+    return call(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _A, _B, _C, _D, _E, _F)
 
-pwd = os.getcwd()
-os.chdir("done")
-for item in sceen:
-    os.mkdir(item)
 
-os.chdir(pwd)
+def Delegate(call, **kw):
+    print(kw)
+    call(kw)
+
+
+#Delegate(OS.makedirs, kite=meow)
+
+chdir("done", OS.makedirs, meow)
 
 
 def scan(path):
