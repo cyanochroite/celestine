@@ -74,10 +74,14 @@ class Path:
 
 
 class File:
-    def __init__(self, name=None, path=None):
+    def __init__(self, name="", path="", root=""):
         self.name = name
         self.path = path
+        self.root = root
 
     def full(self):
         return OS.join_path(self.path, self.name)
+
+    def join(self):
+        return os.path.join(self.root, self.path, self.name)
 

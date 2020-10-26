@@ -1,6 +1,8 @@
 import PIL
 from mem_dixy.package.Pillow.Image import Image
 
+import os
+print(os.path.join("a", "", "b"))
 
 img = Image.open('file/logo.jpg')
 
