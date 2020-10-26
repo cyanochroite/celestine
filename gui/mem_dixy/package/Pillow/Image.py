@@ -3,6 +3,13 @@ import PIL.Image
 
 class Image():
     @classmethod
+    def convert(self, load, save):
+        base = Image.open(load)
+        image = Image.from_input("RGB", base.size, 0)
+        image.paste(base)
+        image.save(save, "PNG")
+
+    @classmethod
     def open(cls, Path):
         fp = Path
         mode = "r"
