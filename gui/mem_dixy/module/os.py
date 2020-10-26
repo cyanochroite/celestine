@@ -35,17 +35,25 @@ class OS:
             image.save(file, "PNG", optimize=True)
 
     def walk_directory(top='.'):
-        print("cherry")
-        print(top)
-        directory = []
+        path = []
+        file = []
         for (dirpath, dirnames, filenames) in os.walk(top):
             for dirname in dirnames:
-                directory.append(os.path.join(dirpath, dirname))
-        return directory
+                path.append(os.path.join(dirpath, dirname))
+            for filename in filenames:
+                file.append(File(filename, dirpath))
+        return (path, file)
 
     def makedirs(paths):
         for path in paths:
             os.mkdir(path)
+
+    def chdir(path, call, *args):
+        cwd = os.getcwd()
+        os.chdir(path)
+        ring = call(*args)
+        os.chdir(cwd)
+        return ring
 
 
 class Path:
@@ -63,3 +71,13 @@ class Path:
 
     def get_file(self):
         return OS.join_path(self.path, self.file)
+
+
+class File:
+    def __init__(self, name=None, path=None):
+        self.name = name
+        self.path = path
+
+    def full(self):
+        return OS.join_path(self.path, self.name)
+
