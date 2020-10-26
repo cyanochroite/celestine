@@ -8,8 +8,8 @@ class OS:
         return os.getcwd()
 
     @classmethod
-    def join_path(cls, one, two):
-        return os.path.join(one, two)
+    def join(cls, path, *paths):
+        return os.path.join(path, *paths)
 
     def remove(cls, path):
         if os.path.isfile(path):
@@ -41,7 +41,7 @@ class OS:
             for dirname in dirnames:
                 path.append(os.path.join(dirpath, dirname))
             for filename in filenames:
-                file.append(File(filename, dirpath))
+                file.append((filename, dirpath))
         return (path, file)
 
     def makedirs(paths):
@@ -54,34 +54,3 @@ class OS:
         ring = call(*args)
         os.chdir(cwd)
         return ring
-
-
-class Path:
-    def __init__(self, path=None, file=None):
-        self.path = OS.working_directory()
-        if path is not None:
-            self.change_directory(path)
-        self.file = file
-
-    def change_directory(self, path):
-        self.path = OS.join_path(self.path, path)
-
-    def get_path(self):
-        return self.path
-
-    def get_file(self):
-        return OS.join_path(self.path, self.file)
-
-
-class File:
-    def __init__(self, name="", path="", root=""):
-        self.name = name
-        self.path = path
-        self.root = root
-
-    def full(self):
-        return OS.join_path(self.path, self.name)
-
-    def join(self):
-        return os.path.join(self.root, self.path, self.name)
-
