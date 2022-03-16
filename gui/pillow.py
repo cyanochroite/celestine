@@ -1,6 +1,4 @@
-print("start")
-
-import os
+from mem_dixy.module.os import OS
 
 import PIL.Image
 import PIL.ImageFont
@@ -26,65 +24,7 @@ class Array:
 
 
 ####
-
-
-class OS:
-    @staticmethod
-    def working_directory():
-        return os.getcwd()
-
-    @staticmethod
-    def join(path, *paths):
-        return os.path.join(path, *paths)
-
-    @staticmethod
-    def remove(path):
-        if os.path.isfile(path):
-            os.remove(path)
-
-    @staticmethod
-    def rename(source, destination):
-        if not os.path.isfile(destination):
-            os.rename(source, destination)
-
-    @staticmethod
-    def filenames(path):
-        file = []
-        for (dirpath, dirnames, filenames) in os.walk(path):
-            for name in filenames:
-                file.append(os.path.join(dirpath, name))
-        return file
-
-    @staticmethod
-    def _image_save(image, path):
-        if os.path.isfile(path):
-            os.remove(path)
-        with open(path, "wb") as file:
-            image.save(file, "PNG", optimize=True)
-
-    @staticmethod
-    def walk_directory(top='.'):
-        path = []
-        file = []
-        for (dirpath, dirnames, filenames) in os.walk(top):
-            for dirname in dirnames:
-                path.append(os.path.join(dirpath, dirname))
-            for filename in filenames:
-                file.append((filename, dirpath))
-        return (path, file)
-
-    @staticmethod
-    def makedirs(paths):
-        for path in paths:
-            os.mkdir(path)
-
-    @staticmethod
-    def chdir(path, call, *args):
-        cwd = os.getcwd()
-        os.chdir(path)
-        ring = call(*args)
-        os.chdir(cwd)
-        return ring
+print("start")
 
 
 class Style:
@@ -869,27 +809,26 @@ paths = [
 ]
 
 paths = [
-    ("01_BLACK_20_01.jpg","Phil in his military uniform","November 1944",""),
-    ("02_NEGATIVE_205.jpg","Phil and June on furlough","November 1944",""),
-    ("03_BLACK_26_01.jpg","Phil and June on furlough","November 1944",""),
-    ("04_NEGATIVE_006-BLACK_20_03.jpg","Camp Roberts in California","Military Training Camp",""),
-    ("05_NEGATIVE_007.jpg","Fern and Phil","Camp Roberts",""),
-    ("06_NEGATIVE_002.jpg","Fern and Phil","Camp Roberts",""),
-    ("07_NEGATIVE_004-BLACK_21_03.jpg","Phil (on left)","Camp Roberts",""),
-    ("08_NEGATIVE_011.jpg","Fern","Camp Roberts",""),
-    ("09_BLACK_25_04.jpg","Phil and Fern","Pismo Beach, California","Break from training"),
-    ("10_BLACK_25_03.jpg","Phil and Fern","Pismo Beach, California",""),
-    ("11_BLACK_25_05.jpg","Phil and Fern","Pismo Beach, California",""),
-    ("12_BLACK_25_08.jpg","Phil and Fern","Pismo Beach, California",""),
-    ("13_BLACK_25_09.jpg","Phil and Fern","Pismo Beach, California",""),
-    ("14_BLACK_25_10.jpg","Phil","Pismo Beach, California",""),
-    ("15_BLACK_20_02.jpg","Camp Roberts","",""),
-    ("16_BLACK_20_05.jpg","Camp Roberts","",""),
-    ("18_BLACK_36_01.jpg","Graduation from Camp Roberts","","")
+    ("01_BLACK_20_01.jpg", "Phil in his military uniform", "November 1944", ""),
+    ("02_NEGATIVE_205.jpg", "Phil and June on furlough", "November 1944", ""),
+    ("03_BLACK_26_01.jpg", "Phil and June on furlough", "November 1944", ""),
+    ("04_NEGATIVE_006-BLACK_20_03.jpg", "Camp Roberts in California", "Military Training Camp", ""),
+    ("05_NEGATIVE_007.jpg", "Fern and Phil", "Camp Roberts", ""),
+    ("06_NEGATIVE_002.jpg", "Fern and Phil", "Camp Roberts", ""),
+    ("07_NEGATIVE_004-BLACK_21_03.jpg", "Phil (on left)", "Camp Roberts", ""),
+    ("08_NEGATIVE_011.jpg", "Fern", "Camp Roberts", ""),
+    ("09_BLACK_25_04.jpg", "Phil and Fern", "Pismo Beach, California", "Break from training"),
+    ("10_BLACK_25_03.jpg", "Phil and Fern", "Pismo Beach, California", ""),
+    ("11_BLACK_25_05.jpg", "Phil and Fern", "Pismo Beach, California", ""),
+    ("12_BLACK_25_08.jpg", "Phil and Fern", "Pismo Beach, California", ""),
+    ("13_BLACK_25_09.jpg", "Phil and Fern", "Pismo Beach, California", ""),
+    ("14_BLACK_25_10.jpg", "Phil", "Pismo Beach, California", ""),
+    ("15_BLACK_20_02.jpg", "Camp Roberts", "", ""),
+    ("16_BLACK_20_05.jpg", "Camp Roberts", "", ""),
+    ("18_BLACK_36_01.jpg", "Graduation from Camp Roberts", "", "")
 ]
 
-#("A.jpg", "1234567890!@#$%^&*()_+=-[]}{;':./?>,<QWzxZXOILPyY", "1234567890!@#$%^&*()_+=-[]}{;':./?>,<QWzxZXOILPyY", "1234567890!@#$%^&*()_+=-[]}{;':./?>,<QWzxZXOILPyY"),
-
+# ("A.jpg", "1234567890!@#$%^&*()_+=-[]}{;':./?>,<QWzxZXOILPyY", "1234567890!@#$%^&*()_+=-[]}{;':./?>,<QWzxZXOILPyY", "1234567890!@#$%^&*()_+=-[]}{;':./?>,<QWzxZXOILPyY"),
 
 
 def convert_to_jpg(array):
@@ -901,9 +840,9 @@ def convert_to_jpg(array):
     print("convert " + path)
 
     photo = Image.open(path)
-    
+
     mode = "L" if photo.image.mode == "L" else "RGB"
-    
+
     image = Image.new("RGB", screen.width, screen.height)
 
     #style = Style("/System/Library/Fonts/HelveticaNeue.ttc", 64)
@@ -912,7 +851,7 @@ def convert_to_jpg(array):
     line = [item for item in [text_0, text_1, text_2] if item != ""]
     lines = len(line)
 
-    picture = Canvas(0, 0, screen.width, screen.height - (text.height*lines))
+    picture = Canvas(0, 0, screen.width, screen.height - (text.height * lines))
     new_width = picture.width
     new_height = picture.height
     if photo.ratio >= picture.ratio:
@@ -1013,12 +952,10 @@ def jpg_quality_test(path):
         image.save_jpg(image_save, quality)
 
 
-
-#main(paths)
-
+# main(paths)
 paths = load_paths()
 paths.sort()
-#paths.remove(".DS_Store")
+# paths.remove(".DS_Store")
 for item in paths:
     print(item + ",")
 
