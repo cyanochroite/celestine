@@ -1,16 +1,9 @@
-from mem_dixy.module.os import OS
+from mem_dixy.module.python.os import OS
+from mem_dixy.module.pillow.Image import Image
+from mem_dixy.module.pillow.ImageDraw import ImageDraw
+from mem_dixy.module.pillow.ImageFont import ImageFont
 
-import PIL.Image
-import PIL.ImageFont
-import PIL.ImageDraw
-PIL.Image.MAX_IMAGE_PIXELS = None
-
-
-class Cast():
-    @staticmethod
-    def float_to_integer(number):
-        return int(round(number))
-
+#import PIL.Image
 
 class Array:
     @staticmethod
@@ -49,12 +42,7 @@ class Style:
         self.size = size
 
     def truetype(self):
-        font = self.font
-        size = self.size
-        index = 0
-        encoding = "unic"
-        layout_engine = PIL.ImageFont.LAYOUT_BASIC
-        return PIL.ImageFont.truetype(font, size, index, encoding, layout_engine)
+        return ImageFont.truetype(self.font, self.size)
 
     def text(self, x, y, text, ImageDraw):
         xy = (int(x), int(y))
@@ -95,12 +83,7 @@ class Style2:
         self.size = size
 
     def truetype(self):
-        font = self.font
-        size = self.size
-        index = 0
-        encoding = "unic"
-        layout_engine = PIL.ImageFont.LAYOUT_BASIC
-        return PIL.ImageFont.truetype(font, size, index, encoding, layout_engine)
+        return ImageFont.truetype(self.font, self.size)
 
     def text(self, x, y, text, ImageDraw):
         xy = (int(x), int(y))
@@ -117,105 +100,6 @@ class Style2:
         stroke_fill = self.stroke_fill
         embedded_color = False
         ImageDraw.text(xy, text, fill, font, anchor, spacing, align, direction, features, language, stroke_width, stroke_fill, embedded_color)
-
-
-class Image:
-    def __del__(self):
-        self.height = None
-        self.image = None
-        self.ratio = None
-        self.size = None
-        self.width = None
-
-    def __init__(self, image):
-        self.height = image.height
-        self.image = image
-        self.ratio = image.width / image.height if image.height else 0
-        self.size = image.size
-        self.width = image.width
-
-    @classmethod
-    def new(cls, mode, x, y):
-        mode = mode
-        size = (x, y)
-        color = 0
-        return cls(PIL.Image.new(mode, size, color))
-
-    @classmethod
-    def open(cls, path):
-        fp = path
-        mode = "r"
-        formats = None
-        return cls(PIL.Image.open(fp, mode, formats))
-
-    def convert(self, mode):
-        matrix = None
-        dither = PIL.Image.NONE
-        palette = 0
-        colors = 256
-        self.__init__(self.image.convert(mode, matrix, dither, palette, colors))
-
-    def resize(self, width, height):
-        size = (Cast.float_to_integer(width), Cast.float_to_integer(height))
-        resample = PIL.Image.LANCZOS
-        box = None
-        reducing_gap = None
-        self.__init__(self.image.resize(size, resample, box, reducing_gap))
-
-    def resize_to_height(self, height):
-        scale = height / self.height
-        width = self.width * scale
-        self.resize(width, height)
-
-    def resize_to_width(self, width):
-        scale = width / self.width
-        height = self.height * scale
-        self.resize(width, height)
-
-    def rotate(self, rotation):
-        angle = rotation
-        resample = PIL.Image.BICUBIC
-        expand = True
-        center = None
-        translate = None
-        fillcolor = None
-        self.__init__(self.image.rotate(angle, resample, expand, center, translate, fillcolor))
-
-    def save_jpg(self, path, quality=75, dpi=0):
-        self._save_jpg(path, quality, True, False, dpi, dpi, None, bytes(), "4:4:4", None)
-
-    def _save(self, fp, format, params):
-        self.image.save(fp, format, **params)
-
-    def _save_jpg(self, path, quality, optimize, progressive, x, y, icc_profile, exif, subsampling, qtables):
-        fp = path
-        format = "jpeg"
-        params = {
-            "quality": quality,
-            "optimize": optimize,
-            "progressive": progressive,
-            "dpi": (x, y),
-            "icc_profile": icc_profile,
-            "exif": exif,
-            "subsampling": subsampling,
-            "qtables": qtables
-        }
-        self._save(fp, format, params)
-
-####
-    def save_png(self, path):
-        print(PIL.Image.SAVE)
-        self.image.save(path, "PNG", optimize=True)
-        print(PIL.Image.SAVE)
-        print(breakybreaky)
-
-    def paste(self, image, x=0, y=0):
-        im = image.image
-        x = Cast.float_to_integer(x)
-        y = Cast.float_to_integer(y)
-        box = (x, y, x + image.width, y + image.height)
-        mask = None
-        self.image.paste(im, box, mask)
 
 
 class Canvas:
@@ -809,23 +693,8 @@ paths = [
 ]
 
 paths = [
-    ("01_BLACK_20_01.jpg", "Phil in his military uniform", "November 1944", ""),
-    ("02_NEGATIVE_205.jpg", "Phil and June on furlough", "November 1944", ""),
-    ("03_BLACK_26_01.jpg", "Phil and June on furlough", "November 1944", ""),
-    ("04_NEGATIVE_006-BLACK_20_03.jpg", "Camp Roberts in California", "Military Training Camp", ""),
-    ("05_NEGATIVE_007.jpg", "Fern and Phil", "Camp Roberts", ""),
-    ("06_NEGATIVE_002.jpg", "Fern and Phil", "Camp Roberts", ""),
-    ("07_NEGATIVE_004-BLACK_21_03.jpg", "Phil (on left)", "Camp Roberts", ""),
-    ("08_NEGATIVE_011.jpg", "Fern", "Camp Roberts", ""),
-    ("09_BLACK_25_04.jpg", "Phil and Fern", "Pismo Beach, California", "Break from training"),
-    ("10_BLACK_25_03.jpg", "Phil and Fern", "Pismo Beach, California", ""),
-    ("11_BLACK_25_05.jpg", "Phil and Fern", "Pismo Beach, California", ""),
-    ("12_BLACK_25_08.jpg", "Phil and Fern", "Pismo Beach, California", ""),
-    ("13_BLACK_25_09.jpg", "Phil and Fern", "Pismo Beach, California", ""),
-    ("14_BLACK_25_10.jpg", "Phil", "Pismo Beach, California", ""),
-    ("15_BLACK_20_02.jpg", "Camp Roberts", "", ""),
-    ("16_BLACK_20_05.jpg", "Camp Roberts", "", ""),
-    ("18_BLACK_36_01.jpg", "Graduation from Camp Roberts", "", "")
+    ("Control_Screenshot_2.jpg", "Phil in his military uniform", "November 1944", ""),
+    ("Control_Screenshot_3.jpg", "Phil in his military uniform", "November 1944", "")
 ]
 
 # ("A.jpg", "1234567890!@#$%^&*()_+=-[]}{;':./?>,<QWzxZXOILPyY", "1234567890!@#$%^&*()_+=-[]}{;':./?>,<QWzxZXOILPyY", "1234567890!@#$%^&*()_+=-[]}{;':./?>,<QWzxZXOILPyY"),
@@ -846,7 +715,10 @@ def convert_to_jpg(array):
     image = Image.new("RGB", screen.width, screen.height)
 
     #style = Style("/System/Library/Fonts/HelveticaNeue.ttc", 64)
-    style = Style("/System/Library/Fonts/Supplemental/AmericanTypewriter.ttc", 128)
+    #style = Style("/System/Library/Fonts/Supplemental/AmericanTypewriter.ttc", 128)
+    print("C:\Windows\Fonts\Arial.ttf")
+    style = Style("C:\Windows\Fonts\Arial.ttf", 128)
+    
 
     line = [item for item in [text_0, text_1, text_2] if item != ""]
     lines = len(line)
@@ -863,7 +735,7 @@ def convert_to_jpg(array):
     offy = (picture.height - new_height) / 2
 
     image.paste(photo, offx, offy)
-    draw = PIL.ImageDraw.Draw(image.image)
+    draw = ImageDraw.Draw(image.image)
 
     if lines == 0:
         pass
@@ -924,7 +796,7 @@ def dvd(array):
 
 print("finish")
 
-# https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html
+
 # https://help.fontlab.com/fontlab/7/manual/Color-Font-Formats/
 
 
@@ -952,7 +824,7 @@ def jpg_quality_test(path):
         image.save_jpg(image_save, quality)
 
 
-# main(paths)
+main(paths)
 paths = load_paths()
 paths.sort()
 # paths.remove(".DS_Store")

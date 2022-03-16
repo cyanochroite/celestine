@@ -1,8 +1,8 @@
 import os.path
 import sys
 
-from mem_dixy.package.Pillow.Image import Image
-from mem_dixy.package.Pillow.ImageTk import ImageTk
+from mem_dixy.module.pillow.Image import Image
+from mem_dixy.module.pillow.ImageTk import ImageTk
 from mem_dixy.list import list
 
 
@@ -33,7 +33,9 @@ class WindowModel():
     def _load_image(self, path, name):
         file = os.path.join(path, name)
         image = Image.open(file)
-        photo = ImageTk.PhotoImage(image)
+        print(file)
+        print(image)
+        photo = ImageTk.PhotoImage(image.image)
         return photo
 
     def reset_image(self):

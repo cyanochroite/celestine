@@ -1,9 +1,10 @@
+# https://docs.python.org/3/library/hashlib.html
 import hashlib
 
 
 class Hash:
-    @classmethod
-    def _cypher(cls, path, cypher):
+    @staticmethod
+    def _cypher(path, cypher):
         with open(path, "rb") as file:
             cypher.update(file.read())
         return cypher.hexdigest().upper()
