@@ -1,6 +1,6 @@
 import functools
 
-from mem_dixy.module.tkinter.Widget import Frame
+from mem_dixy.package.tkinter.Widget import Frame
 
 
 class two(Frame):
