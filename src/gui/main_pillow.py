@@ -1,7 +1,7 @@
-from mem_dixy.module.python.os import OS
-from mem_dixy.module.pillow.Image import Image
-from mem_dixy.module.pillow.ImageDraw import ImageDraw
-from mem_dixy.module.pillow.ImageFont import ImageFont
+from mem_dixy.package.python.os import os
+from mem_dixy.package.pillow.Image import Image
+from mem_dixy.package.pillow.ImageDraw import ImageDraw
+from mem_dixy.package.pillow.ImageFont import ImageFont
 
 #import PIL.Image
 
@@ -156,7 +156,7 @@ def convert_to_jpg(array):
     global text
 
     (name, text_0, text_1, text_2) = array
-    path = OS.join("todo", name)
+    path = os.join("todo", name)
     print("convert " + path)
 
     photo = Image.open(path)
@@ -202,7 +202,7 @@ def convert_to_jpg(array):
 
     image.convert(mode)
 
-    new_name = OS.join("done", name)
+    new_name = os.join("done", name)
     names = new_name.split(".")
     image_save = names[0] + ".jpg"
     print("saved " + image_save)
@@ -210,8 +210,8 @@ def convert_to_jpg(array):
 
 
 def make_dvd(left, right):
-    name1 = OS.join("todo", left)
-    name2 = OS.join("todo", right)
+    name1 = os.join("todo", left)
+    name2 = os.join("todo", right)
     print("convert " + name1)
     print("convert " + name2)
     background = Image.new("RGB", screen.width, screen.height)
@@ -226,7 +226,7 @@ def make_dvd(left, right):
     background.paste(image_left, screen_middle - image_left.width, 0)
     background.paste(image_right, screen_middle, 0)
 
-    new_name = OS.join("done", left)
+    new_name = os.join("done", left)
     names = new_name.split(".")
     image_save = names[0] + ".jpg"
     print("saved " + image_save)
@@ -248,8 +248,8 @@ print("scan")
 
 
 def load_paths():
-    (path, file) = OS.chdir("todo", OS.walk_directory)
-    OS.chdir("done", OS.makedirs, path)
+    (path, file) = os.chdir("todo", os.walk_directory)
+    os.chdir("done", os.makedirs, path)
     array = []
     for (item) in file:
         root = "todo"
@@ -259,11 +259,11 @@ def load_paths():
 
 
 def jpg_quality_test(path):
-    image_open = OS.join("todo", path)
+    image_open = os.join("todo", path)
     image = Image.open(image_open)
     for quality in range(101):
         name = str(quality) + ".jpg"
-        image_save = OS.join("done", name)
+        image_save = os.join("done", name)
         print("saved " + image_save)
         image.save_jpg(image_save, quality)
 
@@ -312,11 +312,7 @@ import dearpygui.dearpygui as dpg
 
 def testy(sender):
     print(sender)
-    print(a)
-    print(b)
-    print(c)
-    print(d)
-    print(e)
+
 
 def gui_main(sender):
     global paths

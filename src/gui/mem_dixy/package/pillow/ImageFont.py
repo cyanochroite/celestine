@@ -1,5 +1,5 @@
 # https://pillow.readthedocs.io/en/stable/reference/ImageFont.html
-import PIL.ImageFont
+import PIL.ImageFont as _ImageFont
 
 
 class ImageFont():
@@ -9,5 +9,5 @@ class ImageFont():
         size = size
         index = 0
         encoding = "unic"
-        layout_engine = PIL.ImageFont.LAYOUT_BASIC
-        return PIL.ImageFont.truetype(font, size, index, encoding, layout_engine)
+        layout_engine = _ImageFont.LAYOUT_BASIC
+        return _ImageFont.truetype(font, size, index, encoding, layout_engine)

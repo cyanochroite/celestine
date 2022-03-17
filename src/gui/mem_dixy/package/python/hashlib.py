@@ -1,8 +1,8 @@
 # https://docs.python.org/3/library/hashlib.html
-import hashlib
+import hashlib as _hashlib
 
 
-class Hash:
+class hashlib:
     @staticmethod
     def _cypher(path, cypher):
         with open(path, "rb") as file:
@@ -11,4 +11,4 @@ class Hash:
 
     @classmethod
     def sha3_512(cls, path):
-        return cls._cypher(path, hashlib.sha3_512())
+        return cls._cypher(path, _hashlib.sha3_512())

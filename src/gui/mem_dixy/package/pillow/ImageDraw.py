@@ -1,5 +1,5 @@
 # https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html
-import PIL.ImageDraw
+import PIL.ImageDraw as _ImageDraw
 
 
 class ImageDraw():
@@ -7,4 +7,4 @@ class ImageDraw():
     def Draw(image):
         im = image
         mode = None
-        return PIL.ImageDraw.Draw(im, mode)
+        return _ImageDraw.Draw(im, mode)
