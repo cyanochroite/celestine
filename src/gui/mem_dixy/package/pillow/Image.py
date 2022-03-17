@@ -1,8 +1,8 @@
 # https://pillow.readthedocs.io/en/stable/reference/Image.html
-import PIL.Image
+import PIL.Image as _Image
 
 
-PIL.Image.MAX_IMAGE_PIXELS = None
+_Image.MAX_IMAGE_PIXELS = None
 
 
 class Image:
@@ -29,25 +29,25 @@ class Image:
         mode = mode
         size = (x, y)
         color = 0
-        return cls(PIL.Image.new(mode, size, color))
+        return cls(_Image.new(mode, size, color))
 
     @classmethod
     def open(cls, path):
         fp = path
         mode = "r"
         formats = None
-        return cls(PIL.Image.open(fp, mode, formats))
+        return cls(_Image.open(fp, mode, formats))
 
     def convert(self, mode):
         matrix = None
-        dither = PIL.Image.NONE
+        dither = _Image.NONE
         palette = 0
         colors = 256
         self.__init__(self.image.convert(mode, matrix, dither, palette, colors))
 
     @classmethod
     def old_png_convert(cls, load, save):
-        base = Image.open(load)
+        base = cls.open(load)
         image = cls.old_from_input("RGB", base.size, 0)
         image.paste(base.image)
         image.save(save, "PNG")
@@ -70,11 +70,11 @@ class Image:
         }
         if mode not in modes:
             raise ValueError("Invalid value for 'mode' variable.")
-        return PIL.Image.new(mode, size, color)
-    
+        return _Image.new(mode, size, color)
+
     def resize(self, width, height):
         size = (self._float_to_integer(width), self._float_to_integer(height))
-        resample = PIL.Image.LANCZOS
+        resample = _Image.LANCZOS
         box = None
         reducing_gap = None
         self.__init__(self.image.resize(size, resample, box, reducing_gap))
@@ -91,7 +91,7 @@ class Image:
 
     def rotate(self, rotation):
         angle = rotation
-        resample = PIL.Image.BICUBIC
+        resample = _Image.BICUBIC
         expand = True
         center = None
         translate = None
@@ -121,9 +121,9 @@ class Image:
 
 ####
     def save_png(self, path):
-        print(PIL.Image.SAVE)
+        print(_Image.SAVE)
         self.image.save(path, "PNG", optimize=True)
-        print(PIL.Image.SAVE)
+        print(_Image.SAVE)
         print(breakybreaky)
 
     def paste(self, image, x=0, y=0):
@@ -135,9 +135,9 @@ class Image:
         self.image.paste(im, box, mask)
 
     @classmethod
-    def my_convert(self, load, save):
-        base = Image.open(load)
-        image = Image.from_input("RGB", base.size, 0)
+    def my_convert(cls, load, save):
+        base = cls.open(load)
+        image = cls.from_input("RGB", base.size, 0)
         image.paste(base)
         image.save(save, "PNG")
 
@@ -159,7 +159,7 @@ class Image:
         }
         if mode not in modes:
             raise ValueError("Invalid value for 'mode' variable.")
-        return PIL.Image.new(mode, size, color)
+        return _Image.new(mode, size, color)
 
 
 

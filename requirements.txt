@@ -1,2 +1,4 @@
-pillow
 dearpygui
+pillow
+python
+tkinter

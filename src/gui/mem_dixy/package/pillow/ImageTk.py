@@ -1,8 +1,8 @@
 # https://pillow.readthedocs.io/en/stable/reference/ImageTk.html
-import PIL.ImageTk
+import PIL.ImageTk as _ImageTk
 
 
 class ImageTk():
     @classmethod
     def PhotoImage(cls, image):
-        return PIL.ImageTk.PhotoImage(image)
+        return _ImageTk.PhotoImage(image)
