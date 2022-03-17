@@ -305,35 +305,66 @@ print("done")
 
 
 ###########################
+import mem_dixy.star.main
 
 
 import dearpygui
 import dearpygui.dearpygui as dpg
 
-def testy(sender):
+def callback_testy(sender, app_data, user_data):
     print(sender)
 
 
-def gui_main(sender):
+def callback_main(sender, app_data, user_data):
     global paths
     main(paths)
 
-def gui_dvd(sender):
+def callback_dvd(sender, app_data, user_data):
     global paths
     dvd(paths)
 
-def gui_test(sender):
+def callback_test(sender, app_data, user_data):
     global paths
     jpg_quality_test(paths)
 
-###########################
+def callback_star(sender, app_data, user_data):
+    mem_dixy.star.main.main()
 
+###########################
+#    App Data:  {'file_path_name': 'C:\\Users\\mem_d\\Project\\src\\gui\\done', 'file_name': '', 'current_path': 'C:\\Users\\mem_d\\Project\\src\\gui\\done', 'current_filter': '', 'min_size': [100.0, 100.0], 'max_size': [30000.0, 30000.0], 'selections': {'done': 'C:\\Users\\mem_d\\Project\\src\\gui\\done\\done'}}
+
+def directory(app_data):
+    #Make directory lookup stuff
+    array = []
+    current_path = app_data.current_path
+    selections = app_data.selections
+    for selection in selections:
+        item = selection.trim(current_path)
+        print(item)
+        array.append(item)
+    return array
+
+def callback(sender, app_data, user_data):
+    print("Sender: ", sender)
+    print("App Data: ", app_data)
+    print("user_data Data: ", user_data)
+    directory(app_data)
+
+def callback2(sender, app_data, user_data):
+    dpg.show_item("file_dialog_id")
+
+    
 def window():
+    dpg.add_file_dialog(directory_selector=True, show=False, callback=callback, tag="file_dialog_id")
+    #
     with dpg.window(label="Dear PyGui Demo", width=800, height=800, pos=(100, 100), tag="Main"):
-        dpg.add_button(label="Test", tag="Test", callback=testy)
-        dpg.add_button(label="DVD", callback=gui_dvd)
-        dpg.add_button(label="Main", callback=gui_main)
-        dpg.add_button(label="JPG", callback=gui_test)
+        dpg.add_button(label="Directory Selector", callback=callback2)
+        
+        dpg.add_button(label="Test", tag="Test", callback=callback_testy)
+        dpg.add_button(label="DVD", callback=callback_dvd)
+        dpg.add_button(label="Main", callback=callback_main)
+        dpg.add_button(label="JPG", callback=callback_test)
+        dpg.add_button(label="Star", callback=callback_star)
 
 ###########################
 dearpygui.dearpygui.create_context()
@@ -341,6 +372,8 @@ dpg.create_viewport(title='Custom Title', width=1200, height=800)
 dearpygui.dearpygui.setup_dearpygui()
 
 window()
+
+
 
 dearpygui.dearpygui.show_viewport(minimized=False, maximized=False)
 dearpygui.dearpygui.start_dearpygui()
