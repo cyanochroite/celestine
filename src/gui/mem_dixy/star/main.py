@@ -1,6 +1,6 @@
-from mem_dixy.package.Pillow.Image import Image
-from mem_dixy.module.hashlib import Hash
-from mem_dixy.module.os import OS
+from mem_dixy.package.pillow.Image import Image
+from mem_dixy.package.python.hashlib import Hash
+from mem_dixy.package.python.os import OS
 
 print("scan")
 
@@ -16,10 +16,13 @@ for (item) in file:
     root = "done"
     two = OS.join(root, path, name)
 
-    Image.convert(one, two)
+    Image.old_png_convert(one, two)
     name = Hash.sha3_512(two) + ".png"
     three = OS.join(root, path, name)
 
     OS.rename(two, three)
 
 print("done")
+
+
+
