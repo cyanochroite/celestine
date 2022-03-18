@@ -331,33 +331,33 @@ def callback_star(sender, app_data, user_data):
     mem_dixy.star.main.main()
 
 ###########################
-#    App Data:  {'file_path_name': 'C:\\Users\\mem_d\\Project\\src\\gui\\done', 'file_name': '', 'current_path': 'C:\\Users\\mem_d\\Project\\src\\gui\\done', 'current_filter': '', 'min_size': [100.0, 100.0], 'max_size': [30000.0, 30000.0], 'selections': {'done': 'C:\\Users\\mem_d\\Project\\src\\gui\\done\\done'}}
 
-def directory(app_data):
-    #Make directory lookup stuff
-    array = []
-    current_path = app_data.current_path
-    selections = app_data.selections
-    for selection in selections:
-        item = selection.trim(current_path)
-        print(item)
-        array.append(item)
-    return array
+from mem_dixy.package.dearpygui.file_dialog import file_dialog
 
 def callback(sender, app_data, user_data):
     print("Sender: ", sender)
     print("App Data: ", app_data)
     print("user_data Data: ", user_data)
-    directory(app_data)
+
+def callback_file_dialog(sender, app_data, user_data):
+    selection = file_dialog.selection(app_data)
+    if selection:
+        selection = selection[0]
+    if user_data:
+        dpg.set_value(user_data, selection)
+    print(selection)
+    print(user_data)
 
 def callback2(sender, app_data, user_data):
+    dpg.configure_item("file_dialog_id", user_data="cat")
     dpg.show_item("file_dialog_id")
 
     
 def window():
-    dpg.add_file_dialog(directory_selector=True, show=False, callback=callback, tag="file_dialog_id")
+    dpg.add_file_dialog(directory_selector=True, show=False, callback=callback_file_dialog, tag="file_dialog_id", user_data="cows")
     #
     with dpg.window(label="Dear PyGui Demo", width=800, height=800, pos=(100, 100), tag="Main"):
+        dpg.add_input_text(label="moo", tag="cat")
         dpg.add_button(label="Directory Selector", callback=callback2)
         
         dpg.add_button(label="Test", tag="Test", callback=callback_testy)
