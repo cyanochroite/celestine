@@ -2767,3 +2767,24 @@ def show_demo():
                 dpg.configure_item(b1, user_data=dpg.last_item(), callback=_callback_auto_mutex)
                 dpg.configure_item(b2, user_data=dpg.last_item(), callback=_callback_manual_mutex)
                 dpg.configure_item(b3, user_data=dpg.last_item())
+
+dpg.create_context()
+dpg.create_viewport(title='Custom Title', width=2600, height=1600)
+dpg.setup_dearpygui()
+
+dpg.show_style_editor()
+dpg.show_metrics()
+dpg.show_about()
+dpg.show_debug()
+dpg.show_documentation()
+dpg.show_font_manager()
+dpg.show_item_registry()
+
+show_demo()
+
+dpg.show_viewport(minimized=False, maximized=False)
+dpg.start_dearpygui()
+dpg.destroy_context()
+
+
+    

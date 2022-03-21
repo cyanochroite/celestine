@@ -14,8 +14,11 @@ def callback1(sender, app_data, user_data):
 def callback2(sender, app_data, user_data):
     value = dpg.set_value("cat", "Oink")
 
+def callback4(sender, app_data, user_data):
+    print(app_data)
+
 with dpg.window():
-    dpg.add_input_text(tag="cat", default_value="meow")
+    dpg.add_input_text(tag="cat", default_value="meow", callback=callback4)
     dpg.add_button(label="What does a cat say?", callback=callback0)
     dpg.add_button(label="It says Moo", callback=callback1)
     dpg.add_button(label="It says Oink?", callback=callback2)
