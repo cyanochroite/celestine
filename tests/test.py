@@ -1,8 +1,11 @@
+import sys
+sys.path.insert(1, '../src/gui/')
+
 import PIL
-from mem_dixy.package.Pillow.Image import Image
+from mem_dixy.package.pillow.Image import Image
 
 
-img = Image.open('file/logo.jpg')
+img = Image.open('../src/gui/file/logo.jpg')
 
 # DateTime
 # TimeZoneOffset

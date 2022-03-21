@@ -1,4 +1,7 @@
-# coding=utf-8
+import sys
+sys.path.insert(1, '../src/gui')
+
+#import file
 import unittest
 
 from mem_dixy.tag.alphabet import logical
@@ -9,14 +12,14 @@ from enum import Enum
 
 
 class enum_comparison(Enum):
-    lt = 0,
-    le = 1,
-    eq = 2,
-    ne = 3,
-    ge = 4,
-    gt = 5,
-    sa = 6,
-    sn = 7
+    lt = 0, # less then
+    le = 1, # less then or equal to
+    eq = 2, # equal to
+    ne = 3, # not equal to
+    ge = 4, # greater then
+    gt = 5, # greater then or equal to
+    sa = 6, # select all
+    sn = 7  # select none
 
 
 class operator():
