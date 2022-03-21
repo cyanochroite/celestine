@@ -1,4 +1,4 @@
 dearpygui
 pillow
-python
+python # NOTE: 3.9+ ONLY
 tkinter
