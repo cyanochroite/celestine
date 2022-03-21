@@ -4,9 +4,9 @@ from mem_dixy.Unicode.U0080 import *
 from mem_dixy.Unicode_Encoding.U0000 import encoding as Basic_Latin
 from mem_dixy.Unicode_Encoding.U0080 import encoding as Latin_1_Supplement
 
+from mem_dixy.tag.comparison import *
 
-# convert = Basic_Latin | Latin_1_Supplement # NOTE: 3.9+ ONLY
-convert = {**Basic_Latin, **Latin_1_Supplement}
+convert = Basic_Latin | Latin_1_Supplement
 
 
 lowercase = {
@@ -303,6 +303,28 @@ wildcard = {
     COLON,
     QUESTION_MARK,
     COMMERCIA_AT,
+}
+
+comparison_primary = {
+    enum_comparison.lt: lt.primary,
+    enum_comparison.le: le.primary,
+    enum_comparison.eq: eq.primary,
+    enum_comparison.ne: ne.primary,
+    enum_comparison.ge: ge.primary,
+    enum_comparison.gt: gt.primary,
+    enum_comparison.sa: sa.primary,
+    enum_comparison.sn: sn.primary
+}
+
+comparison_secondary = {
+    enum_comparison.lt: lt.secondary,
+    enum_comparison.le: le.secondary,
+    enum_comparison.eq: eq.secondary,
+    enum_comparison.ne: ne.secondary,
+    enum_comparison.ge: ge.secondary,
+    enum_comparison.gt: gt.secondary,
+    enum_comparison.sa: sa.secondary,
+    enum_comparison.sn: sn.secondary
 }
 
 # The percent sign % can be used to match a number

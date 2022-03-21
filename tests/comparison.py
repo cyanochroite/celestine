@@ -1,92 +1,9 @@
+import unittest
 import sys
 sys.path.insert(1, '../src/gui')
 
-#import file
-import unittest
 
-from mem_dixy.tag.alphabet import logical
-from mem_dixy.Unicode.U0000 import *
-
-
-from enum import Enum
-
-
-class enum_comparison(Enum):
-    lt = 0, # less then
-    le = 1, # less then or equal to
-    eq = 2, # equal to
-    ne = 3, # not equal to
-    ge = 4, # greater then
-    gt = 5, # greater then or equal to
-    sa = 6, # select all
-    sn = 7  # select none
-
-
-class operator():
-    pass
-
-
-class comparison(operator):
-    def __init__(self, symbol):
-        self.symbol = symbol
-
-    def __str__(self):
-        return this.symbol
-
-
-class lt(comparison):
-    def __init__(self):
-        super().__init__(str().join([LESS_THAN_SIGN]))
-
-
-class le(comparison):
-    def __init__(self):
-        super().__init__(str().join([LESS_THAN_SIGN, EQUALS_SIGN]))
-
-
-class eq(comparison):
-    def __init__(self):
-        super().__init__(str().join([EQUALS_SIGN]))
-
-
-class ne(comparison):
-    def __init__(self):
-        super().__init__(str().join([EXCLAMATION_MARK, EQUALS_SIGN]))
-
-
-class ge(comparison):
-    def __init__(self):
-        super().__init__(str().join([GREATER_THAN_SIGN, EQUALS_SIGN]))
-
-
-class gt(comparison):
-    def __init__(self):
-        super().__init__(str().join([GREATER_THAN_SIGN]))
-
-
-class sa(comparison):
-    def __init__(self):
-        super().__init__(str().join(
-            [LESS_THAN_SIGN, EQUALS_SIGN, GREATER_THAN_SIGN]))
-
-
-class sn(comparison):
-    def __init__(self):
-        super().__init__(str().join([EXCLAMATION_MARK]))
-
-
-final_encoding = {
-    enum_comparison.lt: str().join([LESS_THAN_SIGN]),
-    enum_comparison.le: str().join([LESS_THAN_SIGN, EQUALS_SIGN]),
-    enum_comparison.eq: str().join([EQUALS_SIGN]),
-    enum_comparison.ne: str().join([EXCLAMATION_MARK, EQUALS_SIGN]),
-    enum_comparison.ge: str().join([GREATER_THAN_SIGN, EQUALS_SIGN]),
-    enum_comparison.gt: str().join([GREATER_THAN_SIGN]),
-    enum_comparison.sa: str().join([LESS_THAN_SIGN, EQUALS_SIGN, GREATER_THAN_SIGN]),
-    enum_comparison.sn: str().join([EXCLAMATION_MARK]),
-
-
-}
+from mem_dixy.tag.comparison import *
 
 
 all_encoding = {
@@ -197,4 +114,3 @@ class check_comparison(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
