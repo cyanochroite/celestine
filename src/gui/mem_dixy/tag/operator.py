@@ -1,0 +1,2 @@
+class operator():
+    pass
