@@ -1,5 +1,4 @@
 from mem_dixy.Unicode.U0000 import *
-# om mem_dixy.Unicode.UXXXX import *
 
 
 encoding = {

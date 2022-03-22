@@ -1,22 +1,5 @@
-from enum import Enum
-
-
 from mem_dixy.Unicode.U0000 import *
-
-
-class enum_comparison(Enum):
-    lt = 0,  # less then
-    le = 1,  # less then or equal to
-    eq = 2,  # equal to
-    ne = 3,  # not equal to
-    ge = 4,  # greater then
-    gt = 5,  # greater then or equal to
-    sa = 6,  # select all
-    sn = 7  # select none
-
-
-class operator():
-    pass
+from mem_dixy.tag.operator import operator
 
 
 class comparison(operator):

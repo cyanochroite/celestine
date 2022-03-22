@@ -50,69 +50,69 @@ class check_comparison(unittest.TestCase):
     def tearDownClass(cls):
         cls.all_encoding = {}
 
-    def test__EMPTY(self):
-        t = []
-        self.assertIs(self._add_token(t), nu)
+    def test(self):
+        token = {}
+        self.assertIs(self._add_token(token), nu)
 
     def test__EQUALS_SIGN(self):
-        t = [EQUALS_SIGN]
-        self.assertIs(self._add_token(t), eq)
+        token = {EQUALS_SIGN}
+        self.assertIs(self._add_token(token), eq)
 
     def test__EQUALS_SIGN__EXCLAMATION_MARK(self):
-        t = [EQUALS_SIGN, EXCLAMATION_MARK]
-        self.assertIs(self._add_token(t), ne)
+        token = {EQUALS_SIGN, EXCLAMATION_MARK}
+        self.assertIs(self._add_token(token), ne)
 
     def test__EQUALS_SIGN__EXCLAMATION_MARK__GREATER_THAN_SIGN(self):
-        t = [EQUALS_SIGN, EXCLAMATION_MARK, GREATER_THAN_SIGN]
-        self.assertIs(self._add_token(t), lt)
+        token = {EQUALS_SIGN, EXCLAMATION_MARK, GREATER_THAN_SIGN}
+        self.assertIs(self._add_token(token), lt)
 
     def test__EQUALS_SIGN__EXCLAMATION_MARK__GREATER_THAN_SIGN__LESS_THAN_SIGN(self):
-        t = [EQUALS_SIGN, EXCLAMATION_MARK, GREATER_THAN_SIGN, LESS_THAN_SIGN]
-        self.assertIs(self._add_token(t), nn)
+        token = {EQUALS_SIGN, EXCLAMATION_MARK, GREATER_THAN_SIGN, LESS_THAN_SIGN}
+        self.assertIs(self._add_token(token), nn)
 
     def test__EQUALS_SIGN__EXCLAMATION_MARK__LESS_THAN_SIGN(self):
-        t = [EQUALS_SIGN, EXCLAMATION_MARK, LESS_THAN_SIGN]
-        self.assertIs(self._add_token(t), gt)
+        token = {EQUALS_SIGN, EXCLAMATION_MARK, LESS_THAN_SIGN}
+        self.assertIs(self._add_token(token), gt)
 
     def test__EQUALS_SIGN__GREATER_THAN_SIGN(self):
-        t = [EQUALS_SIGN, GREATER_THAN_SIGN]
-        self.assertIs(self._add_token(t), ge)
+        token = {EQUALS_SIGN, GREATER_THAN_SIGN}
+        self.assertIs(self._add_token(token), ge)
 
     def test__EQUALS_SIGN__GREATER_THAN_SIGN__LESS_THAN_SIGN(self):
-        t = [EQUALS_SIGN, GREATER_THAN_SIGN, LESS_THAN_SIGN]
-        self.assertIs(self._add_token(t), nu)
+        token = {EQUALS_SIGN, GREATER_THAN_SIGN, LESS_THAN_SIGN}
+        self.assertIs(self._add_token(token), nu)
 
     def test__EQUALS_SIGN__LESS_THAN_SIGN(self):
-        t = [EQUALS_SIGN, LESS_THAN_SIGN]
-        self.assertIs(self._add_token(t), le)
+        token = {EQUALS_SIGN, LESS_THAN_SIGN}
+        self.assertIs(self._add_token(token), le)
 
     def test__EXCLAMATION_MARK(self):
-        t = [EXCLAMATION_MARK]
-        self.assertIs(self._add_token(t), nn)
+        token = {EXCLAMATION_MARK}
+        self.assertIs(self._add_token(token), nn)
 
     def test__EXCLAMATION_MARK__GREATER_THAN_SIGN(self):
-        t = [EXCLAMATION_MARK, GREATER_THAN_SIGN]
-        self.assertIs(self._add_token(t), le)
+        token = {EXCLAMATION_MARK, GREATER_THAN_SIGN}
+        self.assertIs(self._add_token(token), le)
 
     def test__EXCLAMATION_MARK__GREATER_THAN_SIGN__LESS_THAN_SIGN(self):
-        t = [EXCLAMATION_MARK, GREATER_THAN_SIGN, LESS_THAN_SIGN]
-        self.assertIs(self._add_token(t), eq)
+        token = {EXCLAMATION_MARK, GREATER_THAN_SIGN, LESS_THAN_SIGN}
+        self.assertIs(self._add_token(token), eq)
 
     def test__EXCLAMATION_MARK__LESS_THAN_SIGN(self):
-        t = [EXCLAMATION_MARK, LESS_THAN_SIGN]
-        self.assertIs(self._add_token(t), ge)
+        token = {EXCLAMATION_MARK, LESS_THAN_SIGN}
+        self.assertIs(self._add_token(token), ge)
 
     def test__GREATER_THAN_SIGN(self):
-        t = [GREATER_THAN_SIGN]
-        self.assertIs(self._add_token(t), gt)
+        token = {GREATER_THAN_SIGN}
+        self.assertIs(self._add_token(token), gt)
 
     def test__GREATER_THAN_SIGN__LESS_THAN_SIGN(self):
-        t = [GREATER_THAN_SIGN, LESS_THAN_SIGN]
-        self.assertIs(self._add_token(t), ne)
+        token = {GREATER_THAN_SIGN, LESS_THAN_SIGN}
+        self.assertIs(self._add_token(token), ne)
 
     def test__LESS_THAN_SIGN(self):
-        t = [LESS_THAN_SIGN]
-        self.assertIs(self._add_token(t), lt)
+        token = {LESS_THAN_SIGN}
+        self.assertIs(self._add_token(token), lt)
 
 
 
