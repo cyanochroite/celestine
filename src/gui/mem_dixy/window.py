@@ -33,8 +33,6 @@ class WindowModel():
     def _load_image(self, path, name):
         file = os.path.join(path, name)
         image = Image.open(file)
-        print(file)
-        print(image)
         photo = ImageTk.PhotoImage(image.image)
         return photo
 
