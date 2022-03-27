@@ -8,15 +8,8 @@ from mem_dixy.tag.comparison import *
 
 class check_comparison(unittest.TestCase):
     @classmethod
-    def _add_token(cls, array):  # !<>=
-        index = 0
-        index |= EXCLAMATION_MARK in array
-        index <<= 1
-        index |= LESS_THAN_SIGN in array
-        index <<= 1
-        index |= GREATER_THAN_SIGN in array
-        index <<= 1
-        index |= EQUALS_SIGN in array
+    def _add_token(cls, token):  # !<>=
+        index = comparison.parse(token)
         return cls.all_encoding.get(index)
 
     def setUp(self):

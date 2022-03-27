@@ -3,16 +3,17 @@ from mem_dixy.tag.operator import operator
 
 
 class comparison(operator):
-    primary = NotImplementedError
-    secondary = NotImplementedError
-
     @classmethod
-    def __str__(cls):
-        return cls.primary
-
-    @classmethod
-    def init(cls, array):
-        return str().join(array)
+    def parse(cls, array):  # !<>=
+        index = 0
+        index |= EXCLAMATION_MARK in array
+        index <<= 1
+        index |= LESS_THAN_SIGN in array
+        index <<= 1
+        index |= GREATER_THAN_SIGN in array
+        index <<= 1
+        index |= EQUALS_SIGN in array
+        return index
 
 
 class eq(comparison):  # EQUALITY_OPERATOR
