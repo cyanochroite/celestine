@@ -70,8 +70,22 @@ class check_unary(unittest.TestCase):
         self.assertIs(self._add_token(token), unary.div)
 
 
-print(unary.sub.primary)
-print(unary.sub.secondary)
+    def test__add(self):
+        self.assertEqual(unary.add.primary, "+")
+        self.assertEqual(unary.add.secondary, "")
+
+    def test__div(self):
+        self.assertEqual(unary.div.primary, "-*")
+        self.assertEqual(unary.div.secondary, "+-*")
+
+    def test__mul(self):
+        self.assertEqual(unary.mul.primary, "*")
+        self.assertEqual(unary.mul.secondary, "+*")
+
+    def test__sub(self):
+        self.assertEqual(unary.sub.primary, "-")
+        self.assertEqual(unary.sub.secondary, "+-")
+
 
 if __name__ == '__main__':
     unittest.main()

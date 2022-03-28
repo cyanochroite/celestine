@@ -1,7 +1,7 @@
+from mem_dixy.tag.operator import operator
 from mem_dixy.Unicode.U0000 import ASTERISK
 from mem_dixy.Unicode.U0000 import HYPHEN_MINUS
 from mem_dixy.Unicode.U0000 import PLUS_SIGN
-from mem_dixy.tag.operator import operator
 
 
 class unary():
@@ -22,11 +22,11 @@ class unary():
                 []  # ___
             )
 
-    class _sub(operator):  # UNARY_MINUS_OPERATOR
+    class _div(operator):  # POINTER_INDIRECTION_OPERATOR
         def __init__(self):
             super().__init__(
-                [HYPHEN_MINUS],  # _-_
-                [PLUS_SIGN, HYPHEN_MINUS]  # +-_
+                [HYPHEN_MINUS, ASTERISK],  # _-*
+                [PLUS_SIGN, HYPHEN_MINUS, ASTERISK]  # +-*
             )
 
     class _mul(operator):  # POINTER_INDIRECTION_OPERATOR
@@ -36,14 +36,14 @@ class unary():
                 [PLUS_SIGN, ASTERISK]  # +_*
             )
 
-    class _div(operator):  # POINTER_INDIRECTION_OPERATOR
+    class _sub(operator):  # UNARY_MINUS_OPERATOR
         def __init__(self):
             super().__init__(
-                [HYPHEN_MINUS, ASTERISK],  # _-*
-                [PLUS_SIGN, HYPHEN_MINUS, ASTERISK]  # +-*
+                [HYPHEN_MINUS],  # _-_
+                [PLUS_SIGN, HYPHEN_MINUS]  # +-_
             )
 
     add = _add()
-    sub = _sub()
-    mul = _mul()
     div = _div()
+    mul = _mul()
+    sub = _sub()
