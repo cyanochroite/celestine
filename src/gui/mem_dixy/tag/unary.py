@@ -1,8 +1,10 @@
-from mem_dixy.Unicode.U0000 import *
+from mem_dixy.Unicode.U0000 import ASTERISK
+from mem_dixy.Unicode.U0000 import HYPHEN_MINUS
+from mem_dixy.Unicode.U0000 import PLUS_SIGN
 from mem_dixy.tag.operator import operator
 
 
-class unary(operator):
+class unary():
     @classmethod
     def parse(cls, array):  # +-*
         index = 0
@@ -13,22 +15,35 @@ class unary(operator):
         index |= ASTERISK in array
         return index
 
+    class _add(operator):  # UNARY_PLUS_OPERATOR
+        def __init__(self):
+            super().__init__(
+                [PLUS_SIGN],  # +__
+                []  # ___
+            )
 
-class add(unary):  # UNARY_PLUS_OPERATOR
-    primary = unary.init([PLUS_SIGN])  # +__
-    secondary = unary.init([])  # ___
+    class _sub(operator):  # UNARY_MINUS_OPERATOR
+        def __init__(self):
+            super().__init__(
+                [HYPHEN_MINUS],  # _-_
+                [PLUS_SIGN, HYPHEN_MINUS]  # +-_
+            )
 
+    class _mul(operator):  # POINTER_INDIRECTION_OPERATOR
+        def __init__(self):
+            super().__init__(
+                [ASTERISK],  # __*
+                [PLUS_SIGN, ASTERISK]  # +_*
+            )
 
-class sub(unary):  # UNARY_MINUS_OPERATOR
-    primary = unary.init([HYPHEN_MINUS])  # _-_
-    secondary = unary.init([PLUS_SIGN, HYPHEN_MINUS])  # +-_
+    class _div(operator):  # POINTER_INDIRECTION_OPERATOR
+        def __init__(self):
+            super().__init__(
+                [HYPHEN_MINUS, ASTERISK],  # _-*
+                [PLUS_SIGN, HYPHEN_MINUS, ASTERISK]  # +-*
+            )
 
-
-class mul(unary):  # POINTER_INDIRECTION_OPERATOR
-    primary = unary.init([ASTERISK])  # __*
-    secondary = unary.init([PLUS_SIGN, ASTERISK])  # +_*
-
-
-class div(unary):  # POINTER_INDIRECTION_OPERATOR
-    primary = unary.init([HYPHEN_MINUS, ASTERISK])  # _-*
-    secondary = unary.init([PLUS_SIGN, HYPHEN_MINUS, ASTERISK])  # +-*
+    add = _add()
+    sub = _sub()
+    mul = _mul()
+    div = _div()

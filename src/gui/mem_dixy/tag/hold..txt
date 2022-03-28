@@ -1,3 +1,10 @@
+Primary
+Secondary
+Tertiary
+Quaternary
+Quinary
+
+
 from enum import Enum
 
 
