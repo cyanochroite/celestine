@@ -1,7 +1,11 @@
 class operator():
     @classmethod
     def __str__(cls):
-        return str().join(cls.primary)
+        try:
+            return str().join(cls.primary)
+        except:
+            return str()
+
 
     @classmethod
     def init(cls, array):
@@ -12,8 +16,8 @@ class operator():
         return NotImplementedError
 
     def __init__(self, primary, secondary):
-        self._primary = primary
-        self._secondary = secondary
+        self._primary = frozenset(primary)
+        self._secondary = frozenset(secondary)
 
     @property
     def primary(self):

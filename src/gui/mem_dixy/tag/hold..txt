@@ -30,3 +30,44 @@ class enum_comparison(Enum):
     gt = 5,  # greater then or equal to
     sa = 6,  # select all
     sn = 7  # select none
+    
+    
+    <
+        
+
+strictly less than
+
+<=
+        
+
+less than or equal
+
+>
+        
+
+strictly greater than
+
+>=
+        
+
+greater than or equal
+
+==
+        
+
+equal
+
+!=
+        
+
+not equal
+
+is
+        
+
+object identity
+
+is not
+        
+
+negated object identity
