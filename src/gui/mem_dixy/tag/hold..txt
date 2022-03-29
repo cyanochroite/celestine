@@ -3,10 +3,23 @@ Secondary
 Tertiary
 Quaternary
 Quinary
-
+secondary, tertiary, and quaternary layers
 
 from enum import Enum
 
+    def setUp(self):
+        pass
+
+    @classmethod
+    def setUpClass(cls):
+        pass
+
+    def tearDown(self):
+        pass
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
 
 class enum_comparison(Enum):
     lt = 0,  # less then
