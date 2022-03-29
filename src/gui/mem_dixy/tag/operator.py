@@ -1,7 +1,7 @@
 class operator():
     @classmethod
     def __str__(cls):
-        return cls.primary
+        return str().join(cls.primary)
 
     @classmethod
     def init(cls, array):
@@ -12,8 +12,8 @@ class operator():
         return NotImplementedError
 
     def __init__(self, primary, secondary):
-        self._primary = str().join(primary)
-        self._secondary = str().join(secondary)
+        self._primary = primary
+        self._secondary = secondary
 
     @property
     def primary(self):
