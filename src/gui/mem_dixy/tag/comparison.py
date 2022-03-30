@@ -29,7 +29,7 @@ class comparison():
         def __init__(self):
             super().__init__(
                 {GREATER_THAN_SIGN, EQUALS_SIGN},
-                {EXCLAMATION_MARK, GREATER_THAN_SIGN}
+                {EXCLAMATION_MARK, LESS_THAN_SIGN}
             )
 
     class _gt(operator):
@@ -50,7 +50,7 @@ class comparison():
         def __init__(self):
             super().__init__(
                 {LESS_THAN_SIGN},
-                {EXCLAMATION_MARK, EQUALS_SIGN, LESS_THAN_SIGN}
+                {EXCLAMATION_MARK, GREATER_THAN_SIGN, EQUALS_SIGN}
             )
 
     class _ne(operator):
@@ -74,14 +74,14 @@ class comparison():
                 {LESS_THAN_SIGN, EQUALS_SIGN, GREATER_THAN_SIGN}
             )
 
-    eq = _eq  # EQUALITY_OPERATOR
-    ge = _ge  # GREATER_THAN_OR_EQUAL_OPERATOR
-    gt = _gt  # LESS_THAN_OR_EQUAL_OPERATOR
-    le = _le  # LESS_THAN_OR_EQUAL_OPERATOR
-    lt = _lt  # LESS_THAN_OPERATOR
-    ne = _ne  # INEQUALITY_OPERATOR
-    nn = _nn  # IS_NOT_NULL_OPERATOR
-    nu = _nu  # IS_NULL_OPERATOR
+    eq = _eq()  # EQUALITY_OPERATOR
+    ge = _ge()  # GREATER_THAN_OR_EQUAL_OPERATOR
+    gt = _gt()  # LESS_THAN_OR_EQUAL_OPERATOR
+    le = _le()  # LESS_THAN_OR_EQUAL_OPERATOR
+    lt = _lt()  # LESS_THAN_OPERATOR
+    ne = _ne()  # INEQUALITY_OPERATOR
+    nn = _nn()  # IS_NOT_NULL_OPERATOR
+    nu = _nu()  # IS_NULL_OPERATOR
 
     _encoding = {
         0x0: nu,  # ____
