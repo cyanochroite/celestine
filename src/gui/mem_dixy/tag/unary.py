@@ -18,29 +18,49 @@ class unary():
     class _add(operator):
         def __init__(self):
             super().__init__(
-                {PLUS_SIGN},
-                {}
+                {
+                    PLUS_SIGN
+                },
+                {
+                }
             )
 
     class _div(operator):
         def __init__(self):
             super().__init__(
-                {HYPHEN_MINUS, ASTERISK},
-                {PLUS_SIGN, HYPHEN_MINUS, ASTERISK}
+                {
+                    HYPHEN_MINUS,
+                    ASTERISK
+                },
+                {
+                    PLUS_SIGN,
+                    HYPHEN_MINUS,
+                    ASTERISK
+                }
             )
 
     class _mul(operator):
         def __init__(self):
             super().__init__(
-                {ASTERISK},
-                {PLUS_SIGN, ASTERISK}
+                {
+                    ASTERISK
+                },
+                {
+                    PLUS_SIGN,
+                    ASTERISK
+                }
             )
 
     class _sub(operator):
         def __init__(self):
             super().__init__(
-                {HYPHEN_MINUS},
-                {PLUS_SIGN, HYPHEN_MINUS}
+                {
+                    HYPHEN_MINUS
+                 },
+                {
+                    PLUS_SIGN,
+                    HYPHEN_MINUS
+                }
             )
 
     add = _add()  # UNARY_PLUS_OPERATOR

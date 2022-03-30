@@ -6,7 +6,6 @@ class operator():
         except:
             return str()
 
-
     @classmethod
     def init(cls, array):
         return str().join(array)

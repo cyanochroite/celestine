@@ -21,57 +21,102 @@ class comparison():
     class _eq(operator):
         def __init__(self):
             super().__init__(
-                {EQUALS_SIGN},
-                {EXCLAMATION_MARK, LESS_THAN_SIGN, GREATER_THAN_SIGN}
+                {
+                    EQUALS_SIGN
+                },
+                {
+                    EXCLAMATION_MARK,
+                    LESS_THAN_SIGN,
+                    GREATER_THAN_SIGN
+                }
             )
 
     class _ge(operator):
         def __init__(self):
             super().__init__(
-                {GREATER_THAN_SIGN, EQUALS_SIGN},
-                {EXCLAMATION_MARK, LESS_THAN_SIGN}
+                {
+                    GREATER_THAN_SIGN,
+                    EQUALS_SIGN
+                 },
+                {
+                    EXCLAMATION_MARK,
+                    LESS_THAN_SIGN
+                }
             )
 
     class _gt(operator):
         def __init__(self):
             super().__init__(
-                {GREATER_THAN_SIGN},
-                {EXCLAMATION_MARK, LESS_THAN_SIGN, EQUALS_SIGN}
+                {
+                    GREATER_THAN_SIGN
+                 },
+                {
+                    EXCLAMATION_MARK,
+                    LESS_THAN_SIGN, EQUALS_SIGN
+                }
             )
 
     class _le(operator):
         def __init__(self):
             super().__init__(
-                {LESS_THAN_SIGN, EQUALS_SIGN},
-                {EXCLAMATION_MARK, GREATER_THAN_SIGN}
+                {
+                    LESS_THAN_SIGN,
+                    EQUALS_SIGN
+                 },
+                {
+                    EXCLAMATION_MARK,
+                    GREATER_THAN_SIGN
+                }
             )
 
     class _lt(operator):
         def __init__(self):
             super().__init__(
-                {LESS_THAN_SIGN},
-                {EXCLAMATION_MARK, GREATER_THAN_SIGN, EQUALS_SIGN}
+                {
+                    LESS_THAN_SIGN
+                },
+                {
+                    EXCLAMATION_MARK,
+                    GREATER_THAN_SIGN,
+                    EQUALS_SIGN
+                }
             )
 
     class _ne(operator):
         def __init__(self):
             super().__init__(
-                {EXCLAMATION_MARK, EQUALS_SIGN},
-                {LESS_THAN_SIGN, GREATER_THAN_SIGN}
+                {
+                    EXCLAMATION_MARK,
+                    EQUALS_SIGN},
+                {
+                    LESS_THAN_SIGN,
+                    GREATER_THAN_SIGN}
             )
 
     class _nn(operator):
         def __init__(self):
             super().__init__(
-                {EXCLAMATION_MARK},
-                {EXCLAMATION_MARK, LESS_THAN_SIGN, EQUALS_SIGN, GREATER_THAN_SIGN}
+                {
+                    EXCLAMATION_MARK
+                },
+                {
+                    EXCLAMATION_MARK,
+                    LESS_THAN_SIGN,
+                    EQUALS_SIGN,
+                    GREATER_THAN_SIGN
+                 }
             )
 
     class _nu(operator):
         def __init__(self):
             super().__init__(
-                {},
-                {LESS_THAN_SIGN, EQUALS_SIGN, GREATER_THAN_SIGN}
+                {
+                },
+                {
+                    LESS_THAN_SIGN,
+                    EQUALS_SIGN,
+                    GREATER_THAN_SIGN
+                }
             )
 
     eq = _eq()  # EQUALITY_OPERATOR
