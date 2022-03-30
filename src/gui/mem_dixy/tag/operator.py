@@ -1,27 +1,19 @@
 class operator():
-    @classmethod
-    def __str__(cls):
-        try:
-            return str().join(cls.primary)
-        except:
-            return str()
+    def __init__(self, primary, secondary):
+        self._primary = tuple(primary)
+        self._secondary = tuple(secondary)
 
-    @classmethod
-    def init(cls, array):
-        return str().join(array)
+    def __str__(self):
+        return str().join(self._primary)
 
     @classmethod
     def parse(cls, array):
         return NotImplementedError
 
-    def __init__(self, primary, secondary):
-        self._primary = frozenset(primary)
-        self._secondary = frozenset(secondary)
-
     @property
     def primary(self):
-        return self._primary
+        return frozenset(self._primary)
 
     @property
     def secondary(self):
-        return self._secondary
+        return frozenset(self._secondary)

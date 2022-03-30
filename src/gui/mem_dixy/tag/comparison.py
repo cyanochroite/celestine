@@ -6,6 +6,107 @@ from mem_dixy.Unicode.U0000 import LESS_THAN_SIGN
 
 
 class comparison():
+    class _eq(operator):
+        def __init__(self):
+            super().__init__(
+                (
+                    EQUALS_SIGN
+                ),
+                (
+                    EXCLAMATION_MARK,
+                    LESS_THAN_SIGN,
+                    GREATER_THAN_SIGN
+                )
+            )
+
+    class _ge(operator):
+        def __init__(self):
+            super().__init__(
+                (
+                    GREATER_THAN_SIGN,
+                    EQUALS_SIGN
+                 ),
+                (
+                    EXCLAMATION_MARK,
+                    LESS_THAN_SIGN
+                )
+            )
+
+    class _gt(operator):
+        def __init__(self):
+            super().__init__(
+                (
+                    GREATER_THAN_SIGN
+                 ),
+                (
+                    EXCLAMATION_MARK,
+                    LESS_THAN_SIGN, EQUALS_SIGN
+                )
+            )
+
+    class _le(operator):
+        def __init__(self):
+            super().__init__(
+                (
+                    LESS_THAN_SIGN,
+                    EQUALS_SIGN
+                 ),
+                (
+                    EXCLAMATION_MARK,
+                    GREATER_THAN_SIGN
+                )
+            )
+
+    class _lt(operator):
+        def __init__(self):
+            super().__init__(
+                (
+                    LESS_THAN_SIGN
+                ),
+                (
+                    EXCLAMATION_MARK,
+                    GREATER_THAN_SIGN,
+                    EQUALS_SIGN
+                )
+            )
+
+    class _ne(operator):
+        def __init__(self):
+            super().__init__(
+                (
+                    EXCLAMATION_MARK,
+                    EQUALS_SIGN),
+                (
+                    LESS_THAN_SIGN,
+                    GREATER_THAN_SIGN)
+            )
+
+    class _nn(operator):
+        def __init__(self):
+            super().__init__(
+                (
+                    EXCLAMATION_MARK
+                ),
+                (
+                    EXCLAMATION_MARK,
+                    LESS_THAN_SIGN,
+                    EQUALS_SIGN,
+                    GREATER_THAN_SIGN
+                 )
+            )
+
+    class _nu(operator):
+        def __init__(self):
+            super().__init__(
+                (
+                ),
+                (
+                    LESS_THAN_SIGN,
+                    EQUALS_SIGN,
+                    GREATER_THAN_SIGN
+                )
+            )
+
     @classmethod
     def parse(cls, array):
         index = 0
@@ -16,108 +117,7 @@ class comparison():
         index |= GREATER_THAN_SIGN in array
         index <<= 1
         index |= EQUALS_SIGN in array
-        return cls._encoding.get(index)
-
-    class _eq(operator):
-        def __init__(self):
-            super().__init__(
-                {
-                    EQUALS_SIGN
-                },
-                {
-                    EXCLAMATION_MARK,
-                    LESS_THAN_SIGN,
-                    GREATER_THAN_SIGN
-                }
-            )
-
-    class _ge(operator):
-        def __init__(self):
-            super().__init__(
-                {
-                    GREATER_THAN_SIGN,
-                    EQUALS_SIGN
-                 },
-                {
-                    EXCLAMATION_MARK,
-                    LESS_THAN_SIGN
-                }
-            )
-
-    class _gt(operator):
-        def __init__(self):
-            super().__init__(
-                {
-                    GREATER_THAN_SIGN
-                 },
-                {
-                    EXCLAMATION_MARK,
-                    LESS_THAN_SIGN, EQUALS_SIGN
-                }
-            )
-
-    class _le(operator):
-        def __init__(self):
-            super().__init__(
-                {
-                    LESS_THAN_SIGN,
-                    EQUALS_SIGN
-                 },
-                {
-                    EXCLAMATION_MARK,
-                    GREATER_THAN_SIGN
-                }
-            )
-
-    class _lt(operator):
-        def __init__(self):
-            super().__init__(
-                {
-                    LESS_THAN_SIGN
-                },
-                {
-                    EXCLAMATION_MARK,
-                    GREATER_THAN_SIGN,
-                    EQUALS_SIGN
-                }
-            )
-
-    class _ne(operator):
-        def __init__(self):
-            super().__init__(
-                {
-                    EXCLAMATION_MARK,
-                    EQUALS_SIGN},
-                {
-                    LESS_THAN_SIGN,
-                    GREATER_THAN_SIGN}
-            )
-
-    class _nn(operator):
-        def __init__(self):
-            super().__init__(
-                {
-                    EXCLAMATION_MARK
-                },
-                {
-                    EXCLAMATION_MARK,
-                    LESS_THAN_SIGN,
-                    EQUALS_SIGN,
-                    GREATER_THAN_SIGN
-                 }
-            )
-
-    class _nu(operator):
-        def __init__(self):
-            super().__init__(
-                {
-                },
-                {
-                    LESS_THAN_SIGN,
-                    EQUALS_SIGN,
-                    GREATER_THAN_SIGN
-                }
-            )
+        return cls._table.get(index)
 
     eq = _eq()  # EQUALITY_OPERATOR
     ge = _ge()  # GREATER_THAN_OR_EQUAL_OPERATOR
@@ -128,7 +128,7 @@ class comparison():
     nn = _nn()  # IS_NOT_NULL_OPERATOR
     nu = _nu()  # IS_NULL_OPERATOR
 
-    _encoding = {
+    _table = {
         0x0: nu,  # ____
         0x1: eq,  # ___=
         0x2: gt,  # __>_
