@@ -2,10 +2,10 @@ import unittest
 import sys
 sys.path.insert(1, '../src/gui')
 
+from mem_dixy.tag.unary import unary
 from mem_dixy.Unicode.U0000 import ASTERISK
 from mem_dixy.Unicode.U0000 import HYPHEN_MINUS
 from mem_dixy.Unicode.U0000 import PLUS_SIGN
-from mem_dixy.tag.unary import unary
 
 
 class test_unary(unittest.TestCase):

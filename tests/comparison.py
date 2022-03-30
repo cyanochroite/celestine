@@ -3,8 +3,11 @@ import sys
 sys.path.insert(1, '../src/gui')
 
 
-from mem_dixy.tag.comparison import *
-
+from mem_dixy.tag.comparison import comparison
+from mem_dixy.Unicode.U0000 import EQUALS_SIGN
+from mem_dixy.Unicode.U0000 import EXCLAMATION_MARK
+from mem_dixy.Unicode.U0000 import GREATER_THAN_SIGN
+from mem_dixy.Unicode.U0000 import LESS_THAN_SIGN
 
 class test_comparison(unittest.TestCase):
     def test(self):
@@ -19,8 +22,7 @@ class test_comparison(unittest.TestCase):
 
     def test__EQUALS_SIGN__EXCLAMATION_MARK(self):
         token = set((EQUALS_SIGN, EXCLAMATION_MARK))
-        self.assertIs(self._add_token(token), ne)
-        self.assertSetEqual(token, comparison.ne.secondary)
+        self.assertSetEqual(token, comparison.ne.primary)
         self.assertIs(comparison.parse(token), comparison.ne)
 
     def test__EQUALS_SIGN__EXCLAMATION_MARK__GREATER_THAN_SIGN(self):
