@@ -1,39 +1,166 @@
-from mem_dixy.Unicode.U0000 import *
+from mem_dixy.Unicode.U0000 import NULL
+from mem_dixy.Unicode.U0000 import START_OF_HEADING
+from mem_dixy.Unicode.U0000 import START_OF_TEXT
+from mem_dixy.Unicode.U0000 import END_OF_TEXT
+from mem_dixy.Unicode.U0000 import END_OF_TRANSMISSION
+from mem_dixy.Unicode.U0000 import ENQUIRY
+from mem_dixy.Unicode.U0000 import ACKNOWLEDGE
+from mem_dixy.Unicode.U0000 import BELL
+from mem_dixy.Unicode.U0000 import BACKSPACE
+from mem_dixy.Unicode.U0000 import CHARACTER_TABULATION
+from mem_dixy.Unicode.U0000 import LINE_FEED
+from mem_dixy.Unicode.U0000 import LINE_TABULATION
+from mem_dixy.Unicode.U0000 import FORM_FEED
+from mem_dixy.Unicode.U0000 import CARRIAGE_RETURN
+from mem_dixy.Unicode.U0000 import SHIFT_OUT
+from mem_dixy.Unicode.U0000 import SHIFT_IN
+from mem_dixy.Unicode.U0000 import DATA_LINK_ESCAPE
+from mem_dixy.Unicode.U0000 import DEVICE_CONTROL_ONE
+from mem_dixy.Unicode.U0000 import DEVICE_CONTROL_TWO
+from mem_dixy.Unicode.U0000 import DEVICE_CONTROL_THREE
+from mem_dixy.Unicode.U0000 import DEVICE_CONTROL_FOUR
+from mem_dixy.Unicode.U0000 import NEGATIVE_ACKNOWLEDGE
+from mem_dixy.Unicode.U0000 import SYNCHRONOUS_IDLE
+from mem_dixy.Unicode.U0000 import END_OF_TRANSMISSION_BLOCK
+from mem_dixy.Unicode.U0000 import CANCEL
+from mem_dixy.Unicode.U0000 import END_OF_MEDIUM
+from mem_dixy.Unicode.U0000 import SUBSTITUTE
+from mem_dixy.Unicode.U0000 import ESCAPE
+from mem_dixy.Unicode.U0000 import INFORMATION_SEPARATOR_FOUR
+from mem_dixy.Unicode.U0000 import INFORMATION_SEPARATOR_THREE
+from mem_dixy.Unicode.U0000 import INFORMATION_SEPARATOR_TWO
+from mem_dixy.Unicode.U0000 import INFORMATION_SEPARATOR_ONE
+from mem_dixy.Unicode.U0000 import SPACE
+from mem_dixy.Unicode.U0000 import EXCLAMATION_MARK
+from mem_dixy.Unicode.U0000 import QUOTATION_MARK
+from mem_dixy.Unicode.U0000 import NUMBER_SIGN
+from mem_dixy.Unicode.U0000 import DOLLAR_SIGN
+from mem_dixy.Unicode.U0000 import PERCENT_SIGN
+from mem_dixy.Unicode.U0000 import AMPERSAND
+from mem_dixy.Unicode.U0000 import APOSTROPHE
+from mem_dixy.Unicode.U0000 import LEFT_PARENTHESIS
+from mem_dixy.Unicode.U0000 import RIGHT_PARENTHESIS
+from mem_dixy.Unicode.U0000 import ASTERISK
+from mem_dixy.Unicode.U0000 import PLUS_SIGN
+from mem_dixy.Unicode.U0000 import COMMA
+from mem_dixy.Unicode.U0000 import HYPHEN_MINUS
+from mem_dixy.Unicode.U0000 import FULL_STOP
+from mem_dixy.Unicode.U0000 import SOLIDUS
+from mem_dixy.Unicode.U0000 import DIGIT_ZERO
+from mem_dixy.Unicode.U0000 import DIGIT_ONE
+from mem_dixy.Unicode.U0000 import DIGIT_TWO
+from mem_dixy.Unicode.U0000 import DIGIT_THREE
+from mem_dixy.Unicode.U0000 import DIGIT_FOUR
+from mem_dixy.Unicode.U0000 import DIGIT_FIVE
+from mem_dixy.Unicode.U0000 import DIGIT_SIX
+from mem_dixy.Unicode.U0000 import DIGIT_SEVEN
+from mem_dixy.Unicode.U0000 import DIGIT_EIGHT
+from mem_dixy.Unicode.U0000 import DIGIT_NINE
+from mem_dixy.Unicode.U0000 import COLON
+from mem_dixy.Unicode.U0000 import SEMICOLON
+from mem_dixy.Unicode.U0000 import LESS_THAN_SIGN
+from mem_dixy.Unicode.U0000 import EQUALS_SIGN
+from mem_dixy.Unicode.U0000 import GREATER_THAN_SIGN
+from mem_dixy.Unicode.U0000 import QUESTION_MARK
+from mem_dixy.Unicode.U0000 import COMMERCIA_AT
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_A
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_B
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_C
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_D
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_E
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_F
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_G
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_H
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_I
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_J
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_K
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_L
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_M
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_N
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_O
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_P
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_Q
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_R
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_S
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_T
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_U
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_V
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_W
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_X
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_Y
+from mem_dixy.Unicode.U0000 import LATIN_CAPITAL_LETTER_Z
+from mem_dixy.Unicode.U0000 import LEFT_SQUARE_BRACKET
+from mem_dixy.Unicode.U0000 import REVERSE_SOLIDUS
+from mem_dixy.Unicode.U0000 import RIGHT_SQUARE_BRACKET
+from mem_dixy.Unicode.U0000 import CIRCUMFLEX_ACCENT
+from mem_dixy.Unicode.U0000 import LOW_LINE
+from mem_dixy.Unicode.U0000 import GRAVE_ACCENT
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_A
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_B
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_C
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_D
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_E
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_F
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_G
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_H
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_I
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_J
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_K
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_L
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_M
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_N
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_O
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_P
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_Q
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_R
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_S
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_T
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_U
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_V
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_W
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_X
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_Y
+from mem_dixy.Unicode.U0000 import LATIN_SMALL_LETTER_Z
+from mem_dixy.Unicode.U0000 import LEFT_CURLY_BRACKET
+from mem_dixy.Unicode.U0000 import VERTICAL_LINE
+from mem_dixy.Unicode.U0000 import RIGHT_CURLY_BRACKET
+from mem_dixy.Unicode.U0000 import TILDE
+from mem_dixy.Unicode.U0000 import DELETE
 
 
 encoding = {
-    NULL: str(),
-    START_OF_HEADING: str(),
-    START_OF_TEXT: str(),
-    END_OF_TEXT: str(),
-    END_OF_TRANSMISSION: str(),
-    ENQUIRY: str(),
-    ACKNOWLEDGE: str(),
-    BELL: str(),
-    BACKSPACE: str(),
+    NULL: None,
+    START_OF_HEADING: None,
+    START_OF_TEXT: None,
+    END_OF_TEXT: None,
+    END_OF_TRANSMISSION: None,
+    ENQUIRY: None,
+    ACKNOWLEDGE: None,
+    BELL: None,
+    BACKSPACE: None,
     CHARACTER_TABULATION: SPACE,
-    LINE_FEED: str(),
-    LINE_TABULATION: str(),
-    FORM_FEED: str(),
-    CARRIAGE_RETURN: str(),
-    SHIFT_OUT: str(),
-    SHIFT_IN: str(),
-    DATA_LINK_ESCAPE: str(),
-    DEVICE_CONTROL_ONE: str(),
-    DEVICE_CONTROL_TWO: str(),
-    DEVICE_CONTROL_THREE: str(),
-    DEVICE_CONTROL_FOUR: str(),
-    NEGATIVE_ACKNOWLEDGE: str(),
-    SYNCHRONOUS_IDLE: str(),
-    END_OF_TRANSMISSION_BLOCK: str(),
-    CANCEL: str(),
-    END_OF_MEDIUM: str(),
-    SUBSTITUTE: str(),
-    ESCAPE: str(),
-    INFORMATION_SEPARATOR_FOUR: str(),
-    INFORMATION_SEPARATOR_THREE: str(),
-    INFORMATION_SEPARATOR_TWO: str(),
-    INFORMATION_SEPARATOR_ONE: str(),
+    LINE_FEED: None,
+    LINE_TABULATION: None,
+    FORM_FEED: None,
+    CARRIAGE_RETURN: None,
+    SHIFT_OUT: None,
+    SHIFT_IN: None,
+    DATA_LINK_ESCAPE: None,
+    DEVICE_CONTROL_ONE: None,
+    DEVICE_CONTROL_TWO: None,
+    DEVICE_CONTROL_THREE: None,
+    DEVICE_CONTROL_FOUR: None,
+    NEGATIVE_ACKNOWLEDGE: None,
+    SYNCHRONOUS_IDLE: None,
+    END_OF_TRANSMISSION_BLOCK: None,
+    CANCEL: None,
+    END_OF_MEDIUM: None,
+    SUBSTITUTE: None,
+    ESCAPE: None,
+    INFORMATION_SEPARATOR_FOUR: None,
+    INFORMATION_SEPARATOR_THREE: None,
+    INFORMATION_SEPARATOR_TWO: None,
+    INFORMATION_SEPARATOR_ONE: None,
     SPACE: SPACE,
     EXCLAMATION_MARK: EXCLAMATION_MARK,
     QUOTATION_MARK: QUOTATION_MARK,
@@ -129,5 +256,5 @@ encoding = {
     VERTICAL_LINE: VERTICAL_LINE,
     RIGHT_CURLY_BRACKET: RIGHT_CURLY_BRACKET,
     TILDE: TILDE,
-    DELETE: str()
+    DELETE: None
 }
