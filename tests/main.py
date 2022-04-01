@@ -1,7 +1,7 @@
 import unittest
 
-
-from comparison import check_comparison
+from comparison import test_comparison
+from unary import test_unary
 
 
 if __name__ == '__main__':
