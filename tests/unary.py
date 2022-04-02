@@ -1,6 +1,6 @@
 import unittest
 import sys
-sys.path.insert(1, '../src/gui')
+sys.path.insert(1, '../src/')
 
 from mem_dixy.tag.unary import unary
 from mem_dixy.Unicode.U0000 import ASTERISK

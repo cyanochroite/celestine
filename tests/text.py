@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(1, '../src/gui/')
+sys.path.insert(1, '../src/')
 
 # from mem_dixy.tag.alphabet import convert
 # from mem_dixy.tag.alphabet import tag
