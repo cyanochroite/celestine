@@ -128,7 +128,7 @@ from mem_dixy.Unicode.U0000 import TILDE
 from mem_dixy.Unicode.U0000 import DELETE
 
 
-encoding = {
+C0_CONTROLS_AND_BASIC_LATIN = {
     NULL: None,
     START_OF_HEADING: None,
     START_OF_TEXT: None,
