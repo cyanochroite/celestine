@@ -156,7 +156,7 @@ from mem_dixy.Unicode.U0080 import LATIN_SMALL_LETTER_THORN
 from mem_dixy.Unicode.U0080 import LATIN_SMALL_LETTER_Y_WITH_DIAERESIS
 
 
-encoding = {
+C1_CONTROLS_AND_LATIN_1_SUPPLEMENT = {
     U0080: None,
     U0081: None,
     BREAK_PERMITTED_HERE: None,

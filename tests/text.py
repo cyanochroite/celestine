@@ -5,7 +5,16 @@ sys.path.insert(1, '../src/gui/')
 # from mem_dixy.tag.alphabet import tag
 # from mem_dixy.tag.alphabet import hashy
 # from mem_dixy.tag.alphabet import space
-from mem_dixy.tag.alphabet import *
+#from mem_dixy.tag.alphabet import *
+
+
+from mem_dixy.tag.logic import *
+
+from mem_dixy.tag.alphabet import convert
+from mem_dixy.tag.alphabet import letter
+from mem_dixy.tag.alphabet import comparison
+from mem_dixy.tag.alphabet import all_token
+from mem_dixy.tag.alphabet import one_token
 from mem_dixy.Unicode.U0000 import LOW_LINE
 
 
@@ -38,55 +47,7 @@ state_now = State.NONE
 state_past = State.NONE
 
 
-class Atoken:
-    def __init__(self, value):
-        self.value = value
 
-    def __str__(self):
-        return self.value
-
-    def __repr__(self):
-        return self.value
-
-
-print(VERTICAL_LINE)
-print(EXCLAMATION_MARK)
-print(AMPERSAND)
-
-
-print(AMPERSAND in sql_and)
-print(EXCLAMATION_MARK)
-print(AMPERSAND)
-
-
-class AND(Atoken):
-    def __init__(self, value):
-        super().__init__(AMPERSAND)
-
-
-class IS(Atoken):
-    def __init__(self, value):
-        super().__init__(PLUS_SIGN)
-
-
-class NOT(Atoken):
-    def __init__(self, value):
-        super().__init__(HYPHEN_MINUS)
-
-
-class OR(Atoken):
-    def __init__(self, value):
-        super().__init__(VERTICAL_LINE)
-
-
-class Atag(Atoken):
-    def __init__(self, value):
-        super().__init__(value)
-
-
-class Asymbol(Atoken):
-    def __init__(self, value):
-        super().__init__("&")
 
 
 def add_token():
@@ -139,4 +100,34 @@ def parse(string):
     print(mouse)
 
 
+print("START")
+print(string)
+
+
+class translator():
+    @staticmethod
+    def translate(string):
+        return str().join(
+            [
+                item for item in
+                [convert.get(character) for character in string]
+                if item is not None
+            ]
+        )
+
+class tokenizer():
+    @staticmethod
+    def tokenize(string):
+        return string
+
+class parser():
+    @staticmethod
+    def parse(string):
+        return string.split()
+
+string = translator.translate(string)
+string = tokenizer.tokenize(string)
+string = parser.parse(string)
+
+print("OLD")
 parse(string)
