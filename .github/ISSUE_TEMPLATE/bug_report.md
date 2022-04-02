@@ -2,37 +2,47 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: ''
+labels: 'state: pending, type: bug'
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
 
-**To Reproduce**
+1. REMOVE ALL 3RD PARTY LIBRARIES.
+
+2. PLEASE MAKE SURE that you have: read the FAQ; explored the examples; searched among Issues; and read the link provided in (1) (2).
+
+3. Be mindful that messages are being sent to the e-mail box of "Watching" users. Try to proof-read your messages before sending them. Edits are not seen by those users.
+
+4. Delete points 1-7 and PLEASE FILL THE TEMPLATE BELOW before submitting your issue or we will immediately close it.
+
+Thank you!
+
+----
+
+## Version
+
+Version: XXX
+Operating System: XXX (Windows 10, macOs xx, Ubuntu 20.04, etc.)
+
+## My Issue/Question
+
+A clear and concise description of what the issue/question is. Please provide as much context as possible.
+
+## To Reproduce
+
 Steps to reproduce the behavior:
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
 
-**Expected behavior**
+## Expected behavior
+
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+## Screenshots/Video
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+XXX _(you can drag files here)_
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.
+## Standalone, minimal, complete and verifiable example
