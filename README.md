@@ -1,22 +1,50 @@
-# image program
-View and organize your photos.
+[PIV-Tag](https://github.com/mem-dixy/PIV-Tag/) - (Personal, Portable, Private) Image Viewing Tag System
+====================================================================================
+
+- [About](#about)
+- [Goals](#goals)
+- [License](#license)
+- [Requirements](#requirements)
+- [Inspiration](#inspiration)
 
 
-# future
+About
+--------------------------------------
+View and organize your photos. Work in progress. Not currently functional.
+
+Old Description:
+By default this is a command line application. Should work anywhere Python 3 code can be run. The code has several folders dedicated to specific pluggins. If package not found, code not run. Can actually be deleted if desired.
+
+Older description:
 Decided that the main reason behind this was an attempt to use HTML as my GUI.
 Most files in this project are dedicated to viewing and modifying local images.
 Will try to update the project to reflect that.
 
 
-# (Merge in old Read Me)
+Goals
+--------------------------------------
+- Zero internet access. (An offline only application. Possible exception would be checking for updates.)
+- Minimal dependencies. (Ideally no more than 4 pip installs. Currently at 2.)
 
-By default this is a command line application. Should work anywhere Python 3 code can be run. The code has several folders dedicated to specific pluggins. If package not found, code not run. Can actually be deleted if desired.
+
+What this is not:
+- This is not a photo editor.
+- This is not a photo downloader.
+- This is not a mobile application.
 
 
+License
+--------------------------------------
+EUROPEAN UNION PUBLIC LICENCE v. 1.2\
+EUPL © the European Union 2007, 2016
 
-Requirements:
-Python
+Requirements
+--------------------------------------
+#Recomended
+Python 3.4 (Lib/base64.py)
+Python 3.9 (PEP 584)
 
+Pillow 7.2.0 (TIFF BYTE tags format)
 
 Recomended
 Python 3.4 (Lib/base64.py)
@@ -46,6 +74,16 @@ Rexex parser: Adds support for wildcard searches using '*'.
 command core
 only the basics here
 use on web server or as external library
+
+
+Inspiration
+--------------------------------------
+[POV-Ray](https://www.povray.org/) - The Persistence of Vision Raytracer\
+[Safebooru](https://safebooru.org/) (And the thousands of other booru sites.)
+
+# Random notes
+
+
 
 
 
