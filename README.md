@@ -6,6 +6,7 @@
 - [License](#license)
 - [Requirements](#requirements)
 - [Inspiration](#inspiration)
+- [Installation](#installation)
 
 
 About
@@ -25,7 +26,7 @@ Goals
 --------------------------------------
 - Zero internet access. (An offline only application. Possible exception would be checking for updates.)
 - Minimal dependencies. (Ideally no more than 4 pip installs. Currently at 2.)
-
+- Advanced tag searching. (Most websites have really lousy topic filters.)
 
 What this is not:
 - This is not a photo editor.
@@ -40,32 +41,19 @@ EUPL © the European Union 2007, 2016
 
 Requirements
 --------------------------------------
-#Recomended
-Python 3.4 (Lib/base64.py)
-Python 3.9 (PEP 584)
-
-Pillow 7.2.0 (TIFF BYTE tags format)
+(Need to update this at some point. Try Instalation to get current code working.)
 
 Recomended
-Python 3.4 (Lib/base64.py)
-Python 3.9 (PEP 584)
-
-Pillow 7.2.0 (TIFF BYTE tags format)
-Replaced TiffImagePlugin DEBUG with logging
-Corrected default offset when writing EXIF data
-Moved to ImageFileDirectory_v2 in Image.Exif
-TIFF BYTE tags format
-
-
+Python `>= 3.4` (Lib/base64.py)\
+Python `>= 3.9` (PEP 584)\
+Pillow `>= 7.2.0` (TIFF BYTE tags format)\
 
 Recommended Packages:
 Tkinter: Included in most python distributions, which means no installation or setup required. Adds GUI to application. Makes it easier for the average user to use. (Plus now you can actually see the images.)
 
 Pillow: InstaLibrary for loading images. Allows for many image file types.
 
-
 Optional Packages:
--None-
 Additional GUI libraries and features may be added in the future. Some configuration may be needed to toggle these additional features.
 
 Rexex parser: Adds support for wildcard searches using '*'.
@@ -78,8 +66,19 @@ use on web server or as external library
 
 Inspiration
 --------------------------------------
-[POV-Ray](https://www.povray.org/) - The Persistence of Vision Raytracer\
-[Safebooru](https://safebooru.org/) (And the thousands of other booru sites.)
+[POV-Ray](https://www.povray.org/) - The Persistence of Vision Raytracer (Name look familar?)\
+[Safebooru](https://safebooru.org/) - Safebooru (And the thousands of other booru sites.)\
+[BGG](https://boardgamegeek.com/advsearch/boardgame) - Board Game Geek (Epic advancned search.)
+
+
+
+
+Installation
+--------------------------------------
+| Package | [PyPi](https://packaging.python.org/en/latest/tutorials/installing-packages/#use-pip-for-installing) |
+| ------------------------------------------------------------------- | ----------------------- |
+| [DearPyGui](https://github.com/hoffstadt/DearPyGui#installation) | `pip install dearpygui` |
+| [Pillow](https://pillow.readthedocs.io/en/latest/installation.html) | `pip install Pillow` |
 
 # Random notes
 
