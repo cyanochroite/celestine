@@ -38,8 +38,8 @@ def os_rename(open_spot, save_path):#{
 #}
 
 def file_save(load_file):#{
-    load_path = "todo/"
-    save_path = "done/";
+    load_path = "D:/todo/"
+    save_path = "D:/done/";
     save_file = "demo.png";
     base = image_open(load_path + load_file);
     image = image_new(base.size);

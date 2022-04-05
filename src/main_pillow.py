@@ -202,7 +202,7 @@ def convert_to_jpg(array):
 
     image.convert(mode)
 
-    new_name = os.join("done", name)
+    new_name = os.join("D:/done", name)
     names = new_name.split(".")
     image_save = names[0] + ".jpg"
     print("saved " + image_save)
@@ -210,8 +210,8 @@ def convert_to_jpg(array):
 
 
 def make_dvd(left, right):
-    name1 = os.join("todo", left)
-    name2 = os.join("todo", right)
+    name1 = os.join("D:/todo", left)
+    name2 = os.join("D:/todo", right)
     print("convert " + name1)
     print("convert " + name2)
     background = Image.new("RGB", screen.width, screen.height)
@@ -248,18 +248,18 @@ print("scan")
 
 
 def load_paths():
-    (path, file) = os.chdir("todo", os.walk_directory)
-    os.chdir("done", os.makedirs, path)
+    (path, file) = os.chdir("D:/todo", os.walk_directory)
+    os.chdir("D:/done", os.makedirs, path)
     array = []
     for (item) in file:
-        root = "todo"
+        root = "D:/todo"
         (name, path) = item
         array.append(name)
     return array
 
 
 def jpg_quality_test(path):
-    image_open = os.join("todo", path)
+    image_open = os.join("D:/todo", path)
     image = Image.open(image_open)
     for quality in range(101):
         name = str(quality) + ".jpg"

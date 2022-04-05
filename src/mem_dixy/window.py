@@ -12,6 +12,7 @@ class WindowModel():
 
     def _init_image_list(self):
         path = self.get_path()
+        path = "D:/file/"
         icon1 = self._load_image(path, "character.jpg")
         icon2 = self._load_image(path, "logo.jpg")
         icon3 = self._load_image(path, "victory.jpg")

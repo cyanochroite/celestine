@@ -2,7 +2,7 @@ from mem_dixy.package.pillow.Image import Image
 from mem_dixy.package.python.hashlib import hashlib
 from mem_dixy.package.python.os import os
 
-def main(todo="todo", done="done"):
+def main(todo="D:/todo", done="D:/done"):
     (path, file) = os.chdir(todo, os.walk_directory)
     os.chdir(done, os.makedirs, path)
     for (item) in file:

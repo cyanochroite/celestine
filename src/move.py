@@ -16,13 +16,13 @@ def file_cypher(name):
     return format(cypher.hexdigest())
 
 def file_name_data(name):
-    return "data/" + str(name) + ".png"
+    return "D:/data/" + str(name) + ".png"
 
 def file_name_done(name):
-    return "done/sha3_512-" + file_cypher(name).upper() + ".png"
+    return "D:/done/sha3_512-" + file_cypher(name).upper() + ".png"
 
 def file_name_todo(name):
-    return "todo/" + str(name)
+    return "D:/todo/" + str(name)
 
 
 def image_write(width,height,compression,name,pixels):
@@ -73,7 +73,7 @@ def file_list(directory):
     return [f for f in listdir(directory) if isfile(join(directory, f))]
 
 def work():
-    for file in file_list("todo/"):
+    for file in file_list("D:/todo/"):
         work_item(file)
     print("finished")
 
