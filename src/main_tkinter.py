@@ -1,6 +1,6 @@
-from mem_dixy.package.tkinter.Widget import Tk
-from mem_dixy.package.tkinter.window import Window
-from mem_dixy.window import WindowModel
+from package.tkinter.Widget import Tk
+from package.tkinter.window import Window
+from window import WindowModel
 root = Tk()
 model = WindowModel()
 window = Window(root, data=model)

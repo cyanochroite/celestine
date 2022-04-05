@@ -1,4 +1,4 @@
-from mem_dixy.package.python.path import path
+from package.python.path import path
 
 
 class file_dialog():

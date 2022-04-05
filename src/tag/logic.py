@@ -1,8 +1,8 @@
-from mem_dixy.Unicode.U0000 import EXCLAMATION_MARK
-from mem_dixy.Unicode.U0000 import AMPERSAND
-from mem_dixy.Unicode.U0000 import VERTICAL_LINE
-from mem_dixy.Unicode.U0000 import CIRCUMFLEX_ACCENT
-from mem_dixy.Unicode.U0000 import TILDE
+from Unicode.U0000 import EXCLAMATION_MARK
+from Unicode.U0000 import AMPERSAND
+from Unicode.U0000 import VERTICAL_LINE
+from Unicode.U0000 import CIRCUMFLEX_ACCENT
+from Unicode.U0000 import TILDE
 
 class Atoken:
     def __init__(self, value):

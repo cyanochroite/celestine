@@ -1,6 +1,6 @@
-from mem_dixy.package.pillow.Image import Image
-from mem_dixy.package.python.hashlib import hashlib
-from mem_dixy.package.python.os import os
+from package.pillow.Image import Image
+from package.python.hashlib import hashlib
+from package.python.os import os
 
 def main(todo="D:/todo", done="D:/done"):
     (path, file) = os.chdir(todo, os.walk_directory)

@@ -1,7 +1,7 @@
-from mem_dixy.tag.operator import operator
-from mem_dixy.Unicode.U0000 import ASTERISK
-from mem_dixy.Unicode.U0000 import HYPHEN_MINUS
-from mem_dixy.Unicode.U0000 import PLUS_SIGN
+from tag.operator import operator
+from Unicode.U0000 import ASTERISK
+from Unicode.U0000 import HYPHEN_MINUS
+from Unicode.U0000 import PLUS_SIGN
 
 
 class unary():

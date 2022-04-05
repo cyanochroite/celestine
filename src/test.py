@@ -1,4 +1,4 @@
-from mem_dixy.tag.alphabet import number
+from tag.alphabet import number
 
 print(number)
 

@@ -2,10 +2,10 @@ import sys
 sys.path.insert(1, '../src/')
 
 import PIL
-from mem_dixy.package.pillow.Image import Image
+from package.pillow.Image import Image
 
 
-img = Image.open('../src/file/logo.jpg')
+img = Image.open('D:/file/logo.jpg')
 
 # DateTime
 # TimeZoneOffset

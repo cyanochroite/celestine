@@ -1,7 +1,7 @@
-from mem_dixy.package.python.os import os
-from mem_dixy.package.pillow.Image import Image
-from mem_dixy.package.pillow.ImageDraw import ImageDraw
-from mem_dixy.package.pillow.ImageFont import ImageFont
+from package.python.os import os
+from package.pillow.Image import Image
+from package.pillow.ImageDraw import ImageDraw
+from package.pillow.ImageFont import ImageFont
 
 #import PIL.Image
 
@@ -305,7 +305,7 @@ print("done")
 
 
 ###########################
-import mem_dixy.star.main
+import star.main
 
 
 import dearpygui
@@ -328,11 +328,11 @@ def callback_test(sender, app_data, user_data):
     jpg_quality_test(paths)
 
 def callback_star(sender, app_data, user_data):
-    mem_dixy.star.main.main()
+    star.main.main()
 
 ###########################
 
-from mem_dixy.package.dearpygui.file_dialog import file_dialog
+from package.dearpygui.file_dialog import file_dialog
 
 def callback(sender, app_data, user_data):
     print("Sender: ", sender)

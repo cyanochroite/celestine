@@ -1,7 +1,7 @@
-from mem_dixy.package.tkinter.Widget import Frame
-from mem_dixy.package.tkinter.one import one
-from mem_dixy.package.tkinter.two import two
-from mem_dixy.package.tkinter.three import three
+from package.tkinter.Widget import Frame
+from package.tkinter.one import one
+from package.tkinter.two import two
+from package.tkinter.three import three
 
 
 class Window(Frame):

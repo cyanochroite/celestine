@@ -2,10 +2,10 @@ import unittest
 import sys
 sys.path.insert(1, '../src/')
 
-from mem_dixy.tag.unary import unary
-from mem_dixy.Unicode.U0000 import ASTERISK
-from mem_dixy.Unicode.U0000 import HYPHEN_MINUS
-from mem_dixy.Unicode.U0000 import PLUS_SIGN
+from tag.unary import unary
+from Unicode.U0000 import ASTERISK
+from Unicode.U0000 import HYPHEN_MINUS
+from Unicode.U0000 import PLUS_SIGN
 
 
 class test_unary(unittest.TestCase):

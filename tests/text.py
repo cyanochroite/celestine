@@ -1,21 +1,21 @@
 import sys
 sys.path.insert(1, '../src/')
 
-# from mem_dixy.tag.alphabet import convert
-# from mem_dixy.tag.alphabet import tag
-# from mem_dixy.tag.alphabet import hashy
-# from mem_dixy.tag.alphabet import space
-#from mem_dixy.tag.alphabet import *
+# from tag.alphabet import convert
+# from tag.alphabet import tag
+# from tag.alphabet import hashy
+# from tag.alphabet import space
+#from tag.alphabet import *
 
 
-from mem_dixy.tag.logic import *
+from tag.logic import *
 
-from mem_dixy.tag.alphabet import convert
-from mem_dixy.tag.alphabet import letter
-from mem_dixy.tag.alphabet import comparison
-from mem_dixy.tag.alphabet import all_token
-from mem_dixy.tag.alphabet import one_token
-from mem_dixy.Unicode.U0000 import LOW_LINE
+from tag.alphabet import convert
+from tag.alphabet import letter
+from tag.alphabet import comparison
+from tag.alphabet import all_token
+from tag.alphabet import one_token
+from Unicode.U0000 import LOW_LINE
 
 
 from enum import Enum
