@@ -1,8 +1,8 @@
-from Unicode.U0000 import EXCLAMATION_MARK
-from Unicode.U0000 import AMPERSAND
-from Unicode.U0000 import VERTICAL_LINE
-from Unicode.U0000 import CIRCUMFLEX_ACCENT
-from Unicode.U0000 import TILDE
+from unicode.u0000 import EXCLAMATION_MARK
+from unicode.u0000 import AMPERSAND
+from unicode.u0000 import VERTICAL_LINE
+from unicode.u0000 import CIRCUMFLEX_ACCENT
+from unicode.u0000 import TILDE
 
 class Atoken:
     def __init__(self, value):

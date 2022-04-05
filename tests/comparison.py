@@ -3,10 +3,10 @@ import sys
 sys.path.insert(1, '../src/')
 
 from tag.comparison import comparison
-from Unicode.U0000 import EQUALS_SIGN
-from Unicode.U0000 import EXCLAMATION_MARK
-from Unicode.U0000 import GREATER_THAN_SIGN
-from Unicode.U0000 import LESS_THAN_SIGN
+from unicode.u0000 import EQUALS_SIGN
+from unicode.u0000 import EXCLAMATION_MARK
+from unicode.u0000 import GREATER_THAN_SIGN
+from unicode.u0000 import LESS_THAN_SIGN
 
 
 class test_comparison(unittest.TestCase):

@@ -1,7 +1,7 @@
 from tag.operator import operator
-from Unicode.U0000 import ASTERISK
-from Unicode.U0000 import HYPHEN_MINUS
-from Unicode.U0000 import PLUS_SIGN
+from unicode.u0000 import ASTERISK
+from unicode.u0000 import HYPHEN_MINUS
+from unicode.u0000 import PLUS_SIGN
 
 
 class unary():

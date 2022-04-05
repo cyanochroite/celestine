@@ -3,9 +3,9 @@ import sys
 sys.path.insert(1, '../src/')
 
 from tag.unary import unary
-from Unicode.U0000 import ASTERISK
-from Unicode.U0000 import HYPHEN_MINUS
-from Unicode.U0000 import PLUS_SIGN
+from unicode.u0000 import ASTERISK
+from unicode.u0000 import HYPHEN_MINUS
+from unicode.u0000 import PLUS_SIGN
 
 
 class test_unary(unittest.TestCase):

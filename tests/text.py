@@ -15,7 +15,7 @@ from tag.alphabet import letter
 from tag.alphabet import comparison
 from tag.alphabet import all_token
 from tag.alphabet import one_token
-from Unicode.U0000 import LOW_LINE
+from unicode.u0000 import LOW_LINE
 
 
 from enum import Enum
