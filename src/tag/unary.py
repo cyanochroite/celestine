@@ -1,10 +1,20 @@
+from tag.collection import collection
 from tag.operator import operator
 from unicode.u0000 import ASTERISK
 from unicode.u0000 import HYPHEN_MINUS
 from unicode.u0000 import PLUS_SIGN
 
 
-class unary():
+class unary(collection):
+    def __init__(self):
+        super().__init__(
+            {
+                ASTERISK,
+                HYPHEN_MINUS,
+                PLUS_SIGN
+            }
+        )
+
     class _add(operator):
         def __init__(self):
             super().__init__(

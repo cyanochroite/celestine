@@ -1,27 +1,34 @@
+from tag.collection import collection
+from tag.operator import operator
 from mem_dixy.tag.operator import operator
 from mem_dixy.Unicode.U0000 import ASTERISK
 from mem_dixy.Unicode.U0000 import HYPHEN_MINUS
 from mem_dixy.Unicode.U0000 import PLUS_SIGN
 
 
-class number(): # digit?
-    DIGIT_ZERO
-    DIGIT_ONE
-    DIGIT_TWO
-    DIGIT_THREE
-    DIGIT_FOUR
-    DIGIT_FIVE
-    DIGIT_SIX
-    DIGIT_SEVEN
-    DIGIT_EIGHT
-    DIGIT_NINE
-    LATIN_CAPITAL_LETTER_A
-    LATIN_CAPITAL_LETTER_B
-    LATIN_CAPITAL_LETTER_C
-    LATIN_CAPITAL_LETTER_D
-    LATIN_CAPITAL_LETTER_E
-    LATIN_CAPITAL_LETTER_F
-    
+class number(collection): # digit?
+    def __init__(self):
+        super().__init__(
+            {
+                DIGIT_ZERO,
+                DIGIT_ONE,
+                DIGIT_TWO,
+                DIGIT_THREE,
+                DIGIT_FOUR,
+                DIGIT_FIVE,
+                DIGIT_SIX,
+                DIGIT_SEVEN,
+                DIGIT_EIGHT,
+                DIGIT_NINE,
+                LATIN_CAPITAL_LETTER_A,
+                LATIN_CAPITAL_LETTER_B,
+                LATIN_CAPITAL_LETTER_C,
+                LATIN_CAPITAL_LETTER_D,
+                LATIN_CAPITAL_LETTER_E,
+                LATIN_CAPITAL_LETTER_F
+            }
+        )
+
     class _add(operator):
         def __init__(self):
             super().__init__(

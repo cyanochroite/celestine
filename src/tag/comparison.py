@@ -1,3 +1,4 @@
+from tag.collection import collection
 from tag.operator import operator
 from unicode.u0000 import EQUALS_SIGN
 from unicode.u0000 import EXCLAMATION_MARK
@@ -5,7 +6,17 @@ from unicode.u0000 import GREATER_THAN_SIGN
 from unicode.u0000 import LESS_THAN_SIGN
 
 
-class comparison():
+class comparison(collection):
+    def __init__(self):
+        super().__init__(
+            {
+                EQUALS_SIGN,
+                EXCLAMATION_MARK,
+                GREATER_THAN_SIGN,
+                LESS_THAN_SIGN
+            }
+        )
+
     class _eq(operator):
         def __init__(self):
             super().__init__(

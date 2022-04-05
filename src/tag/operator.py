@@ -6,6 +6,9 @@ class operator():
     def __str__(self):
         return str().join(self._primary)
 
+    def __repr__(self):
+        return str().join(self._primary)
+
     @classmethod
     def parse(cls, array):
         return NotImplementedError
