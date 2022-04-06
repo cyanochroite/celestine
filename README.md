@@ -1,4 +1,4 @@
-[PIV-Tag](https://github.com/mem-dixy/PIV-Tag/) - (Personal, Portable, Private) Image Viewing Tag System
+Image Program Thing
 ====================================================================================
 
 - [About](#about)
@@ -66,9 +66,8 @@ use on web server or as external library
 
 Inspiration
 --------------------------------------
-[POV-Ray](https://www.povray.org/) - The Persistence of Vision Raytracer (Name look familar?)\
-[Safebooru](https://safebooru.org/) - Safebooru (And the thousands of other booru sites.)\
-[BGG](https://boardgamegeek.com/advsearch/boardgame) - Board Game Geek (Epic advancned search.)
+[Safebooru](https://safebooru.org/) - And the thousands of other booru sites.\
+[Board Game Geek](https://boardgamegeek.com/advsearch/boardgame) - Epic advancned search.
 
 
 
