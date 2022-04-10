@@ -1,9 +1,8 @@
-Image Program Thing
+The Celestine Image Viewer
 ====================================================================================
 
 - [About](#about)
 - [Goals](#goals)
-- [License](#license)
 - [Requirements](#requirements)
 - [Inspiration](#inspiration)
 - [Installation](#installation)
@@ -11,7 +10,7 @@ Image Program Thing
 
 About
 --------------------------------------
-View and organize your photos. Work in progress. Not currently functional.
+View, tag, and organize your photos. Work in progress. Not currently functional.
 
 Old Description:
 By default this is a command line application. Should work anywhere Python 3 code can be run. The code has several folders dedicated to specific pluggins. If package not found, code not run. Can actually be deleted if desired.
@@ -34,17 +33,11 @@ What this is not:
 - This is not a mobile application.
 
 
-License
---------------------------------------
-EUROPEAN UNION PUBLIC LICENCE v. 1.2\
-EUPL © the European Union 2007, 2016
-
 Requirements
 --------------------------------------
 (Need to update this at some point. Try Instalation to get current code working.)
 
 Recomended
-Python `>= 3.4` (Lib/base64.py)\
 Python `>= 3.9` (PEP 584)\
 Pillow `>= 7.2.0` (TIFF BYTE tags format)\
 
@@ -151,7 +144,3 @@ filename:
 sha3 512 base 16
 sha3_512__18446744073709551616
 
-
-
-
-requirements
