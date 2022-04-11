@@ -18,5 +18,7 @@ def main(argument):
     print("%")
 
 if __name__ == "__main__":
+    print ('Number of arguments:', len(sys.argv), 'arguments.')
+    print ('Argument List:', str(sys.argv))
     sys.exit(main(sys.argv[1:]))
 

@@ -80,6 +80,12 @@ def _on_demo_close(sender, app_data, user_data):
     for i in range(4):
         dpg.delete_item("__demo_item_reg5_" + str(i))
 
+
+
+def callback2(sender, app_data, user_data):
+    value = dpg.get_value("input")
+    dpg.set_value("print", value)
+
 def show_demo():
 
     dpg.add_texture_registry(label="Demo Texture Container", tag="__demo_texture_container")
@@ -98,6 +104,11 @@ def show_demo():
     _create_static_textures()
 
     with dpg.window(label="Dear PyGui Demo", width=800, height=800, on_close=_on_demo_close, pos=(100, 100), tag="Main"):
+        # main stuff
+        dpg.add_input_text(label="moo", tag="input")
+        dpg.add_button(label="Directory Selector", callback=callback2)
+        dpg.add_text(label="Result", tag="print")
+        
 
         with dpg.group(horizontal=True):
             with dpg.group():
@@ -206,13 +217,15 @@ dearpygui.dearpygui.create_context()
 dpg.create_viewport(title='Custom Title', width=2600, height=1600)
 dearpygui.dearpygui.setup_dearpygui()
 
-dearpygui.dearpygui.show_style_editor()
-dearpygui.dearpygui.show_metrics()
-dearpygui.dearpygui.show_about()
-dearpygui.dearpygui.show_debug()
-dearpygui.dearpygui.show_documentation()
-dearpygui.dearpygui.show_font_manager()
-dearpygui.dearpygui.show_item_registry()
+debug=False
+if debug:
+    dearpygui.dearpygui.show_style_editor()
+    dearpygui.dearpygui.show_metrics()
+    dearpygui.dearpygui.show_about()
+    dearpygui.dearpygui.show_debug()
+    dearpygui.dearpygui.show_documentation()
+    dearpygui.dearpygui.show_font_manager()
+    dearpygui.dearpygui.show_item_registry()
 
 show_demo()
 dpg.set_primary_window("Main", True)

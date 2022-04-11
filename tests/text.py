@@ -8,7 +8,6 @@ sys.path.insert(1, '../src/')
 #from tag.alphabet import *
 
 
-from tag.logic import *
 
 from tag.alphabet import convert
 from tag.alphabet import letter
