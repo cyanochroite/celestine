@@ -1,0 +1,219 @@
+Primary
+Secondary
+Tertiary
+Quaternary
+Quinary
+secondary, tertiary, and quaternary layers
+
+from enum import Enum
+
+    def setUp(self):
+        pass
+
+    @classmethod
+    def setUpClass(cls):
+        pass
+
+    def tearDown(self):
+        pass
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
+
+class enum_comparison(Enum):
+    lt = 0,  # less then
+    le = 1,  # less then or equal to
+    eq = 2,  # equal to
+    ne = 3,  # not equal to
+    ge = 4,  # greater then
+    gt = 5,  # greater then or equal to
+    sa = 6,  # select all
+    sn = 7  # select none
+    
+    
+    <
+        
+
+strictly less than
+
+<=
+        
+
+less than or equal
+
+>
+        
+
+strictly greater than
+
+>=
+        
+
+greater than or equal
+
+==
+        
+
+equal
+
+!=
+        
+
+not equal
+
+is
+        
+
+object identity
+
+is not
+        
+
+negated object identity
+
+
+I believe that record is held by the codepoint U+FBF9 (ﯹ), “ARABIC LIGATURE UIGHUR KIRGHIZ YEH WITH HAMZA ABOVE WITH ALEF MAKSURA ISOLATED FORM,” which is 83 characters. There are a couple of other Arabic ligatures that are close to that count, as well.
+The next longest name for a different sort of character is U+1F502 (🔂), “CLOCKWISE RIGHTWARDS AND LEFTWARDS OPEN CIRCLE ARROWS WITH CIRCLED ONE OVERLAY” which is 78 characters.
+
+
+
+
+
+
+
+
+
+
+
+LATIN CAPITAL LETTER A WITH RING ABOVE = 212B
+LATIN CAPITAL LETTER ETH = 0
+LATIN CAPITAL LETTER O WITH STROKE
+LATIN SMALL LETTER SHARP S
+LATIN SMALL LETTER AE
+
+
+
+
+
+# from mem_dixy.Unicode.UXXXX import *
+
+
+
+# Random notes
+
+
+
+
+
+
+Rexex parser: Adds support for wildcard searches using '*'.
+
+
+command core
+only the basics here
+use on web server or as external library
+
+
+
+
+b binary:
++ includes it
+- excludes it (NOT)
+
+WHERE pig AND dog
+WHERE NOT pig AND dog
+WHERE pig AND NOT dog
+WHERE NOT pig AND NOT dog
+WHERE pig OR dog
+WHERE NOT pig OR dog
+WHERE pig OR NOT dog
+WHERE NOT pig OR NOT dog
+
+
+
+s symbol:
+& puts it into AND group
+| puts it into OR group
+
+if set empty, use true
+WHERE TRUE AND TRUE
+WHERE (pig AND dog) AND TRUE
+WHERE TRUE AND (cat OR frog)
+WHERE (pig AND dog) AND (cat OR frog)
+
+& = ()&()
+| = ()|()
+
+
+(a & B) | (C | D)
+
+a b c d
+A & B & C & D
+a -b c -d
+A & !B & C & !D
+
++a +b +c +d
+A & B & C & D
++a -b +c -d
+A & !B & C & !D
+
+&&abc
+(a&(b&c))
+&&abc
+((a)&(b))&(c)
+&|abc
+((a)|(b))&(c)
+
+|&a|bcde
+abc|d&e|
+(((a & (b | c)) & d) | e)
+
+
+eye
+	brown
+	red
+
+
+t tag
+
+sbt
+
+&+fish
+
+reserved
+*:?
+
++-
+|&
+
+does white space matter?
+no
+
+steps
+0 user input
+1 strip out all illegal characters. pass over each character and move to new buffer if valid
+>2 convert invalid characters to valid character in new buffer
+3 remove all whitespace. separate items to token groups
+4 apply found symbols to new class. when hit tag, previously applied attributes are used. otherwise defaults used. state set each time new symbol seen, so in essence, last one seen used
+
+
+
+
+
+scanning
+boxworks
+toys r us
+coventry
+middle school
+}
+
+
+filename:
+sha3 512 base 16
+sha3_512__18446744073709551616
+
+
+
+
+requirements

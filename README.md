@@ -63,84 +63,9 @@ Inspiration
 [Board Game Geek](https://boardgamegeek.com/advsearch/boardgame) - Epic advancned search.
 
 
-
-
 Installation
 --------------------------------------
 | Package | [PyPi](https://packaging.python.org/en/latest/tutorials/installing-packages/#use-pip-for-installing) |
 | ------------------------------------------------------------------- | ----------------------- |
 | [DearPyGui](https://github.com/hoffstadt/DearPyGui#installation) | `pip install dearpygui` |
 | [Pillow](https://pillow.readthedocs.io/en/latest/installation.html) | `pip install Pillow` |
-
-# Random notes
-
-
-
-
-
-
-b binary:\
-+ includes it\
-- excludes it (NOT)\
-\
-WHERE pig AND dog\
-WHERE NOT pig AND dog\
-WHERE pig AND NOT dog\
-WHERE NOT pig AND NOT dog\
-WHERE pig OR dog\
-WHERE NOT pig OR dog\
-WHERE pig OR NOT dog\
-WHERE NOT pig OR NOT dog\
-\
-\
-\
-s symbol:\
-& puts it into AND group\
-| puts it into OR group\
-\
-if set empty, use true\
-WHERE TRUE AND TRUE\
-WHERE (pig AND dog) AND TRUE\
-WHERE TRUE AND (cat OR frog)\
-WHERE (pig AND dog) AND (cat OR frog)\
-\
-& = ()&()\
-| = ()|()\
-\
-\
-(a & B) | (C | D)\
-\
-a b c d\
-A & B & C & D\
-a -b c -d\
-A & !B & C & !D\
-\
-+a +b +c +d\
-A & B & C & D\
-+a -b +c -d\
-A & !B & C & !D\
-\
-&&abc\
-(a&(b&c))\
-&&abc\
-((a)&(b))&(c)\
-&|abc\
-((a)|(b))&(c)\
-\
-|&a|bcde\
-abc|d&e|\
-(((a & (b | c)) & d) | e)\
-\
-
-steps\
-0 user input\
-1 strip out all illegal characters. pass over each character and move to new buffer if valid\
-2 convert invalid characters to valid character in new buffer\
-3 remove all whitespace. separate items to token groups\
-4 apply found symbols to new class. when hit tag, previously applied attributes are used. otherwise defaults used. state set each time new symbol seen, so in essence, last one seen used
-
-
-filename:
-sha3 512 base 16
-sha3_512__18446744073709551616
-
