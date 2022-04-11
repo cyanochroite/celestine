@@ -1,6 +1,7 @@
-import unittest
 import sys
-sys.path.insert(1, '../src/')
+sys.path.insert(1, '../../src/')
+
+import unittest
 
 from tag.unary import unary
 from unicode.u0000 import ASTERISK

@@ -1,12 +1,9 @@
-import unittest
 import sys
-sys.path.insert(1, '../src/')
+sys.path.insert(1, '../../src/')
 
-from tag.comparison import comparison
-from unicode.u0000 import EQUALS_SIGN
-from unicode.u0000 import EXCLAMATION_MARK
-from unicode.u0000 import GREATER_THAN_SIGN
-from unicode.u0000 import LESS_THAN_SIGN
+import unittest
+
+from tag.comparison import *
 
 
 class test_comparison(unittest.TestCase):
