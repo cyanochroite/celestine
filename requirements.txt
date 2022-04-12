@@ -1,4 +1,5 @@
-dearpygui
-pillow
-python # NOTE: 3.9+ ONLY
+dearpygui==1.4.0
+Pillow==9.0.1
 tkinter
+unittest
+Python>=3.9
