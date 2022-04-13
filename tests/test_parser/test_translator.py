@@ -1,9 +1,6 @@
-import sys
-sys.path.insert(1, '../../src/')
-
 import unittest
 
-from tag.alphabet import convert
+from celestine.tag.alphabet import *
 
 
 class test_translator():
@@ -16,6 +13,7 @@ class test_translator():
                 if item is not None
             ]
         )
+
 
 string = "cat hat"
 string = translator.translate(string)

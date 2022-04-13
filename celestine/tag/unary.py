@@ -1,8 +1,8 @@
-from tag.collection import collection
-from tag.operator import operator
-from unicode.u0000 import ASTERISK
-from unicode.u0000 import HYPHEN_MINUS
-from unicode.u0000 import PLUS_SIGN
+from celestine.tag.collection import collection
+from celestine.tag.operator import operator
+from celestine.unicode.u0000 import ASTERISK
+from celestine.unicode.u0000 import HYPHEN_MINUS
+from celestine.unicode.u0000 import PLUS_SIGN
 
 
 class unary(collection):

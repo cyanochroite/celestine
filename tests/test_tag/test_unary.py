@@ -1,12 +1,6 @@
-import sys
-sys.path.insert(1, '../../src/')
-
 import unittest
 
-from tag.unary import unary
-from unicode.u0000 import ASTERISK
-from unicode.u0000 import HYPHEN_MINUS
-from unicode.u0000 import PLUS_SIGN
+from celestine.tag.unary import *
 
 
 class test_unary(unittest.TestCase):
@@ -85,7 +79,3 @@ class test_unary(unittest.TestCase):
         )
         self.assertSetEqual(token, unary.sub.secondary)
         self.assertIs(unary.parse(token), unary.sub)
-
-
-if __name__ == '__main__':
-    unittest.main()

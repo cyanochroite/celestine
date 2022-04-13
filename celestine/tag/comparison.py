@@ -1,9 +1,9 @@
-from tag.collection import collection
-from tag.operator import operator
-from unicode.u0000 import EQUALS_SIGN
-from unicode.u0000 import EXCLAMATION_MARK
-from unicode.u0000 import GREATER_THAN_SIGN
-from unicode.u0000 import LESS_THAN_SIGN
+from celestine.tag.collection import collection
+from celestine.tag.operator import operator
+from celestine.unicode.u0000 import EQUALS_SIGN
+from celestine.unicode.u0000 import EXCLAMATION_MARK
+from celestine.unicode.u0000 import GREATER_THAN_SIGN
+from celestine.unicode.u0000 import LESS_THAN_SIGN
 
 
 class comparison(collection):

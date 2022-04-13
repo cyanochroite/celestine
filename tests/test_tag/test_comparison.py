@@ -1,9 +1,6 @@
-import sys
-sys.path.insert(1, '../../src/')
-
 import unittest
 
-from tag.comparison import *
+from celestine.tag.comparison import *
 
 
 class test_comparison(unittest.TestCase):
@@ -166,7 +163,3 @@ class test_comparison(unittest.TestCase):
         )
         self.assertSetEqual(token, comparison.nu.secondary)
         self.assertIs(comparison.parse(token), comparison.nu)
-
-
-if __name__ == '__main__':
-    unittest.main()
