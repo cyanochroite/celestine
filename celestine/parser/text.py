@@ -1,22 +1,22 @@
 import sys
 
-# from tag.alphabet import convert
-# from tag.alphabet import tag
-# from tag.alphabet import hashy
-# from tag.alphabet import space
-#from tag.alphabet import *
+# from celestine.tag.alphabet import convert
+# from celestine.tag.alphabet import tag
+# from celestine.tag.alphabet import hashy
+# from celestine.tag.alphabet import space
+#from celestine.tag.alphabet import *
 
 
 
-from tag.alphabet import convert
-from tag.alphabet import letter
-from tag.alphabet import comparison
-from tag.alphabet import all_token
-from tag.alphabet import one_token
-from unicode.u0000 import LOW_LINE
+from celestine.tag.alphabet import convert
+from celestine.tag.alphabet import letter
+from celestine.tag.alphabet import comparison
+from celestine.tag.alphabet import all_token
+from celestine.tag.alphabet import one_token
+from celestine.unicode.u0000 import LOW_LINE
 
 
-from enum import Enum
+from celestine.enum import Enum
 
 
 class State(Enum):

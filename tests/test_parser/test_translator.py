@@ -13,8 +13,3 @@ class test_translator():
                 if item is not None
             ]
         )
-
-
-string = "cat hat"
-string = translator.translate(string)
-print(string)

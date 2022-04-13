@@ -1,6 +1,6 @@
-from package.pillow.Image import Image
-from package.python.hashlib import hashlib
-from package.python.os import os
+from celestine.package.pillow.Image import Image
+from celestine.package.python.hashlib import hashlib
+from celestine.package.python.os import os
 
 def main(todo="D:/todo", done="D:/done"):
     (path, file) = os.chdir(todo, os.walk_directory)
