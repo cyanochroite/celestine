@@ -32,45 +32,6 @@ class enum_comparison(Enum):
     sn = 7  # select none
     
     
-    <
-        
-
-strictly less than
-
-<=
-        
-
-less than or equal
-
->
-        
-
-strictly greater than
-
->=
-        
-
-greater than or equal
-
-==
-        
-
-equal
-
-!=
-        
-
-not equal
-
-is
-        
-
-object identity
-
-is not
-        
-
-negated object identity
 
 
 I believe that record is held by the codepoint U+FBF9 (ﯹ), “ARABIC LIGATURE UIGHUR KIRGHIZ YEH WITH HAMZA ABOVE WITH ALEF MAKSURA ISOLATED FORM,” which is 83 characters. There are a couple of other Arabic ligatures that are close to that count, as well.
@@ -96,15 +57,8 @@ LATIN SMALL LETTER AE
 
 
 
-# from mem_dixy.Unicode.UXXXX import *
-
-
 
 # Random notes
-
-
-
-
 
 
 Rexex parser: Adds support for wildcard searches using '*'.
@@ -199,21 +153,6 @@ steps
 
 
 
-
-
-scanning
-boxworks
-toys r us
-coventry
-middle school
-}
-
-
 filename:
 sha3 512 base 16
 sha3_512__18446744073709551616
-
-
-
-
-requirements

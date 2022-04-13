@@ -1,28 +1,23 @@
 import dearpygui.dearpygui as dpg
 
 dpg.create_context()
-dpg.create_viewport()
+
+def callback(sender, app_data, user_data):
+    print("Sender: ", sender)
+    print("App Data: ", app_data)
+
+with dpg.file_dialog(directory_selector=False, show=False, callback=callback, id="file_dialog_id"):
+    dpg.add_file_extension(".csv")
+    dpg.add_file_extension("", color=(150, 255, 150, 255))
+    dpg.add_file_extension("Source files (*.cpp *.h *.hpp){.cpp,.h,.hpp}", color=(0, 255, 255, 255))
+    dpg.add_file_extension(".h", color=(255, 0, 255, 255), custom_text="[header]")
+    dpg.add_file_extension(".py", color=(0, 255, 0, 255), custom_text="[Python]")
+
+with dpg.window(label="Tutorial", width=800, height=300):
+    dpg.add_button(label="File Selector", callback=lambda: dpg.show_item("file_dialog_id"))
+
+dpg.create_viewport(title='Custom Title', width=800, height=600)
 dpg.setup_dearpygui()
-
-def callback0(sender, app_data, user_data):
-    value = dpg.get_value("cat")
-    print(value)
-
-def callback1(sender, app_data, user_data):
-    value = dpg.set_value("cat", "Moo")
-
-def callback2(sender, app_data, user_data):
-    value = dpg.set_value("cat", "Oink")
-
-def callback4(sender, app_data, user_data):
-    print(app_data)
-
-with dpg.window():
-    dpg.add_input_text(tag="cat", default_value="meow", callback=callback4)
-    dpg.add_button(label="What does a cat say?", callback=callback0)
-    dpg.add_button(label="It says Moo", callback=callback1)
-    dpg.add_button(label="It says Oink?", callback=callback2)
-
-dpg.show_viewport(minimized=False, maximized=False)
+dpg.show_viewport()
 dpg.start_dearpygui()
 dpg.destroy_context()
