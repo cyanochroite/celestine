@@ -59,7 +59,7 @@ project in a semi working and stable configuration.)
         </td>
         <td>
             <bold>
-                Mandatory
+                REQUIRED
             </bold>
         </td>
         <td>
@@ -76,7 +76,7 @@ project in a semi working and stable configuration.)
         </td>
         <td>
             <bold>
-                Optional
+                OPTIONAL
             </bold>
         </td>
         <td>
@@ -96,7 +96,7 @@ project in a semi working and stable configuration.)
         </td>
         <td>
             <bold>
-                Optional
+                OPTIONAL
             </bold>
         </td>
         <td>
@@ -134,7 +134,7 @@ project in a semi working and stable configuration.)
         </td>
         <td>
             <bold>
-                Mandatory
+                REQUIRED
             </bold>
         </td>
         <td>
@@ -151,7 +151,7 @@ project in a semi working and stable configuration.)
         </td>
         <td>
             <bold>
-                Recommended
+                RECOMMENDED
             </bold>
         </td>
         <td>
@@ -171,7 +171,7 @@ project in a semi working and stable configuration.)
         </td>
         <td>
             <bold>
-                Recommended
+                RECOMMENDED
             </bold>
         </td>
         <td>
@@ -218,3 +218,11 @@ Inspiration
     Board Game Geek
 </a>
 - Epic advancned search.
+
+
+
+Info
+--------------------------------------
+<a href="https://semver.org/">
+    Semantic Versioning 2.0.0
+</a>
