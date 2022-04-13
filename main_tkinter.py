@@ -1,9 +1,38 @@
+from celestine.package.tkinter.Widget import Tk
+from celestine.package.tkinter.window import Window
+
+
 import os.path
 import sys
 
-from package.pillow.Image import Image
-from package.pillow.ImageTk import ImageTk
-from list import list
+from celestine.package.pillow.Image import Image
+from celestine.package.pillow.ImageTk import ImageTk
+
+class list:
+    def __init__(self):
+        self._list = []
+        self._index = 0
+        self._min = 0
+        self._max = -1
+
+    def add(self, item):
+        self._list.append(item)
+        self._max += 1
+
+    def back(self):
+        if self._index > self._min:
+            self._index -= 1
+
+    def get(self):
+        return self._list[self._index]
+
+    def next(self):
+        if self._index < self._max:
+            self._index += 1
+
+    def reset(self):
+        self._index = self._min
+
 
 
 class WindowModel():
@@ -61,3 +90,10 @@ class WindowModel():
         path = os.path.dirname(path)
         path = os.path.join(path, "file")
         return path
+
+
+root = Tk()
+model = WindowModel()
+window = Window(root, data=model)
+window.grid(row=0, column=0)
+root.mainloop()

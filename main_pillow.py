@@ -1,7 +1,7 @@
-from package.python.os import os
-from package.pillow.Image import Image
-from package.pillow.ImageDraw import ImageDraw
-from package.pillow.ImageFont import ImageFont
+from celestine.package.python.os import os
+from celestine.package.pillow.Image import Image
+from celestine.package.pillow.ImageDraw import ImageDraw
+from celestine.package.pillow.ImageFont import ImageFont
 
 #import PIL.Image
 
@@ -305,7 +305,7 @@ print("done")
 
 
 ###########################
-import star.main
+import celestine.star.main
 
 
 import dearpygui
@@ -332,7 +332,7 @@ def callback_star(sender, app_data, user_data):
 
 ###########################
 
-from package.dearpygui.file_dialog import file_dialog
+from celestine.package.dearpygui.file_dialog import file_dialog
 
 def callback(sender, app_data, user_data):
     print("Sender: ", sender)

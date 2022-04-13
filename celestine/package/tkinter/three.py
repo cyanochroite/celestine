@@ -1,6 +1,6 @@
 import functools
 
-from package.tkinter.Widget import Frame
+from celestine.package.tkinter.Widget import Frame
 
 
 class three(Frame):

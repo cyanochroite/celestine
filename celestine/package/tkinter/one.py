@@ -1,4 +1,4 @@
-from package.tkinter.Widget import Frame
+from celestine.package.tkinter.Widget import Frame
 
 
 class one(Frame):

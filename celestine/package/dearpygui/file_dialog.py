@@ -1,4 +1,4 @@
-from package.python.path import path
+from celestine.package.python.path import path
 
 
 class file_dialog():

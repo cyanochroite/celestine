@@ -1,7 +1,7 @@
-from package.tkinter.Widget import Frame
-from package.tkinter.one import one
-from package.tkinter.two import two
-from package.tkinter.three import three
+from celestine.package.tkinter.Widget import Frame
+from celestine.package.tkinter.one import one
+from celestine.package.tkinter.two import two
+from celestine.package.tkinter.three import three
 
 
 class Window(Frame):
