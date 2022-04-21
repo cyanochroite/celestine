@@ -6,7 +6,7 @@ https://celestine-viewer.mem-dixy.ch/
 (Coming soon?)
 
 Vist the Email:
-mailto:celestine-viewer.mem-dixy.ch
+<a href="mailto:celestine-viewer@mem-dixy.ch">celestine-viewer@mem-dixy.ch</a>
 
 Visit the docs:
 
