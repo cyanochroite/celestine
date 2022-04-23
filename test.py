@@ -14,4 +14,9 @@ bird = cat or "fish"
 dog = bird.join(bird)
 print(cat)
 print(bird)
-print(dog)
+print(dog)import celestine.unicode.u0000
+from celestine import *
+
+print(unicode.u0000.LATIN_CAPITAL_LETTER_A)
+print(celestine.unicode.u0000.LATIN_CAPITAL_LETTER_A)
+print("done")
