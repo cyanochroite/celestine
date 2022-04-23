@@ -156,3 +156,15 @@ steps
 filename:
 sha3 512 base 16
 sha3_512__18446744073709551616
+
+
+
+
+
+development install
+unittest
+pytest
+
+The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in RFC 2119.
+
+https://semver.org/
