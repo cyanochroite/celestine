@@ -1,6 +1,4 @@
-from tag.alphabet import convert
-
-
+from celestine.tag.alphabet import convert
 
 
 class translator():
@@ -13,7 +11,3 @@ class translator():
                 if item is not None
             ]
         )
-
-string = "cat hat"
-string = translator.translate(string)
-print(string)

@@ -1,15 +1,10 @@
 import unittest
 
-from celestine.tag.alphabet import *
+from celestine.parser.translator import *
 
 
-class test_translator():
-    @staticmethod
-    def translate(string):
-        return str().join(
-            [
-                item for item in
-                [convert.get(character) for character in string]
-                if item is not None
-            ]
-        )
+class test_translator(unittest.TestCase):
+    def test_translate(self):
+        string = "cat hat"
+        result = translator.translate(string)
+        self.assertEqual(string, result)
