@@ -170,6 +170,19 @@ The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL 
 https://semver.org/
 
 
+PACKAGE
+python -m pip install --upgrade pip
+python -m pip install --upgrade build
+python -m build
+python -m pip install --upgrade twine
+
+# test
+python -m twine upload --repository testpypi dist/*
+python -m pip install --index-url https://test.pypi.org/simple/ --no-deps celestine-viewer
+
+# real
+python -m twine upload dist/* 
+python -m pip install celestine-viewer
 
 INSTALL
 pip install pytest
