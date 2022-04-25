@@ -41,6 +41,8 @@ The next longest name for a different sort of character is U+1F502 (🔂), “CL
 
 
 
+Add a "py.typed" file
+https://devblogs.microsoft.com/python/pylance-introduces-five-new-features-that-enable-type-magic-for-python-developers/
 
 
 
