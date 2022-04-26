@@ -173,6 +173,8 @@ https://semver.org/
 
 https://libraries.io/
 
+celestine-viewer.readthedocs.io
+celestine-viewer.rtfd.io 
 
 PACKAGE
 python -m pip install --upgrade pip

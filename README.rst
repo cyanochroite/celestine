@@ -7,6 +7,10 @@ The Celestine Image Viewer
 - [Inspiration](#inspiration)
 
 
+.. image:: https://readthedocs.org/projects/celestine-viewer/badge/?version=latest
+:target: https://celestine-viewer.readthedocs.io/en/latest/?badge=latest
+:alt: Documentation Status
+
 About
 --------------------------------------
 View, tag, and organize your photos. Work in progress. Not currently functional.
