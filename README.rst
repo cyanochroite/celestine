@@ -1,18 +1,19 @@
 The Celestine Image Viewer
-====================================================================================
+==========================
 
-- [About](#about)
-- [Goals](#goals)
-- [Requirements](#requirements)
-- [Inspiration](#inspiration)
-
+- About_
+- Goals_
+- Requirements_
+- Inspiration_
+- Info_
 
 .. image:: https://readthedocs.org/projects/celestine-viewer/badge/?version=latest
 :target: https://celestine-viewer.readthedocs.io/en/latest/?badge=latest
 :alt: Documentation Status
 
+.. _About:
 About
---------------------------------------
+-----
 View, tag, and organize your photos. Work in progress. Not currently functional.
 
 Old Description:
@@ -23,9 +24,9 @@ Decided that the main reason behind this was an attempt to use HTML as my GUI.
 Most files in this project are dedicated to viewing and modifying local images.
 Will try to update the project to reflect that.
 
-
+.. _Goals:
 Goals
---------------------------------------
+-----
 - Zero internet access. (An offline only application. Possible exception would be checking for updates.)
 - Minimal dependencies. (Ideally no more than 4 pip installs. Currently at 2.)
 - Advanced tag searching. (Most websites have really lousy topic filters.)
@@ -35,159 +36,40 @@ What this is not:
 - This is not a photo downloader.
 - This is not a mobile application.
 
-
+.. _Requirements:
 Requirements
---------------------------------------
+------------
 (Note: Currently all of these requirements are mandatory until I can get this
 project in a semi working and stable configuration.)
-<table>
-    <tr>
-        <th>
-            Python
-        </th>
-        <th>
-            Need
-        </th>
-        <th>
-            Optional Features
-        </th>
-        <th>
-            Why
-        </th>
-    </tr>
-    <tr>
-        <td>
-            <a href="https://www.python.org/downloads/">
-                Python
-            </a>
-        </td>
-        <td>
-            <bold>
-                REQUIRED
-            </bold>
-        </td>
-        <td>
-        </td>
-        <td>
-            This project is written in Python.
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="https://docs.python.org/3/library/tkinter.html">
-                tkinter
-            </a>
-        </td>
-        <td>
-            <bold>
-                OPTIONAL
-            </bold>
-        </td>
-        <td>
-            <samp>
-                tcl/tk and IDLE
-            </samp>
-        </td>
-        <td>
-            Use this if you don't trust DearPyGui.
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="https://docs.python.org/3/library/unittest.html">
-                unittest
-            </a>
-        </td>
-        <td>
-            <bold>
-                OPTIONAL
-            </bold>
-        </td>
-        <td>
-            <samp>
-                Python test suite
-            </samp>
-        </td>
-        <td>
-            Use this to run the tests yourself.
-        </td>
-    </tr>
-<table>
-<table>
-    <tr>
-        <th>
-            Package
-        </th>
-        <th>
-            Need
-        </th>
-        <th>
-            <a href="https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-pypi">
-                PyPi
-            </a>
-        </th>
-        <th>
-            Why
-        </th>
-    </tr>
-    <tr>
-        <td>
-            <a href="https://github.com/mem-dixy/celestine-viewer/">
-                Celestine Image Viewer
-            </a>
-        </td>
-        <td>
-            <bold>
-                REQUIRED
-            </bold>
-        </td>
-        <td>
-        </td>
-        <td>
-            This is the project you are trying to install.
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="https://pypi.org/project/dearpygui/">
-                DearPyGui
-            </a>
-        </td>
-        <td>
-            <bold>
-                RECOMMENDED
-            </bold>
-        </td>
-        <td>
-            <code>
-                pip install dearpygui
-            </code>
-        </td>
-        <td>
-            Without this, you need tkinter or the command line.
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="https://pypi.org/project/Pillow/">
-                Pillow
-            </a>
-        </td>
-        <td>
-            <bold>
-                RECOMMENDED
-            </bold>
-        </td>
-        <td>
-            <code>
-                pip install Pillow
-            </code>
-        </td>
-        <td>
-            Without this most images wont load.
-        </td>
-    </tr>
-</table>
+
++-----------+----------+-------------------+----------------------------------------+
+| Python    | Need     | Optional Features | Why                                    |
++-----------+----------+-------------------+----------------------------------------+
+| Python_   | REQUIRED |                   | This project is written in Python.     |
++-----------+----------+-------------------+----------------------------------------+
+| tkinter_  | OPTIONAL | tcl/tk and IDLE   | Use this if you don't trust DearPyGui. |
++-----------+----------+-------------------+----------------------------------------+
+| unittest_ | OPTIONAL | Python test suite | Use this to run the tests yourself.    |
++-----------+----------+-------------------+----------------------------------------+
+
+.. _Python: https://www.python.org/downloads/
+.. _tkinter: https://docs.python.org/3/library/tkinter.html
+.. _unittest: https://docs.python.org/3/library/unittest.html
+
++---------------------------+-------------+-----------------------+-----------------------------------------------------+
+| Package                   | Need        | PyPi_                 | Why                                                 |
++---------------------------+-------------+-----------------------+-----------------------------------------------------+
+| `Celestine Image Viewer`_ | REQUIRED    |                       | This is the project you are trying to install.      |
++---------------------------+-------------+-----------------------+-----------------------------------------------------+
+| DearPyGui_                | RECOMMENDED | pip install dearpygui | Without this, you need tkinter or the command line. |
++---------------------------+-------------+-----------------------+-----------------------------------------------------+
+| Pillow_                   | RECOMMENDED | pip install Pillow    | Without this most images wont load.                 |
++---------------------------+-------------+-----------------------+-----------------------------------------------------+
+
+.. _PyPi: https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-pypi
+.. _`Celestine Image Viewer`: https://github.com/mem-dixy/celestine-viewer/
+.. _DearPyGui: https://pypi.org/project/dearpygui/
+.. _Pillow: https://pypi.org/project/Pillow/
 
 (Old notes. Still useful. Need to add to table above somehow.)\
 
@@ -210,23 +92,24 @@ command core
 only the basics here
 use on web server or as external library
 
-
+.. _Inspiration:
 Inspiration
---------------------------------------
-<a href="https://safebooru.org/">
-    Safebooru
-</a>
-- And the thousands of other booru sites.
-<br/>
-<a href="https://boardgamegeek.com/advsearch/boardgame">
-    Board Game Geek
-</a>
-- Epic advancned search.
+-----------
+`Safebooru`_ - And the thousands of other booru sites.
 
+`Board Game Geek`_ - Epic advancned search.
 
+.. _`Safebooru`: https://safebooru.org
+.. _`Board Game Geek`: https://boardgamegeek.com/advsearch/boardgame">
 
+.. _Info:
 Info
---------------------------------------
-<a href="https://semver.org/">
-    Semantic Versioning 2.0.0
-</a>
+----
+`Semantic Versioning 2.0.0`_
+
+.. _`Semantic Versioning 2.0.0`: https://semver.org/
+
+
+
+
+.. _Write to me: jdoe@example.com
