@@ -8,10 +8,11 @@ The Celestine Image Viewer
 - Info_
 
 .. image:: https://readthedocs.org/projects/celestine-viewer/badge/?version=latest
-:target: https://celestine-viewer.readthedocs.io/en/latest/?badge=latest
-:alt: Documentation Status
+   :target: https://celestine-viewer.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
 
 .. _About:
+
 About
 -----
 View, tag, and organize your photos. Work in progress. Not currently functional.
@@ -25,6 +26,7 @@ Most files in this project are dedicated to viewing and modifying local images.
 Will try to update the project to reflect that.
 
 .. _Goals:
+
 Goals
 -----
 - Zero internet access. (An offline only application. Possible exception would be checking for updates.)
@@ -37,6 +39,7 @@ What this is not:
 - This is not a mobile application.
 
 .. _Requirements:
+
 Requirements
 ------------
 (Note: Currently all of these requirements are mandatory until I can get this
@@ -71,11 +74,11 @@ project in a semi working and stable configuration.)
 .. _DearPyGui: https://pypi.org/project/dearpygui/
 .. _Pillow: https://pypi.org/project/Pillow/
 
-(Old notes. Still useful. Need to add to table above somehow.)\
+(Old notes. Still useful. Need to add to table above somehow.)
 
-Recomended\
-Python `>= 3.9` (PEP 584)\
-Pillow `>= 7.2.0` (TIFF BYTE tags format)\
+Recomended
+Python `>= 3.9` (PEP 584)
+Pillow `>= 7.2.0` (TIFF BYTE tags format)
 
 Recommended Packages:
 Tkinter: Included in most python distributions, which means no installation or setup required. Adds GUI to application. Makes it easier for the average user to use. (Plus now you can actually see the images.)
@@ -93,6 +96,7 @@ only the basics here
 use on web server or as external library
 
 .. _Inspiration:
+
 Inspiration
 -----------
 `Safebooru`_ - And the thousands of other booru sites.
@@ -103,13 +107,11 @@ Inspiration
 .. _`Board Game Geek`: https://boardgamegeek.com/advsearch/boardgame">
 
 .. _Info:
+
 Info
 ----
 `Semantic Versioning 2.0.0`_
+`Write to me`_
 
 .. _`Semantic Versioning 2.0.0`: https://semver.org/
-
-
-
-
-.. _Write to me: jdoe@example.com
+.. _`Write to me`: celestine-viewer@mem-dixy.ch
