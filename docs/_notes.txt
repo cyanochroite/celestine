@@ -183,15 +183,16 @@ python -m build
 python -m pip install --upgrade twine
 
 
-python -m twine check --strict dist/*
-
 # test
-python -m twine upload --repository testpypi dist/*
-python -m pip install --index-url https://test.pypi.org/simple/ --no-deps celestine-viewer
+python -m twine check --strict dist/*
 python -m twine upload --verbose --repository testpypi dist/*
+python -m pip install --index-url https://test.pypi.org/simple/ --no-deps celestine-viewer
+python -m pip install --index-url https://test.pypi.org/simple/ celestine-viewer
+
 
 # real
-python -m twine upload dist/* 
+python -m twine check --strict dist/*
+python -m twine upload --verbose dist/*
 python -m pip install celestine-viewer
 
 INSTALL
