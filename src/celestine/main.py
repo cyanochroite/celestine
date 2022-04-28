@@ -2,7 +2,7 @@ import sys
 import os
 import textwrap
 
-
+import argparse
 
 
 __version__ = "0.1.2.3"
@@ -11,6 +11,20 @@ OK = 0
 ERR = 1
 FAIL_UNDER = 2
 
+
+COMMANDS = {
+    'annotate': 1,
+    'combine': 2,
+    'debug': 3,
+    'erase': 4,
+    'help': 5,
+    'html': 6,
+    'json': 7,
+    'lcov': 8,
+    'report': 9,
+    'run': 10,
+    'xml': 11
+}
 
 
 HELP_TOPICS = {
@@ -55,7 +69,7 @@ def show_help(error=None, topic=None, parser=None):
         # The path is the main module of a package; get that path instead.
         program_path = os.path.dirname(program_path)
     program_name = os.path.basename(program_path)
-    help_params = dict({"__version__":__version__, "__url__":"happy place dot com"})
+    help_params = dict({"__version__": __version__, "__url__": "happy place dot com"})
     help_params['program_name'] = program_name
     help_params['extension_modifier'] = 'without C extension'
 
@@ -73,177 +87,23 @@ def show_help(error=None, topic=None, parser=None):
             print(f"Don't know topic {topic!r}")
     print("Full documentation is at {__url__}".format(**help_params))
 
-    
-def command_line(self, argv):
-    """The bulk of the command line interface to coverage.py.
+GUI = [
+    "dearpygui",
+    "terminal",
+    "tkinter"
+]
 
-    `argv` is the argument list to process.
-
-    Returns 0 if all is well, 1 if something went wrong.
-
-    """
-    # Collect the command-line options.
-    if not argv:
-        show_help(topic='minimum_help')
-        return OK
-
-    # The command syntax we parse depends on the first argument.  Global
-    # switch syntax always starts with an option.
-    self.global_option = argv[0].startswith('-')
-    if self.global_option:
-        parser = GlobalOptionParser()
-    else:
-        parser = COMMANDS.get(argv[0])
-        if not parser:
-            show_help(f"Unknown command: {argv[0]!r}")
-            return ERR
-        argv = argv[1:]
-
-    ok, options, args = parser.parse_args_ok(argv)
-    if not ok:
-        return ERR
-
-    # Handle help and version.
-    if self.do_help(options, args, parser):
-        return OK
-
-    # Listify the list options.
-    source = unshell_list(options.source)
-    omit = unshell_list(options.omit)
-    include = unshell_list(options.include)
-    debug = unshell_list(options.debug)
-    contexts = unshell_list(options.contexts)
-
-    if options.concurrency is not None:
-        concurrency = options.concurrency.split(",")
-    else:
-        concurrency = None
-
-    # Do something.
-    self.coverage = Coverage(
-        data_file=options.data_file or DEFAULT_DATAFILE,
-        data_suffix=options.parallel_mode,
-        cover_pylib=options.pylib,
-        timid=options.timid,
-        branch=options.branch,
-        config_file=options.rcfile,
-        source=source,
-        omit=omit,
-        include=include,
-        debug=debug,
-        concurrency=concurrency,
-        check_preimported=True,
-        context=options.context,
-        messages=not options.quiet,
-        )
-
-    if options.action == "debug":
-        return self.do_debug(args)
-
-    elif options.action == "erase":
-        self.coverage.erase()
-        return OK
-
-    elif options.action == "run":
-        return self.do_run(options, args)
-
-    elif options.action == "combine":
-        if options.append:
-            self.coverage.load()
-        data_paths = args or None
-        self.coverage.combine(data_paths, strict=True, keep=bool(options.keep))
-        self.coverage.save()
-        return OK
-
-    # Remaining actions are reporting, with some common options.
-    report_args = dict(
-        morfs=unglob_args(args),
-        ignore_errors=options.ignore_errors,
-        omit=omit,
-        include=include,
-        contexts=contexts,
-        )
-
-    # We need to be able to import from the current directory, because
-    # plugins may try to, for example, to read Django settings.
-    sys.path.insert(0, '')
-
-    self.coverage.load()
-
-    total = None
-    if options.action == "report":
-        total = self.coverage.report(
-            precision=options.precision,
-            show_missing=options.show_missing,
-            skip_covered=options.skip_covered,
-            skip_empty=options.skip_empty,
-            sort=options.sort,
-            **report_args
-            )
-    elif options.action == "annotate":
-        self.coverage.annotate(directory=options.directory, **report_args)
-    elif options.action == "html":
-        total = self.coverage.html_report(
-            directory=options.directory,
-            precision=options.precision,
-            skip_covered=options.skip_covered,
-            skip_empty=options.skip_empty,
-            show_contexts=options.show_contexts,
-            title=options.title,
-            **report_args
-            )
-    elif options.action == "xml":
-        total = self.coverage.xml_report(
-            outfile=options.outfile,
-            skip_empty=options.skip_empty,
-            **report_args
-            )
-    elif options.action == "json":
-        total = self.coverage.json_report(
-            outfile=options.outfile,
-            pretty_print=options.pretty_print,
-            show_contexts=options.show_contexts,
-            **report_args
-            )
-    elif options.action == "lcov":
-        total = self.coverage.lcov_report(
-            outfile=options.outfile,
-            **report_args
-            )
-    else:
-        # There are no other possible actions.
-        raise AssertionError
-
-    if total is not None:
-        # Apply the command line fail-under options, and then use the config
-        # value, so we can get fail_under from the config file.
-        if options.fail_under is not None:
-            self.coverage.set_option("report:fail_under", options.fail_under)
-        if options.precision is not None:
-            self.coverage.set_option("report:precision", options.precision)
-
-        fail_under = self.coverage.get_option("report:fail_under")
-        precision = self.coverage.get_option("report:precision")
-        if should_fail_under(total, fail_under, precision):
-            msg = "total of {total} is less than fail-under={fail_under:.{p}f}".format(
-                total=Numbers(precision=precision).display_covered(total),
-                fail_under=fail_under,
-                p=precision,
-            )
-            print("Coverage failure:", msg)
-            return FAIL_UNDER
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        prog="celestine"
+    )
+    parser.add_argument(
+        "-g", "--gui",
+        default="dearpygui",
+        choices=GUI,
+        help="Choose a gui to use."
+    )
+    parse = parser.parse_args()
+    print(parse.gui)
 
     return OK
-
-def main():
-    command_line(None, None)
-    return OK
-
-
-def main(argv) -> int:
-    """Echo the input arguments to standard output"""
-    print(sys.argv)
-    
-    student_name = sys.argv[2] if len(sys.argv) >= 2 else ''
-    print(student_name)
-    return 0
