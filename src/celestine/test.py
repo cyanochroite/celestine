@@ -21,3 +21,5 @@ from celestine import *
 print(unicode.u0000.LATIN_CAPITAL_LETTER_A)
 print(celestine.unicode.u0000.LATIN_CAPITAL_LETTER_A)
 print("done")
+special = "-🌋 Volcano🏕️ Camping🏜️ Desert 1girl __vodo__on__!!||?#$&& pie"
+print(special)
