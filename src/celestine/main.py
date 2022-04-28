@@ -77,14 +77,14 @@ def main():
     gui = parse.gui.upper()
 
     if check(gui, DEARPYGUI):
-        import main_dearpygui
+        import dearpygui
 
     if check(gui, TKINTER):
-        import main_tkinter
+        import tkinter
 
     if check(gui, DESKTOP):
-        pass
+        import desktop
 
     if check(gui, TERMINAL):
-        pass
+        import terminal
 
