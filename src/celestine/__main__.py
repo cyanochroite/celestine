@@ -1,5 +1,5 @@
 import sys
 
-from main import main
+from celestine.main import main
 
 sys.exit(main())
