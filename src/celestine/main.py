@@ -1,6 +1,40 @@
 import argparse
 
 
+class Package():
+    def __init__(self, name, external, internal, main):
+        self.name = name
+        self.external = external
+        self.internal = internal
+        self.imported = True
+        self.main = "celestine." + main
+
+    def _import(self):
+        try:
+            __import__(self.external)
+            return True
+        except ModuleNotFoundError:
+            return False
+    
+    def import_package(self):
+        if not self._import:
+            raise MissingPackageError(self)
+        __import__(self.main)
+
+
+class MissingPackageError(ImportError):
+    def __init__(self, package):
+        self.package = package
+        #self.message = message
+
+    def __str__(self):
+        print("Candy")
+        return "This feature needs the package '{0}' installed.".format(
+            self.package.name
+        )
+    
+
+
 def _import(module):
     try:
         __import__(module)
@@ -31,26 +65,14 @@ UNITTEST = "unittest"
 VERIFICATION = "verification"
 
 
-class package():
-    def __init__(self, name, module, install):
-        self.name = name
-        self.module = module
-        self.install = install
-        self.imported = self._import(module)
 
-    def _import(self, module):
-        try:
-            __import__(module)
-            return True
-        except ModuleNotFoundError:
-            return False
 
 
 PACKAGE = {
-    DEARPYGUI: package("DearPyGui", "dearpygui", "pip install dearpygui"),
-    PILLOW: package("Pillow", "PIL", "pip install Pillow"),
-    TKINTER: package("tkinter", "tkinter", "Installing it with python."),
-    UNITTEST: package("unittest", "unittest", "Installing it with python.")
+    DEARPYGUI: Package("DearPyGui", "dearpygui", "dearpygui", ""),
+    PILLOW: Package("Pillow", "PIL", "pillow", ""),
+    TKINTER: Package("tkinter", "tkinter", "tkinter", ""),
+    UNITTEST: Package("unittest", "unittest", "unittest", "verify")
 }
 
 
@@ -136,8 +158,9 @@ def main():
         pass
 
     if parse.verify:
-        check_package(UNITTEST)
-        import celestine.verify
+        package = PACKAGE[UNITTEST]
+        package.import_package()
+
 
 
 
