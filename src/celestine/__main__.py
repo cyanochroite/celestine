@@ -1,16 +1,21 @@
 import sys
 import argparse
 
-def import_package(package):
-    __import__("celestine." + package)
+
+def import_package(package, module):
+    __import__(".".join(["celestine", "package", package, module]))
+
+
+def import_module(module):
+    __import__(".".join(["celestine", "module", module]))
+
 
 class Package():
-    def __init__(self, name, external, internal, main):
+    def __init__(self, name, external, internal):
         self.name = name
         self.external = external
         self.internal = internal
         self.imported = True
-        self.main = main
 
     def _import(self):
         try:
@@ -18,7 +23,7 @@ class Package():
             return True
         except ModuleNotFoundError:
             return False
-    
+
     def import_package(self):
         if not self._import:
             raise MissingPackageError(self)
@@ -35,7 +40,6 @@ class MissingPackageError(ImportError):
         return "This feature needs the package '{0}' installed.".format(
             self.package.name
         )
-    
 
 
 def _import(module):
@@ -60,13 +64,9 @@ VERIFICATION = "VERIFICATION"
 FILE = "file"
 PILLOW = "pillow"
 PROGRAM = "program"
+
 UNITTEST = "unittest"
 
-VERIFY = "verify"
-DEARPYGUI = "dearpygui"
-DESKTOP = "desktop"
-TERMINAL = "terminal"
-TKINTER = "tkinter"
 
 
 DEARPYGUI = "dearpygui"
@@ -82,48 +82,31 @@ VERIFICATION = "verification"
 
 
 
-def verify():
-    #import unittest
-    unittest = __import__("unittest")
-    import celestine.verify
-    unittest.main()
+VERIFY = "verify"
+DEARPYGUI = "dearpygui"
+DESKTOP = "desktop"
+TERMINAL = "terminal"
+TKINTER = "tkinter"
 
-def dearpygui():
-    import dearpygui
 
-def tkinter():
-    import tkinter
-
-def desktop():
-    import desktop
-
-def terminal():
-    import terminal
 
 
 
 PACKAGE = {
-    DEARPYGUI: Package("DearPyGui", "dearpygui", "dearpygui", dearpygui),
-    PILLOW: Package("Pillow", "PIL", "pillow", ""),
-    TKINTER: Package("tkinter", "tkinter", "tkinter", tkinter),
-    UNITTEST: Package("unittest", "unittest", "unittest", verify)
+    DEARPYGUI: Package("DearPyGui", "dearpygui", "dearpygui"),
+    PILLOW: Package("Pillow", "PIL", "pillow"),
+    TKINTER: Package("tkinter", "tkinter", "tkinter"),
+    UNITTEST: Package("unittest", "unittest", "unittest")
 }
 
 
-GUI = [
+MODE = [
+    DEARPYGUI,
+    TERMINAL,
     TKINTER,
-    DEARPYGUI
+    VERIFY
 ]
 
-CONSOLE = [
-    TERMINAL,
-    DESKTOP,
-    FILE
-]
-RUN = [
-    PROGRAM,
-    VERIFICATION
-]
 __version__ = "0.1.2.3"
 
 
@@ -148,7 +131,8 @@ def check_package(name):
         raise SystemExit(message)
 
 
-
+class Window():
+    pass
 
 
 def main():
@@ -160,66 +144,29 @@ def main():
         action="store_true",
         help="List all installed packages."
     )
-    parser.add_argument(
-        "-v", "--verify",
-        action="store_true",
-        help="Run unit tests."
-    )
 
-
-    parser.add_argument(
-        "-r", "--run",
-        default=PROGRAM,
-        choices=RUN,
-        help="Choose what you want to run."
-    )
     parser.add_argument(
         "-m", "--mode",
         default=TERMINAL,
-        choices=CONSOLE,
-        help="Choose a console mode."
+        choices=MODE,
+        help="Choose a mode to opperate in."
     )
-    parser.add_argument(
-        "-g", "--gui",
-        default=DEARPYGUI,
-        choices=GUI,
-        help="Choose a gui to use."
-    )
+
     parse = parser.parse_args()
 
-    run = parse.run
     mode = parse.mode
-    gui = parse.gui
-    print(gui)
-    print(parse)
-    print(vars(parse))
-    
-    cow = {a:b for a,b in vars(parse).items() if b}
-    print(cow)
 
-    print(parse.package)
-    if run == PROGRAM:
-        pass
-    elif run == VERIFICATION:
-        pass
+    if mode == VERIFY:
+        import unittest
+        import_module(mode)
+        unittest.main()
 
-    if parse.package:
-        pass
+    if mode == TERMINAL:
+        import_module(mode)
 
-    if parse.verify:
-        verify()
+    if mode == DEARPYGUI or mode == TKINTER:
+        import_package(mode, "main")
 
 
-    import_package(gui)
-
-    if check(gui, DESKTOP):
-        import desktop
-
-    if check(gui, TERMINAL):
-        import terminal
-
-
-try:
-    main()
-except ModuleNotFoundError:
-    raise MissingPackageError()
+main()
+#raise MissingPackageError()

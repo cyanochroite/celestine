@@ -4,6 +4,6 @@
 # Run them here instead.
 import unittest
 
-from celestine.verify import *
+from celestine.module.verify import *
 
 unittest.main()
