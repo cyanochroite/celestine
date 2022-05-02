@@ -1,7 +1,8 @@
 import sys
-import unittest
 import argparse
-from celestine.verify import *
+
+def import_package(package):
+    __import__("celestine." + package)
 
 class Package():
     def __init__(self, name, external, internal, main):
@@ -9,7 +10,7 @@ class Package():
         self.external = external
         self.internal = internal
         self.imported = True
-        self.main = "celestine." + main
+        self.main = main
 
     def _import(self):
         try:
@@ -21,7 +22,7 @@ class Package():
     def import_package(self):
         if not self._import:
             raise MissingPackageError(self)
-        __import__(self.main)
+        self.main()
 
 
 class MissingPackageError(ImportError):
@@ -56,6 +57,18 @@ UNITTEST = "UNITTEST"
 VERIFICATION = "VERIFICATION"
 
 
+FILE = "file"
+PILLOW = "pillow"
+PROGRAM = "program"
+UNITTEST = "unittest"
+
+VERIFY = "verify"
+DEARPYGUI = "dearpygui"
+DESKTOP = "desktop"
+TERMINAL = "terminal"
+TKINTER = "tkinter"
+
+
 DEARPYGUI = "dearpygui"
 DESKTOP = "desktop"
 FILE = "file"
@@ -69,12 +82,31 @@ VERIFICATION = "verification"
 
 
 
+def verify():
+    #import unittest
+    unittest = __import__("unittest")
+    import celestine.verify
+    unittest.main()
+
+def dearpygui():
+    import dearpygui
+
+def tkinter():
+    import tkinter
+
+def desktop():
+    import desktop
+
+def terminal():
+    import terminal
+
+
 
 PACKAGE = {
-    DEARPYGUI: Package("DearPyGui", "dearpygui", "dearpygui", ""),
+    DEARPYGUI: Package("DearPyGui", "dearpygui", "dearpygui", dearpygui),
     PILLOW: Package("Pillow", "PIL", "pillow", ""),
-    TKINTER: Package("tkinter", "tkinter", "tkinter", ""),
-    UNITTEST: Package("unittest", "unittest", "unittest", "verify")
+    TKINTER: Package("tkinter", "tkinter", "tkinter", tkinter),
+    UNITTEST: Package("unittest", "unittest", "unittest", verify)
 }
 
 
@@ -115,6 +147,10 @@ def check_package(name):
         message = "Package {0} not installed\nTry: {1}".format(name, install)
         raise SystemExit(message)
 
+
+
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="celestine"
@@ -154,26 +190,12 @@ def main():
     run = parse.run
     mode = parse.mode
     gui = parse.gui
+    print(gui)
+    print(parse)
+    print(vars(parse))
     
-
-    if parse.package:
-        pass
-
-    if parse.verify:
-        package = PACKAGE[UNITTEST]
-        package.import_package()
-
-        
-        #from celestine.pig.tag.test_unary import test_unary
-
-        
-        #unittest.main()
-        
-        unittest.main()
-
-
-
-
+    cow = {a:b for a,b in vars(parse).items() if b}
+    print(cow)
 
     print(parse.package)
     if run == PROGRAM:
@@ -181,12 +203,14 @@ def main():
     elif run == VERIFICATION:
         pass
 
+    if parse.package:
+        pass
 
-    if check(gui, DEARPYGUI):
-        import dearpygui
+    if parse.verify:
+        verify()
 
-    if check(gui, TKINTER):
-        import tkinter
+
+    import_package(gui)
 
     if check(gui, DESKTOP):
         import desktop
@@ -195,4 +219,7 @@ def main():
         import terminal
 
 
-main()
+try:
+    main()
+except ModuleNotFoundError:
+    raise MissingPackageError()
