@@ -1,5 +1,15 @@
 import sys
+
+try:
+    print("cow")
+    import celestine
+    print("dog")
+except ModuleNotFoundError:
+    print("moo")
+    sys.path.insert(0, "../")
+
 import argparse
+
 
 
 def import_package(package, module):
@@ -157,8 +167,9 @@ def main():
     mode = parse.mode
 
     if mode == VERIFY:
+        sys.argv = [sys.argv[0]]
         import unittest
-        import_module(mode)
+        import celestine.module.verify
         unittest.main()
 
     if mode == TERMINAL:
@@ -168,5 +179,6 @@ def main():
         import_package(mode, "main")
 
 
+from celestine.module.verify import *
 main()
 #raise MissingPackageError()
