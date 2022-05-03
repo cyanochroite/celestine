@@ -1,184 +1,25 @@
 import sys
 
 try:
-    print("cow")
+    # Check to see if this installed as a global package.
     import celestine
-    print("dog")
 except ModuleNotFoundError:
-    print("moo")
+    # If not then we will need to search for files from the parent directory.
     sys.path.insert(0, "../")
 
-import argparse
+from celestine.enum.exit import EXIT
+from celestine.main import main
 
+exit = main()
 
+if exit == EXIT.TEST:
+    # Clear argument list before we call unittest.
+    sys.argv = [sys.argv[0]]
+    # Import everything so we can find tests.
+    # This can only be done from the top level, so that is why it is here.
+    from celestine.module.verify import *
+    import unittest
+    unittest.main()
+    # Program exits before reaching this line.
 
-def import_package(package, module):
-    __import__(".".join(["celestine", "package", package, module]))
-
-
-def import_module(module):
-    __import__(".".join(["celestine", "module", module]))
-
-
-class Package():
-    def __init__(self, name, external, internal):
-        self.name = name
-        self.external = external
-        self.internal = internal
-        self.imported = True
-
-    def _import(self):
-        try:
-            __import__(self.external)
-            return True
-        except ModuleNotFoundError:
-            return False
-
-    def import_package(self):
-        if not self._import:
-            raise MissingPackageError(self)
-        self.main()
-
-
-class MissingPackageError(ImportError):
-    def __init__(self, package):
-        self.package = package
-        #self.message = message
-
-    def __str__(self):
-        print("Candy")
-        return "This feature needs the package '{0}' installed.".format(
-            self.package.name
-        )
-
-
-def _import(module):
-    try:
-        __import__(module)
-        return True
-    except ModuleNotFoundError:
-        return False
-
-
-DEARPYGUI = "DEARPYGUI"
-DESKTOP = "DESKTOP"
-FILE = "FILE"
-PILLOW = "PILLOW"
-PROGRAM = "PROGRAM"
-TERMINAL = "TERMINAL"
-TKINTER = "TKINTER"
-UNITTEST = "UNITTEST"
-VERIFICATION = "VERIFICATION"
-
-
-FILE = "file"
-PILLOW = "pillow"
-PROGRAM = "program"
-
-UNITTEST = "unittest"
-
-
-
-DEARPYGUI = "dearpygui"
-DESKTOP = "desktop"
-FILE = "file"
-PILLOW = "pillow"
-PROGRAM = "program"
-TERMINAL = "terminal"
-TKINTER = "tkinter"
-UNITTEST = "unittest"
-VERIFICATION = "verification"
-
-
-
-
-VERIFY = "verify"
-DEARPYGUI = "dearpygui"
-DESKTOP = "desktop"
-TERMINAL = "terminal"
-TKINTER = "tkinter"
-
-
-
-
-
-PACKAGE = {
-    DEARPYGUI: Package("DearPyGui", "dearpygui", "dearpygui"),
-    PILLOW: Package("Pillow", "PIL", "pillow"),
-    TKINTER: Package("tkinter", "tkinter", "tkinter"),
-    UNITTEST: Package("unittest", "unittest", "unittest")
-}
-
-
-MODE = [
-    DEARPYGUI,
-    TERMINAL,
-    TKINTER,
-    VERIFY
-]
-
-__version__ = "0.1.2.3"
-
-
-def check(gui, module):
-    package = PACKAGE[gui]
-    if gui != module:
-        return False
-    if not package.imported:
-        name = package.name
-        install = package.install
-        message = "Package {0} not installed\nTry: {1}".format(name, install)
-        raise SystemExit(message)
-    return True
-
-
-def check_package(name):
-    package = PACKAGE[name]
-    if not package.imported:
-        name = package.name
-        install = package.install
-        message = "Package {0} not installed\nTry: {1}".format(name, install)
-        raise SystemExit(message)
-
-
-class Window():
-    pass
-
-
-def main():
-    parser = argparse.ArgumentParser(
-        prog="celestine"
-    )
-    parser.add_argument(
-        "-p", "--package",
-        action="store_true",
-        help="List all installed packages."
-    )
-
-    parser.add_argument(
-        "-m", "--mode",
-        default=TERMINAL,
-        choices=MODE,
-        help="Choose a mode to opperate in."
-    )
-
-    parse = parser.parse_args()
-
-    mode = parse.mode
-
-    if mode == VERIFY:
-        sys.argv = [sys.argv[0]]
-        import unittest
-        import celestine.module.verify
-        unittest.main()
-
-    if mode == TERMINAL:
-        import_module(mode)
-
-    if mode == DEARPYGUI or mode == TKINTER:
-        import_package(mode, "main")
-
-
-from celestine.module.verify import *
-main()
-#raise MissingPackageError()
+sys.exit(exit)
