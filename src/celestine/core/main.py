@@ -1,6 +1,6 @@
 import argparse
 
-from celestine.enum.exit import EXIT
+from celestine.data.exit import EXIT
 
 
 def import_package(package, module):
@@ -162,6 +162,8 @@ def main():
 
     if mode == DEARPYGUI or mode == TKINTER:
         import_package(mode, "main")
+    
+    return EXIT.SUCCESS
 
 
 
