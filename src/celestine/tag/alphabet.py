@@ -129,10 +129,11 @@ from celestine.unicode.u0000 import DELETE
 
 from celestine.encoding.u0000 import C0_CONTROLS_AND_BASIC_LATIN
 from celestine.encoding.u0080 import C1_CONTROLS_AND_LATIN_1_SUPPLEMENT
+from celestine.encoding.u2700 import DINGBATS
 
 from celestine.tag.comparison import comparison
 
-convert = C0_CONTROLS_AND_BASIC_LATIN | C1_CONTROLS_AND_LATIN_1_SUPPLEMENT
+convert = C0_CONTROLS_AND_BASIC_LATIN | C1_CONTROLS_AND_LATIN_1_SUPPLEMENT | DINGBATS
 
 lowercase = {
     LATIN_CAPITAL_LETTER_A: LATIN_SMALL_LETTER_A,
