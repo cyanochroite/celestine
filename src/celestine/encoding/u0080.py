@@ -1,31 +1,3 @@
-from celestine.unicode.u0000 import SPACE
-from celestine.unicode.u0000 import EXCLAMATION_MARK
-from celestine.unicode.u0000 import QUOTATION_MARK
-from celestine.unicode.u0000 import DOLLAR_SIGN
-from celestine.unicode.u0000 import ASTERISK
-from celestine.unicode.u0000 import COMMA
-from celestine.unicode.u0000 import HYPHEN_MINUS
-from celestine.unicode.u0000 import SOLIDUS
-from celestine.unicode.u0000 import QUESTION_MARK
-from celestine.unicode.u0000 import COMMERCIA_AT
-from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_A
-from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_C
-from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_E
-from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_I
-from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_N
-from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_O
-from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_U
-from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_Y
-from celestine.unicode.u0000 import LATIN_SMALL_LETTER_A
-from celestine.unicode.u0000 import LATIN_SMALL_LETTER_C
-from celestine.unicode.u0000 import LATIN_SMALL_LETTER_E
-from celestine.unicode.u0000 import LATIN_SMALL_LETTER_I
-from celestine.unicode.u0000 import LATIN_SMALL_LETTER_N
-from celestine.unicode.u0000 import LATIN_SMALL_LETTER_O
-from celestine.unicode.u0000 import LATIN_SMALL_LETTER_U
-from celestine.unicode.u0000 import LATIN_SMALL_LETTER_Y
-from celestine.unicode.u0000 import VERTICAL_LINE
-
 from celestine.unicode.u0080 import U0080
 from celestine.unicode.u0080 import U0081
 from celestine.unicode.u0080 import BREAK_PERMITTED_HERE
@@ -155,6 +127,33 @@ from celestine.unicode.u0080 import LATIN_SMALL_LETTER_Y_WITH_ACUTE
 from celestine.unicode.u0080 import LATIN_SMALL_LETTER_THORN
 from celestine.unicode.u0080 import LATIN_SMALL_LETTER_Y_WITH_DIAERESIS
 
+from celestine.unicode.u0000 import SPACE
+from celestine.unicode.u0000 import EXCLAMATION_MARK
+from celestine.unicode.u0000 import QUOTATION_MARK
+from celestine.unicode.u0000 import DOLLAR_SIGN
+from celestine.unicode.u0000 import ASTERISK
+from celestine.unicode.u0000 import COMMA
+from celestine.unicode.u0000 import HYPHEN_MINUS
+from celestine.unicode.u0000 import SOLIDUS
+from celestine.unicode.u0000 import QUESTION_MARK
+from celestine.unicode.u0000 import COMMERCIA_AT
+from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_A
+from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_C
+from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_E
+from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_I
+from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_N
+from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_O
+from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_U
+from celestine.unicode.u0000 import LATIN_CAPITAL_LETTER_Y
+from celestine.unicode.u0000 import LATIN_SMALL_LETTER_A
+from celestine.unicode.u0000 import LATIN_SMALL_LETTER_C
+from celestine.unicode.u0000 import LATIN_SMALL_LETTER_E
+from celestine.unicode.u0000 import LATIN_SMALL_LETTER_I
+from celestine.unicode.u0000 import LATIN_SMALL_LETTER_N
+from celestine.unicode.u0000 import LATIN_SMALL_LETTER_O
+from celestine.unicode.u0000 import LATIN_SMALL_LETTER_U
+from celestine.unicode.u0000 import LATIN_SMALL_LETTER_Y
+from celestine.unicode.u0000 import VERTICAL_LINE
 
 C1_CONTROLS_AND_LATIN_1_SUPPLEMENT = {
     U0080: None,
