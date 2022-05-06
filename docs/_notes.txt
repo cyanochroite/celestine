@@ -279,3 +279,12 @@ ERROR 	Designates error events that might still allow the application to continu
 FATAL 	Designates very severe error events that will presumably lead the application to abort.
 OFF 	The highest possible rank and is intended to turn off logging.
 TRACE 	Designates finer-grained informational events than the DEBUG.
+
+
+
+
+An always offline application. 
+An offline only application. The only internet used is for installing updates.
+instalation and updates. 
+pip.
+No internet

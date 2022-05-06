@@ -1,20 +1,35 @@
+Section Title 1
+###############
+
+Section Title 2
+***************
+
+Section Title 3
+^^^^^^^^^^^^^^^
+
+Section Title 4
+~~~~~~~~~~~~~~~
+
+Section Title 5
+"""""""""""""""
+
+Section Title 6
+'''''''''''''''
+
 The Celestine Image Viewer
-==========================
+##########################
 
 - About_
-- Goals_
+- `Primary Goals`_
 - Requirements_
 - Inspiration_
 - Info_
 
-.. image:: https://readthedocs.org/projects/celestine-viewer/badge/?version=latest
-   :target: https://celestine-viewer.readthedocs.io/en/latest/?badge=latest
-   :alt: Documentation Status
+candy
 
-.. _About:
 
 About
------
+*****
 View, tag, and organize your photos. Work in progress. Not currently functional.
 
 
@@ -28,10 +43,9 @@ Decided that the main reason behind this was an attempt to use HTML as my GUI.
 Most files in this project are dedicated to viewing and modifying local images.
 Will try to update the project to reflect that.
 
-.. _Goals:
 
 Primary Goals
--------------
+*************
 - Is an offline only application. (The only internet used is when you use pip.)
 - Has no required dependencies. (All you need to run this package is Python.)
 - Can be customized to use different packages. (See the list below for supported packages.)
@@ -62,13 +76,12 @@ What this is not:
 - This is not a photo downloader.
 - This is not a mobile application.
 
-.. _Requirements:
 
 Requirements
-------------
+************
 +-----------+----------+-------------------+----------------------------------------+
 | Python    | Need     | Optional Features | Why                                    |
-+-----------+----------+-------------------+----------------------------------------+
++===========+==========+===================+========================================+
 | Python_   | REQUIRED |                   | This project is written in Python.     |
 +-----------+----------+-------------------+----------------------------------------+
 | tkinter_  | OPTIONAL | tcl/tk and IDLE   | Use this if you don't trust DearPyGui. |
@@ -82,7 +95,7 @@ Requirements
 
 +---------------------------+-------------+-----------------------+-----------------------------------------------------+
 | Package                   | Need        | PyPi_                 | Why                                                 |
-+---------------------------+-------------+-----------------------+-----------------------------------------------------+
++===========================+=============+=======================+=====================================================+
 | `Celestine Image Viewer`_ | REQUIRED    |                       | This is the project you are trying to install.      |
 +---------------------------+-------------+-----------------------+-----------------------------------------------------+
 | DearPyGui_                | RECOMMENDED | pip install dearpygui | Without this, you need tkinter or the command line. |
@@ -116,10 +129,9 @@ command core
 only the basics here
 use on web server or as external library
 
-.. _Inspiration:
 
 Inspiration
------------
+***********
 `Safebooru`_ - And the thousands of other booru sites.
 
 `Board Game Geek`_ - Epic advancned search.
@@ -127,10 +139,9 @@ Inspiration
 .. _`Safebooru`: https://safebooru.org
 .. _`Board Game Geek`: https://boardgamegeek.com/advsearch/boardgame">
 
-.. _Info:
 
 Info
-----
+****
 `Semantic Versioning 2.0.0`_
 `Write to me`_
 
