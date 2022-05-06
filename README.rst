@@ -17,8 +17,11 @@ About
 -----
 View, tag, and organize your photos. Work in progress. Not currently functional.
 
-Old Description:
-By default this is a command line application. Should work anywhere Python 3 code can be run. The code has several folders dedicated to specific pluggins. If package not found, code not run. Can actually be deleted if desired.
+
+By default this is a command line application.
+Should work anywhere Python 3 code can be run.
+The code has several folders dedicated to specific pluggins.
+If package not found, code not run. Can actually be deleted if desired.
 
 Older description:
 Decided that the main reason behind this was an attempt to use HTML as my GUI.
@@ -27,10 +30,13 @@ Will try to update the project to reflect that.
 
 .. _Goals:
 
-Goals
------
-- Zero internet access. (An offline only application. Possible exception would be checking for updates.)
-- Minimal dependencies. (Ideally no more than 4 pip installs. Currently at 2.)
+Primary Goals
+-------------
+- Is an offline only application. (The only internet used is when you use pip.)
+- Has no required dependencies. (All you need to run this package is Python.)
+- Can be customized to use different packages. (See the list below for supported packages.)
+
+Secondary goals:
 - Advanced tag searching. (Most websites have really lousy topic filters.)
 
 What this is not:
@@ -42,9 +48,6 @@ What this is not:
 
 Requirements
 ------------
-(Note: Currently all of these requirements are mandatory until I can get this
-project in a semi working and stable configuration.)
-
 +-----------+----------+-------------------+----------------------------------------+
 | Python    | Need     | Optional Features | Why                                    |
 +-----------+----------+-------------------+----------------------------------------+
