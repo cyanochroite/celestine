@@ -141,6 +141,7 @@ from celestine.alphabet import LETTER_O
 from celestine.alphabet import LETTER_U
 from celestine.alphabet import LETTER_Y
 
+
 u0080 = {
     U0080: NONE,
     U0081: NONE,

@@ -209,6 +209,7 @@ from celestine.alphabet import DIGIT_8
 from celestine.alphabet import DIGIT_9
 from celestine.alphabet import DIGIT_A
 
+
 u2700 = {
     BLACK_SAFETY_SCISSORS: NONE,
     UPPER_BLADE_SCISSORS: NONE,

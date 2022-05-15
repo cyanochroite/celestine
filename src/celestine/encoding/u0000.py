@@ -180,6 +180,7 @@ from celestine.alphabet import LETTER_X
 from celestine.alphabet import LETTER_Y
 from celestine.alphabet import LETTER_Z
 
+
 u0000 = {
     NULL: NONE,
     START_OF_HEADING: WHITESPACE,
