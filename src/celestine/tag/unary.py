@@ -1,11 +1,11 @@
-from celestine.tag.collection import collection
+from celestine.tag.token import Token
 from celestine.tag.operator import operator
 from celestine.unicode.u0000 import ASTERISK
 from celestine.unicode.u0000 import HYPHEN_MINUS
 from celestine.unicode.u0000 import PLUS_SIGN
 
 
-class unary(collection):
+class unary(Token):
     def __init__(self):
         super().__init__(
             {
