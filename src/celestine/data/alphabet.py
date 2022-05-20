@@ -50,8 +50,3 @@ LETTER_X = chr(0x0078)
 LETTER_Y = chr(0x0079)
 LETTER_Z = chr(0x007A)
 LETTER__ = chr(0x005F)
-
-cow = ["LETTER__", "LETTER_A", "LETTER_Z"]
-cow.sort()
-print(cow)
-print(LETTER__)
