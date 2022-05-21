@@ -1,21 +1,21 @@
 from celestine.symbol.symbol import Symbol
 
-from celestine.alphabet import DIGIT_0
-from celestine.alphabet import DIGIT_1
-from celestine.alphabet import DIGIT_2
-from celestine.alphabet import DIGIT_3
-from celestine.alphabet import DIGIT_4
-from celestine.alphabet import DIGIT_5
-from celestine.alphabet import DIGIT_6
-from celestine.alphabet import DIGIT_7
-from celestine.alphabet import DIGIT_8
-from celestine.alphabet import DIGIT_9
-from celestine.alphabet import DIGIT_A
-from celestine.alphabet import DIGIT_B
-from celestine.alphabet import DIGIT_C
-from celestine.alphabet import DIGIT_D
-from celestine.alphabet import DIGIT_E
-from celestine.alphabet import DIGIT_F
+from celestine.data.alphabet import DIGIT_0
+from celestine.data.alphabet import DIGIT_1
+from celestine.data.alphabet import DIGIT_2
+from celestine.data.alphabet import DIGIT_3
+from celestine.data.alphabet import DIGIT_4
+from celestine.data.alphabet import DIGIT_5
+from celestine.data.alphabet import DIGIT_6
+from celestine.data.alphabet import DIGIT_7
+from celestine.data.alphabet import DIGIT_8
+from celestine.data.alphabet import DIGIT_9
+from celestine.data.alphabet import DIGIT_A
+from celestine.data.alphabet import DIGIT_B
+from celestine.data.alphabet import DIGIT_C
+from celestine.data.alphabet import DIGIT_D
+from celestine.data.alphabet import DIGIT_E
+from celestine.data.alphabet import DIGIT_F
 
 
 class Digit(Symbol):

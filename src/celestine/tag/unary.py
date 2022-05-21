@@ -1,8 +1,8 @@
 from celestine.tag.token import Token
 from celestine.tag.operator import operator
-from celestine.unicode.u0000 import ASTERISK
-from celestine.unicode.u0000 import HYPHEN_MINUS
-from celestine.unicode.u0000 import PLUS_SIGN
+from celestine.data.unicode import ASTERISK
+from celestine.data.unicode import HYPHEN_MINUS
+from celestine.data.unicode import PLUS_SIGN
 
 
 class unary(Token):

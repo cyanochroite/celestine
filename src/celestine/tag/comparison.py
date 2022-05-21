@@ -1,9 +1,9 @@
 from celestine.tag.token import Token
 from celestine.tag.operator import operator
-from celestine.unicode.u0000 import EQUALS_SIGN
-from celestine.unicode.u0000 import EXCLAMATION_MARK
-from celestine.unicode.u0000 import GREATER_THAN_SIGN
-from celestine.unicode.u0000 import LESS_THAN_SIGN
+from celestine.data.unicode import EQUALS_SIGN
+from celestine.data.unicode import EXCLAMATION_MARK
+from celestine.data.unicode import GREATER_THAN_SIGN
+from celestine.data.unicode import LESS_THAN_SIGN
 
 
 class comparison(Token):

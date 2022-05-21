@@ -154,7 +154,6 @@ def main():
     mode = parse.mode
 
     if mode == VERIFY:
-        print("honk")
         return EXIT.TEST
 
     if mode == TERMINAL:

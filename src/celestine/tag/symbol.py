@@ -1,7 +1,7 @@
 from abc import ABC
 from abc import abstractmethod
 
-from celestine.alphabet import *
+from celestine.data.alphabet import *
 
 
 class Symbol(ABC):

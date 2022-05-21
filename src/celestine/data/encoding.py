@@ -1,5 +1,5 @@
-from celestine.alphabet import *
-from celestine.unicode import *
+from celestine.data.alphabet import *
+from celestine.data.unicode import *
 
 encoding = {
     NULL: NONE,

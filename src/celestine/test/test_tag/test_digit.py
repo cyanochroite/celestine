@@ -1,6 +1,6 @@
 import unittest
 
-from celestine.tag.digit import Digit
+from celestine.symbol.digit import Digit
 
 
 class test_digit(unittest.TestCase):

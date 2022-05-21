@@ -1,12 +1,12 @@
 from celestine.symbol.symbol import Symbol
 
-from celestine.alphabet import SIGN_MARK
-from celestine.alphabet import SIGN_STAR
-from celestine.alphabet import SIGN_PLUS
-from celestine.alphabet import SIGN_DASH
-from celestine.alphabet import SIGN_LESS
-from celestine.alphabet import SIGN_SAME
-from celestine.alphabet import SIGN_MORE
+from celestine.data.alphabet import SIGN_MARK
+from celestine.data.alphabet import SIGN_STAR
+from celestine.data.alphabet import SIGN_PLUS
+from celestine.data.alphabet import SIGN_DASH
+from celestine.data.alphabet import SIGN_LESS
+from celestine.data.alphabet import SIGN_SAME
+from celestine.data.alphabet import SIGN_MORE
 
 
 class Sign(Symbol):

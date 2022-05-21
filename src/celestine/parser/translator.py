@@ -1,9 +1,4 @@
-from celestine.encoding.u0000 import u0000
-from celestine.encoding.u0080 import u0080
-from celestine.encoding.u2700 import u2700
-
-
-encoding = u0000 | u0080 | u2700
+from celestine.data.encoding import encoding
 
 
 class translator():
