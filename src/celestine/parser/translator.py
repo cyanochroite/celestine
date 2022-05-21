@@ -11,4 +11,5 @@ class translator():
                 log.Warning("NO CHAATER")
             else:
                 array.append(item)
-        return str().join(array)
+        value = [item.value for item in array]
+        return str().join(value)
