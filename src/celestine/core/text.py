@@ -10,11 +10,11 @@ class log():
         print(text)
 
     @staticmethod
-    def warning(text):  # user: things are not perfect right now
+    def notice(text):  # user: happy text for user to read on terminal
         print(text)
 
     @staticmethod
-    def notice(text):  # user: happy text for user to read on terminal
+    def warning(text):  # user: things are not perfect right now
         print(text)
 
     @staticmethod

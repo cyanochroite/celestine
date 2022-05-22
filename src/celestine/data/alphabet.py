@@ -2,8 +2,7 @@ import enum
 
 
 @enum.unique
-class More(enum.Enum):
-    NONE = chr(0x0000)
+class Divider(enum.Enum):
     WHITESPACE = chr(0x0020)
 
 
