@@ -8,14 +8,18 @@ class More(enum.Enum):
 
 
 @enum.unique
-class Sign(enum.Enum):
-    SIGN_MARK = chr(0x0021)
-    SIGN_STAR = chr(0x002A)
-    SIGN_PLUS = chr(0x002B)
-    SIGN_DASH = chr(0x002D)
-    SIGN_LESS = chr(0x003C)
-    SIGN_SAME = chr(0x003D)
-    SIGN_MORE = chr(0x003E)
+class Comparison(enum.Enum):
+    MARK = chr(0x0021)
+    MORE = chr(0x003E)
+    LESS = chr(0x003C)
+    SAME = chr(0x003D)
+
+
+@enum.unique
+class Unary(enum.Enum):
+    STAR = chr(0x002A)
+    PLUS = chr(0x002B)
+    DASH = chr(0x002D)
 
 
 @enum.unique
