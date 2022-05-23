@@ -220,6 +220,11 @@ python -m coverage html
 
 
 
+
+pip install more-itertools
+
+
+
 warn user on None unicode return
 
 

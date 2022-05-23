@@ -1,6 +1,7 @@
 from celestine.data.encoding import encoding
 from celestine.core.text import log
 
+from celestine.package.itertools import split_when
 
 def log_unicode(character, info):
     message = "Unicode Character Code U+{0:04X}:'{1}' {2}"
@@ -24,32 +25,9 @@ def decode(character):
 class translator():
     @staticmethod
     def translate(string):
-        array = []
-        for character in string:
-            item = encoding.get(character)
-            if item is None:
-                log_unicode(item, "Not Found")
-            else:
-                array.append(item)
-        return [item for item in array]
-
-    @staticmethod
-    def translate(string):
         return [item for item in map(decode, string) if item is not None]
 
 class converter():
     @staticmethod
     def translate(iterable):
-        # insert "end of input" signal
-        iterable.append(None)
-        inner = []
-        outer = []
-        mode = None
-        for item in iterable:
-            kind = type(item)
-            if kind != mode:
-                mode = kind
-                outer.append(inner)
-                inner = []
-            inner.append(item)
-        return [item for item in outer if item]
+        return split_when(iterable, lambda x, y: type(x) is not type(y))
