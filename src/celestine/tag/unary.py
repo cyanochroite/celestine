@@ -1,17 +1,15 @@
 from celestine.tag.token import Token
 from celestine.tag.operator import operator
-from celestine.data.unicode import ASTERISK
-from celestine.data.unicode import HYPHEN_MINUS
-from celestine.data.unicode import PLUS_SIGN
 
+from celestine.data.alphabet import Unary
 
-class unary(Token):
+class Unary2(Token):
     def __init__(self):
         super().__init__(
             {
-                ASTERISK,
-                HYPHEN_MINUS,
-                PLUS_SIGN
+                Unary.STAR,
+                Unary.DASH,
+                Unary.PLUS
             }
         )
 
@@ -19,7 +17,7 @@ class unary(Token):
         def __init__(self):
             super().__init__(
                 (
-                    PLUS_SIGN
+                    Unary.PLUS
                 ),
                 (
                 )
@@ -29,13 +27,13 @@ class unary(Token):
         def __init__(self):
             super().__init__(
                 (
-                    HYPHEN_MINUS,
-                    ASTERISK
+                    Unary.DASH,
+                    Unary.STAR
                 ),
                 (
-                    PLUS_SIGN,
-                    HYPHEN_MINUS,
-                    ASTERISK
+                    Unary.PLUS,
+                    Unary.DASH,
+                    Unary.STAR
                 )
             )
 
@@ -43,11 +41,11 @@ class unary(Token):
         def __init__(self):
             super().__init__(
                 (
-                    ASTERISK
+                    Unary.STAR
                 ),
                 (
-                    PLUS_SIGN,
-                    ASTERISK
+                    Unary.PLUS,
+                    Unary.STAR
                 )
             )
 
@@ -55,22 +53,22 @@ class unary(Token):
         def __init__(self):
             super().__init__(
                 (
-                    HYPHEN_MINUS
+                    Unary.DASH
                  ),
                 (
-                    PLUS_SIGN,
-                    HYPHEN_MINUS
+                    Unary.PLUS,
+                    Unary.DASH
                 )
             )
 
     @classmethod
     def parse(cls, array):
         index = 0
-        index |= PLUS_SIGN in array
+        index |= Unary.PLUS in array
         index <<= 1
-        index |= HYPHEN_MINUS in array
+        index |= Unary.DASH in array
         index <<= 1
-        index |= ASTERISK in array
+        index |= Unary.STAR in array
         return cls._table.get(index)
 
     add = _add()  # UNARY_PLUS_OPERATOR

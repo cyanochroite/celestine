@@ -2,6 +2,22 @@ from celestine.data.encoding import encoding
 from celestine.core.text import log
 
 from celestine.package.itertools import split_when
+from celestine.package.itertools import filter_true
+
+from celestine.tag.comparison import Comparison2
+from celestine.tag.unary import Unary2
+from celestine.tag.tab import Tab
+from celestine.tag.tab import Word
+from celestine.tag.tab import Number
+
+from celestine.data.alphabet import Comparison
+from celestine.data.alphabet import Digit
+from celestine.data.alphabet import Divider
+from celestine.data.alphabet import Letter
+from celestine.data.alphabet import Unary
+
+
+
 
 def log_unicode(character, info):
     message = "Unicode Character Code U+{0:04X}:'{1}' {2}"
@@ -22,12 +38,33 @@ def decode(character):
     return item
 
 
-class translator():
+def maps(iterable):
+    item = iterable[0]
+    mapping = {
+        Comparison: Comparison2,
+        Digit: Number,
+        Divider: Tab,
+        Letter: Word,
+        Unary: Unary2
+    }
+    matt = mapping.get(type(item))
+    print(matt)
+    cats = matt.parse(iterable)
+    print(cats)
+
+class translator(): # translate
     @staticmethod
     def translate(string):
-        return [item for item in map(decode, string) if item is not None]
+        return filter_true(map(decode, string))
 
-class converter():
+class tokenizer():
     @staticmethod
-    def translate(iterable):
+    def tokenize(iterable):
         return split_when(iterable, lambda x, y: type(x) is not type(y))
+
+class parser():
+    @staticmethod
+    def parse(iterable):
+        for item in iterable:
+            maps(item)
+        return "done"

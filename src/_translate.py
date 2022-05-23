@@ -1,10 +1,14 @@
 from celestine.parser.translator import translator
-from celestine.parser.translator import converter
+from celestine.parser.translator import tokenizer
+from celestine.parser.translator import parser
 
-go = translator()
-more = go.translate("ⶀ0#hi35<mo5cat  $&dog")
-print(more)
-cat = converter.translate(more)
-print(cat)
-
+one = translator.translate("ⶀ<>0#h i35 <m o5cat  $&dog")
+print(list(one))
+two = tokenizer.tokenize(one)
+print(list(two))
+three = parser.parse(two)
+print(list(three))
 print("moo")
+
+
+

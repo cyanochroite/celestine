@@ -1,10 +1,10 @@
 class operator():
     def __init__(self, primary, secondary):
-        self._primary = tuple(primary)
-        self._secondary = tuple(secondary)
+        self._primary = primary
+        self._secondary = secondary
 
     def __str__(self):
-        return str().join(self._primary)
+        return str().join([item.value for item in self._primary])
 
     def __repr__(self):
         return str().join(self._primary)

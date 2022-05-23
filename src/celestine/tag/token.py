@@ -24,3 +24,4 @@ class Token(ABC):
 
     def parse(cls, value):
         return NotImplementedError
+

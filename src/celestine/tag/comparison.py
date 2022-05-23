@@ -1,133 +1,133 @@
 from celestine.tag.token import Token
 from celestine.tag.operator import operator
-from celestine.data.unicode import EQUALS_SIGN
-from celestine.data.unicode import EXCLAMATION_MARK
-from celestine.data.unicode import GREATER_THAN_SIGN
-from celestine.data.unicode import LESS_THAN_SIGN
+
+from celestine.data.alphabet import Comparison
 
 
-class comparison(Token):
+class Comparison2(Token):
     def __init__(self):
         super().__init__(
             {
-                EQUALS_SIGN,
-                EXCLAMATION_MARK,
-                GREATER_THAN_SIGN,
-                LESS_THAN_SIGN
+                Comparison.SAME,
+                Comparison.MARK,
+                Comparison.MORE,
+                Comparison.LESS
             }
         )
 
     class _eq(operator):
         def __init__(self):
             super().__init__(
-                (
-                    EQUALS_SIGN
-                ),
-                (
-                    EXCLAMATION_MARK,
-                    LESS_THAN_SIGN,
-                    GREATER_THAN_SIGN
-                )
+                [
+                    Comparison.SAME
+                ],
+                [
+                    Comparison.MARK,
+                    Comparison.LESS,
+                    Comparison.MORE
+                ]
             )
 
     class _ge(operator):
         def __init__(self):
             super().__init__(
-                (
-                    GREATER_THAN_SIGN,
-                    EQUALS_SIGN
-                 ),
-                (
-                    EXCLAMATION_MARK,
-                    LESS_THAN_SIGN
-                )
+                [
+                    Comparison.MORE,
+                    Comparison.SAME
+                ],
+                [
+                    Comparison.MARK,
+                    Comparison.LESS
+                ]
             )
 
     class _gt(operator):
         def __init__(self):
             super().__init__(
-                (
-                    GREATER_THAN_SIGN
-                 ),
-                (
-                    EXCLAMATION_MARK,
-                    LESS_THAN_SIGN, EQUALS_SIGN
-                )
+                [
+                    Comparison.MORE
+                ],
+                [
+                    Comparison.MARK,
+                    Comparison.LESS, Comparison.SAME
+                ]
             )
 
     class _le(operator):
         def __init__(self):
             super().__init__(
-                (
-                    LESS_THAN_SIGN,
-                    EQUALS_SIGN
-                 ),
-                (
-                    EXCLAMATION_MARK,
-                    GREATER_THAN_SIGN
-                )
+                [
+                    Comparison.LESS,
+                    Comparison.SAME
+                ],
+                [
+                    Comparison.MARK,
+                    Comparison.MORE
+                ]
             )
 
     class _lt(operator):
         def __init__(self):
             super().__init__(
-                (
-                    LESS_THAN_SIGN
-                ),
-                (
-                    EXCLAMATION_MARK,
-                    GREATER_THAN_SIGN,
-                    EQUALS_SIGN
-                )
+                [
+                    Comparison.LESS
+                ],
+                [
+                    Comparison.MARK,
+                    Comparison.MORE,
+                    Comparison.SAME
+                ]
             )
 
     class _ne(operator):
         def __init__(self):
             super().__init__(
-                (
-                    EXCLAMATION_MARK,
-                    EQUALS_SIGN),
-                (
-                    LESS_THAN_SIGN,
-                    GREATER_THAN_SIGN)
+                [
+                    Comparison.MARK,
+                    Comparison.SAME
+                ],
+                [
+                    Comparison.LESS,
+                    Comparison.MORE
+                ]
             )
 
     class _nn(operator):
         def __init__(self):
             super().__init__(
-                (
-                    EXCLAMATION_MARK
-                ),
-                (
-                    EXCLAMATION_MARK,
-                    LESS_THAN_SIGN,
-                    EQUALS_SIGN,
-                    GREATER_THAN_SIGN
-                 )
+                [
+                    Comparison.MARK
+                ],
+                [
+                    Comparison.MARK,
+                    Comparison.LESS,
+                    Comparison.SAME,
+                    Comparison.MORE
+                ]
             )
 
     class _nu(operator):
         def __init__(self):
             super().__init__(
-                (
-                ),
-                (
-                    LESS_THAN_SIGN,
-                    EQUALS_SIGN,
-                    GREATER_THAN_SIGN
-                )
+                [
+                ],
+                [
+                    Comparison.LESS,
+                    Comparison.SAME,
+                    Comparison.MORE
+                ]
             )
 
     @classmethod
-    def parse(cls, array):
+    def parse(cls, iterable):
         index = 0
-        index |= EXCLAMATION_MARK in array
+        index |= Comparison.MARK in iterable
         index <<= 1
-        index |= LESS_THAN_SIGN in array
+        index |= Comparison.LESS in iterable
         index <<= 1
-        index |= GREATER_THAN_SIGN in array
+        index |= Comparison.MORE in iterable
         index <<= 1
-        index |= EQUALS_SIGN in array
+        index |= Comparison.SAME in iterable
         return cls._table.get(index)
 
     eq = _eq()  # EQUALITY_OPERATOR
