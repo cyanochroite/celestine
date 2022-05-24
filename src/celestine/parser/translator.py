@@ -19,7 +19,6 @@ from celestine.parser.operator import word_parse
 from celestine.parser.operator import unary_parse
 
 
-
 def log_unicode(character, info):
     message = "Unicode Character Code U+{0:04X}:'{1}' {2}"
     log.warning(message.format(ord(character), character, info))
@@ -29,11 +28,11 @@ def decode(character):
     item = encoding.get(character, False)
 
     if item is True:
-        log_unicode(character, "Not Found")
+        log_unicode(character, "Not Defined")
         return None
 
     if item is False:
-        log_unicode(character, "Not Mapped")
+        log_unicode(character, "Not Implemented")
         return None
 
     return item
@@ -51,16 +50,19 @@ def maps(iterable):
     matt = mapping.get(type(item))
     cats = matt(iterable)
     return cats
-    
-class translator(): # translate
+
+
+class translator():  # translate
     @staticmethod
     def translate(string):
         return filter_true(map(decode, string))
+
 
 class tokenizer():
     @staticmethod
     def tokenize(iterable):
         return split_when(iterable, lambda x, y: type(x) is not type(y))
+
 
 class parser():
     @staticmethod

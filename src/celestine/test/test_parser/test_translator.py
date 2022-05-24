@@ -17,3 +17,20 @@ class test_translator(unittest.TestCase):
         ]
         result = translator.translate(string)
         self.assertEqual(expect, result)
+
+    def test_translate_not_defined(self):
+        string = "(x)"
+        expect = [
+            Letter.LETTER_X
+        ]
+        result = translator.translate(string)
+        self.assertEqual(expect, result)
+
+    def test_translate_not_implemented(self):
+        string = "xⶀx"
+        expect = [
+            Letter.LETTER_X,
+            Letter.LETTER_X
+        ]
+        result = translator.translate(string)
+        self.assertEqual(expect, result)
