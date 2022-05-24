@@ -12,11 +12,11 @@ from celestine.data.alphabet import Letter
 from celestine.data.alphabet import Unary
 
 
-from celestine.tag.operator import comparison_parse
-from celestine.tag.operator import number_parse
-from celestine.tag.operator import tab_parse
-from celestine.tag.operator import word_parse
-from celestine.tag.operator import unary_parse
+from celestine.parser.operator import comparison_parse
+from celestine.parser.operator import number_parse
+from celestine.parser.operator import tab_parse
+from celestine.parser.operator import word_parse
+from celestine.parser.operator import unary_parse
 
 
 
