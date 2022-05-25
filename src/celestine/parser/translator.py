@@ -67,4 +67,4 @@ class tokenizer():
 class parser():
     @staticmethod
     def parse(iterable):
-        return map(maps, iterable)
+        return list(map(maps, iterable))

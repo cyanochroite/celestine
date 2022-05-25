@@ -3,31 +3,27 @@ from celestine.data.alphabet import Unary
 from celestine.data.alphabet import Comparison
 
 
-class Token():
-    def __init__(self, kind, value):
-        self._kind = kind
-        self._value = value
-
-    @property
-    def kind(self):
-        return self._kind
-
-    @property
-    def value(self):
-        return self._value
-
-
 
 class operator():
-    def __init__(self, primary, secondary):
+    def __init__(self, name, primary, secondary):
+        self._name = name
         self._primary = primary
         self._secondary = secondary
 
     def __str__(self):
-        return str().join([item.value for item in self._primary])
+        return str().join([str(item) for item in self._primary])
 
     def __repr__(self):
-        return "<OPERATOR.{0}: '{1}'>".format("????", str().join([item.value for item in self._primary]))
+        return "<OPERATOR.{0}: '{1}'>".format(self._name, str().join([str(item) for item in self._primary]))
+    
+    def __eq__(self, other):
+        e = str().join([str(item) for item in self._primary])
+        f = str().join([str(item) for item in other._primary])
+        g = self._name == other._name
+        h = e == f
+        i = g and h
+        return i
+#        return self._name == other._name and str().join(self._primary) == str().join(other._primary)
 
     @classmethod
     def parse(cls, array):
@@ -42,23 +38,10 @@ class operator():
         return frozenset(self._secondary)
 
 
-
-
-def eq():
-    return Token("eq", 
-            [
-                Comparison.SAME
-            ],
-            [
-                Comparison.MARK,
-                Comparison.LESS,
-                Comparison.MORE
-            ]
-        )
-        
 class _eq(operator):
     def __init__(self):
         super().__init__(
+            "EQ",
             [
                 Comparison.SAME
             ],
@@ -72,6 +55,7 @@ class _eq(operator):
 class _ge(operator):
     def __init__(self):
         super().__init__(
+            "GE",
             [
                 Comparison.MORE,
                 Comparison.SAME
@@ -85,6 +69,7 @@ class _ge(operator):
 class _gt(operator):
     def __init__(self):
         super().__init__(
+            "GT",
             [
                 Comparison.MORE
             ],
@@ -97,6 +82,7 @@ class _gt(operator):
 class _le(operator):
     def __init__(self):
         super().__init__(
+            "LE",
             [
                 Comparison.LESS,
                 Comparison.SAME
@@ -110,6 +96,7 @@ class _le(operator):
 class _lt(operator):
     def __init__(self):
         super().__init__(
+            "LT",
             [
                 Comparison.LESS
             ],
@@ -123,6 +110,7 @@ class _lt(operator):
 class _ne(operator):
     def __init__(self):
         super().__init__(
+            "NE",
             [
                 Comparison.MARK,
                 Comparison.SAME
@@ -136,6 +124,7 @@ class _ne(operator):
 class _nn(operator):
     def __init__(self):
         super().__init__(
+            "NN",
             [
                 Comparison.MARK
             ],
@@ -150,6 +139,7 @@ class _nn(operator):
 class _nu(operator):
     def __init__(self):
         super().__init__(
+            "NU",
             [
             ],
             [
@@ -174,6 +164,7 @@ nu = _nu()  # IS_NULL_OPERATOR
 class _add(operator):
     def __init__(self):
         super().__init__(
+            "ADD",
             [
                 Unary.PLUS
             ],
@@ -184,6 +175,7 @@ class _add(operator):
 class _div(operator):
     def __init__(self):
         super().__init__(
+            "DIV",
             [
                 Unary.DASH,
                 Unary.STAR
@@ -198,6 +190,7 @@ class _div(operator):
 class _mul(operator):
     def __init__(self):
         super().__init__(
+            "MUL",
             [
                 Unary.STAR
             ],
@@ -210,6 +203,7 @@ class _mul(operator):
 class _sub(operator):
     def __init__(self):
         super().__init__(
+            "SUB",
             [
                 Unary.DASH
             ],
@@ -238,9 +232,10 @@ _table = {
 
 
     
-class _tab(operator):
+class tab(operator):
     def __init__(self, iterable):
         super().__init__(
+            "TAB",
             [
                 Divider.WHITESPACE
             ],
@@ -248,17 +243,19 @@ class _tab(operator):
             ]
         )
 
-class _word(operator):
+class word(operator):
     def __init__(self, iterable):
         super().__init__(
+            "WORD",
             [item for item in iterable],
             []
         )
 
 
-class _number(operator):
+class number(operator):
     def __init__(self, iterable):
         super().__init__(
+            "NUMBER",
             [item for item in iterable],
             []
         )
@@ -267,44 +264,48 @@ class _number(operator):
 
 
 _comparison = {
-    0x0: nu,  # ____
-    0x1: eq,  # ___=
-    0x2: gt,  # __>_
-    0x3: ge,  # __>=
-    0x4: lt,  # _<__
-    0x5: le,  # _<_=
-    0x6: ne,  # _<>_
-    0x7: nu,  # _<>=
-    0x8: nn,  # !___
-    0x9: ne,  # !__=
-    0xA: le,  # !_>_
-    0xB: lt,  # !_>=
-    0xC: ge,  # !<__
-    0xD: gt,  # !<_=
-    0xE: eq,  # !<>_
-    0xF: nn   # !<>=
+    0x0: _nu(),  # ____
+    0x1: _eq(),  # ___=
+    0x2: _gt(),  # __>_
+    0x3: _ge(),  # __>=
+    0x4: _lt(),  # _<__
+    0x5: _le(),  # _<_=
+    0x6: _ne(),  # _<>_
+    0x7: _nu(),  # _<>=
+    0x8: _nn(),  # !___
+    0x9: _ne(),  # !__=
+    0xA: _le(),  # !_>_
+    0xB: _lt(),  # !_>=
+    0xC: _ge(),  # !<__
+    0xD: _gt(),  # !<_=
+    0xE: _eq(),  # !<>_
+    0xF: _nn()   # !<>=
 }
 _unary = {
-    0x0: add,  # ___
-    0x1: mul,  # __*
-    0x2: sub,  # _-_
-    0x3: div,  # _-*
-    0x4: add,  # +__
-    0x5: mul,  # +_*
-    0x6: sub,  # +-_
-    0x7: div,  # +-*
+    0x0: _add(),  # ___
+    0x1: _mul(),  # __*
+    0x2: _sub(),  # _-_
+    0x3: _div(),  # _-*
+    0x4: _add(),  # +__
+    0x5: _mul(),  # +_*
+    0x6: _sub(),  # +-_
+    0x7: _div(),  # +-*
 }
 
+
+def join(iterable):
+    return str().join([item.value for item in iterable])
+
 def tab_parse(iterable):
-    return _tab(iterable)
+    return tab(join(iterable))
 
 
 def word_parse(iterable):
-    return _word(iterable)
+    return word(join(iterable))
 
 
 def number_parse(iterable):
-    return _number(iterable)
+    return number(join(iterable))
 
 
 
@@ -328,83 +329,5 @@ def comparison_parse(iterable):
     index <<= 1
     index |= Comparison.SAME in iterable
     return _comparison.get(index)
-
-
-
-
-
-
-import enum
-
-
-
-@enum.unique
-class Comparison3(enum.Enum):
-    eq = _eq()  # EQUALITY_OPERATOR
-    ge = _ge()  # GREATER_THAN_OR_EQUAL_OPERATOR
-    gt = _gt()  # LESS_THAN_OR_EQUAL_OPERATOR
-    le = _le()  # LESS_THAN_OR_EQUAL_OPERATOR
-    lt = _lt()  # LESS_THAN_OPERATOR
-    ne = _ne()  # INEQUALITY_OPERATOR
-    nn = _nn()  # IS_NOT_NULL_OPERATOR
-    nu = _nu()  # IS_NULL_OPERATOR
-
-
-@enum.unique
-class Unary3(enum.Enum):
-    STAR = chr(0x002A)
-    PLUS = chr(0x002B)
-    DASH = chr(0x002D)
-
-
-@enum.unique
-class Letter3(enum.Enum):
-    LETTER_A = chr(0x0061)
-    LETTER_B = chr(0x0062)
-    LETTER_C = chr(0x0063)
-    LETTER_D = chr(0x0064)
-    LETTER_E = chr(0x0065)
-    LETTER_F = chr(0x0066)
-    LETTER_G = chr(0x0067)
-    LETTER_H = chr(0x0068)
-    LETTER_I = chr(0x0069)
-    LETTER_J = chr(0x006A)
-    LETTER_K = chr(0x006B)
-    LETTER_L = chr(0x006C)
-    LETTER_M = chr(0x006D)
-    LETTER_N = chr(0x006E)
-    LETTER_O = chr(0x006F)
-    LETTER_P = chr(0x0070)
-    LETTER_Q = chr(0x0071)
-    LETTER_R = chr(0x0072)
-    LETTER_S = chr(0x0073)
-    LETTER_T = chr(0x0074)
-    LETTER_U = chr(0x0075)
-    LETTER_V = chr(0x0076)
-    LETTER_W = chr(0x0077)
-    LETTER_X = chr(0x0078)
-    LETTER_Y = chr(0x0079)
-    LETTER_Z = chr(0x007A)
-    LETTER__ = chr(0x005F)
-
-
-@enum.unique
-class Digi3t(enum.Enum):
-    DIGIT_0 = chr(0x0030)
-    DIGIT_1 = chr(0x0031)
-    DIGIT_2 = chr(0x0032)
-    DIGIT_3 = chr(0x0033)
-    DIGIT_4 = chr(0x0034)
-    DIGIT_5 = chr(0x0035)
-    DIGIT_6 = chr(0x0036)
-    DIGIT_7 = chr(0x0037)
-    DIGIT_8 = chr(0x0038)
-    DIGIT_9 = chr(0x0039)
-    DIGIT_A = chr(0x0041)
-    DIGIT_B = chr(0x0042)
-    DIGIT_C = chr(0x0043)
-    DIGIT_D = chr(0x0044)
-    DIGIT_E = chr(0x0045)
-    DIGIT_F = chr(0x0046)
 
 
