@@ -3,24 +3,26 @@ from celestine.data.alphabet import Unary
 from celestine.data.alphabet import Comparison
 
 
-
 class operator():
     def __init__(self, name, primary, secondary):
         self._name = name
         self._primary = primary
         self._secondary = secondary
 
+        self.name = name
+        self.value = primary
+        self.value = str().join([str(item) for item in self._primary])
+
     def __str__(self):
-        return str().join([str(item) for item in self._primary])
+        return self.value
 
     def __repr__(self):
-        return "<OPERATOR.{0}: '{1}'>".format(self._name, str().join([str(item) for item in self._primary]))
-    
+        return "<OPERATOR.{0}: '{1}'>".format(self.name, self.value)
+#        return "<OPERATOR.{0}: '{1}'>".format(self._name, str().join([str(item) for item in self._primary]))
+
     def __eq__(self, other):
-        e = str().join([str(item) for item in self._primary])
-        f = str().join([str(item) for item in other._primary])
         g = self._name == other._name
-        h = e == f
+        h = self.value == self.value
         i = g and h
         return i
 #        return self._name == other._name and str().join(self._primary) == str().join(other._primary)
@@ -52,6 +54,7 @@ class _eq(operator):
             ]
         )
 
+
 class _ge(operator):
     def __init__(self):
         super().__init__(
@@ -66,6 +69,7 @@ class _ge(operator):
             ]
         )
 
+
 class _gt(operator):
     def __init__(self):
         super().__init__(
@@ -75,9 +79,11 @@ class _gt(operator):
             ],
             [
                 Comparison.MARK,
-                Comparison.LESS, Comparison.SAME
+                Comparison.LESS,
+                Comparison.SAME
             ]
         )
+
 
 class _le(operator):
     def __init__(self):
@@ -93,6 +99,7 @@ class _le(operator):
             ]
         )
 
+
 class _lt(operator):
     def __init__(self):
         super().__init__(
@@ -107,6 +114,7 @@ class _lt(operator):
             ]
         )
 
+
 class _ne(operator):
     def __init__(self):
         super().__init__(
@@ -120,6 +128,7 @@ class _ne(operator):
                 Comparison.MORE
             ]
         )
+
 
 class _nn(operator):
     def __init__(self):
@@ -136,6 +145,7 @@ class _nn(operator):
             ]
         )
 
+
 class _nu(operator):
     def __init__(self):
         super().__init__(
@@ -149,6 +159,7 @@ class _nu(operator):
             ]
         )
 
+
 eq = _eq()  # EQUALITY_OPERATOR
 ge = _ge()  # GREATER_THAN_OR_EQUAL_OPERATOR
 gt = _gt()  # LESS_THAN_OR_EQUAL_OPERATOR
@@ -157,8 +168,6 @@ lt = _lt()  # LESS_THAN_OPERATOR
 ne = _ne()  # INEQUALITY_OPERATOR
 nn = _nn()  # IS_NOT_NULL_OPERATOR
 nu = _nu()  # IS_NULL_OPERATOR
-
-
 
 
 class _add(operator):
@@ -171,6 +180,7 @@ class _add(operator):
             [
             ]
         )
+
 
 class _div(operator):
     def __init__(self):
@@ -187,6 +197,7 @@ class _div(operator):
             ]
         )
 
+
 class _mul(operator):
     def __init__(self):
         super().__init__(
@@ -199,6 +210,7 @@ class _mul(operator):
                 Unary.STAR
             ]
         )
+
 
 class _sub(operator):
     def __init__(self):
@@ -231,7 +243,6 @@ _table = {
 }
 
 
-    
 class tab(operator):
     def __init__(self, iterable):
         super().__init__(
@@ -242,6 +253,7 @@ class tab(operator):
             [
             ]
         )
+
 
 class word(operator):
     def __init__(self, iterable):
@@ -259,8 +271,6 @@ class number(operator):
             [item for item in iterable],
             []
         )
-
-
 
 
 _comparison = {
@@ -296,6 +306,7 @@ _unary = {
 def join(iterable):
     return str().join([item.value for item in iterable])
 
+
 def tab_parse(iterable):
     return tab(join(iterable))
 
@@ -306,7 +317,6 @@ def word_parse(iterable):
 
 def number_parse(iterable):
     return number(join(iterable))
-
 
 
 def unary_parse(iterable):

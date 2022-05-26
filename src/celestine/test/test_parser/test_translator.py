@@ -37,7 +37,7 @@ class test_translator(unittest.TestCase):
         self.assertEqual(expect, result)
 
     def test_one(self):
-        string = "ⶀ<>0#h i35 <m o5cat  $&dog"
+        string = "ⶀ<>0#h i35 <m o7cat  $&dog"
         expect = [
             Comparison.LESS,
             Comparison.MORE,
@@ -52,7 +52,7 @@ class test_translator(unittest.TestCase):
             Letter.LETTER_M,
             Divider.WHITESPACE,
             Letter.LETTER_O,
-            Digit.DIGIT_5,
+            Digit.DIGIT_7,
             Letter.LETTER_C,
             Letter.LETTER_A,
             Letter.LETTER_T,
@@ -66,7 +66,7 @@ class test_translator(unittest.TestCase):
         self.assertEqual(expect, one)
 
     def test_two(self):
-        string = "ⶀ<>0#h i35 <m o5cat  $&dog"
+        string = "ⶀ<>0#h i35 <m o7cat  $&dog"
         expect = [
             [
                 Comparison.LESS,
@@ -104,7 +104,7 @@ class test_translator(unittest.TestCase):
                 Letter.LETTER_O
             ],
             [
-                Digit.DIGIT_5
+                Digit.DIGIT_7
             ],
             [
                 Letter.LETTER_C	,
@@ -126,7 +126,7 @@ class test_translator(unittest.TestCase):
         self.assertEqual(expect, two)
 
     def test_three(self):
-        string = "ⶀ<>0#h i35 <m o5cat  $&dog"
+        string = "ⶀ<>0#h i35 <m o7cat  $&dog"
         expect = [
             ne,
             number("0"),
@@ -139,7 +139,7 @@ class test_translator(unittest.TestCase):
             word("m"),
             tab(""),
             word("o"),
-            number("5"),
+            number("7"),
             word("cat"),
             tab(""),
             word("dog")
