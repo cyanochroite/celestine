@@ -1,12 +1,9 @@
-try:
-    import more_itertools
-    package = True
-except ModuleNotFoundError:
-    package = False
+from celestine.package import package
+more_itertools = package("more_itertools")
 
 
 def split_when(iterable, predicate):
-    if package:
+    if more_itertools:
         return list(more_itertools.split_when(iterable, predicate))
     inner = []
     outer = []
@@ -22,6 +19,7 @@ def split_when(iterable, predicate):
         inner.append(last)
         outer.append(inner)
     return outer
+
 
 def filter_true(iterable, predicate=None):
     return list(filter(predicate, iterable))
