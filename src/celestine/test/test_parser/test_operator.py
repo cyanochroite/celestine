@@ -23,11 +23,6 @@ class test_unary(unittest.TestCase):
         ]
         self.assertEqual(parse(token), add)
 
-#    def test_add_secondary(self):
-#        token = [
-#        ]
-#        self.assertEqual(parse(token), add)
-
     def test_div_primary(self):
         token = [
             Unary.STAR,
@@ -170,11 +165,6 @@ class test_comparison(unittest.TestCase):
         ]
         self.assertEqual(parse(token), nn)
 
-#    def test_nu_primary(self):
-#        token = [
-#        ]
-#        self.assertEqual(parse(token), nu)
-
     def test_nu_secondary(self):
         token = [
             Comparison.SAME,
@@ -182,3 +172,12 @@ class test_comparison(unittest.TestCase):
             Comparison.LESS
         ]
         self.assertEqual(parse(token), nu)
+
+    def test_strings(self):
+        token = [
+            Comparison.SAME,
+            Comparison.MORE,
+            Comparison.LESS
+        ]
+        self.assertEqual(str(eq), "=")
+        self.assertEqual(repr(eq), "<Operator.EQ: '='>")

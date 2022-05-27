@@ -3,44 +3,23 @@ from celestine.data.alphabet import Unary
 from celestine.data.alphabet import Comparison
 
 
-class operator():
+class Operator():
     def __init__(self, name, primary, secondary):
-        self._name = name
-        self._primary = primary
-        self._secondary = secondary
-
         self.name = name
         self.value = primary
-        self.value = str().join([str(item) for item in self._primary])
+        self.value = str().join([getattr(item, "value", str(item)) for item in primary])
 
     def __str__(self):
         return self.value
 
     def __repr__(self):
-        return "<OPERATOR.{0}: '{1}'>".format(self.name, self.value)
-#        return "<OPERATOR.{0}: '{1}'>".format(self._name, str().join([str(item) for item in self._primary]))
+        return "<Operator.{0}: '{1}'>".format(self.name, self.value)
 
     def __eq__(self, other):
-        g = self._name == other._name
-        h = self.value == self.value
-        i = g and h
-        return i
-#        return self._name == other._name and str().join(self._primary) == str().join(other._primary)
-
-    @classmethod
-    def parse(cls, array):
-        return NotImplementedError
-
-    @property
-    def primary(self):
-        return frozenset(self._primary)
-
-    @property
-    def secondary(self):
-        return frozenset(self._secondary)
+        return self.name == other.name and self.value == other.value
 
 
-class _eq(operator):
+class _eq(Operator):
     def __init__(self):
         super().__init__(
             "EQ",
@@ -55,7 +34,7 @@ class _eq(operator):
         )
 
 
-class _ge(operator):
+class _ge(Operator):
     def __init__(self):
         super().__init__(
             "GE",
@@ -70,7 +49,7 @@ class _ge(operator):
         )
 
 
-class _gt(operator):
+class _gt(Operator):
     def __init__(self):
         super().__init__(
             "GT",
@@ -85,7 +64,7 @@ class _gt(operator):
         )
 
 
-class _le(operator):
+class _le(Operator):
     def __init__(self):
         super().__init__(
             "LE",
@@ -100,7 +79,7 @@ class _le(operator):
         )
 
 
-class _lt(operator):
+class _lt(Operator):
     def __init__(self):
         super().__init__(
             "LT",
@@ -115,7 +94,7 @@ class _lt(operator):
         )
 
 
-class _ne(operator):
+class _ne(Operator):
     def __init__(self):
         super().__init__(
             "NE",
@@ -130,7 +109,7 @@ class _ne(operator):
         )
 
 
-class _nn(operator):
+class _nn(Operator):
     def __init__(self):
         super().__init__(
             "NN",
@@ -146,7 +125,7 @@ class _nn(operator):
         )
 
 
-class _nu(operator):
+class _nu(Operator):
     def __init__(self):
         super().__init__(
             "NU",
@@ -170,7 +149,7 @@ nn = _nn()  # IS_NOT_NULL_OPERATOR
 nu = _nu()  # IS_NULL_OPERATOR
 
 
-class _add(operator):
+class _add(Operator):
     def __init__(self):
         super().__init__(
             "ADD",
@@ -182,7 +161,7 @@ class _add(operator):
         )
 
 
-class _div(operator):
+class _div(Operator):
     def __init__(self):
         super().__init__(
             "DIV",
@@ -198,7 +177,7 @@ class _div(operator):
         )
 
 
-class _mul(operator):
+class _mul(Operator):
     def __init__(self):
         super().__init__(
             "MUL",
@@ -212,7 +191,7 @@ class _mul(operator):
         )
 
 
-class _sub(operator):
+class _sub(Operator):
     def __init__(self):
         super().__init__(
             "SUB",
@@ -243,7 +222,7 @@ _table = {
 }
 
 
-class tab(operator):
+class tab(Operator):
     def __init__(self, iterable):
         super().__init__(
             "TAB",
@@ -255,7 +234,7 @@ class tab(operator):
         )
 
 
-class word(operator):
+class word(Operator):
     def __init__(self, iterable):
         super().__init__(
             "WORD",
@@ -264,7 +243,7 @@ class word(operator):
         )
 
 
-class number(operator):
+class number(Operator):
     def __init__(self, iterable):
         super().__init__(
             "NUMBER",

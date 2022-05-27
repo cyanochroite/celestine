@@ -8,9 +8,10 @@ two = tokenizer.tokenize(one)
 print(list(two))
 three = parser.parse(two)
 print(list(three))
+print(str(list(three)))
+print(repr(list(three)))
 print("moo")
 
-
-
 from celestine.parser.operator import *
-print(Unary.STAR.value)
+
+print(repr(eq))
