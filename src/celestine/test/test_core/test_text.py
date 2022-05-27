@@ -5,25 +5,25 @@ from celestine.core.text import *
 
 class test_text(unittest.TestCase):
     def test_fatal(self):
-        log.fatal("text")
+        log.fatal("")
 
     def test_error(self):
-        log.error("text")
+        log.error("")
 
     def test_notice(self):
-        log.notice("text")
+        log.notice("")
 
     def test_warning(self):
-        log.warning("text")
+        log.warning("")
 
     def test_alert(self):
-        log.alert("text")
+        log.alert("")
 
     def test_debug(self):
-        log.debug("text")
+        log.debug("")
 
     def test_info(self):
-        log.info("text")
+        log.info("")
 
     def test_trace(self):
-        log.trace("text")
+        log.trace("")

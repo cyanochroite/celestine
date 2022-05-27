@@ -12,6 +12,5 @@ print(str(list(three)))
 print(repr(list(three)))
 print("moo")
 
-from celestine.parser.operator import *
+from celestine.package.itertools import *
 
-print(repr(eq))
