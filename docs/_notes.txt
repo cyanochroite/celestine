@@ -147,8 +147,8 @@ https://semver.org/
 
 https://libraries.io/
 
-celestine-viewer.readthedocs.io
-celestine-viewer.rtfd.io 
+celestine.readthedocs.io
+celestine.rtfd.io 
 
 
 
@@ -163,14 +163,14 @@ python -m pip install --upgrade twine
 # test
 python -m twine check --strict dist/*
 python -m twine upload --verbose --repository testpypi dist/*
-python -m pip install --index-url https://test.pypi.org/simple/ --no-deps celestine-viewer
-python -m pip install --index-url https://test.pypi.org/simple/ celestine-viewer
+python -m pip install --index-url https://test.pypi.org/simple/ --no-deps celestine
+python -m pip install --index-url https://test.pypi.org/simple/ celestine
 
 
 # real
 python -m twine check --strict dist/*
 python -m twine upload --verbose dist/*
-python -m pip install celestine-viewer
+python -m pip install celestine
 
 INSTALL
 pip install pytest

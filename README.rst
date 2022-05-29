@@ -7,8 +7,8 @@ The Celestine Image Viewer
 - Inspiration_
 - Info_
 
-.. image:: https://readthedocs.org/projects/celestine-viewer/badge/?version=latest
-   :target: https://celestine-viewer.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
+   :target: https://celestine.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
 .. _About:
@@ -91,7 +91,7 @@ Requirements
 +---------------------------+-------------+-----------------------+-----------------------------------------------------+
 
 .. _PyPi: https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-pypi
-.. _`Celestine Image Viewer`: https://github.com/mem-dixy/celestine-viewer/
+.. _`Celestine Image Viewer`: https://github.com/mem-dixy/celestine/
 .. _DearPyGui: https://pypi.org/project/dearpygui/
 .. _Pillow: https://pypi.org/project/Pillow/
 
@@ -135,4 +135,4 @@ Info
 `Write to me`_
 
 .. _`Semantic Versioning 2.0.0`: https://semver.org/
-.. _`Write to me`: celestine-viewer@mem-dixy.ch
+.. _`Write to me`: celestine@mem-dixy.ch
