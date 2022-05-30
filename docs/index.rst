@@ -1,5 +1,5 @@
 The Celestine Image Viewer
-==========================
+##########################
 
 - About_
 - Goals_
@@ -14,7 +14,7 @@ The Celestine Image Viewer
 .. _About:
 
 About
------
+*****
 View, tag, and organize your photos. Work in progress. Not currently functional.
 
 
@@ -31,7 +31,7 @@ Will try to update the project to reflect that.
 .. _Goals:
 
 Primary Goals
--------------
+*************
 - Is an offline only application. (The only internet used is when you use pip.)
 - Has no required dependencies. (All you need to run this package is Python.)
 - Can be customized to use different packages. (See the list below for supported packages.)
@@ -41,9 +41,10 @@ Offline Only
 ^^^^^^^^^^^^
 The only internet you need is when you install with pip.
 
-No Dependencies
-^^^^^^^^^^^^^^^
-Just download and run.
+No Required Dependencies
+^^^^^^^^^^^^^^^^^^^^^^^^
+Celestine is very independent and can run without any dependecies.
+However she also likes gifts. Try giving her a Package_.
 
 Custom Install
 ^^^^^^^^^^^^^^
@@ -65,7 +66,7 @@ What this is not:
 .. _Requirements:
 
 Requirements
-------------
+************
 +-----------+----------+-------------------+----------------------------------------+
 | Python    | Need     | Optional Features | Why                                    |
 +-----------+----------+-------------------+----------------------------------------+
@@ -80,20 +81,27 @@ Requirements
 .. _tkinter: https://docs.python.org/3/library/tkinter.html
 .. _unittest: https://docs.python.org/3/library/unittest.html
 
-+---------------------------+-------------+-----------------------+-----------------------------------------------------+
-| Package                   | Need        | PyPi_                 | Why                                                 |
-+---------------------------+-------------+-----------------------+-----------------------------------------------------+
-| `Celestine Image Viewer`_ | REQUIRED    |                       | This is the project you are trying to install.      |
-+---------------------------+-------------+-----------------------+-----------------------------------------------------+
-| DearPyGui_                | RECOMMENDED | pip install dearpygui | Without this, you need tkinter or the command line. |
-+---------------------------+-------------+-----------------------+-----------------------------------------------------+
-| Pillow_                   | RECOMMENDED | pip install Pillow    | Without this most images wont load.                 |
-+---------------------------+-------------+-----------------------+-----------------------------------------------------+
+Package
+********
+
+These packages are optional. But features and performance may be lacking without them.
+
++-------------------+----------------------------+------------------------------------------------------------+
+| Package           | Install                    | Description                                                |
++===================+============================+============================================================+
+| `Dear PyGui`_     | pip install dearpygui      | DearPyGui: A simple Python GUI Toolkit                     |
++-------------------+----------------------------+------------------------------------------------------------+
+| `More Itertools`_ | pip install more-itertools | More routines for operating on iterables, beyond itertools |
++-------------------+----------------------------+------------------------------------------------------------+
+| `Pillow`_         | pip install Pillow         | Python Imaging Library (Fork)                              |
++-------------------+----------------------------+------------------------------------------------------------+
+
 
 .. _PyPi: https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-pypi
-.. _`Celestine Image Viewer`: https://github.com/mem-dixy/celestine/
-.. _DearPyGui: https://pypi.org/project/dearpygui/
-.. _Pillow: https://pypi.org/project/Pillow/
+.. _`Celestine`: https://test.pypi.org/project/celestine/
+.. _`Dear PyGui`: https://pypi.org/project/dearpygui/
+.. _`Pillow`: https://pypi.org/project/Pillow/
+.. _`More Itertools`: https://pypi.org/project/Pillow/
 
 (Old notes. Still useful. Need to add to table above somehow.)
 
@@ -119,7 +127,7 @@ use on web server or as external library
 .. _Inspiration:
 
 Inspiration
------------
+***********
 `Safebooru`_ - And the thousands of other booru sites.
 
 `Board Game Geek`_ - Epic advancned search.
@@ -130,8 +138,9 @@ Inspiration
 .. _Info:
 
 Info
-----
+****
 `Semantic Versioning 2.0.0`_
+
 `Write to me`_
 
 .. _`Semantic Versioning 2.0.0`: https://semver.org/
