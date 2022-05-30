@@ -1,6 +1,0 @@
-typescript
-tsc ./canvas/event/EventType.ts --outDir ./make/
-
-javascript
-eslint ./canvas/event/EventType.js
-
