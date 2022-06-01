@@ -1,14 +1,16 @@
 import sys
 
 try:
-    # Check to see if this installed as a global package.
     import celestine
 except ModuleNotFoundError:
-    # If not then we will search from the parent directory of this file.
     import os.path
-    directory = sys.path[0]
-    parent = os.path.dirname(directory)
-    sys.path.insert(0, parent)
+    current_directory = sys.path[0]
+    parent_directory = os.path.dirname(current_directory)
+    sys.path.insert(0, parent_directory)
+
+def clear_arguments():
+    path = sys.argv[0]
+    sys.argv = [path]
 
 from celestine.core.main import main
 from celestine.data.exit import EXIT

@@ -102,6 +102,12 @@ MODE = [
     VERIFY
 ]
 
+GUI = [
+    DEARPYGUI,
+    DESKTOP,
+    TERMINAL,
+    TKINTER
+]
 __version__ = "0.1.2.3"
 
 
@@ -149,6 +155,12 @@ def main():
         help="Choose a mode to opperate in."
     )
 
+    parser.add_argument(
+        "-g", "--gui",
+        default=TERMINAL,
+        choices=GUI,
+        help="Choose a mode to opperate in."
+    )
     parse = parser.parse_args()
 
     mode = parse.mode
@@ -156,12 +168,27 @@ def main():
     if mode == VERIFY:
         return EXIT.TEST
 
-    if mode == TERMINAL:
-        import_module(mode)
+    #import_package(mode, "main")
 
-    if mode == DEARPYGUI or mode == TKINTER:
-        import_package(mode, "main")
-    
+    # This next section is weird.
+    # Revisit once we start parsing multiple parameters.
+
+    gui = TERMINAL
+
+    if mode == TERMINAL:
+        gui = TERMINAL
+
+    if mode == DEARPYGUI:
+        gui = DEARPYGUI
+
+    if mode == DESKTOP:
+        gui = DESKTOP
+
+    if mode == TKINTER:
+        gui = TKINTER
+
+    gui = import_module(gui)
+
     return EXIT.SUCCESS
 
 

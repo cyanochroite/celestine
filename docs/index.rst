@@ -4,12 +4,9 @@ The Celestine Image Viewer
 - About_
 - Goals_
 - Requirements_
+- Package_
 - Inspiration_
 - Info_
-
-.. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
-   :target: https://celestine.readthedocs.io/en/latest/?badge=latest
-   :alt: Documentation Status
 
 .. _About:
 
@@ -62,8 +59,6 @@ What this is not:
 - This is not a photo editor.
 - This is not a photo downloader.
 - This is not a mobile application.
-
-.. _Requirements:
 
 Requirements
 ************
@@ -124,8 +119,6 @@ command core
 only the basics here
 use on web server or as external library
 
-.. _Inspiration:
-
 Inspiration
 ***********
 `Safebooru`_ - And the thousands of other booru sites.
@@ -134,8 +127,6 @@ Inspiration
 
 .. _`Safebooru`: https://safebooru.org
 .. _`Board Game Geek`: https://boardgamegeek.com/advsearch/boardgame">
-
-.. _Info:
 
 Info
 ****
