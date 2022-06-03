@@ -1,5 +1,7 @@
 import dearpygui.dearpygui as dpg
 
+VERSION = 1.4
+
 
 class Window():
     def draw(self):
@@ -9,7 +11,10 @@ class Window():
             dpg.add_input_text(label="string", default_value="Quick brown fox")
             dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
 
-    def run(self, name):
+    def run(self):
+        name = "celestine - PyPI"
+        if VERSION > 900:  # Hope they fix this
+            name = "celestine · PyPI"
         dpg.create_context()
         dpg.create_viewport(
             title=name,
@@ -25,9 +30,9 @@ class Window():
             max_height=4096,
             resizable=True,
             vsync=True,
-            always_on_top=True,
+            always_on_top=False,
             decorated=True,
-            clear_color=(0,0,0)
+            clear_color=(0, 0, 0)
         )
         self.draw()
         dpg.setup_dearpygui()

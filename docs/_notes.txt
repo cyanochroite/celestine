@@ -206,7 +206,7 @@ pip install more-itertools
 
 python -m pip install --requirement requirements.txt
 
-
+python -m pip install windows-curses
 
 
 

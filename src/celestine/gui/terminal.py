@@ -1,3 +1,6 @@
+VERSION = 1
+
+
 class Window():
     def run(self):
-        raise NotImplementedError
+        print("Hello World")
