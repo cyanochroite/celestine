@@ -171,6 +171,6 @@ def main():
 
     module = import_module("gui", parse.gui)
     window = module.Window()
-    window.run()
+    window.run("celestine · PyPI")
 
     return EXIT.SUCCESS

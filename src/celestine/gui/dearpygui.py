@@ -2,19 +2,36 @@ import dearpygui.dearpygui as dpg
 
 
 class Window():
-    def make(self):
-        with dpg.window(label="Example Window"):
+    def draw(self):
+        with dpg.window(tag="primary_window"):
             dpg.add_text("Hello, world")
             dpg.add_button(label="Save")
             dpg.add_input_text(label="string", default_value="Quick brown fox")
             dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
-        #dpg.set_primary_window("Main", True)
 
-    def run(self):
+    def run(self, name):
         dpg.create_context()
-        dpg.create_viewport(title='Custom Title', width=2600, height=1600)
-        self.make()
+        dpg.create_viewport(
+            title=name,
+            small_icon="celestine_small.ico",
+            large_icon="celestine_large.ico",
+            width=2600,
+            height=1600,
+            x_pos=256,
+            y_pos=256,
+            min_width=256,
+            max_width=4096,
+            min_height=256,
+            max_height=4096,
+            resizable=True,
+            vsync=True,
+            always_on_top=True,
+            decorated=True,
+            clear_color=(0,0,0)
+        )
+        self.draw()
         dpg.setup_dearpygui()
         dpg.show_viewport(minimized=False, maximized=False)
+        dpg.set_primary_window("primary_window", True)
         dpg.start_dearpygui()
         dpg.destroy_context()
