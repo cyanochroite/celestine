@@ -1,4 +1,5 @@
 import argparse
+import importlib
 
 from celestine.data.exit import EXIT
 
@@ -7,8 +8,8 @@ def import_package(package, module):
     __import__(".".join(["celestine", "package", package, module]))
 
 
-def import_module(module):
-    __import__(".".join(["celestine", "module", module]))
+def import_module(package, module):
+    return importlib.import_module(".".join(["celestine", package, module]))
 
 
 class Package():
@@ -174,7 +175,6 @@ def main():
     # Revisit once we start parsing multiple parameters.
 
     gui = TERMINAL
-
     if mode == TERMINAL:
         gui = TERMINAL
 
@@ -187,9 +187,8 @@ def main():
     if mode == TKINTER:
         gui = TKINTER
 
-    gui = import_module(gui)
+    module = import_module("gui", gui)
+    window = module.Terminal()
+    window.watch()
 
     return EXIT.SUCCESS
-
-
-
