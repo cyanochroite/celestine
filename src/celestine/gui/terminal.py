@@ -1,7 +1,6 @@
-from celestine.core.gui import Window
+import celestine.core.gui as gui
 
-
-class Terminal(Window):
+class Window(gui.Window):
     def close(self):
         pass
 
