@@ -1,5 +1,5 @@
 from celestine.package.tkinter.Widget import Tk
-from celestine.package.tkinter.window import Window
+from celestine.package.tkinter.window import Window as my_window
 
 
 import os.path
@@ -92,18 +92,10 @@ class WindowModel():
         return path
 
 
-import celestine.core.gui as gui
-
-class Window(gui.Window):
-    def close(self):
-        pass
-
-    def start(self):
-        pass
-
-    def watch(self):
+class Window():
+    def run(self):
         root = Tk()
         model = WindowModel()
-        window = Window(root, data=model)
+        window = my_window(root, data=model)
         window.grid(row=0, column=0)
         root.mainloop()
