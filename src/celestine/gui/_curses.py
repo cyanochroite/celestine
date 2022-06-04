@@ -126,12 +126,7 @@ def draw_menu(stdscr):
         stdscr.clrtoeol()
         stdscr.refresh()
 
-def main():
-    curses.wrapper(draw_menu)
 
-if __name__ == "__main__":
-    main()
-    
 
 import dearpygui.dearpygui as dpg
 
@@ -155,4 +150,5 @@ class Window():
             dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
 
     def run(self):
-        pass
+        print("dog")
+        curses.wrapper(draw_menu)

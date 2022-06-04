@@ -52,38 +52,17 @@ def _import(module):
         return False
 
 
-DEARPYGUI = "DEARPYGUI"
-DESKTOP = "DESKTOP"
-FILE = "FILE"
-PILLOW = "PILLOW"
-PROGRAM = "PROGRAM"
-TERMINAL = "TERMINAL"
-TKINTER = "TKINTER"
-UNITTEST = "UNITTEST"
-VERIFICATION = "VERIFICATION"
-
-
-FILE = "file"
-PILLOW = "pillow"
-PROGRAM = "program"
-
-UNITTEST = "unittest"
-
 
 DEARPYGUI = "dearpygui"
-DESKTOP = "desktop"
-FILE = "file"
 PILLOW = "pillow"
-PROGRAM = "program"
-TERMINAL = "terminal"
 TKINTER = "tkinter"
 UNITTEST = "unittest"
-VERIFICATION = "verification"
 
-
+MAIN = "main"
 VERIFY = "verify"
+
+CURSES = "curses"
 DEARPYGUI = "dearpygui"
-DESKTOP = "desktop"
 TERMINAL = "terminal"
 TKINTER = "tkinter"
 
@@ -97,15 +76,13 @@ PACKAGE = {
 
 
 MODE = [
-    DEARPYGUI,
-    TERMINAL,
-    TKINTER,
+    MAIN,
     VERIFY
 ]
 
 GUI = [
     DEARPYGUI,
-    DESKTOP,
+    CURSES,
     TERMINAL,
     TKINTER
 ]
@@ -150,7 +127,7 @@ def main():
 
     parser.add_argument(
         "-m", "--mode",
-        default=TERMINAL,
+        default=MAIN,
         choices=MODE,
         help="Choose a mode to opperate in."
     )
@@ -161,7 +138,13 @@ def main():
         choices=GUI,
         help="Choose a mode to opperate in."
     )
-    
+
+    parser.add_argument(
+        "ignore",
+        nargs="*",
+        help="Ignore."
+    )
+
     parse = parser.parse_args()
 
     mode = parse.mode
