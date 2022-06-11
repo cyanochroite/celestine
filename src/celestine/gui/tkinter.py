@@ -233,7 +233,9 @@ class WindowModel():
 class Window():
     def run(self):
         root = Tk()
+
         model = WindowModel()
         window = my_window(root, data=model)
         window.grid(row=0, column=0)
+
         root.mainloop()

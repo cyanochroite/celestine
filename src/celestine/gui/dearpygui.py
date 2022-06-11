@@ -3,6 +3,73 @@ import dearpygui.dearpygui as dpg
 VERSION = 1.4
 
 
+
+import dearpygui.dearpygui as dpg
+
+path = "D:\\file\\demo.png"
+
+
+
+def load_image(file: str, gamma: float = 1.0, gamma_scale_factor: float = 1.0):
+    return dpg.load_image(
+        file,
+        gamma=gamma,
+        gamma_scale_factor=gamma_scale_factor
+    )
+
+
+
+class dpg_image():
+    def __init__(self, image):
+        if image is None:
+            image = (0, 0, 0, [])
+        self.width = image[0]
+        self.height = image[1]
+        self.channels = image[2]
+        self.data = image[3]
+    
+    @classmethod
+    def load(cls, file):
+        cls
+        
+def load_image(file: str, gamma: float = 1.0, gamma_scale_factor: float = 1.0):
+    image = dpg.load_image(
+        file,
+        gamma=gamma,
+        gamma_scale_factor=gamma_scale_factor
+    )
+    car = dpg_image(image)
+    pass
+
+
+
+
+def cat():
+    load_image(path)
+    
+    load_image("cat")
+    
+    
+    
+    dpg.create_context()
+    
+    width, height, channels, data = dpg.load_image(path)
+    
+    with dpg.texture_registry(show=True):
+        dpg.add_static_texture(width=width, height=height, default_value=data, tag="texture_tag")
+    
+    with dpg.window(label="Tutorial"):
+        dpg.add_image("texture_tag")
+    
+    
+    dpg.create_viewport(title='Custom Title', width=800, height=600)
+    dpg.setup_dearpygui()
+    dpg.show_viewport()
+    dpg.start_dearpygui()
+    dpg.destroy_context()
+    
+    
+
 class Window():
     def draw(self):
         with dpg.window(tag="primary_window"):
@@ -40,3 +107,8 @@ class Window():
         dpg.set_primary_window("primary_window", True)
         dpg.start_dearpygui()
         dpg.destroy_context()
+
+
+        
+        
+        #mvFormat_Float_rgba
