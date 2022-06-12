@@ -3,11 +3,9 @@ import dearpygui.dearpygui as dpg
 VERSION = 1.4
 
 
-
 import dearpygui.dearpygui as dpg
 
 path = "D:\\file\\demo.png"
-
 
 
 def load_image(file: str, gamma: float = 1.0, gamma_scale_factor: float = 1.0):
@@ -18,8 +16,10 @@ def load_image(file: str, gamma: float = 1.0, gamma_scale_factor: float = 1.0):
     )
 
 
-
-class dpg_image():
+class Image():
+    def load(self, file):
+        return dpg.load_image(file)
+    
     def __init__(self, image):
         if image is None:
             image = (0, 0, 0, [])
@@ -27,48 +27,35 @@ class dpg_image():
         self.height = image[1]
         self.channels = image[2]
         self.data = image[3]
-    
+
     @classmethod
     def load(cls, file):
-        cls
-        
-def load_image(file: str, gamma: float = 1.0, gamma_scale_factor: float = 1.0):
-    image = dpg.load_image(
-        file,
-        gamma=gamma,
-        gamma_scale_factor=gamma_scale_factor
-    )
-    car = dpg_image(image)
-    pass
+        cls()
 
 
 
 
 def cat():
     load_image(path)
-    
+
     load_image("cat")
-    
-    
-    
+
     dpg.create_context()
-    
+
     width, height, channels, data = dpg.load_image(path)
-    
+
     with dpg.texture_registry(show=True):
         dpg.add_static_texture(width=width, height=height, default_value=data, tag="texture_tag")
-    
+
     with dpg.window(label="Tutorial"):
         dpg.add_image("texture_tag")
-    
-    
+
     dpg.create_viewport(title='Custom Title', width=800, height=600)
     dpg.setup_dearpygui()
     dpg.show_viewport()
     dpg.start_dearpygui()
     dpg.destroy_context()
-    
-    
+
 
 class Window():
     def draw(self):
@@ -78,7 +65,10 @@ class Window():
             dpg.add_input_text(label="string", default_value="Quick brown fox")
             dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
 
-    def run(self):
+    def image_load(self, file):
+        return dpg.load_image(file)
+
+    def run(self, draw2):
         name = "celestine - PyPI"
         if VERSION > 900:  # Hope they fix this
             name = "celestine · PyPI"
@@ -101,14 +91,13 @@ class Window():
             decorated=True,
             clear_color=(0, 0, 0)
         )
-        self.draw()
+
+        draw2(self)
+
         dpg.setup_dearpygui()
         dpg.show_viewport(minimized=False, maximized=False)
-        dpg.set_primary_window("primary_window", True)
+        #dpg.set_primary_window("primary_window", True)
         dpg.start_dearpygui()
         dpg.destroy_context()
 
-
-        
-        
-        #mvFormat_Float_rgba
+        # mvFormat_Float_rgba

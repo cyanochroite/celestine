@@ -216,7 +216,8 @@ python -m pip install windows-curses
 
 
 
-
+ToDo Features:
+Add gamma to photos? Both TK and dearpygui support this
 
 
 

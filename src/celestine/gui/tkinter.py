@@ -41,6 +41,7 @@ class Frame(tkinter.Frame, metaclass=abc.ABCMeta):
     def StringVar(self, **kw):
         return tkinter.StringVar()
 
+
 class one(Frame):
     def __init__(self, master=None, cnf={}, **kw):
         super().__init__(master, cnf, **kw)
@@ -69,6 +70,7 @@ class one(Frame):
     def _button_next(self):
         self.data.list_next()
         self.reset_image()
+
 
 class two(Frame):
     def __init__(self, master=None, cnf={}, **kw):
@@ -99,6 +101,7 @@ class two(Frame):
 
     def hippo(self, index):
         print(index)
+
 
 class three(Frame):
     def __init__(self, master=None, cnf={}, **kw):
@@ -139,9 +142,6 @@ class my_window(Frame):
         self.bottom.grid(row=2, column=0, columnspan=2)
 
 
-
-
-
 def Tk():
     return tkinter.Tk()
 
@@ -170,7 +170,6 @@ class list:
 
     def reset(self):
         self._index = self._min
-
 
 
 class WindowModel():
@@ -230,12 +229,47 @@ class WindowModel():
         return path
 
 
+import tkinter
+
+class Image():
+    def load(cls, file):
+        return cls(tkinter.PhotoImage(file=file))
+
+    def __init__(self, image):
+        self.height = image.height()
+        self.image = image
+        self.width = image.width()
+
+    @classmethod
+    def load(cls, file):
+        cls()
+
+
 class Window():
-    def run(self):
-        root = Tk()
+    def __init__(self):
+        self.image = []
 
-        model = WindowModel()
-        window = my_window(root, data=model)
-        window.grid(row=0, column=0)
+    def label_add(self, image):
+        tkinter.Label(self.root, image=image).pack()
 
-        root.mainloop()
+    def image_load(self, file):
+        image = tkinter.PhotoImage(file=file)
+        self.image.append(image)
+        return image
+
+    def run(self, call):
+        self.root = tkinter.Tk()
+        self.root.title('celestine · PyPI')
+
+        self.root.geometry("900x550") # Set the starting size of the window
+        self.root.maxsize(900, 600) # width x height
+        self.root.config(bg="skyblue")
+        
+        
+        call(self)
+        
+        image = self.image_load("D:\\file\\anitest.gif")
+        self.label_add(image)
+#        tkinter.Label(self.root, image=image).pack()
+        self.root.mainloop()
+
