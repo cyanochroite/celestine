@@ -233,32 +233,22 @@ import tkinter
 
 
 class Image():
-    def load(cls, file):
-        return cls(tkinter.PhotoImage(file=file))
-
-    def __init__(self, image):
+    def __init__(self, file):
+        image = tkinter.PhotoImage(file=file)
         self.height = image.height()
         self.image = image
         self.width = image.width()
-
-    @classmethod
-    def load(cls, file):
-        cls()
+        self.name = file
 
 
 class Window():
-    def __init__(self):
-        self.image = []
-
     def label_add(self, image):
-        tkinter.Label(self.root, image=image).pack()
+        tkinter.Label(self.root, image=image.image).pack()
 
     def image_load(self, file):
-        image = tkinter.PhotoImage(file=file)
-        self.image.append(image)
-        return image
+        return Image(file)
 
-    def run(self, call):
+    def run(self, setup, view):
         self.root = tkinter.Tk()
         self.root.title('celestine · PyPI')
 
@@ -266,10 +256,8 @@ class Window():
         self.root.maxsize(900, 600)  # width x height
         self.root.config(bg="skyblue")
 
-        call(self)
+        setup(self)
+        view(self)
 
-        image = self.image_load("D:\\file\\anitest.gif")
-        self.label_add(image)
-#        tkinter.Label(self.root, image=image).pack()
         self.root.mainloop()
 
