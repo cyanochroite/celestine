@@ -231,6 +231,7 @@ class WindowModel():
 
 import tkinter
 
+
 class Image():
     def load(cls, file):
         return cls(tkinter.PhotoImage(file=file))
@@ -261,13 +262,12 @@ class Window():
         self.root = tkinter.Tk()
         self.root.title('celestine · PyPI')
 
-        self.root.geometry("900x550") # Set the starting size of the window
-        self.root.maxsize(900, 600) # width x height
+        self.root.geometry("900x550")  # Set the starting size of the window
+        self.root.maxsize(900, 600)  # width x height
         self.root.config(bg="skyblue")
-        
-        
+
         call(self)
-        
+
         image = self.image_load("D:\\file\\anitest.gif")
         self.label_add(image)
 #        tkinter.Label(self.root, image=image).pack()

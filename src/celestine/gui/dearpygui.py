@@ -17,22 +17,14 @@ def load_image(file: str, gamma: float = 1.0, gamma_scale_factor: float = 1.0):
 
 
 class Image():
-    def load(self, file):
-        return dpg.load_image(file)
-    
-    def __init__(self, image):
+    def __init__(self, file):
+        image = dpg.load_image(file)
         if image is None:
             image = (0, 0, 0, [])
         self.width = image[0]
         self.height = image[1]
-        self.channels = image[2]
-        self.data = image[3]
-
-    @classmethod
-    def load(cls, file):
-        cls()
-
-
+        #self.channels = image[2]
+        self.image = image[3]
 
 
 def cat():
@@ -58,6 +50,14 @@ def cat():
 
 
 class Window():
+    def __init__(self):
+        self.image = []
+
+    def label_add(self, image):
+        image = "texture_tag"
+        with dpg.window(label="Tutorial"):
+            dpg.add_image(image)
+
     def draw(self):
         with dpg.window(tag="primary_window"):
             dpg.add_text("Hello, world")
@@ -66,9 +66,19 @@ class Window():
             dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
 
     def image_load(self, file):
-        return dpg.load_image(file)
+        image = Image(file)
+        self.image.append(image)
 
-    def run(self, draw2):
+        with dpg.texture_registry(show=True):
+            dpg.add_static_texture(
+                width=image.width,
+                height=image.height,
+                default_value=image.image,
+                tag="texture_tag"
+            )
+            return image
+
+    def run(self, call):
         name = "celestine - PyPI"
         if VERSION > 900:  # Hope they fix this
             name = "celestine · PyPI"
@@ -92,7 +102,7 @@ class Window():
             clear_color=(0, 0, 0)
         )
 
-        draw2(self)
+        call(self)
 
         dpg.setup_dearpygui()
         dpg.show_viewport(minimized=False, maximized=False)
