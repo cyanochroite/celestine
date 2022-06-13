@@ -1,8 +1,16 @@
+import os
+
 image = {}
 
+
 def setup(self):
-    image["image1"] = self.image_load("D:\\file\\anitest.gif")
-    image["image2"] = self.image_load("D:\\file\\test4.gif")
+    image["image1"] = self.image_load(
+        os.path.join("celestine", "file", "anitest.gif")
+    )
+    image["image2"] = self.image_load(
+        os.path.join("celestine", "file", "test4.gif")
+    )
+
 
 def view(self):
     self.label_add(image["image1"])

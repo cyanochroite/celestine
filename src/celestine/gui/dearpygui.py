@@ -3,11 +3,6 @@ import dearpygui.dearpygui as dpg
 VERSION = 1.4
 
 
-import dearpygui.dearpygui as dpg
-
-path = "D:\\file\\demo.png"
-
-
 class Image():
     def __init__(self, file):
         image = dpg.load_image(file)
@@ -19,28 +14,20 @@ class Image():
         self.image = image[3]
         self.name = file
 
-
-class Window():
-    def __init__(self):
-        self.image = {}
-
-    def label_add(self, name):
-        image = self.image[name].image #try catch fail?
-        dpg.add_image(name)
-
-    def image_load(self, file):
-        image = Image(file)
-        name = image.name
-        self.image[name] = image
-
         dpg.add_static_texture(
-            width=image.width,
-            height=image.height,
-            default_value=image.image,
-            tag=name
+            width=self.width,
+            height=self.height,
+            default_value=self.image,
+            tag=self.name
         )
 
-        return name
+
+class Window():
+    def label_add(self, image):
+        dpg.add_image(image.name)
+
+    def image_load(self, file):
+        return Image(file)
 
     def run(self, setup, view):
         title = "celestine - PyPI"
@@ -66,8 +53,7 @@ class Window():
             clear_color=(0, 0, 0)
         )
 
-
-        with dpg.texture_registry(show=True):
+        with dpg.texture_registry(show=False):
             setup(self)
 
         with dpg.window(tag="primary_window"):
