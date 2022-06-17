@@ -22,12 +22,14 @@ class Window():
         self.root = tkinter.Tk()
         self.root.title('celestine · PyPI')
 
-        self.root.geometry("900x550")  # Set the starting size of the window
-        self.root.maxsize(900, 600)  # width x height
+        self.root.geometry("1920x1080")
+        self.root.minsize(640, 480)
+        self.root.maxsize(3840, 2160)
         self.root.config(bg="skyblue")
 
         setup(self)
         view(self)
 
         self.root.mainloop()
+
 

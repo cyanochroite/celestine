@@ -201,6 +201,6 @@ class Window():
             dpg.add_input_text(label="string", default_value="Quick brown fox")
             dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
 
-    def run(self):
+    def run(self, setup, view):
         print("dog")
         curses.wrapper(draw_menu)

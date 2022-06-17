@@ -1,21 +1,15 @@
 import sys
+import os.path
 
-try:
-    import celestine
-except ModuleNotFoundError:
-    import os.path
-    current_directory = sys.path[0]
-    parent_directory = os.path.dirname(current_directory)
-    sys.path.insert(0, parent_directory)
-
-def clear_arguments():
-    path = sys.argv[0]
-    sys.argv = [path]
+current_directory = sys.path[0]
+parent_directory = os.path.dirname(current_directory)
+sys.path.append(parent_directory)
 
 from celestine.core.main import main
 from celestine.data.exit import EXIT
 
-exit = main()
+
+exit = main(parent_directory)
 
 if exit == EXIT.TEST:
     # Clear argument list before we call unittest.

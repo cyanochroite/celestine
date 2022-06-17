@@ -10,7 +10,7 @@ option = [
 
 #https://docs.python.org/3/library/argparse.html
 class Window():
-    def run(self):
+    def run(self, setup, view):
         print(sys.argv)
         data = sys.argv[3:]
         print(sys.argv)

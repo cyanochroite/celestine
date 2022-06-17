@@ -38,7 +38,6 @@ class MissingPackageError(ImportError):
         #self.message = message
 
     def __str__(self):
-        print("Candy")
         return "This feature needs the package '{0}' installed.".format(
             self.package.name
         )
@@ -113,8 +112,7 @@ def check_package(name):
 class Window():
     pass
 
-
-def main():
+def main(directory):
     parser = argparse.ArgumentParser(
         prog="celestine"
     )
@@ -152,8 +150,15 @@ def main():
     if mode == VERIFY:
         return EXIT.TEST
 
+
+    from celestine.gui.main import main
     module = import_module("gui", parse.gui)
     window = module.Window()
-    window.run()
+    main(directory, window)
 
+#    window.run()
+    
+
+   
+    
     return EXIT.SUCCESS
