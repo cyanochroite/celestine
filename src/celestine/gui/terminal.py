@@ -1,3 +1,4 @@
+# https://docs.python.org/3/library/argparse.html
 import argparse
 import sys
 
@@ -5,19 +6,24 @@ VERSION = 1
 
 option = [
     "a",
-    "b"
+    "b",
+    "list"
 ]
 
-#https://docs.python.org/3/library/argparse.html
+
 class Window():
+    def __init__(self):
+        self.list = []
+
+    def label_add(self, image):
+        pass
+
+    def image_load(self, file):
+        self.list.append(file)
+
     def run(self, setup, view):
-        print(sys.argv)
-        data = sys.argv[3:]
-        print(sys.argv)
-        parser = argparse.ArgumentParser(
-            prog="celestine"
-        )
-        
+        parser = argparse.ArgumentParser(prog="celestine")
+        parser.add_argument("-g", "--gui")
         parser.add_argument(
             "option",
             nargs="?",
@@ -25,16 +31,19 @@ class Window():
             choices=option,
             help="Choose a mode to opperate in."
         )
-    
-        parse = parser.parse_args(sys.argv[3:])
+        parse = parser.parse_args()
         mode = parse.option
-        mode = 'a'
-        if data:
-            mode = data[0]
-        print(mode)
-    
+
+
+        setup(self)
+        view(self)
+
         if mode == "a":
             print("Hello World")
 
         if mode == "b":
             print("Goodby Island")
+
+        if mode == "list":
+            print("here is a list")
+            print(self.list)

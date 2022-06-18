@@ -209,6 +209,8 @@ python -m pip install --requirement requirements.txt
 python -m pip install windows-curses
 
 
+UniCurses 1.2 ??
+
 
 
 
