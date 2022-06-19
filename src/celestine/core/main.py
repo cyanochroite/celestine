@@ -11,6 +11,13 @@ def import_package(package, module):
 def import_module(package, module):
     return importlib.import_module(".".join(["celestine", package, module]))
 
+import os.path
+
+def import_file(directory):
+    return os.path.join(directory, "celestine", "celestine.ini")
+
+
+
 
 class Package():
     def __init__(self, name, external, internal):
@@ -18,38 +25,6 @@ class Package():
         self.external = external
         self.internal = internal
         self.imported = True
-
-    def _import(self):
-        try:
-            __import__(self.external)
-            return True
-        except ModuleNotFoundError:
-            return False
-
-    def import_package(self):
-        if not self._import:
-            raise MissingPackageError(self)
-        self.main()
-
-
-class MissingPackageError(ImportError):
-    def __init__(self, package):
-        self.package = package
-        #self.message = message
-
-    def __str__(self):
-        return "This feature needs the package '{0}' installed.".format(
-            self.package.name
-        )
-
-
-def _import(module):
-    try:
-        __import__(module)
-        return True
-    except ModuleNotFoundError:
-        return False
-
 
 
 DEARPYGUI = "dearpygui"
@@ -112,7 +87,7 @@ def check_package(name):
 class Window():
     pass
 
-def main(directory):
+def main(session):
     parser = argparse.ArgumentParser(
         prog="celestine"
     )
@@ -151,10 +126,15 @@ def main(directory):
         return EXIT.TEST
 
 
+    import configparser
+    
+
+    
+
     from celestine.gui.main import main
     module = import_module("gui", parse.gui)
     window = module.Window()
-    main(directory, window)
+    main(session, window)
 
 #    window.run()
     

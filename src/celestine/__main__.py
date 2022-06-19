@@ -8,8 +8,10 @@ sys.path.append(parent_directory)
 from celestine.core.main import main
 from celestine.data.exit import EXIT
 
+from celestine.data.session import make
+session = make(parent_directory)
 
-exit = main(parent_directory)
+exit = main(session)
 
 if exit == EXIT.TEST:
     # Clear argument list before we call unittest.

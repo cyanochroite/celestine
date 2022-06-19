@@ -1,11 +1,6 @@
-from celestine.gui.main import main
-
-from celestine.gui.dearpygui import Window
-#from celestine.gui.tkinter import Window
-
-window = Window()
-main(window)
+from celestine.core.load import *
 
 
-#640 480
-#80 24
+
+gippy = import_module("gui", "main")
+gippy.view(None)
