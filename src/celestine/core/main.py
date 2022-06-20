@@ -4,6 +4,20 @@ import importlib
 from celestine.data.exit import EXIT
 
 
+
+STORE = "store"
+STORE_CONST = "store_const"
+STORE_TRUE = "store_true"
+STORE_FALSE = "store_false"
+APPEND = "append"
+APPEND_CONST = "append_const"
+COUNT = "count"
+HELP = "help"
+VERSION = "version"
+EXTEND = "extend"
+
+
+
 def import_package(package, module):
     __import__(".".join(["celestine", "package", package, module]))
 
@@ -97,6 +111,8 @@ def main(session):
         action="store_true",
         help="List all installed packages."
     )
+
+
 
     parser.add_argument(
         "-m", "--mode",

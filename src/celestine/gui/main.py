@@ -13,8 +13,10 @@ def setup(self):
 
 
 def view(self):
-    self.label_add(image["image1"])
-    self.label_add(image["image2"])
+    self.image("00", image["image1"])
+    self.image("01", image["image2"])
+    self.label("Settings", "no puppy. File Explorer using Tkinter")
+    self.filebox("set", "Settings")
 
 
 def main(data, window):

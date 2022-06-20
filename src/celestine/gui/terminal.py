@@ -4,6 +4,19 @@ import sys
 
 VERSION = 1
 
+
+STORE = "store"
+STORE_CONST = "store_const"
+STORE_TRUE = "store_true"
+STORE_FALSE = "store_false"
+APPEND = "append"
+APPEND_CONST = "append_const"
+COUNT = "count"
+HELP = "help"
+VERSION = "version"
+EXTEND = "extend"
+
+
 option = [
     "a",
     "b",
@@ -34,7 +47,13 @@ class Window():
         parse = parser.parse_args()
         mode = parse.option
 
-
+        parser.add_argument(
+            "-i", "--ini",
+            action=STORE,
+            nargs=1,
+            help="List all installed packages."
+        )
+        
         setup(self)
         view(self)
 
@@ -47,3 +66,4 @@ class Window():
         if mode == "list":
             print("here is a list")
             print(self.list)
+
