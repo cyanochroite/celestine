@@ -1,4 +1,4 @@
-from celestine.package import package
+from celestine.mypackage import package
 more_itertools = package("more_itertools")
 
 

@@ -54,7 +54,7 @@ DEARPYGUI = "dearpygui"
 TERMINAL = "terminal"
 TKINTER = "tkinter"
 UNITTEST = "unittest"
-
+CELESTINE = "celestine"
 
 PACKAGE = {
     DEARPYGUI: Package("DearPyGui", "dearpygui", "dearpygui"),
@@ -66,6 +66,7 @@ PACKAGE = {
 
 MODE = [
     DEARPYGUI,
+    CELESTINE,
     CURSES,
     TERMINAL,
     TKINTER,
@@ -98,14 +99,45 @@ def check_package(name):
 class Window():
     pass
 
-def main(session):
+
+import celestine.core.load as load
+import os
+
+image = {}
+application = None
+session = None
+
+
+def setup(self):
+    image1 = load.file(session, ["file", "anitest.gif"])
+    image2 = load.file(session, ["file", "test4.gif"])
+    image["image1"] = self.image_load(image1)
+    image["image2"] = self.image_load(image2)
+
+
+def view(self):
+    self.image("00", image["image1"])
+    self.image("01", image["image2"])
+    self.label("Settings", "no puppy. File Explorer using Tkinter")
+    self.filebox("set", "Settings")
+
+
+def main(data, window):
+    global session
+    session = data
+    window.run(setup, view)
+
+
+def main(_session):
+    global session
+    session = _session
+    
     parser = argparse.ArgumentParser(
         prog="celestine"
     )
-    
 
     parser.add_argument(
-        "mode",
+        "package",
         nargs="?",
         default=TERMINAL,
         choices=MODE,
@@ -114,14 +146,15 @@ def main(session):
 
     parse = parser.parse_args()
 
-    mode = parse.mode
+    package = parse.package
 
-    if mode == UNITTEST:
+    if package == UNITTEST:
         return EXIT.TEST
 
-    from celestine.gui.main import main
-    module = import_module("gui", mode)
+    from celestine.package.main import main
+    module = import_module("package", package)
     window = module.Window()
-    main(session, window)
+    window.run(setup, view)
+    
 
     return EXIT.SUCCESS

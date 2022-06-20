@@ -1,6 +1,6 @@
 import unittest
 
-from celestine.package import *
+from celestine.mypackage import *
 
 
 class test_init(unittest.TestCase):

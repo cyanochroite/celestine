@@ -17,12 +17,35 @@ VERSION = "version"
 EXTEND = "extend"
 
 
+DEARPYGUI = "dearpygui"
+PILLOW = "pillow"
+TKINTER = "tkinter"
+UNITTEST = "unittest"
+
+MAIN = "main"
+VERIFY = "verify"
+
+CURSES = "curses"
+DEARPYGUI = "dearpygui"
+TERMINAL = "terminal"
+TKINTER = "tkinter"
+UNITTEST = "unittest"
+CELESTINE = "celestine"
+
 option = [
     "a",
     "b",
     "list"
 ]
 
+MODE = [
+    DEARPYGUI,
+    CELESTINE,
+    CURSES,
+    TERMINAL,
+    TKINTER,
+    UNITTEST
+]
 
 class Window():
     def __init__(self):
@@ -58,10 +81,10 @@ class Window():
         )
         
         parse = parser.parse_args()
-        mode = parse.option
+        mode = parse.mode
 
-        setup(self)
-        view(self)
+        #setup(self)
+        #view(self)
 
         if mode == "a":
             print("Hello World")
