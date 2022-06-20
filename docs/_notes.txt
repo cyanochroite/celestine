@@ -215,6 +215,10 @@ UniCurses 1.2 ??
 
 
 
+GUI to try:
+pip install wxPython
+pip install pygame
+pip install Kivy
 
 
 

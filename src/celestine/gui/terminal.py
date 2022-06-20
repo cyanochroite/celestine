@@ -36,17 +36,20 @@ class Window():
 
     def run(self, setup, view):
         parser = argparse.ArgumentParser(prog="celestine")
-        parser.add_argument("-g", "--gui")
+
         parser.add_argument(
-            "option",
-            nargs="?",
-            default="a",
-            choices=option,
+            "-p", "--package",
+            action="store_true",
+            help="List all installed packages."
+        )
+
+        parser.add_argument(
+            "-m", "--mode",
+            default=MAIN,
+            choices=MODE,
             help="Choose a mode to opperate in."
         )
-        parse = parser.parse_args()
-        mode = parse.option
-
+        
         parser.add_argument(
             "-i", "--ini",
             action=STORE,
@@ -54,6 +57,9 @@ class Window():
             help="List all installed packages."
         )
         
+        parse = parser.parse_args()
+        mode = parse.option
+
         setup(self)
         view(self)
 

@@ -53,6 +53,7 @@ CURSES = "curses"
 DEARPYGUI = "dearpygui"
 TERMINAL = "terminal"
 TKINTER = "tkinter"
+UNITTEST = "unittest"
 
 
 PACKAGE = {
@@ -64,15 +65,11 @@ PACKAGE = {
 
 
 MODE = [
-    MAIN,
-    VERIFY
-]
-
-GUI = [
     DEARPYGUI,
     CURSES,
     TERMINAL,
-    TKINTER
+    TKINTER,
+    UNITTEST
 ]
 __version__ = "0.1.2.3"
 
@@ -106,55 +103,25 @@ def main(session):
         prog="celestine"
     )
     
-    parser.add_argument(
-        "-p", "--package",
-        action="store_true",
-        help="List all installed packages."
-    )
-
-
 
     parser.add_argument(
-        "-m", "--mode",
-        default=MAIN,
+        "mode",
+        nargs="?",
+        default=TERMINAL,
         choices=MODE,
         help="Choose a mode to opperate in."
-    )
-
-    parser.add_argument(
-        "-g", "--gui",
-        default=TERMINAL,
-        choices=GUI,
-        help="Choose a mode to opperate in."
-    )
-
-    parser.add_argument(
-        "ignore",
-        nargs="*",
-        help="Ignore."
     )
 
     parse = parser.parse_args()
 
     mode = parse.mode
 
-    if mode == VERIFY:
+    if mode == UNITTEST:
         return EXIT.TEST
 
-
-    import configparser
-    
-
-    
-
     from celestine.gui.main import main
-    module = import_module("gui", parse.gui)
+    module = import_module("gui", mode)
     window = module.Window()
     main(session, window)
 
-#    window.run()
-    
-
-   
-    
     return EXIT.SUCCESS

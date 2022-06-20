@@ -18,7 +18,7 @@ if exit == EXIT.TEST:
     sys.argv = [sys.argv[0]]
     # Import everything so we can find tests.
     # This can only be done from the top level, so that is why it is here.
-    from celestine.module.verify import *
+    from celestine.gui.unittest import *
     # Also we only attempt to import unittest if the user requested it.
     # This is because it could not be installed and would error otherwise.
     import unittest
