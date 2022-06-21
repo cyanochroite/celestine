@@ -1,8 +1,8 @@
 from celestine.data.encoding import encoding
 from celestine.core.text import log
 
-from celestine.extension.itertools import split_when
-from celestine.extension.itertools import filter_true
+from celestine.extension.more_itertools import split_when
+from celestine.extension.more_itertools import filter_true
 
 
 from celestine.data.alphabet import Comparison
@@ -61,7 +61,7 @@ class translator():  # translate
 class tokenizer():
     @staticmethod
     def tokenize(iterable):
-        return split_when(iterable, lambda x, y: type(x) is not type(y))
+        return list(split_when(iterable, lambda x, y: type(x) is not type(y)))
 
 
 class parser():

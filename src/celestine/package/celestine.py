@@ -38,7 +38,7 @@ option = [
     "list"
 ]
 
-MODE = [
+PACKAGE = [
     DEARPYGUI,
     CELESTINE,
     CURSES,
@@ -58,30 +58,22 @@ class Window():
         self.list.append(file)
 
     def run(self, app):
-        # this is not set up right.
-        # unable to send commands because level 1 eats them
-        print("sanity")
         parser = argparse.ArgumentParser(prog="celestine")
 
         parser.add_argument(
-            "celestine",
+            "package",
             nargs="?",
             default=CELESTINE,
-            help="Eat the first argument."
+            choices=PACKAGE,
+            help="Choose a mode to opperate in."
         )
-
+        
         parser.add_argument(
-            "-p", "--package",
+            "-a", "--available",
             action="store_true",
             help="List all installed packages."
         )
 
-        parser.add_argument(
-            "-m", "--mode",
-            default=MAIN,
-            choices=MODE,
-            help="Choose a mode to opperate in."
-        )
         
         parser.add_argument(
             "-i", "--ini",
@@ -91,7 +83,8 @@ class Window():
         )
         
         parse = parser.parse_args()
-        mode = parse.mode
+
+        mode = parse.package
 
         #app.setup(self)
         #app.view(self)

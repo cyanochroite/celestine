@@ -14,8 +14,6 @@ session = make(parent_directory)
 exit = main(session)
 
 if exit == EXIT.TEST:
-    # Clear argument list before we call unittest.
-    sys.argv = [sys.argv[0]]
     # Import everything so we can find tests.
     # This can only be done from the top level, so that is why it is here.
     from celestine.package.unittest import *

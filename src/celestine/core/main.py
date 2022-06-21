@@ -15,7 +15,7 @@ HELP = "help"
 VERSION = "version"
 EXTEND = "extend"
 
-ITERTOOLS = "itertools"
+MORE_ITERTOOLS = "more_itertools"
 PILLOW = "pillow"
 
 DEARPYGUI = "dearpygui"
@@ -25,7 +25,7 @@ TKINTER = "tkinter"
 UNITTEST = "unittest"
 
 EXTENSION = [
-    ITERTOOLS,
+    MORE_ITERTOOLS,
     PILLOW
 ]
 
@@ -37,23 +37,35 @@ PACKAGE = [
     UNITTEST
 ]
 
+import sys
+from celestine.core.load import extension
+
+
+def has_package(name):
+    try:
+        __import__(name)
+        return True
+    except ModuleNotFoundError:
+        return False
+
+
+def load_valid_packages():
+    #package = next((a for a in sys.argv for p in PACKAGE if a == p), None)
+    for argv in sys.argv:
+        for package in PACKAGE:
+            if argv == package:
+                if has_package(package):
+                    sys.argv.remove(package)
+                    return package
+    return CELESTINE
+
 
 def main(session):
-    parser = argparse.ArgumentParser(
-        prog="celestine"
-    )
+    package = load_valid_packages()
 
-    parser.add_argument(
-        "package",
-        nargs="?",
-        default=CELESTINE,
-        choices=PACKAGE,
-        help="Choose a mode to opperate in."
-    )
-
-    parse = parser.parse_args()
-
-    package = parse.package
+    if package != CELESTINE:
+        # Clear argument list.
+        sys.argv = [sys.argv[0]]
 
     if package == UNITTEST:
         return EXIT.TEST

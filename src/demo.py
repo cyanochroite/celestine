@@ -1,64 +1,74 @@
-# Python program to create
-# a file explorer in Tkinter
+# https://docs.python.org/3/library/argparse.html
+import argparse
+import sys
 
-# import all components
-# from the tkinter library
-from tkinter import *
-
-# import filedialog module
-from tkinter import filedialog
-
-# Function for opening the
-# file explorer window
-def browseFiles():
-    filename = filedialog.askopenfilename(initialdir = "/",
-                                              title = "Select a File",
-                                                                                filetypes = (("Text files",
-                                                                                              "*.txt*"),
-                                                                                             ("all files",
-                                                                                                         "*.*")))
-
-    # Change label contents
-    label_file_explorer.configure(text="File Opened: "+filename)
+VERSION = 1
 
 
-
-# Create the root window
-window = Tk()
-
-# Set window title
-window.title('File Explorer')
-
-# Set window size
-window.geometry("500x500")
-
-#Set window background color
-window.config(background = "white")
-
-# Create a File Explorer label
-label_file_explorer = Label(window,
-                            text = "File Explorer using Tkinter",
-                                                        width = 100, height = 4,
-                                                        fg = "blue")
+STORE = "store"
+STORE_CONST = "store_const"
+STORE_TRUE = "store_true"
+STORE_FALSE = "store_false"
+APPEND = "append"
+APPEND_CONST = "append_const"
+COUNT = "count"
+HELP = "help"
+VERSION = "version"
+EXTEND = "extend"
 
 
-button_explore = Button(window,
-                        text = "Browse Files",
-                                                command = browseFiles)
+DEARPYGUI = "dearpygui"
+PILLOW = "pillow"
+TKINTER = "tkinter"
+UNITTEST = "unittest"
 
-button_exit = Button(window,
-                     text = "Exit",
-                                        command = exit)
+MAIN = "main"
+VERIFY = "verify"
 
-# Grid method is chosen for placing
-# the widgets at respective positions
-# in a table like structure by
-# specifying rows and columns
-label_file_explorer.grid(column = 1, row = 1)
+CURSES = "curses"
+DEARPYGUI = "dearpygui"
+TERMINAL = "terminal"
+TKINTER = "tkinter"
+UNITTEST = "unittest"
+CELESTINE = "celestine"
 
-button_explore.grid(column = 1, row = 2)
+option = [
+    "a",
+    "b",
+    "list"
+]
 
-button_exit.grid(column = 1,row = 3)
+PACKAGE = [
+    DEARPYGUI,
+    CELESTINE,
+    CURSES,
+    TERMINAL,
+    TKINTER,
+    UNITTEST,
+    "A"
+]
 
-# Let the window wait for any events
-window.mainloop()
+x = ["A", "B", "C"]
+y = [1, 2, 3, "A"]
+
+sys.argv = x
+
+z = next((a for a in sys.argv for p in PACKAGE if a == p), CELESTINE)
+print(z)
+
+def has_package(name):
+    try:
+        __import__(name)
+        return True
+    except ModuleNotFoundError:
+        return False
+
+def angry():
+    for argv in sys.argv:
+        for package in PACKAGE:
+            if argv == package:
+                if has_package(package):
+                    return package
+    return None
+
+angry()
