@@ -1,5 +1,5 @@
-from celestine.mypackage import package
-more_itertools = package("more_itertools")
+from celestine.extension import extension
+more_itertools = extension("more_itertools")
 
 
 def split_when_external(iterable, predicate):

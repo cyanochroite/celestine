@@ -60,7 +60,7 @@ class Window():
     def image_load(self, file):
         return Image(file)
 
-    def run(self, setup, view):
+    def run(self, app):
         self.root = tkinter.Tk()
         self.root.title('celestine · PyPI')
 
@@ -69,8 +69,8 @@ class Window():
         self.root.maxsize(3840, 2160)
         self.root.config(bg="skyblue")
 
-        setup(self)
-        view(self)
+        app.setup(self)
+        app.view(self)
 
         self.root.mainloop()
 

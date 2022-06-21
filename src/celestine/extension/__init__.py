@@ -1,4 +1,4 @@
-def package(name):
+def extension(name):
     try:
         return __import__(name)
     except ModuleNotFoundError:

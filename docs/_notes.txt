@@ -221,6 +221,17 @@ pip install pygame
 pip install Kivy
 
 
+PACKAGE
+where packages that change functionality, mostly guis
+no fallback support. either it works or not
+typically only one of these would be run ever, and only 1 at once
+
+
+EXTENSION
+is where extra packages can be installed for more functionality
+will try to provide fallback options so every feature "works"
+idea is all of them would be installed usually
+
 
 ToDo Features:
 Add gamma to photos? Both TK and dearpygui support this

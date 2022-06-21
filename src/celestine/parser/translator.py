@@ -1,8 +1,8 @@
 from celestine.data.encoding import encoding
 from celestine.core.text import log
 
-from celestine.mypackage.itertools import split_when
-from celestine.mypackage.itertools import filter_true
+from celestine.extension.itertools import split_when
+from celestine.extension.itertools import filter_true
 
 
 from celestine.data.alphabet import Comparison

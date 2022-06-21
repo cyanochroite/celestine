@@ -1,6 +1,6 @@
 import unittest
 
-from celestine.mypackage.itertools import *
+from celestine.extension.itertools import *
 
 
 class test_itertools(unittest.TestCase):
