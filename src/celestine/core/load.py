@@ -4,6 +4,24 @@ from celestine.data.unicode import FULL_STOP
 
 CELESTINE = "celestine"
 EXTENSION = "extension"
+PACKAGE = "package"
+
+
+def attempt(name):
+    try:
+        __import__(name)
+        return True
+    except ModuleNotFoundError:
+        pass
+    return False
+
+
+def extension(name):
+    try:
+        return __import__(name)
+    except ModuleNotFoundError:
+        pass
+    return module(EXTENSION, name)
 
 
 def file(session, iterable):
@@ -22,18 +40,5 @@ def module(*paths):
     return module
 
 
-def extension(name):
-    try:
-        return __import__(name)
-    except ModuleNotFoundError:
-        pass
-    return module(EXTENSION, name)
-
-def attempt(name):
-    try:
-        __import__(name)
-        return True
-    except ModuleNotFoundError:
-        pass
-    return False
-
+def package(name):
+    return module(PACKAGE, name)

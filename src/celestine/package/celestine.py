@@ -17,34 +17,31 @@ VERSION = "version"
 EXTEND = "extend"
 
 
-DEARPYGUI = "dearpygui"
+MORE_ITERTOOLS = "more_itertools"
 PILLOW = "pillow"
-TKINTER = "tkinter"
-UNITTEST = "unittest"
 
-MAIN = "main"
-VERIFY = "verify"
-
-CURSES = "curses"
 DEARPYGUI = "dearpygui"
-TERMINAL = "terminal"
+CELESTINE = "celestine"
+CURSES = "curses"
 TKINTER = "tkinter"
 UNITTEST = "unittest"
-CELESTINE = "celestine"
 
-option = [
-    "a",
-    "b",
-    "list"
+EXTENSION = [
+    MORE_ITERTOOLS,
+    PILLOW
 ]
 
 PACKAGE = [
     DEARPYGUI,
     CELESTINE,
     CURSES,
-    TERMINAL,
     TKINTER,
     UNITTEST
+]
+option = [
+    "a",
+    "b",
+    "list"
 ]
 
 class Window():
