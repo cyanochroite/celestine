@@ -13,7 +13,7 @@ def file(session, iterable):
 # return os.path.join([root, CELESTINE] + iterable)
 
 
-def import_module(*paths):
+def module(*paths):
     iterable = [CELESTINE] + list(paths)
     name = FULL_STOP.join(iterable)
     module = __import__(name)
@@ -26,11 +26,14 @@ def extension(name):
     try:
         return __import__(name)
     except ModuleNotFoundError:
-        return import_module(EXTENSION, name)
+        pass
+    return module(EXTENSION, name)
 
-def has_package(name):
+def attempt(name):
     try:
         __import__(name)
         return True
     except ModuleNotFoundError:
-        return False
+        pass
+    return False
+

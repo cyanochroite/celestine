@@ -62,7 +62,7 @@ class Window():
 
         parser.add_argument(
             "package",
-            nargs="?",
+            nargs="*",
             default=CELESTINE,
             choices=PACKAGE,
             help="Choose a mode to opperate in."
