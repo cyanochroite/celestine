@@ -1,13 +1,16 @@
+"""Internal representatino of letters and symbols."""
 import enum
 
 
 @enum.unique
 class Divider(enum.Enum):
+    """Spaces and tabs."""
     WHITESPACE = chr(0x0020)
 
 
 @enum.unique
 class Comparison(enum.Enum):
+    """< > ! ="""
     MARK = chr(0x0021)
     MORE = chr(0x003E)
     LESS = chr(0x003C)
@@ -16,6 +19,7 @@ class Comparison(enum.Enum):
 
 @enum.unique
 class Unary(enum.Enum):
+    """* + -"""
     STAR = chr(0x002A)
     PLUS = chr(0x002B)
     DASH = chr(0x002D)
@@ -23,6 +27,7 @@ class Unary(enum.Enum):
 
 @enum.unique
 class Letter(enum.Enum):
+    """Lowercase letters."""
     LETTER_A = chr(0x0061)
     LETTER_B = chr(0x0062)
     LETTER_C = chr(0x0063)
@@ -54,6 +59,7 @@ class Letter(enum.Enum):
 
 @enum.unique
 class Digit(enum.Enum):
+    """Hexadecimal numbers."""
     DIGIT_0 = chr(0x0030)
     DIGIT_1 = chr(0x0031)
     DIGIT_2 = chr(0x0032)
