@@ -9,47 +9,99 @@ import celestine.core.load as load
 from celestine.data.session import make
 from celestine.window.main import main
 
+
+# https://docs.python.org/3/library/argparse.html
+import argparse
+import sys
+
+VERSION = 1
+
+
+STORE = "store"
+STORE_CONST = "store_const"
+STORE_TRUE = "store_true"
+STORE_FALSE = "store_false"
+APPEND = "append"
+APPEND_CONST = "append_const"
+COUNT = "count"
+HELP = "help"
+VERSION = "version"
+EXTEND = "extend"
+
+MORE_ITERTOOLS = "more_itertools"
+PILLOW = "pillow"
+
 DEARPYGUI = "dearpygui"
 CELESTINE = "celestine"
 CURSES = "curses"
 TKINTER = "tkinter"
 UNITTEST = "unittest"
 
+EXTENSION = [
+    MORE_ITERTOOLS,
+    PILLOW
+]
+
 PACKAGE = [
-    DEARPYGUI,
     CELESTINE,
     CURSES,
+    DEARPYGUI,
     TKINTER,
     UNITTEST
 ]
 
-package = next(  # need to message user when package not installed
-    (
-        argv
-        for argv in sys.argv[1:]  # skip first argument
-        for name in PACKAGE
-        if argv == name and load.attempt(name)  # package is installed
-    ),
-    CELESTINE
+
+parser = argparse.ArgumentParser(prog=CELESTINE)
+parser.add_argument(
+    "package",
+    nargs="*",
+    default=CELESTINE,
+    choices=PACKAGE,
+    help="Choose a mode to opperate in."
 )
 
-if package != CELESTINE:
-    sys.argv = [sys.argv[0]]  # clear argument list
+parser.add_argument(
+    "-a", "--available",
+    action="store_true",
+    help="List all installed packages."
+)
 
-if package == UNITTEST:
-    # Import everything so we can find tests.
-    # This can only be done from the top level, so that is why it is here.
-    from celestine.package.unittest import *
-    # Also we only attempt to import unittest if the user requested it.
-    # This is because it could not be installed and would error otherwise.
-    import unittest
-    unittest.main()  # this function will terminate the program
 
-module = load.package(package)
-window = module.Window()
+parser.add_argument(
+    "-i", "--ini",
+    action=STORE,
+    nargs=1,
+    help="List all installed packages."
+)
 
-session = make(parent_directory)
-run = main(session)
-window.run(run)
+parse = parser.parse_args()
+
+def parse_package(package):
+    if package == CELESTINE:
+        package = [CELESTINE]
+    for name in package:
+        if load.attempt(name):
+            return name
+        print("Package '{0}' is not installed.".format(name))
+    return CELESTINE
+
+match parse_package(parse.package):
+    case "unittest":
+        sys.argv = [sys.argv[0]]  # clear argument list
+        # Import everything so we can find tests.
+        # This can only be done from the top level, so that is why it is here.
+        from celestine.package.unittest import *
+        # Also we only attempt to import unittest if the user requested it.
+        # This is because it could not be installed and would error otherwise.
+        import unittest
+        unittest.main()  # this function will terminate the program
+    case "celestine":
+        parser.ini
+    case _ as package:
+        module = load.package(package)
+        window = module.Window()
+        session = make(parent_directory)
+        run = main(session)
+        window.run(run)
 
 sys.exit()
