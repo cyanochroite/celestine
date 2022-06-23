@@ -1,34 +1,26 @@
-import argparse
-
-DEARPYGUI = "dearpygui"
-CURSES = "curses"
-TKINTER = "tkinter"
-UNITTEST = "unittest"
+from pprint import pprint
 
 
-PACKAGE = [
-    DEARPYGUI,
-    CURSES,
-    TKINTER,
-    UNITTEST,
-    None
-]
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def set_age(self, age):
+        if age <= 0:
+            raise ValueError('The age must be positive')
+        self._age = age
+
+    def get_age(self):
+        return self._age
+
+    age = property(fget=get_age, fset=set_age)
 
 
+print(Person.age)
 
+john = Person('John', 18)
+pprint(john.__dict__)
 
-
-
-#parser = argparse.ArgumentParser(prog=CELESTINE)
-parser = argparse.ArgumentParser()
-parser.add_argument(
-        "package",
-        nargs="*",
-        default=CURSES,
-        choices=PACKAGE,
-        help="Choose a mode to opperate in."
-    )
-
-parse = parser.parse_args()
-
-package = parse.package[0]
+john.age = 19
+pprint(Person.__dict__)

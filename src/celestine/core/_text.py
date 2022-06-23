@@ -9,6 +9,8 @@ trace = True
 
 # eventually will do more then just print to terminal
 # but setting this up now so can try to use this elsewhere
+
+
 class log():
     @staticmethod
     def fatal(text):  # user: program will crash now

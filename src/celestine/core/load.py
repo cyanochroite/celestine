@@ -1,4 +1,6 @@
+"""Central place for loading and importing external files."""
 import os.path
+
 from celestine.data.unicode import FULL_STOP
 
 
@@ -8,6 +10,7 @@ PACKAGE = "package"
 
 
 def attempt(name):
+    """Attempt to load a package and return the result."""
     try:
         __import__(name)
         return True
@@ -17,6 +20,7 @@ def attempt(name):
 
 
 def extension(name):
+    """Load an internal module from the "extension" directory."""
     try:
         return __import__(name)
     except ModuleNotFoundError:
@@ -25,20 +29,22 @@ def extension(name):
 
 
 def file(session, iterable):
-    root = session["Application"]["directory"]
-    carwash = [root, CELESTINE] + iterable
-    return os.path.join(*tuple(carwash))
-# return os.path.join([root, CELESTINE] + iterable)
+    """Load a file from absolute path."""
+    root = session.directory
+    path = [root, CELESTINE] + iterable
+    return os.path.join(*tuple(path))
 
 
 def module(*paths):
+    """Load an internal module from anywhere in the application."""
     iterable = [CELESTINE] + list(paths)
     name = FULL_STOP.join(iterable)
-    module = __import__(name)
+    item = __import__(name)
     for path in paths:
-        module = getattr(module, path)
-    return module
+        item = getattr(item, path)
+    return item
 
 
 def package(name):
+    """Load an internal module from the "package" directory."""
     return module(PACKAGE, name)

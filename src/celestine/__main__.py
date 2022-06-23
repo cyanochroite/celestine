@@ -6,13 +6,20 @@ parent_directory = os.path.dirname(current_directory)
 sys.path.append(parent_directory)
 
 import celestine.core.load as load
-from celestine.data.session import make
+from celestine.data.session import Session
 from celestine.window.main import main
 
 
 # https://docs.python.org/3/library/argparse.html
 import argparse
 import sys
+
+
+
+session = Session(parent_directory)
+print(session.python)
+print(session.python < 3.9)
+print(session.python > 3.9)
 
 VERSION = 1
 
@@ -100,7 +107,6 @@ match parse_package(parse.package):
     case _ as package:
         module = load.package(package)
         window = module.Window()
-        session = make(parent_directory)
         run = main(session)
         window.run(run)
 

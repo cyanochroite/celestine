@@ -201,7 +201,8 @@ python -m coverage html
 
 
 pip install more-itertools
-
+pip install pylint
+python -m pylint --output pylint.txt celestine
 
 
 python -m pip install --requirement requirements.txt
