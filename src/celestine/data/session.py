@@ -24,6 +24,8 @@ VERSION = "version"
 APPLICATION = "Application"
 DIRECTORY = "directory"
 
+
+
 class Session():
     """Wrapper around configuration dictionary data."""
     def __init__(self, parent_directory):
@@ -39,9 +41,15 @@ class Session():
     @property
     def python(self):
         """Returns the python version."""
-        return float(self.session[VERSION][PYTHON])
+        return Version(self.session[VERSION][PYTHON])
 
     @property
     def directory(self):
         """Returns the current working directory."""
         return self.session[APPLICATION][DIRECTORY]
+
+from celestine.data.version import Version
+
+car = Version("3.10")
+cat = Version("3.10.1")
+print(car<cat)
