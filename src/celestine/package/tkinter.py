@@ -3,6 +3,7 @@
 import tkinter
 import tkinter.ttk
 import tkinter.filedialog
+from functools import partial
 
 
 class Image():
@@ -27,15 +28,39 @@ def browseFiles():
     # Change label contents
     label_file_explorer.configure(text="File Opened: " + filename)
 
-class Window():
 
+class Window():
     def __init__(self):
         self.item = {}
+
+    def file_dialog(self, tag, bind):
+        command = partial(self.filebox_load, bind)
+        item = tkinter.Button(
+            self.root,
+            text="Config find Exit",
+            command=command
+        )
+        self.item[tag] = item
+        item.pack()
+
+    def file_dialog_load(self, tag):
+        filename = tkinter.filedialog.askopenfilename(
+            initialdir="/",
+            title="Select a File",
+            filetypes=(
+                ("Text files", "*.txt*"),
+                ("all files", "*.*")
+            )
+        )
+        self.item[tag].configure(text="File Opened: " + filename)
 
     def image(self, tag, image):
         item = tkinter.Label(self.root, image=image.image)
         self.item[tag] = item
         item.pack()
+
+    def image_load(self, file):
+        return Image(file)
 
     def label(self, tag, text):
         item = tkinter.Label(
@@ -47,18 +72,6 @@ class Window():
         )
         self.item[tag] = item
         item.pack()
-
-    def filebox(self, tag, bind):
-        item = tkinter.Button(
-            self.root,
-            text="Config find Exit",
-            command=browseFiles
-        )
-        self.item[tag] = item
-        item.pack()
-
-    def image_load(self, file):
-        return Image(file)
 
     def run(self, app):
         self.root = tkinter.Tk()

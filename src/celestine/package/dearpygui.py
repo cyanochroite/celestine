@@ -23,14 +23,67 @@ class Image():
         )
 
 
+def callback_dvd(sender, app_data, user_data):
+    dpg.configure_item(user_data, show=True)
+
+
+def callback_file(sender, app_data, user_data):
+    array = list(app_data["selections"])
+    item = ""
+    if len(array) > 0:
+        item = array[0]
+    dpg.set_value(user_data, item)
+
+
 class Window():
-    def label_add(self, image):
-        dpg.add_image(image.name)
+    def __init__(self):
+        self.item = {}
+
+    def file_dialog(self, tag, bind):
+        with dpg.file_dialog(
+            label="Demo File Dialog",
+            width=800,
+            height=600,
+            show=False,
+            callback=callback_file,
+            tag="__demo_filedialog",
+            user_data=bind,
+        ):
+            dpg.add_file_extension(".*", color=(255, 255, 255, 255))
+            dpg.add_file_extension("Source files (*.cpp *.h *.hpp){.cpp,.h,.hpp}", color=(0, 255, 255, 255))
+            dpg.add_file_extension(".txt", color=(255, 255, 0, 255))
+            dpg.add_file_extension(".gif", color=(255, 0, 255, 255), custom_text="header")
+            dpg.add_file_extension(".py", color=(0, 255, 0, 255))
+        item = dpg.add_button(
+            label="Show File Selector",
+            user_data=dpg.last_container(),
+            callback=callback_dvd
+        )
+        self.item[tag] = item
+
+    def file_dialog_load(self, tag):
+        filename = tkinter.filedialog.askopenfilename(
+            initialdir="/",
+            title="Select a File",
+            filetypes=(
+                ("Text files", "*.txt*"),
+                ("all files", "*.*")
+            )
+        )
+        self.item[tag].configure(text="File Opened: " + filename)
+
+    def image(self, tag, image):
+        item = dpg.add_image(image.name)
+        self.item[tag] = item
 
     def image_load(self, file):
         return Image(file)
 
-    def run(self, setup, view):
+    def label(self, tag, text):
+        item = dpg.add_text(text, tag=tag, label="Label", show_label=True)
+        self.item[tag] = item
+
+    def run(self, app):
         title = "celestine - PyPI"
         if VERSION > 900:  # Hope they fix this
             title = "celestine · PyPI"
@@ -55,10 +108,10 @@ class Window():
         )
 
         with dpg.texture_registry(show=False):
-            setup(self)
+            app.setup(self)
 
         with dpg.window(tag="primary_window"):
-            view(self)
+            app.view(self)
 
         dpg.setup_dearpygui()
         dpg.show_viewport(minimized=False, maximized=False)

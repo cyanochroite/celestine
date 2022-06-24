@@ -16,4 +16,4 @@ class main():
         window.image("00", self.image["image1"])
         window.image("01", self.image["image2"])
         window.label("Settings", "no puppy. File Explorer using Tkinter")
-        window.filebox("set", "Settings")
+        window.file_dialog("set", "Settings")
