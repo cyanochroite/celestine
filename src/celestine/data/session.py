@@ -1,6 +1,6 @@
 """Load and save user settings from a file."""
 import configparser
-
+from celestine.data.version import Version
 
 def make(parent_directory):
     """A quick way to make a configuration file on disk."""
@@ -47,9 +47,3 @@ class Session():
     def directory(self):
         """Returns the current working directory."""
         return self.session[APPLICATION][DIRECTORY]
-
-from celestine.data.version import Version
-
-car = Version("3.10")
-cat = Version("3.10.1")
-print(car<cat)

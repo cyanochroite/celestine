@@ -1,7 +1,7 @@
 from celestine.data.version import Version
 
 car = Version("3.10")
-cat = Version("3.1.1")
+cat = Version("3.21.1")
 print(car<cat)
 
 bat = Version()
@@ -13,3 +13,13 @@ print(candy)
 
 (major, minor, patch, *ignore) = ".0.0".split(".")
 print(major, minor, patch)
+
+
+car = 2
+print(car)
+cat = car << 8
+print(cat)
+
+
+from celestine.extension.more_itertools import more_itertools
+more_itertools.first_true([1])

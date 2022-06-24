@@ -1,5 +1,1 @@
-def extension(name):
-    try:
-        return __import__(name)
-    except ModuleNotFoundError:
-        return None
+"""External packages that are not critical and used by many components."""

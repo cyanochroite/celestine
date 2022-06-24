@@ -1,3 +1,6 @@
+"""This is the main file. It runs first."""
+# https://docs.python.org/3/library/argparse.html
+import argparse
 import sys
 import os.path
 
@@ -5,21 +8,17 @@ current_directory = sys.path[0]
 parent_directory = os.path.dirname(current_directory)
 sys.path.append(parent_directory)
 
-import celestine.core.load as load
+# pylint: disable=wrong-import-position, wildcard-import, unused-wildcard-import
+# The parent directory must be added to the system path
+# before attempting to load our package in.
+# Also, getting unittest to work properly is hard
+# and importing everything seems to make it work.
+from celestine.core import load
 from celestine.data.session import Session
 from celestine.window.main import main
 
 
-# https://docs.python.org/3/library/argparse.html
-import argparse
-import sys
-
-
-
 session = Session(parent_directory)
-print(session.python)
-print(session.python < 3.9)
-print(session.python > 3.9)
 
 VERSION = 1
 
@@ -83,14 +82,17 @@ parser.add_argument(
 
 parse = parser.parse_args()
 
-def parse_package(package):
-    if package == CELESTINE:
-        package = [CELESTINE]
-    for name in package:
+
+def parse_package(_package):
+    """Parses a package and tells you why it didn't work."""
+    if _package == CELESTINE:
+        _package = [CELESTINE]
+    for name in _package:
         if load.attempt(name):
             return name
-        print("Package '{0}' is not installed.".format(name))
+        print(F"Package '{name}' is not installed.")
     return CELESTINE
+
 
 match parse_package(parse.package):
     case "unittest":
@@ -103,7 +105,7 @@ match parse_package(parse.package):
         import unittest
         unittest.main()  # this function will terminate the program
     case "celestine":
-        parser.ini
+        pass
     case _ as package:
         module = load.package(package)
         window = module.Window()

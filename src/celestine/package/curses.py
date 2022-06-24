@@ -3,16 +3,12 @@
 import curses
 
 
-
 def draw_menu(stdscr):
     stdscr.clear()
-    
+
     curses.init_pair(1, curses.COLOR_CYAN, curses.COLOR_BLACK)
     curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
     curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
-
-
-
 
     nlines = 24
     ncols = 80
@@ -20,24 +16,22 @@ def draw_menu(stdscr):
     begin_x = 0
     wandoww = curses.newwin(nlines, ncols, begin_y, begin_x)
 
-
     stdscr.addstr("RANDOM QUOTES", curses.A_REVERSE)
     stdscr.chgat(-1, curses.A_REVERSE)
 
     stdscr.chgat(20, 7, 1, curses.A_BOLD | curses.color_pair(2))
     stdscr.chgat(20, 35, 1, curses.A_BOLD | curses.color_pair(1))
-    
+
     quote_window = curses.newwin(19, 80, 1, 0)
     quote_window = curses.newwin(nlines, ncols, begin_y, begin_x)
     quote_text_window = quote_window.subwin(14, 76, 3, 2)
 
     quote_text_window.addstr("Press 'R' to get your first quote!")
     quote_window.box()
-    
+
     stdscr.noutrefresh()
     quote_window.noutrefresh()
     curses.doupdate()
-
 
     while True:
         c = quote_window.getch()
@@ -54,10 +48,10 @@ def draw_menu(stdscr):
         quote_window.noutrefresh()
         quote_text_window.noutrefresh()
         curses.doupdate()
-    
+
     stdscr.clear()
     stdscr.refresh()
-        
+
     k = 0
     kw = 0
     kk = ""
@@ -66,13 +60,8 @@ def draw_menu(stdscr):
     min_x_wkeystr = width - 1
     min_x_kkeystr = width - 1
 
-
-
     cursor_x = 0
     cursor_y = 0
-
-
-    
 
     nlines = 5
     ncols = 40
@@ -111,7 +100,7 @@ def draw_menu(stdscr):
         cursor_y = min(height - 1, cursor_y)
 
         # Initialization
-       
+
         stdscr.clear()
         wandoww.clear()
 
@@ -148,10 +137,10 @@ def draw_menu(stdscr):
         wandoww.addstr(0, 0, whstr, curses.color_pair(1))
 
         # Render status bar
-        #wandoww.attron(curses.color_pair(3))
+        # wandoww.attron(curses.color_pair(3))
         #wandoww.addstr(height - 1, 0, statusbarstr)
         #wandoww.addstr(height - 1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
-        #wandoww.attroff(curses.color_pair(3))
+        # wandoww.attroff(curses.color_pair(3))
 
         # Turning on attributes for title
         wandoww.attron(curses.color_pair(2))
@@ -196,7 +185,7 @@ def draw_menu(stdscr):
         stdscr.clrtoeol()
         stdscr.move(start_y + 9, min_x_kkeystr)
         stdscr.clrtoeol()
-        
+
         stdscr.refresh()
         wandoww.refresh()
 
