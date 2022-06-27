@@ -34,7 +34,7 @@ class Window():
         self.item = {}
 
     def file_dialog(self, tag, bind):
-        command = partial(self.filebox_load, bind)
+        command = partial(self.file_dialog_load, bind)
         item = tkinter.Button(
             self.root,
             text="Config find Exit",

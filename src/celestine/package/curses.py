@@ -204,5 +204,7 @@ class Window():
         "done"
     ]
 
-    def run(self, setup, view):
+    def run(self, app):
+        #app.setup(self)
+        #app.view(self)
         curses.wrapper(draw_menu)

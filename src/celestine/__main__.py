@@ -16,11 +16,17 @@ sys.path.append(parent_directory)
 from celestine.core import load
 from celestine.data.session import Session
 from celestine.window.main import main
+from celestine.data.version import Version
 
 
 session = Session(parent_directory)
 
-VERSION = 1
+PYTHON = Version("3.7")
+
+PYTHON_3_10 = Version("3.10")
+PYTHON_3_9 = Version("3.9")
+PYTHON_3_8 = Version("3.8")
+PYTHON_3_7 = Version("3.7")
 
 
 STORE = "store"
@@ -93,23 +99,21 @@ def parse_package(_package):
         print(F"Package '{name}' is not installed.")
     return CELESTINE
 
-
-match parse_package(parse.package):
-    case "unittest":
-        sys.argv = [sys.argv[0]]  # clear argument list
-        # Import everything so we can find tests.
-        # This can only be done from the top level, so that is why it is here.
-        from celestine.package.unittest import *
-        # Also we only attempt to import unittest if the user requested it.
-        # This is because it could not be installed and would error otherwise.
-        import unittest
-        unittest.main()  # this function will terminate the program
-    case "celestine":
-        pass
-    case _ as package:
-        module = load.package(package)
-        window = module.Window()
-        run = main(session)
-        window.run(run)
+package = parse.package[0]
+if package == "unittest":
+    sys.argv = [sys.argv[0]]  # clear argument list
+    # Import everything so we can find tests.
+    # This can only be done from the top level, so that is why it is here.
+    from celestine.package.unittest import *
+    # Also we only attempt to import unittest if the user requested it.
+    # This is because it could not be installed and would error otherwise.
+    import unittest
+    unittest.main()  # this function will terminate the program
+if package == "celestine":
+    pass
+module = load.package(package)
+window = module.Window()
+run = main(session)
+window.run(run)
 
 sys.exit()

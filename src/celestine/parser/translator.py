@@ -1,5 +1,4 @@
 from celestine.data.encoding import encoding
-from celestine.core.text import log
 
 from celestine.extension.more_itertools import split_when
 from celestine.extension.more_itertools import filter_true
@@ -21,7 +20,7 @@ from celestine.parser.operator import unary_parse
 
 def log_unicode(character, info):
     message = "Unicode Character Code U+{0:04X}:'{1}' {2}"
-    log.warning(message.format(ord(character), character, info))
+    print(message.format(ord(character), character, info))
 
 
 def decode(character):

@@ -21,5 +21,10 @@ cat = car << 8
 print(cat)
 
 
-from celestine.extension.more_itertools import more_itertools
-more_itertools.first_true([1])
+#from celestine.extension.more_itertools import more_itertools
+#more_itertools.first_true([1])
+
+import celestine.extension.Python37 as hi
+import celestine.extension.Python_38
+import celestine.extension.Python_3_9
+import celestine.extension.Python3_10

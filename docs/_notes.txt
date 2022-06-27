@@ -202,13 +202,11 @@ python -m coverage html
 
 pip install more-itertools
 pip install pylint
-python -m pylint --output pylint.txt celestine
 
 
 python -m pip install --requirement requirements.txt
 
 python -m pip install windows-curses
-
 
 UniCurses 1.2 ??
 
@@ -241,6 +239,12 @@ Add gamma to photos? Both TK and dearpygui support this
 
 
 
+
+make theme folder for various window apearances.
+could also use different packages
+
+3 gui (2 mouse 1 terminal)
+comand line
 
 
 
