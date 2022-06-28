@@ -1,1 +1,0 @@
-%APPDATA%\..\Local\Programs\Python\Python38\python.exe
