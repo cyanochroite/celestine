@@ -1,4 +1,6 @@
-python celestine unittest
-python celestine curses
-python celestine dearpygui
-python celestine tkinter
+%APPDATA%\..\Local\Programs\Python\Python310\python.exe celestine
+%APPDATA%\..\Local\Programs\Python\Python310\python.exe celestine celestine
+%APPDATA%\..\Local\Programs\Python\Python310\python.exe celestine curses
+%APPDATA%\..\Local\Programs\Python\Python310\python.exe celestine dearpygui
+%APPDATA%\..\Local\Programs\Python\Python310\python.exe celestine tkinter
+%APPDATA%\..\Local\Programs\Python\Python310\python.exe celestine unittest

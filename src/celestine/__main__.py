@@ -16,17 +16,9 @@ sys.path.append(parent_directory)
 from celestine.core import load
 from celestine.data.session import Session
 from celestine.window.main import main
-from celestine.data.version import Version
 
 
 session = Session(parent_directory)
-
-PYTHON = Version("3.7")
-
-PYTHON_3_10 = Version("3.10")
-PYTHON_3_9 = Version("3.9")
-PYTHON_3_8 = Version("3.8")
-PYTHON_3_7 = Version("3.7")
 
 
 STORE = "store"
@@ -92,15 +84,20 @@ parse = parser.parse_args()
 def parse_package(_package):
     """Parses a package and tells you why it didn't work."""
     if _package == CELESTINE:
-        _package = [CELESTINE]
+        return CELESTINE
     for name in _package:
         if load.attempt(name):
             return name
         print(F"Package '{name}' is not installed.")
     return CELESTINE
 
-package = parse.package[0]
-if package == "unittest":
+
+package = parse_package(parse.package)
+
+if package == CELESTINE:
+    pass
+
+if package == UNITTEST:
     sys.argv = [sys.argv[0]]  # clear argument list
     # Import everything so we can find tests.
     # This can only be done from the top level, so that is why it is here.
@@ -108,12 +105,12 @@ if package == "unittest":
     # Also we only attempt to import unittest if the user requested it.
     # This is because it could not be installed and would error otherwise.
     import unittest
-    unittest.main()  # this function will terminate the program
-if package == "celestine":
-    pass
-module = load.package(package)
-window = module.Window()
-run = main(session)
-window.run(run)
+    unittest.main()  # this function will terminate the progra
+
+if package in [CURSES, DEARPYGUI, TKINTER]:
+    module = load.package(package)
+    window = module.Window()
+    run = main(session)
+    window.run(run)
 
 sys.exit()
