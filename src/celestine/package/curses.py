@@ -190,8 +190,6 @@ def draw_menu(stdscr):
         wandoww.refresh()
 
 
-import dearpygui.dearpygui as dpg
-
 VERSION = 1
 
 

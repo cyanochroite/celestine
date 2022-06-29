@@ -92,6 +92,23 @@ These packages are optional. But features and performance may be lacking without
 +-------------------+----------------------------+------------------------------------------------------------+
 
 
+
++-----------+-----+-----+-----+-----+------+------+
+| Package   | 3.6 | 3.7 | 3.8 | 3.9 | 3.10 | 3.11 |
++===========+=====+=====+=====+=====+======+======+
+| celestine | yes | yes | yes | yes | yes  | yes  |
++-----------+-----+-----+-----+-----+------+------+
+| curses    | yes | yes | yes | yes | yes  | no*  |
++-----------+-----+-----+-----+-----+------+------+
+| dearpygui | no  | yes | yes | yes | yes  | no   |
++-----------+-----+-----+-----+-----+------+------+
+| tkinter_  | yes | yes | yes | yes | yes  | yes  |
++-----------+-----+-----+-----+-----+------+------+
+| unittest_ | yes | yes | yes | yes | yes  | yes  |
++-----------+-----+-----+-----+-----+------+------+
+
+
+
 .. _PyPi: https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-pypi
 .. _`Celestine`: https://test.pypi.org/project/celestine/
 .. _`Dear PyGui`: https://pypi.org/project/dearpygui/

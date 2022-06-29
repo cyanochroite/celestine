@@ -1,2 +1,1 @@
-def parse_package(package):
-    python_3_10.parse_package(package)
+from celestine.python import python_3_6
