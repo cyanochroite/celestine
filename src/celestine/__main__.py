@@ -13,7 +13,6 @@ sys.path.append(parent_directory)
 # before attempting to load our package in.
 # Also, getting unittest to work properly is hard
 # and importing everything seems to make it work.
-from celestine.core import load
 from celestine.data.session import Session
 from celestine.window.main import main
 
@@ -23,7 +22,6 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument(
     "-p, --package",
-    default="celestine",
     choices=[
         "celestine",
         "curses",
@@ -37,7 +35,6 @@ parser.add_argument(
 
 parser.add_argument(
     "-l, --language",
-    default="english",
     choices=[
         "english",
         "french",
@@ -49,7 +46,6 @@ parser.add_argument(
 
 parser.add_argument(
     "-v, --version",
-    default="python_3_10",
     choices=[
         "python_3_6",
         "python_3_7",
@@ -64,11 +60,9 @@ parser.add_argument(
 
 parse = parser.parse_args()
 
-session = Session(parent_directory)
+session = Session(parent_directory, parse)
 
-package = load.module("package", parse.package)
-python = load.module("python", parse.python)
-language = load.module("language", parse.language)
+package = session.package
 
 if package == "unittest":
     sys.argv = [sys.argv[0]]  # clear argument list
@@ -82,7 +76,6 @@ if package == "unittest":
     # this line never reached
 
 window = package.Window()
-session = Session(parent_directory)
 run = main(session)
 window.run(run)
 
