@@ -49,13 +49,3 @@ def module(*paths):
 def package(name):
     """Load an internal module from the "package" directory."""
     return module(PACKAGE, name)
-
-def language(name):
-    """Load an internal module from the "language" directory."""
-    return module(LANGUAGE, name)
-
-def python(name):
-    """Load an internal module from the "python" directory."""
-    (major, minor) = name.split(".")
-    name = F"python_{major}_{minor}"
-    return module(PYTHON, name)

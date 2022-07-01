@@ -20,6 +20,9 @@ def make(parent_directory):
 
 
 PYTHON = "python"
+PACKAGE = "package"
+LANGUAGE = "language"
+
 VERSION = "version"
 APPLICATION = "Application"
 DIRECTORY = "directory"
@@ -35,6 +38,10 @@ class Session():
         self.session.add_section(APPLICATION)
         self.session.set(APPLICATION, DIRECTORY, parent_directory)
 
+        self.session.set(APPLICATION, PYTHON, parent_directory)
+        self.session.set(APPLICATION, LANGUAGE, parent_directory)
+        self.session.set(APPLICATION, PACKAGE, parent_directory)
+
         self.session.add_section(VERSION)
         self.session.set(VERSION, PYTHON, "3.10") # need to calculate this
 
@@ -47,3 +54,20 @@ class Session():
     def directory(self):
         """Returns the current working directory."""
         return self.session[APPLICATION][DIRECTORY]
+
+
+
+    @property
+    def python(self):
+        """Returns the python."""
+        return self.session[APPLICATION][PYTHON]
+
+    @property
+    def language(self):
+        """Returns the language."""
+        return self.session[APPLICATION][LANGUAGE]
+
+    @property
+    def package(self):
+        """Returns the package."""
+        return self.session[APPLICATION][PACKAGE]
