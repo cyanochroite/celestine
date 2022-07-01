@@ -64,18 +64,6 @@ parse = parser.parse_args()
 session = Session(parent_directory, parse)
 
 package = session.package
-
-if package == "unittest":
-    sys.argv = [sys.argv[0]]  # clear argument list
-    # Import everything so we can find tests.
-    # This can only be done from the top level, so that is why it is here.
-    from celestine.package.unittest import *
-    # Also we only attempt to import unittest if the user requested it.
-    # This is because it could not be installed and would error otherwise.
-    import unittest
-    unittest.main()  # this function will terminate the program
-    # this line never reached
-
 module = load.module("package", package)
 window = module.Window()
 run = main(session)
