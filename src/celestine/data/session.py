@@ -122,4 +122,4 @@ class Session():
     @property
     def package(self):
         """Returns the package."""
-        return load.module(PACKAGE, self.session[APPLICATION][PACKAGE])
+        return self.session[APPLICATION][PACKAGE]

@@ -13,6 +13,7 @@ sys.path.append(parent_directory)
 # before attempting to load our package in.
 # Also, getting unittest to work properly is hard
 # and importing everything seems to make it work.
+from celestine.core import load
 from celestine.data.session import Session
 from celestine.window.main import main
 
@@ -75,7 +76,8 @@ if package == "unittest":
     unittest.main()  # this function will terminate the program
     # this line never reached
 
-window = package.Window()
+module = load.module("package", package)
+window = module.Window()
 run = main(session)
 window.run(run)
 
