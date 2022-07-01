@@ -35,16 +35,31 @@ EXTEND = "extend"
 MORE_ITERTOOLS = "more_itertools"
 PILLOW = "pillow"
 
+
+
+EXTENSION = [
+    MORE_ITERTOOLS,
+    PILLOW
+]
+
+####
+
 DEARPYGUI = "dearpygui"
 CELESTINE = "celestine"
 CURSES = "curses"
 TKINTER = "tkinter"
 UNITTEST = "unittest"
 
-EXTENSION = [
-    MORE_ITERTOOLS,
-    PILLOW
-]
+ENGLISH = "english"
+FRENCH = "french"
+GERMAN = "german"
+
+PYTHON_3_6 = "3.6"
+PYTHON_3_7 = "3.7"
+PYTHON_3_8 = "3.8"
+PYTHON_3_9 = "3.9"
+PYTHON_3_10 = "3.10"
+PYTHON_3_11 = "3.11"
 
 PACKAGE = [
     CELESTINE,
@@ -54,8 +69,23 @@ PACKAGE = [
     UNITTEST
 ]
 
+LANGUAGE = [
+    ENGLISH,
+    FRENCH,
+    GERMAN
+]
+
+PYTHON = [
+    PYTHON_3_6,
+    PYTHON_3_7,
+    PYTHON_3_8,
+    PYTHON_3_9,
+    PYTHON_3_10,
+    PYTHON_3_11
+]
 
 parser = argparse.ArgumentParser(prog=CELESTINE)
+
 parser.add_argument(
     "package",
     nargs="*",
@@ -63,6 +93,24 @@ parser.add_argument(
     choices=PACKAGE,
     help="Choose a mode to opperate in."
 )
+
+parser.add_argument(
+    "-l, --language",
+    default=ENGLISH,
+    choices=LANGUAGE,
+    help="Choose a language.",
+    dest="language"
+)
+
+parser.add_argument(
+    "-p, --python",
+    default=PYTHON_3_10,
+    choices=PYTHON,
+    help="Tell me which python version you are using.",
+    dest="python"
+)
+
+####
 
 parser.add_argument(
     "-a", "--available",
@@ -92,7 +140,22 @@ def parse_package(_package):
     return CELESTINE
 
 
+def parse_package(_package):
+    """Parses a package and tells you why it didn't work."""
+    if _package == CELESTINE:
+        return CELESTINE
+    for name in _package:
+        if load.attempt(name):
+            return name
+        print(F"Package '{name}' is not installed.")
+    return CELESTINE
+
+
+
+
 package = parse_package(parse.package)
+python = load.python(parse.python)
+language = load.language(parse.language)
 
 if package == CELESTINE:
     pass
