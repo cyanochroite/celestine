@@ -14,8 +14,9 @@ def load_module(*paths):
         item = getattr(item, path)
     return item
 
-parse = load_module("core", "argparse").parser()
-session = load_module("data", "session").Session(directory, parse)
+argument = load_module("main", "argument").argument
+configuration = load_module("main", "configuration").more(directory, argument)
+session = load_module("main", "session").Session(argument, configuration)
 window = load_module("package", session.package).Window()
 run = load_module("window", "main").main(session)
 

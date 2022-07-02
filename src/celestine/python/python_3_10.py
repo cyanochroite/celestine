@@ -1,4 +1,2 @@
-from celestine.python import python_3_6
-from celestine.python import python_3_7
-from celestine.python import python_3_8
+"""Python 3.10"""
 from celestine.python import python_3_9
