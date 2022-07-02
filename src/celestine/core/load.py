@@ -36,7 +36,7 @@ def file(session, iterable):
     return os.path.join(*tuple(path))
 
 
-def _module(*paths):
+def module(*paths):
     """Load an internal module from anywhere in the application."""
     iterable = [CELESTINE] + list(paths)
     name = FULL_STOP.join(iterable)
