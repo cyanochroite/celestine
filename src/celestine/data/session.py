@@ -4,22 +4,6 @@ import os.path
 from celestine.core import load
 
 
-def make(parent_directory):
-    """A quick way to make a configuration file on disk."""
-    session = configparser.ConfigParser()
-
-    session.add_section("Application")
-    session.set("Application", "name", "celestine")
-    session.set("Application", "directory", parent_directory)
-
-    with open("celestine.ini", "w", encoding="utf_8") as file:
-        session.write(file)
-
-    session.read("celestine.ini")
-
-    return session
-
-
 APPLICATION = "Application"
 
 PYTHON = "python"
@@ -72,19 +56,20 @@ class Session():
         if attribute is not None:
             self.session[APPLICATION][name] = attribute
 
-    def save_me(self):
-        file = os.path.join(parent_directory, "celestine", "celestine.ini")
-        self.session.write(File.write(file), True)
+    def make(self, directory):
+        """A quick way to make a configuration file on disk."""
+        file = os.path.join(directory, "celestine", "celestine.ini")
 
-    @staticmethod
-    def save_new(parent_directory):
-        file = os.path.join(parent_directory, "celestine", "celestine.ini")
-        session = configparser.ConfigParser()
-        session.add_section(APPLICATION)
-        session.set(APPLICATION, LANGUAGE, "english")
-        session.set(APPLICATION, PACKAGE, "celestine")
-        session.set(APPLICATION, PYTHON, "python_3_10")
-        session.write(File.write(file), True)
+        self.session = configparser.ConfigParser()
+
+        self.session.add_section(APPLICATION)
+        session.set("Application", "name", "celestine")
+        self.session.set(APPLICATION, LANGUAGE, "english")
+        self.session.set(APPLICATION, PACKAGE, "celestine")
+        self.session.set(APPLICATION, PYTHON, "python_3_10")
+
+        with File.write as folder:
+            session.write(folder)
 
     def __init__(self, parent_directory, parse):
         file = os.path.join(parent_directory, "celestine", "celestine.ini")
