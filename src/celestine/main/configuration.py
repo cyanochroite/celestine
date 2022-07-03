@@ -2,18 +2,32 @@
 import configparser
 import os.path
 
-from celestine.main.keyword import APPLICATION
-from celestine.main.keyword import DIRECTORY
-from celestine.main.keyword import LANGUAGE
-from celestine.main.keyword import PACKAGE
-from celestine.main.keyword import PRIVATE
-from celestine.main.keyword import PYTHON
 
+from celestine.main.keyword import APPLICATION
+
+from celestine.main.keyword import LANGUAGE
+from celestine.main.keyword import ENGLISH
+
+from celestine.main.keyword import PACKAGE
+from celestine.main.keyword import CELESTINE
+
+from celestine.main.keyword import PYTHON
+from celestine.main.keyword import PYTHON_3_10
+
+from celestine.main.keyword import CACHE
+from celestine.main.keyword import DIRECTORY
+
+
+from celestine.main.keyword import CONFIGURATION
+from celestine.main.keyword import ENCODING
+from celestine.main.keyword import ERRORS
+from celestine.main.keyword import READ
+from celestine.main.keyword import WRITE
 
 def file_mode(file, mode):
     buffering = 1
-    encoding = "utf_8"
-    errors = "strict"
+    encoding = ENCODING
+    errors = ERRORS
     newline = None
     closefd = True
     opener = None
@@ -29,35 +43,46 @@ def file_mode(file, mode):
     )
 
 
-def save(file, session):
-    with file_mode(file, "wt") as fileobject:
-        session.write(fileobject, True)
+def save(path, configuration):
+    with file_mode(path, WRITE) as file:
+        configuration.write(file, True)
 
 
-def load(path):
+def read_file(path):
     configuration = configparser.ConfigParser()
-    configuration.read_file(file_mode(path, "rt"), path) ##CHECK
-    configuration.read("celestine.ini", encoding="utf_8")
+    configuration.read_file(file_mode(path, READ), path) ##CHECK
     return configuration
 
 
-def make(directory):
-    """A quick way to make a configuration file on disk."""
-    file = os.path.join(directory, "celestine", "celestine.ini")
 
+def load(path):
+    try:
+        configuration = read_file(path)
+    except FileNotFoundError:
+        make(path)
+        configuration = read_file(path)
+
+    configuration.read(CONFIGURATION, encoding=ENCODING)
+    return configuration
+
+
+def make(path):
+    """A quick way to make a configuration file on disk."""
     configuration = configparser.ConfigParser()
 
-    session.add_section(APPLICATION)
-    session.set("Application", "name", "celestine")
-    session.set(APPLICATION, LANGUAGE, "english")
-    session.set(APPLICATION, PACKAGE, "celestine")
-    session.set(APPLICATION, PYTHON, "python_3_10")
-    save(file, session)
+    configuration.add_section(APPLICATION)
+    configuration.set(APPLICATION, LANGUAGE, ENGLISH)
+    configuration.set(APPLICATION, PACKAGE, CELESTINE)
+    configuration.set(APPLICATION, PYTHON, PYTHON_3_10)
+
+    save(path, configuration)
 
 def more(directory, argument):
-    file = os.path.join(directory, "celestine", "celestine.ini")
+    file = os.path.join(directory, CELESTINE, CONFIGURATION)
     configuration = load(file)
-    configuration.add_section(PRIVATE)
-    configuration.set(PRIVATE, DIRECTORY, directory)
+
+    configuration.add_section(CACHE)
+    configuration.set(CACHE, DIRECTORY, directory)
+
     return configuration
 

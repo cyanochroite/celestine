@@ -1,3 +1,2 @@
 """Translations of words into German."""
-language = {
-}
+TITLE = "Celestine Bildbetrachter"

@@ -1,3 +1,2 @@
 """Translations of words into English."""
-language = {
-}
+TITLE = "Celestine Image Viewer"

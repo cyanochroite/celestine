@@ -3,7 +3,7 @@ from celestine.main.keyword import APPLICATION
 from celestine.main.keyword import DIRECTORY
 from celestine.main.keyword import LANGUAGE
 from celestine.main.keyword import PACKAGE
-from celestine.main.keyword import PRIVATE
+from celestine.main.keyword import CACHE
 from celestine.main.keyword import PYTHON
 
 
@@ -24,7 +24,7 @@ class Session():
     @property
     def directory(self):
         """Returns the current working directory."""
-        return self.session[PRIVATE][DIRECTORY]
+        return self.session[CACHE][DIRECTORY]
 
     @property
     def python(self):

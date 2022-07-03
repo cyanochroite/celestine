@@ -1,3 +1,2 @@
 """Translations of words into French."""
-language = {
-}
+TITLE = "Visionneuse d’images Célestine"
