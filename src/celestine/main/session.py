@@ -7,6 +7,16 @@ from celestine.main.keyword import CACHE
 from celestine.main.keyword import PYTHON
 
 
+def load_module(*paths):
+    """Load an internal module from anywhere in the application."""
+    iterable = ["celestine"] + list(paths)
+    name = ".".join(iterable)
+    item = __import__(name)
+    for path in paths:
+        item = getattr(item, path)
+    return item
+
+
 class Session():
     """Wrapper around configuration dictionary data."""
 
@@ -29,14 +39,14 @@ class Session():
     @property
     def python(self):
         """Returns the python."""
-        return PYTHON, self.session[APPLICATION][PYTHON]
+        return load_module(PYTHON, self.session[APPLICATION][PYTHON])
 
     @property
     def language(self):
         """Returns the language."""
-        return LANGUAGE, self.session[APPLICATION][LANGUAGE]
+        return load_module(LANGUAGE, self.session[APPLICATION][LANGUAGE])
 
     @property
     def package(self):
         """Returns the package."""
-        return self.session[APPLICATION][PACKAGE]
+        return load_module(PACKAGE, self.session[APPLICATION][PACKAGE])

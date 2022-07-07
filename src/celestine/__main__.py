@@ -5,6 +5,7 @@ import sys
 directory = sys.path[0] = os.path.dirname(sys.path[0])
 sys.path.append(directory)
 
+
 def load_module(*paths):
     """Load an internal module from anywhere in the application."""
     iterable = ["celestine"] + list(paths)
@@ -14,12 +15,12 @@ def load_module(*paths):
         item = getattr(item, path)
     return item
 
+
 argument = load_module("main", "argument").argument
 configuration = load_module("main", "configuration").more(directory, argument)
 session = load_module("main", "session").Session(argument, configuration)
-window = load_module("package", session.package).Window()
 main = load_module("window", "main").main(session)
 
-window.run(main)
+session.package.Window(session).run(main)
 
 sys.exit()

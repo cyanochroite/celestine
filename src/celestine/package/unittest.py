@@ -9,8 +9,8 @@ from celestine.test.test_extension.test_more_itertools import *
 
 
 class Window():
-    def __init__(self):
-        pass
+    def __init__(self, session):
+        self.session = session
 
     def file_dialog(self, tag, bind):
         pass

@@ -2,7 +2,8 @@
 
 
 class Window():
-    def __init__(self):
+    def __init__(self, session):
+        self.session = session
         self.item = {}
 
     def file_dialog(self, tag, bind):
