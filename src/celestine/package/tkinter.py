@@ -1,3 +1,4 @@
+"""Package tkinter."""
 # https://docs.python.org/3/library/tk.html
 # https://www.tcl.tk/man/tcl8.6/TkCmd/contents.html
 import tkinter

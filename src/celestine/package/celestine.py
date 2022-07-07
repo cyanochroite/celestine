@@ -1,4 +1,4 @@
-"""Celestine package."""
+"""Package celestine."""
 
 
 class Window():

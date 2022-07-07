@@ -1,7 +1,6 @@
+"""Package dearpygui."""
 # https://dearpygui.readthedocs.io/en/latest/
 import dearpygui.dearpygui as dpg
-
-VERSION = 1.4
 
 
 class Image():
@@ -85,8 +84,6 @@ class Window():
 
     def run(self, app):
         title = "celestine - PyPI"
-        if VERSION > 900:  # Hope they fix this
-            title = "celestine · PyPI"
         dpg.create_context()
         dpg.create_viewport(
             title=title,

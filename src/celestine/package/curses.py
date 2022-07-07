@@ -1,11 +1,9 @@
+"""Package celestine."""
 import curses
 
-VERSION = 1
 
-import curses
-
-WIDTH = 80
 HEIGHT = 24
+WIDTH = 80
 
 
 class Cursor():
@@ -64,7 +62,7 @@ def draw_menu(stdscr):
     quote_window.noutrefresh()
     curses.doupdate()
 
-    while (key != ord('q')):
+    while key != ord('q'):
         stdscr.refresh()
 
         cursor.input(key)
