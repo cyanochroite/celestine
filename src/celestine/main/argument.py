@@ -1,15 +1,17 @@
 """Parse arguments."""
 import argparse
 
-from celestine.main.keyword import CELESTINE
-
 
 from celestine.main.keyword import LANGUAGE
+
+from celestine.main.keyword import ENGLISH
+from celestine.main.keyword import FRENCH
+from celestine.main.keyword import GERMAN
 
 
 from celestine.main.keyword import PACKAGE
 
-#from celestine.main.keyword import CELESTINE
+from celestine.main.keyword import CELESTINE
 from celestine.main.keyword import CURSES
 from celestine.main.keyword import DEARPYGUI
 from celestine.main.keyword import TKINTER
@@ -33,9 +35,9 @@ parser = argparse.ArgumentParser(
 parser.add_argument(
     "-l, --language",
     choices=[
-        "english",
-        "french",
-        "german"
+        ENGLISH,
+        FRENCH,
+        GERMAN
     ],
     help="Choose a language.",
     dest=LANGUAGE
@@ -44,7 +46,7 @@ parser.add_argument(
 parser.add_argument(
     "-p, --package",
     choices=[
-        CELESTINE, # need?
+        CELESTINE,
         CURSES,
         DEARPYGUI,
         TKINTER,

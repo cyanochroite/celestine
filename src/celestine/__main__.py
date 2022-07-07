@@ -18,8 +18,8 @@ argument = load_module("main", "argument").argument
 configuration = load_module("main", "configuration").more(directory, argument)
 session = load_module("main", "session").Session(argument, configuration)
 window = load_module("package", session.package).Window()
-run = load_module("window", "main").main(session)
+main = load_module("window", "main").main(session)
 
-window.run(run)
+window.run(main)
 
 sys.exit()

@@ -1,5 +1,6 @@
 import curses
 
+
 def draw_menu(stdscr):
     k = 0
     kw = 0
@@ -25,7 +26,7 @@ def draw_menu(stdscr):
     while (k != ord('q')):
 
         # Initialization
-        #stdscr.clear()
+        # stdscr.clear()
         height, width = stdscr.getmaxyx()
 
         if k == curses.KEY_DOWN:
@@ -38,27 +39,27 @@ def draw_menu(stdscr):
             cursor_x = cursor_x - 1
 
         cursor_x = max(0, cursor_x)
-        cursor_x = min(width-1, cursor_x)
+        cursor_x = min(width - 1, cursor_x)
 
         cursor_y = max(0, cursor_y)
-        cursor_y = min(height-1, cursor_y)
+        cursor_y = min(height - 1, cursor_y)
 
         # Declaration of strings
-        title = "Curses example"[:width-1]
-        subtitle = "Written by Clay McLeod"[:width-1]
+        title = "Curses example"[:width - 1]
+        subtitle = "Written by Clay McLeod"[:width - 1]
         statusbarstr = "Press 'q' to exit | STATUS BAR | Pos: {}, {}".format(cursor_x, cursor_y)
         if k == 0:
-            keystr = "No key press detected..."[:width-1]
+            keystr = "No key press detected..."[:width - 1]
         else:
-            keystr = "Last key pressed: {}".format(k)[:width-1]
+            keystr = "Last key pressed: {}".format(k)[:width - 1]
         if kw == 0:
-            wkeystr = "No wide key press detected..."[:width-1]
+            wkeystr = "No wide key press detected..."[:width - 1]
         else:
-            wkeystr = "Last wide key pressed: {}".format(kw)[:width-1]
+            wkeystr = "Last wide key pressed: {}".format(kw)[:width - 1]
         if kk == 0:
-            kkeystr = "No 'key' press detected..."[:width-1]
+            kkeystr = "No 'key' press detected..."[:width - 1]
         else:
-            kkeystr = "Last 'key' pressed: {}".format(kk)[:width-1]
+            kkeystr = "Last 'key' pressed: {}".format(kk)[:width - 1]
 
         # Centering calculations
         start_x_title = int((width // 2) - (len(title) // 2) - len(title) % 2)
@@ -77,8 +78,8 @@ def draw_menu(stdscr):
 
         # Render status bar
         stdscr.attron(curses.color_pair(3))
-        stdscr.addstr(height-1, 0, statusbarstr)
-        stdscr.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
+        stdscr.addstr(height - 1, 0, statusbarstr)
+        stdscr.addstr(height - 1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
         stdscr.attroff(curses.color_pair(3))
 
         # Turning on attributes for title
@@ -127,28 +128,4 @@ def draw_menu(stdscr):
         stdscr.refresh()
 
 
-
-import dearpygui.dearpygui as dpg
-
-VERSION = 1
-
-
-class Window():
-    end = [
-        "stop",
-        "die",
-        "end",
-        "kill",
-        "done"
-    ]
-
-    def draw(self):
-        with dpg.window(tag="primary_window"):
-            dpg.add_text("Hello, world")
-            dpg.add_button(label="Save")
-            dpg.add_input_text(label="string", default_value="Quick brown fox")
-            dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
-
-    def run(self):
-        print("dog")
-        curses.wrapper(draw_menu)
+curses.wrapper(draw_menu)
