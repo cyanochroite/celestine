@@ -7,7 +7,8 @@ from celestine.data.unicode import FULL_STOP
 CELESTINE = "celestine"
 EXTENSION = "extension"
 PACKAGE = "package"
-
+LANGUAGE = "language"
+PYTHON = "python"
 
 def attempt(name):
     """Attempt to load a package and return the result."""

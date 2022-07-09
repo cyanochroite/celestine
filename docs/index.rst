@@ -62,17 +62,20 @@ What this is not:
 
 Requirements
 ************
-+-----------+----------+-------------------+----------------------------------------+
-| Python    | Need     | Optional Features | Why                                    |
-+-----------+----------+-------------------+----------------------------------------+
-| Python_   | REQUIRED |                   | This project is written in Python.     |
-+-----------+----------+-------------------+----------------------------------------+
-| tkinter_  | OPTIONAL | tcl/tk and IDLE   | Use this if you don't trust DearPyGui. |
-+-----------+----------+-------------------+----------------------------------------+
-| unittest_ | OPTIONAL | Python test suite | Use this to run the tests yourself.    |
-+-----------+----------+-------------------+----------------------------------------+
+I recommend doing a full install of Python.
+It will still work if you don't, but I use a lot of these features.
+It may reduce your want for external dependecies.
++-----------+-------------+-------------------+----------------------------------------+
+| Python    | Need        | Optional Features | Why                                    |
++===========+=============+===================+========================================+
+| python_   | REQUIRED    |                   | This project is written in Python.     |
++-----------+-------------+-------------------+----------------------------------------+
+| tkinter_  | RECOMMENDED | tcl/tk and IDLE   | Use this if you don't trust DearPyGui. |
++-----------+-------------+-------------------+----------------------------------------+
+| unittest_ | RECOMMENDED | Python test suite | Use this to run the tests yourself.    |
++-----------+-------------+-------------------+----------------------------------------+
 
-.. _Python: https://www.python.org/downloads/
+.. _python: https://www.python.org/downloads/
 .. _tkinter: https://docs.python.org/3/library/tkinter.html
 .. _unittest: https://docs.python.org/3/library/unittest.html
 

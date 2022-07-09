@@ -211,7 +211,7 @@ python -m pip install windows-curses
 UniCurses 1.2 ??
 
 
-
+https://packaging.python.org/en/latest/tutorials/installing-packages/#requirements-for-installing-packages
 
 
 GUI to try:

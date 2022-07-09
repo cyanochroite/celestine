@@ -1,3 +1,4 @@
+"""Package tkinter."""
 # https://docs.python.org/3/library/tk.html
 # https://www.tcl.tk/man/tcl8.6/TkCmd/contents.html
 import tkinter
@@ -30,7 +31,8 @@ def browseFiles():
 
 
 class Window():
-    def __init__(self):
+    def __init__(self, session):
+        self.session = session
         self.item = {}
 
     def file_dialog(self, tag, bind):
