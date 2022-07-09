@@ -4,9 +4,30 @@ import argparse
 
 from celestine.main.keyword import LANGUAGE
 
+from celestine.main.keyword import BULGARIAN
+from celestine.main.keyword import CROATIAN
+from celestine.main.keyword import CZECH
+from celestine.main.keyword import DANISH
+from celestine.main.keyword import DUTCH
 from celestine.main.keyword import ENGLISH
+from celestine.main.keyword import ESTONIAN
+from celestine.main.keyword import FINNISH
 from celestine.main.keyword import FRENCH
 from celestine.main.keyword import GERMAN
+from celestine.main.keyword import GREEK
+from celestine.main.keyword import HUNGARIAN
+from celestine.main.keyword import IRISH
+from celestine.main.keyword import ITALIAN
+from celestine.main.keyword import LATVIAN
+from celestine.main.keyword import LITHUANIAN
+from celestine.main.keyword import MALTESE
+from celestine.main.keyword import POLISH
+from celestine.main.keyword import PORTUGUESE
+from celestine.main.keyword import ROMANIAN
+from celestine.main.keyword import SLOVAK
+from celestine.main.keyword import SLOVENIAN
+from celestine.main.keyword import SPANISH
+from celestine.main.keyword import SWEDISH
 
 
 from celestine.main.keyword import PACKAGE
@@ -35,9 +56,30 @@ parser = argparse.ArgumentParser(
 parser.add_argument(
     "-l, --language",
     choices=[
+        BULGARIAN,
+        CROATIAN,
+        CZECH,
+        DANISH,
+        DUTCH,
         ENGLISH,
+        ESTONIAN,
+        FINNISH,
         FRENCH,
-        GERMAN
+        GERMAN,
+        GREEK,
+        HUNGARIAN,
+        IRISH,
+        ITALIAN,
+        LATVIAN,
+        LITHUANIAN,
+        MALTESE,
+        POLISH,
+        PORTUGUESE,
+        ROMANIAN,
+        SLOVAK,
+        SLOVENIAN,
+        SPANISH,
+        SWEDISH
     ],
     help="Choose a language.",
     dest=LANGUAGE
