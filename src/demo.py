@@ -23,3 +23,13 @@ print("Slovak".lower())
 print("Slovenian".lower())
 print("Spanish".lower())
 print("Swedish".lower())
+
+a = [
+"__pycache__/",
+"docs/.vscode/",
+"dist/",
+"src/celestine.egg-info/"
+]
+a.sort()
+
+print(a)

@@ -206,6 +206,8 @@ pip install pylint
 requests
 uuid
 
+AZURE API for translationts
+
 
 
 
