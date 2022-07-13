@@ -37,7 +37,20 @@ body = [{
     "text": text
 }]
 
-request = requests.post(translator.url, params=params, headers=headers, json=body)
-response = request.json()
 
-print(json.dumps(response, sort_keys=True, ensure_ascii=False, indent=4, separators=(',', ': ')))
+from celestine.main import configuration
+
+file = os.path.join(directory, "celestine", "language", "english.ini")
+config = configuration.load(file)
+
+config["application"]["title"] += "frenchy"
+config["curses"]["exit"] += "language"
+
+path = os.path.join(directory, "celestine", "language", "french.ini")
+configuration.save(path, config)
+
+
+#request = requests.post(translator.url, params=params, headers=headers, json=body)
+#response = request.json()
+
+#print(json.dumps(response, sort_keys=True, ensure_ascii=False, indent=4, separators=(',', ': ')))
