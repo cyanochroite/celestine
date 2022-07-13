@@ -1,3 +1,4 @@
+import tests
 
 print("Bulgarian".lower())
 print("Croatian".lower())
