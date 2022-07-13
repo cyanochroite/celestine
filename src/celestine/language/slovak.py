@@ -1,3 +1,3 @@
-"""Translations of words into German."""
+"""Translations of words into Slovak."""
 TITLE = "Celestine Bildbetrachter"
-CURSES_EXIT = "Drücken Sie 'q', um das Programm zu beenden."
+CURSES_EXIT = "Stlačením tlačidla 'q' ukončíte program."

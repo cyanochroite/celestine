@@ -203,6 +203,11 @@ python -m coverage html
 pip install more-itertools
 pip install pylint
 
+requests
+uuid
+
+
+
 
 python -m pip install --requirement requirements.txt
 

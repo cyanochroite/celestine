@@ -1,3 +1,3 @@
-"""Translations of words into German."""
+"""Translations of words into Hungarian"""
 TITLE = "Celestine Bildbetrachter"
-CURSES_EXIT = "Drücken Sie 'q', um das Programm zu beenden."
+CURSES_EXIT = "Nyomja meg a 'q' gombot a programból való kilépéshez."

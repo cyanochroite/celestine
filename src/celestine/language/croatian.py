@@ -1,3 +1,3 @@
-"""Translations of words into German."""
-TITLE = "Celestine Bildbetrachter"
-CURSES_EXIT = "Drücken Sie 'q', um das Programm zu beenden."
+"""Croatian Lookup Table"""
+TITLE = "Celestine Preglednik Slika"
+CURSES_EXIT = "Pritisnite tipku 'q' za izlaz."

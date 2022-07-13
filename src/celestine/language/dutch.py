@@ -1,3 +1,3 @@
-"""Translations of words into German."""
-TITLE = "Celestine Bildbetrachter"
-CURSES_EXIT = "Drücken Sie 'q', um das Programm zu beenden."
+"""Dutch Lookup Table"""
+TITLE = "Celestine Beeldviewer"
+CURSES_EXIT = "Druk op de 'q'-toets om af te sluiten."
