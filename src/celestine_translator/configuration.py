@@ -1,9 +1,9 @@
+import configparser
 import os.path
 
 from celestine.main import configuration
 
 
-TRANSLATOR = "translator"
 CONFIGURATION = "key.ini"
 
 AZURE = "azure"
@@ -18,18 +18,18 @@ url = "https://api.cognitive.microsofttranslator.com/translate"
 
 def make(path):
     """A quick way to make a configuration file on disk."""
-    configuration = configparser.ConfigParser()
+    figtree = configparser.ConfigParser()
 
-    configuration.add_section(AZURE)
-    configuration.set(AZURE, KEY, key)
-    configuration.set(AZURE, REGION, region)
-    configuration.set(AZURE, URL, url)
+    figtree.add_section(AZURE)
+    figtree.set(AZURE, KEY, key)
+    figtree.set(AZURE, REGION, region)
+    figtree.set(AZURE, URL, url)
 
-    save(path, configuration)
+    configuration.save(path, figtree)
 
 
 def load(directory):
-    file = os.path.join(directory, TRANSLATOR, CONFIGURATION)
+    file = os.path.join(directory, CONFIGURATION)
     return configuration.load(file)
 
 

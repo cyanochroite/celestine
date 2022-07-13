@@ -8,7 +8,13 @@ import json
 import requests
 import uuid
 
-from translator.configuration import Translator
+from celestine_translator.configuration import Translator
+from celestine_translator.configuration import *
+
+
+
+path = os.path.join(directory, "key.ini")
+make(path)
 
 
 translator = Translator(directory)
