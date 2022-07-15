@@ -55,7 +55,8 @@ def read_file(path):
 
 
 
-def load(path):
+def load(*paths):
+    path = os.path.join(*paths)
     try:
         configuration = read_file(path)
     except FileNotFoundError:
@@ -78,8 +79,7 @@ def make(path):
     save(path, configuration)
 
 def more(directory, argument):
-    file = os.path.join(directory, CELESTINE, CONFIGURATION)
-    configuration = load(file)
+    configuration = load(directory, CELESTINE, CONFIGURATION)
 
     configuration.add_section(CACHE)
     configuration.set(CACHE, DIRECTORY, directory)

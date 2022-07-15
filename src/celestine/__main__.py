@@ -1,6 +1,3 @@
-import test
-import tests
-
 """This is the main file. It runs first."""
 import os.path
 import sys
