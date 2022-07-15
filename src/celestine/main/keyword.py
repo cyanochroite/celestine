@@ -57,6 +57,85 @@ language = [
 ]
 
 
+BG = "bg"
+HR = "hr"
+CS = "cs"
+DA = "da"
+NL = "nl"
+EN = "en"
+ET = "et"
+FI = "fi"
+FR = "fr"
+DE = "de"
+EL = "el"
+HU = "hu"
+GA = "ga"
+IT = "it"
+LV = "lv"
+LT = "lt"
+MT = "mt"
+PL = "pl"
+PT = "pt-pt"
+RO = "ro"
+SK = "sk"
+SL = "sl"
+ES = "es"
+SV = "sv"
+
+code = [
+    BG,
+    HR,
+    CS,
+    DA,
+    NL,
+    EN,
+    ET,
+    FI,
+    FR,
+    DE,
+    EL,
+    HU,
+    GA,
+    IT,
+    LV,
+    LT,
+    MT,
+    PL,
+    PT,
+    RO,
+    SK,
+    SL,
+    ES,
+    SV,
+]
+
+languages = {
+    BG :  BULGARIAN,
+    HR :  CROATIAN,
+    CS :  CZECH,
+    DA :  DANISH,
+    NL :  DUTCH,
+    EN :  ENGLISH,
+    ET :  ESTONIAN,
+    FI :  FINNISH,
+    FR :  FRENCH,
+    DE :  GERMAN,
+    EL :  GREEK,
+    HU :  HUNGARIAN,
+    GA :  IRISH,
+    IT :  ITALIAN,
+    LV :  LATVIAN,
+    LT :  LITHUANIAN,
+    MT :  MALTESE,
+    PL :  POLISH,
+    PT :  PORTUGUESE,
+    RO :  ROMANIAN,
+    SK :  SLOVAK,
+    SL :  SLOVENIAN,
+    ES :  SPANISH,
+    SV :  SWEDISH,
+}
+
 PACKAGE = "package"
 
 CELESTINE = "celestine"

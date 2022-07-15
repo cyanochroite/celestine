@@ -1,7 +1,7 @@
 import os.path
 import sys
 
-directory = sys.path[0] = os.path.dirname(sys.path[0])
+directory = os.path.dirname(sys.path[0])
 sys.path.append(directory)
 
 import json
@@ -22,6 +22,7 @@ TEXT = "text"
 
 text = "I would really like to drive your car around the block a few times!"
 text = "text"
+text = "Fish in the sun is fun."
 
 
 json = [
@@ -32,7 +33,7 @@ json = [
 
 from celestine.main import configuration
 
-file = os.path.join(directory, "celestine", "language", "english.ini")
+file = os.path.join(directory, "celestine_translator", "language.ini")
 config = configuration.load(file)
 
 config["application"]["title"] += "frenchy"
@@ -58,16 +59,18 @@ def post(body):
         'includeSentenceLength': True,
         "to": [
             "fr",
-            "zu"
+            "de",
+            "tlh-Latn",
+            "tlh-Piqd",
         ]
     }
     return requests.post(url, data, json, headers=headers, params=params)
 
 
-request.post(body)
-response = request.json()
+#request = post(json)
+#response = request.json()
 
-candy = json.dumps(response, sort_keys=True, ensure_ascii=False, indent=4, separators=(',', ': '))
+#candy = json.dumps(response, sort_keys=True, ensure_ascii=False, indent=4, separators=(',', ': '))
 
 print(response)
 one = response[0]

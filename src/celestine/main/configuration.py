@@ -84,5 +84,11 @@ def more(directory, argument):
     configuration.add_section(CACHE)
     configuration.set(CACHE, DIRECTORY, directory)
 
-    return configuration
+    
+    print(vars(configuration))
+    print(vars(configuration[APPLICATION]))
+    mydict = vars(configuration)["_sections"]
+    for key, value in mydict.items():
+        print(key, value)
 
+    return configuration
