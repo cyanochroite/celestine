@@ -43,7 +43,7 @@ def file_mode(file, mode):
     )
 
 
-def save(path, configuration):
+def configuration_save(path, configuration):
     with file_mode(path, WRITE) as file:
         configuration.write(file, True)
 
@@ -55,7 +55,7 @@ def read_file(path):
 
 
 
-def load(*paths):
+def configuration_load(*paths):
     path = os.path.join(*paths)
     try:
         configuration = read_file(path)
@@ -67,7 +67,7 @@ def load(*paths):
     return configuration
 
 
-def make(path):
+def make(path): # outsource
     """A quick way to make a configuration file on disk."""
     configuration = configparser.ConfigParser()
 
@@ -77,18 +77,3 @@ def make(path):
     configuration.set(APPLICATION, PYTHON, PYTHON_3_10)
 
     save(path, configuration)
-
-def more(directory, argument):
-    configuration = load(directory, CELESTINE, CONFIGURATION)
-
-    configuration.add_section(CACHE)
-    configuration.set(CACHE, DIRECTORY, directory)
-
-    
-    print(vars(configuration))
-    print(vars(configuration[APPLICATION]))
-    mydict = vars(configuration)["_sections"]
-    for key, value in mydict.items():
-        print(key, value)
-
-    return configuration

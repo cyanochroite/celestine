@@ -1,7 +1,7 @@
 import configparser
 import os.path
 
-from celestine.main import configuration
+from celestine.main.configuration import configuration_load
 
 
 CONFIGURATION = "key.ini"
@@ -30,7 +30,7 @@ def make(path):
 
 def load(directory):
     file = os.path.join(directory, CONFIGURATION)
-    return configuration.load(file)
+    return configuration_load(file)
 
 
 class Translator():

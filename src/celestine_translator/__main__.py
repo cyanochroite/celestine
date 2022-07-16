@@ -11,9 +11,12 @@ import uuid
 from celestine_translator.configuration import Translator
 from celestine_translator.configuration import *
 
+from celestine.main.configuration import configuration_load
+from celestine.main.configuration import configuration_save
 
-path = os.path.join(directory, "key.ini")
-make(path)
+
+#path = os.path.join(directory, "key.ini")
+# make(path)
 
 
 translator = Translator(directory)
@@ -34,41 +37,47 @@ json = [
 from celestine.main import configuration
 
 file = os.path.join(directory, "celestine_translator", "language.ini")
-config = configuration.load(file)
+config = configuration_load(file)
 
-config["application"]["title"] += "frenchy"
-config["curses"]["exit"] += "language"
+def azure_endpoint():
+    return "https://api.cognitive.microsofttranslator.com/translate"
 
-path = os.path.join(directory, "celestine", "language", "french.ini")
-configuration.save(path, config)
+
+def azure_header(key, region, trace):
+    return {
+        "Ocp-Apim-Subscription-Key": key,
+        "Ocp-Apim-Subscription-Region": region,
+        "Content-type": "application/json",
+        "X-ClientTraceId": trace
+    }
+
+
+def azure_parameter(language):
+    return {
+        "api-version": "3.0",
+        "to": language,
+        "category": "general",
+        "from": "en",
+        "includeAlignment": False,
+        "includeSentenceLength": False,
+        "profanityAction": "NoAction",
+        "profanityMarker": "Asterisk",
+        "suggestedFrom": "en",
+        "textType": "plain",
+    }
 
 
 def post(body):
-    url = translator.url
+    url = azure_endpoint()
     data = None
     json = body
-    headers = {
-        "Ocp-Apim-Subscription-Key": translator.key,
-        "Ocp-Apim-Subscription-Region": translator.region,
-        "Content-type": "application/json",
-        "X-ClientTraceId": str(uuid.uuid4())
-    }
-    params = {
-        "api-version": "3.0",
-        "from": 'en',
-        'includeSentenceLength': True,
-        "to": [
-            "fr",
-            "de",
-            "tlh-Latn",
-            "tlh-Piqd",
-        ]
-    }
+    headers = azure_header(translator.key, translator.region, str(uuid.uuid4()))
+    params = azure_parameter(["fr", "de", ])
     return requests.post(url, data, json, headers=headers, params=params)
 
 
-#request = post(json)
-#response = request.json()
+request = post(json)
+response = request.json()
 
 #candy = json.dumps(response, sort_keys=True, ensure_ascii=False, indent=4, separators=(',', ': '))
 

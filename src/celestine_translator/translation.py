@@ -7,7 +7,9 @@ sys.path.append(directory)
 
 from celestine.main.keyword import language
 from celestine.main.keyword import languages
-from celestine.main import configuration
+
+from celestine.main.configuration import configuration_load
+from celestine.main.configuration import configuration_save
 
 TRANSLATIONS = "translations"
 TEXT = "text"
@@ -34,12 +36,12 @@ def add_item(section, key, value):
 def save_item():
     for name in language:
         path = os.path.join(directory, "celestine", "language", F"{name}.ini")
-        configuration.save(path, moose[name])
+        configuration_save(path, moose[name])
 
 
 file = os.path.join(directory, "celestine_translator", "language.ini")
-config = configuration.load(file)
-mydict = vars(config)["_sections"]
+configuration = configuration_load(file)
+mydict = vars(configuration)["_sections"]
 
 new_parser()
 for section, dictionary in mydict.items():

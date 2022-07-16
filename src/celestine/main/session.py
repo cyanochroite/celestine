@@ -6,6 +6,12 @@ from celestine.main.keyword import PACKAGE
 from celestine.main.keyword import CACHE
 from celestine.main.keyword import PYTHON
 
+from celestine.main.keyword import CELESTINE
+from celestine.main.keyword import CONFIGURATION
+
+from celestine.main.configuration import configuration_load
+from celestine.main.configuration import configuration_save
+
 
 def load_module(*paths):
     """Load an internal module from anywhere in the application."""
@@ -25,28 +31,15 @@ class Session():
         if attribute is not None:
             self.session[APPLICATION][name] = attribute
 
-    def __init__(self, argument, configuration):
-        self.session = configuration
+    def __init__(self, argument, directory):
+        self.session = configuration_load(directory, CELESTINE, CONFIGURATION)
+        self.session.add_section(CACHE)
+        self.session.set(CACHE, DIRECTORY, directory)
         self.override(argument, LANGUAGE)
         self.override(argument, PACKAGE)
         self.override(argument, PYTHON)
-
-    @property
-    def directory(self):
-        """Returns the current working directory."""
-        return self.session[CACHE][DIRECTORY]
-
-    @property
-    def python(self):
-        """Returns the python."""
-        return load_module(PYTHON, self.session[APPLICATION][PYTHON])
-
-    @property
-    def language(self):
-        """Returns the language."""
-        return load_module(LANGUAGE, self.session[APPLICATION][LANGUAGE])
-
-    @property
-    def package(self):
-        """Returns the package."""
-        return load_module(PACKAGE, self.session[APPLICATION][PACKAGE])
+        ###
+        self.directory = self.session[CACHE][DIRECTORY]
+        self.python = load_module(PYTHON, self.session[APPLICATION][PYTHON])
+        self.language = load_module(LANGUAGE, self.session[APPLICATION][LANGUAGE])
+        self.package = load_module(PACKAGE, self.session[APPLICATION][PACKAGE])
