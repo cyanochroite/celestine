@@ -8,15 +8,11 @@ import json
 import requests
 import uuid
 
-from celestine_translator.configuration import Translator
-from celestine_translator.configuration import *
+from celestine_translator.translator import Translator
 
 from celestine.main.configuration import configuration_load
 from celestine.main.configuration import configuration_save
 
-
-#path = os.path.join(directory, "key.ini")
-# make(path)
 
 
 translator = Translator(directory)
@@ -34,45 +30,16 @@ json = [
 ]
 
 
-from celestine.main import configuration
-
 file = os.path.join(directory, "celestine_translator", "language.ini")
 config = configuration_load(file)
 
-def azure_endpoint():
-    return "https://api.cognitive.microsofttranslator.com/translate"
-
-
-def azure_header(key, region, trace):
-    return {
-        "Ocp-Apim-Subscription-Key": key,
-        "Ocp-Apim-Subscription-Region": region,
-        "Content-type": "application/json",
-        "X-ClientTraceId": trace
-    }
-
-
-def azure_parameter(language):
-    return {
-        "api-version": "3.0",
-        "to": language,
-        "category": "general",
-        "from": "en",
-        "includeAlignment": False,
-        "includeSentenceLength": False,
-        "profanityAction": "NoAction",
-        "profanityMarker": "Asterisk",
-        "suggestedFrom": "en",
-        "textType": "plain",
-    }
-
 
 def post(body):
-    url = azure_endpoint()
+    url = translator.endpoint()
     data = None
     json = body
-    headers = azure_header(translator.key, translator.region, str(uuid.uuid4()))
-    params = azure_parameter(["fr", "de", ])
+    headers = translator.header(str(uuid.uuid4()))
+    params = translator.parameter(["fr", "de", ])
     return requests.post(url, data, json, headers=headers, params=params)
 
 
