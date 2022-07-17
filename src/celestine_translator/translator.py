@@ -18,13 +18,13 @@ class Translator():
     def __init__(self, directory):
         self.configuration = configuration_load(directory, FILE)
         self.key = self.configuration[AZURE][KEY]
-        self.region = self.configuration[AZURE][KEY]
-        self.url = self.configuration[AZURE][KEY]
+        self.region = self.configuration[AZURE][REGION]
+        self.url = self.configuration[AZURE][URL]
 
-    def endpoint():
+    def endpoint(self):
         return "https://api.cognitive.microsofttranslator.com/translate"
 
-    def header(trace):
+    def header(self, trace):
         return {
             "Ocp-Apim-Subscription-Key": self.key,
             "Ocp-Apim-Subscription-Region": self.region,
@@ -32,7 +32,7 @@ class Translator():
             "X-ClientTraceId": trace,
         }
 
-    def parameter(language):
+    def parameter(self, language):
         return {
             "api-version": "3.0",
             "to": language,

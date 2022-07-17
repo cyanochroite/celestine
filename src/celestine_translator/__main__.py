@@ -4,57 +4,78 @@ import sys
 directory = os.path.dirname(sys.path[0])
 sys.path.append(directory)
 
-import json
 import requests
 import uuid
+import configparser
 
 from celestine_translator.translator import Translator
 
 from celestine.main.configuration import configuration_load
 from celestine.main.configuration import configuration_save
 
+from celestine.main.keyword import language
+from celestine.main.keyword import languages
 
+TRANSLATIONS = "translations"
+TEXT = "text"
+TO = "to"
+
+moose = {}
 
 translator = Translator(directory)
 
-TEXT = "text"
 
-text = "I would really like to drive your car around the block a few times!"
-text = "text"
-text = "Fish in the sun is fun."
+def post(text):
+    url = translator.endpoint()
+    data = None
+    json = [{TEXT: text}]
+    headers = translator.header(str(uuid.uuid4()))
+    params = translator.parameter(["fr", "de", ])
+    request = requests.post(url, data, json, headers=headers, params=params)
+    return request.json()
+    
 
 
-json = [
-    {TEXT: text},
-    {TEXT: "apple pie"}
-]
+def new_parser():
+    for name in language:
+        moose[name] = configparser.ConfigParser()
+
+
+def add_section(section):
+    for name in language:
+        moose[name].add_section(section)
+
+
+def add_item(section, key, value):
+    items = post(value)
+    for item in items:
+        translations = item[TRANSLATIONS]
+        for translation in translations:
+            text = translation[TEXT]
+            to = translation[TO]
+            put = languages[to]
+            name = put
+            moose[name].set(section, key, text)
+
+
+def save_item():
+    for name in language:
+        path = os.path.join(directory, "celestine", "language", F"{name}.ini")
+        configuration_save(path, moose[name])
 
 
 file = os.path.join(directory, "celestine_translator", "language.ini")
-config = configuration_load(file)
+configuration = configuration_load(file)
+mydict = vars(configuration)["_sections"]
+
+new_parser()
+for section, dictionary in mydict.items():
+    add_section(section)
+    for key, value in dictionary.items():
+        add_item(section, key, value)
+
+save_item()
 
 
-def post(body):
-    url = translator.endpoint()
-    data = None
-    json = body
-    headers = translator.header(str(uuid.uuid4()))
-    params = translator.parameter(["fr", "de", ])
-    return requests.post(url, data, json, headers=headers, params=params)
-
-
-request = post(json)
-response = request.json()
-
-#candy = json.dumps(response, sort_keys=True, ensure_ascii=False, indent=4, separators=(',', ': '))
-
-print(response)
-one = response[0]
-two = response[1]["translations"]
-
-print("MOO")
-print(one)
-print("MOO")
-print(two)
-
-
+print(moose)
+print("done")

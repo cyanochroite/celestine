@@ -1,1 +1,0 @@
-from celestine_translator import translation
