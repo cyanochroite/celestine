@@ -3,7 +3,7 @@ import configparser
 import os.path
 
 
-from celestine.main.keyword import CONFIGURATION
+from celestine.main.keyword import CONFIGURATION_CELESTINE
 from celestine.main.keyword import ENCODING
 from celestine.main.keyword import ERRORS
 from celestine.main.keyword import READ
@@ -43,5 +43,5 @@ def read_file(path):
 def configuration_load(*paths):
     path = os.path.join(*paths)
     configuration = read_file(path)
-    configuration.read(CONFIGURATION, encoding=ENCODING)
+    configuration.read(CONFIGURATION_CELESTINE, encoding=ENCODING)
     return configuration

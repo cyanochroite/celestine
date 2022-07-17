@@ -30,7 +30,7 @@ def post(text):
     data = None
     json = [{TEXT: text}]
     headers = translator.header(str(uuid.uuid4()))
-    params = translator.parameter(["fr", "de", ])
+    params = translator.parameter(language)
     request = requests.post(url, data, json, headers=headers, params=params)
     return request.json()
     
