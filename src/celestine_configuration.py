@@ -1,7 +1,6 @@
 """Generate configuration files for all packages."""
 import argparse
 import configparser
-import os.path
 import sys
 
 from celestine.main.configuration import configuration_load
@@ -57,14 +56,12 @@ if celestine:
     configuration.set(APPLICATION, LANGUAGE, ENGLISH)
     configuration.set(APPLICATION, PACKAGE, CELESTINE)
     configuration.set(APPLICATION, PYTHON, PYTHON_3_10)
-    path = os.path.join(directory, CELESTINE, CONFIGURATION_CELESTINE)
-    configuration_save(path, configuration)
+    configuration_save(configuration, directory, CELESTINE, CONFIGURATION_CELESTINE)
 
 language = parse.language
 if language:
     configuration = configuration_load(directory, CELESTINE, LANGUAGE, "english.ini")
-    path = os.path.join(directory, "celestine_translator", "language.ini")
-    configuration_save(path, configuration)
+    configuration_save(configuration, directory, "celestine_translator", "language.ini")
 
 translator = parse.translator
 if translator:
@@ -74,5 +71,4 @@ if translator:
     configuration.set(AZURE, KEY, key)
     configuration.set(AZURE, REGION, region)
     configuration.set(AZURE, URL, url)
-    path = os.path.join(directory, FILE)
-    configuration_save(path, configuration)
+    configuration_save(configuration, directory, FILE)

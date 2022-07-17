@@ -1,4 +1,4 @@
-"""Keywords used throughout the application."""
+"""Keywords used throughout the translator application."""
 AZURE = "azure"
 
 KEY = "key"

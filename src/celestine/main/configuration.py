@@ -28,7 +28,8 @@ def file_mode(file, mode):
     )
 
 
-def configuration_save(path, configuration):
+def configuration_save(configuration, *paths):
+    path = os.path.join(*paths)
     with file_mode(path, WRITE) as file:
         configuration.write(file, True)
 
