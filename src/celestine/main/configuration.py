@@ -3,11 +3,11 @@ import configparser
 import os.path
 
 
-from celestine.main.keyword import CONFIGURATION_CELESTINE
-from celestine.main.keyword import ENCODING
-from celestine.main.keyword import ERRORS
-from celestine.main.keyword import READ
-from celestine.main.keyword import WRITE
+from celestine.keyword.main import CONFIGURATION_CELESTINE
+from celestine.keyword.main import ENCODING
+from celestine.keyword.main import ERRORS
+from celestine.keyword.main import READ
+from celestine.keyword.main import WRITE
 
 def file_mode(file, mode):
     buffering = 1

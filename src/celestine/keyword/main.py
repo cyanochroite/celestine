@@ -192,6 +192,7 @@ MORE_ITERTOOLS = "more_itertools"
 PILLOW = "pillow"
 
 
+CONFIGURATION = "configuration"
 CONFIGURATION_CELESTINE = "celestine.ini"
 ENCODING = "utf_8"
 ERRORS = "strict"

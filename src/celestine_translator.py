@@ -1,23 +1,32 @@
 import sys
 
-directory = sys.path[0]
+
 
 import requests
 import uuid
 import configparser
 
 
-
-
-import configparser
-
 from celestine.main.configuration import configuration_load
+from celestine.main.configuration import configuration_save
+
+from celestine.main.keyword import language
+from celestine.main.keyword import languages
+
 
 from celestine.keyword.translator import AZURE
+
 from celestine.keyword.translator import KEY
 from celestine.keyword.translator import REGION
 from celestine.keyword.translator import URL
+
 from celestine.keyword.translator import FILE
+
+
+from celestine.keyword.translator import TRANSLATIONS
+from celestine.keyword.translator import TEXT
+from celestine.keyword.translator import TO
+
 
 
 class Translator():
@@ -58,17 +67,9 @@ class Translator():
 
 
 
+directory = sys.path[0]
 
 
-from celestine.main.configuration import configuration_load
-from celestine.main.configuration import configuration_save
-
-from celestine.main.keyword import language
-from celestine.main.keyword import languages
-
-TRANSLATIONS = "translations"
-TEXT = "text"
-TO = "to"
 
 moose = {}
 

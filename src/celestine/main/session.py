@@ -7,7 +7,7 @@ from celestine.main.keyword import CACHE
 from celestine.main.keyword import PYTHON
 
 from celestine.main.keyword import CELESTINE
-from celestine.main.keyword import CONFIGURATION
+from celestine.main.keyword import CONFIGURATION_CELESTINE
 
 from celestine.main.configuration import configuration_load
 from celestine.main.configuration import configuration_save
@@ -32,7 +32,7 @@ class Session():
             self.session[APPLICATION][name] = attribute
 
     def __init__(self, argument, directory):
-        self.session = configuration_load(directory, CELESTINE, CONFIGURATION)
+        self.session = configuration_load(directory, CELESTINE, "configuration", CONFIGURATION_CELESTINE)
         self.session.add_section(CACHE)
         self.session.set(CACHE, DIRECTORY, directory)
         self.override(argument, LANGUAGE)
@@ -41,5 +41,7 @@ class Session():
         ###
         self.directory = self.session[CACHE][DIRECTORY]
         self.python = load_module(PYTHON, self.session[APPLICATION][PYTHON])
-        self.language = load_module(LANGUAGE, self.session[APPLICATION][LANGUAGE])
+
+        self.language = configuration_load(directory, CELESTINE, "configuration", "language", F"{self.session[APPLICATION][LANGUAGE]}.ini")
+
         self.package = load_module(PACKAGE, self.session[APPLICATION][PACKAGE])

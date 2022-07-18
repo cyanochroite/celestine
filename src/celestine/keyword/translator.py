@@ -6,3 +6,7 @@ REGION = "region"
 URL = "url"
 
 FILE = "key.ini"
+
+TRANSLATIONS = "translations"
+TEXT = "text"
+TO = "to"

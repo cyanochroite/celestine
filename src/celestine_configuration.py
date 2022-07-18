@@ -6,20 +6,21 @@ import sys
 from celestine.main.configuration import configuration_load
 from celestine.main.configuration import configuration_save
 
-from celestine.main.keyword import APPLICATION
-from celestine.main.keyword import LANGUAGE
-from celestine.main.keyword import ENGLISH
-from celestine.main.keyword import PACKAGE
-from celestine.main.keyword import CELESTINE
-from celestine.main.keyword import PYTHON
-from celestine.main.keyword import PYTHON_3_10
-from celestine.main.keyword import CONFIGURATION_CELESTINE
+from celestine.keyword.main import APPLICATION
+from celestine.keyword.main import LANGUAGE
+from celestine.keyword.main import ENGLISH
+from celestine.keyword.main import PACKAGE
+from celestine.keyword.main import CELESTINE
+from celestine.keyword.main import PYTHON
+from celestine.keyword.main import PYTHON_3_10
+from celestine.keyword.main import CONFIGURATION
+from celestine.keyword.main import CONFIGURATION_CELESTINE
 
-from celestine_translator.keyword import AZURE
-from celestine_translator.keyword import KEY
-from celestine_translator.keyword import REGION
-from celestine_translator.keyword import URL
-from celestine_translator.keyword import FILE
+from celestine.keyword.translator import AZURE
+from celestine.keyword.translator import KEY
+from celestine.keyword.translator import REGION
+from celestine.keyword.translator import URL
+from celestine.keyword.translator import FILE
 
 
 directory = sys.path[0]
@@ -56,7 +57,13 @@ if celestine:
     configuration.set(APPLICATION, LANGUAGE, ENGLISH)
     configuration.set(APPLICATION, PACKAGE, CELESTINE)
     configuration.set(APPLICATION, PYTHON, PYTHON_3_10)
-    configuration_save(configuration, directory, CELESTINE, CONFIGURATION_CELESTINE)
+    configuration_save(
+        configuration,
+        directory,
+        CELESTINE,
+        CONFIGURATION,
+        CONFIGURATION_CELESTINE
+    )
 
 language = parse.language
 if language:
