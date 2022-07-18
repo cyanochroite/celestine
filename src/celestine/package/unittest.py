@@ -2,10 +2,10 @@
 import sys
 import unittest
 
-from celestine.test.test_parser.test_translator import *
-from celestine.test.test_parser.test_operator import *
+from celestine.tests.test_parser.test_translator import *
+from celestine.tests.test_parser.test_operator import *
 
-from celestine.test.test_extension.test_more_itertools import *
+from celestine.tests.test_extension.test_more_itertools import *
 
 
 class Window():
