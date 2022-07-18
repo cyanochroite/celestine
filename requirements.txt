@@ -1,1 +1,1 @@
--e .
+--requirement requirements/pip.txt

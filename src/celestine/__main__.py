@@ -17,8 +17,8 @@ def load_module(*paths):
 
 
 argument = load_module("main", "argument").argument
-configuration = load_module("main", "configuration").more(directory, argument)
-session = load_module("main", "session").Session(argument, configuration)
+
+session = load_module("main", "session").Session(argument, directory)
 main = load_module("window", "main").main(session)
 
 session.package.Window(session).run(main)

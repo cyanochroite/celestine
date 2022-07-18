@@ -1,31 +1,16 @@
 """Parse arguments."""
 import argparse
 
+from celestine.keyword.main import CELESTINE
 
-from celestine.main.keyword import LANGUAGE
+from celestine.keyword.main import LANGUAGE
+from celestine.keyword.main import language
 
-from celestine.main.keyword import ENGLISH
-from celestine.main.keyword import FRENCH
-from celestine.main.keyword import GERMAN
+from celestine.keyword.main import PACKAGE
+from celestine.keyword.main import package
 
-
-from celestine.main.keyword import PACKAGE
-
-from celestine.main.keyword import CELESTINE
-from celestine.main.keyword import CURSES
-from celestine.main.keyword import DEARPYGUI
-from celestine.main.keyword import TKINTER
-from celestine.main.keyword import UNITTEST
-
-
-from celestine.main.keyword import PYTHON
-
-from celestine.main.keyword import PYTHON_3_6
-from celestine.main.keyword import PYTHON_3_7
-from celestine.main.keyword import PYTHON_3_8
-from celestine.main.keyword import PYTHON_3_9
-from celestine.main.keyword import PYTHON_3_10
-from celestine.main.keyword import PYTHON_3_11
+from celestine.keyword.main import PYTHON
+from celestine.keyword.main import python
 
 
 parser = argparse.ArgumentParser(
@@ -34,40 +19,23 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument(
     "-l, --language",
-    choices=[
-        ENGLISH,
-        FRENCH,
-        GERMAN
-    ],
+    choices=language,
     help="Choose a language.",
-    dest=LANGUAGE
+    dest=LANGUAGE,
 )
 
 parser.add_argument(
     "-p, --package",
-    choices=[
-        CELESTINE,
-        CURSES,
-        DEARPYGUI,
-        TKINTER,
-        UNITTEST
-    ],
+    choices=package,
     help="Choose a mode to opperate in.",
-    dest=PACKAGE
+    dest=PACKAGE,
 )
 
 parser.add_argument(
     "-v, --version",
-    choices=[
-        PYTHON_3_6,
-        PYTHON_3_7,
-        PYTHON_3_8,
-        PYTHON_3_9,
-        PYTHON_3_10,
-        PYTHON_3_11
-    ],
+    choices=python,
     help="Tell me which python version you are using.",
-    dest=PYTHON
+    dest=PYTHON,
 )
 
 argument = parser.parse_args()

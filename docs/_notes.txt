@@ -203,6 +203,13 @@ python -m coverage html
 pip install more-itertools
 pip install pylint
 
+requests
+uuid
+
+AZURE API for translationts
+
+
+
 
 python -m pip install --requirement requirements.txt
 

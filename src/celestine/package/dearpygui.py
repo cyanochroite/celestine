@@ -61,17 +61,6 @@ class Window():
         )
         self.item[tag] = item
 
-    def file_dialog_load(self, tag):
-        filename = tkinter.filedialog.askopenfilename(
-            initialdir="/",
-            title="Select a File",
-            filetypes=(
-                ("Text files", "*.txt*"),
-                ("all files", "*.*")
-            )
-        )
-        self.item[tag].configure(text="File Opened: " + filename)
-
     def image(self, tag, image):
         item = dpg.add_image(image.name)
         self.item[tag] = item
@@ -84,7 +73,7 @@ class Window():
         self.item[tag] = item
 
     def run(self, app):
-        title = "celestine - PyPI"
+        title = self.session.language.TITLE
         dpg.create_context()
         dpg.create_viewport(
             title=title,

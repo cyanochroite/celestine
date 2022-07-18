@@ -1,10 +1,16 @@
 """Load and save user settings from a file."""
-from celestine.main.keyword import APPLICATION
-from celestine.main.keyword import DIRECTORY
-from celestine.main.keyword import LANGUAGE
-from celestine.main.keyword import PACKAGE
-from celestine.main.keyword import CACHE
-from celestine.main.keyword import PYTHON
+from celestine.keyword.main import APPLICATION
+from celestine.keyword.main import DIRECTORY
+from celestine.keyword.main import LANGUAGE
+from celestine.keyword.main import PACKAGE
+from celestine.keyword.main import CACHE
+from celestine.keyword.main import PYTHON
+
+from celestine.keyword.main import CELESTINE
+from celestine.keyword.main import CONFIGURATION_CELESTINE
+
+from celestine.main.configuration import configuration_load
+from celestine.main.configuration import configuration_save
 
 
 def load_module(*paths):
@@ -17,6 +23,12 @@ def load_module(*paths):
     return item
 
 
+class Language():
+    def __init__(self, configuration):
+        self.configuration = configuration
+        self.TITLE = self.configuration[APPLICATION]["title"]
+        self.CURSES_EXIT = self.configuration["curses"]["exit"]
+    
 class Session():
     """Wrapper around configuration dictionary data."""
 
@@ -25,28 +37,25 @@ class Session():
         if attribute is not None:
             self.session[APPLICATION][name] = attribute
 
-    def __init__(self, argument, configuration):
-        self.session = configuration
+    def __init__(self, argument, directory):
+        self.session = configuration_load(directory, CELESTINE, "configuration", CONFIGURATION_CELESTINE)
+        self.session.add_section(CACHE)
+        self.session.set(CACHE, DIRECTORY, directory)
         self.override(argument, LANGUAGE)
         self.override(argument, PACKAGE)
         self.override(argument, PYTHON)
+        ###
+        self.directory = self.session[CACHE][DIRECTORY]
+        self.python = load_module(PYTHON, self.session[APPLICATION][PYTHON])
 
-    @property
-    def directory(self):
-        """Returns the current working directory."""
-        return self.session[CACHE][DIRECTORY]
+        self.language = Language(
+            configuration_load(
+                directory,
+                CELESTINE,
+                "configuration", 
+                "language",
+                F"{self.session[APPLICATION][LANGUAGE]}.ini"
+            )
+        )
 
-    @property
-    def python(self):
-        """Returns the python."""
-        return load_module(PYTHON, self.session[APPLICATION][PYTHON])
-
-    @property
-    def language(self):
-        """Returns the language."""
-        return load_module(LANGUAGE, self.session[APPLICATION][LANGUAGE])
-
-    @property
-    def package(self):
-        """Returns the package."""
-        return load_module(PACKAGE, self.session[APPLICATION][PACKAGE])
+        self.package = load_module(PACKAGE, self.session[APPLICATION][PACKAGE])

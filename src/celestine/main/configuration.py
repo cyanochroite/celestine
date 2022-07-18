@@ -3,26 +3,11 @@ import configparser
 import os.path
 
 
-from celestine.main.keyword import APPLICATION
-
-from celestine.main.keyword import LANGUAGE
-from celestine.main.keyword import ENGLISH
-
-from celestine.main.keyword import PACKAGE
-from celestine.main.keyword import CELESTINE
-
-from celestine.main.keyword import PYTHON
-from celestine.main.keyword import PYTHON_3_10
-
-from celestine.main.keyword import CACHE
-from celestine.main.keyword import DIRECTORY
-
-
-from celestine.main.keyword import CONFIGURATION
-from celestine.main.keyword import ENCODING
-from celestine.main.keyword import ERRORS
-from celestine.main.keyword import READ
-from celestine.main.keyword import WRITE
+from celestine.keyword.main import CONFIGURATION_CELESTINE
+from celestine.keyword.main import ENCODING
+from celestine.keyword.main import ERRORS
+from celestine.keyword.main import READ
+from celestine.keyword.main import WRITE
 
 def file_mode(file, mode):
     buffering = 1
@@ -43,7 +28,8 @@ def file_mode(file, mode):
     )
 
 
-def save(path, configuration):
+def configuration_save(configuration, *paths):
+    path = os.path.join(*paths)
     with file_mode(path, WRITE) as file:
         configuration.write(file, True)
 
@@ -55,34 +41,8 @@ def read_file(path):
 
 
 
-def load(path):
-    try:
-        configuration = read_file(path)
-    except FileNotFoundError:
-        make(path)
-        configuration = read_file(path)
-
-    configuration.read(CONFIGURATION, encoding=ENCODING)
+def configuration_load(*paths):
+    path = os.path.join(*paths)
+    configuration = read_file(path)
+    #configuration.read(CONFIGURATION_CELESTINE, encoding=ENCODING)
     return configuration
-
-
-def make(path):
-    """A quick way to make a configuration file on disk."""
-    configuration = configparser.ConfigParser()
-
-    configuration.add_section(APPLICATION)
-    configuration.set(APPLICATION, LANGUAGE, ENGLISH)
-    configuration.set(APPLICATION, PACKAGE, CELESTINE)
-    configuration.set(APPLICATION, PYTHON, PYTHON_3_10)
-
-    save(path, configuration)
-
-def more(directory, argument):
-    file = os.path.join(directory, CELESTINE, CONFIGURATION)
-    configuration = load(file)
-
-    configuration.add_section(CACHE)
-    configuration.set(CACHE, DIRECTORY, directory)
-
-    return configuration
-
