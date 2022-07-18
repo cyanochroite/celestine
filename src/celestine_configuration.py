@@ -67,8 +67,20 @@ if celestine:
 
 language = parse.language
 if language:
-    configuration = configuration_load(directory, CELESTINE, LANGUAGE, "english.ini")
-    configuration_save(configuration, directory, "celestine_translator", "language.ini")
+    configuration = configuration_load(
+        directory,
+        CELESTINE,
+        CONFIGURATION,
+        LANGUAGE,
+        "english.ini"
+    )
+    configuration_save(
+        configuration,
+        directory,
+        CELESTINE,
+        CONFIGURATION,
+        "language.ini"
+    )
 
 translator = parse.translator
 if translator:
@@ -78,4 +90,10 @@ if translator:
     configuration.set(AZURE, KEY, key)
     configuration.set(AZURE, REGION, region)
     configuration.set(AZURE, URL, url)
-    configuration_save(configuration, directory, FILE)
+    configuration_save(
+        configuration,
+        directory,
+        CELESTINE,
+        CONFIGURATION,
+        FILE
+    )

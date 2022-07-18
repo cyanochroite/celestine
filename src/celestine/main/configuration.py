@@ -44,5 +44,5 @@ def read_file(path):
 def configuration_load(*paths):
     path = os.path.join(*paths)
     configuration = read_file(path)
-    configuration.read(CONFIGURATION_CELESTINE, encoding=ENCODING)
+    #configuration.read(CONFIGURATION_CELESTINE, encoding=ENCODING)
     return configuration

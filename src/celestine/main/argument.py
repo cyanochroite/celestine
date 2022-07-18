@@ -1,16 +1,16 @@
 """Parse arguments."""
 import argparse
 
-from celestine.main.keyword import CELESTINE
+from celestine.keyword.main import CELESTINE
 
-from celestine.main.keyword import LANGUAGE
-from celestine.main.keyword import language
+from celestine.keyword.main import LANGUAGE
+from celestine.keyword.main import language
 
-from celestine.main.keyword import PACKAGE
-from celestine.main.keyword import package
+from celestine.keyword.main import PACKAGE
+from celestine.keyword.main import package
 
-from celestine.main.keyword import PYTHON
-from celestine.main.keyword import python
+from celestine.keyword.main import PYTHON
+from celestine.keyword.main import python
 
 
 parser = argparse.ArgumentParser(
