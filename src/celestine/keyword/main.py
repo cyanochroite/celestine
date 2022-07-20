@@ -194,6 +194,7 @@ PILLOW = "pillow"
 
 CONFIGURATION = "configuration"
 CONFIGURATION_CELESTINE = "celestine.ini"
+CONFIGURATION_TRANSLATOR = "key.ini"
 ENCODING = "utf_8"
 ERRORS = "strict"
 READ = "rt"

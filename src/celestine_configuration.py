@@ -5,22 +5,27 @@ import sys
 
 from celestine.main.configuration import configuration_load
 from celestine.main.configuration import configuration_save
-from celestine.main.configuration import celestine
-from celestine.main.configuration import translator as _translator
+from celestine.main.configuration import configuration_celestine
+from celestine.main.configuration import configuration_translator
 
-from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import LANGUAGE
-from celestine.keyword.main import ENGLISH
-from celestine.keyword.main import PACKAGE
 from celestine.keyword.main import CELESTINE
-from celestine.keyword.main import PYTHON
-from celestine.keyword.main import PYTHON_3_10
-from celestine.keyword.main import CONFIGURATION
 from celestine.keyword.main import CONFIGURATION_CELESTINE
+from celestine.keyword.main import CONFIGURATION_TRANSLATOR
 
+
+from celestine.keyword.main import LANGUAGE
+from celestine.keyword.main import language
+
+from celestine.keyword.main import PACKAGE
+from celestine.keyword.main import package
+
+from celestine.keyword.main import PYTHON
+from celestine.keyword.main import python
 
 from celestine.keyword.translator import FILE
 
+
+from celestine.keyword.main import language
 
 directory = sys.path[0]
 
@@ -29,66 +34,84 @@ parser = argparse.ArgumentParser(
     prog="celestine_configuration"
 )
 
-parser.add_argument(
-    "-c, --celestine",
-    action="store_true",
-    dest="celestine",
+subparser = parser.add_subparsers(
+    title="configuration",
+    description="Generate configuration files.",
+    prog="celestine_configuration",
+    dest="configuration",
+    required=True,
+    help="Enter the data for the configuration file.",
 )
 
-parser.add_argument(
-    "-l, --language",
-    action="store_true",
-    dest="language",
+
+parser_celestine = subparser.add_parser(
+    "celestine",
+    help="Try: english tkinter python_3_10",
 )
 
-parser.add_argument(
-    "-t, --translator",
-    dest="translator",
-    nargs=3,
+parser_celestine.add_argument(
+    "language",
+    choices=language,
+    help="The natural language to display the application in.",
 )
+
+parser_celestine.add_argument(
+    "package",
+    choices=package,
+    help="Which subpackage to run as the primary application.",
+)
+
+parser_celestine.add_argument(
+    "python",
+    choices=python,
+    help="Which version of python to run as.",
+)
+
+
+parser_translator = subparser.add_parser(
+    "translator",
+    help="Try: english tkinter python_3_10",
+)
+
+parser_translator.add_argument(
+    "key",
+    help="The natural language to display the application in.",
+)
+
+parser_translator.add_argument(
+    "region",
+    help="Which subpackage to run as the primary application.",
+)
+
+parser_translator.add_argument(
+    "url",
+    help="Which version of python to run as.",
+)
+
 
 parse = parser.parse_args()
+configuration = parse.configuration
 
-celestine = parse.celestine
-if celestine:
-    configuration = configparser.ConfigParser()
-    configuration.add_section(APPLICATION)
-    configuration.set(APPLICATION, LANGUAGE, ENGLISH)
-    configuration.set(APPLICATION, PACKAGE, CELESTINE)
-    configuration.set(APPLICATION, PYTHON, PYTHON_3_10)
+if configuration == "celestine":
     configuration_save(
-        configuration,
+        configuration_celestine(
+            parse.language,
+            parse.package,
+            parse.python,
+        ),
         directory,
         CELESTINE,
-        CONFIGURATION,
-        CONFIGURATION_CELESTINE
+        CONFIGURATION_CELESTINE,
     )
 
-language = parse.language
-if language:
-    configuration = configuration_load(
-        directory,
-        CELESTINE,
-        CONFIGURATION,
-        LANGUAGE,
-        "english.ini"
-    )
+if configuration == "translator":
     configuration_save(
-        configuration,
+        configuration_translator(
+            parse.key,
+            parse.region,
+            parse.url,
+        ),
         directory,
         CELESTINE,
-        CONFIGURATION,
-        "language.ini"
-    )
-
-translator = parse.translator
-if translator:
-    (key, region, url) = translator
-    configuration = _translator(key, region, url)
-    configuration_save(
-        configuration,
-        directory,
-        CELESTINE,
-        CONFIGURATION,
-        FILE
+        CONFIGURATION_TRANSLATOR,
     )

@@ -12,7 +12,7 @@ from celestine.keyword.main import WRITE
 
 def configuration_save(configuration, *paths):
     path = os.path.join(*paths)
-    with file_mode(path, WRITE) as file:
+    with open(path, WRITE) as file:
         configuration.write(file, True)
 
 
@@ -20,7 +20,7 @@ def configuration_save(configuration, *paths):
 def configuration_load(*paths):
     path = os.path.join(*paths)
     configuration = configparser.ConfigParser()
-    configuration.read(path+"a", encoding=ENCODING)
+    configuration.read(path+"a", encoding=ENCODING) #EERRROORORORROR
     return configuration
 
 
@@ -42,7 +42,7 @@ from celestine.keyword.translator import URL
 from celestine.keyword.translator import FILE
 
 
-def configuration_celestine():
+def configuration_celestine(language=ENGLISH, package=CELESTINE, python=PYTHON_3_10):
     configuration = configparser.ConfigParser()
     configuration.add_section(APPLICATION)
     configuration.set(APPLICATION, LANGUAGE, ENGLISH)
