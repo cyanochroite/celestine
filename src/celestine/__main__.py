@@ -2,7 +2,7 @@
 import os.path
 import sys
 
-directory = sys.path[0] = os.path.dirname(sys.path[0])
+directory = os.path.dirname(sys.path[0])
 sys.path.append(directory)
 
 

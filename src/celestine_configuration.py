@@ -5,6 +5,8 @@ import sys
 
 from celestine.main.configuration import configuration_load
 from celestine.main.configuration import configuration_save
+from celestine.main.configuration import celestine
+from celestine.main.configuration import translator as _translator
 
 from celestine.keyword.main import APPLICATION
 from celestine.keyword.main import LANGUAGE
@@ -16,10 +18,7 @@ from celestine.keyword.main import PYTHON_3_10
 from celestine.keyword.main import CONFIGURATION
 from celestine.keyword.main import CONFIGURATION_CELESTINE
 
-from celestine.keyword.translator import AZURE
-from celestine.keyword.translator import KEY
-from celestine.keyword.translator import REGION
-from celestine.keyword.translator import URL
+
 from celestine.keyword.translator import FILE
 
 
@@ -84,12 +83,8 @@ if language:
 
 translator = parse.translator
 if translator:
-    configuration = configparser.ConfigParser()
     (key, region, url) = translator
-    configuration.add_section(AZURE)
-    configuration.set(AZURE, KEY, key)
-    configuration.set(AZURE, REGION, region)
-    configuration.set(AZURE, URL, url)
+    configuration = _translator(key, region, url)
     configuration_save(
         configuration,
         directory,
