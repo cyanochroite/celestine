@@ -30,20 +30,32 @@ from celestine.keyword.translator import TRANSLATIONS
 from celestine.keyword.translator import TEXT
 from celestine.keyword.translator import TO
 
+from celestine.main.configuration import configuration_translator
+
 
 class Translator():
     """A translator."""
 
-    def __init__(self, in_directory):
-        self.configuration = configuration_load(
-            in_directory,
+    def set_attribute(self, default, configuration, name):
+        attribute = default[AZURE][name]
+
+        if configuration.has_option(AZURE, name):
+            attribute = configuration[AZURE][name]
+
+        setattr(self, name, attribute)
+    
+    def __init__(self, path):
+        default = configuration_translator("fish", "are", "friends")
+
+        configuration = configuration_load(
+            path,
             CELESTINE,
-            CONFIGURATION,
             FILE
         )
-        self.key = self.configuration[AZURE][KEY]
-        self.region = self.configuration[AZURE][REGION]
-        self.url = self.configuration[AZURE][URL]
+
+        self.set_attribute(default, configuration, KEY)
+        self.set_attribute(default, configuration, REGION)
+        self.set_attribute(default, configuration, URL)
 
     def endpoint(self):
         """Return the URL."""
@@ -93,18 +105,6 @@ def post(text):
     return request.json()
 
 
-def new_parser():
-    """Create new parsers."""
-    for name in language:
-        moose[name] = configparser.ConfigParser()
-
-
-def add_section(section):
-    """Add a section to parsers."""
-    for name in language:
-        moose[name].add_section(section)
-
-
 def add_item(section, key, value):
     """Add item to parsers."""
     items = post(value)
@@ -114,7 +114,7 @@ def add_item(section, key, value):
             text = translation[TEXT]
             put = languages[translation[TO]]
             name = put
-            moose[name].set(section, key, text)
+            moose[name].append(section, key, text)
 
 
 def save_item():
@@ -141,9 +141,10 @@ mydict = vars(configuration)["_sections"]
 
 def parser_magic():
     """Do all parser stuff here."""
-    new_parser()
+    for name in language:
+        moose[name] = []
+
     for section, dictionary in mydict.items():
-        add_section(section)
         for key, value in dictionary.items():
             add_item(section, key, value)
     save_item()

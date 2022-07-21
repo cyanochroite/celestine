@@ -2,6 +2,7 @@
 
 import os.path
 import sys
+import keyword
 
 directory = sys.path[0]
 
@@ -13,6 +14,7 @@ from celestine.keyword.main import ENCODING
 from celestine.keyword.main import ERRORS
 from celestine.keyword.main import READ
 from celestine.keyword.main import WRITE
+
 
 def file_mode(file, mode):
     buffering = 1
@@ -32,6 +34,7 @@ def file_mode(file, mode):
         opener
     )
 
+
 language = "italian"
 data = "a puppy"
 candy = [
@@ -39,7 +42,36 @@ candy = [
     F'eat_peppers = "{data}"\n'
 ]
 path = os.path.join(directory, "monkey.py")
+
+
+def format_line(name, value):
+    if not name.isidentifier():
+        raise ValueError("Not a valid identifier.")
+    if keyword.iskeyword(name) or keyword.issoftkeyword(name):
+        raise ValueError("This work is a keyword.")
+    value = value.replace('"', "'")
+    return F'{name} = "{value}"\n'
+
+
+names = ['sugar', 'spice', 'everything_nice']
+values = ["1", "2", "3"]
 with file_mode(path, WRITE) as file:
-    file.writelines(candy)
+    file.write(F'"""Lookup table for {language}."""\n')
+    file.writelines(map(format_line, names, values))
+
 
 print("cow")
+
+
+
+
+
+
+
+names = ['sugar', 'spice', 'everything_nice']
+values = ["1", "2", "3"]
+
+fish = map(format_line, names, values)
+
+print(list(fish))
+

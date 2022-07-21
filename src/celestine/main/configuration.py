@@ -20,7 +20,7 @@ def configuration_save(configuration, *paths):
 def configuration_load(*paths):
     path = os.path.join(*paths)
     configuration = configparser.ConfigParser()
-    configuration.read(path+"a", encoding=ENCODING) #EERRROORORORROR
+    configuration.read(path, encoding=ENCODING)
     return configuration
 
 

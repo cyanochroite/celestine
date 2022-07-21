@@ -1,2 +1,4 @@
 """Lookup table for italian."""
-eat_peppers = "a puppy"
+sugar = "1"
+spice = "2"
+everything_nice = "3"

@@ -22,41 +22,34 @@ def load_module(*paths):
         item = getattr(item, path)
     return item
 
+
 class Session():
     """Wrapper around configuration dictionary data."""
-    def override(self, argument, name):
-        attribute = getattr(argument, name, None)
-        if attribute is not None:
-            self.session[APPLICATION][name] = attribute
 
-    def magic(self, name):
-        if self.session.has_option(APPLICATION, name):
-            setattr(self, name,  self.session[APPLICATION][name])
-        
-    def dentist(self, default, configuration, argument, name):
-        sun = default[APPLICATION][name]
+    def set_attribute(self, default, configuration, argument, name):
+        attribute = default[APPLICATION][name]
+
         if configuration.has_option(APPLICATION, name):
-            sun = configuration[APPLICATION][name]
+            attribute = configuration[APPLICATION][name]
 
-        attribute = getattr(argument, name, None)
-        if attribute is not None:
-            sun = attribute
+        override = getattr(argument, name, None)
+        if override is not None:
+            attribute = override
 
-        carwash = load_module(name, sun)
-        setattr(self, name, carwash)
-        
+        module = load_module(name, attribute)
+        setattr(self, name, module)
+
     def __init__(self, argument, directory):
         self.directory = directory
-        
+
         default = configuration_celestine()
+
         configuration = configuration_load(
             directory,
             CELESTINE,
-            "configuration",
             CONFIGURATION_CELESTINE
         )
-        
-        self.dentist(default, configuration, argument, LANGUAGE)
-        self.dentist(default, configuration, argument, PACKAGE)
-        self.dentist(default, configuration, argument, PYTHON)
-        
+
+        self.set_attribute(default, configuration, argument, LANGUAGE)
+        self.set_attribute(default, configuration, argument, PACKAGE)
+        self.set_attribute(default, configuration, argument, PYTHON)
