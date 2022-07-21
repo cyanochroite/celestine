@@ -3,45 +3,35 @@
 import os.path
 import sys
 import keyword
+import shutil
 
 directory = sys.path[0]
 
-import configparser
 
-
-from celestine.keyword.main import CONFIGURATION_CELESTINE
-from celestine.keyword.main import ENCODING
-from celestine.keyword.main import ERRORS
-from celestine.keyword.main import READ
 from celestine.keyword.main import WRITE
 
 
-def file_mode(file, mode):
-    buffering = 1
-    encoding = ENCODING
-    errors = ERRORS
-    newline = None
-    closefd = True
-    opener = None
-    return open(
-        file,
-        mode,
-        buffering,
-        encoding,
-        errors,
-        newline,
-        closefd,
-        opener
-    )
+
+def reset():
+    path = os.path.join(directory, "celestine", "language")
+    if os.path.islink(path):
+        raise RuntimeError
+    
+    if os.path.isdir(path):
+        shutil.rmtree.avoids_symlink_attacks
+        shutil.rmtree(path, ignore_errors=False, onerror=None)
+    
+    os.mkdir(path)
+    
+    
+def header():
+    path = os.path.join(directory, "celestine", "language", "__init__.py")
+    with open(path, WRITE) as file:
+        file.write(F'"""Lookup table for languages."""\n')
 
 
-language = "italian"
-data = "a puppy"
-candy = [
-    F'"""Lookup table for {language}."""\n',
-    F'eat_peppers = "{data}"\n'
-]
-path = os.path.join(directory, "monkey.py")
+reset()
+header()
 
 
 def format_line(name, value):
@@ -52,26 +42,11 @@ def format_line(name, value):
     value = value.replace('"', "'")
     return F'{name} = "{value}"\n'
 
-
+language = "friday"
+path = os.path.join(directory, "celestine", "language", "monkey.py")
 names = ['sugar', 'spice', 'everything_nice']
 values = ["1", "2", "3"]
-with file_mode(path, WRITE) as file:
+with open(path, WRITE) as file:
     file.write(F'"""Lookup table for {language}."""\n')
     file.writelines(map(format_line, names, values))
-
-
-print("cow")
-
-
-
-
-
-
-
-names = ['sugar', 'spice', 'everything_nice']
-values = ["1", "2", "3"]
-
-fish = map(format_line, names, values)
-
-print(list(fish))
 

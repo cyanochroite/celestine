@@ -29,6 +29,7 @@ from celestine.keyword.translator import FILE
 from celestine.keyword.translator import TRANSLATIONS
 from celestine.keyword.translator import TEXT
 from celestine.keyword.translator import TO
+from celestine.keyword.language import thelist
 
 from celestine.main.configuration import configuration_translator
 
@@ -85,6 +86,24 @@ class Translator():
             "textType": "plain",
         }
 
+def reset():
+    path = os.path.join(directory, "celestine", "language")
+    if os.path.islink(path):
+        raise RuntimeError
+    
+    if os.path.isdir(path):
+        shutil.rmtree.avoids_symlink_attacks
+        shutil.rmtree(path, ignore_errors=False, onerror=None)
+    
+    os.mkdir(path)
+    
+    
+def header():
+    path = os.path.join(directory, "celestine", "language", "__init__.py")
+    with open(path, WRITE) as file:
+        file.write(F'"""Lookup table for languages."""\n')
+
+
 
 directory = sys.path[0]
 
@@ -92,6 +111,26 @@ directory = sys.path[0]
 moose = {}
 
 translator = Translator(directory)
+
+def format_line(item):
+    (name, value) = item
+    if not name.isidentifier():
+        raise ValueError("Not a valid identifier.")
+    if keyword.iskeyword(name) or keyword.issoftkeyword(name):
+        raise ValueError("This work is a keyword.")
+    value = value.replace('"', "'")
+    return F'{name} = "{value}"\n'
+
+
+def new_save(language):
+    path = os.path.join(directory, "celestine", "language", F"{language}.py")
+    items = moose[language]
+
+    names = ['sugar', 'spice', 'everything_nice']
+    values = ["1", "2", "3"]
+    with open(path, WRITE) as file:
+        file.write(F'"""Lookup table for {language}."""\n')
+        file.writelines(map(format_line, names, values))
 
 
 def post(text):
@@ -105,7 +144,7 @@ def post(text):
     return request.json()
 
 
-def add_item(section, key, value):
+def add_item(key, value):
     """Add item to parsers."""
     items = post(value)
     for item in items:
@@ -114,41 +153,34 @@ def add_item(section, key, value):
             text = translation[TEXT]
             put = languages[translation[TO]]
             name = put
-            moose[name].append(section, key, text)
+            moose[name].append((key, text))
 
 
 def save_item():
     """Save the items."""
     for name in language:
-        configuration_save(
-            moose[name],
-            directory,
-            CELESTINE,
-            CONFIGURATION,
-            "language",
-            F"{name}.ini"
-        )
+        path = os.path.join(directory, "celestine", "language", F"{name}.py")
+        items = moose[name]
+        with open(path, WRITE) as file:
+            file.write(F'"""Lookup table for {name}."""\n')
+            file.writelines(map(format_line, items))
 
-
-configuration = configuration_load(
-    directory,
-    CELESTINE,
-    CONFIGURATION,
-    "language.ini"
-)
-mydict = vars(configuration)["_sections"]
 
 
 def parser_magic():
     """Do all parser stuff here."""
     for name in language:
         moose[name] = []
+    
+    for item in thelist:
+        (name, value) = item
+        add_item(name, value)
 
-    for section, dictionary in mydict.items():
-        for key, value in dictionary.items():
-            add_item(section, key, value)
     save_item()
 
+
+reset()
+header()
 
 parser_magic()
 
