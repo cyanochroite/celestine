@@ -3,17 +3,19 @@ import sys
 import uuid
 import configparser
 import requests
-
+import os
+import shutil
+import keyword
 
 from celestine.main.configuration import configuration_load
-from celestine.main.configuration import configuration_save
 
 from celestine.keyword.main import code
 from celestine.keyword.main import language
 from celestine.keyword.main import languages
+from celestine.keyword.main import WRITE
+from celestine.keyword.main import UTF_8
 
 
-from celestine.keyword.main import CONFIGURATION
 from celestine.keyword.main import CELESTINE
 
 
@@ -44,7 +46,7 @@ class Translator():
             attribute = configuration[AZURE][name]
 
         setattr(self, name, attribute)
-    
+
     def __init__(self, path):
         default = configuration_translator("fish", "are", "friends")
 
@@ -86,31 +88,24 @@ class Translator():
             "textType": "plain",
         }
 
+
 def reset():
     path = os.path.join(directory, "celestine", "language")
     if os.path.islink(path):
         raise RuntimeError
-    
+
     if os.path.isdir(path):
         shutil.rmtree.avoids_symlink_attacks
         shutil.rmtree(path, ignore_errors=False, onerror=None)
-    
+
     os.mkdir(path)
-    
-    
+
+
 def header():
     path = os.path.join(directory, "celestine", "language", "__init__.py")
-    with open(path, WRITE) as file:
+    with open(path, WRITE, encoding=UTF_8) as file:
         file.write(F'"""Lookup table for languages."""\n')
 
-
-
-directory = sys.path[0]
-
-
-moose = {}
-
-translator = Translator(directory)
 
 def format_line(item):
     (name, value) = item
@@ -120,17 +115,6 @@ def format_line(item):
         raise ValueError("This work is a keyword.")
     value = value.replace('"', "'")
     return F'{name} = "{value}"\n'
-
-
-def new_save(language):
-    path = os.path.join(directory, "celestine", "language", F"{language}.py")
-    items = moose[language]
-
-    names = ['sugar', 'spice', 'everything_nice']
-    values = ["1", "2", "3"]
-    with open(path, WRITE) as file:
-        file.write(F'"""Lookup table for {language}."""\n')
-        file.writelines(map(format_line, names, values))
 
 
 def post(text):
@@ -161,28 +145,33 @@ def save_item():
     for name in language:
         path = os.path.join(directory, "celestine", "language", F"{name}.py")
         items = moose[name]
-        with open(path, WRITE) as file:
+        with open(path, WRITE, encoding=UTF_8) as file:
             file.write(F'"""Lookup table for {name}."""\n')
             file.writelines(map(format_line, items))
-
 
 
 def parser_magic():
     """Do all parser stuff here."""
     for name in language:
         moose[name] = []
-    
-    for item in thelist:
-        (name, value) = item
+
+    for name, value in thelist.items():
         add_item(name, value)
 
-    save_item()
+
+directory = sys.path[0]
+
+
+moose = {}
+
+translator = Translator(directory)
 
 
 reset()
 header()
 
 parser_magic()
+save_item()
 
 print(moose)
 print("done")
