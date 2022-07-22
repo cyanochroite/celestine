@@ -73,7 +73,7 @@ class Window():
         self.item[tag] = item
 
     def run(self, app):
-        title = self.session.language.TITLE
+        title = self.session.language.application_title
         dpg.create_context()
         dpg.create_viewport(
             title=title,

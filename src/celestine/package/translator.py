@@ -1,4 +1,10 @@
 """Application for translating text to other languages."""
+import os.path
+import sys
+
+directory = os.path.dirname(sys.path[0])
+sys.path.append(directory)
+
 import sys
 import uuid
 import configparser
@@ -158,8 +164,6 @@ def parser_magic():
     for name, value in thelist.items():
         add_item(name, value)
 
-
-directory = sys.path[0]
 
 
 moose = {}

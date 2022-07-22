@@ -1,7 +1,12 @@
 """Generate configuration files for all packages."""
+import os.path
+import sys
+
+directory = os.path.dirname(sys.path[0])
+sys.path.append(directory)
+
 import argparse
 import configparser
-import sys
 
 from celestine.main.configuration import configuration_load
 from celestine.main.configuration import configuration_save
@@ -26,8 +31,6 @@ from celestine.keyword.translator import FILE
 
 
 from celestine.keyword.main import language
-
-directory = sys.path[0]
 
 
 parser = argparse.ArgumentParser(

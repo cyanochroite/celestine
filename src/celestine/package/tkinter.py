@@ -77,7 +77,7 @@ class Window():
 
     def run(self, app):
         self.root = tkinter.Tk()
-        self.root.title(self.session.language.TITLE)
+        self.root.title(self.session.language.application_title)
 
         self.root.geometry("1920x1080")
         self.root.minsize(640, 480)
