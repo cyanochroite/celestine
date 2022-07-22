@@ -45,8 +45,8 @@ from celestine.keyword.translator import FILE
 def configuration_celestine(language=ENGLISH, package=CELESTINE, python=PYTHON_3_10):
     configuration = configparser.ConfigParser()
     configuration.add_section(APPLICATION)
+    configuration.set(APPLICATION, APPLICATION, CELESTINE)
     configuration.set(APPLICATION, LANGUAGE, ENGLISH)
-    configuration.set(APPLICATION, PACKAGE, CELESTINE)
     configuration.set(APPLICATION, PYTHON, PYTHON_3_10)
     return configuration
 

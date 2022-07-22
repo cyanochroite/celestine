@@ -21,6 +21,6 @@ argument = load_module("main", "argument").argument
 session = load_module("main", "session").Session(argument, directory)
 main = load_module("window", "main").main(session)
 
-session.package.Window(session).run(main)
+session.application.Window(session).run(main)
 
 sys.exit()

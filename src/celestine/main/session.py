@@ -2,7 +2,7 @@
 from celestine.keyword.main import APPLICATION
 from celestine.keyword.main import DIRECTORY
 from celestine.keyword.main import LANGUAGE
-from celestine.keyword.main import PACKAGE
+from celestine.keyword.main import APPLICATION
 from celestine.keyword.main import CACHE
 from celestine.keyword.main import PYTHON
 
@@ -50,6 +50,6 @@ class Session():
             CONFIGURATION_CELESTINE
         )
 
+        self.set_attribute(default, configuration, argument, APPLICATION)
         self.set_attribute(default, configuration, argument, LANGUAGE)
-        self.set_attribute(default, configuration, argument, PACKAGE)
         self.set_attribute(default, configuration, argument, PYTHON)

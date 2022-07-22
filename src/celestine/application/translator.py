@@ -2,6 +2,7 @@
 import os.path
 import sys
 
+print("application".upper())
 directory = os.path.dirname(sys.path[0])
 sys.path.append(directory)
 
@@ -94,7 +95,7 @@ class Translator():
             "textType": "plain",
         }
 
-
+choeunts
 def reset():
     path = os.path.join(directory, "celestine", "language")
     if os.path.islink(path):

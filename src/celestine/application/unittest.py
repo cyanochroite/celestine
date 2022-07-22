@@ -1,6 +1,9 @@
 """Package unittest."""
-import sys
 import unittest
+
+from celestine.keyword.main import APPLICATION
+from celestine.keyword.main import CELESTINE
+from celestine.keyword.main import UNITTEST
 
 from celestine.tests.test_parser.test_translator import *
 from celestine.tests.test_parser.test_operator import *
@@ -28,9 +31,9 @@ class Window():
         pass
 
     def run(self, app):
-        module = "celestine.package.unittest"
+        module = F"{CELESTINE}.{APPLICATION}.{UNITTEST}"
         defaultTest = None  # customize
-        argv = [sys.argv[0]]  # can we do better? sessios parent directiy
+        argv = [CELESTINE]
         testRunner = None
         testLoader = unittest.defaultTestLoader
         exit = True
