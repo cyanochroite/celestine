@@ -1,3 +1,3 @@
 """Lookup table for greek."""
-application_title = "Θεατής εικόνων Celestine"
-curses_exit = " Πατήστε το πλήκτρο 'q' για έξοδο."
+APPLICATION_TITLE = "Θεατής εικόνων Celestine"
+CURSES_EXIT = "Πατήστε το πλήκτρο 'q' για έξοδο."

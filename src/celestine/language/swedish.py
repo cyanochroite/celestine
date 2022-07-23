@@ -1,3 +1,3 @@
 """Lookup table for swedish."""
-application_title = "Celestine bildvisare"
-curses_exit = " Tryck på 'q' -tangenten för att avsluta."
+APPLICATION_TITLE = "Celestine bildvisare"
+CURSES_EXIT = "Tryck på 'q' -tangenten för att avsluta."

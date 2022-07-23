@@ -1,3 +1,3 @@
 """Lookup table for polish."""
-application_title = "Przeglądarka obrazów Celestine"
-curses_exit = " Naciśnij 'q', aby wyjść."
+APPLICATION_TITLE = "Przeglądarka obrazów Celestine"
+CURSES_EXIT = "Naciśnij 'q', aby wyjść."

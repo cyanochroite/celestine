@@ -34,6 +34,10 @@ class Window():
         self.session = session
         self.item = {}
         self.line = 0
+        self.quote_window = None
+        self.header = None
+        self.quote_text_window = None
+
 
     def file_dialog(self, tag, bind):
         self._add_string(self.quote_text_window, "File dialog thing.")
@@ -84,10 +88,11 @@ class Window():
             self.quote_window.box()
 
             self.header = self._new_subwindow(self.quote_window, 0, 0, WIDTH, 1)
-            self.header.addstr(self.session.language.application_title)
-            self.header.addstr(" - " + self.session.language.curses_exit)
+            self.header.addstr(self.session.language.APPLICATION_TITLE)
+            self.header.addstr(" - " + self.session.language.CURSES_EXIT)
             
-            self.quote_text_window = self._new_subwindow(self.quote_window, 1, 1, WIDTH-1, HEIGHT-1)
+            self.quote_text_window = self._new_subwindow(
+                self.quote_window, 1, 1, WIDTH-1, HEIGHT-1)
 
             app.setup(self)
             app.view(self)

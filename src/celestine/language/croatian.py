@@ -1,3 +1,3 @@
 """Lookup table for croatian."""
-application_title = "Celestine preglednik slika"
-curses_exit = " Pritisnite tipku 'q' za izlaz."
+APPLICATION_TITLE = "Celestine preglednik slika"
+CURSES_EXIT = "Pritisnite tipku 'q' za izlaz."

@@ -1,3 +1,3 @@
 """Lookup table for bulgarian."""
-application_title = "Преглед на изображения в Селестина"
-curses_exit = " Натиснете клавиш 'q', за да излезете."
+APPLICATION_TITLE = "Преглед на изображения в Селестина"
+CURSES_EXIT = "Натиснете клавиш 'q', за да излезете."

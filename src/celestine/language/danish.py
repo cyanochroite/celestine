@@ -1,3 +1,3 @@
 """Lookup table for danish."""
-application_title = "Celestine billedfremviser"
-curses_exit = " Tryk på 'q' -tasten for at afslutte."
+APPLICATION_TITLE = "Celestine billedfremviser"
+CURSES_EXIT = "Tryk på 'q' -tasten for at afslutte."

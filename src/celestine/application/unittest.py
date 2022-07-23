@@ -16,21 +16,27 @@ class Window():
         self.session = session
 
     def file_dialog(self, tag, bind):
+        """pass"""
         pass
 
     def file_dialog_load(self, tag):
+        """pass"""
         pass
 
     def image(self, tag, image):
+        """pass"""
         pass
 
     def image_load(self, file):
+        """pass"""
         pass
 
     def label(self, tag, text):
+        """pass"""
         pass
 
     def run(self, app):
+        """pass"""
         module = F"{CELESTINE}.{APPLICATION}.{UNITTEST}"
         defaultTest = None  # customize
         argv = [CELESTINE]

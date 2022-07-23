@@ -1,3 +1,3 @@
 """Lookup table for hungarian."""
-application_title = "Celesztin Képnézegető"
-curses_exit = " Nyomja meg a 'q' gombot a kilépéshez."
+APPLICATION_TITLE = "Celesztin Képnézegető"
+CURSES_EXIT = "Nyomja meg a 'q' gombot a kilépéshez."

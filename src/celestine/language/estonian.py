@@ -1,3 +1,3 @@
 """Lookup table for estonian."""
-application_title = "Celestine'i pildivaatleja"
-curses_exit = " Väljumiseks vajutage klahvi 'q'."
+APPLICATION_TITLE = "Celestine'i pildivaatleja"
+CURSES_EXIT = "Väljumiseks vajutage klahvi 'q'."

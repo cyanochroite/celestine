@@ -1,3 +1,3 @@
 """Lookup table for spanish."""
-application_title = "Visor de imágenes Celestine"
-curses_exit = " Presione la tecla 'q' para salir."
+APPLICATION_TITLE = "Visor de imágenes Celestine"
+CURSES_EXIT = "Presione la tecla 'q' para salir."

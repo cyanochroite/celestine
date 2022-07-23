@@ -5,86 +5,48 @@ import os.path
 import shutil
 import keyword
 
-from celestine.main.configuration import configuration_load
-
 from celestine.keyword.main import code
-from celestine.keyword.main import language
+from celestine.keyword.main import language as language_list
 from celestine.keyword.main import languages
 from celestine.keyword.main import WRITE
 from celestine.keyword.main import UTF_8
 
 
-from celestine.keyword.main import CELESTINE
-
-
-from celestine.keyword.translator import AZURE
-
-from celestine.keyword.translator import KEY
-from celestine.keyword.translator import REGION
-from celestine.keyword.translator import URL
-
-from celestine.keyword.translator import FILE
-
-
 from celestine.keyword.translator import TRANSLATIONS
 from celestine.keyword.translator import TEXT
 from celestine.keyword.translator import TO
-from celestine.keyword.language import thelist
 
-from celestine.main.configuration import configuration_translator
+from celestine.application.translator.translator import Translator
 
 
-class Translator():
-    """A translator."""
+# start: dict loader
+from celestine.keyword import language
+from celestine.keyword.unicode import LOW_LINE
 
-    def set_attribute(self, default, configuration, name):
-        attribute = default[AZURE][name]
 
-        if configuration.has_option(AZURE, name):
-            attribute = configuration[AZURE][name]
+def magic(module):
+    dictionary = vars(module)
+    return {
+        key: value
+        for key, value
+        in dictionary.items()
+        if not key.startswith(LOW_LINE)
+    }
 
-        setattr(self, name, attribute)
 
-    def __init__(self, path):
-        default = configuration_translator("fish", "are", "friends")
+def magic1(dictionary):
+    return {
+        key: value
+        for key, value
+        in dictionary.items()
+        if not key.startswith(LOW_LINE)
+    }
 
-        configuration = configuration_load(
-            path,
-            CELESTINE,
-            FILE
-        )
 
-        self.set_attribute(default, configuration, KEY)
-        self.set_attribute(default, configuration, REGION)
-        self.set_attribute(default, configuration, URL)
+def magic2(module):
+    return magic1(vars(module))
 
-    def endpoint(self):
-        """Return the URL."""
-        return self.url
-
-    def header(self, trace):
-        """Return the header."""
-        return {
-            "Ocp-Apim-Subscription-Key": self.key,
-            "Ocp-Apim-Subscription-Region": self.region,
-            "Content-type": "application/json",
-            "X-ClientTraceId": trace,
-        }
-
-    def parameter(self, to_language):
-        """Return the parameter."""
-        return {
-            "api-version": "3.0",
-            "to": to_language,
-            "category": "general",
-            "from": "en",
-            "includeAlignment": False,
-            "includeSentenceLength": False,
-            "profanityAction": "NoAction",
-            "profanityMarker": "Asterisk",
-            "suggestedFrom": "en",
-            "textType": "plain",
-        }
+# end: dict loader
 
 
 class Window():
@@ -154,7 +116,7 @@ class Window():
 
     def save_item(self):
         """Save the items."""
-        for name in language:
+        for name in language_list:
             path = os.path.join(self.directory, "celestine", "language", F"{name}.py")
             items = self.moose[name]
             with open(path, WRITE, encoding=UTF_8) as file:
@@ -163,9 +125,10 @@ class Window():
 
     def parser_magic(self):
         """Do all parser stuff here."""
-        for name in language:
+        for name in language_list:
             self.moose[name] = []
 
+        thelist = magic2(language)
         for name, value in thelist.items():
             self.add_item(name, value)
 
@@ -182,6 +145,5 @@ class Window():
 
         print(self.moose)
         print("done")
-
 
 

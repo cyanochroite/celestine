@@ -52,7 +52,7 @@ def configuration_celestine(application=TERMINAL, language=ENGLISH, python=PYTHO
     return configuration
 
 
-def configuration_translator(key, region, url):
+def configuration_translator(key="", region="", url=""):
     configuration = configparser.ConfigParser()
     configuration.add_section(AZURE)
     configuration.set(AZURE, KEY, key)

@@ -1,3 +1,3 @@
 """Lookup table for finnish."""
-application_title = "Celestinen kuvankatseluohjelma"
-curses_exit = " Paina 'q' -näppäintä poistuaksesi."
+APPLICATION_TITLE = "Celestinen kuvankatseluohjelma"
+CURSES_EXIT = "Paina 'q' -näppäintä poistuaksesi."

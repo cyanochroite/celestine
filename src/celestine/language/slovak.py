@@ -1,3 +1,3 @@
 """Lookup table for slovak."""
-application_title = "Zobrazovač celestínových obrázkov"
-curses_exit = " Stlačením klávesu 'q' ukončíte."
+APPLICATION_TITLE = "Zobrazovač celestínových obrázkov"
+CURSES_EXIT = "Stlačením klávesu 'q' ukončíte."

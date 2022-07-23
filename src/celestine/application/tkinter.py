@@ -17,6 +17,7 @@ class Image():
 
 
 def browseFiles():
+    """pass"""
     filename = tkinter.filedialog.askopenfilename(
         initialdir="/",
         title="Select a File",
@@ -36,6 +37,7 @@ class Window():
         self.item = {}
 
     def file_dialog(self, tag, bind):
+        """pass"""
         command = partial(self.file_dialog_load, bind)
         item = tkinter.Button(
             self.root,
@@ -46,6 +48,7 @@ class Window():
         item.pack()
 
     def file_dialog_load(self, tag):
+        """pass"""
         filename = tkinter.filedialog.askopenfilename(
             initialdir="/",
             title="Select a File",
@@ -57,14 +60,17 @@ class Window():
         self.item[tag].configure(text="File Opened: " + filename)
 
     def image(self, tag, image):
+        """pass"""
         item = tkinter.Label(self.root, image=image.image)
         self.item[tag] = item
         item.pack()
 
     def image_load(self, file):
+        """pass"""
         return Image(file)
 
     def label(self, tag, text):
+        """pass"""
         item = tkinter.Label(
             self.root,
             text=text,
@@ -76,8 +82,9 @@ class Window():
         item.pack()
 
     def run(self, app):
+        """pass"""
         self.root = tkinter.Tk()
-        self.root.title(self.session.language.application_title)
+        self.root.title(self.session.language.APPLICATION_TITLE)
 
         self.root.geometry("1920x1080")
         self.root.minsize(640, 480)

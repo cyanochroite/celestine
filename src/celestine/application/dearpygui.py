@@ -4,6 +4,8 @@ import dearpygui.dearpygui as dpg
 
 
 class Image():
+    """Something to hold the images in."""
+
     def __init__(self, file):
         image = dpg.load_image(file)
         if image is None:
@@ -23,10 +25,12 @@ class Image():
 
 
 def callback_dvd(sender, app_data, user_data):
+    """Some other callback thing."""
     dpg.configure_item(user_data, show=True)
 
 
 def callback_file(sender, app_data, user_data):
+    """File dialaog callback."""
     array = list(app_data["selections"])
     item = ""
     if len(array) > 0:
@@ -40,6 +44,7 @@ class Window():
         self.item = {}
 
     def file_dialog(self, tag, bind):
+        """Make file dialog."""
         with dpg.file_dialog(
             label="Demo File Dialog",
             width=800,
@@ -50,9 +55,15 @@ class Window():
             user_data=bind,
         ):
             dpg.add_file_extension(".*", color=(255, 255, 255, 255))
-            dpg.add_file_extension("Source files (*.cpp *.h *.hpp){.cpp,.h,.hpp}", color=(0, 255, 255, 255))
+            dpg.add_file_extension(
+                "Source files (*.cpp *.h *.hpp){.cpp,.h,.hpp}",
+                color=(0, 255, 255, 255),
+            )
             dpg.add_file_extension(".txt", color=(255, 255, 0, 255))
-            dpg.add_file_extension(".gif", color=(255, 0, 255, 255), custom_text="header")
+            dpg.add_file_extension(
+                ".gif", color=(255, 0, 255, 255),
+                custom_text="header",
+            )
             dpg.add_file_extension(".py", color=(0, 255, 0, 255))
         item = dpg.add_button(
             label="Show File Selector",
@@ -62,18 +73,22 @@ class Window():
         self.item[tag] = item
 
     def image(self, tag, image):
+        """Make image."""
         item = dpg.add_image(image.name)
         self.item[tag] = item
 
     def image_load(self, file):
+        """Load image."""
         return Image(file)
 
     def label(self, tag, text):
+        """Make a label."""
         item = dpg.add_text(text, tag=tag, label="Label", show_label=True)
         self.item[tag] = item
 
     def run(self, app):
-        title = self.session.language.application_title
+        """Run the main program."""
+        title = self.session.language.APPLICATION_TITLE
         dpg.create_context()
         dpg.create_viewport(
             title=title,
