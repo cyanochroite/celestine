@@ -30,6 +30,7 @@ from celestine.keyword.main import LANGUAGE
 from celestine.keyword.main import ENGLISH
 from celestine.keyword.main import PACKAGE
 from celestine.keyword.main import CELESTINE
+from celestine.keyword.main import TERMINAL
 from celestine.keyword.main import PYTHON
 from celestine.keyword.main import PYTHON_3_10
 from celestine.keyword.main import CONFIGURATION
@@ -42,12 +43,12 @@ from celestine.keyword.translator import URL
 from celestine.keyword.translator import FILE
 
 
-def configuration_celestine(language=ENGLISH, package=CELESTINE, python=PYTHON_3_10):
+def configuration_celestine(application=TERMINAL, language=ENGLISH, python=PYTHON_3_10):
     configuration = configparser.ConfigParser()
-    configuration.add_section(APPLICATION)
-    configuration.set(APPLICATION, APPLICATION, CELESTINE)
-    configuration.set(APPLICATION, LANGUAGE, ENGLISH)
-    configuration.set(APPLICATION, PYTHON, PYTHON_3_10)
+    configuration.add_section(CELESTINE)
+    configuration.set(CELESTINE, APPLICATION, application)
+    configuration.set(CELESTINE, LANGUAGE, language)
+    configuration.set(CELESTINE, PYTHON, python)
     return configuration
 
 

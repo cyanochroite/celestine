@@ -27,10 +27,10 @@ class Session():
     """Wrapper around configuration dictionary data."""
 
     def set_attribute(self, default, configuration, argument, name):
-        attribute = default[APPLICATION][name]
+        attribute = default[CELESTINE][name]
 
-        if configuration.has_option(APPLICATION, name):
-            attribute = configuration[APPLICATION][name]
+        if configuration.has_option(CELESTINE, name):
+            attribute = configuration[CELESTINE][name]
 
         override = getattr(argument, name, None)
         if override is not None:

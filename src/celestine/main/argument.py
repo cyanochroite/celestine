@@ -24,6 +24,12 @@ parser = argparse.ArgumentParser(
     prog=CELESTINE
 )
 
+parser.add_argument(
+    "application",
+    choices=application,
+    help="Tell me which python version you are using.",
+    nargs="?"
+)
 
 parser.add_argument(
     "-l, --language",
@@ -41,12 +47,6 @@ parser.add_argument(
 )
 
 
-parser.add_argument(
-    "application",
-    choices=application,
-    default=CELESTINE,
-    help="Tell me which python version you are using.",
-)
 
 parser.add_argument(
     "_",

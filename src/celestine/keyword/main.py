@@ -1,7 +1,6 @@
 """Keywords used throughout the application."""
 APPLICATION = "application"
 
-
 LANGUAGE = "language"
 
 BULGARIAN = "bulgarian"
@@ -204,12 +203,14 @@ UTF_8 = "utf_8"
 
 APPLICATION = "application"
 
+TERMINAL = "terminal"
+
 application = [
-    CELESTINE,
+    "configuration",
     CURSES,
     DEARPYGUI,
+    TERMINAL,
     TKINTER,
     UNITTEST,
     "translator",
-    "configuration",
 ]
