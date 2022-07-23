@@ -1,6 +1,6 @@
 python celestine
-python celestine -p celestine
-python celestine -p unittest
-python celestine -p curses
-python celestine -p dearpygui
-python celestine -p tkinter
+python celestine curses
+python celestine dearpygui
+python celestine tkinter
+python celestine terminal
+python celestine unittest

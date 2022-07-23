@@ -1,6 +1,6 @@
 %APPDATA%\..\Local\Programs\Python\Python38\python.exe celestine -v python_3_8
-%APPDATA%\..\Local\Programs\Python\Python38\python.exe celestine -v python_3_8 -p celestine
-%APPDATA%\..\Local\Programs\Python\Python38\python.exe celestine -v python_3_8 -p curses
-%APPDATA%\..\Local\Programs\Python\Python38\python.exe celestine -v python_3_8 -p dearpygui
-%APPDATA%\..\Local\Programs\Python\Python38\python.exe celestine -v python_3_8 -p tkinter
-%APPDATA%\..\Local\Programs\Python\Python38\python.exe celestine -v python_3_8 -p unittest
+%APPDATA%\..\Local\Programs\Python\Python38\python.exe celestine curses -v python_3_8
+%APPDATA%\..\Local\Programs\Python\Python38\python.exe celestine dearpygui -v python_3_8
+%APPDATA%\..\Local\Programs\Python\Python38\python.exe celestine terminal -v python_3_8
+%APPDATA%\..\Local\Programs\Python\Python38\python.exe celestine tkinter -v python_3_8
+%APPDATA%\..\Local\Programs\Python\Python38\python.exe celestine unittest -v python_3_8
