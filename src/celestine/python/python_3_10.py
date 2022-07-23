@@ -2,18 +2,18 @@
 from celestine.python import python_3_9 as python
 
 
-def curses_cursor_input_match(key, curses, x, y):
+def curses_cursor_input_match(key, curses, mouse_x, mouse_y):
     """Move the cursor."""
     match key:
         case curses.KEY_UP:
-            y -= 1
+            mouse_y -= 1
         case curses.KEY_DOWN:
-            y += 1
+            mouse_y += 1
         case curses.KEY_LEFT:
-            x -= 1
+            mouse_x -= 1
         case curses.KEY_RIGHT:
-            x += 1
-    return (x, y)
+            mouse_x += 1
+    return (mouse_x, mouse_y)
 
 
 def string_format(string):

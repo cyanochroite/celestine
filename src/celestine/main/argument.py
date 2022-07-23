@@ -2,6 +2,10 @@
 import argparse
 
 from celestine.keyword.main import CELESTINE
+from celestine.keyword.main import CURSES
+from celestine.keyword.main import DEARPYGUI
+from celestine.keyword.main import TKINTER
+from celestine.keyword.main import UNITTEST
 
 from celestine.keyword.main import LANGUAGE
 from celestine.keyword.main import language
@@ -12,9 +16,19 @@ from celestine.keyword.main import package
 from celestine.keyword.main import PYTHON
 from celestine.keyword.main import python
 
+from celestine.keyword.main import APPLICATION
+from celestine.keyword.main import application
+
 
 parser = argparse.ArgumentParser(
     prog=CELESTINE
+)
+
+parser.add_argument(
+    "application",
+    choices=application,
+    help="Tell me which python version you are using.",
+    nargs="?"
 )
 
 parser.add_argument(
@@ -24,18 +38,19 @@ parser.add_argument(
     dest=LANGUAGE,
 )
 
-parser.add_argument(
-    "-p, --package",
-    choices=package,
-    help="Choose a mode to opperate in.",
-    dest=PACKAGE,
-)
 
 parser.add_argument(
     "-v, --version",
     choices=python,
     help="Tell me which python version you are using.",
     dest=PYTHON,
+)
+
+
+
+parser.add_argument(
+    "_",
+    nargs="*",
 )
 
 argument = parser.parse_args()

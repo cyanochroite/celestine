@@ -2,7 +2,7 @@
 from celestine.keyword.main import APPLICATION
 from celestine.keyword.main import DIRECTORY
 from celestine.keyword.main import LANGUAGE
-from celestine.keyword.main import PACKAGE
+from celestine.keyword.main import APPLICATION
 from celestine.keyword.main import CACHE
 from celestine.keyword.main import PYTHON
 
@@ -10,7 +10,7 @@ from celestine.keyword.main import CELESTINE
 from celestine.keyword.main import CONFIGURATION_CELESTINE
 
 from celestine.main.configuration import configuration_load
-from celestine.main.configuration import configuration_save
+from celestine.main.configuration import configuration_celestine
 
 
 def load_module(*paths):
@@ -23,39 +23,33 @@ def load_module(*paths):
     return item
 
 
-class Language():
-    def __init__(self, configuration):
-        self.configuration = configuration
-        self.TITLE = self.configuration[APPLICATION]["title"]
-        self.CURSES_EXIT = self.configuration["curses"]["exit"]
-    
 class Session():
     """Wrapper around configuration dictionary data."""
 
-    def override(self, argument, name):
-        attribute = getattr(argument, name, None)
-        if attribute is not None:
-            self.session[APPLICATION][name] = attribute
+    def set_attribute(self, default, configuration, argument, name):
+        attribute = default[CELESTINE][name]
+
+        if configuration.has_option(CELESTINE, name):
+            attribute = configuration[CELESTINE][name]
+
+        override = getattr(argument, name, None)
+        if override is not None:
+            attribute = override
+
+        module = load_module(name, attribute)
+        setattr(self, name, module)
 
     def __init__(self, argument, directory):
-        self.session = configuration_load(directory, CELESTINE, "configuration", CONFIGURATION_CELESTINE)
-        self.session.add_section(CACHE)
-        self.session.set(CACHE, DIRECTORY, directory)
-        self.override(argument, LANGUAGE)
-        self.override(argument, PACKAGE)
-        self.override(argument, PYTHON)
-        ###
-        self.directory = self.session[CACHE][DIRECTORY]
-        self.python = load_module(PYTHON, self.session[APPLICATION][PYTHON])
+        self.directory = directory
 
-        self.language = Language(
-            configuration_load(
-                directory,
-                CELESTINE,
-                "configuration", 
-                "language",
-                F"{self.session[APPLICATION][LANGUAGE]}.ini"
-            )
+        default = configuration_celestine()
+
+        configuration = configuration_load(
+            directory,
+            CELESTINE,
+            CONFIGURATION_CELESTINE
         )
 
-        self.package = load_module(PACKAGE, self.session[APPLICATION][PACKAGE])
+        self.set_attribute(default, configuration, argument, APPLICATION)
+        self.set_attribute(default, configuration, argument, LANGUAGE)
+        self.set_attribute(default, configuration, argument, PYTHON)

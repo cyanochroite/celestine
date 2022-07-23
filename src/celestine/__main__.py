@@ -2,7 +2,7 @@
 import os.path
 import sys
 
-directory = sys.path[0] = os.path.dirname(sys.path[0])
+directory = os.path.dirname(sys.path[0])
 sys.path.append(directory)
 
 
@@ -21,6 +21,6 @@ argument = load_module("main", "argument").argument
 session = load_module("main", "session").Session(argument, directory)
 main = load_module("window", "main").main(session)
 
-session.package.Window(session).run(main)
+session.application.Window(session).run(main)
 
 sys.exit()

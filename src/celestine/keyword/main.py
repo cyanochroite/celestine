@@ -1,7 +1,6 @@
 """Keywords used throughout the application."""
 APPLICATION = "application"
 
-
 LANGUAGE = "language"
 
 BULGARIAN = "bulgarian"
@@ -194,7 +193,24 @@ PILLOW = "pillow"
 
 CONFIGURATION = "configuration"
 CONFIGURATION_CELESTINE = "celestine.ini"
+CONFIGURATION_TRANSLATOR = "key.ini"
 ENCODING = "utf_8"
 ERRORS = "strict"
 READ = "rt"
 WRITE = "wt"
+UTF_8 = "utf_8"
+
+
+APPLICATION = "application"
+
+TERMINAL = "terminal"
+
+application = [
+    "configuration",
+    CURSES,
+    DEARPYGUI,
+    TERMINAL,
+    TKINTER,
+    UNITTEST,
+    "translator",
+]

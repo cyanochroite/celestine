@@ -1,7 +1,7 @@
 """Central place for loading and importing external files."""
 import os.path
 
-from celestine.data.unicode import FULL_STOP
+from celestine.keyword.unicode import FULL_STOP
 
 
 CELESTINE = "celestine"
