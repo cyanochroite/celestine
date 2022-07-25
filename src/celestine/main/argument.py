@@ -52,5 +52,3 @@ parser.add_argument(
     "_",
     nargs="*",
 )
-
-argument = parser.parse_args()

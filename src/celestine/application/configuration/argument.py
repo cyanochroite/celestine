@@ -74,6 +74,3 @@ parser_translator.add_argument(
     "url",
     help="Which version of python to run as.",
 )
-
-
-argument = parser.parse_args()

@@ -16,7 +16,8 @@ def load_module(*paths):
     return item
 
 
-argument = load_module("main", "argument").argument
+parser = load_module("main", "argument").parser
+argument = parser.parse_args()
 
 session = load_module("main", "session").Session(argument, directory)
 main = load_module("window", "main").main(session)

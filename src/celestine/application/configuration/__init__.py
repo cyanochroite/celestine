@@ -1,5 +1,5 @@
 """Generate configuration files for all packages."""
-from celestine.application.configuration.argument import argument
+from celestine.application.configuration.argument import parser
 from celestine.main.configuration import configuration_save
 from celestine.main.configuration import configuration_celestine
 from celestine.main.configuration import configuration_translator
@@ -32,6 +32,7 @@ class Window():
         configuration_save(configuration, directory, CELESTINE, file)
 
     def run(self, app):
+        argument = parser.parse_args()
         configuration = argument.configuration
         if configuration == "celestine":
             self._save(
