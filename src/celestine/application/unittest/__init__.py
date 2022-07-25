@@ -5,10 +5,10 @@ from celestine.keyword.main import APPLICATION
 from celestine.keyword.main import CELESTINE
 from celestine.keyword.main import UNITTEST
 
-from celestine.tests.test_parser.test_translator import *
-from celestine.tests.test_parser.test_operator import *
+from celestine.application.unittest.parser.test_translator import *
+from celestine.application.unittest.parser.test_operator import *
 
-from celestine.tests.test_extension.test_more_itertools import *
+from celestine.application.unittest.extension.test_more_itertools import *
 
 
 class Window():
