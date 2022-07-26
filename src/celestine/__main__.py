@@ -22,6 +22,6 @@ argument = parser.parse_args()
 session = load_module("main", "session").Session(argument, directory)
 main = load_module("window", "main").main(session)
 
-session.application.Window(session).run(main)
+session.application.main(session=session, window=main)
 
 sys.exit()

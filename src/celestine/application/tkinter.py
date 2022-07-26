@@ -31,69 +31,76 @@ def browseFiles():
     label_file_explorer.configure(text="File Opened: " + filename)
 
 
-class Window():
-    def __init__(self, session):
-        self.session = session
-        self.item = {}
+def file_dialog(tag, bind):
+    """pass"""
+    command = partial(file_dialog_load, bind)
+    button = tkinter.Button(
+        root,
+        text="Config find Exit",
+        command=command
+    )
+    item[tag] = button
+    button.pack()
 
-    def file_dialog(self, tag, bind):
-        """pass"""
-        command = partial(self.file_dialog_load, bind)
-        item = tkinter.Button(
-            self.root,
-            text="Config find Exit",
-            command=command
+
+def file_dialog_load(tag):
+    """pass"""
+    filename = tkinter.filedialog.askopenfilename(
+        initialdir="/",
+        title="Select a File",
+        filetypes=(
+            ("Text files", "*.txt*"),
+            ("all files", "*.*")
         )
-        self.item[tag] = item
-        item.pack()
+    )
+    item[tag].configure(text="File Opened: " + filename)
 
-    def file_dialog_load(self, tag):
-        """pass"""
-        filename = tkinter.filedialog.askopenfilename(
-            initialdir="/",
-            title="Select a File",
-            filetypes=(
-                ("Text files", "*.txt*"),
-                ("all files", "*.*")
-            )
-        )
-        self.item[tag].configure(text="File Opened: " + filename)
 
-    def image(self, tag, image):
-        """pass"""
-        item = tkinter.Label(self.root, image=image.image)
-        self.item[tag] = item
-        item.pack()
+def image(tag, image):
+    """pass"""
+    label = tkinter.Label(root, image=image.image)
+    item[tag] = label
+    label.pack()
 
-    def image_load(self, file):
-        """pass"""
-        return Image(file)
 
-    def label(self, tag, text):
-        """pass"""
-        item = tkinter.Label(
-            self.root,
-            text=text,
-            width=100,
-            height=4,
-            fg="blue"
-        )
-        self.item[tag] = item
-        item.pack()
+def image_load(file):
+    """pass"""
+    return Image(file)
 
-    def run(self, app):
-        """pass"""
-        self.root = tkinter.Tk()
-        self.root.title(self.session.language.APPLICATION_TITLE)
 
-        self.root.geometry("1920x1080")
-        self.root.minsize(640, 480)
-        self.root.maxsize(3840, 2160)
-        self.root.config(bg="skyblue")
+def label(tag, text):
+    """pass"""
+    label = tkinter.Label(
+        root,
+        text=text,
+        width=100,
+        height=4,
+        fg="blue"
+    )
+    item[tag] = label
+    label.pack()
 
-        app.setup(self)
-        app.view(self)
 
-        self.root.mainloop()
+def main(**kwargs):
+    """def main"""
+    session = kwargs["session"]
+    window = kwargs["window"]
+
+    global item
+    item = {}
+
+    global root
+    root = tkinter.Tk()
+    root.title(session.language.APPLICATION_TITLE)
+
+    root.geometry("1920x1080")
+    root.minsize(640, 480)
+    root.maxsize(3840, 2160)
+    root.config(bg="skyblue")
+
+    window.setup()
+    window.view()
+
+    root.mainloop()
 
 

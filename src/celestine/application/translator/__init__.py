@@ -49,101 +49,91 @@ def magic2(module):
 # end: dict loader
 
 
-class Window():
-    def __init__(self, session):
-        self.session = session
+def reset():
+    path = os.path.join(session.directory, "celestine", "language")
+    if os.path.islink(path):
+        raise RuntimeError
 
-    def file_dialog(self, tag, bind):
-        pass
+    if os.path.isdir(path):
+        shutil.rmtree.avoids_symlink_attacks
+        shutil.rmtree(path, ignore_errors=False, onerror=None)
 
-    def file_dialog_load(self, tag):
-        pass
+    os.mkdir(path)
 
-    def image(self, tag, image):
-        pass
 
-    def image_load(self, file):
-        pass
+def header():
+    path = os.path.join(session.directory, "celestine", "language", "__init__.py")
+    with open(path, WRITE, encoding=UTF_8) as file:
+        file.write(F'"""Lookup table for languages."""\n')
 
-    def label(self, tag, text):
-        pass
 
-    def reset(self):
-        path = os.path.join(self.directory, "celestine", "language")
-        if os.path.islink(path):
-            raise RuntimeError
+def format_line(item):
+    (name, value) = item
+    if not name.isidentifier():
+        raise ValueError("Not a valid identifier.")
+    if keyword.iskeyword(name) or keyword.issoftkeyword(name):
+        raise ValueError("This work is a keyword.")
+    value = value.replace('"', "'")
+    return F'{name} = "{value}"\n'
 
-        if os.path.isdir(path):
-            shutil.rmtree.avoids_symlink_attacks
-            shutil.rmtree(path, ignore_errors=False, onerror=None)
 
-        os.mkdir(path)
+def post(text):
+    """Generate a post request."""
+    translator = Translator(session.directory)
+    url = translator.endpoint()
+    data = None
+    json = [{TEXT: text}]
+    headers = translator.header(str(uuid.uuid4()))
+    params = translator.parameter(code)
+    request = requests.post(url, data, json, headers=headers, params=params)
+    return request.json()
 
-    def header(self):
-        path = os.path.join(self.directory, "celestine", "language", "__init__.py")
+
+def add_item(key, value):
+    """Add item to parsers."""
+    items = post(value)
+    for item in items:
+        translations = item[TRANSLATIONS]
+        for translation in translations:
+            text = translation[TEXT]
+            put = languages[translation[TO]]
+            name = put
+            moose[name].append((key, text))
+
+
+def save_item():
+    """Save the items."""
+    for name in language_list:
+        path = os.path.join(session.directory, "celestine", "language", F"{name}.py")
+        items = moose[name]
         with open(path, WRITE, encoding=UTF_8) as file:
-            file.write(F'"""Lookup table for languages."""\n')
-
-    def format_line(self, item):
-        (name, value) = item
-        if not name.isidentifier():
-            raise ValueError("Not a valid identifier.")
-        if keyword.iskeyword(name) or keyword.issoftkeyword(name):
-            raise ValueError("This work is a keyword.")
-        value = value.replace('"', "'")
-        return F'{name} = "{value}"\n'
-
-    def post(self, text):
-        """Generate a post request."""
-        url = self.translator.endpoint()
-        data = None
-        json = [{TEXT: text}]
-        headers = self.translator.header(str(uuid.uuid4()))
-        params = self.translator.parameter(code)
-        request = requests.post(url, data, json, headers=headers, params=params)
-        return request.json()
-
-    def add_item(self, key, value):
-        """Add item to parsers."""
-        items = self.post(value)
-        for item in items:
-            translations = item[TRANSLATIONS]
-            for translation in translations:
-                text = translation[TEXT]
-                put = languages[translation[TO]]
-                name = put
-                self.moose[name].append((key, text))
-
-    def save_item(self):
-        """Save the items."""
-        for name in language_list:
-            path = os.path.join(self.directory, "celestine", "language", F"{name}.py")
-            items = self.moose[name]
-            with open(path, WRITE, encoding=UTF_8) as file:
-                file.write(F'"""Lookup table for {name}."""\n')
-                file.writelines(map(self.format_line, items))
-
-    def parser_magic(self):
-        """Do all parser stuff here."""
-        for name in language_list:
-            self.moose[name] = []
-
-        thelist = magic2(language)
-        for name, value in thelist.items():
-            self.add_item(name, value)
-
-    def run(self, app):
-        self.moose = {}
-        self.directory = app.session.directory
-        self.translator = Translator(app.session.directory)
-
-        self.parser_magic()
-
-        self.reset()
-        self.header()
-        self.save_item()
-
-        print(self.moose)
-        print("done")
+            file.write(F'"""Lookup table for {name}."""\n')
+            file.writelines(map(format_line, items))
 
 
+def parser_magic():
+    """Do all parser stuff here."""
+    for name in language_list:
+        moose[name] = []
+
+    thelist = magic2(language)
+    for name, value in thelist.items():
+        add_item(name, value)
+
+
+def main(**kwargs):
+    """def main"""
+    global session
+    session = kwargs["session"]
+
+    global moose
+    moose = {}
+
+    parser_magic()
+
+    reset()
+    header()
+    save_item()
+
+    print(moose)
+    print("done")

@@ -38,85 +38,91 @@ def callback_file(sender, app_data, user_data):
     dpg.set_value(user_data, item)
 
 
-class Window():
-    def __init__(self, session):
-        self.session = session
-        self.item = {}
-
-    def file_dialog(self, tag, bind):
-        """Make file dialog."""
-        with dpg.file_dialog(
-            label="Demo File Dialog",
-            width=800,
-            height=600,
-            show=False,
-            callback=callback_file,
-            tag="__demo_filedialog",
-            user_data=bind,
-        ):
-            dpg.add_file_extension(".*", color=(255, 255, 255, 255))
-            dpg.add_file_extension(
-                "Source files (*.cpp *.h *.hpp){.cpp,.h,.hpp}",
-                color=(0, 255, 255, 255),
-            )
-            dpg.add_file_extension(".txt", color=(255, 255, 0, 255))
-            dpg.add_file_extension(
-                ".gif", color=(255, 0, 255, 255),
-                custom_text="header",
-            )
-            dpg.add_file_extension(".py", color=(0, 255, 0, 255))
-        item = dpg.add_button(
-            label="Show File Selector",
-            user_data=dpg.last_container(),
-            callback=callback_dvd
+def file_dialog(tag, bind):
+    """Make file dialog."""
+    with dpg.file_dialog(
+        label="Demo File Dialog",
+        width=800,
+        height=600,
+        show=False,
+        callback=callback_file,
+        tag="__demo_filedialog",
+        user_data=bind,
+    ):
+        dpg.add_file_extension(".*", color=(255, 255, 255, 255))
+        dpg.add_file_extension(
+            "Source files (*.cpp *.h *.hpp){.cpp,.h,.hpp}",
+            color=(0, 255, 255, 255),
         )
-        self.item[tag] = item
-
-    def image(self, tag, image):
-        """Make image."""
-        item = dpg.add_image(image.name)
-        self.item[tag] = item
-
-    def image_load(self, file):
-        """Load image."""
-        return Image(file)
-
-    def label(self, tag, text):
-        """Make a label."""
-        item = dpg.add_text(text, tag=tag, label="Label", show_label=True)
-        self.item[tag] = item
-
-    def run(self, app):
-        """Run the main program."""
-        title = self.session.language.APPLICATION_TITLE
-        dpg.create_context()
-        dpg.create_viewport(
-            title=title,
-            small_icon="celestine_small.ico",
-            large_icon="celestine_large.ico",
-            width=1920,
-            height=1080,
-            x_pos=256,
-            y_pos=256,
-            min_width=640,
-            max_width=3840,
-            min_height=480,
-            max_height=2160,
-            resizable=True,
-            vsync=True,
-            always_on_top=False,
-            decorated=True,
-            clear_color=(0, 0, 0)
+        dpg.add_file_extension(".txt", color=(255, 255, 0, 255))
+        dpg.add_file_extension(
+            ".gif", color=(255, 0, 255, 255),
+            custom_text="header",
         )
+        dpg.add_file_extension(".py", color=(0, 255, 0, 255))
+    button = dpg.add_button(
+        label="Show File Selector",
+        user_data=dpg.last_container(),
+        callback=callback_dvd
+    )
+    item[tag] = button
 
-        with dpg.texture_registry(show=False):
-            app.setup(self)
 
-        with dpg.window(tag="primary_window"):
-            app.view(self)
+def image(tag, image):
+    """Make image."""
+    image = dpg.add_image(image.name)
+    item[tag] = image
 
-        dpg.setup_dearpygui()
-        dpg.show_viewport(minimized=False, maximized=False)
-        dpg.set_primary_window("primary_window", True)
-        dpg.start_dearpygui()
-        dpg.destroy_context()
+
+def image_load(file):
+    """Load image."""
+    return Image(file)
+
+
+def label(tag, text):
+    """Make a label."""
+    text = dpg.add_text(text, tag=tag, label="Label", show_label=True)
+    item[tag] = text
+
+
+def main(**kwargs):
+    """def main"""
+    global session
+    session = kwargs["session"]
+    window = kwargs["window"]
+
+    global item
+    item = {}
+
+    title = session.language.APPLICATION_TITLE
+    dpg.create_context()
+    dpg.create_viewport(
+        title=title,
+        small_icon="celestine_small.ico",
+        large_icon="celestine_large.ico",
+        width=1920,
+        height=1080,
+        x_pos=256,
+        y_pos=256,
+        min_width=640,
+        max_width=3840,
+        min_height=480,
+        max_height=2160,
+        resizable=True,
+        vsync=True,
+        always_on_top=False,
+        decorated=True,
+        clear_color=(0, 0, 0)
+    )
+
+    with dpg.texture_registry(show=False):
+        window.setup()
+
+    with dpg.window(tag="primary_window"):
+        window.view()
+
+    dpg.setup_dearpygui()
+    dpg.show_viewport(minimized=False, maximized=False)
+    dpg.set_primary_window("primary_window", True)
+    dpg.start_dearpygui()
+    dpg.destroy_context()
