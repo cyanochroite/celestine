@@ -1,5 +1,5 @@
 """Keywords used throughout the translator application."""
-AZURE = "azure"
+LANGUAGE = "language"
 
 KEY = "key"
 REGION = "region"

@@ -49,3 +49,6 @@ def module(*paths):
 def package(name):
     """Load an internal module from the "package" directory."""
     return module(PACKAGE, name)
+
+def directory(path):
+    pass

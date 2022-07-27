@@ -212,5 +212,5 @@ application = [
     TERMINAL,
     TKINTER,
     UNITTEST,
-    "translator",
+    "language",
 ]

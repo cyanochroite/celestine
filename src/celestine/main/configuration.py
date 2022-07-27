@@ -24,6 +24,22 @@ def configuration_load(*paths):
     return configuration
 
 
+def configuration_save_main(configuration, directory):
+    configuration_save(
+        configuration,
+        directory,
+        CELESTINE,
+        CONFIGURATION_CELESTINE,
+    )
+
+
+def configuration_load_main(directory):
+    return configuration_load(
+        directory,
+        CELESTINE,
+        CONFIGURATION_CELESTINE,
+    )
+    
 
 from celestine.keyword.main import APPLICATION
 from celestine.keyword.main import LANGUAGE
@@ -36,11 +52,11 @@ from celestine.keyword.main import PYTHON_3_10
 from celestine.keyword.main import CONFIGURATION
 from celestine.keyword.main import CONFIGURATION_CELESTINE
 
-from celestine.keyword.translator import AZURE
-from celestine.keyword.translator import KEY
-from celestine.keyword.translator import REGION
-from celestine.keyword.translator import URL
-from celestine.keyword.translator import FILE
+from celestine.application.language.keyword import LANGUAGE
+from celestine.application.language.keyword import KEY
+from celestine.application.language.keyword import REGION
+from celestine.application.language.keyword import URL
+from celestine.application.language.keyword import FILE
 
 
 def configuration_celestine(application=TERMINAL, language=ENGLISH, python=PYTHON_3_10):
@@ -54,8 +70,8 @@ def configuration_celestine(application=TERMINAL, language=ENGLISH, python=PYTHO
 
 def configuration_translator(key="", region="", url=""):
     configuration = configparser.ConfigParser()
-    configuration.add_section(AZURE)
-    configuration.set(AZURE, KEY, key)
-    configuration.set(AZURE, REGION, region)
-    configuration.set(AZURE, URL, url)
+    configuration.add_section(LANGUAGE)
+    configuration.set(LANGUAGE, KEY, key)
+    configuration.set(LANGUAGE, REGION, region)
+    configuration.set(LANGUAGE, URL, url)
     return configuration

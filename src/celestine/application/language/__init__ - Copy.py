@@ -12,11 +12,11 @@ from celestine.keyword.main import WRITE
 from celestine.keyword.main import UTF_8
 
 
-from celestine.keyword.translator import TRANSLATIONS
-from celestine.keyword.translator import TEXT
-from celestine.keyword.translator import TO
+from celestine.application.language.keyword import TRANSLATIONS
+from celestine.application.language.keyword import TEXT
+from celestine.application.language.keyword import TO
 
-from celestine.application.translator.translator import Translator
+from celestine.application.language.translator import Translator
 
 
 # start: dict loader

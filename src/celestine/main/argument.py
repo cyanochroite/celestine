@@ -20,9 +20,7 @@ from celestine.keyword.main import APPLICATION
 from celestine.keyword.main import application
 
 
-parser = argparse.ArgumentParser(
-    prog=CELESTINE
-)
+parser = argparse.ArgumentParser(prog=CELESTINE)
 
 parser.add_argument(
     "application",
