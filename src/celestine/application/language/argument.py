@@ -1,31 +1,31 @@
 """Generate configuration files for all packages."""
 import argparse
 
-from celestine.keyword.main import CELESTINE
+from celestine.application.language.keyword import CELESTINE
+from celestine.application.language.keyword import APPLICATION
+from celestine.application.language.keyword import LANGUAGE
+from celestine.application.language.keyword import TASK
 
-from celestine.keyword.main import LANGUAGE
-from celestine.keyword.main import language
+from celestine.application.language.keyword import KEY
+from celestine.application.language.keyword import REGION
+from celestine.application.language.keyword import URL
 
-from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import application
-
-from celestine.keyword.main import PYTHON
-from celestine.keyword.main import python
-
-from celestine.main.argument import parser
-
-
-parser = argparse.ArgumentParser(add_help=False, prog="celestine")
-parser.add_argument("application", choices=["language"])
+from celestine.application.language.keyword import CONFIGURE
+from celestine.application.language.keyword import REPORT
+from celestine.application.language.keyword import TRANSLATE
 
 
-subparser = parser.add_subparsers(dest="task", required=True)
+parser = argparse.ArgumentParser(add_help=False, prog=CELESTINE)
+parser.add_argument(APPLICATION, choices=[LANGUAGE])
 
-configure = subparser.add_parser("configure")
-configure.add_argument("key")
-configure.add_argument("region")
-configure.add_argument("url")
 
-report = subparser.add_parser("report")
+subparser = parser.add_subparsers(dest=TASK, required=True)
 
-translate = subparser.add_parser("translate")
+configure = subparser.add_parser(CONFIGURE)
+configure.add_argument(KEY)
+configure.add_argument(REGION)
+configure.add_argument(URL)
+
+report = subparser.add_parser(REPORT)
+
+translate = subparser.add_parser(TRANSLATE)

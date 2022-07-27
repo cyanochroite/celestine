@@ -52,12 +52,6 @@ from celestine.keyword.main import PYTHON_3_10
 from celestine.keyword.main import CONFIGURATION
 from celestine.keyword.main import CONFIGURATION_CELESTINE
 
-from celestine.application.language.keyword import LANGUAGE
-from celestine.application.language.keyword import KEY
-from celestine.application.language.keyword import REGION
-from celestine.application.language.keyword import URL
-from celestine.application.language.keyword import FILE
-
 
 def configuration_celestine(application=TERMINAL, language=ENGLISH, python=PYTHON_3_10):
     configuration = configparser.ConfigParser()

@@ -1,7 +1,7 @@
 """Package terminal."""
 
 
-def main(**kwargs):
+def main(**_):
     """def main"""
     print("Hello user.")
     print("Try '-h' option.")

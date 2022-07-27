@@ -1,22 +1,20 @@
 from celestine.core import load
 
-from celestine.keyword.main import language
-from celestine.keyword.main import LANGUAGE
-from celestine.keyword.unicode import LOW_LINE
+from celestine.application.language.keyword import language
+from celestine.application.language.keyword import LANGUAGE
 
 
-def main():
+def main(**kwargs):
     minimum = {}
     maximum = {}
-    
+
     for lang in language:
         module = load.module(LANGUAGE, lang)
         dictionary = load.dictionary(module)
         for key, value in dictionary.items():
-            long = len(value)
-            minimum[key] =  min(minimum.get(key, 256), long)
-            maximum[key] =  max(maximum.get(key, 0), long)
-    
+            length = len(value)
+            minimum[key] = min(length, minimum.get(key, 256))
+            maximum[key] = max(length, maximum.get(key, 0))
+
     print(minimum)
     print(maximum)
-    

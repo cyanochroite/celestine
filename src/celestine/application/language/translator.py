@@ -1,22 +1,17 @@
 """Application for translating text to other languages."""
 
-from celestine.main.configuration import configuration_load
+from celestine.main.configuration import configuration_load_main
 
 
-from celestine.keyword.main import CELESTINE
+from celestine.application.language.keyword import CELESTINE
+from celestine.application.language.keyword import LANGUAGE
+
+from celestine.application.language.keyword import KEY
+from celestine.application.language.keyword import REGION
+from celestine.application.language.keyword import URL
 
 
-from celestine.application.language.keyword  import LANGUAGE
-
-from celestine.application.language.keyword  import KEY
-from celestine.application.language.keyword  import REGION
-from celestine.application.language.keyword  import URL
-
-from celestine.application.language.keyword  import FILE
-
-
-
-from celestine.application.language.configure import configure
+from celestine.application.language import configure
 
 
 class Translator():
@@ -31,13 +26,9 @@ class Translator():
         setattr(self, name, attribute)
 
     def __init__(self, path):
-        default = configure()
+        default = configure.default()
 
-        configuration = configuration_load(
-            path,
-            CELESTINE,
-            FILE
-        )
+        configuration = configuration_load_main(path)
 
         self.set_attribute(default, configuration, KEY)
         self.set_attribute(default, configuration, REGION)
