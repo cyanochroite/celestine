@@ -2,13 +2,11 @@
 import os.path
 
 from celestine.keyword.unicode import FULL_STOP
+from celestine.keyword.unicode import LOW_LINE
 
+from celestine.keyword import language
+from celestine.keyword.main import CELESTINE
 
-CELESTINE = "celestine"
-EXTENSION = "extension"
-PACKAGE = "package"
-LANGUAGE = "language"
-PYTHON = "python"
 
 def attempt(name):
     """Attempt to load a package and return the result."""
@@ -20,35 +18,33 @@ def attempt(name):
     return False
 
 
-def extension(name):
-    """Load an internal module from the "extension" directory."""
-    try:
-        return __import__(name)
-    except ModuleNotFoundError:
-        pass
-    return module(EXTENSION, name)
-
-
-def file(session, iterable):
+def path(*paths):
     """Load a file from absolute path."""
-    root = session.directory
-    path = [root, CELESTINE] + iterable
-    return os.path.join(*tuple(path))
+    path = os.path.join(*paths)
+    return path
 
 
 def module(*paths):
     """Load an internal module from anywhere in the application."""
-    iterable = [CELESTINE] + list(paths)
+    iterable = [CELESTINE, *paths]
     name = FULL_STOP.join(iterable)
-    item = __import__(name)
+    file = __import__(name)
     for path in paths:
-        item = getattr(item, path)
-    return item
+        file = getattr(file, path)
+    return file
 
-
-def package(name):
-    """Load an internal module from the "package" directory."""
-    return module(PACKAGE, name)
 
 def directory(path):
     pass
+
+
+def dictionary(module):
+    """Load from module all key value pairs and turn them into dictionary."""
+    dictionary = vars(module)
+    mapping = {
+        key: value
+        for key, value
+        in dictionary.items()
+        if not key.startswith(LOW_LINE)
+    }
+    return mapping

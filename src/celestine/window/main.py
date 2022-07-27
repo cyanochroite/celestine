@@ -7,8 +7,9 @@ class main():
 
     def setup(self):
         window = self.session.application
-        image1 = load.file(self.session, ["file", "anitest.gif"])
-        image2 = load.file(self.session, ["file", "test4.gif"])
+        directory =  self.session.asset
+        image1 = load.path(directory, "file", "anitest.gif")
+        image2 = load.path(directory, "file", "test4.gif")
         self.image["image1"] = window.image_load(image1)
         self.image["image2"] = window.image_load(image2)
     

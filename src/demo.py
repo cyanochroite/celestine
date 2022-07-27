@@ -1,32 +1,37 @@
-from celestine.keyword.main import language
-from celestine.keyword.unicode import LOW_LINE
+import os.path
+CELESTINE = "celestine"
+FULL_STOP = "."
 
-def load_module(*paths):
+def module2(*paths):
     """Load an internal module from anywhere in the application."""
-    iterable = ["celestine"] + list(paths)
-    name = ".".join(iterable)
+    iterable = [CELESTINE, *paths]
+    name = FULL_STOP.join(iterable)
+    file = __import__(name)
+    for path in paths:
+        file = getattr(file, path)
+    return file
+
+
+def module1(*paths):
+    """Load an internal module from anywhere in the application."""
+    iterable = [CELESTINE] + list(paths)
+    name = FULL_STOP.join(iterable)
     item = __import__(name)
     for path in paths:
         item = getattr(item, path)
     return item
 
-minimum = {}
-maximum = {}
 
-for lang in language:
-    module = load_module("language", lang)
-    kitty = vars(module)
-    fish = {
-        key: value
-        for key, value
-        in kitty.items()
-        if not key.startswith(LOW_LINE)
-    }
-    for key, value in fish.items():
-        long = len(value)
-        minimum[key] =  min(minimum.get(key, 256), long)
-        maximum[key] =  max(maximum.get(key, 0), long)
-    print(fish)
+def file(*paths):
+    """Load a file from absolute path."""
+    path = os.path.join(*paths)
+    return path
 
-print(minimum)
-print(maximum)
+print(module1("language", "english"))
+print(module2("language", "english"))
+
+image1 = file("directory", "file", "anitest.gif")
+image2 = file("directory", "file", "test4.gif")
+
+print(image1)
+print(image2)

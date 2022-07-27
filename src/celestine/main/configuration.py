@@ -67,11 +67,3 @@ def configuration_celestine(application=TERMINAL, language=ENGLISH, python=PYTHO
     configuration.set(CELESTINE, PYTHON, python)
     return configuration
 
-
-def configuration_translator(key="", region="", url=""):
-    configuration = configparser.ConfigParser()
-    configuration.add_section(LANGUAGE)
-    configuration.set(LANGUAGE, KEY, key)
-    configuration.set(LANGUAGE, REGION, region)
-    configuration.set(LANGUAGE, URL, url)
-    return configuration
