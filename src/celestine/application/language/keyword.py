@@ -20,6 +20,8 @@ URL = "url"
 ARGUMENT = "argument"
 SESSION = "session"
 
+NONE = ""  # blank
+
 
 # unused?
 TRANSLATIONS = "translations"

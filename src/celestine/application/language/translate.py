@@ -18,36 +18,20 @@ from celestine.application.language.keyword import TO
 
 from celestine.application.language.translator import Translator
 
-
-# start: dict loader
-from celestine.keyword import language
-from celestine.keyword.unicode import LOW_LINE
+from celestine.core import load
+from celestine.core.file import File
 
 
-def magic(module):
-    dictionary = vars(module)
-    return {
-        key: value
-        for key, value
-        in dictionary.items()
-        if not key.startswith(LOW_LINE)
-    }
 
+def parser_magic():
+    """Do all parser stuff here."""
+    for name in language_list:
+        moose[name] = []
 
-def magic1(dictionary):
-    return {
-        key: value
-        for key, value
-        in dictionary.items()
-        if not key.startswith(LOW_LINE)
-    }
-
-
-def magic2(module):
-    return magic1(vars(module))
-
-# end: dict loader
-
+    module = load.module("keyword", "language")
+    thelist = load.dictionary(module)
+    for name, value in thelist.items():
+        add_item(name, value)
 
 def reset():
     path = os.path.join(session.directory, "celestine", "language")
@@ -67,14 +51,15 @@ def header():
         file.write(F'"""Lookup table for languages."""\n')
 
 
-def format_line(item):
-    (name, value) = item
-    if not name.isidentifier():
-        raise ValueError("Not a valid identifier.")
-    if keyword.iskeyword(name) or keyword.issoftkeyword(name):
-        raise ValueError("This work is a keyword.")
-    value = value.replace('"', "'")
-    return F'{name} = "{value}"\n'
+def save_item():
+    """Save the items."""
+    for name in language_list:
+        file = File(name, F"Lookup table for {name}.", moose[name])
+        file.save(session.directory, "celestine", "language")
+
+
+
+
 
 
 def post(text):
@@ -101,24 +86,6 @@ def add_item(key, value):
             moose[name].append((key, text))
 
 
-def save_item():
-    """Save the items."""
-    for name in language_list:
-        path = os.path.join(session.directory, "celestine", "language", F"{name}.py")
-        items = moose[name]
-        with open(path, WRITE, encoding=UTF_8) as file:
-            file.write(F'"""Lookup table for {name}."""\n')
-            file.writelines(map(format_line, items))
-
-
-def parser_magic():
-    """Do all parser stuff here."""
-    for name in language_list:
-        moose[name] = []
-
-    thelist = magic2(language)
-    for name, value in thelist.items():
-        add_item(name, value)
 
 
 def main(**kwargs):
@@ -133,6 +100,7 @@ def main(**kwargs):
 
     reset()
     header()
+
     save_item()
 
     print(moose)

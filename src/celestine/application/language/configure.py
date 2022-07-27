@@ -11,6 +11,7 @@ from celestine.application.language.keyword import URL
 
 from celestine.application.language.keyword import ARGUMENT
 from celestine.application.language.keyword import SESSION
+from celestine.application.language.keyword import NONE
 
 
 def configure(configuration, key, region, url):
@@ -24,9 +25,9 @@ def configure(configuration, key, region, url):
 
 def default():
     configuration = configparser.ConfigParser()
-    key = ""
-    region = ""
-    url = ""
+    key = NONE
+    region = NONE
+    url = NONE
     configuration = configure(configuration, key, region, url)
     return configuration
 

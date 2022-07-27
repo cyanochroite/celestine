@@ -6,6 +6,7 @@ from celestine.keyword.unicode import LOW_LINE
 
 from celestine.keyword import language
 from celestine.keyword.main import CELESTINE
+import keyword
 
 
 def attempt(name):
