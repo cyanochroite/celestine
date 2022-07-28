@@ -1,9 +1,11 @@
-from celestine.package.pillow.Image import Image
-from celestine.package.python.hashlib import hashlib
-from celestine.package.python.os import os
+"""Converts image to hashed png version."""
+from celestine.application.star.image import Image
+from celestine.application.star.hashlib import hashlib
+from celestine.application.star.os import os
 
 
 def main(todo="D:/todo", done="D:/done"):
+    """The main file."""
     (path, file) = os.chdir(todo, os.walk_directory)
     os.chdir(done, os.makedirs, path)
     for item in file:

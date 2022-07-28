@@ -19,7 +19,7 @@ from celestine.keyword.main import UTF_8
 def configuration_save(configuration, *paths):
     """Save the configuration file."""
     path = os.path.join(*paths)
-    with open(path, WRITE, UTF_8) as file:
+    with open(path, WRITE, encoding=UTF_8) as file:
         configuration.write(file, True)
 
 
