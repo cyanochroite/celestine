@@ -1,47 +1,39 @@
 """Application for translating text to other languages."""
+from celestine.main.configuration import configuration_load_main
 
-from celestine.main.configuration import configuration_load
+from celestine.application.language.keyword import LANGUAGE
 
-
-from celestine.keyword.main import CELESTINE
-
-
-from celestine.keyword.translator import AZURE
-
-from celestine.keyword.translator import KEY
-from celestine.keyword.translator import REGION
-from celestine.keyword.translator import URL
-
-from celestine.keyword.translator import FILE
+from celestine.application.language.keyword import KEY
+from celestine.application.language.keyword import REGION
+from celestine.application.language.keyword import URL
 
 
-
-from celestine.main.configuration import configuration_translator
+from celestine.application.language import configure
 
 
 class Translator():
     """A translator."""
 
-    def set_attribute(self, default, configuration, name):
-        attribute = default[AZURE][name]
+    def _attribute(self, default, configuration, name):
+        attribute = default[LANGUAGE][name]
 
-        if configuration.has_option(AZURE, name):
-            attribute = configuration[AZURE][name]
+        if configuration.has_option(LANGUAGE, name):
+            attribute = configuration[LANGUAGE][name]
 
         setattr(self, name, attribute)
 
     def __init__(self, path):
-        default = configuration_translator()
+        self.key = None
+        self.region = None
+        self.url = None
 
-        configuration = configuration_load(
-            path,
-            CELESTINE,
-            FILE
-        )
+        default = configure.default()
 
-        self.set_attribute(default, configuration, KEY)
-        self.set_attribute(default, configuration, REGION)
-        self.set_attribute(default, configuration, URL)
+        configuration = configuration_load_main(path)
+
+        self._attribute(default, configuration, KEY)
+        self._attribute(default, configuration, REGION)
+        self._attribute(default, configuration, URL)
 
     def endpoint(self):
         """Return the URL."""
@@ -70,4 +62,3 @@ class Translator():
             "suggestedFrom": "en",
             "textType": "plain",
         }
-
