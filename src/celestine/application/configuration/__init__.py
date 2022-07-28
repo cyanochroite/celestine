@@ -10,6 +10,7 @@ from celestine.keyword.main import CONFIGURATION_TRANSLATOR
 
 
 def save(configuration, file):
+    """Simplify the saveing of stuff."""
     configuration_save(configuration, session.directory, CELESTINE, file)
 
 

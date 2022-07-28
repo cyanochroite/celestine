@@ -3,3 +3,4 @@ dist/
 docs/.vscode/
 src/celestine.egg-info/
 *.ini
+src/.coverage

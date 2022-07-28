@@ -1,10 +1,12 @@
+"""Print out the lengths of the translations."""
 from celestine.core import load
 
 from celestine.application.language.keyword import language
 from celestine.application.language.keyword import LANGUAGE
 
 
-def main(**kwargs):
+def main(**_):
+    """The main function."""
     minimum = {}
     maximum = {}
 

@@ -15,6 +15,7 @@ from celestine.application.language.keyword import NONE
 
 
 def configure(configuration, key, region, url):
+    """Build up the configuration file."""
     if not configuration.has_section(LANGUAGE):
         configuration.add_section(LANGUAGE)
     configuration.set(LANGUAGE, KEY, key)
@@ -24,6 +25,7 @@ def configure(configuration, key, region, url):
 
 
 def default():
+    """The default configuration with all keys."""
     configuration = configparser.ConfigParser()
     key = NONE
     region = NONE
@@ -33,6 +35,7 @@ def default():
 
 
 def main(**kwargs):
+    """The main function."""
     argument = kwargs[ARGUMENT]
     session = kwargs[SESSION]
     directory = session.directory

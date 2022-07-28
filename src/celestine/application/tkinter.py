@@ -8,27 +8,13 @@ from functools import partial
 
 
 class Image():
+    """Holds an image."""
     def __init__(self, file):
-        image = tkinter.PhotoImage(file=file)
-        self.height = image.height()
-        self.image = image
-        self.width = image.width()
+        _image = tkinter.PhotoImage(file=file)
+        self.height = _image.height()
+        self.image = _image
+        self.width = _image.width()
         self.name = file
-
-
-def browseFiles():
-    """pass"""
-    filename = tkinter.filedialog.askopenfilename(
-        initialdir="/",
-        title="Select a File",
-        filetypes=(
-            ("Text files", "*.txt*"),
-            ("all files", "*.*")
-        )
-    )
-
-    # Change label contents
-    label_file_explorer.configure(text="File Opened: " + filename)
 
 
 def file_dialog(tag, bind):
@@ -56,11 +42,11 @@ def file_dialog_load(tag):
     item[tag].configure(text="File Opened: " + filename)
 
 
-def image(tag, image):
+def image(tag, _image):
     """pass"""
-    label = tkinter.Label(root, image=image.image)
-    item[tag] = label
-    label.pack()
+    _label = tkinter.Label(root, image=_image.image)
+    item[tag] = _label
+    _label.pack()
 
 
 def image_load(file):
@@ -70,15 +56,15 @@ def image_load(file):
 
 def label(tag, text):
     """pass"""
-    label = tkinter.Label(
+    _label = tkinter.Label(
         root,
         text=text,
         width=100,
         height=4,
         fg="blue"
     )
-    item[tag] = label
-    label.pack()
+    item[tag] = _label
+    _label.pack()
 
 
 def main(**kwargs):
@@ -102,5 +88,3 @@ def main(**kwargs):
     window.view()
 
     root.mainloop()
-
-

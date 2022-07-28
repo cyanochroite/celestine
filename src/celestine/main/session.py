@@ -1,9 +1,8 @@
 """Load and save user settings from a file."""
+import dataclasses
+
 from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import DIRECTORY
 from celestine.keyword.main import LANGUAGE
-from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import CACHE
 from celestine.keyword.main import PYTHON
 
 from celestine.keyword.main import CELESTINE
@@ -15,10 +14,12 @@ from celestine.main.configuration import configuration_celestine
 from celestine.core import load
 
 
+@dataclasses.dataclass
 class Session():
     """Wrapper around configuration dictionary data."""
 
-    def set_attribute(self, default, configuration, argument, name):
+    def _attribute(self, default, configuration, argument, name):
+        """Combine several sources to set a final value."""
         attribute = default[CELESTINE][name]
 
         if configuration.has_option(CELESTINE, name):
@@ -43,6 +44,6 @@ class Session():
             CONFIGURATION_CELESTINE
         )
 
-        self.set_attribute(default, configuration, argument, APPLICATION)
-        self.set_attribute(default, configuration, argument, LANGUAGE)
-        self.set_attribute(default, configuration, argument, PYTHON)
+        self._attribute(default, configuration, argument, APPLICATION)
+        self._attribute(default, configuration, argument, LANGUAGE)
+        self._attribute(default, configuration, argument, PYTHON)

@@ -4,9 +4,7 @@ import os.path
 from celestine.keyword.unicode import FULL_STOP
 from celestine.keyword.unicode import LOW_LINE
 
-from celestine.keyword import language
 from celestine.keyword.main import CELESTINE
-import keyword
 
 
 def attempt(name):
@@ -21,8 +19,8 @@ def attempt(name):
 
 def path(*paths):
     """Load a file from absolute path."""
-    path = os.path.join(*paths)
-    return path
+    _path = os.path.join(*paths)
+    return _path
 
 
 def module(*paths):
@@ -30,22 +28,24 @@ def module(*paths):
     iterable = [CELESTINE, *paths]
     name = FULL_STOP.join(iterable)
     file = __import__(name)
-    for path in paths:
-        file = getattr(file, path)
+    for _path in paths:
+        file = getattr(file, _path)
     return file
 
 
-def directory(path):
+def directory(_path):
+    """Load file contents from a directory."""
+    print(_path)
     pass
 
 
-def dictionary(module):
+def dictionary(_module):
     """Load from module all key value pairs and turn them into dictionary."""
-    dictionary = vars(module)
+    _dictionary = vars(_module)
     mapping = {
         key: value
         for key, value
-        in dictionary.items()
+        in _dictionary.items()
         if not key.startswith(LOW_LINE)
     }
     return mapping

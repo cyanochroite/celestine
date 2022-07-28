@@ -1,29 +1,21 @@
 """Keywords used throughout the translator application."""
 from celestine.keyword import main
 
-TASK = "task"
-REPORT = "report"
-TRANSLATE = "translate"
-CONFIGURE = "configure"
 
-
-CELESTINE = main.CELESTINE
 APPLICATION = main.APPLICATION
-LANGUAGE = main.LANGUAGE
-language = main.language
-
+ARGUMENT = "argument"  # outsource
+CELESTINE = main.CELESTINE
+CONFIGURE = "configure"  # outsource
 KEY = "key"
-REGION = "region"
-URL = "url"
-
-
-ARGUMENT = "argument"
-SESSION = "session"
-
+LANGUAGE = main.LANGUAGE
 NONE = ""  # blank
-
-
-# unused?
-TRANSLATIONS = "translations"
+REGION = "region"
+REPORT = "report"
+SESSION = "session"  # outsource
+TASK = "task"
 TEXT = "text"
 TO = "to"
+TRANSLATE = "translate"
+TRANSLATIONS = "translations"
+URL = "url"
+language = main.language

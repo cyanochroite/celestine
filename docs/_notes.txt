@@ -183,17 +183,19 @@ SHELL COMMAND
 python -m pytest
 
 # test code used
+python -m coverage run --source=celestine/application/unittest --module pytest --verbose
+
 python -m coverage run --source=tests --module pytest --verbose
 python -m coverage report --show-missing
 python -m coverage html
 
 # source code used by test code
-python -m coverage run --module pytest --verbose celestine/test
+python -m coverage run --module pytest --verbose celestine/application/unittest
 python -m coverage report --show-missing
 python -m coverage html
 
 # source code used
-python -m coverage run --source=celestine --module pytest --verbose celestine/test
+python -m coverage run --source=celestine --module pytest --verbose celestine/application/unittest
 python -m coverage report --show-missing
 python -m coverage html
 

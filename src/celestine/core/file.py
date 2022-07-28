@@ -8,6 +8,7 @@ from celestine.keyword.main import UTF_8
 
 
 class File():
+    """Write a key value pair python file."""
     def __init__(self, name, header, iterable):
         self.name = F"{name}.py"
         self.head = F'"""{header}"""\n'
@@ -22,6 +23,7 @@ class File():
 
     @staticmethod
     def line(item):
+        """Make a line for the file from a key value pair."""
         (key, value) = item
         if not key.isidentifier():
             raise ValueError("Not a valid identifier.")
