@@ -118,9 +118,6 @@ celestine\application\star\os.py:27:22: W0612: Unused variable 'dirnames' (unuse
 celestine\application\star\os.py:33:4: C0116: Missing function or method docstring (missing-function-docstring)
 celestine\application\star\os.py:44:4: C0116: Missing function or method docstring (missing-function-docstring)
 celestine\application\star\os.py:49:4: C0116: Missing function or method docstring (missing-function-docstring)
-************* Module celestine.application.star
-celestine\application\star\__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-celestine\application\star\__init__.py:6:0: C0116: Missing function or method docstring (missing-function-docstring)
 ************* Module celestine.application.unittest
 celestine\application\unittest\__init__.py:21:4: W0622: Redefining built-in 'exit' (redefined-builtin)
 celestine\application\unittest\__init__.py:17:4: C0103: Variable name "defaultTest" doesn't conform to snake_case naming style (invalid-name)

@@ -1,0 +1,1 @@
+"""Celestine Image Viewer"""

@@ -1,3 +1,2 @@
-from celestine.application.star import main
-
-main()
+import celestine
+print("done")
