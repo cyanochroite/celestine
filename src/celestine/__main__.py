@@ -16,10 +16,46 @@ def load_module(*paths):
     return item
 
 
-parser = load_module("main", "argument").parser
-argument = parser.parse_args()
 
-session = load_module("main", "session").Session(argument, directory)
+import argparse
+
+from celestine.keyword.main import CELESTINE
+
+from celestine.keyword.main import APPLICATION
+from celestine.keyword.main import application
+
+
+
+CELESTINE = "celestine"
+CURSES = "curses"
+DEARPYGUI = "dearpygui"
+TKINTER = "tkinter"
+UNITTEST = "unittest"
+TERMINAL = "terminal"
+
+
+
+application = [
+    "configuration",
+    CURSES,
+    DEARPYGUI,
+    TERMINAL,
+    TKINTER,
+    UNITTEST,
+    "language",
+    None
+]
+
+
+###############################
+
+argument = sys.argv[1] if len(sys.argv) > 1 else None
+
+if argument and argument not in application:
+    raise ValueError(application)
+
+
+session = load_module("main", "session").Session(directory, argument)
 main = load_module("window", "main").main(session)
 
 session.application.main(session=session, window=main)
