@@ -44,7 +44,7 @@ applications = [
     DEARPYGUI,
     TERMINAL,
     TKINTER,
-    UNITTEST,
+    "verify",
     "language",
     None
 ]
