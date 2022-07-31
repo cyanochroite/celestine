@@ -6,12 +6,10 @@ from celestine.application.language.argument import parser
 
 from celestine.application.language.keyword import APPLICATION
 from celestine.application.language.keyword import LANGUAGE
-from celestine.application.language.keyword import SESSION
 
 
-def main(**kwargs):
+def main(session):
     """def main"""
-    session = kwargs[SESSION]
 
     argument = parser.parse_args()
     task = argument.task

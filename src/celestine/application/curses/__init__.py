@@ -73,12 +73,8 @@ def _add_string(window, string):
     window.addstr(y, x, string)
 
 
-def main(**kwargs):
+def main(session):
     """def main"""
-    global session
-    session = kwargs["session"]
-    window = kwargs["window"]
-
     global item
     item = {}
 
@@ -111,8 +107,8 @@ def main(**kwargs):
 
         quote_text_window = _new_subwindow(quote_window, 1, 1, WIDTH - 1, HEIGHT - 2)
 
-        window.setup()
-        window.view()
+        session.window.setup(session)
+        session.window.view(session)
 
         stdscr.noutrefresh()
         quote_window.noutrefresh()

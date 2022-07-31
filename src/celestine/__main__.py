@@ -6,26 +6,17 @@ directory = os.path.dirname(sys.path[0])
 sys.path.append(directory)
 
 
-import argparse
+session = __import__("celestine")
 
-from celestine.keyword.main import CELESTINE
-
-from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import application
-
-from celestine.keyword.main import application
-from celestine.core import load
-
-
-
-
-from celestine.core import load
-
-
-session = __import__(CELESTINE)
-
-session.directory = directory
+session.directory = directory # contstrure
 
 session.application.main(session)
 
 sys.exit()
+
+
+#sys.exit(session.application.main(session))
+
+
+#terminal
+#language
