@@ -67,11 +67,8 @@ def label(tag, text):
     _label.pack()
 
 
-def main(**kwargs):
+def main(session):
     """def main"""
-    session = kwargs["session"]
-    window = kwargs["window"]
-
     global item
     item = {}
 
@@ -84,7 +81,7 @@ def main(**kwargs):
     root.maxsize(3840, 2160)
     root.config(bg="skyblue")
 
-    window.setup()
-    window.view()
+    session.window.setup(session)
+    session.window.view(session)
 
     root.mainloop()

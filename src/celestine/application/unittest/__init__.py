@@ -11,7 +11,7 @@ from celestine.application.unittest.parser.test_operator import *
 from celestine.application.unittest.extension.test_more_itertools import *
 
 
-def main(**kwargs):
+def main(_):
     """def main"""
     module = F"{CELESTINE}.{APPLICATION}.{UNITTEST}"
     defaultTest = None  # customize
