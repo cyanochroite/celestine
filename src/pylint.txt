@@ -1,63 +1,64 @@
+************* Module celestine
+celestine\__init__.py:98:0: C0304: Final newline missing (missing-final-newline)
+celestine\__init__.py:2:0: W0105: String statement has no effect (pointless-string-statement)
+celestine\__init__.py:4:0: C0413: Import "import sys" should be placed at the top of the module (wrong-import-position)
+celestine\__init__.py:5:0: C0413: Import "import os.path" should be placed at the top of the module (wrong-import-position)
+celestine\__init__.py:10:0: C0413: Import "from celestine.keyword.main import APPLICATION" should be placed at the top of the module (wrong-import-position)
+celestine\__init__.py:11:0: C0413: Import "from celestine.keyword.main import PYTHON" should be placed at the top of the module (wrong-import-position)
+celestine\__init__.py:14:0: C0413: Import "from celestine.keyword.main import CELESTINE" should be placed at the top of the module (wrong-import-position)
+celestine\__init__.py:15:0: C0413: Import "from celestine.keyword.main import CONFIGURATION_CELESTINE" should be placed at the top of the module (wrong-import-position)
+celestine\__init__.py:17:0: C0413: Import "from celestine.main.configuration import configuration_load" should be placed at the top of the module (wrong-import-position)
+celestine\__init__.py:18:0: C0413: Import "from celestine.main.configuration import configuration_celestine" should be placed at the top of the module (wrong-import-position)
+celestine\__init__.py:20:0: C0413: Import "from celestine.core import load" should be placed at the top of the module (wrong-import-position)
+celestine\__init__.py:62:0: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\__init__.py:69:12: W0621: Redefining name 'configuration' from outer scope (line 55) (redefined-outer-name)
+celestine\__init__.py:77:0: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\__init__.py:79:8: W0621: Redefining name 'python' from outer scope (line 91) (redefined-outer-name)
 ************* Module celestine.application.curses
-celestine\application\curses.py:9:0: C0115: Missing class docstring (missing-class-docstring)
-celestine\application\curses.py:13:8: C0103: Attribute name "x" doesn't conform to snake_case naming style (invalid-name)
-celestine\application\curses.py:14:8: C0103: Attribute name "y" doesn't conform to snake_case naming style (invalid-name)
-celestine\application\curses.py:10:23: W0621: Redefining name 'session' from outer scope (line 79) (redefined-outer-name)
-celestine\application\curses.py:18:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\curses.py:21:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\curses.py:22:9: C0103: Variable name "x" doesn't conform to snake_case naming style (invalid-name)
-celestine\application\curses.py:22:12: C0103: Variable name "y" doesn't conform to snake_case naming style (invalid-name)
-celestine\application\curses.py:32:0: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\curses.py:32:21: W0613: Unused argument 'bind' (unused-argument)
-celestine\application\curses.py:37:0: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\curses.py:37:15: W0621: Redefining name 'image' from outer scope (line 37) (redefined-outer-name)
-celestine\application\curses.py:42:0: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\curses.py:46:0: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\curses.py:46:15: W0613: Unused argument 'text' (unused-argument)
-celestine\application\curses.py:56:11: E1101: Module 'curses' has no 'newwin' member (no-member)
-celestine\application\curses.py:68:4: C0103: Constant name "line" doesn't conform to UPPER_CASE naming style (invalid-name)
-celestine\application\curses.py:68:4: W0601: Global variable 'line' undefined at the module level (global-variable-undefined)
-celestine\application\curses.py:70:4: C0103: Variable name "y" doesn't conform to snake_case naming style (invalid-name)
-celestine\application\curses.py:70:8: E0601: Using variable 'line' before assignment (used-before-assignment)
-celestine\application\curses.py:71:4: C0103: Variable name "x" doesn't conform to snake_case naming style (invalid-name)
-celestine\application\curses.py:78:4: C0103: Constant name "session" doesn't conform to UPPER_CASE naming style (invalid-name)
-celestine\application\curses.py:78:4: W0601: Global variable 'session' undefined at the module level (global-variable-undefined)
-celestine\application\curses.py:82:4: C0103: Constant name "item" doesn't conform to UPPER_CASE naming style (invalid-name)
-celestine\application\curses.py:82:4: W0601: Global variable 'item' undefined at the module level (global-variable-undefined)
-celestine\application\curses.py:85:4: C0103: Constant name "line" doesn't conform to UPPER_CASE naming style (invalid-name)
-celestine\application\curses.py:85:4: W0601: Global variable 'line' undefined at the module level (global-variable-undefined)
-celestine\application\curses.py:88:4: C0103: Constant name "quote_window" doesn't conform to UPPER_CASE naming style (invalid-name)
-celestine\application\curses.py:88:4: W0601: Global variable 'quote_window' undefined at the module level (global-variable-undefined)
-celestine\application\curses.py:91:4: C0103: Constant name "quote_text_window" doesn't conform to UPPER_CASE naming style (invalid-name)
-celestine\application\curses.py:91:4: W0601: Global variable 'quote_text_window' undefined at the module level (global-variable-undefined)
-celestine\application\curses.py:95:4: E1101: Module 'curses' has no 'noecho' member (no-member)
-celestine\application\curses.py:96:4: E1101: Module 'curses' has no 'cbreak' member (no-member)
-celestine\application\curses.py:119:8: E1101: Module 'curses' has no 'doupdate' member (no-member)
-celestine\application\curses.py:131:8: E1101: Module 'curses' has no 'nocbreak' member (no-member)
-celestine\application\curses.py:132:8: E1101: Module 'curses' has no 'echo' member (no-member)
-celestine\application\curses.py:133:8: E1101: Module 'curses' has no 'endwin' member (no-member)
+celestine\application\curses\__init__.py:9:0: C0115: Missing class docstring (missing-class-docstring)
+celestine\application\curses\__init__.py:13:8: C0103: Attribute name "x" doesn't conform to snake_case naming style (invalid-name)
+celestine\application\curses\__init__.py:14:8: C0103: Attribute name "y" doesn't conform to snake_case naming style (invalid-name)
+celestine\application\curses\__init__.py:18:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\curses\__init__.py:21:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\curses\__init__.py:22:9: C0103: Variable name "x" doesn't conform to snake_case naming style (invalid-name)
+celestine\application\curses\__init__.py:22:12: C0103: Variable name "y" doesn't conform to snake_case naming style (invalid-name)
+celestine\application\curses\__init__.py:32:0: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\curses\__init__.py:32:21: W0613: Unused argument 'bind' (unused-argument)
+celestine\application\curses\__init__.py:37:0: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\curses\__init__.py:37:15: W0621: Redefining name 'image' from outer scope (line 37) (redefined-outer-name)
+celestine\application\curses\__init__.py:42:0: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\curses\__init__.py:46:0: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\curses\__init__.py:46:15: W0613: Unused argument 'text' (unused-argument)
+celestine\application\curses\__init__.py:56:11: E1101: Module 'curses' has no 'newwin' member (no-member)
+celestine\application\curses\__init__.py:68:4: C0103: Constant name "line" doesn't conform to UPPER_CASE naming style (invalid-name)
+celestine\application\curses\__init__.py:68:4: W0601: Global variable 'line' undefined at the module level (global-variable-undefined)
+celestine\application\curses\__init__.py:70:4: C0103: Variable name "y" doesn't conform to snake_case naming style (invalid-name)
+celestine\application\curses\__init__.py:70:8: E0601: Using variable 'line' before assignment (used-before-assignment)
+celestine\application\curses\__init__.py:71:4: C0103: Variable name "x" doesn't conform to snake_case naming style (invalid-name)
+celestine\application\curses\__init__.py:78:4: C0103: Constant name "item" doesn't conform to UPPER_CASE naming style (invalid-name)
+celestine\application\curses\__init__.py:78:4: W0601: Global variable 'item' undefined at the module level (global-variable-undefined)
+celestine\application\curses\__init__.py:81:4: C0103: Constant name "line" doesn't conform to UPPER_CASE naming style (invalid-name)
+celestine\application\curses\__init__.py:81:4: W0601: Global variable 'line' undefined at the module level (global-variable-undefined)
+celestine\application\curses\__init__.py:84:4: C0103: Constant name "quote_window" doesn't conform to UPPER_CASE naming style (invalid-name)
+celestine\application\curses\__init__.py:84:4: W0601: Global variable 'quote_window' undefined at the module level (global-variable-undefined)
+celestine\application\curses\__init__.py:87:4: C0103: Constant name "quote_text_window" doesn't conform to UPPER_CASE naming style (invalid-name)
+celestine\application\curses\__init__.py:87:4: W0601: Global variable 'quote_text_window' undefined at the module level (global-variable-undefined)
+celestine\application\curses\__init__.py:91:4: E1101: Module 'curses' has no 'noecho' member (no-member)
+celestine\application\curses\__init__.py:92:4: E1101: Module 'curses' has no 'cbreak' member (no-member)
+celestine\application\curses\__init__.py:115:8: E1101: Module 'curses' has no 'doupdate' member (no-member)
+celestine\application\curses\__init__.py:127:8: E1101: Module 'curses' has no 'nocbreak' member (no-member)
+celestine\application\curses\__init__.py:128:8: E1101: Module 'curses' has no 'echo' member (no-member)
+celestine\application\curses\__init__.py:129:8: E1101: Module 'curses' has no 'endwin' member (no-member)
 ************* Module celestine.application.dearpygui
-celestine\application\dearpygui.py:10:8: W0621: Redefining name 'image' from outer scope (line 71) (redefined-outer-name)
-celestine\application\dearpygui.py:6:0: R0903: Too few public methods (0/2) (too-few-public-methods)
-celestine\application\dearpygui.py:27:17: W0613: Unused argument 'sender' (unused-argument)
-celestine\application\dearpygui.py:27:25: W0613: Unused argument 'app_data' (unused-argument)
-celestine\application\dearpygui.py:35:4: W0621: Redefining name 'item' from outer scope (line 95) (redefined-outer-name)
-celestine\application\dearpygui.py:32:18: W0613: Unused argument 'sender' (unused-argument)
-celestine\application\dearpygui.py:71:15: W0621: Redefining name 'image' from outer scope (line 71) (redefined-outer-name)
-celestine\application\dearpygui.py:90:4: C0103: Constant name "session" doesn't conform to UPPER_CASE naming style (invalid-name)
-celestine\application\dearpygui.py:90:4: W0601: Global variable 'session' undefined at the module level (global-variable-undefined)
-celestine\application\dearpygui.py:94:4: C0103: Constant name "item" doesn't conform to UPPER_CASE naming style (invalid-name)
-celestine\application\dearpygui.py:94:4: W0601: Global variable 'item' undefined at the module level (global-variable-undefined)
-************* Module celestine.application.tkinter
-celestine\application\tkinter.py:10:0: R0903: Too few public methods (0/2) (too-few-public-methods)
-celestine\application\tkinter.py:75:4: C0103: Constant name "item" doesn't conform to UPPER_CASE naming style (invalid-name)
-celestine\application\tkinter.py:75:4: W0601: Global variable 'item' undefined at the module level (global-variable-undefined)
-celestine\application\tkinter.py:78:4: C0103: Constant name "root" doesn't conform to UPPER_CASE naming style (invalid-name)
-celestine\application\tkinter.py:78:4: W0601: Global variable 'root' undefined at the module level (global-variable-undefined)
-************* Module celestine.application.configuration
-celestine\application\configuration\__init__.py:5:0: E0611: No name 'configuration_translator' in module 'celestine.main.configuration' (no-name-in-module)
-celestine\application\configuration\__init__.py:19:4: C0103: Constant name "session" doesn't conform to UPPER_CASE naming style (invalid-name)
-celestine\application\configuration\__init__.py:19:4: W0601: Global variable 'session' undefined at the module level (global-variable-undefined)
+celestine\application\dearpygui\__init__.py:10:8: W0621: Redefining name 'image' from outer scope (line 71) (redefined-outer-name)
+celestine\application\dearpygui\__init__.py:6:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+celestine\application\dearpygui\__init__.py:27:17: W0613: Unused argument 'sender' (unused-argument)
+celestine\application\dearpygui\__init__.py:27:25: W0613: Unused argument 'app_data' (unused-argument)
+celestine\application\dearpygui\__init__.py:35:4: W0621: Redefining name 'item' from outer scope (line 91) (redefined-outer-name)
+celestine\application\dearpygui\__init__.py:32:18: W0613: Unused argument 'sender' (unused-argument)
+celestine\application\dearpygui\__init__.py:71:15: W0621: Redefining name 'image' from outer scope (line 71) (redefined-outer-name)
+celestine\application\dearpygui\__init__.py:90:4: C0103: Constant name "item" doesn't conform to UPPER_CASE naming style (invalid-name)
+celestine\application\dearpygui\__init__.py:90:4: W0601: Global variable 'item' undefined at the module level (global-variable-undefined)
 ************* Module celestine.application.language.translate
 celestine\application\language\translate.py:88:4: C0103: Constant name "session" doesn't conform to UPPER_CASE naming style (invalid-name)
 celestine\application\language\translate.py:88:4: W0601: Global variable 'session' undefined at the module level (global-variable-undefined)
@@ -118,87 +119,101 @@ celestine\application\star\os.py:27:22: W0612: Unused variable 'dirnames' (unuse
 celestine\application\star\os.py:33:4: C0116: Missing function or method docstring (missing-function-docstring)
 celestine\application\star\os.py:44:4: C0116: Missing function or method docstring (missing-function-docstring)
 celestine\application\star\os.py:49:4: C0116: Missing function or method docstring (missing-function-docstring)
-************* Module celestine.application.unittest
-celestine\application\unittest\__init__.py:21:4: W0622: Redefining built-in 'exit' (redefined-builtin)
-celestine\application\unittest\__init__.py:17:4: C0103: Variable name "defaultTest" doesn't conform to snake_case naming style (invalid-name)
-celestine\application\unittest\__init__.py:19:4: C0103: Variable name "testRunner" doesn't conform to snake_case naming style (invalid-name)
-celestine\application\unittest\__init__.py:20:4: C0103: Variable name "testLoader" doesn't conform to snake_case naming style (invalid-name)
-celestine\application\unittest\__init__.py:14:0: W0613: Unused argument 'kwargs' (unused-argument)
-************* Module celestine.application.unittest.core.test_text
-celestine\application\unittest\core\test_text.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-celestine\application\unittest\core\test_text.py:3:0: W0401: Wildcard import celestine.core.text (wildcard-import)
-celestine\application\unittest\core\test_text.py:6:0: C0115: Missing class docstring (missing-class-docstring)
-celestine\application\unittest\core\test_text.py:6:0: C0103: Class name "test_text" doesn't conform to PascalCase naming style (invalid-name)
-celestine\application\unittest\core\test_text.py:7:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\core\test_text.py:10:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\core\test_text.py:13:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\core\test_text.py:16:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\core\test_text.py:19:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\core\test_text.py:22:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\core\test_text.py:25:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\core\test_text.py:28:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\core\test_text.py:3:0: W0614: Unused import(s) fatal, error, notice, warning, alert, debug, info and trace from wildcard import of celestine.core.text (unused-wildcard-import)
-************* Module celestine.application.unittest.extension.test_more_itertools
-celestine\application\unittest\extension\test_more_itertools.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-celestine\application\unittest\extension\test_more_itertools.py:3:0: W0401: Wildcard import celestine.extension.more_itertools (wildcard-import)
-celestine\application\unittest\extension\test_more_itertools.py:6:0: C0115: Missing class docstring (missing-class-docstring)
-celestine\application\unittest\extension\test_more_itertools.py:6:0: C0103: Class name "test_more_itertools" doesn't conform to PascalCase naming style (invalid-name)
-celestine\application\unittest\extension\test_more_itertools.py:3:0: W0614: Unused import(s) split_when, filter_true and first_true from wildcard import of celestine.extension.more_itertools (unused-wildcard-import)
-************* Module celestine.application.unittest.parser.test_operator
-celestine\application\unittest\parser\test_operator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-celestine\application\unittest\parser\test_operator.py:3:0: W0401: Wildcard import celestine.parser.operator (wildcard-import)
-celestine\application\unittest\parser\test_operator.py:4:0: W0401: Wildcard import celestine.data.alphabet (wildcard-import)
-celestine\application\unittest\parser\test_operator.py:5:0: W0401: Wildcard import celestine.parser.translator (wildcard-import)
-celestine\application\unittest\parser\test_operator.py:8:0: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:14:0: C0115: Missing class docstring (missing-class-docstring)
-celestine\application\unittest\parser\test_operator.py:14:0: C0103: Class name "test_digit" doesn't conform to PascalCase naming style (invalid-name)
-celestine\application\unittest\parser\test_operator.py:15:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:19:0: C0115: Missing class docstring (missing-class-docstring)
-celestine\application\unittest\parser\test_operator.py:19:0: C0103: Class name "test_unary" doesn't conform to PascalCase naming style (invalid-name)
-celestine\application\unittest\parser\test_operator.py:20:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:26:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:33:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:41:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:47:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:54:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:60:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:68:0: C0115: Missing class docstring (missing-class-docstring)
-celestine\application\unittest\parser\test_operator.py:68:0: C0103: Class name "test_comparison" doesn't conform to PascalCase naming style (invalid-name)
-celestine\application\unittest\parser\test_operator.py:69:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:75:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:83:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:90:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:97:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:103:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:111:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:118:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:125:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:131:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:139:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:146:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:153:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:159:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:168:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:176:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_operator.py:177:8: W0612: Unused variable 'token' (unused-variable)
-celestine\application\unittest\parser\test_operator.py:3:0: W0614: Unused import(s) Operator, tab, word, number, join, tab_parse, word_parse, number_parse, unary_parse, comparison_parse and Divider from wildcard import of celestine.parser.operator (unused-wildcard-import)
-celestine\application\unittest\parser\test_operator.py:4:0: W0614: Unused import(s) enum and Letter from wildcard import of celestine.data.alphabet (unused-wildcard-import)
-celestine\application\unittest\parser\test_operator.py:5:0: W0614: Unused import(s) log_unicode, decode, maps, translator, encoding, split_when and filter_true from wildcard import of celestine.parser.translator (unused-wildcard-import)
-************* Module celestine.application.unittest.parser.test_translator
-celestine\application\unittest\parser\test_translator.py:147:0: C0301: Line too long (343/100) (line-too-long)
-celestine\application\unittest\parser\test_translator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-celestine\application\unittest\parser\test_translator.py:3:0: W0401: Wildcard import celestine.parser.translator (wildcard-import)
-celestine\application\unittest\parser\test_translator.py:4:0: W0401: Wildcard import celestine.parser.operator (wildcard-import)
-celestine\application\unittest\parser\test_translator.py:7:0: C0115: Missing class docstring (missing-class-docstring)
-celestine\application\unittest\parser\test_translator.py:7:0: C0103: Class name "test_translator" doesn't conform to PascalCase naming style (invalid-name)
-celestine\application\unittest\parser\test_translator.py:8:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_translator.py:22:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_translator.py:30:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_translator.py:39:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_translator.py:68:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_translator.py:128:4: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\application\unittest\parser\test_translator.py:3:0: W0614: Unused import(s) log_unicode, decode, maps, encoding, split_when, filter_true, Unary, comparison_parse, number_parse, tab_parse, word_parse and unary_parse from wildcard import of celestine.parser.translator (unused-wildcard-import)
-celestine\application\unittest\parser\test_translator.py:4:0: W0614: Unused import(s) Operator, eq, ge, gt, le, nn, nu, add, div, mul, sub and join from wildcard import of celestine.parser.operator (unused-wildcard-import)
+************* Module celestine.application.terminal.configure
+celestine\application\terminal\configure.py:21:32: E0602: Undefined variable 'KEY' (undefined-variable)
+celestine\application\terminal\configure.py:22:32: E0602: Undefined variable 'REGION' (undefined-variable)
+celestine\application\terminal\configure.py:23:32: E0602: Undefined variable 'URL' (undefined-variable)
+celestine\application\terminal\configure.py:7:0: W0611: Unused APPLICATION imported from celestine.application.terminal.keyword (unused-import)
+celestine\application\terminal\configure.py:8:0: W0611: Unused DIRECTORY imported from celestine.application.terminal.keyword (unused-import)
+celestine\application\terminal\configure.py:10:0: W0611: Unused PYTHON imported from celestine.application.terminal.keyword (unused-import)
+************* Module celestine.application.terminal.keyword
+celestine\application\terminal\keyword.py:14:0: W0404: Reimport 'main' (imported line 2) (reimported)
+celestine\application\terminal\keyword.py:14:0: C0413: Import "from celestine.keyword import main" should be placed at the top of the module (wrong-import-position)
+************* Module celestine.application.terminal.__init__ - Copy
+celestine\application\terminal\__init__ - Copy.py:1:0: C0103: Module name "__init__ - Copy" doesn't conform to snake_case naming style (invalid-name)
+************* Module celestine.application.tkinter
+celestine\application\tkinter\__init__.py:10:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+celestine\application\tkinter\__init__.py:72:4: C0103: Constant name "item" doesn't conform to UPPER_CASE naming style (invalid-name)
+celestine\application\tkinter\__init__.py:72:4: W0601: Global variable 'item' undefined at the module level (global-variable-undefined)
+celestine\application\tkinter\__init__.py:75:4: C0103: Constant name "root" doesn't conform to UPPER_CASE naming style (invalid-name)
+celestine\application\tkinter\__init__.py:75:4: W0601: Global variable 'root' undefined at the module level (global-variable-undefined)
+************* Module celestine.application.verify
+celestine\application\verify\__init__.py:12:0: C0103: Constant name "candeeycane" doesn't conform to UPPER_CASE naming style (invalid-name)
+************* Module celestine.application.verify.core.test_text
+celestine\application\verify\core\test_text.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+celestine\application\verify\core\test_text.py:3:0: W0401: Wildcard import celestine.core.text (wildcard-import)
+celestine\application\verify\core\test_text.py:6:0: C0115: Missing class docstring (missing-class-docstring)
+celestine\application\verify\core\test_text.py:6:0: C0103: Class name "test_text" doesn't conform to PascalCase naming style (invalid-name)
+celestine\application\verify\core\test_text.py:7:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\core\test_text.py:10:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\core\test_text.py:13:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\core\test_text.py:16:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\core\test_text.py:19:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\core\test_text.py:22:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\core\test_text.py:25:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\core\test_text.py:28:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\core\test_text.py:3:0: W0614: Unused import(s) fatal, error, notice, warning, alert, debug, info and trace from wildcard import of celestine.core.text (unused-wildcard-import)
+************* Module celestine.application.verify.extension.test_more_itertools
+celestine\application\verify\extension\test_more_itertools.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+celestine\application\verify\extension\test_more_itertools.py:3:0: W0401: Wildcard import celestine.extension.more_itertools (wildcard-import)
+celestine\application\verify\extension\test_more_itertools.py:6:0: C0115: Missing class docstring (missing-class-docstring)
+celestine\application\verify\extension\test_more_itertools.py:6:0: C0103: Class name "test_more_itertools" doesn't conform to PascalCase naming style (invalid-name)
+celestine\application\verify\extension\test_more_itertools.py:3:0: W0614: Unused import(s) split_when, filter_true and first_true from wildcard import of celestine.extension.more_itertools (unused-wildcard-import)
+************* Module celestine.application.verify.parser.test_operator
+celestine\application\verify\parser\test_operator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+celestine\application\verify\parser\test_operator.py:3:0: W0401: Wildcard import celestine.parser.operator (wildcard-import)
+celestine\application\verify\parser\test_operator.py:4:0: W0401: Wildcard import celestine.data.alphabet (wildcard-import)
+celestine\application\verify\parser\test_operator.py:5:0: W0401: Wildcard import celestine.parser.translator (wildcard-import)
+celestine\application\verify\parser\test_operator.py:8:0: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:14:0: C0115: Missing class docstring (missing-class-docstring)
+celestine\application\verify\parser\test_operator.py:14:0: C0103: Class name "test_digit" doesn't conform to PascalCase naming style (invalid-name)
+celestine\application\verify\parser\test_operator.py:15:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:19:0: C0115: Missing class docstring (missing-class-docstring)
+celestine\application\verify\parser\test_operator.py:19:0: C0103: Class name "test_unary" doesn't conform to PascalCase naming style (invalid-name)
+celestine\application\verify\parser\test_operator.py:20:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:26:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:33:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:41:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:47:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:54:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:60:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:68:0: C0115: Missing class docstring (missing-class-docstring)
+celestine\application\verify\parser\test_operator.py:68:0: C0103: Class name "test_comparison" doesn't conform to PascalCase naming style (invalid-name)
+celestine\application\verify\parser\test_operator.py:69:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:75:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:83:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:90:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:97:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:103:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:111:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:118:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:125:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:131:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:139:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:146:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:153:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:159:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:168:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:176:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_operator.py:177:8: W0612: Unused variable 'token' (unused-variable)
+celestine\application\verify\parser\test_operator.py:3:0: W0614: Unused import(s) Operator, tab, word, number, join, tab_parse, word_parse, number_parse, unary_parse, comparison_parse and Divider from wildcard import of celestine.parser.operator (unused-wildcard-import)
+celestine\application\verify\parser\test_operator.py:4:0: W0614: Unused import(s) enum and Letter from wildcard import of celestine.data.alphabet (unused-wildcard-import)
+celestine\application\verify\parser\test_operator.py:5:0: W0614: Unused import(s) log_unicode, decode, maps, translator, encoding, split_when and filter_true from wildcard import of celestine.parser.translator (unused-wildcard-import)
+************* Module celestine.application.verify.parser.test_translator
+celestine\application\verify\parser\test_translator.py:147:0: C0301: Line too long (343/100) (line-too-long)
+celestine\application\verify\parser\test_translator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+celestine\application\verify\parser\test_translator.py:3:0: W0401: Wildcard import celestine.parser.translator (wildcard-import)
+celestine\application\verify\parser\test_translator.py:4:0: W0401: Wildcard import celestine.parser.operator (wildcard-import)
+celestine\application\verify\parser\test_translator.py:7:0: C0115: Missing class docstring (missing-class-docstring)
+celestine\application\verify\parser\test_translator.py:7:0: C0103: Class name "test_translator" doesn't conform to PascalCase naming style (invalid-name)
+celestine\application\verify\parser\test_translator.py:8:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_translator.py:22:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_translator.py:30:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_translator.py:39:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_translator.py:68:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_translator.py:128:4: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\application\verify\parser\test_translator.py:3:0: W0614: Unused import(s) log_unicode, decode, maps, encoding, split_when, filter_true, Unary, comparison_parse, number_parse, tab_parse, word_parse and unary_parse from wildcard import of celestine.parser.translator (unused-wildcard-import)
+celestine\application\verify\parser\test_translator.py:4:0: W0614: Unused import(s) Operator, eq, ge, gt, le, nn, nu, add, div, mul, sub and join from wildcard import of celestine.parser.operator (unused-wildcard-import)
 ************* Module celestine.core.file
 celestine\core\file.py:30:11: E1101: Module 'keyword' has no 'iskeyword' member (no-member)
 celestine\core\file.py:30:37: E1101: Module 'keyword' has no 'issoftkeyword' member (no-member)
@@ -225,8 +240,6 @@ celestine\core\text.py:41:4: C0116: Missing function or method docstring (missin
 celestine\core\text.py:46:4: C0116: Missing function or method docstring (missing-function-docstring)
 celestine\core\text.py:51:4: C0116: Missing function or method docstring (missing-function-docstring)
 celestine\core\text.py:56:0: W0105: String statement has no effect (pointless-string-statement)
-************* Module celestine.main.configuration
-celestine\main\configuration.py:22:9: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
 ************* Module celestine.parser.operator
 celestine\parser\operator.py:322:0: C0305: Trailing newlines (trailing-newlines)
 celestine\parser\operator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -332,16 +345,130 @@ celestine\parser\translator.py:68:4: C0116: Missing function or method docstring
 celestine\parser\translator.py:66:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module celestine.python.__init__
 celestine\python\__init__.py:1:0: R0801: Similar lines in 2 files
-==celestine.application.curses:[77:84]
-==celestine.application.dearpygui:[89:96]
-    global session
-    session = kwargs["session"]
-    window = kwargs["window"]
+==celestine.application.tkinter.configuration:[20:60]
+==celestine.main.configuration:[20:60]
+    path = os.path.join(*paths)
+    with open(path, WRITE, encoding=UTF_8) as file:
+        configuration.write(file, True)
 
-    global item
-    item = {}
+
+def configuration_load(*paths):
+    """Load the configuration file."""
+    path = os.path.join(*paths)
+    configuration = configparser.ConfigParser()
+    configuration.read(path, encoding=ENCODING)
+    return configuration
+
+
+def configuration_save_main(configuration, directory):
+    """Save the default configuration file."""
+    configuration_save(
+        configuration,
+        directory,
+        CELESTINE,
+        CONFIGURATION_CELESTINE,
+    )
+
+
+def configuration_load_main(directory):
+    """Load the default configuration file."""
+    return configuration_load(
+        directory,
+        CELESTINE,
+        CONFIGURATION_CELESTINE,
+    )
+
+
+def configuration_celestine(application=TERMINAL, language=ENGLISH, python=PYTHON_3_10):
+    """The default configuration file."""
+    configuration = configparser.ConfigParser()
+    configuration.add_section(CELESTINE)
+    configuration.set(CELESTINE, APPLICATION, application)
+    configuration.set(CELESTINE, LANGUAGE, language)
+    configuration.set(CELESTINE, PYTHON, python)
+    return configuration (duplicate-code)
+celestine\python\__init__.py:1:0: R0801: Similar lines in 2 files
+==celestine.application.language.configure:[18:48]
+==celestine.application.terminal.configure:[18:48]
+    if not configuration.has_section(LANGUAGE):
+        configuration.add_section(LANGUAGE)
+    configuration.set(LANGUAGE, KEY, key)
+    configuration.set(LANGUAGE, REGION, region)
+    configuration.set(LANGUAGE, URL, url)
+    return configuration
+
+
+def default():
+    """The default configuration with all keys."""
+    configuration = configparser.ConfigParser()
+    key = NONE
+    region = NONE
+    url = NONE
+    configuration = configure(configuration, key, region, url)
+    return configuration
+
+
+def main(**kwargs):
+    """The main function."""
+    argument = kwargs[ARGUMENT]
+    session = kwargs[SESSION]
+    directory = session.directory
+
+    configuration = configuration_load_main(directory)
+    key = argument.key
+    region = argument.region
+    url = argument.url
+    configuration = configure(configuration, key, region, url)
+    configuration_save_main(configuration, directory) (duplicate-code)
+celestine\python\__init__.py:1:0: R0801: Similar lines in 2 files
+==celestine.application.language.keyword:[4:21]
+==celestine.application.terminal.keyword:[16:33]
+APPLICATION = main.APPLICATION
+ARGUMENT = "argument"  # outsource
+CELESTINE = main.CELESTINE
+CONFIGURE = "configure"  # outsource
+KEY = "key"
+LANGUAGE = main.LANGUAGE
+NONE = ""  # blank
+REGION = "region"
+REPORT = "report"
+SESSION = "session"  # outsource
+TASK = "task"
+TEXT = "text"
+TO = "to"
+TRANSLATE = "translate"
+TRANSLATIONS = "translations"
+URL = "url"
+language = main.language (duplicate-code)
+celestine\python\__init__.py:1:0: R0801: Similar lines in 2 files
+==celestine.application.language.argument:[17:31]
+==celestine.application.terminal.argument:[17:31]
+parser = argparse.ArgumentParser(add_help=False, prog=CELESTINE)
+parser.add_argument(APPLICATION, choices=[LANGUAGE])
+
+
+subparser = parser.add_subparsers(dest=TASK, required=True)
+
+configure = subparser.add_parser(CONFIGURE)
+configure.add_argument(KEY)
+configure.add_argument(REGION)
+configure.add_argument(URL)
+
+report = subparser.add_parser(REPORT)
+
+translate = subparser.add_parser(TRANSLATE) (duplicate-code)
+celestine\python\__init__.py:1:0: R0801: Similar lines in 2 files
+==celestine.application.tkinter.session:[38:46]
+==celestine:[52:62]
+        default = configuration_celestine()
+
+        configuration = configuration_load(
+            directory,
+            CELESTINE,
+            CONFIGURATION_CELESTINE
+        )
  (duplicate-code)
 
 ------------------------------------------------------------------
-Your code has been rated at 7.61/10 (previous run: 5.35/10, +2.27)
+Your code has been rated at 7.67/10 (previous run: 7.67/10, +0.00)
 

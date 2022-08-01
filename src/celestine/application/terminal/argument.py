@@ -1,30 +1,47 @@
 """Generate configuration files for all packages."""
 import argparse
 
-from celestine.application.terminal.keyword import CELESTINE
-from celestine.application.terminal.keyword import APPLICATION
-from celestine.application.terminal.keyword import LANGUAGE
-from celestine.application.terminal.keyword import TASK
+from .keyword import CELESTINE
+from .keyword import APPLICATION
+from .keyword import TERMINAL
+from .keyword import TASK
 
-from celestine.application.terminal.keyword import KEY
-from celestine.application.terminal.keyword import REGION
-from celestine.application.terminal.keyword import URL
+from .keyword import KEY
+from .keyword import REGION
+from .keyword import URL
 
-from celestine.application.terminal.keyword import CONFIGURE
-from celestine.application.terminal.keyword import REPORT
-from celestine.application.terminal.keyword import TRANSLATE
+from .keyword import CONFIGURE
+from .keyword import REPORT
+from .keyword import TRANSLATE
 
 
-parser = argparse.ArgumentParser(add_help=False, prog=CELESTINE)
-parser.add_argument(APPLICATION, choices=[LANGUAGE])
+STORE = "store"
+
+parser = argparse.ArgumentParser(prog=CELESTINE)
+parser.add_argument(APPLICATION, choices=[TERMINAL])
 
 
 subparser = parser.add_subparsers(dest=TASK, required=True)
 
 configure = subparser.add_parser(CONFIGURE)
-configure.add_argument(KEY)
-configure.add_argument(REGION)
-configure.add_argument(URL)
+
+configure.add_argument(
+    KEY,
+    action=STORE,
+    help ="A brief description of what the argument does.",
+)
+
+configure.add_argument(
+    REGION,
+    action=STORE,
+    help ="A brief description of what the argument does.",
+)
+
+configure.add_argument(
+    URL,
+    action=STORE,
+    help ="A brief description of what the argument does.",
+)
 
 report = subparser.add_parser(REPORT)
 

@@ -1,37 +1,28 @@
 """Package unittest."""
 import unittest
 
-from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import CELESTINE
-from celestine.keyword.main import UNITTEST
+from .keyword import CELESTINE
+from .keyword import ERROR
+from .keyword import MODULE
 
 
-verify = None
+# unittest needs this exact vairable to run properly
+# note that it is the same name as the package
+verify = None  # pylint: disable=invalid-name
 
 
 def main(_):
     """def main"""
-    module = F"{CELESTINE}.{APPLICATION}.verify"
-    defaultTest = None
-    argv = [CELESTINE]
-    testRunner = None
-    testLoader = unittest.defaultTestLoader
-    exit = True
-    verbosity = 2
-    failfast = False
-    catchbreak = True
-    buffer = True
-    warnings = "error"
     unittest.main(
-        module,
-        defaultTest,
-        argv,
-        testRunner,
-        testLoader,
-        exit,
-        verbosity,
-        failfast,
-        catchbreak,
-        buffer,
-        warnings
+        MODULE,
+        None,
+        [CELESTINE],
+        None,
+        unittest.defaultTestLoader,
+        True,
+        2,
+        False,
+        True,
+        True,
+        ERROR,
     )

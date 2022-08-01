@@ -1,11 +1,10 @@
 """Application for translating text to other languages."""
 from celestine.core import load
 
-from celestine.application.language.argument import parser
+from .argument import parser
 
-
-from celestine.application.language.keyword import APPLICATION
-from celestine.application.language.keyword import LANGUAGE
+from .keyword import APPLICATION
+from .keyword import LANGUAGE
 
 
 def main(session):

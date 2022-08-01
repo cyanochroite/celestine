@@ -1,11 +1,15 @@
 """Keywords used throughout the terminal application."""
+from celestine.keyword.main import CELESTINE
+from celestine.keyword.main import APPLICATION
+from celestine.keyword.main import TERMINAL
+#from celestine.keyword.main import TASK
+TASK = "task"
+
+
 from celestine.keyword import main
 
 
 APPLICATION = main.APPLICATION
-DIRECTORY = main.DIRECTORY
-LANGUAGE = main.LANGUAGE
-PYTHON = main.PYTHON
 TERMINAL = main.TERMINAL
 
 
@@ -14,20 +18,23 @@ TERMINAL = main.TERMINAL
 from celestine.keyword import main
 
 
-APPLICATION = main.APPLICATION
-ARGUMENT = "argument"  # outsource
-CELESTINE = main.CELESTINE
-CONFIGURE = "configure"  # outsource
+
+
 KEY = "key"
-LANGUAGE = main.LANGUAGE
-NONE = ""  # blank
+URL = "url"
 REGION = "region"
+
+CONFIGURE = "configure"  # outsource
 REPORT = "report"
+TRANSLATE = "translate"
+
+ARGUMENT = "argument"  # outsource
+NONE = ""  # blank
 SESSION = "session"  # outsource
-TASK = "task"
 TEXT = "text"
 TO = "to"
-TRANSLATE = "translate"
 TRANSLATIONS = "translations"
-URL = "url"
 language = main.language
+DIRECTORY = main.DIRECTORY
+LANGUAGE = main.LANGUAGE
+PYTHON = main.PYTHON

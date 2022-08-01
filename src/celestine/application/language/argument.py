@@ -1,31 +1,52 @@
 """Generate configuration files for all packages."""
 import argparse
 
-from celestine.application.language.keyword import CELESTINE
-from celestine.application.language.keyword import APPLICATION
-from celestine.application.language.keyword import LANGUAGE
-from celestine.application.language.keyword import TASK
+from .keyword import CELESTINE
+from .keyword import APPLICATION
+from .keyword import LANGUAGE
+from .keyword import TASK
 
-from celestine.application.language.keyword import KEY
-from celestine.application.language.keyword import REGION
-from celestine.application.language.keyword import URL
+from .keyword import KEY
+from .keyword import REGION
+from .keyword import URL
 
-from celestine.application.language.keyword import CONFIGURE
-from celestine.application.language.keyword import REPORT
-from celestine.application.language.keyword import TRANSLATE
+from .keyword import CONFIGURE
+from .keyword import REPORT
+from .keyword import TRANSLATE
+
+from .keyword import STORE
 
 
-parser = argparse.ArgumentParser(add_help=False, prog=CELESTINE)
-parser.add_argument(APPLICATION, choices=[LANGUAGE])
+parser = argparse.ArgumentParser(prog=CELESTINE)
 
+parser.add_argument(
+    APPLICATION,
+    choices=[LANGUAGE],
+    help="The currently run application.",
+)
 
 subparser = parser.add_subparsers(dest=TASK, required=True)
 
-configure = subparser.add_parser(CONFIGURE)
-configure.add_argument(KEY)
-configure.add_argument(REGION)
-configure.add_argument(URL)
+configure = subparser.add_parser(CONFIGURE, help="you are a fish")
 
-report = subparser.add_parser(REPORT)
+configure.add_argument(
+    KEY,
+    action=STORE,
+    help ="A brief description of what the argument does.",
+)
 
-translate = subparser.add_parser(TRANSLATE)
+configure.add_argument(
+    REGION,
+    action=STORE,
+    help ="A brief description of what the argument does.",
+)
+
+configure.add_argument(
+    URL,
+    action=STORE,
+    help ="A brief description of what the argument does.",
+)
+
+report = subparser.add_parser(REPORT, help="you are a fish")
+
+translate = subparser.add_parser(TRANSLATE, help="you are a fish")
