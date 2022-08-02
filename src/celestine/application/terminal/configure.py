@@ -46,3 +46,13 @@ def main(**kwargs):
     url = argument.url
     configuration = configure(configuration, key, region, url)
     configuration_save_main(configuration, directory)
+
+
+def configuration_celestine(application=TERMINAL, language=ENGLISH, python=PYTHON_3_10):
+    """The default configuration file."""
+    configuration = configparser.ConfigParser()
+    configuration.add_section(CELESTINE)
+    configuration.set(CELESTINE, APPLICATION, application)
+    configuration.set(CELESTINE, LANGUAGE, language)
+    configuration.set(CELESTINE, PYTHON, python)
+    return configuration

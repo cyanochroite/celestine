@@ -12,14 +12,11 @@ from celestine.keyword.main import PYTHON
 
 
 from celestine.keyword.main import CELESTINE
-from celestine.keyword.main import CONFIGURATION_CELESTINE
+from celestine.keyword.main import CONFIGURATION
 
-from celestine.main.configuration import configuration_load
-from celestine.main.configuration import configuration_celestine
 
 from celestine.core import load
 
-from celestine.main.argument import parser
 
 PYTHON = "python"
 
@@ -51,13 +48,12 @@ applications = [
 ]
 
 
-default = configuration_celestine()
 
-configuration = configuration_load(
-    directory,
-    CELESTINE,
-    CONFIGURATION_CELESTINE
-)
+
+
+
+
+
 
 
 def load_application():
@@ -67,38 +63,40 @@ def load_application():
             parser.parse_args()
     except IndexError:
         try:
-            configuration = configuration_load(directory, CELESTINE, CONFIGURATION_CELESTINE)
+            configuration = configuration.load(directory, CELESTINE, CONFIGURATION)
             argumentation = configuration[CELESTINE][APPLICATION]
         except KeyError:
-            configuration = configuration_celestine()
+            configuration = configuration.load_default()
             argumentation = configuration[CELESTINE][APPLICATION]
     return load.module(APPLICATION, argumentation)
 
 
-def load_python():
-    try:
-        python = load.module(PYTHON, PYTHON_3_6)
-        python = load.module(PYTHON, PYTHON_3_7)
-        python = load.module(PYTHON, PYTHON_3_8)
-        python = load.module(PYTHON, PYTHON_3_9)
-        python = load.module(PYTHON, PYTHON_3_10)
-        python = load.module(PYTHON, PYTHON_3_11)
-    except SyntaxError:
-        pass
-    return python
 
 
-application = load_application()
-python = load_python()
-
-
-window = load.module("window", "main")
-
-def cow():
-    """pointless"""
-    return 7 or 8
-
-cow = cow()
 
 print("CHANGE THIS")
 language = load.module("language", "english")
+window = load.module("window", "main")
+
+
+
+
+
+from celestine.session.argument import Argument
+from celestine.session.configuration import Configuration
+from celestine.session.python import python
+
+class Session():
+    def __init__(self, directory):
+        self.directory = directory
+
+        self.argument = Argument()
+        self.configuration = Configuration(directory)
+        self.python = python()
+        
+        
+        
+        #pre
+        self.application = load_application()
+        self.window = load.module("window", "main")
+        
