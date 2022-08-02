@@ -23,7 +23,7 @@ parser = argparse.ArgumentParser(prog=CELESTINE)
 parser.add_argument(
     APPLICATION,
     choices=application,
-    help="Tell me which python version you are using.",
+    help="Select which application to run.",
 )
 
 parser.add_argument(
@@ -31,13 +31,6 @@ parser.add_argument(
     choices=language,
     help="Choose a language.",
     dest=LANGUAGE,
-)
-
-parser.add_argument(
-    "-v, --version",
-    choices=python,
-    help="Tell me which python version you are using.",
-    dest=PYTHON,
 )
 
 subparser = parser.add_subparsers(dest=TASK, required=True)

@@ -1,17 +1,5 @@
-cat = None
-dog = None
-fish = cat or dog
-print(fish)
-cow = [3]
+from celestine.core import load
 
-print(cow[0])
+car = load.module("application","language","report")
 
-import sys
-applications = ["hi"]
-try:
-    final = sys.argv[1]
-except IndexError:
-    pass
-else:
-    if final not in applications:
-        raise ValueError(applications)
+car.main()

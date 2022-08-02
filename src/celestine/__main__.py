@@ -5,6 +5,8 @@ import sys
 
 sys.path.append(os.path.dirname(sys.path[0]))
 
-session = __import__("celestine")
+load = __import__("celestine")
+
+session = load.module("session")
 
 sys.exit(session.application.main(session))

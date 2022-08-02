@@ -1,19 +1,19 @@
-************* Module celestine
-celestine\__init__.py:98:0: C0304: Final newline missing (missing-final-newline)
-celestine\__init__.py:2:0: W0105: String statement has no effect (pointless-string-statement)
-celestine\__init__.py:4:0: C0413: Import "import sys" should be placed at the top of the module (wrong-import-position)
-celestine\__init__.py:5:0: C0413: Import "import os.path" should be placed at the top of the module (wrong-import-position)
-celestine\__init__.py:10:0: C0413: Import "from celestine.keyword.main import APPLICATION" should be placed at the top of the module (wrong-import-position)
-celestine\__init__.py:11:0: C0413: Import "from celestine.keyword.main import PYTHON" should be placed at the top of the module (wrong-import-position)
-celestine\__init__.py:14:0: C0413: Import "from celestine.keyword.main import CELESTINE" should be placed at the top of the module (wrong-import-position)
-celestine\__init__.py:15:0: C0413: Import "from celestine.keyword.main import CONFIGURATION_CELESTINE" should be placed at the top of the module (wrong-import-position)
-celestine\__init__.py:17:0: C0413: Import "from celestine.main.configuration import configuration_load" should be placed at the top of the module (wrong-import-position)
-celestine\__init__.py:18:0: C0413: Import "from celestine.main.configuration import configuration_celestine" should be placed at the top of the module (wrong-import-position)
-celestine\__init__.py:20:0: C0413: Import "from celestine.core import load" should be placed at the top of the module (wrong-import-position)
-celestine\__init__.py:62:0: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\__init__.py:69:12: W0621: Redefining name 'configuration' from outer scope (line 55) (redefined-outer-name)
-celestine\__init__.py:77:0: C0116: Missing function or method docstring (missing-function-docstring)
-celestine\__init__.py:79:8: W0621: Redefining name 'python' from outer scope (line 91) (redefined-outer-name)
+************* Module celestine.session
+celestine\session.py:2:0: W0105: String statement has no effect (pointless-string-statement)
+celestine\session.py:4:0: C0413: Import "import sys" should be placed at the top of the module (wrong-import-position)
+celestine\session.py:5:0: C0413: Import "import os.path" should be placed at the top of the module (wrong-import-position)
+celestine\session.py:10:0: C0413: Import "from celestine.keyword.main import APPLICATION" should be placed at the top of the module (wrong-import-position)
+celestine\session.py:11:0: C0413: Import "from celestine.keyword.main import PYTHON" should be placed at the top of the module (wrong-import-position)
+celestine\session.py:14:0: C0413: Import "from celestine.keyword.main import CELESTINE" should be placed at the top of the module (wrong-import-position)
+celestine\session.py:15:0: C0413: Import "from celestine.keyword.main import CONFIGURATION_CELESTINE" should be placed at the top of the module (wrong-import-position)
+celestine\session.py:17:0: C0413: Import "from celestine.main.configuration import configuration_load" should be placed at the top of the module (wrong-import-position)
+celestine\session.py:18:0: C0413: Import "from celestine.main.configuration import configuration_celestine" should be placed at the top of the module (wrong-import-position)
+celestine\session.py:20:0: C0413: Import "from celestine.core import load" should be placed at the top of the module (wrong-import-position)
+celestine\session.py:62:0: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\session.py:69:12: W0621: Redefining name 'configuration' from outer scope (line 55) (redefined-outer-name)
+celestine\session.py:77:0: C0116: Missing function or method docstring (missing-function-docstring)
+celestine\session.py:79:8: W0621: Redefining name 'python' from outer scope (line 91) (redefined-outer-name)
+celestine\session.py:100:0: C0103: Constant name "cow" doesn't conform to UPPER_CASE naming style (invalid-name)
 ************* Module celestine.application.curses
 celestine\application\curses\__init__.py:9:0: C0115: Missing class docstring (missing-class-docstring)
 celestine\application\curses\__init__.py:13:8: C0103: Attribute name "x" doesn't conform to snake_case naming style (invalid-name)
@@ -59,6 +59,16 @@ celestine\application\dearpygui\__init__.py:32:18: W0613: Unused argument 'sende
 celestine\application\dearpygui\__init__.py:71:15: W0621: Redefining name 'image' from outer scope (line 71) (redefined-outer-name)
 celestine\application\dearpygui\__init__.py:90:4: C0103: Constant name "item" doesn't conform to UPPER_CASE naming style (invalid-name)
 celestine\application\dearpygui\__init__.py:90:4: W0601: Global variable 'item' undefined at the module level (global-variable-undefined)
+************* Module celestine.application.language.argument
+celestine\application\language\argument.py:15:0: C0411: first party import "from celestine.main.argument import parser" should be placed before "from .keyword import KEY" (wrong-import-order)
+celestine\application\language\argument.py:16:0: C0411: first party import "from celestine.main.argument import subparser" should be placed before "from .keyword import KEY" (wrong-import-order)
+celestine\application\language\argument.py:2:0: W0611: Unused import argparse (unused-import)
+celestine\application\language\argument.py:15:0: W0611: Unused parser imported from celestine.main.argument (unused-import)
+************* Module celestine.application.language.keyword
+celestine\application\language\keyword.py:2:0: W0611: Unused APPLICATION imported from celestine.keyword.main (unused-import)
+celestine\application\language\keyword.py:3:0: W0611: Unused CELESTINE imported from celestine.keyword.main (unused-import)
+celestine\application\language\keyword.py:4:0: W0611: Unused LANGUAGE imported from celestine.keyword.main (unused-import)
+celestine\application\language\keyword.py:5:0: W0611: Unused language imported from celestine.keyword.main (unused-import)
 ************* Module celestine.application.language.translate
 celestine\application\language\translate.py:88:4: C0103: Constant name "session" doesn't conform to UPPER_CASE naming style (invalid-name)
 celestine\application\language\translate.py:88:4: W0601: Global variable 'session' undefined at the module level (global-variable-undefined)
@@ -127,18 +137,18 @@ celestine\application\terminal\configure.py:7:0: W0611: Unused APPLICATION impor
 celestine\application\terminal\configure.py:8:0: W0611: Unused DIRECTORY imported from celestine.application.terminal.keyword (unused-import)
 celestine\application\terminal\configure.py:10:0: W0611: Unused PYTHON imported from celestine.application.terminal.keyword (unused-import)
 ************* Module celestine.application.terminal.keyword
-celestine\application\terminal\keyword.py:14:0: W0404: Reimport 'main' (imported line 2) (reimported)
-celestine\application\terminal\keyword.py:14:0: C0413: Import "from celestine.keyword import main" should be placed at the top of the module (wrong-import-position)
-************* Module celestine.application.terminal.__init__ - Copy
-celestine\application\terminal\__init__ - Copy.py:1:0: C0103: Module name "__init__ - Copy" doesn't conform to snake_case naming style (invalid-name)
+celestine\application\terminal\keyword.py:9:0: C0413: Import "from celestine.keyword import main" should be placed at the top of the module (wrong-import-position)
+celestine\application\terminal\keyword.py:18:0: W0404: Reimport 'main' (imported line 9) (reimported)
+celestine\application\terminal\keyword.py:18:0: C0413: Import "from celestine.keyword import main" should be placed at the top of the module (wrong-import-position)
+celestine\application\terminal\keyword.py:2:0: W0611: Unused CELESTINE imported from celestine.keyword.main (unused-import)
+celestine\application\terminal\keyword.py:3:0: W0611: Unused APPLICATION imported from celestine.keyword.main (unused-import)
+celestine\application\terminal\keyword.py:4:0: W0611: Unused TERMINAL imported from celestine.keyword.main (unused-import)
 ************* Module celestine.application.tkinter
 celestine\application\tkinter\__init__.py:10:0: R0903: Too few public methods (0/2) (too-few-public-methods)
 celestine\application\tkinter\__init__.py:72:4: C0103: Constant name "item" doesn't conform to UPPER_CASE naming style (invalid-name)
 celestine\application\tkinter\__init__.py:72:4: W0601: Global variable 'item' undefined at the module level (global-variable-undefined)
 celestine\application\tkinter\__init__.py:75:4: C0103: Constant name "root" doesn't conform to UPPER_CASE naming style (invalid-name)
 celestine\application\tkinter\__init__.py:75:4: W0601: Global variable 'root' undefined at the module level (global-variable-undefined)
-************* Module celestine.application.verify
-celestine\application\verify\__init__.py:12:0: C0103: Constant name "candeeycane" doesn't conform to UPPER_CASE naming style (invalid-name)
 ************* Module celestine.application.verify.core.test_text
 celestine\application\verify\core\test_text.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 celestine\application\verify\core\test_text.py:3:0: W0401: Wildcard import celestine.core.text (wildcard-import)
@@ -240,6 +250,9 @@ celestine\core\text.py:41:4: C0116: Missing function or method docstring (missin
 celestine\core\text.py:46:4: C0116: Missing function or method docstring (missing-function-docstring)
 celestine\core\text.py:51:4: C0116: Missing function or method docstring (missing-function-docstring)
 celestine\core\text.py:56:0: W0105: String statement has no effect (pointless-string-statement)
+************* Module celestine.main.argument
+celestine\main\argument.py:16:0: W0404: Reimport 'APPLICATION' (imported line 13) (reimported)
+celestine\main\argument.py:17:0: W0404: Reimport 'application' (imported line 14) (reimported)
 ************* Module celestine.parser.operator
 celestine\parser\operator.py:322:0: C0305: Trailing newlines (trailing-newlines)
 celestine\parser\operator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -345,49 +358,6 @@ celestine\parser\translator.py:68:4: C0116: Missing function or method docstring
 celestine\parser\translator.py:66:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module celestine.python.__init__
 celestine\python\__init__.py:1:0: R0801: Similar lines in 2 files
-==celestine.application.tkinter.configuration:[20:60]
-==celestine.main.configuration:[20:60]
-    path = os.path.join(*paths)
-    with open(path, WRITE, encoding=UTF_8) as file:
-        configuration.write(file, True)
-
-
-def configuration_load(*paths):
-    """Load the configuration file."""
-    path = os.path.join(*paths)
-    configuration = configparser.ConfigParser()
-    configuration.read(path, encoding=ENCODING)
-    return configuration
-
-
-def configuration_save_main(configuration, directory):
-    """Save the default configuration file."""
-    configuration_save(
-        configuration,
-        directory,
-        CELESTINE,
-        CONFIGURATION_CELESTINE,
-    )
-
-
-def configuration_load_main(directory):
-    """Load the default configuration file."""
-    return configuration_load(
-        directory,
-        CELESTINE,
-        CONFIGURATION_CELESTINE,
-    )
-
-
-def configuration_celestine(application=TERMINAL, language=ENGLISH, python=PYTHON_3_10):
-    """The default configuration file."""
-    configuration = configparser.ConfigParser()
-    configuration.add_section(CELESTINE)
-    configuration.set(CELESTINE, APPLICATION, application)
-    configuration.set(CELESTINE, LANGUAGE, language)
-    configuration.set(CELESTINE, PYTHON, python)
-    return configuration (duplicate-code)
-celestine\python\__init__.py:1:0: R0801: Similar lines in 2 files
 ==celestine.application.language.configure:[18:48]
 ==celestine.application.terminal.configure:[18:48]
     if not configuration.has_section(LANGUAGE):
@@ -421,54 +391,19 @@ def main(**kwargs):
     configuration = configure(configuration, key, region, url)
     configuration_save_main(configuration, directory) (duplicate-code)
 celestine\python\__init__.py:1:0: R0801: Similar lines in 2 files
-==celestine.application.language.keyword:[4:21]
-==celestine.application.terminal.keyword:[16:33]
-APPLICATION = main.APPLICATION
-ARGUMENT = "argument"  # outsource
-CELESTINE = main.CELESTINE
-CONFIGURE = "configure"  # outsource
-KEY = "key"
-LANGUAGE = main.LANGUAGE
-NONE = ""  # blank
-REGION = "region"
-REPORT = "report"
-SESSION = "session"  # outsource
-TASK = "task"
-TEXT = "text"
-TO = "to"
-TRANSLATE = "translate"
-TRANSLATIONS = "translations"
-URL = "url"
-language = main.language (duplicate-code)
-celestine\python\__init__.py:1:0: R0801: Similar lines in 2 files
-==celestine.application.language.argument:[17:31]
-==celestine.application.terminal.argument:[17:31]
-parser = argparse.ArgumentParser(add_help=False, prog=CELESTINE)
-parser.add_argument(APPLICATION, choices=[LANGUAGE])
+==celestine.core.load:[27:37]
+==celestine:[6:12]
+    iterable = [CELESTINE, *paths]
+    name = FULL_STOP.join(iterable)
+    file = __import__(name)
+    for _path in paths:
+        file = getattr(file, _path)
+    return file
 
 
-subparser = parser.add_subparsers(dest=TASK, required=True)
-
-configure = subparser.add_parser(CONFIGURE)
-configure.add_argument(KEY)
-configure.add_argument(REGION)
-configure.add_argument(URL)
-
-report = subparser.add_parser(REPORT)
-
-translate = subparser.add_parser(TRANSLATE) (duplicate-code)
-celestine\python\__init__.py:1:0: R0801: Similar lines in 2 files
-==celestine.application.tkinter.session:[38:46]
-==celestine:[52:62]
-        default = configuration_celestine()
-
-        configuration = configuration_load(
-            directory,
-            CELESTINE,
-            CONFIGURATION_CELESTINE
-        )
- (duplicate-code)
+def directory(_path):
+    """Load file contents from a directory.""" (duplicate-code)
 
 ------------------------------------------------------------------
-Your code has been rated at 7.67/10 (previous run: 7.67/10, +0.00)
+Your code has been rated at 7.53/10 (previous run: 7.51/10, +0.03)
 
