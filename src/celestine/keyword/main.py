@@ -214,3 +214,5 @@ application = [
     UNITTEST,
     "language",
 ]
+
+TASK = "task"

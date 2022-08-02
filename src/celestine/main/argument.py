@@ -13,6 +13,10 @@ from celestine.keyword.main import python
 from celestine.keyword.main import APPLICATION
 from celestine.keyword.main import application
 
+from celestine.keyword.main import APPLICATION
+from celestine.keyword.main import application
+
+from celestine.keyword.main import TASK
 
 parser = argparse.ArgumentParser(prog=CELESTINE)
 
@@ -20,7 +24,6 @@ parser.add_argument(
     APPLICATION,
     choices=application,
     help="Tell me which python version you are using.",
-    nargs="?"
 )
 
 parser.add_argument(
@@ -30,7 +33,6 @@ parser.add_argument(
     dest=LANGUAGE,
 )
 
-
 parser.add_argument(
     "-v, --version",
     choices=python,
@@ -38,8 +40,4 @@ parser.add_argument(
     dest=PYTHON,
 )
 
-
-parser.add_argument(
-    "_",
-    nargs="*",
-)
+subparser = parser.add_subparsers(dest=TASK, required=True)

@@ -29,7 +29,10 @@ def module(*paths):
     name = FULL_STOP.join(iterable)
     file = __import__(name)
     for _path in paths:
-        file = getattr(file, _path)
+        try:
+            file = getattr(file, _path)
+        except AttributeError:
+            pass
     return file
 
 

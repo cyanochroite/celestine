@@ -4,7 +4,7 @@
 import sys
 import os.path
 
-asset =sys.path[0]
+asset = sys.path[0]
 directory = os.path.dirname(sys.path[0])
 
 from celestine.keyword.main import APPLICATION
