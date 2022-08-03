@@ -34,9 +34,3 @@ class Argument():
             dest=TASK,
             required=True,
         )
-
-    def parse(self, session):
-        argument = session.argument.parser.parse_args()
-        session.task = module(APPLICATION, argument.application, argument.task)
-        session.language = module(LANGUAGE, argument.language)
-        session.asset = sys.path[0]

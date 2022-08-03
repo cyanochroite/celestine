@@ -12,7 +12,7 @@ def main(session):
 
     #    argument = argmain(session).parse_args()
     argmain(session)
-    argument = session.argument.parse(session)
+    argument = session.parse(session)
     task = argument.task
 
     module = load.module(APPLICATION, LANGUAGE, task)

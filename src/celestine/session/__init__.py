@@ -17,56 +17,28 @@ from celestine.keyword.main import CONFIGURATION
 
 from celestine.core import load
 
-
-PYTHON = "python"
-
-PYTHON_3_6 = "python_3_6"
-PYTHON_3_7 = "python_3_7"
-PYTHON_3_8 = "python_3_8"
-PYTHON_3_9 = "python_3_9"
-PYTHON_3_10 = "python_3_10"
-PYTHON_3_11 = "python_3_11"
+from celestine.keyword.main import APPLICATION
+from celestine.keyword.main import LANGUAGE
+from celestine.keyword.main import TASK
 
 
-CELESTINE = "celestine"
-CURSES = "curses"
-DEARPYGUI = "dearpygui"
-TKINTER = "tkinter"
-UNITTEST = "unittest"
-TERMINAL = "terminal"
 
-
-applications = [
-    "configuration",
-    CURSES,
-    DEARPYGUI,
-    TERMINAL,
-    TKINTER,
-    "verify",
-    "language",
-    None
-]
+from celestine.keyword.main import application as applications
 
 
 
 
-
-
-
-
-
-
-def load_application():
+def load_application(config):
     try:
         argumentation = sys.argv[1]
         if argumentation not in applications:
             parser.parse_args()
     except IndexError:
         try:
-            configuration = configuration.load(directory, CELESTINE, CONFIGURATION)
+            configuration = config.load(directory, CELESTINE, CONFIGURATION)
             argumentation = configuration[CELESTINE][APPLICATION]
         except KeyError:
-            configuration = configuration.load_default()
+            configuration = config.load_default()
             argumentation = configuration[CELESTINE][APPLICATION]
     return load.module(APPLICATION, argumentation)
 
@@ -74,29 +46,53 @@ def load_application():
 
 
 
-print("CHANGE THIS")
-language = load.module("language", "english")
-window = load.module("window", "main")
-
-
-
-
-
 from celestine.session.argument import Argument
 from celestine.session.configuration import Configuration
+from celestine.session.parser import Parser
+
 from celestine.session.python import python
+from celestine.application.terminal.configure import configuration_celestine
 
 class Session():
     def __init__(self, directory):
         self.directory = directory
 
         self.argument = Argument()
-        self.configuration = Configuration(directory)
+#        self.configuration = Configuration(directory)
+        self.parser = Parser(directory)
         self.python = python()
         
+        self.app_name = sys.argv[1]
+                
+        config = Configuration(directory)
+        self.configuration = config.load(directory)
+        self.default = configuration_celestine()
         
         
-        #pre
-        self.application = load_application()
+        self.application = load_application(self.configuration)
         self.window = load.module("window", "main")
         
+    def parse(self, session):
+        argument = self.argument.parser.parse_args()
+        application = self.load_attribute(argument, APPLICATION)
+        task = self.load_attribute(argument, TASK)
+        language =self.load_attribute(argument, LANGUAGE)
+        
+        self.task_name = task
+
+
+        session.application = load.module(APPLICATION, application)
+        session.task = load.module(APPLICATION, application, task)
+        session.language = load.module(LANGUAGE, language)
+        session.asset = sys.path[0]
+
+    def load_attribute(self, argument, attribute):
+        cat = getattr(argument, attribute)
+        if cat:
+            return cat
+                
+        try:
+            argg = self.configuration[CELESTINE][attribute]
+        except KeyError:
+            argg = self.default[CELESTINE][attribute]
+        return argg

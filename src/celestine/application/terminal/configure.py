@@ -1,9 +1,6 @@
 """Load and save user settings from a file."""
 import configparser
 
-from celestine.main.configuration import configuration_save_main
-from celestine.main.configuration import configuration_load_main
-
 from celestine.application.terminal.keyword import APPLICATION
 from celestine.application.terminal.keyword import DIRECTORY
 from celestine.application.terminal.keyword import LANGUAGE
@@ -13,6 +10,11 @@ from celestine.application.language.keyword import ARGUMENT
 from celestine.application.language.keyword import SESSION
 from celestine.application.language.keyword import NONE
 
+
+TERMINAL = "terminal"
+ENGLISH = "english"
+PYTHON_3_10 = "python_3_10"
+CELESTINE = "celestine"
 
 def configure(configuration, key, region, url):
     """Build up the configuration file."""
@@ -34,18 +36,15 @@ def default():
     return configuration
 
 
-def main(**kwargs):
+def main(session):
     """The main function."""
-    argument = kwargs[ARGUMENT]
-    session = kwargs[SESSION]
     directory = session.directory
-
-    configuration = configuration_load_main(directory)
+    configuration = session.configuration.load_default(directory)
     key = argument.key
     region = argument.region
     url = argument.url
     configuration = configure(configuration, key, region, url)
-    configuration_save_main(configuration, directory)
+    session.configuration.save_default(configuration, directory)
 
 
 def configuration_celestine(application=TERMINAL, language=ENGLISH, python=PYTHON_3_10):

@@ -10,4 +10,12 @@ load = __import__("celestine")
 
 session = load.module("session").Session(directory)
 
-sys.exit(session.application.main(session))
+argmain = load.module("application", session.app_name, "argument")
+
+argmain.argument(session)
+
+argument = session.parse(session)
+
+module = load.module("application", session.app_name, session.task_name)
+
+sys.exit(module.main(session))

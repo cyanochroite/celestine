@@ -19,12 +19,12 @@ class Configuration():
         """Load the configuration file."""
         path = load.path(*paths)
         configuration = configparser.ConfigParser()
-        configuration.read(path, encoding=ENCODING)
+        configuration.read(path, encoding=UTF_8)
         return configuration
 
     def load_default(self, directory):
         """Load the default configuration file."""
-        return configuration_load(
+        return self.load(
             directory,
             CELESTINE,
             CONFIGURATION,
@@ -38,7 +38,7 @@ class Configuration():
 
     def save_default(self, configuration, directory):
         """Save the default configuration file."""
-        configuration_save(
+        self.save(
             configuration,
             directory,
             CELESTINE,
