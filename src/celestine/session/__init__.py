@@ -22,10 +22,7 @@ from celestine.keyword.main import LANGUAGE
 from celestine.keyword.main import TASK
 
 
-
 from celestine.keyword.main import application as applications
-
-
 
 
 def load_application(config):
@@ -43,15 +40,13 @@ def load_application(config):
     return load.module(APPLICATION, argumentation)
 
 
-
-
-
 from celestine.session.argument import Argument
 from celestine.session.configuration import Configuration
 from celestine.session.parser import Parser
 
 from celestine.session.python import python
 from celestine.application.terminal.configure import configuration_celestine
+
 
 class Session():
     def __init__(self, directory):
@@ -61,25 +56,23 @@ class Session():
 #        self.configuration = Configuration(directory)
         self.parser = Parser(directory)
         self.python = python()
-        
+
         self.app_name = sys.argv[1]
-                
+
         config = Configuration(directory)
         self.configuration = config.load(directory)
         self.default = configuration_celestine()
-        
-        
+
         self.application = load_application(self.configuration)
         self.window = load.module("window", "main")
-        
+
     def parse(self, session):
         argument = self.argument.parser.parse_args()
         application = self.load_attribute(argument, APPLICATION)
         task = self.load_attribute(argument, TASK)
-        language =self.load_attribute(argument, LANGUAGE)
-        
-        self.task_name = task
+        language = self.load_attribute(argument, LANGUAGE)
 
+        self.task_name = task
 
         session.application = load.module(APPLICATION, application)
         session.task = load.module(APPLICATION, application, task)
@@ -90,7 +83,7 @@ class Session():
         cat = getattr(argument, attribute)
         if cat:
             return cat
-                
+
         try:
             argg = self.configuration[CELESTINE][attribute]
         except KeyError:
