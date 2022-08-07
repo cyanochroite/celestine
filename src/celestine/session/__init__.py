@@ -60,20 +60,21 @@ class Session():
         self.application = sys.argv[1]
         self.window = load.module("window", "main")
 
-        self.argument = load.module("application", self.application, "argument").main(Argument())
-
 
     def main(self):
+        module = load.module("application", self.application)
 
+        argument = Argument()
         configuration = configparser.ConfigParser()
+
+        self.argument = module.argument(Argument())
+        self.configuration = module.configuration(configuration)
 
         confree = load.module("application", "terminal", "configure")
         configuration = confree.configure(configuration)
 
-        configtree = load.module("application", self.application, "configure")
-        configuration = configtree.configure(configuration)
 
-        self.parser = Parser(directory, configuration)
+        self.parser = Parser(directory, self.configuration)
 
         temargument = self.parser.parse(self)
 
