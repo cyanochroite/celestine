@@ -3,7 +3,7 @@
 
 import sys
 import os.path
-
+import configparser
 asset = sys.path[0]
 directory = os.path.dirname(sys.path[0])
 
@@ -45,47 +45,38 @@ from celestine.session.configuration import Configuration
 from celestine.session.parser import Parser
 
 from celestine.session.python import python
-from celestine.application.terminal.configure import configuration_celestine
 
 
 class Session():
     def __init__(self, directory):
         self.directory = directory
 
-        self.argument = Argument()
 #        self.configuration = Configuration(directory)
-        self.parser = Parser(directory)
         self.python = python()
 
-        self.app_name = sys.argv[1]
+        self.config = Configuration(directory)
+        self.configuration = self.config.load(directory)
 
-        config = Configuration(directory)
-        self.configuration = config.load(directory)
-        self.default = configuration_celestine()
-
-        self.application = load_application(self.configuration)
+        self.application = sys.argv[1]
         self.window = load.module("window", "main")
 
-    def parse(self, session):
-        argument = self.argument.parser.parse_args()
-        application = self.load_attribute(argument, APPLICATION)
-        task = self.load_attribute(argument, TASK)
-        language = self.load_attribute(argument, LANGUAGE)
+        self.argument = load.module("application", self.application, "argument").main(Argument())
 
-        self.task_name = task
 
-        session.application = load.module(APPLICATION, application)
-        session.task = load.module(APPLICATION, application, task)
-        session.language = load.module(LANGUAGE, language)
-        session.asset = sys.path[0]
+    def main(self):
 
-    def load_attribute(self, argument, attribute):
-        cat = getattr(argument, attribute)
-        if cat:
-            return cat
+        configuration = configparser.ConfigParser()
 
-        try:
-            argg = self.configuration[CELESTINE][attribute]
-        except KeyError:
-            argg = self.default[CELESTINE][attribute]
-        return argg
+        confree = load.module("application", "terminal", "configure")
+        configuration = confree.configure(configuration)
+
+        configtree = load.module("application", self.application, "configure")
+        configuration = configtree.configure(configuration)
+
+        self.parser = Parser(directory, configuration)
+
+        temargument = self.parser.parse(self)
+
+        module = load.module("application", self.application, self.task)
+        return module.main(self)
+

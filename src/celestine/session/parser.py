@@ -7,51 +7,34 @@ from celestine.keyword.main import APPLICATION
 from celestine.keyword.main import LANGUAGE
 from celestine.keyword.main import TASK
 
+from celestine.keyword.main import CELESTINE
 
+import sys
+
+from celestine import module
 class Parser():
-    def __init__(self, directory):
-        self.directory = directory
-
+    def __init__(self, directory, default):
         self.argument = Argument()
         config = Configuration(directory)
-        self.configuration = config.load(directory)
-        self.default = config.load_default(directory)
-
-    
-    def load_application(self):
-        try:
-            argumentation = sys.argv[1]
-            if argumentation not in applications:
-                parser.parse_args()
-        except IndexError:
-            try:
-                configuration = configuration.load(directory, CELESTINE, CONFIGURATION)
-                argumentation = configuration[CELESTINE][APPLICATION]
-            except KeyError:
-                configuration = configuration.load_default()
-                argumentation = configuration[CELESTINE][APPLICATION]
-        return load.module(APPLICATION, argumentation)
+        self.configuration = config.load()
+        self.default = default
 
 
-    def load_attribute(self, attribute):
+    def load_attribute(self, argument, attribute):
         cat = getattr(argument, attribute)
         if cat:
             return cat
                 
         try:
-            argg = self.configuration[CELESTINE][APPLICATION]
+            argg = self.configuration[CELESTINE][attribute]
         except KeyError:
-            argg = self.default[CELESTINE][APPLICATION]
+            argg = self.default[CELESTINE][attribute]
         return argg
 
     def parse(self, session):
         argument = session.argument.parser.parse_args()
-        application = self.load_attribute(argument, APPLICATION)
-        task = self.load_attribute(argument, TASK)
-        language =self.load_attribute(argument, LANGUAGE)
+        session.argument = argument
+        session.application = self.load_attribute(argument, APPLICATION)
+        session.task = self.load_attribute(argument, TASK)
+        session.language =self.load_attribute(argument, LANGUAGE)
 
-        self.load_attribute()
-        session.application = module(APPLICATION, application)
-        session.task = module(APPLICATION, application, argument)
-        session.language = module(LANGUAGE, language)
-        session.asset = sys.path[0]

@@ -14,33 +14,15 @@ class Configuration():
 
     def __init__(self, directory):
         self.directory = directory
+        self.path = load.path(directory, CELESTINE, CONFIGURATION)
 
-    def load(self, *paths):
+    def load(self, path=None):
         """Load the configuration file."""
-        path = load.path(*paths)
         configuration = configparser.ConfigParser()
-        configuration.read(path, encoding=UTF_8)
+        configuration.read(path or self.path, encoding=UTF_8)
         return configuration
 
-    def load_default(self, directory):
-        """Load the default configuration file."""
-        return self.load(
-            directory,
-            CELESTINE,
-            CONFIGURATION,
-        )
-
-    def save(self, configuration, *paths):
+    def save(self, configuration, path=None):
         """Save the configuration file."""
-        path = load.path(*paths)
-        with open(path, WRITE, encoding=UTF_8) as file:
+        with open(path or self.path, WRITE, encoding=UTF_8) as file:
             configuration.write(file, True)
-
-    def save_default(self, configuration, directory):
-        """Save the default configuration file."""
-        self.save(
-            configuration,
-            directory,
-            CELESTINE,
-            CONFIGURATION,
-        )

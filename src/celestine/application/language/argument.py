@@ -12,38 +12,38 @@ from .keyword import TRANSLATE
 from .keyword import STORE
 
 
-def argument(session):
-    configure = session.argument.subparser.add_parser(
+def main(argument):
+    configure = argument.subparser.add_parser(
         CONFIGURE,
         help="you are a fish",
     )
-    
+
     configure.add_argument(
         KEY,
         action=STORE,
         help="A brief description of what the argument does.",
     )
-    
+
     configure.add_argument(
         REGION,
         action=STORE,
         help="A brief description of what the argument does.",
     )
-    
+
     configure.add_argument(
         URL,
         action=STORE,
         help="A brief description of what the argument does.",
     )
-    
-    
-    report = session.argument.subparser.add_parser(
+
+    report = argument.subparser.add_parser(
         REPORT,
         help="you are a fish",
     )
-    
-    
-    translate = session.argument.subparser.add_parser(
+
+    translate = argument.subparser.add_parser(
         TRANSLATE,
         help="you are a fish",
     )
+
+    return argument
