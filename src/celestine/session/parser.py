@@ -11,7 +11,12 @@ from celestine.keyword.main import CELESTINE
 
 import sys
 
+from celestine.session.python import python
+
+
 from celestine import module
+
+
 class Parser():
     def __init__(self, directory, default):
         self.argument = Argument()
@@ -19,12 +24,11 @@ class Parser():
         self.configuration = config.load()
         self.default = default
 
-
     def load_attribute(self, argument, attribute):
         cat = getattr(argument, attribute)
         if cat:
             return cat
-                
+
         try:
             argg = self.configuration[CELESTINE][attribute]
         except KeyError:
@@ -36,5 +40,8 @@ class Parser():
         session.argument = argument
         session.application = self.load_attribute(argument, APPLICATION)
         session.task = self.load_attribute(argument, TASK)
-        session.language =self.load_attribute(argument, LANGUAGE)
 
+        language = self.load_attribute(argument, LANGUAGE)
+        session.language = module(LANGUAGE, language)
+
+        self.python = python()

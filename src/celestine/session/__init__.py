@@ -44,15 +44,12 @@ from celestine.session.argument import Argument
 from celestine.session.configuration import Configuration
 from celestine.session.parser import Parser
 
-from celestine.session.python import python
-
 
 class Session():
     def __init__(self, directory):
         self.directory = directory
 
 #        self.configuration = Configuration(directory)
-        self.python = python()
 
         self.config = Configuration(directory)
         self.configuration = self.config.load(directory)
