@@ -4,17 +4,17 @@ image = {}
 
 def setup(session):
     global image
-    window = session.application
-    directory =  session.asset
-    image1 = load.path(directory, "file", "anitest.gif")
-    image2 = load.path(directory, "file", "test4.gif")
+    window = session.module
+    directory =  session.directory
+    image1 = load.path(directory, "celestine", "file", "anitest.gif")
+    image2 = load.path(directory, "celestine", "file", "test4.gif")
     image["image1"] = window.image_load(image1)
     image["image2"] = window.image_load(image2)
 
 
 def view(session):
     global image
-    window = session.application
+    window = session.module
     window.image("00", image["image1"])
     window.image("01", image["image2"])
     window.label("Settings", "no puppy. File Explorer using Tkinter")

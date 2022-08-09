@@ -32,5 +32,5 @@ class Argument():
 
         self.subparser = self.parser.add_subparsers(
             dest=TASK,
-            required=True,
+            required=False,
         )

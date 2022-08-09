@@ -30,18 +30,29 @@ class Parser():
             return cat
 
         try:
+            argg = self.configuration[self.application][attribute]
+        except KeyError:
+            argg = self.default[self.application][attribute]
+        return argg
+
+    def load_attribute(self, argument, attribute):
+        cat = getattr(argument, attribute)
+        if cat:
+            return cat
+
+        try:
             argg = self.configuration[CELESTINE][attribute]
         except KeyError:
             argg = self.default[CELESTINE][attribute]
         return argg
-
     def parse(self, session):
         argument = session.argument.parser.parse_args()
         session.argument = argument
         session.application = self.load_attribute(argument, APPLICATION)
+        self.application = session.application
         session.task = self.load_attribute(argument, TASK)
 
         language = self.load_attribute(argument, LANGUAGE)
         session.language = module(LANGUAGE, language)
 
-        self.python = python()
+        session.python = python()
