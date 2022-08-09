@@ -6,13 +6,9 @@ from .keyword import ERROR
 from .keyword import MODULE
 
 
-# unittest needs this exact vairable to run properly
-# note that it is the same name as the package
-verify = None  # pylint: disable=invalid-name
-
-
 def main(_):
     """def main"""
+    MODULE = "celestine.application.verify.parser.test_translator"
     unittest.main(
         MODULE,
         None,
