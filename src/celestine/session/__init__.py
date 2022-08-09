@@ -54,7 +54,13 @@ class Session():
         self.config = Configuration(directory)
         self.configuration = self.config.load(directory)
 
-        self.application = sys.argv[1]
+        try:
+            self.application = sys.argv[1]
+        except IndexError:
+            print("hack and bad default?")
+            sys.argv.append("tkinter")
+            self.application = sys.argv[1]
+
         self.window = load.module("window", "main")
 
 

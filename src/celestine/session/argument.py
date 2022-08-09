@@ -34,3 +34,8 @@ class Argument():
             dest=TASK,
             required=False,
         )
+
+        self.subparser.add_parser(
+            "main",
+            help="The default main application.",
+        )

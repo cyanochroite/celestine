@@ -24,35 +24,25 @@ class Parser():
         self.configuration = config.load()
         self.default = default
 
-    def load_attribute(self, argument, attribute):
+    def load_attribute(self, argument, section, attribute):
         cat = getattr(argument, attribute)
         if cat:
             return cat
 
         try:
-            argg = self.configuration[self.application][attribute]
+            argg = self.configuration[section][attribute]
         except KeyError:
-            argg = self.default[self.application][attribute]
+            argg = self.default[section][attribute]
         return argg
 
-    def load_attribute(self, argument, attribute):
-        cat = getattr(argument, attribute)
-        if cat:
-            return cat
-
-        try:
-            argg = self.configuration[CELESTINE][attribute]
-        except KeyError:
-            argg = self.default[CELESTINE][attribute]
-        return argg
     def parse(self, session):
         argument = session.argument.parser.parse_args()
         session.argument = argument
-        session.application = self.load_attribute(argument, APPLICATION)
+        session.application = self.load_attribute(argument, CELESTINE, APPLICATION)
         self.application = session.application
-        session.task = self.load_attribute(argument, TASK)
+        session.task = self.load_attribute(argument, session.application, TASK)
 
-        language = self.load_attribute(argument, LANGUAGE)
+        language = self.load_attribute(argument, CELESTINE, LANGUAGE)
         session.language = module(LANGUAGE, language)
 
         session.python = python()
