@@ -8,7 +8,6 @@ from .keyword import MODULE
 
 def main(_):
     """def main"""
-    MODULE = "celestine.application.verify.parser.test_translator"
     unittest.main(
         MODULE,
         None,
