@@ -101,11 +101,11 @@ def python():
 class Attribute():
     def __init__(self, session, items):
         for name in items:
-            value = self.load_attribute(session, session.application , name)
+            value = self.load_attribute(session, session.application, name)
             setattr(self, name, value)
-            
+
     def load_attribute(self, session, section, attribute):
-        #duplicate code
+        # duplicate code
         try:
             cat = getattr(session.argument, attribute)
             if cat:
@@ -119,7 +119,6 @@ class Attribute():
             argg = session.default[section][attribute]
         return argg
 
-    
 
 class Session():
     def __init__(self, directory):
@@ -149,7 +148,6 @@ class Session():
         configuration.set(application, "task", "main")
         return configuration
 
-        
     def main(self):
         root = load.module(APPLICATION)
         module = load.module(APPLICATION, self.application)
@@ -168,9 +166,8 @@ class Session():
         self.parser = Parser()
 
         temargument = self.parser.parse(self)
-        
+
         self.attribute = Attribute(self, module.attribute())
 
         self.module = load.module(APPLICATION, self.application, self.task)
         return self.module.main(self)
-

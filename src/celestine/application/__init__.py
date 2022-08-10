@@ -13,6 +13,7 @@ from celestine.keyword.main import language
 @dataclasses.dataclass
 class Argument():
     """Argument"""
+
     def __init__(self):
         self.parser = argparse.ArgumentParser(
             prog=CELESTINE
@@ -36,12 +37,11 @@ class Argument():
             dest=TASK,
             required=False
         )
-        
+
         self.main = self.subparser.add_parser(
             "main",
             help="The default main application."
         )
-
 
 
 """Load and save user settings from a file."""
@@ -74,7 +74,6 @@ class Configuration():
             self.configuration.write(file, True)
 
 
-
 def argument():
     """argument"""
     return Argument()
@@ -83,6 +82,7 @@ def argument():
 def configuration(directory):
     """configuration"""
     return Configuration(directory)
+
 
 from celestine.application.terminal.keyword import APPLICATION
 from celestine.application.terminal.keyword import LANGUAGE

@@ -9,6 +9,7 @@ from celestine.keyword.main import application
 from celestine.keyword.main import language
 from celestine.keyword.main import python
 
+
 def main(session):
     """The main function."""
     configuration = session.configuration
@@ -27,4 +28,3 @@ def hippo(configuration, application, language, python):
     configuration.set(CELESTINE, LANGUAGE, language)
     configuration.set(CELESTINE, PYTHON, python)
     return configuration
-

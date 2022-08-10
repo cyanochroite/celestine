@@ -36,7 +36,6 @@ def module(*paths):
 def directory(_path):
     """Load file contents from a directory."""
     print(_path)
-    pass
 
 
 def dictionary(_module):

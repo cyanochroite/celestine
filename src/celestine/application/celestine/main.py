@@ -1,6 +1,6 @@
 """Load and save user settings from a file."""
 
 
-def main(session):
+def main(_):
     """The main function."""
     print("do nothing")
