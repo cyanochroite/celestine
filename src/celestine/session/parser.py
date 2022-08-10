@@ -1,5 +1,4 @@
 
-from celestine.session.argument import Argument
 from celestine.session.configuration import Configuration
 from celestine.session.python import python
 
@@ -19,7 +18,6 @@ from celestine import module
 
 class Parser():
     def __init__(self, directory, default):
-        self.argument = Argument()
         config = Configuration(directory)
         self.configuration = config.load()
         self.default = default

@@ -83,11 +83,10 @@ def add_item(key, value):
             moose[name].append((key, text))
 
 
-def main(**kwargs):
+def main(a_session):
     """def main"""
     global session
-    session = kwargs[SESSION]
-
+    session = a_session
     global moose
     moose = {}
 

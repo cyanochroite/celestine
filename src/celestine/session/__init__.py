@@ -40,7 +40,6 @@ def load_application(config):
     return load.module(APPLICATION, argumentation)
 
 
-from celestine.session.argument import Argument
 from celestine.session.configuration import Configuration
 from celestine.session.parser import Parser
 
@@ -77,11 +76,12 @@ class Session():
         
     
     def main(self):
+        root = load.module("application")
         module = load.module("application", self.application)
 
-        argument = Argument()
+        argument = root.argument()
 
-        self.argument = module.argument(Argument())
+        self.argument = module.argument(argument)
 
         confree = load.module("application", "terminal", "configure")
 
