@@ -14,8 +14,6 @@ from celestine.keyword.main import TASK
 
 from celestine.keyword.main import CELESTINE
 
-import sys
-
 
 from celestine import module
 
@@ -100,6 +98,29 @@ def python():
     return python
 
 
+class Attribute():
+    def __init__(self, session, items):
+        for name in items:
+            value = self.load_attribute(session, session.application , name)
+            setattr(self, name, value)
+            
+    def load_attribute(self, session, section, attribute):
+        #duplicate code
+        try:
+            cat = getattr(session.argument, attribute)
+            if cat:
+                return cat
+        except AttributeError:
+            pass
+
+        try:
+            argg = session.configuration[section][attribute]
+        except KeyError:
+            argg = session.default[section][attribute]
+        return argg
+
+    
+
 class Session():
     def __init__(self, directory):
         self.directory = directory
@@ -118,38 +139,35 @@ class Session():
 
         self.window = load.module("window", "main")
 
-
-
     def figtree(self, configuration, module, application):
         """Build up the configuration file."""
         configuration.add_section(application)
         configuration = module.default(configuration)
         configuration.set(application, "task", "main")
         return configuration
-    
-    
+
         
-    
     def main(self):
-        root = load.module("application")
-        module = load.module("application", self.application)
+        root = load.module(APPLICATION)
+        module = load.module(APPLICATION, self.application)
 
         argument = root.argument()
         self.argument = module.argument(argument)
 
         configuration = root.Configuration(self.directory)
         self.configuration = configuration.load()
-        
 
         default = configparser.ConfigParser()
-        default = self.figtree(default, root, "celestine")
+        default = self.figtree(default, root, CELESTINE)
         default = self.figtree(default, module, self.application)
         self.default = default
-        
+
         self.parser = Parser()
 
         temargument = self.parser.parse(self)
+        
+        self.attribute = Attribute(self, module.attribute())
 
-        self.module = load.module("application", self.application, self.task)
+        self.module = load.module(APPLICATION, self.application, self.task)
         return self.module.main(self)
 

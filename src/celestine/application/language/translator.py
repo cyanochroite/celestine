@@ -3,10 +3,10 @@
 
 class Translator():
     """A translator."""
-    def __init__(self, argument):
-        self.key = argument.key
-        self.region = argument.region
-        self.url = argument.url
+    def __init__(self, attribute):
+        self.key = attribute.key
+        self.region = attribute.region
+        self.url = attribute.url
 
     def endpoint(self):
         """Return the URL."""

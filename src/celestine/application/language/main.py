@@ -61,7 +61,7 @@ def save_item():
 
 def post(text):
     """Generate a post request."""
-    translator = Translator(session.directory)
+    translator = Translator(session.attribute)
     url = translator.endpoint()
     data = None
     json = [{TEXT: text}]

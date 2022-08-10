@@ -20,6 +20,11 @@ def argument(argument):
     return argument
 
 
+def attribute():
+    """Build up the attribute file."""
+    return []
+
+
 def configuration(configuration):
     return configuration
 
