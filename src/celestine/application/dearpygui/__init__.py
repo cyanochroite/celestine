@@ -9,3 +9,8 @@ def argument(argument):
 def configuration(configuration):
     """Build up the configuration file."""
     return configuration
+
+
+def default(default):
+    """Build up the default file."""
+    return default

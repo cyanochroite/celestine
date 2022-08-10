@@ -68,3 +68,9 @@ def configuration(
     return configuration
 
 
+
+def default(configuration):
+    configuration.set(LANGUAGE, KEY, NONE)
+    configuration.set(LANGUAGE, REGION, NONE)
+    configuration.set(LANGUAGE, URL, NONE)
+    return configuration

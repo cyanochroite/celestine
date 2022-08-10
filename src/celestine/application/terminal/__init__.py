@@ -17,52 +17,14 @@ CELESTINE = "celestine"
 
 
 def argument(argument):
-    configure = argument.subparser.add_parser(
-        CONFIGURE,
-        help="you are a fish",
-    )
-
-    configure.add_argument(
-        KEY,
-        action=STORE,
-        help="A brief description of what the argument does.",
-    )
-
-    configure.add_argument(
-        REGION,
-        action=STORE,
-        help="A brief description of what the argument does.",
-    )
-
-    configure.add_argument(
-        URL,
-        action=STORE,
-        help="A brief description of what the argument does.",
-    )
-
-    report = argument.subparser.add_parser(
-        REPORT,
-        help="you are a fish",
-    )
-
-    translate = argument.subparser.add_parser(
-        TRANSLATE,
-        help="you are a fish",
-    )
-
     return argument
 
 
-def configuration(
-    configuration,
-    application=TERMINAL,
-    language=ENGLISH,
-    python=PYTHON_3_10,
-):
-    if not configuration.configuration.has_section(CELESTINE):
-        configuration.configuration.add_section(CELESTINE)
-    configuration.configuration.set(CELESTINE, APPLICATION, application)
-    configuration.configuration.set(CELESTINE, LANGUAGE, language)
-    configuration.configuration.set(CELESTINE, PYTHON, python)
+def configuration(configuration):
     return configuration
 
+
+
+def default(default):
+    """Build up the default file."""
+    return default
