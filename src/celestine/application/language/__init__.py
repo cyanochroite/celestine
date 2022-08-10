@@ -60,11 +60,11 @@ def configuration(
     url=NONE,
 ):
     """Build up the configuration file."""
-    if not configuration.has_section(LANGUAGE):
-        configuration.add_section(LANGUAGE)
-    configuration.set(LANGUAGE, KEY, key)
-    configuration.set(LANGUAGE, REGION, region)
-    configuration.set(LANGUAGE, URL, url)
+    if not configuration.configuration.has_section(LANGUAGE):
+        configuration.configuration.add_section(LANGUAGE)
+    configuration.configuration.set(LANGUAGE, KEY, key)
+    configuration.configuration.set(LANGUAGE, REGION, region)
+    configuration.configuration.set(LANGUAGE, URL, url)
     return configuration
 
 

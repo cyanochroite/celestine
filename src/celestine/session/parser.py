@@ -17,30 +17,25 @@ from celestine import module
 
 
 class Parser():
-    def __init__(self, directory, default):
-        config = Configuration(directory)
-        self.configuration = config.load()
-        self.default = default
-
-    def load_attribute(self, argument, section, attribute):
-        cat = getattr(argument, attribute)
+    def load_attribute(self, session, section, attribute):
+        cat = getattr(session.argument, attribute)
         if cat:
             return cat
 
         try:
-            argg = self.configuration[section][attribute]
+            argg = session.configuration[section][attribute]
         except KeyError:
-            argg = self.default[section][attribute]
+            argg = session.default.configuration[section][attribute]
         return argg
 
     def parse(self, session):
         argument = session.argument.parser.parse_args()
         session.argument = argument
-        session.application = self.load_attribute(argument, CELESTINE, APPLICATION)
+        session.application = self.load_attribute(session, CELESTINE, APPLICATION)
         self.application = session.application
-        session.task = self.load_attribute(argument, session.application, TASK)
+        session.task = self.load_attribute(session, session.application, TASK)
 
-        language = self.load_attribute(argument, CELESTINE, LANGUAGE)
+        language = self.load_attribute(session, CELESTINE, LANGUAGE)
         session.language = module(LANGUAGE, language)
 
         session.python = python()

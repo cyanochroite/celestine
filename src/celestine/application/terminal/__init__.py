@@ -59,10 +59,10 @@ def configuration(
     language=ENGLISH,
     python=PYTHON_3_10,
 ):
-    if not configuration.has_section(CELESTINE):
-        configuration.add_section(CELESTINE)
-    configuration.set(CELESTINE, APPLICATION, application)
-    configuration.set(CELESTINE, LANGUAGE, language)
-    configuration.set(CELESTINE, PYTHON, python)
+    if not configuration.configuration.has_section(CELESTINE):
+        configuration.configuration.add_section(CELESTINE)
+    configuration.configuration.set(CELESTINE, APPLICATION, application)
+    configuration.configuration.set(CELESTINE, LANGUAGE, language)
+    configuration.configuration.set(CELESTINE, PYTHON, python)
     return configuration
 

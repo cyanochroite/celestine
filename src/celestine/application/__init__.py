@@ -37,17 +37,53 @@ class Argument():
             required=False
         )
 
-        self.subparser.add_parser(
-            "main",
-            help="The default main application."
-        )
+
+
+"""Load and save user settings from a file."""
+import configparser
+
+from celestine.core import load
+
+from celestine.keyword.main import CELESTINE
+from celestine.keyword.main import CONFIGURATION
+from celestine.keyword.main import WRITE
+from celestine.keyword.main import UTF_8
+
+
+class Configuration():
+    """parse configuration stuff."""
+
+    def __init__(self, directory):
+        self.directory = directory
+        self.path = load.path(directory, CELESTINE, CONFIGURATION)
+        self.configuration = configparser.ConfigParser()
+
+    def load(self, path=None):
+        """Load the configuration file."""
+        self.configuration.read(path or self.path, encoding=UTF_8)
+        return self.configuration
+
+    def save(self, configuration, path=None):
+        """Save the configuration file."""
+        with open(path or self.path, WRITE, encoding=UTF_8) as file:
+            self.configuration.write(file, True)
+
 
 
 def argument():
     """argument"""
-    return Argument()
+    argument = Argument()
+
+    main = argument.subparser.add_parser(
+        "main",
+        help="The default main application."
+    )
+    
+    return argument
 
 
-def configuration(configuration):
+def configuration(directory):
     """configuration"""
-    return configuration
+    return Configuration(directory)
+
+

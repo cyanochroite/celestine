@@ -2,42 +2,13 @@
 """Load and save user settings from a file."""
 
 import sys
-import os.path
 import configparser
-asset = sys.path[0]
-directory = os.path.dirname(sys.path[0])
-
-from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import PYTHON
-
-
-from celestine.keyword.main import CELESTINE
-from celestine.keyword.main import CONFIGURATION
 
 
 from celestine.core import load
 
-from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import LANGUAGE
-from celestine.keyword.main import TASK
 
 
-from celestine.keyword.main import application as applications
-
-
-def load_application(config):
-    try:
-        argumentation = sys.argv[1]
-        if argumentation not in applications:
-            parser.parse_args()
-    except IndexError:
-        try:
-            configuration = config.load(directory, CELESTINE, CONFIGURATION)
-            argumentation = configuration[CELESTINE][APPLICATION]
-        except KeyError:
-            configuration = config.load_default()
-            argumentation = configuration[CELESTINE][APPLICATION]
-    return load.module(APPLICATION, argumentation)
 
 
 from celestine.session.configuration import Configuration
@@ -67,9 +38,9 @@ class Session():
     def figtree(self, configuration, application):
         """Build up the configuration file."""
         module = load.module("application", application)
-        configuration.add_section(application)
+        configuration.configuration.add_section(application)
         configuration = module.configuration(configuration)
-        configuration.set(application, "task", "main")
+        configuration.configuration.set(application, "task", "main")
         return configuration
     
     
@@ -80,17 +51,17 @@ class Session():
         module = load.module("application", self.application)
 
         argument = root.argument()
-
         self.argument = module.argument(argument)
 
-        confree = load.module("application", "terminal", "configure")
-
-        configuration = configparser.ConfigParser()
-        configuration = self.figtree(configuration, "terminal")
-        configuration = self.figtree(configuration, self.application)
-        self.configuration = configuration
+        configuration = root.Configuration(self.directory)
+        self.configuration = configuration.load()
         
-        self.parser = Parser(directory, configuration)
+        default = root.configuration(self.directory)
+        default = self.figtree(default, "terminal")
+        default = self.figtree(default, self.application)
+        self.default = default
+        
+        self.parser = Parser()
 
         temargument = self.parser.parse(self)
 
