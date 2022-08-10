@@ -1,20 +1,13 @@
 """Load and save user settings from a file."""
-import configparser
 
-from celestine.main.configuration import configuration_save_main
-from celestine.main.configuration import configuration_load_main
+from .keyword import LANGUAGE
 
-from celestine.application.language.keyword import LANGUAGE
-from celestine.application.language.keyword import KEY
-from celestine.application.language.keyword import REGION
-from celestine.application.language.keyword import URL
-
-from celestine.application.language.keyword import ARGUMENT
-from celestine.application.language.keyword import SESSION
-from celestine.application.language.keyword import NONE
+from .keyword import KEY
+from .keyword import REGION
+from .keyword import URL
 
 
-def configure(configuration, key, region, url):
+def hippo(configuration, key, region, url):
     """Build up the configuration file."""
     if not configuration.has_section(LANGUAGE):
         configuration.add_section(LANGUAGE)
@@ -24,25 +17,11 @@ def configure(configuration, key, region, url):
     return configuration
 
 
-def default():
-    """The default configuration with all keys."""
-    configuration = configparser.ConfigParser()
-    key = NONE
-    region = NONE
-    url = NONE
-    configuration = configure(configuration, key, region, url)
-    return configuration
-
-
-def main(**kwargs):
+def main(session):
     """The main function."""
-    argument = kwargs[ARGUMENT]
-    session = kwargs[SESSION]
-    directory = session.directory
-
-    configuration = configuration_load_main(directory)
-    key = argument.key
-    region = argument.region
-    url = argument.url
-    configuration = configure(configuration, key, region, url)
-    configuration_save_main(configuration, directory)
+    configuration = session.configuration
+    key = session.argument.key
+    region = session.argument.region
+    url = session.argument.url
+    figtree = hippo(configuration, key, region, url)
+    session.config.save(figtree)

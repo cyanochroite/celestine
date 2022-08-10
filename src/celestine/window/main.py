@@ -1,22 +1,21 @@
 import celestine.core.load as load
 
-class main():
-    def __init__(self, session):
-        self.session = session
-        self.image = {}
+image = {}
 
-    def setup(self):
-        window = self.session.application
-        directory =  self.session.asset
-        image1 = load.path(directory, "file", "anitest.gif")
-        image2 = load.path(directory, "file", "test4.gif")
-        self.image["image1"] = window.image_load(image1)
-        self.image["image2"] = window.image_load(image2)
-    
-    
-    def view(self):
-        window = self.session.application
-        window.image("00", self.image["image1"])
-        window.image("01", self.image["image2"])
-        window.label("Settings", "no puppy. File Explorer using Tkinter")
-        window.file_dialog("set", "Settings")
+def setup(session):
+    global image
+    window = session.module
+    directory =  session.directory
+    image1 = load.path(directory, "celestine", "file", "anitest.gif")
+    image2 = load.path(directory, "celestine", "file", "test4.gif")
+    image["image1"] = window.image_load(image1)
+    image["image2"] = window.image_load(image2)
+
+
+def view(session):
+    global image
+    window = session.module
+    window.image("00", image["image1"])
+    window.image("01", image["image2"])
+    window.label("Settings", "no puppy. File Explorer using Tkinter")
+    window.file_dialog("set", "Settings")

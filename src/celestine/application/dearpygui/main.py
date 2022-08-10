@@ -85,12 +85,8 @@ def label(tag, text):
     item[tag] = text
 
 
-def main(**kwargs):
+def main(session):
     """def main"""
-    global session
-    session = kwargs["session"]
-    window = kwargs["window"]
-
     global item
     item = {}
 
@@ -116,10 +112,10 @@ def main(**kwargs):
     )
 
     with dpg.texture_registry(show=False):
-        window.setup()
+        session.window.setup(session)
 
     with dpg.window(tag="primary_window"):
-        window.view()
+        session.window.view(session)
 
     dpg.setup_dearpygui()
     dpg.show_viewport(minimized=False, maximized=False)

@@ -109,30 +109,30 @@ code = [
 ]
 
 languages = {
-    BG :  BULGARIAN,
-    HR :  CROATIAN,
-    CS :  CZECH,
-    DA :  DANISH,
-    NL :  DUTCH,
-    EN :  ENGLISH,
-    ET :  ESTONIAN,
-    FI :  FINNISH,
-    FR :  FRENCH,
-    DE :  GERMAN,
-    EL :  GREEK,
-    HU :  HUNGARIAN,
-    GA :  IRISH,
-    IT :  ITALIAN,
-    LV :  LATVIAN,
-    LT :  LITHUANIAN,
-    MT :  MALTESE,
-    PL :  POLISH,
-    PT :  PORTUGUESE,
-    RO :  ROMANIAN,
-    SK :  SLOVAK,
-    SL :  SLOVENIAN,
-    ES :  SPANISH,
-    SV :  SWEDISH,
+    BG: BULGARIAN,
+    HR: CROATIAN,
+    CS: CZECH,
+    DA: DANISH,
+    NL: DUTCH,
+    EN: ENGLISH,
+    ET: ESTONIAN,
+    FI: FINNISH,
+    FR: FRENCH,
+    DE: GERMAN,
+    EL: GREEK,
+    HU: HUNGARIAN,
+    GA: IRISH,
+    IT: ITALIAN,
+    LV: LATVIAN,
+    LT: LITHUANIAN,
+    MT: MALTESE,
+    PL: POLISH,
+    PT: PORTUGUESE,
+    RO: ROMANIAN,
+    SK: SLOVAK,
+    SL: SLOVENIAN,
+    ES: SPANISH,
+    SV: SWEDISH,
 }
 
 PACKAGE = "package"
@@ -191,10 +191,8 @@ MORE_ITERTOOLS = "more_itertools"
 PILLOW = "pillow"
 
 
-CONFIGURATION = "configuration"
-CONFIGURATION_CELESTINE = "celestine.ini"
+CONFIGURATION = "celestine.ini"
 CONFIGURATION_TRANSLATOR = "key.ini"
-ENCODING = "utf_8"
 ERRORS = "strict"
 READ = "rt"
 WRITE = "wt"
@@ -206,11 +204,14 @@ APPLICATION = "application"
 TERMINAL = "terminal"
 
 application = [
-    "configuration",
+    CELESTINE,
     CURSES,
     DEARPYGUI,
+    LANGUAGE,
+    "star",
     TERMINAL,
     TKINTER,
-    UNITTEST,
-    "language",
+    "verify",
 ]
+
+TASK = "task"

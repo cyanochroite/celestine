@@ -61,7 +61,7 @@ def save_item():
 
 def post(text):
     """Generate a post request."""
-    translator = Translator(session.directory)
+    translator = Translator(session.attribute)
     url = translator.endpoint()
     data = None
     json = [{TEXT: text}]
@@ -83,11 +83,10 @@ def add_item(key, value):
             moose[name].append((key, text))
 
 
-def main(**kwargs):
+def main(a_session):
     """def main"""
     global session
-    session = kwargs[SESSION]
-
+    session = a_session
     global moose
     moose = {}
 

@@ -17,9 +17,9 @@ def attempt(name):
     return False
 
 
-def path(*paths):
+def path(one, *paths):
     """Load a file from absolute path."""
-    _path = os.path.join(*paths)
+    _path = os.path.join(one, *paths)
     return _path
 
 
@@ -36,7 +36,6 @@ def module(*paths):
 def directory(_path):
     """Load file contents from a directory."""
     print(_path)
-    pass
 
 
 def dictionary(_module):

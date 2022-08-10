@@ -1,20 +1,64 @@
 """Application for translating text to other languages."""
-from celestine.core import load
+import argparse
+import configparser
 
-from celestine.application.language.argument import parser
+from .keyword import LANGUAGE
+from .keyword import NONE
+
+from .keyword import KEY
+from .keyword import REGION
+from .keyword import URL
+
+from .keyword import CONFIGURE
+from .keyword import REPORT
+from .keyword import TRANSLATE
+
+from .keyword import STORE
 
 
-from celestine.application.language.keyword import APPLICATION
-from celestine.application.language.keyword import LANGUAGE
-from celestine.application.language.keyword import SESSION
+def argument(argument):
+    configure = argument.subparser.add_parser(
+        CONFIGURE,
+        help="you are a fish",
+    )
+
+    configure.add_argument(
+        KEY,
+        action=STORE,
+        help="A brief description of what the argument does.",
+    )
+
+    configure.add_argument(
+        REGION,
+        action=STORE,
+        help="A brief description of what the argument does.",
+    )
+
+    configure.add_argument(
+        URL,
+        action=STORE,
+        help="A brief description of what the argument does.",
+    )
+
+    report = argument.subparser.add_parser(
+        REPORT,
+        help="you are a fish",
+    )
+
+    translate = argument.subparser.add_parser(
+        TRANSLATE,
+        help="you are a fish",
+    )
+
+    return argument
 
 
-def main(**kwargs):
-    """def main"""
-    session = kwargs[SESSION]
+def default(configuration):
+    configuration.set(LANGUAGE, KEY, NONE)
+    configuration.set(LANGUAGE, REGION, NONE)
+    configuration.set(LANGUAGE, URL, NONE)
+    return configuration
 
-    argument = parser.parse_args()
-    task = argument.task
 
-    module = load.module(APPLICATION, LANGUAGE, task)
-    module.main(argument=argument, session=session)
+def attribute():
+    return [KEY, REGION, URL]
