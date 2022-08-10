@@ -1,6 +1,20 @@
 """Load and save user settings from a file."""
 
-from celestine.application.language import configuration as hippo
+from .keyword import LANGUAGE
+
+from .keyword import KEY
+from .keyword import REGION
+from .keyword import URL
+
+
+def hippo(configuration, key, region, url):
+    """Build up the configuration file."""
+    if not configuration.has_section(LANGUAGE):
+        configuration.add_section(LANGUAGE)
+    configuration.set(LANGUAGE, KEY, key)
+    configuration.set(LANGUAGE, REGION, region)
+    configuration.set(LANGUAGE, URL, url)
+    return configuration
 
 
 def main(session):

@@ -53,16 +53,6 @@ def argument(argument):
     return argument
 
 
-def configuration(configuration, key, region, url):
-    """Build up the configuration file."""
-    if not configuration.has_section(LANGUAGE):
-        configuration.add_section(LANGUAGE)
-    configuration.set(LANGUAGE, KEY, key)
-    configuration.set(LANGUAGE, REGION, region)
-    configuration.set(LANGUAGE, URL, url)
-    return configuration
-
-
 def default(configuration):
     configuration.set(LANGUAGE, KEY, NONE)
     configuration.set(LANGUAGE, REGION, NONE)

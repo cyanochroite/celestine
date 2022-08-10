@@ -25,10 +25,6 @@ def attribute():
     return []
 
 
-def configuration(configuration):
-    return configuration
-
-
 
 def default(default):
     """Build up the default file."""

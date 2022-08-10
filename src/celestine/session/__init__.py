@@ -141,7 +141,10 @@ class Session():
 
     def figtree(self, configuration, module, application):
         """Build up the configuration file."""
-        configuration.add_section(application)
+        try:
+            configuration.add_section(application)
+        except configparser.DuplicateSectionError:
+            pass
         configuration = module.default(configuration)
         configuration.set(application, "task", "main")
         return configuration

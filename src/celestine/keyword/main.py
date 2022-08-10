@@ -204,13 +204,14 @@ APPLICATION = "application"
 TERMINAL = "terminal"
 
 application = [
-    "configuration",
+    CELESTINE,
     CURSES,
     DEARPYGUI,
+    LANGUAGE,
+    "star",
     TERMINAL,
     TKINTER,
     "verify",
-    "language",
 ]
 
 TASK = "task"
