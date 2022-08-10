@@ -36,6 +36,11 @@ class Argument():
             dest=TASK,
             required=False
         )
+        
+        self.main = self.subparser.add_parser(
+            "main",
+            help="The default main application."
+        )
 
 
 
@@ -72,14 +77,7 @@ class Configuration():
 
 def argument():
     """argument"""
-    argument = Argument()
-
-    main = argument.subparser.add_parser(
-        "main",
-        help="The default main application."
-    )
-    
-    return argument
+    return Argument()
 
 
 def configuration(directory):

@@ -4,8 +4,10 @@ from celestine.application.star.hashlib import hashlib
 from celestine.application.star.os import os
 
 
-def main(todo="D:/todo", done="D:/done"):
+def main(session):
     """The main file."""
+    todo = session.attribute.todo
+    done = session.attribute.done
     (path, file) = os.chdir(todo, os.walk_directory)
     os.chdir(done, os.makedirs, path)
     for item in file:
