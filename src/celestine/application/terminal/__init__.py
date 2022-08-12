@@ -15,15 +15,13 @@ PYTHON_3_10 = "python_3_10"
 CELESTINE = "celestine"
 
 
-
 def argument(argument):
     return argument
 
 
-def attribute():
+def attribute(attribute):
     """Build up the attribute file."""
-    return []
-
+    return attribute.add("terminal")
 
 
 def default(default):

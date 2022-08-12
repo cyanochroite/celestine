@@ -17,9 +17,9 @@ def argument(argument):
     return argument
 
 
-def attribute():
+def attribute(attribute):
     """Build up the attribute file."""
-    return []
+    return attribute.add("verify")
 
 
 def default(default):

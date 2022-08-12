@@ -29,7 +29,7 @@ def argument(argument):
     )
 
     configure.add_argument(
-        "_"+APPLICATION,
+        "_" + APPLICATION,
         action=STORE,
         choices=application,
         help="A brief description of what the argument does.",
@@ -38,7 +38,7 @@ def argument(argument):
     configure.add_argument(
         LANGUAGE,
         action=STORE,
-        choices = language,
+        choices=language,
         help="A brief description of what the argument does.",
     )
 
@@ -59,5 +59,6 @@ def default(configuration):
     return configuration
 
 
-def attribute():
-    return [APPLICATION, LANGUAGE, PYTHON]
+def attribute(attribute):
+    """Build up the attribute file."""
+    return attribute.add(CELESTINE, APPLICATION, LANGUAGE, PYTHON, "task")

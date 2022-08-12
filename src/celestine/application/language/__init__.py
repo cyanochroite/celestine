@@ -60,5 +60,6 @@ def default(configuration):
     return configuration
 
 
-def attribute():
-    return [KEY, REGION, URL]
+def attribute(attribute):
+    """Build up the attribute file."""
+    return attribute.add("language", KEY, REGION, URL)

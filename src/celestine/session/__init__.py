@@ -18,29 +18,6 @@ from celestine.keyword.main import CELESTINE
 from celestine import module
 
 
-class Parser():
-    def load_attribute(self, session, section, attribute):
-        cat = getattr(session.argument, attribute)
-        if cat:
-            return cat
-
-        try:
-            argg = session.configuration[section][attribute]
-        except KeyError:
-            argg = session.default[section][attribute]
-        return argg
-
-    def parse(self, session):
-        argument = session.argument.parser.parse_args()
-        session.argument = argument
-        session.application = self.load_attribute(session, CELESTINE, APPLICATION)
-        self.application = session.application
-        session.task = self.load_attribute(session, session.application, TASK)
-
-        language = self.load_attribute(session, CELESTINE, LANGUAGE)
-        session.language = module(LANGUAGE, language)
-
-        session.python = python()
 
 
 """Load and save user settings from a file."""
@@ -99,32 +76,35 @@ def python():
 
 
 class Attribute():
-    def __init__(self, session, items):
-        for name in items:
-            value = self.load_attribute(session, session.application, name)
-            setattr(self, name, value)
+    def __init__(self, session):
+        self.session = session
 
-    def load_attribute(self, session, section, attribute):
+    def add(self, application, *iterable):
+        for name in iterable:
+            value = self.load_attribute(application, name)
+            setattr(self, name, value)
+        return self
+
+        
+    def load_attribute(self, section, attribute):
         # duplicate code
         try:
-            cat = getattr(session.argument, attribute)
+            cat = getattr(self.session.argument, attribute)
             if cat:
                 return cat
         except AttributeError:
             pass
 
         try:
-            argg = session.configuration[section][attribute]
+            argg = self.session.configuration[section][attribute]
         except KeyError:
-            argg = session.default[section][attribute]
+            argg = self.session.default[section][attribute]
         return argg
 
 
 class Session():
     def __init__(self, directory):
         self.directory = directory
-
-#        self.configuration = Configuration(directory)
 
         self.config = Configuration(directory)
         self.configuration = self.config.load(directory)
@@ -148,26 +128,65 @@ class Session():
         configuration.set(application, "task", "main")
         return configuration
 
-    def main(self):
-        root = load.module(APPLICATION)
-        module = load.module(APPLICATION, self.application)
+    def load_attribute(self, session, section, attribute):
+        cat = getattr(session.argument, attribute)
+        if cat:
+            return cat
 
+        try:
+            argg = session.configuration[section][attribute]
+        except KeyError:
+            argg = session.default[section][attribute]
+        return argg
+
+        
+    def main(self):
+        module_root = load.module(APPLICATION)
+        module_celestine = load.module(APPLICATION, CELESTINE)
+        module_application = load.module(APPLICATION, self.application)
+
+
+
+        root = module_root
+        modulea = module_application
+        
         argument = root.argument()
-        self.argument = module.argument(argument)
+        self.argument = modulea.argument(argument)
 
         configuration = root.Configuration(self.directory)
         self.configuration = configuration.load()
 
         default = configparser.ConfigParser()
         default = self.figtree(default, root, CELESTINE)
-        default = self.figtree(default, module, self.application)
+        default = self.figtree(default, modulea, self.application)
         self.default = default
 
-        self.parser = Parser()
 
-        temargument = self.parser.parse(self)
+        
+        
+        
+        argument = self.argument.parser.parse_args()
+        self.argument = argument
 
-        self.attribute = Attribute(self, module.attribute())
+
+        self.application = self.load_attribute(self, CELESTINE, APPLICATION)
+        self.task = self.load_attribute(self, self.application, TASK)
+
+        language = self.load_attribute(self, CELESTINE, LANGUAGE)
+        self.language = module(LANGUAGE, language)
+
+        self.python = python()
+        
+        
+        attribute = Attribute(self)
+        attribute = module_celestine.attribute(attribute)
+        attribute = module_application.attribute(attribute)
+        
+        self.attribute = attribute
+
+        print(self.attribute.application)
+        print(self.attribute.task)
+        print(self.attribute.language)
 
         self.module = load.module(APPLICATION, self.application, self.task)
         return self.module.main(self)

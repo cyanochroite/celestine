@@ -3,8 +3,10 @@ import os
 import sys
 
 
-directory = os.path.dirname(sys.path[0])
+path = sys.path[0]
+directory = os.path.dirname(path)
 sys.path.append(directory)
+
 
 load = __import__("celestine")
 module = load.module("session")
