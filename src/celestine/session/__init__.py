@@ -18,8 +18,6 @@ from celestine.keyword.main import CELESTINE
 from celestine import module
 
 
-
-
 """Load and save user settings from a file."""
 import configparser
 
@@ -78,29 +76,32 @@ def python():
 class Attribute():
     def __init__(self, session):
         self.session = session
+        self.carsh = None
 
     def add(self, application, *iterable):
-        for name in iterable:
-            value = self.load_attribute(application, name)
-            setattr(self, name, value)
+        self.carsh = application
+        cowboy = map(self.load_attribute, iterable)
+        print(list(cowboy))
         return self
 
-        
-    def load_attribute(self, section, attribute):
-        # duplicate code
+    def load_attribute(self, attribute):
+        section = self.carsh
+        args = None
         try:
             cat = getattr(self.session.argument, attribute)
             if cat:
-                return cat
+                args = cat
         except AttributeError:
             pass
 
-        try:
-            argg = self.session.configuration[section][attribute]
-        except KeyError:
-            argg = self.session.default[section][attribute]
-        return argg
+        if not args:
+            try:
+                args = self.session.configuration[section][attribute]
+            except KeyError:
+                args = self.session.default[section][attribute]
 
+        setattr(self, attribute, args)#value
+ 
 
 class Session():
     def __init__(self, directory):
@@ -128,30 +129,13 @@ class Session():
         configuration.set(application, "task", "main")
         return configuration
 
-    def load_attribute(self, session, section, attribute):
-        cat = getattr(session.argument, attribute)
-        if cat:
-            return cat
-
-        try:
-            argg = session.configuration[section][attribute]
-        except KeyError:
-            argg = session.default[section][attribute]
-        return argg
-
-        
     def main(self):
         module_root = load.module(APPLICATION)
         module_celestine = load.module(APPLICATION, CELESTINE)
         module_application = load.module(APPLICATION, self.application)
 
-
-
         root = module_root
         modulea = module_application
-        
-        argument = root.argument()
-        self.argument = modulea.argument(argument)
 
         configuration = root.Configuration(self.directory)
         self.configuration = configuration.load()
@@ -161,32 +145,31 @@ class Session():
         default = self.figtree(default, modulea, self.application)
         self.default = default
 
-
-        
-        
-        
-        argument = self.argument.parser.parse_args()
+        argument = root.argument()
+        argument = modulea.argument(argument)
+        argument = argument.parser.parse_args()
         self.argument = argument
 
-
-        self.application = self.load_attribute(self, CELESTINE, APPLICATION)
-        self.task = self.load_attribute(self, self.application, TASK)
-
-        language = self.load_attribute(self, CELESTINE, LANGUAGE)
-        self.language = module(LANGUAGE, language)
-
-        self.python = python()
-        
-        
         attribute = Attribute(self)
         attribute = module_celestine.attribute(attribute)
         attribute = module_application.attribute(attribute)
-        
+
+        self.application = load.module(
+            APPLICATION,
+            attribute.application,
+        )
         self.attribute = attribute
+        self.task = load.module(
+            APPLICATION,
+            attribute.application,
+            attribute.task,
+        )
+#        self.task = load.module(APPLICATION, data.application, data.task)
+        self.language = module(
+            LANGUAGE,
+            attribute.language,
+        )
 
-        print(self.attribute.application)
-        print(self.attribute.task)
-        print(self.attribute.language)
+        self.python = python()
 
-        self.module = load.module(APPLICATION, self.application, self.task)
-        return self.module.main(self)
+        return self.task.main(self)
