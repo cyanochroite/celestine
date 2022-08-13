@@ -32,6 +32,6 @@ def default(configuration):
     return configuration
 
 
-def attribute(attribute):
+def attribute(add):
     """Build up the attribute file."""
-    return attribute.add("star", TODO, DONE)
+    add("star", TODO, DONE)

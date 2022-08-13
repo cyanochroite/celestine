@@ -76,16 +76,13 @@ def python():
 class Attribute():
     def __init__(self, session):
         self.session = session
-        self.carsh = None
 
     def add(self, application, *iterable):
-        self.carsh = application
-        cowboy = map(self.load_attribute, iterable)
-        print(list(cowboy))
+        self.section = application
+        map(self.load_attribute, iterable)
         return self
 
     def load_attribute(self, attribute):
-        section = self.carsh
         args = None
         try:
             cat = getattr(self.session.argument, attribute)
@@ -96,11 +93,37 @@ class Attribute():
 
         if not args:
             try:
-                args = self.session.configuration[section][attribute]
+                args = self.session.configuration[self.section][attribute]
             except KeyError:
-                args = self.session.default[section][attribute]
+                args = self.session.default[self.section][attribute]
 
         setattr(self, attribute, args)#value
+
+
+class Attribute():
+    pass
+
+    def add(self, application, *iterable):
+        self.section = application
+        for attribute in iterable:
+            args = None
+            try:
+                cat = getattr(self.session.argument, attribute)
+                if cat:
+                    args = cat
+            except AttributeError:
+                pass
+    
+            if not args:
+                try:
+                    args = self.session.configuration[self.section][attribute]
+                except KeyError:
+                    args = self.session.default[self.section][attribute]
+    
+            setattr(self, attribute, args)#value
+
+        return self
+
  
 
 class Session():
@@ -129,6 +152,25 @@ class Session():
         configuration.set(application, "task", "main")
         return configuration
 
+    def add_attribute(self, application, *iterable):
+        self.section = application
+        for attribute in iterable:
+            args = None
+            try:
+                cat = getattr(self.argument, attribute)
+                if cat:
+                    args = cat
+            except AttributeError:
+                pass
+    
+            if not args:
+                try:
+                    args = self.configuration[self.section][attribute]
+                except KeyError:
+                    args = self.default[self.section][attribute]
+    
+            setattr(self.attribute, attribute, args)#value
+
     def main(self):
         module_root = load.module(APPLICATION)
         module_celestine = load.module(APPLICATION, CELESTINE)
@@ -150,24 +192,23 @@ class Session():
         argument = argument.parser.parse_args()
         self.argument = argument
 
-        attribute = Attribute(self)
-        attribute = module_celestine.attribute(attribute)
-        attribute = module_application.attribute(attribute)
-
+        self.attribute = Attribute()
+        module_celestine.attribute(self.add_attribute)
+        module_application.attribute(self.add_attribute)
+        
         self.application = load.module(
             APPLICATION,
-            attribute.application,
+            self.attribute.application,
         )
-        self.attribute = attribute
         self.task = load.module(
             APPLICATION,
-            attribute.application,
-            attribute.task,
+            self.attribute.application,
+            self.attribute.task,
         )
 #        self.task = load.module(APPLICATION, data.application, data.task)
         self.language = module(
             LANGUAGE,
-            attribute.language,
+            self.attribute.language,
         )
 
         self.python = python()
