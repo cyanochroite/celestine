@@ -6,9 +6,9 @@ def argument(argument):
     return argument
 
 
-def attribute(attribute):
+def attribute():
     """Build up the attribute file."""
-    return attribute.add("dearpygui")
+    return ()
 
 
 def default(default):

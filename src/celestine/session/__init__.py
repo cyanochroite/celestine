@@ -152,7 +152,7 @@ class Session():
         configuration.set(application, "task", "main")
         return configuration
 
-    def add_attribute(self, application, *iterable):
+    def add_attribute(self, application, iterable):
         self.section = application
         for attribute in iterable:
             args = None
@@ -193,8 +193,9 @@ class Session():
         self.argument = argument
 
         self.attribute = Attribute()
-        module_celestine.attribute(self.add_attribute)
-        module_application.attribute(self.add_attribute)
+        
+        self.add_attribute(CELESTINE, module_celestine.attribute())
+        self.add_attribute(self.application, module_application.attribute())
         
         self.application = load.module(
             APPLICATION,

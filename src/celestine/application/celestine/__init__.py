@@ -59,6 +59,6 @@ def default(configuration):
     return configuration
 
 
-def attribute(add):
+def attribute():
     """Build up the attribute file."""
-    add(CELESTINE, APPLICATION, LANGUAGE, PYTHON, "task")
+    return (APPLICATION, LANGUAGE, PYTHON, "task") 
