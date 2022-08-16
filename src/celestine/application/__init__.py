@@ -83,20 +83,3 @@ def configuration(directory):
     """configuration"""
     return Configuration(directory)
 
-
-from celestine.application.terminal.keyword import APPLICATION
-from celestine.application.terminal.keyword import LANGUAGE
-from celestine.application.terminal.keyword import PYTHON
-
-
-TERMINAL = "terminal"
-ENGLISH = "english"
-PYTHON_3_10 = "python_3_10"
-CELESTINE = "celestine"
-
-
-def default(configuration):
-    configuration.set(CELESTINE, APPLICATION, TERMINAL)
-    configuration.set(CELESTINE, LANGUAGE, ENGLISH)
-    configuration.set(CELESTINE, PYTHON, PYTHON_3_10)
-    return configuration

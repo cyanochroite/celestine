@@ -5,9 +5,10 @@ from celestine.application.star.os import os
 
 STORE = "store"
 TODO = "todo"
-DONE= "done"
+DONE = "done"
 STAR = "star"
 NONE = ""
+
 
 def argument(argument):
     main = argument.main
@@ -26,12 +27,10 @@ def argument(argument):
     return argument
 
 
-def default(configuration):
-    configuration.set(STAR, TODO, "D:/todo")
-    configuration.set(STAR, DONE, "D:/done")
-    return configuration
-
-
 def attribute():
     """Build up the attribute file."""
     return (TODO, DONE)
+
+
+def default():
+    return ("D:/todo", "D:/done")

@@ -97,7 +97,7 @@ class Attribute():
             except KeyError:
                 args = self.session.default[self.section][attribute]
 
-        setattr(self, attribute, args)#value
+        setattr(self, attribute, args)  # value
 
 
 class Attribute():
@@ -113,18 +113,17 @@ class Attribute():
                     args = cat
             except AttributeError:
                 pass
-    
+
             if not args:
                 try:
                     args = self.session.configuration[self.section][attribute]
                 except KeyError:
                     args = self.session.default[self.section][attribute]
-    
-            setattr(self, attribute, args)#value
+
+            setattr(self, attribute, args)  # value
 
         return self
 
- 
 
 class Session():
     def __init__(self, directory):
@@ -142,14 +141,16 @@ class Session():
 
         self.window = load.module("window", "main")
 
-    def figtree(self, configuration, module, application):
+    def add_configuration(self, configuration, module, application):
         """Build up the configuration file."""
-        try:
+        if not configuration.has_section(application):
             configuration.add_section(application)
-        except configparser.DuplicateSectionError:
-            pass
-        configuration = module.default(configuration)
-        configuration.set(application, "task", "main")
+        attribute = module.attribute()
+        default = module.default()
+        for item in zip(attribute, default, strict=True):
+            (name, value) = item
+            configuration.set(application, name, value)
+
         return configuration
 
     def add_attribute(self, application, iterable):
@@ -162,14 +163,14 @@ class Session():
                     args = cat
             except AttributeError:
                 pass
-    
+
             if not args:
                 try:
                     args = self.configuration[self.section][attribute]
                 except KeyError:
                     args = self.default[self.section][attribute]
-    
-            setattr(self.attribute, attribute, args)#value
+
+            setattr(self.attribute, attribute, args)  # value
 
     def main(self):
         module_root = load.module(APPLICATION)
@@ -183,8 +184,8 @@ class Session():
         self.configuration = configuration.load()
 
         default = configparser.ConfigParser()
-        default = self.figtree(default, root, CELESTINE)
-        default = self.figtree(default, modulea, self.application)
+        default = self.add_configuration(default, module_celestine, CELESTINE)
+        default = self.add_configuration(default, modulea, self.application)
         self.default = default
 
         argument = root.argument()
@@ -193,10 +194,10 @@ class Session():
         self.argument = argument
 
         self.attribute = Attribute()
-        
+
         self.add_attribute(CELESTINE, module_celestine.attribute())
         self.add_attribute(self.application, module_application.attribute())
-        
+
         self.application = load.module(
             APPLICATION,
             self.attribute.application,

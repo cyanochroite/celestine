@@ -52,11 +52,8 @@ def argument(argument):
     return argument
 
 
-def default(configuration):
-    configuration.set(CELESTINE, APPLICATION, TERMINAL)
-    configuration.set(CELESTINE, LANGUAGE, ENGLISH)
-    configuration.set(CELESTINE, PYTHON, PYTHON_3_10)
-    return configuration
+def default():
+    return (TERMINAL, ENGLISH, PYTHON_3_10, "main")
 
 
 def attribute():
