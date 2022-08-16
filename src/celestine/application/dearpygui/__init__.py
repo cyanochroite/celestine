@@ -11,6 +11,6 @@ def attribute():
     return ()
 
 
-def default(default):
+def default():
     """Build up the default file."""
-    return default
+    return ()

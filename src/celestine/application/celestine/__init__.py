@@ -23,6 +23,7 @@ STORE = "store"
 
 
 def argument(argument):
+    """Build up the argument."""
     configure = argument.subparser.add_parser(
         CONFIGURE,
         help="you are a fish",
@@ -53,9 +54,10 @@ def argument(argument):
 
 
 def default():
+    """Build up the default file."""
     return (TERMINAL, ENGLISH, PYTHON_3_10, "main")
 
 
 def attribute():
     """Build up the attribute file."""
-    return (APPLICATION, LANGUAGE, PYTHON, "task") 
+    return (APPLICATION, LANGUAGE, PYTHON, "task")

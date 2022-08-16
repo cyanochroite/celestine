@@ -11,6 +11,7 @@ NONE = ""
 
 
 def argument(argument):
+    """Build up the argument."""
     main = argument.main
 
     main.add_argument(
@@ -33,4 +34,5 @@ def attribute():
 
 
 def default():
+    """Build up the default file."""
     return ("D:/todo", "D:/done")

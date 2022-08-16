@@ -17,6 +17,7 @@ from .keyword import STORE
 
 
 def argument(argument):
+    """Build up the argument."""
     configure = argument.subparser.add_parser(
         CONFIGURE,
         help="you are a fish",
@@ -53,13 +54,11 @@ def argument(argument):
     return argument
 
 
-def default(configuration):
-    configuration.set(LANGUAGE, KEY, NONE)
-    configuration.set(LANGUAGE, REGION, NONE)
-    configuration.set(LANGUAGE, URL, NONE)
-    return configuration
-
-
 def attribute():
     """Build up the attribute file."""
     return (KEY, REGION, URL)
+
+
+def default():
+    """Build up the default file."""
+    return (NONE, NONE, NONE)

@@ -82,4 +82,3 @@ def argument():
 def configuration(directory):
     """configuration"""
     return Configuration(directory)
-
