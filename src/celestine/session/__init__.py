@@ -96,10 +96,20 @@ class Configuration():
 
 
 class Attribute(Configuration):
-    def __init__(self, argument, configuration, default):
+    def __init__(self, argument, default, directory):
         self.argument = argument
+
+        configuration = Configuration(directory)
+        configuration = configuration.load()
         self.configuration = configuration
+
         self.default = default
+
+    def __getattr__(self, attribute):
+        try:
+            args = self.configuration[self.section][attribute]
+        except KeyError:
+            args = self.default[self.section][attribute]
 
     def add(self, application, iterable):
         self.section = application
@@ -125,7 +135,6 @@ class Attribute(Configuration):
 
 class Session():
     def __init__(self, directory):
-        self.directory = directory  # me no like
 
         try:
             application = sys.argv[1]
@@ -137,37 +146,38 @@ class Session():
         module_celestine = load.module(APPLICATION, CELESTINE)
         module_application = load.module(APPLICATION, application)
 
-        configuration = Configuration(directory)
-        self.configuration = configuration.load()
 
         default = configparser.ConfigParser()
         default = self.add_configuration(default, module_celestine, CELESTINE)
         default = self.add_configuration(default, module_application, application)
-        self.default = default
 
         argument = Argument()
         argument = module_application.argument(argument)
         argument = argument.parser.parse_args()
-        self.argument = argument
 
-        self.attribute = Attribute(self.argument, self.configuration, self.default)
-        self.attribute.add(CELESTINE, module_celestine.attribute())
-        self.attribute.add(application, module_application.attribute())
+        attribute1 = Attribute(argument, default, directory)
+        attribute1.add(CELESTINE, module_celestine.attribute())
+
+        attribute2 = Attribute(argument, default, directory)
+        attribute2.add(application, module_application.attribute())
+
+        self.attribute = attribute2  # function call?
 
         self.application = load.module(
             APPLICATION,
-            self.attribute.application,
+            attribute1.application,
+        )
+        self.directory = directory  # me no like
+        self.language = load.module(
+            LANGUAGE,
+            attribute1.language,
+        )
+        self.python = self.python(
         )
         self.task = load.module(
             APPLICATION,
-            self.attribute.application,
-            self.attribute.task,
-        )
-        self.language = load.module(
-            LANGUAGE,
-            self.attribute.language,
-        )
-        self.python = self.python(
+            attribute1.application,
+            attribute1.task,
         )
         self.window = load.module(
             "window",
