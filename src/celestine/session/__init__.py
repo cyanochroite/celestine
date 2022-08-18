@@ -96,41 +96,92 @@ class Configuration():
 
 
 class Attribute(Configuration):
-    def __init__(self, argument, default, directory):
-        self.argument = argument
+    def __init__(self, argument, directory, section):
+        module = load.module(APPLICATION, section)
+
+        attribute = module.attribute()
+        default = module.default()
 
         configuration = Configuration(directory)
         configuration = configuration.load()
-        self.configuration = configuration
 
-        self.default = default
+        for item in zip(attribute, default, strict=True):
+            (name, value) = item
 
-    def __getattr__(self, attribute):
-        try:
-            args = self.configuration[self.section][attribute]
-        except KeyError:
-            args = self.default[self.section][attribute]
-
-    def add(self, application, iterable):
-        self.section = application
-        for attribute in iterable:
-            args = None
-            try:
-                cat = getattr(self.argument, attribute)
-                if cat:
-                    args = cat
-            except AttributeError:
-                pass
-
-            if not args:
+            value = getattr(argument, name, None) or value
+            if not value:
                 try:
-                    args = self.configuration[self.section][attribute]
+                    value = configuration[section][name]
                 except KeyError:
-                    args = self.default[self.section][attribute]
+                    pass
 
-            setattr(self, attribute, args)  # value
+            setattr(self, name, value)
 
-        return self
+
+class Attribute(Configuration):
+    def __init__(self, argument, directory, section):
+        module = load.module(APPLICATION, section)
+
+        attribute = module.attribute()
+        default = module.default()
+
+        configuration = Configuration(directory)
+        configuration = configuration.load()
+
+        for item in zip(attribute, default, strict=True):
+            (name, default_value) = item
+            value = getattr(argument, name, None)
+            if not value:
+                try:
+                    value = default_value
+                    value = configuration[section][name]
+                except KeyError:
+                    pass
+            setattr(self, name, value)
+
+
+class Attribute(Configuration):
+    def __init__(self, argument, directory, section):
+        module = load.module(APPLICATION, section)
+
+        attribute = module.attribute()
+        default = module.default()
+
+        configuration = Configuration(directory)
+        configuration = configuration.load()
+
+        for item in zip(attribute, default, strict=True):
+            (name, default_value) = item
+            try:
+                # Maybe remove None default later
+                value = getattr(argument, name, None) or configuration.get(section, name)  # option
+            except (configparser.NoSectionError, configparser.NoOptionError):
+                value = default_value
+            setattr(self, name, value)
+
+
+class Attribute(Configuration):
+    def __init__(self, argument, directory, section):
+        module = load.module(APPLICATION, section)
+
+        attribute = module.attribute()
+        default = module.default()
+
+        configuration = Configuration(directory)
+        configuration = configuration.load()
+
+        for item in zip(attribute, default, strict=True):
+            (name, default_value) = item
+            value = getattr(
+                argument,
+                name,
+                None,
+            ) or configuration.get(
+                section,
+                name,  # option
+                fallback=default_value,
+            )
+            setattr(self, name, value)
 
 
 class Session():
@@ -146,38 +197,32 @@ class Session():
         module_celestine = load.module(APPLICATION, CELESTINE)
         module_application = load.module(APPLICATION, application)
 
-
-        default = configparser.ConfigParser()
-        default = self.add_configuration(default, module_celestine, CELESTINE)
-        default = self.add_configuration(default, module_application, application)
-
         argument = Argument()
         argument = module_application.argument(argument)
         argument = argument.parser.parse_args()
 
-        attribute1 = Attribute(argument, default, directory)
-        attribute1.add(CELESTINE, module_celestine.attribute())
-
-        attribute2 = Attribute(argument, default, directory)
-        attribute2.add(application, module_application.attribute())
-
-        self.attribute = attribute2  # function call?
+        attribute = Attribute(argument, directory, CELESTINE)
 
         self.application = load.module(
             APPLICATION,
-            attribute1.application,
+            attribute.application,
+        )
+        self.attribute = Attribute(
+            argument,
+            directory,
+            application,
         )
         self.directory = directory  # me no like
         self.language = load.module(
             LANGUAGE,
-            attribute1.language,
+            attribute.language,
         )
         self.python = self.python(
         )
         self.task = load.module(
             APPLICATION,
-            attribute1.application,
-            attribute1.task,
+            attribute.application,
+            attribute.task,
         )
         self.window = load.module(
             "window",
