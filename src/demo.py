@@ -1,5 +1,12 @@
 """lazy"""
 import configparser
+cow = ''
+if cow:
+    print("hi")
+else:
+    print("dog")
+
+print('' or 'bacon')
 
 class Attribute():
     def add(self, application, *iterable):

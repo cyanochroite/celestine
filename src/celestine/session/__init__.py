@@ -97,90 +97,18 @@ class Configuration():
 
 class Attribute(Configuration):
     def __init__(self, argument, directory, section):
+        configuration = Configuration(directory)
+        configuration = configuration.load()
+
         module = load.module(APPLICATION, section)
 
         attribute = module.attribute()
         default = module.default()
 
-        configuration = Configuration(directory)
-        configuration = configuration.load()
-
-        for item in zip(attribute, default, strict=True):
-            (name, value) = item
-
-            value = getattr(argument, name, None) or value
-            if not value:
-                try:
-                    value = configuration[section][name]
-                except KeyError:
-                    pass
-
-            setattr(self, name, value)
-
-
-class Attribute(Configuration):
-    def __init__(self, argument, directory, section):
-        module = load.module(APPLICATION, section)
-
-        attribute = module.attribute()
-        default = module.default()
-
-        configuration = Configuration(directory)
-        configuration = configuration.load()
-
-        for item in zip(attribute, default, strict=True):
-            (name, default_value) = item
-            value = getattr(argument, name, None)
-            if not value:
-                try:
-                    value = default_value
-                    value = configuration[section][name]
-                except KeyError:
-                    pass
-            setattr(self, name, value)
-
-
-class Attribute(Configuration):
-    def __init__(self, argument, directory, section):
-        module = load.module(APPLICATION, section)
-
-        attribute = module.attribute()
-        default = module.default()
-
-        configuration = Configuration(directory)
-        configuration = configuration.load()
-
-        for item in zip(attribute, default, strict=True):
-            (name, default_value) = item
-            try:
-                # Maybe remove None default later
-                value = getattr(argument, name, None) or configuration.get(section, name)  # option
-            except (configparser.NoSectionError, configparser.NoOptionError):
-                value = default_value
-            setattr(self, name, value)
-
-
-class Attribute(Configuration):
-    def __init__(self, argument, directory, section):
-        module = load.module(APPLICATION, section)
-
-        attribute = module.attribute()
-        default = module.default()
-
-        configuration = Configuration(directory)
-        configuration = configuration.load()
-
-        for item in zip(attribute, default, strict=True):
-            (name, default_value) = item
-            value = getattr(
-                argument,
-                name,
-                None,
-            ) or configuration.get(
-                section,
-                name,  # option
-                fallback=default_value,
-            )
+        for (name, failover) in zip(attribute, default, strict=True):
+            database = configuration.get(section, name, fallback=None)
+            override = getattr(argument, name, None)
+            value = override or database or failover
             setattr(self, name, value)
 
 
