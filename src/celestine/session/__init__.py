@@ -54,7 +54,7 @@ class Argument():
         self.parser.add_argument(
             APPLICATION,
             choices=application,
-            help="Select which application to run."
+            help="Select which application to run.",
         )
 
         self.parser.add_argument(
@@ -62,17 +62,17 @@ class Argument():
             choices=language,
             help="Choose a language.",
             dest=LANGUAGE,
-            metavar="language"
+            metavar="language",
         )
 
         self.subparser = self.parser.add_subparsers(
             dest=TASK,
-            required=False
+            required=False,
         )
 
         self.main = self.subparser.add_parser(
             "main",
-            help="The default main application."
+            help="The default main application.",
         )
 
 
@@ -113,32 +113,28 @@ class Attribute(Configuration):
 
 
 class Session():
-    def __init__(self, directory):
-
-        try:
-            application = sys.argv[1]
-        except IndexError:
-            print("hack and bad default?")
-            sys.argv.append("tkinter")
-            application = sys.argv[1]
-
-        module_celestine = load.module(APPLICATION, CELESTINE)
-        module_application = load.module(APPLICATION, application)
+    def __init__(self, directory, args):
+        args = args or ["tkinter"]
 
         argument = Argument()
-        argument = module_application.argument(argument)
-        argument = argument.parser.parse_args()
 
-        attribute = Attribute(argument, directory, CELESTINE)
+        attribute = Attribute(
+            argument.parser.parse_args(args),
+            directory,
+            CELESTINE,
+        )
+
+        module_application = load.module(APPLICATION, attribute.application)
+        argument = module_application.argument(argument)
 
         self.application = load.module(
             APPLICATION,
             attribute.application,
         )
         self.attribute = Attribute(
-            argument,
+            argument.parser.parse_args(args),
             directory,
-            application,
+            attribute.application,
         )
         self.directory = directory  # me no like
         self.language = load.module(

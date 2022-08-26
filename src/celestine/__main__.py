@@ -8,8 +8,7 @@ directory = os.path.dirname(path)
 sys.path.append(directory)
 
 
-load = __import__("celestine")
-module = load.module("session")
-session = module.Session(directory)
-main = session.main()
+module = __import__("celestine")
+sys.argv.pop(0)
+main = module.main(directory, sys.argv)
 sys.exit(main)
