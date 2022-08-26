@@ -9,6 +9,6 @@ sys.path.append(directory)
 
 
 module = __import__("celestine")
-sys.argv.pop(0)
-main = module.main(directory, sys.argv)
+args = sys.argv[1:]
+main = module.main(directory, args)
 sys.exit(main)

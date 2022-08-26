@@ -6,8 +6,8 @@ def setup(session):
     global image
     window = session.task
     directory =  session.directory
-    image1 = load.path(directory, "celestine", "file", "anitest.gif")
-    image2 = load.path(directory, "celestine", "file", "test4.gif")
+    image1 = load.path("D:\\", "file", "test.jpg")
+    image2 = load.path("D:\\", "file", "test2.jpg")
     image["image1"] = window.image_load(image1)
     image["image2"] = window.image_load(image2)
 

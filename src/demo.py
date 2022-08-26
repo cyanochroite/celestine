@@ -3,5 +3,5 @@ import sys
 
 import celestine
 
-argv = ["dearpygui"]
+argv = ["tkinter"]
 celestine.main(sys.path[0], argv)
