@@ -124,8 +124,8 @@ class Session():
             CELESTINE,
         )
 
-        module_application = load.module(APPLICATION, attribute.application)
-        argument = module_application.argument(argument)
+        module = load.module(APPLICATION, attribute.application)
+        argument = module.argument(argument)
 
         self.application = load.module(
             APPLICATION,
@@ -137,6 +137,7 @@ class Session():
             attribute.application,
         )
         self.directory = directory  # me no like
+        self.image_format = module.image_format() 
         self.language = load.module(
             LANGUAGE,
             attribute.language,

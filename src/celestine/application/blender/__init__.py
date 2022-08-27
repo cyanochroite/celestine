@@ -15,6 +15,29 @@ def default():
     """Build up the default file."""
     return ()
 
+
+def image_format():
+    return [
+        ".bmp",
+        ".sgi",
+        ".rgb",
+        ".bw",
+        ".png",
+        ".jpg",
+        ".jpeg",
+        ".jp2",
+        ".j2c",
+        ".tga",
+        ".cin",
+        ".dpx",
+        ".exr",
+        ".hdr",
+        ".tif",
+        ".tiff",
+        ".webp",
+    ]
+
+
 """
 An add-on is simply a Python module with some additional requirements so
 Blender can display it in a list with useful information.

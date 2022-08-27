@@ -36,3 +36,7 @@ def attribute():
 def default():
     """Build up the default file."""
     return ("D:/todo", "D:/done")
+
+
+def image_format():
+    return []

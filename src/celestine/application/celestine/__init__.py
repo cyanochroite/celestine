@@ -61,3 +61,7 @@ def default():
 def attribute():
     """Build up the attribute file."""
     return (APPLICATION, LANGUAGE, PYTHON, "task")
+
+
+def image_format():
+    return []

@@ -62,3 +62,7 @@ def attribute():
 def default():
     """Build up the default file."""
     return (NONE, NONE, NONE)
+
+
+def image_format():
+    return []
