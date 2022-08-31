@@ -14,7 +14,7 @@ def main(_):
         [CELESTINE],
         None,
         unittest.defaultTestLoader,
-        True,
+        False,
         2,
         False,
         True,
