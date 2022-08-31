@@ -45,10 +45,32 @@ PYTHON_3_11 = "python_3_11"
 
 
 @dataclasses.dataclass
-class Argument():
+class Argument1():
     def __init__(self):
         self.parser = argparse.ArgumentParser(
-            prog=CELESTINE
+            prog=CELESTINE,
+            exit_on_error = False,
+        )
+
+        self.parser.add_argument(
+            APPLICATION,
+            choices=application,
+            help="Select which application to run.",
+        )
+
+        self.parser.add_argument(
+            "ignore",
+            nargs="*",
+            help="Select which application to run.",
+        )
+
+
+@dataclasses.dataclass
+class Argument2():
+    def __init__(self):
+        self.parser = argparse.ArgumentParser(
+            prog=CELESTINE,
+            exit_on_error = False,
         )
 
         self.parser.add_argument(
@@ -96,11 +118,9 @@ class Configuration():
 
 
 class Attribute(Configuration):
-    def __init__(self, argument, directory, section):
+    def __init__(self, argument, directory, module, section):
         configuration = Configuration(directory)
         configuration = configuration.load()
-
-        module = load.module(APPLICATION, section)
 
         attribute = module.attribute()
         default = module.default()
@@ -116,16 +136,27 @@ class Session():
     def __init__(self, directory, args):
         args = args or ["tkinter"]
 
-        argument = Argument()
+        argument = Argument1()
 
         attribute = Attribute(
             argument.parser.parse_args(args),
             directory,
+            load.module("internal"),
             CELESTINE,
         )
 
         module = load.module(APPLICATION, attribute.application)
+
+
+        argument = Argument2()
         argument = module.argument(argument)
+        attribute = Attribute(
+            argument.parser.parse_args(args),
+            directory,
+            load.module("internal"),
+            CELESTINE,
+        )
+
 
         self.application = load.module(
             APPLICATION,
@@ -134,10 +165,11 @@ class Session():
         self.attribute = Attribute(
             argument.parser.parse_args(args),
             directory,
+            module,
             attribute.application,
         )
         self.directory = directory  # me no like
-        self.image_format = module.image_format() 
+        self.image_format = module.image_format()
         self.language = load.module(
             LANGUAGE,
             attribute.language,

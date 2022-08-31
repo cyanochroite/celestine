@@ -3,6 +3,11 @@
 
 def argument(argument):
     """Build up the argument."""
+    verify = argument.subparser.add_parser(
+        "verify",
+        help="you are a fish",
+    )
+    
     return argument
 
 
