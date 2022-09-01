@@ -1,5 +1,5 @@
 # <pep8-80 compliant>
-from . import new
+from blender import data
 
 # shader
 
@@ -43,7 +43,7 @@ def shader_output(nodes):
 
 
 def material(name, image):
-    material = new.material(name)
+    material = data.material.new(name)
     material.use_nodes = True
 
     tree = material.node_tree

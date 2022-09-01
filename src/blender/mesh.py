@@ -2,7 +2,7 @@
 import bmesh
 import mathutils
 
-from . import new
+from blender import data
 
 
 class Mesh():
@@ -57,7 +57,7 @@ class Mesh():
 
     def finalize(self, name):
         """Call this after adding all the stuff to mesh."""
-        mesh = new.mesh(name)
+        mesh = data.mesh.new(name)
         self.bmesh.to_mesh(mesh)
         self.bmesh.free()
         return mesh

@@ -17,6 +17,6 @@ def module(*paths):
 
 
 def main(directory, argv):
+    """Run the main program."""
     session = Session(directory, argv)
-    main = session.main()
-    return main
+    return session.main()
