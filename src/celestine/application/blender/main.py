@@ -1,34 +1,31 @@
 # <pep8-80 compliant>
 """Package celestine."""
-import blender
-
-from blender import data
-from blender import UV
 import bpy  # pylint: disable=import-error
 import bmesh  # pylint: disable=import-error
 
+from celestine.application.blender import data
+from celestine.application.blender import preferences
+from celestine.application.blender import UV
 
+
+def register():
+    """
+    This is a function which only runs when enabling the add-on, this means the
+    module can be loaded without activating the add-on.
+    """
+    data.register()
+    preferences.register()
+
+
+def unregister():
+    """
+    This is a function to unload anything setup by register, this is called
+    when the add-on is disabled.
+    """
+    preferences.unregister()
+    data.unregister()
 
 ready = False
-Image_Formats = [
-    ".bmp",
-    ".sgi",
-    ".rgb",
-    ".bw",
-    ".png",
-    ".jpg",
-    ".jpeg",
-    ".jp2",
-    ".j2c",
-    ".tga",
-    ".cin",
-    ".dpx",
-    ".exr",
-    ".hdr",
-    ".tif",
-    ".tiff",
-    ".webp",
-]
 
 
 def new_image(image):
@@ -151,10 +148,10 @@ def main(session):
     global spot
     spot = 0
 
-    blender.register()
+    register()
 
     _startup_clear()
     session.window.setup(session)
     session.window.view(session)
 
-    blender.unregister()
+    unregister()

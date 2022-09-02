@@ -1,5 +1,5 @@
+# <pep8-80 compliant>
 """Package blender."""
-
 
 def argument(argument):
     """Build up the argument."""
@@ -7,7 +7,7 @@ def argument(argument):
         "verify",
         help="you are a fish",
     )
-    
+
     return argument
 
 
