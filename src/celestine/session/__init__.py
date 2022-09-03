@@ -183,7 +183,8 @@ class Session():
         )
         self.window = load.module(
             "window",
-            "main",
+#            "main",
+            "two",
         )
 
     def add_configuration(self, configuration, module, application):

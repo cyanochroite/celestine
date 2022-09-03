@@ -7,8 +7,6 @@ from celestine.session import Session
 from celestine.keyword.main import CELESTINE
 from celestine.keyword.unicode import FULL_STOP
 
-from celestine import blender
-
 bl_info = {
     "name": "Celestine Image Viewer",
     "description": "Blnder stuff can do stuff wow cool.",
@@ -29,6 +27,7 @@ def register():
     This is a function which only runs when enabling the add-on, this means the
     module can be loaded without activating the add-on.
     """
+    blender = load.module("blender")
     blender.register()
 
 
