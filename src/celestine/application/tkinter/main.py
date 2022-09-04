@@ -155,7 +155,7 @@ def main(session):
         frame.config(bg="skyblue")
         key = frame_key(index)
         frame_set(key, frame)
-        window.main(session.task, key)
+        window.main(session, key)
         index += 1
 
     show_frame(frame_key(0))
