@@ -29,11 +29,10 @@ def setup(session):
         image.append(window.image_load(imaged))
 
 
-def view(session):
+def main(window, frame):
     global image
-    window = session.task
     for imaged in image:
         window.image("00", imaged)
 
-    window.label("Settings", "no puppy. File Explorer using Tkinter")
-    window.file_dialog("set", "Settings")
+    window.label(frame, "Settings", "no puppy. File Explorer using Tkinter")
+    window.file_dialog(frame, "set", "Settings")

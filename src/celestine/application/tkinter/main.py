@@ -18,18 +18,6 @@ class Image():
         self.name = file
 
 
-def file_dialog(tag, bind):
-    """pass"""
-    command = partial(file_dialog_load, bind)
-    button = tkinter.Button(
-        root,
-        text="Config find Exit",
-        command=command
-    )
-    item[tag] = button
-    button.pack()
-
-
 def file_dialog_load(tag):
     """pass"""
     filename = tkinter.filedialog.askopenfilename(
@@ -43,16 +31,39 @@ def file_dialog_load(tag):
     item[tag].configure(text="File Opened: " + filename)
 
 
-def image(tag, _image):
+def image_load(file):
     """pass"""
-    _label = tkinter.Label(root, image=_image.image)
+    return Image(file)
+
+
+def image(frame, tag, _image):
+    """pass"""
+    _label = tkinter.Label(frame, image=_image.image)
     item[tag] = _label
     _label.pack()
 
 
-def image_load(file):
+def button(frame, tag, text):
     """pass"""
-    return Image(file)
+    _button = tkinter.Button(
+        frame,
+        text=text,
+        command=lambda: show_frame(text)
+    )
+    item[F"{frame}-{tag}"] = _button
+    _button.pack()
+
+
+def file_dialog(frame, tag, bind):
+    """pass"""
+    command = partial(file_dialog_load, bind)
+    button = tkinter.Button(
+        frame,
+        text="Config find Exit",
+        command=command
+    )
+    item[tag] = button
+    button.pack()
 
 
 def label(frame, tag, text):
@@ -77,17 +88,6 @@ def show_frame(text):
     frame.tkraise()
 
 
-def button(frame, tag, text):
-    """pass"""
-    _button = tkinter.Button(
-        frame,
-        text=text,
-        command=lambda: show_frame(text)
-    )
-    item[F"{frame}-{tag}"] = _button
-    _button.pack()
-
-
 def main(session):
     """def main"""
     global item
@@ -100,7 +100,6 @@ def main(session):
     root.geometry("1920x1080")
     root.minsize(640, 480)
     root.maxsize(3840, 2160)
-    root.config(bg="skyblue")
 
     container = tkinter.Frame(root)
     container.pack(side="top", fill="both", expand=True)
@@ -110,6 +109,7 @@ def main(session):
     index = 0
     for window in session.window:
         frame = tkinter.Frame(container, padx=5, pady=5)
+        frame.config(bg="skyblue")
         item[F"Page {index}"] = frame
         window.main(session.task, frame)
         index += 1
