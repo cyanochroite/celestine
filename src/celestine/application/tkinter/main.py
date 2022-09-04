@@ -7,17 +7,6 @@ import tkinter.filedialog
 from functools import partial
 
 
-class Image():
-    """Holds an image."""
-
-    def __init__(self, file):
-        _image = tkinter.PhotoImage(file=file)
-        self.height = _image.height()
-        self.image = _image
-        self.width = _image.width()
-        self.name = file
-
-
 def item_key(frame, tag):
     global item
     return F"{frame}-{tag}"
@@ -47,6 +36,17 @@ def frame_set(frame, value):
     item[frame] = value
 
 
+class Image():
+    """Holds an image."""
+
+    def __init__(self, file):
+        _image = tkinter.PhotoImage(file=file)
+        self.height = _image.height()
+        self.image = _image
+        self.width = _image.width()
+        self.name = file
+
+
 def file_dialog_load(frame, tag):
     """pass"""
     filename = tkinter.filedialog.askopenfilename(
@@ -65,17 +65,13 @@ def image_load(file):
     return Image(file)
 
 
-def image(frame, tag, _image):
-    """pass"""
-    item_set(
-        frame,
-        tag,
-        tkinter.Label(
-            frame_get(frame),
-            image=_image.image,
-        ),
-    )
-    item_get(frame, tag).pack()
+def show_frame(text):
+    global item
+
+    frame = item[text]
+    frame.grid(row=0, column=0, sticky="nsew")
+
+    frame.tkraise()
 
 
 def button(frame, tag, text):
@@ -106,6 +102,19 @@ def file_dialog(frame, tag, bind):
     item_get(frame, tag).pack()
 
 
+def image(frame, tag, _image):
+    """pass"""
+    item_set(
+        frame,
+        tag,
+        tkinter.Label(
+            frame_get(frame),
+            image=_image.image,
+        ),
+    )
+    item_get(frame, tag).pack()
+
+
 def label(frame, tag, text):
     """pass"""
     item_set(
@@ -120,15 +129,6 @@ def label(frame, tag, text):
         ),
     )
     item_get(frame, tag).pack()
-
-
-def show_frame(text):
-    global item
-
-    frame = item[text]
-    frame.grid(row=0, column=0, sticky="nsew")
-
-    frame.tkraise()
 
 
 def main(session):

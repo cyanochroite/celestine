@@ -3,6 +3,35 @@
 import dearpygui.dearpygui as dpg
 
 
+def item_key(frame, tag):
+    global item
+    return F"{frame}-{tag}"
+
+
+def item_get(frame, tag):
+    global item
+    return item[item_key(frame, tag)]
+
+
+def item_set(frame, tag, value):
+    global item
+    item[item_key(frame, tag)] = value
+
+
+def frame_key(index):
+    return F"Page {index}"
+
+
+def frame_get(frame):
+    global item
+    return item[frame]
+
+
+def frame_set(frame, value):
+    global item
+    item[frame] = value
+
+
 class Image():
     """Something to hold the images in."""
 
@@ -38,15 +67,32 @@ def callback_file(sender, app_data, user_data):
     dpg.set_value(user_data, item)
 
 
-def file_dialog(tag, bind):
+def image_load(file):
+    """Load image."""
+    return Image(file)
+
+
+def button(frame, tag, bind):
     """Make file dialog."""
+    key = item_key(frame, tag)
+    button = dpg.add_button(
+        label="Show File Selector",
+        user_data=dpg.last_container(),
+        callback=callback_dvd
+    )
+    item[key] = button
+
+
+def file_dialog(frame, tag, bind):
+    """Make file dialog."""
+    key = item_key(frame, tag)
     with dpg.file_dialog(
         label="Demo File Dialog",
         width=800,
         height=600,
         show=False,
         callback=callback_file,
-        tag="__demo_filedialog",
+        tag=key + "__demo_filedialog",
         user_data=bind,
     ):
         dpg.add_file_extension(".*", color=(255, 255, 255, 255))
@@ -68,21 +114,18 @@ def file_dialog(tag, bind):
     item[tag] = button
 
 
-def image(tag, image):
+def image(frame, tag, image):
     """Make image."""
+    key = item_key(frame, tag)
     image = dpg.add_image(image.name)
-    item[tag] = image
+    item[key] = image
 
 
-def image_load(file):
-    """Load image."""
-    return Image(file)
-
-
-def label(tag, text):
+def label(frame, tag, text):
     """Make a label."""
-    text = dpg.add_text(text, tag=tag, label="Label", show_label=True)
-    item[tag] = text
+    key = item_key(frame, tag)
+    text = dpg.add_text(text, tag=key, label="Label", show_label=True)
+    item[key] = text
 
 
 def main(session):
@@ -111,14 +154,22 @@ def main(session):
         clear_color=(0, 0, 0)
     )
 
-    with dpg.texture_registry(show=False):
-        session.window.setup(session)
+    # with dpg.texture_registry(show=False):
+    #    session.window.setup(session)
 
-    with dpg.window(tag="primary_window"):
-        session.window.view(session)
+    # with dpg.window(tag="primary_window"):
+    #    session.window.view(session)
+
+    index = 0
+    for window in session.window:
+        key = frame_key(index)
+        #frame_set(key, frame)
+        with dpg.window(tag=key):
+            window.main(session, key)
+        index += 1
 
     dpg.setup_dearpygui()
     dpg.show_viewport(minimized=False, maximized=False)
-    dpg.set_primary_window("primary_window", True)
+    dpg.set_primary_window(frame_key(0), True)
     dpg.start_dearpygui()
     dpg.destroy_context()
