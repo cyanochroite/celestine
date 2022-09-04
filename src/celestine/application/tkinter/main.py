@@ -67,6 +67,28 @@ def label(tag, text):
     _label.pack()
 
 
+
+def show_frame(cont):
+    global frames
+    global container
+
+    frame = frames[cont]
+    frame.grid(row=0, column=0, sticky="nsew")
+
+    frame.tkraise()
+    
+    
+def button(tag, text):
+    """pass"""
+    _button = tkinter.Button(
+        root,
+        text=text,
+        command=lambda: show_frame(text)
+    )
+    item[tag] = _button
+    _button.pack()
+
+
 def main(session):
     """def main"""
     global item
@@ -81,7 +103,10 @@ def main(session):
     root.maxsize(3840, 2160)
     root.config(bg="skyblue")
 
-    session.window.setup(session)
-    session.window.view(session)
+    item["Page 0"] = session.window[0].view(session)
+    #item["Page 1"] = session.window[1].view(session)
+    #item["Page 2"] = session.window[2].view(session)
 
+
+    
     root.mainloop()

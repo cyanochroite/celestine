@@ -49,7 +49,7 @@ class Argument1():
     def __init__(self):
         self.parser = argparse.ArgumentParser(
             prog=CELESTINE,
-            exit_on_error = False,
+            exit_on_error=False,
         )
 
         self.parser.add_argument(
@@ -70,7 +70,7 @@ class Argument2():
     def __init__(self):
         self.parser = argparse.ArgumentParser(
             prog=CELESTINE,
-            exit_on_error = False,
+            exit_on_error=False,
         )
 
         self.parser.add_argument(
@@ -147,7 +147,6 @@ class Session():
 
         module = load.module(APPLICATION, attribute.application)
 
-
         argument = Argument2()
         argument = module.argument(argument)
         attribute = Attribute(
@@ -156,7 +155,6 @@ class Session():
             load.module("internal"),
             CELESTINE,
         )
-
 
         self.application = load.module(
             APPLICATION,
@@ -181,32 +179,31 @@ class Session():
             attribute.application,
             attribute.task,
         )
-        self.window = load.module(
-            "window",
-#            "main",
-            "two",
-        )
+        self.window = []
+        self.window.append(load.module("window", "zero"))
+        self.window.append(load.module("window", "one"))
+        self.window.append(load.module("window", "two"))
 
     def add_configuration(self, configuration, module, application):
         """Build up the configuration file."""
         if not configuration.has_section(application):
             configuration.add_section(application)
-        attribute = module.attribute()
-        default = module.default()
+        attribute=module.attribute()
+        default=module.default()
         for item in zip(attribute, default, strict=True):
-            (name, value) = item
+            (name, value)=item
             configuration.set(application, name, value)
 
         return configuration
 
     def python(self):
         try:
-            python = load.module(PYTHON, PYTHON_3_6)
-            python = load.module(PYTHON, PYTHON_3_7)
-            python = load.module(PYTHON, PYTHON_3_8)
-            python = load.module(PYTHON, PYTHON_3_9)
-            python = load.module(PYTHON, PYTHON_3_10)
-            python = load.module(PYTHON, PYTHON_3_11)
+            python=load.module(PYTHON, PYTHON_3_6)
+            python=load.module(PYTHON, PYTHON_3_7)
+            python=load.module(PYTHON, PYTHON_3_8)
+            python=load.module(PYTHON, PYTHON_3_9)
+            python=load.module(PYTHON, PYTHON_3_10)
+            python=load.module(PYTHON, PYTHON_3_11)
         except SyntaxError:
             pass
         return python
