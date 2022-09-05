@@ -67,6 +67,18 @@ def callback_file(sender, app_data, user_data):
     dpg.set_value(user_data, item)
 
 
+def show_frame(sender, app_data, user_data):
+    """Some other callback thing."""
+    current = sender.split("-")[0]
+    dpg.hide_item(current)
+    show_frame_simple(user_data)
+
+
+def show_frame_simple(frame):
+    dpg.show_item(frame)
+    dpg.set_primary_window(frame, True)
+
+
 def image_load(file):
     """Load image."""
     return Image(file)
@@ -76,9 +88,10 @@ def button(frame, tag, bind):
     """Make file dialog."""
     key = item_key(frame, tag)
     button = dpg.add_button(
-        label="Show File Selector",
-        user_data=dpg.last_container(),
-        callback=callback_dvd
+        tag=key,
+        label=tag,
+        user_data=bind,
+        callback=show_frame,
     )
     item[key] = button
 
@@ -166,10 +179,13 @@ def main(session):
         #frame_set(key, frame)
         with dpg.window(tag=key):
             window.main(session, key)
+            dpg.configure_item(key, show=False)
+
         index += 1
+
+    show_frame_simple(frame_key(0))
 
     dpg.setup_dearpygui()
     dpg.show_viewport(minimized=False, maximized=False)
-    dpg.set_primary_window(frame_key(0), True)
     dpg.start_dearpygui()
     dpg.destroy_context()
