@@ -45,12 +45,13 @@ class Image():
         self.image = image[3]
         self.name = file
 
-        dpg.add_static_texture(
-            width=self.width,
-            height=self.height,
-            default_value=self.image,
-            tag=self.name
-        )
+        with dpg.texture_registry(show=False):
+            dpg.add_static_texture(
+                width=self.width,
+                height=self.height,
+                default_value=self.image,
+                tag=self.name
+            )
 
 
 def callback_dvd(sender, app_data, user_data):
@@ -166,12 +167,6 @@ def main(session):
         decorated=True,
         clear_color=(0, 0, 0)
     )
-
-    # with dpg.texture_registry(show=False):
-    #    session.window.setup(session)
-
-    # with dpg.window(tag="primary_window"):
-    #    session.window.view(session)
 
     index = 0
     for window in session.window:
