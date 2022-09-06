@@ -32,6 +32,18 @@ def frame_set(frame, value):
     item[frame] = value
 
 
+def show_frame(sender, app_data, user_data):
+    """Some other callback thing."""
+    current = sender.split("-")[0]
+    dpg.hide_item(current)
+    show_frame_simple(user_data)
+
+
+def show_frame_simple(frame):
+    dpg.show_item(frame)
+    dpg.set_primary_window(frame, True)
+
+
 class Image():
     """Something to hold the images in."""
 
@@ -66,18 +78,6 @@ def callback_file(sender, app_data, user_data):
     if len(array) > 0:
         item = array[0]
     dpg.set_value(user_data, item)
-
-
-def show_frame(sender, app_data, user_data):
-    """Some other callback thing."""
-    current = sender.split("-")[0]
-    dpg.hide_item(current)
-    show_frame_simple(user_data)
-
-
-def show_frame_simple(frame):
-    dpg.show_item(frame)
-    dpg.set_primary_window(frame, True)
 
 
 def image_load(file):

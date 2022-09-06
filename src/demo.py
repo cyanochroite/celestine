@@ -1,18 +1,22 @@
-import dearpygui.dearpygui as dpg
+cow = [
+"C#",
+"Python",
+"MySQL",
+"Git",
+"Bootstrap",
+"JavaScript",
+"XHTML 1.0 Strict",
+"CSS",
+"XML",
+"HTML5",
+"C/C++",
+"GitHub",
+"SQL",
+"Tomcat",
+"Software Development",
+"JSON",
+"JSP",
+"Java"]
 
-dpg.create_context()
-
-width, height, channels, data = dpg.load_image("24923261.jpg")
-
-
-with dpg.window(label="Tutorial"):
-    with dpg.texture_registry(show=False):
-        dpg.add_static_texture(width=width, height=height, default_value=data, tag="texture_tag")
-    dpg.add_image("texture_tag")
-
-
-dpg.create_viewport(title='Custom Title', width=800, height=600)
-dpg.setup_dearpygui()
-dpg.show_viewport()
-dpg.start_dearpygui()
-dpg.destroy_context()
+cow.sort()
+print(cow)

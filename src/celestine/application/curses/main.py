@@ -6,6 +6,43 @@ HEIGHT = 24
 WIDTH = 80
 
 
+def item_key(frame, tag):
+    global item
+    return F"{frame}-{tag}"
+
+
+def item_get(key):
+    global item
+    return item[key]
+
+
+def item_set(key, value):
+    global item
+    item[key] = value
+
+
+def frame_key(index):
+    return F"Page {index}"
+
+
+def frame_get(frame):
+    global item
+    return item[frame]
+
+
+def frame_set(frame, value):
+    global item
+    item[frame] = value
+
+
+def show_frame(text):
+    global item
+
+    frame = item[text]
+
+    return frame
+
+
 class Cursor():
     def __init__(self, session, stdscr):
         self.session = session
@@ -29,23 +66,52 @@ class Cursor():
         self.y = y % self.height
 
 
-def file_dialog(tag, bind):
-    _add_string(quote_text_window, "File dialog thing.")
-    item[tag] = tag
+class String():
+    def __init__(self, x, y, text):
+        self.x = x
+        self.y = y
+        self.width = len(text)
+        self.height = 1
+        self.text = text
 
+    def draw(self, window):
+        window.addstr(self.y, self.x, self.text)
 
-def image(tag, image):
-    _add_string(quote_text_window, image)
-    item[tag] = tag
+    def select(self, x, y):
+        a = x >= self.x
+        b = x < self.x + self.width
+        c = y >= self.y
+        d = y < self.y + self.height
+        print(a, b, c, d)
+        return a and b and c and d
 
 
 def image_load(file):
     return file
 
 
-def label(tag, text):
-    _add_string(quote_text_window, "This is a label.")
-    item[tag] = tag
+def button(frame, tag, text):
+    key = item_key(frame, tag)
+    _add_string(key, quote_text_window, F"button: {text}")
+    item[key] = tag
+
+
+def file_dialog(frame, tag, bind):
+    key = item_key(frame, tag)
+    _add_string(key, quote_text_window, "File dialog thing.")
+    item[key] = tag
+
+
+def image(frame, tag, image):
+    key = item_key(frame, tag)
+    _add_string(key, quote_text_window, image)
+    item[key] = tag
+
+
+def label(frame, tag, text):
+    key = item_key(frame, tag)
+    _add_string(key, quote_text_window, F"label: {text}")
+    item[key] = tag
 
 
 def _new_window(column, row, width, height):
@@ -64,13 +130,19 @@ def _new_subwindow(window, column, row, width, height):
     return window.subwin(nlines, ncols, begin_y, begin_x)
 
 
-def _add_string(window, string):
+def _add_string(key, window, string):
     global line
 
     y = line
     x = 0
     line += 1
-    window.addstr(y, x, string)
+
+    food = key
+    fight = String(x, y, string)
+    print(food, fight.text)
+    item_set(key, fight)
+    #item_set(key, String(x, y, string))
+    item_get(key).draw(window)
 
 
 def main(session):
@@ -107,14 +179,31 @@ def main(session):
 
         quote_text_window = _new_subwindow(quote_window, 1, 1, WIDTH - 1, HEIGHT - 2)
 
-        session.window.setup(session)
-        session.window.view(session)
+        index = 0
+        for window in session.window:
+            key = frame_key(index)
+            frame = None
+            frame_set(key, frame)
+            window.main(session, key)
+            index += 1
+
+        show_frame(frame_key(0))
 
         stdscr.noutrefresh()
         quote_window.noutrefresh()
         curses.doupdate()
 
         while key != ord('q'):
+
+            if key == ord(' '):
+                for key, thing in item.items():
+                    print(key, thing)
+                    print("sanity")
+                    if "-" in key and thing.select(cursor.x,cursor.y):
+                        print("MOO")
+                        print(thing.text)
+                    
+
             stdscr.refresh()
 
             cursor.input(key)

@@ -36,6 +36,16 @@ def frame_set(frame, value):
     item[frame] = value
 
 
+def show_frame(text):
+    global item
+
+    frame = item[text]
+    frame.grid(row=0, column=0, sticky="nsew")
+
+    frame.tkraise()
+
+
+
 class Image():
     """Holds an image."""
 
@@ -65,13 +75,7 @@ def image_load(file):
     return Image(file)
 
 
-def show_frame(text):
-    global item
 
-    frame = item[text]
-    frame.grid(row=0, column=0, sticky="nsew")
-
-    frame.tkraise()
 
 
 def button(frame, tag, text):
