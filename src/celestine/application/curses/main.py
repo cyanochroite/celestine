@@ -66,24 +66,33 @@ class Cursor():
         self.y = y % self.height
 
 
-class String():
-    def __init__(self, x, y, text):
-        self.x = x
-        self.y = y
-        self.width = len(text)
-        self.height = 1
-        self.text = text
-
-    def draw(self, window):
-        window.addstr(self.y, self.x, self.text)
+class Wiget():
+    def __init__(self, column, row, width, height):
+        self.x = column
+        self.y = row
+        self.width = width
+        self.height = height
 
     def select(self, x, y):
         a = x >= self.x
         b = x < self.x + self.width
         c = y >= self.y
         d = y < self.y + self.height
-        print(a, b, c, d)
         return a and b and c and d
+
+
+class String(Wiget):
+    def __init__(self, x, y, text):
+        super().__init__(x, y, len(text), 1)
+        self.text = text
+
+    def draw(self, window):
+        window.addstr(self.y, self.x, self.text)
+
+
+class Button(String):
+    def __init__(self, x, y, text):
+        super().__init__(x, y, text)
 
 
 def image_load(file):
@@ -92,7 +101,7 @@ def image_load(file):
 
 def button(frame, tag, text):
     key = item_key(frame, tag)
-    _add_string(key, quote_text_window, F"button: {text}")
+    _add_string(key, quote_text_window, F"button:{text}")
 
 
 def file_dialog(frame, tag, bind):
@@ -107,7 +116,7 @@ def image(frame, tag, image):
 
 def label(frame, tag, text):
     key = item_key(frame, tag)
-    _add_string(key, quote_text_window, F"label: {text}")
+    _add_string(key, quote_text_window, F"label:{text}")
 
 
 def _new_window(column, row, width, height):
@@ -133,11 +142,7 @@ def _add_string(key, window, string):
     x = 0
     line += 1
 
-    food = key
-    fight = String(x, y, string)
-    print(food, fight.text)
-    item_set(key, fight)
-    #item_set(key, String(x, y, string))
+    item_set(key, String(x, y, string))
     item_get(key).draw(window)
 
 
@@ -173,7 +178,13 @@ def main(session):
         header2 = _new_subwindow(quote_window, 0, HEIGHT - 1, WIDTH, 1)
         header2.addstr(session.language.CURSES_EXIT)
 
-        quote_text_window = _new_subwindow(quote_window, 1, 1, WIDTH - 1, HEIGHT - 2)
+        quote_text_window = _new_subwindow(
+            quote_window,
+            1,
+            1,
+            WIDTH - 1,
+            HEIGHT - 2,
+        )
 
         index = 0
         for window in session.window:
@@ -190,13 +201,10 @@ def main(session):
         curses.doupdate()
 
         while key != ord('q'):
-
             if key == ord(' '):
                 for key, thing in item.items():
-                    print(key, thing)
-                    print("sanity")
                     if "-" in key and thing.select(cursor.x - 1, cursor.y - 1):
-                        print("MOO")
+                        new = thing.text.split(":")[1]
                         print(thing.text)
 
             stdscr.refresh()
