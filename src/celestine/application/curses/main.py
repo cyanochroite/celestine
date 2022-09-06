@@ -93,25 +93,21 @@ def image_load(file):
 def button(frame, tag, text):
     key = item_key(frame, tag)
     _add_string(key, quote_text_window, F"button: {text}")
-    item[key] = tag
 
 
 def file_dialog(frame, tag, bind):
     key = item_key(frame, tag)
     _add_string(key, quote_text_window, "File dialog thing.")
-    item[key] = tag
 
 
 def image(frame, tag, image):
     key = item_key(frame, tag)
     _add_string(key, quote_text_window, image)
-    item[key] = tag
 
 
 def label(frame, tag, text):
     key = item_key(frame, tag)
     _add_string(key, quote_text_window, F"label: {text}")
-    item[key] = tag
 
 
 def _new_window(column, row, width, height):
@@ -199,10 +195,9 @@ def main(session):
                 for key, thing in item.items():
                     print(key, thing)
                     print("sanity")
-                    if "-" in key and thing.select(cursor.x,cursor.y):
+                    if "-" in key and thing.select(cursor.x - 1, cursor.y - 1):
                         print("MOO")
                         print(thing.text)
-                    
 
             stdscr.refresh()
 
