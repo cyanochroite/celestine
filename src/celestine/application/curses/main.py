@@ -100,23 +100,19 @@ def image_load(file):
 
 
 def button(frame, tag, text):
-    key = item_key(frame, tag)
-    _add_string(key, quote_text_window, F"button:{text}")
+    _add_string(frame, tag,F"button:{text}")
 
 
 def file_dialog(frame, tag, bind):
-    key = item_key(frame, tag)
-    _add_string(key, quote_text_window, "File dialog thing.")
+    _add_string(frame, tag,"File dialog thing.")
 
 
 def image(frame, tag, image):
-    key = item_key(frame, tag)
-    _add_string(key, quote_text_window, image)
+    _add_string(frame, tag,image)
 
 
 def label(frame, tag, text):
-    key = item_key(frame, tag)
-    _add_string(key, quote_text_window, F"label:{text}")
+    _add_string(frame, tag, F"label:{text}")
 
 
 def _new_window(column, row, width, height):
@@ -135,15 +131,19 @@ def _new_subwindow(window, column, row, width, height):
     return window.subwin(nlines, ncols, begin_y, begin_x)
 
 
-def _add_string(key, window, string):
+def _add_string(frame, tag, string):
     global line
 
     y = line
     x = 0
     line += 1
 
+    key = item_key(frame, tag)
+    window = item_get(frame)
+
     item_set(key, String(x, y, string))
     item_get(key).draw(window)
+
 
 
 def main(session):
@@ -154,12 +154,6 @@ def main(session):
     global line
     line = 0
 
-    global quote_window
-    quote_window = None
-
-    global quote_text_window
-    quote_text_window = None
-
     stdscr = curses.initscr()
     curses.noecho()
     curses.cbreak()
@@ -169,41 +163,46 @@ def main(session):
 
         cursor = Cursor(session, stdscr)
 
-        quote_window = _new_window(0, 0, WIDTH, HEIGHT)
-        quote_window.box()
+        background = _new_window(0, 0, WIDTH, HEIGHT)
+        background.box()
 
-        header1 = _new_subwindow(quote_window, 0, 0, WIDTH, 1)
+        header1 = _new_subwindow(background, 0, 0, WIDTH, 1)
         header1.addstr(session.language.APPLICATION_TITLE)
 
-        header2 = _new_subwindow(quote_window, 0, HEIGHT - 1, WIDTH, 1)
+        header2 = _new_subwindow(background, 0, HEIGHT - 1, WIDTH, 1)
         header2.addstr(session.language.CURSES_EXIT)
-
-        quote_text_window = _new_subwindow(
-            quote_window,
-            1,
-            1,
-            WIDTH - 1,
-            HEIGHT - 2,
-        )
 
         index = 0
         for window in session.window:
-            key = frame_key(index)
-            frame = None
-            frame_set(key, frame)
-            window.main(session, key)
+            key2 = frame_key(index)
+
+            frame = _new_window(
+                1,
+                1,
+                WIDTH - 1,
+                HEIGHT - 2,
+            )
+
+            frame_set(key2, frame)
+            window.main(session, key2)
+            frame.noutrefresh()
+
             index += 1
 
         show_frame(frame_key(0))
 
         stdscr.noutrefresh()
-        quote_window.noutrefresh()
+        background.noutrefresh()
         curses.doupdate()
 
         while key != ord('q'):
             if key == ord(' '):
                 for key, thing in item.items():
-                    if "-" in key and thing.select(cursor.x - 1, cursor.y - 1):
+                    if "-" not in key:
+                        continue
+#                    split = key.split("-")[0]
+#                    if split
+                    if thing.select(cursor.x - 1, cursor.y - 1):
                         new = thing.text.split(":")[1]
                         print(thing.text)
 

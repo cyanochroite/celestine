@@ -4,6 +4,23 @@
 # Wing project file                                              #
 ##################################################################
 [project attributes]
+console.toolbox = [{'autosave': False,
+                    'entry_point': 'main',
+                    'id': 'cmd-u10fZ8s38tOX7aMI',
+                    'io_encoding': None,
+                    'key_binding': None,
+                    'line_mode': True,
+                    'pseudo_tty': False,
+                    'raise_panel': True,
+                    'shared': False,
+                    'title': None}]
+debug.named-entry-points = (1,
+                            {'Entry Point': ({},
+        {'auto-show': False,
+         'launch-id': ('project',
+                       ('',
+                        '')),
+         'loc': loc('__main__.py')})})
 proj.directory-list = [{'dirloc': loc('.'),
                         'excludes': (),
                         'filter': '*',
