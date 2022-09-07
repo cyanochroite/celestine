@@ -24,31 +24,6 @@ class Frame():
         self.frame.noutrefresh()
 
 
-def item_get(frame, tag):
-    global item
-    return item[frame].item_get(tag)
-
-
-def item_set(frame, tag, value):
-    global item
-    item[frame].item_set(tag, value)
-
-
-def frame_get(index):
-    global item
-    return item[index].frame
-
-
-def frame_set(index, value):
-    global item
-    item[index] = value
-
-
-def show_frame(index):
-    global item
-    return frame_get(index)
-
-
 class Cursor():
     def __init__(self, session, stdscr):
         self.session = session
@@ -96,9 +71,63 @@ class String(Wiget):
         window.addstr(self.y, self.x, self.text)
 
 
+class Curses():
+    @staticmethod
+    def window(column, row, width, height):
+        nlines = height
+        ncols = width
+        begin_y = row
+        begin_x = column
+        return curses.newwin(nlines, ncols, begin_y, begin_x)
+
+    @staticmethod
+    def subwindow(window, column, row, width, height):
+        nlines = height
+        ncols = width
+        begin_y = row
+        begin_x = column
+        return window.subwin(nlines, ncols, begin_y, begin_x)
+
+    @staticmethod
+    def string(frame, tag, string, x, y):
+        window = frame_get(frame)
+        thing = String(x, y, string)
+        thing.draw(window)
+        item_set(frame, tag, thing)
+
+    @staticmethod
+    def doupdate():
+        curses.doupdate()
+
+
 class Button(String):
     def __init__(self, x, y, text):
         super().__init__(x, y, text)
+
+
+def item_get(frame, tag):
+    global item
+    return item[frame].item_get(tag)
+
+
+def item_set(frame, tag, value):
+    global item
+    item[frame].item_set(tag, value)
+
+
+def frame_get(index):
+    global item
+    return item[index].frame
+
+
+def frame_set(index, value):
+    global item
+    item[index] = value
+
+
+def show_frame(index):
+    global item
+    return frame_get(index)
 
 
 def image_load(file):
@@ -106,48 +135,22 @@ def image_load(file):
 
 
 def button(frame, tag, text, x, y):
-    _add_string(frame, tag, F"button:{text}", x, y)
+    Curses.string(frame, tag, F"button:{text}", x, y)
 
 
 def file_dialog(frame, tag, _, x, y):
-    _add_string(frame, tag, "File dialog thing.", x, y)
+    Curses.string(frame, tag, "File dialog thing.", x, y)
 
 
 def image(frame, tag, _image, x, y):
-    _add_string(frame, tag, _image, x, y)
+    Curses.string(frame, tag, _image, x, y)
 
 
 def label(frame, tag, text, x, y):
-    _add_string(frame, tag, F"label:{text}", x, y)
+    Curses.string(frame, tag, F"label:{text}", x, y)
 
 
-def _new_window(column, row, width, height):
-    nlines = height
-    ncols = width
-    begin_y = row
-    begin_x = column
-    return curses.newwin(nlines, ncols, begin_y, begin_x)
-
-
-def _new_subwindow(window, column, row, width, height):
-    nlines = height
-    ncols = width
-    begin_y = row
-    begin_x = column
-    return window.subwin(nlines, ncols, begin_y, begin_x)
-
-
-def _add_string(frame, tag, string, x, y):
-
-    window = frame_get(frame)
-    thing = String(x, y, string)
-    thing.draw(window)
-
-    item_set(frame, tag, thing)
-
-
-def main_it(stdscr):
-
+def main_it(stdscr, session):
     global item
     item = {}
 
@@ -155,52 +158,39 @@ def main_it(stdscr):
 
     cursor = Cursor(session, stdscr)
 
-    background = _new_window(0, 0, WIDTH, HEIGHT)
+    background = Curses.window(0, 0, WIDTH, HEIGHT)
     background.box()
 
-    stdscr.noutrefresh()
-    background.noutrefresh()
-
-    header1 = _new_subwindow(background, 0, 0, WIDTH, 1)
+    header1 = Curses.subwindow(background, 0, 0, WIDTH, 1)
     header1.addstr(session.language.APPLICATION_TITLE)
 
-    header2 = _new_subwindow(background, 0, HEIGHT - 1, WIDTH, 1)
+    header2 = Curses.subwindow(background, 0, HEIGHT - 1, WIDTH, 1)
     header2.addstr(session.language.CURSES_EXIT)
 
-    index = 0
-    for window in session.window:
-
-        _frame = _new_window(
+    for index in range(len(session.window)):
+        _frame = Curses.window(
             1,
             1,
             WIDTH - 1,
             HEIGHT - 2,
         )
         frame = Frame(_frame)
-
         frame_set(index, frame)
-        #window.main(session, index)
-
-        #  stdscr.noutrefresh()
-        #  frame.noutrefresh()
-
-        index += 1
 
     display_it_now = 0
 
     frame = show_frame(display_it_now)
     session.window[0].main(session, 0)
 
-    curses.doupdate()
+    #  refresh
+    stdscr.noutrefresh()
+    background.noutrefresh()
+    frame.noutrefresh()
+    Curses.doupdate()
 
     while key != ord('q'):
 
         if key == ord(' '):
-            #  refresh
-            stdscr.noutrefresh()
-            background.noutrefresh()
-            frame.noutrefresh()
-            curses.doupdate()
 
             for key, thing in item[display_it_now].item.items():
                 if thing.select(cursor.x - 1, cursor.y - 1):
@@ -212,12 +202,13 @@ def main_it(stdscr):
 
                     session.window[indexer].main(session, indexer)
 
-                    stdscr.noutrefresh()
-                    frame.noutrefresh()
-
                     display_it_now = indexer
 
-                    print(thing.text)
+                    #  refresh
+                    stdscr.noutrefresh()
+                    background.noutrefresh()
+                    frame.noutrefresh()
+                    Curses.doupdate()
 
         cursor.input(key)
         cursor.move()
@@ -225,9 +216,5 @@ def main_it(stdscr):
         key = stdscr.getch()
 
 
-def main(_session):
-    """def main"""
-    global session
-    session = _session
-
-    curses.wrapper(main_it)
+def main(session):
+    curses.wrapper(main_it, session)

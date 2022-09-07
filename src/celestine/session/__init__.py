@@ -189,22 +189,22 @@ class Session():
         """Build up the configuration file."""
         if not configuration.has_section(application):
             configuration.add_section(application)
-        attribute=module.attribute()
-        default=module.default()
+        attribute = module.attribute()
+        default = module.default()
         for item in zip(attribute, default, strict=True):
-            (name, value)=item
+            (name, value) = item
             configuration.set(application, name, value)
 
         return configuration
 
     def python(self):
         try:
-            python=load.module(PYTHON, PYTHON_3_6)
-            python=load.module(PYTHON, PYTHON_3_7)
-            python=load.module(PYTHON, PYTHON_3_8)
-            python=load.module(PYTHON, PYTHON_3_9)
-            python=load.module(PYTHON, PYTHON_3_10)
-            python=load.module(PYTHON, PYTHON_3_11)
+            python = load.module(PYTHON, PYTHON_3_6)
+            python = load.module(PYTHON, PYTHON_3_7)
+            python = load.module(PYTHON, PYTHON_3_8)
+            python = load.module(PYTHON, PYTHON_3_9)
+            python = load.module(PYTHON, PYTHON_3_10)
+            python = load.module(PYTHON, PYTHON_3_11)
         except SyntaxError:
             pass
         return python
