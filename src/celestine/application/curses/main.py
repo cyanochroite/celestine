@@ -24,7 +24,6 @@ class Frame():
         self.frame.noutrefresh()
 
 
-
 def item_get(frame, tag):
     global item
     return item[frame].item_get(tag)
@@ -106,20 +105,20 @@ def image_load(file):
     return file
 
 
-def button(frame, tag, text):
-    _add_string(frame, tag, F"button:{text}")
+def button(frame, tag, text, x, y):
+    _add_string(frame, tag, F"button:{text}", x, y)
 
 
-def file_dialog(frame, tag, bind):
-    _add_string(frame, tag, "File dialog thing.")
+def file_dialog(frame, tag, _, x, y):
+    _add_string(frame, tag, "File dialog thing.", x, y)
 
 
-def image(frame, tag, image):
-    _add_string(frame, tag, image)
+def image(frame, tag, _image, x, y):
+    _add_string(frame, tag, _image, x, y)
 
 
-def label(frame, tag, text):
-    _add_string(frame, tag, F"label:{text}")
+def label(frame, tag, text, x, y):
+    _add_string(frame, tag, F"label:{text}", x, y)
 
 
 def _new_window(column, row, width, height):
@@ -138,12 +137,7 @@ def _new_subwindow(window, column, row, width, height):
     return window.subwin(nlines, ncols, begin_y, begin_x)
 
 
-def _add_string(frame, tag, string):
-    global line
-
-    y = line
-    x = 0
-    line += 1
+def _add_string(frame, tag, string, x, y):
 
     window = frame_get(frame)
     thing = String(x, y, string)
@@ -152,94 +146,88 @@ def _add_string(frame, tag, string):
     item_set(frame, tag, thing)
 
 
-def main(session):
-    """def main"""
+def main_it(stdscr):
+
     global item
     item = {}
 
-    global line
-    line = 0
+    key = ord(' ')
 
-    stdscr = curses.initscr()
-    curses.noecho()
-    curses.cbreak()
-    stdscr.keypad(True)
-    try:
-        key = ord(' ')
+    cursor = Cursor(session, stdscr)
 
-        cursor = Cursor(session, stdscr)
+    background = _new_window(0, 0, WIDTH, HEIGHT)
+    background.box()
 
-        background = _new_window(0, 0, WIDTH, HEIGHT)
-        background.box()
+    stdscr.noutrefresh()
+    background.noutrefresh()
 
-        stdscr.noutrefresh()
-        background.noutrefresh()
+    header1 = _new_subwindow(background, 0, 0, WIDTH, 1)
+    header1.addstr(session.language.APPLICATION_TITLE)
 
-        header1 = _new_subwindow(background, 0, 0, WIDTH, 1)
-        header1.addstr(session.language.APPLICATION_TITLE)
+    header2 = _new_subwindow(background, 0, HEIGHT - 1, WIDTH, 1)
+    header2.addstr(session.language.CURSES_EXIT)
 
-        header2 = _new_subwindow(background, 0, HEIGHT - 1, WIDTH, 1)
-        header2.addstr(session.language.CURSES_EXIT)
+    index = 0
+    for window in session.window:
 
-        index = 0
-        for window in session.window:
+        _frame = _new_window(
+            1,
+            1,
+            WIDTH - 1,
+            HEIGHT - 2,
+        )
+        frame = Frame(_frame)
 
-            _frame = _new_window(
-                1,
-                1,
-                WIDTH - 1,
-                HEIGHT - 2,
-            )
-            frame = Frame(_frame)
+        frame_set(index, frame)
+        #window.main(session, index)
 
-            frame_set(index, frame)
-            window.main(session, index)
+        #  stdscr.noutrefresh()
+        #  frame.noutrefresh()
 
-            #stdscr.noutrefresh()
-            #frame.noutrefresh()
+        index += 1
 
-            index += 1
+    display_it_now = 0
 
-        display_it_now = 0
+    frame = show_frame(display_it_now)
+    session.window[0].main(session, 0)
 
-        frame = show_frame(display_it_now)
+    curses.doupdate()
 
-        curses.doupdate()
+    while key != ord('q'):
 
-        while key != ord('q'):
+        if key == ord(' '):
+            #  refresh
+            stdscr.noutrefresh()
+            background.noutrefresh()
+            frame.noutrefresh()
+            curses.doupdate()
 
-            if key == ord(' '):
-                # refresh
-                stdscr.noutrefresh() # one time only?
-                background.noutrefresh()
-                frame.noutrefresh()
-                curses.doupdate()
+            for key, thing in item[display_it_now].item.items():
+                if thing.select(cursor.x - 1, cursor.y - 1):
+                    new = thing.text.split(":")[1]
+                    indexer = int(new.split(" ")[1])
 
-                for key, thing in item[display_it_now].item.items():
-                    if thing.select(cursor.x - 1, cursor.y - 1):
-                        new = thing.text.split(":")[1]
-                        indexer = int(new.split(" ")[1])
+                    frame.clear()
+                    frame = frame_get(indexer)
 
-                        frame.clear()
-                        frame = frame_get(indexer)
+                    session.window[indexer].main(session, indexer)
 
-                        line = 0
-                        session.window[indexer].main(session, indexer)
+                    stdscr.noutrefresh()
+                    frame.noutrefresh()
 
-                        stdscr.noutrefresh()
-                        frame.noutrefresh()
+                    display_it_now = indexer
 
-                        display_it_now = indexer
+                    print(thing.text)
 
-                        print(thing.text)
+        cursor.input(key)
+        cursor.move()
 
-            cursor.input(key)
-            cursor.move()
+        key = stdscr.getch()
 
-            key = stdscr.getch()
 
-    finally:
-        stdscr.keypad(False)
-        curses.nocbreak()
-        curses.echo()
-        curses.endwin()
+def main(_session):
+    """def main"""
+    global session
+    session = _session
+
+    curses.wrapper(main_it)
