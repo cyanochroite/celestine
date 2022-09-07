@@ -6,41 +6,48 @@ HEIGHT = 24
 WIDTH = 80
 
 
-def item_key(frame, tag):
+class Frame():
+    def __init__(self, frame):
+        self.frame = frame
+        self.item = {}
+
+    def item_get(self, tag):
+        return self.item[tag]
+
+    def item_set(self, tag, value):
+        self.item[tag] = value
+
+    def clear(self):
+        self.frame.clear()
+
+    def noutrefresh(self):
+        self.frame.noutrefresh()
+
+
+
+def item_get(frame, tag):
     global item
-    return F"{frame}-{tag}"
+    return item[frame].item_get(tag)
 
 
-def item_get(key):
+def item_set(frame, tag, value):
     global item
-    return item[key]
+    item[frame].item_set(tag, value)
 
 
-def item_set(key, value):
+def frame_get(index):
     global item
-    item[key] = value
+    return item[index].frame
 
 
-def frame_key(index):
-    return F"Page {index}"
-
-
-def frame_get(frame):
+def frame_set(index, value):
     global item
-    return item[frame]
+    item[index] = value
 
 
-def frame_set(frame, value):
+def show_frame(index):
     global item
-    item[frame] = value
-
-
-def show_frame(text):
-    global item
-
-    frame = item[text]
-
-    return frame
+    return frame_get(index)
 
 
 class Cursor():
@@ -138,13 +145,11 @@ def _add_string(frame, tag, string):
     x = 0
     line += 1
 
-    key = item_key(frame, tag)
-    window = item_get(frame)
+    window = frame_get(frame)
     thing = String(x, y, string)
     thing.draw(window)
 
-    item_set(key, thing)
-    #item_get(key).draw(window)
+    item_set(frame, tag, thing)
 
 
 def main(session):
@@ -176,27 +181,28 @@ def main(session):
         header2 = _new_subwindow(background, 0, HEIGHT - 1, WIDTH, 1)
         header2.addstr(session.language.CURSES_EXIT)
 
-
         index = 0
         for window in session.window:
-            key2 = frame_key(index)
 
-            frame = _new_window(
+            _frame = _new_window(
                 1,
                 1,
                 WIDTH - 1,
                 HEIGHT - 2,
             )
+            frame = Frame(_frame)
 
-            frame_set(key2, frame)
-            window.main(session, key2)
+            frame_set(index, frame)
+            window.main(session, index)
 
             #stdscr.noutrefresh()
             #frame.noutrefresh()
 
             index += 1
 
-        frame = show_frame(frame_key(0))
+        display_it_now = 0
+
+        frame = show_frame(display_it_now)
 
         curses.doupdate()
 
@@ -209,24 +215,21 @@ def main(session):
                 frame.noutrefresh()
                 curses.doupdate()
 
-                for key, thing in item.items():
-                    if "-" not in key:
-                        continue
-#                    split = key.split("-")[0]
-#                    if split
+                for key, thing in item[display_it_now].item.items():
                     if thing.select(cursor.x - 1, cursor.y - 1):
                         new = thing.text.split(":")[1]
                         indexer = int(new.split(" ")[1])
 
                         frame.clear()
-                        frame = frame_get(new)
+                        frame = frame_get(indexer)
 
                         line = 0
-                        key2 = frame_key(indexer)
-                        session.window[indexer].main(session, key2)
+                        session.window[indexer].main(session, indexer)
 
                         stdscr.noutrefresh()
                         frame.noutrefresh()
+
+                        display_it_now = indexer
 
                         print(thing.text)
 
