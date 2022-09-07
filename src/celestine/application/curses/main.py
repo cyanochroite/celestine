@@ -100,15 +100,15 @@ def image_load(file):
 
 
 def button(frame, tag, text):
-    _add_string(frame, tag,F"button:{text}")
+    _add_string(frame, tag, F"button:{text}")
 
 
 def file_dialog(frame, tag, bind):
-    _add_string(frame, tag,"File dialog thing.")
+    _add_string(frame, tag, "File dialog thing.")
 
 
 def image(frame, tag, image):
-    _add_string(frame, tag,image)
+    _add_string(frame, tag, image)
 
 
 def label(frame, tag, text):
@@ -140,10 +140,11 @@ def _add_string(frame, tag, string):
 
     key = item_key(frame, tag)
     window = item_get(frame)
+    thing = String(x, y, string)
+    thing.draw(window)
 
-    item_set(key, String(x, y, string))
-    item_get(key).draw(window)
-
+    item_set(key, thing)
+    #item_get(key).draw(window)
 
 
 def main(session):
@@ -159,7 +160,7 @@ def main(session):
     curses.cbreak()
     stdscr.keypad(True)
     try:
-        key = 0
+        key = ord(' ')
 
         cursor = Cursor(session, stdscr)
 
@@ -189,14 +190,19 @@ def main(session):
 
             index += 1
 
+            frame.addstr(4, 4, "Moo")
+
         show_frame(frame_key(0))
 
-        stdscr.noutrefresh()
-        background.noutrefresh()
-        curses.doupdate()
-
         while key != ord('q'):
+
             if key == ord(' '):
+                # refresh
+                stdscr.noutrefresh() # one time only?
+                background.noutrefresh()
+                frame.noutrefresh()
+                curses.doupdate()
+
                 for key, thing in item.items():
                     if "-" not in key:
                         continue
@@ -205,8 +211,6 @@ def main(session):
                     if thing.select(cursor.x - 1, cursor.y - 1):
                         new = thing.text.split(":")[1]
                         print(thing.text)
-
-            stdscr.refresh()
 
             cursor.input(key)
             cursor.move()
