@@ -182,8 +182,8 @@ class Session():
         self.window = []
         #self.window.append(load.module("window", "main"))
         self.window.append(load.module("window", "zero"))
-        #self.window.append(load.module("window", "one"))
-        #self.window.append(load.module("window", "two"))
+        self.window.append(load.module("window", "one"))
+        self.window.append(load.module("window", "two"))
 
     def add_configuration(self, configuration, module, application):
         """Build up the configuration file."""

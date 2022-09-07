@@ -167,11 +167,15 @@ def main(session):
         background = _new_window(0, 0, WIDTH, HEIGHT)
         background.box()
 
+        stdscr.noutrefresh()
+        background.noutrefresh()
+
         header1 = _new_subwindow(background, 0, 0, WIDTH, 1)
         header1.addstr(session.language.APPLICATION_TITLE)
 
         header2 = _new_subwindow(background, 0, HEIGHT - 1, WIDTH, 1)
         header2.addstr(session.language.CURSES_EXIT)
+
 
         index = 0
         for window in session.window:
@@ -186,13 +190,15 @@ def main(session):
 
             frame_set(key2, frame)
             window.main(session, key2)
-            frame.noutrefresh()
+
+            #stdscr.noutrefresh()
+            #frame.noutrefresh()
 
             index += 1
 
-            frame.addstr(4, 4, "Moo")
+        frame = show_frame(frame_key(0))
 
-        show_frame(frame_key(0))
+        curses.doupdate()
 
         while key != ord('q'):
 
@@ -210,6 +216,18 @@ def main(session):
 #                    if split
                     if thing.select(cursor.x - 1, cursor.y - 1):
                         new = thing.text.split(":")[1]
+                        indexer = int(new.split(" ")[1])
+
+                        frame.clear()
+                        frame = frame_get(new)
+
+                        line = 0
+                        key2 = frame_key(indexer)
+                        session.window[indexer].main(session, key2)
+
+                        stdscr.noutrefresh()
+                        frame.noutrefresh()
+
                         print(thing.text)
 
             cursor.input(key)
