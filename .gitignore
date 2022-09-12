@@ -1,7 +1,8 @@
 __pycache__/
-celestine.wpr
 dist/
 src/celestine.egg-info/
+src/celestine.wpu
+src/celestine.wpr
 *.ini
 .coverage
 .vscode
