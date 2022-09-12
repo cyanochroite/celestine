@@ -45,43 +45,7 @@ PYTHON_3_11 = "python_3_11"
 
 
 @dataclasses.dataclass
-class Argument1():
-    def __init__(self, exit_on_error):
-        self.parser = argparse.ArgumentParser(
-            prog=CELESTINE,
-            exit_on_error=exit_on_error,
-        )
-
-        self.parser.add_argument(
-            APPLICATION,
-            choices=application,
-            help="Select which application to run.",
-        )
-
-        self.parser.add_argument(
-            "ignore",
-            nargs="*",
-            help="Select which application to run.",
-        )
-
-        self.parser.add_argument(
-            "-l",
-            "--language",
-            choices=language,
-            help="""
-                The EU has 24 official languages: Bulgarian, Croatian, Czech,
-                Danish, Dutch, English, Estonian, Finnish, French, German,
-                Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, Maltese,
-                Polish, Portuguese, Romanian, Slovak, Slovenian, Spanish and
-                Swedish.
-            """,
-            metavar="LANGUAGE",
-            type=str.lower,
-        )
-
-
-@dataclasses.dataclass
-class Argument2():
+class Argument():
     def __init__(self, exit_on_error):
         self.parser = argparse.ArgumentParser(
             prog=CELESTINE,
@@ -120,6 +84,21 @@ class Argument2():
         )
 
 
+@dataclasses.dataclass
+class Attribute():
+    def __init__(self, argument, directory, module, section):
+        configuration = Configuration.make(directory)
+
+        attribute = module.attribute()
+        default = module.default()
+
+        for (name, failover) in zip(attribute, default, strict=True):
+            database = configuration.get(section, name, fallback=None)
+            override = getattr(argument, name, None)
+            value = override or database or failover
+            setattr(self, name, value)
+
+
 class Configuration():
     """parse configuration stuff."""
 
@@ -133,32 +112,23 @@ class Configuration():
         configuration.read(path or self.path, encoding=UTF_8)
         return configuration
 
+    @staticmethod
+    def make(directory):
+        """Make a new configuration file."""
+        configuration = Configuration(directory)
+        return configuration.load()
+
     def save(self, configuration, path=None):
         """Save the configuration file."""
         with open(path or self.path, WRITE, encoding=UTF_8) as file:
             configuration.write(file, True)
 
 
-class Attribute():
-    def __init__(self, argument, directory, module, section):
-        configuration = Configuration(directory)
-        configuration = configuration.load()
-
-        attribute = module.attribute()
-        default = module.default()
-
-        for (name, failover) in zip(attribute, default, strict=True):
-            database = configuration.get(section, name, fallback=None)
-            override = getattr(argument, name, None)
-            value = override or database or failover
-            setattr(self, name, value)
-
-
 class Session():
     def __init__(self, directory, args, exit_on_error):
         args = args or ["tkinter"]
 
-        argument = Argument1(exit_on_error)
+        argument = Argument(exit_on_error)
 
         attribute = Attribute(
             argument.parser.parse_args(args),
@@ -169,7 +139,6 @@ class Session():
 
         module = load.module(APPLICATION, attribute.application)
 
-        argument = Argument2(exit_on_error)
         argument = module.argument(argument)
         attribute = Attribute(
             argument.parser.parse_args(args),

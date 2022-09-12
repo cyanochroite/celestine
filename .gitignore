@@ -2,6 +2,5 @@ __pycache__/
 dist/
 src/celestine.egg-info/
 *.ini
-*.wpu
 .coverage
 .vscode
