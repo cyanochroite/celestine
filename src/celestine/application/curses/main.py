@@ -4,6 +4,7 @@ import curses
 
 HEIGHT = 24
 WIDTH = 80
+ITEM = {}
 
 
 class Frame():
@@ -28,38 +29,41 @@ class Cursor():
     def __init__(self, session, stdscr):
         self.session = session
         self.stdscr = stdscr
-        self.x = 0
-        self.y = 0
+        self.cord_x = 0
+        self.cord_y = 0
         self.width = WIDTH
         self.height = HEIGHT
 
     def move(self):
-        self.stdscr.move(self.y, self.x)
+        self.stdscr.move(self.cord_y, self.cord_x)
 
     def input(self, key):
-        (x, y) = self.session.python.curses_cursor_input_match(
+        (cord_x, cord_y) = self.session.python.curses_cursor_input_match(
             key,
             curses,
-            self.x,
-            self.y
+            self.cord_x,
+            self.cord_y
         )
-        self.x = x % self.width
-        self.y = y % self.height
+        self.cord_x = cord_x % self.width
+        self.cord_y = cord_y % self.height
 
 
 class Wiget():
     def __init__(self, column, row, width, height):
-        self.x = column
-        self.y = row
+        self.cord_x = column
+        self.cord_y = row
         self.width = width
         self.height = height
 
-    def select(self, x, y):
-        a = x >= self.x
-        b = x < self.x + self.width
-        c = y >= self.y
-        d = y < self.y + self.height
-        return a and b and c and d
+    def select(self, cord_x, cord_y):
+        temp_a = cord_x >= self.cord_x
+        temp_b = cord_x < self.cord_x + self.width
+        temp_c = cord_y >= self.cord_y
+        temp_d = cord_y < self.cord_y + self.height
+        return temp_a and temp_b and temp_c and temp_d
+
+    def unselect(self, cord_x, cord_y):
+        return not self.select(cord_x, cord_y)
 
 
 class String(Wiget):
@@ -68,7 +72,7 @@ class String(Wiget):
         self.text = text
 
     def draw(self, window):
-        window.addstr(self.y, self.x, self.text)
+        window.addstr(self.cord_y, self.cord_x, self.text)
 
 
 class Curses():
@@ -89,9 +93,9 @@ class Curses():
         return window.subwin(nlines, ncols, begin_y, begin_x)
 
     @staticmethod
-    def string(frame, tag, string, x, y):
+    def string(frame, tag, string, cord_x, cord_y):
         window = frame_get(frame)
-        thing = String(x, y, string)
+        thing = String(cord_x, cord_y, string)
         thing.draw(window)
         item_set(frame, tag, thing)
 
@@ -100,33 +104,23 @@ class Curses():
         curses.doupdate()
 
 
-class Button(String):
-    def __init__(self, x, y, text):
-        super().__init__(x, y, text)
-
-
 def item_get(frame, tag):
-    global item
-    return item[frame].item_get(tag)
+    return ITEM[frame].item_get(tag)
 
 
 def item_set(frame, tag, value):
-    global item
-    item[frame].item_set(tag, value)
+    ITEM[frame].item_set(tag, value)
 
 
 def frame_get(index):
-    global item
-    return item[index].frame
+    return ITEM[index].frame
 
 
 def frame_set(index, value):
-    global item
-    item[index] = value
+    ITEM[index] = value
 
 
 def show_frame(index):
-    global item
     return frame_get(index)
 
 
@@ -134,26 +128,23 @@ def image_load(file):
     return file
 
 
-def button(frame, tag, text, x, y):
-    Curses.string(frame, tag, F"button:{text}", x, y)
+def button(frame, tag, text, cord_x, cord_y):
+    Curses.string(frame, tag, F"button:{text}", cord_x, cord_y)
 
 
-def file_dialog(frame, tag, _, x, y):
-    Curses.string(frame, tag, "File dialog thing.", x, y)
+def file_dialog(frame, tag, _, cord_x, cord_y):
+    Curses.string(frame, tag, "File dialog thing.", cord_x, cord_y)
 
 
-def image(frame, tag, _image, x, y):
-    Curses.string(frame, tag, _image, x, y)
+def image(frame, tag, _image, cord_x, cord_y):
+    Curses.string(frame, tag, _image, cord_x, cord_y)
 
 
-def label(frame, tag, text, x, y):
-    Curses.string(frame, tag, F"label:{text}", x, y)
+def label(frame, tag, text, cord_x, cord_y):
+    Curses.string(frame, tag, F"label:{text}", cord_x, cord_y)
 
 
 def main_it(stdscr, session):
-    global item
-    item = {}
-
     key = ord(' ')
 
     cursor = Cursor(session, stdscr)
@@ -192,8 +183,8 @@ def main_it(stdscr, session):
 
         if key == ord(' '):
 
-            for key, thing in item[display_it_now].item.items():
-                if thing.select(cursor.x - 1, cursor.y - 1):
+            for key, thing in ITEM[display_it_now].item.items():
+                if thing.select(cursor.cord_x - 1, cursor.cord_y - 1):
                     new = thing.text.split(":")[1]
                     indexer = int(new.split(" ")[1])
 
