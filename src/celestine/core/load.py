@@ -4,7 +4,7 @@ import os.path
 from celestine.keyword.unicode import FULL_STOP
 from celestine.keyword.unicode import LOW_LINE
 
-from celestine.keyword.main import CELESTINE
+from celestine.keyword.all import CELESTINE
 
 
 def attempt(name):

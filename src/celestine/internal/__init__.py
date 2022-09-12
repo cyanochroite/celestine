@@ -2,16 +2,16 @@
 import configparser
 
 
-from celestine.keyword.main import CELESTINE
+from celestine.keyword.all import CELESTINE
 
 
 from .keyword import APPLICATION
 from .keyword import LANGUAGE
 from .keyword import PYTHON
 
-from celestine.keyword.main import application
-from celestine.keyword.main import language
-from celestine.keyword.main import python
+from celestine.keyword.all import application
+from celestine.keyword.all import language
+from celestine.keyword.all import python
 
 
 TERMINAL = "terminal"

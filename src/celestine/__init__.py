@@ -2,7 +2,7 @@
 from celestine.core import load
 from celestine.session import Session
 
-from celestine.keyword.main import CELESTINE
+from celestine.keyword.all import CELESTINE
 from celestine.keyword.unicode import FULL_STOP
 
 

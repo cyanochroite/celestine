@@ -5,28 +5,28 @@ import argparse
 import dataclasses
 
 
-from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import LANGUAGE
-from celestine.keyword.main import TASK
+from celestine.keyword.all import APPLICATION
+from celestine.keyword.all import LANGUAGE
+from celestine.keyword.all import TASK
 
-from celestine.keyword.main import CELESTINE
+from celestine.keyword.all import CELESTINE
 
 
 
 from celestine.core import load
 
-from celestine.keyword.main import CELESTINE
-from celestine.keyword.main import CONFIGURATION
-from celestine.keyword.main import WRITE
-from celestine.keyword.main import UTF_8
+from celestine.keyword.all import CELESTINE
+from celestine.keyword.all import CONFIGURATION
+from celestine.keyword.all import WRITE
+from celestine.keyword.all import UTF_8
 
 
-from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import CELESTINE
-from celestine.keyword.main import LANGUAGE
-from celestine.keyword.main import TASK
-from celestine.keyword.main import application
-from celestine.keyword.main import language
+from celestine.keyword.all import APPLICATION
+from celestine.keyword.all import CELESTINE
+from celestine.keyword.all import LANGUAGE
+from celestine.keyword.all import TASK
+from celestine.keyword.all import application
+from celestine.keyword.all import language
 
 
 PYTHON = "python"

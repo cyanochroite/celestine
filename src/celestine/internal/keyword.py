@@ -1,21 +1,21 @@
 """Keywords used throughout the terminal application."""
-from celestine.keyword.main import CELESTINE
-from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import TERMINAL
+from celestine.keyword.all import CELESTINE
+from celestine.keyword.all import APPLICATION
+from celestine.keyword.all import TERMINAL
 #from celestine.keyword.main import TASK
 TASK = "task"
 
 
-from celestine.keyword import main
+from celestine.keyword import all
 
 
-APPLICATION = main.APPLICATION
-TERMINAL = main.TERMINAL
+APPLICATION = all.APPLICATION
+TERMINAL = all.TERMINAL
 
 
 
 """Keywords used throughout the translator application."""
-from celestine.keyword import main
+from celestine.keyword import all
 
 
 
@@ -34,7 +34,7 @@ SESSION = "session"  # outsource
 TEXT = "text"
 TO = "to"
 TRANSLATIONS = "translations"
-language = main.language
-DIRECTORY = main.DIRECTORY
-LANGUAGE = main.LANGUAGE
-PYTHON = main.PYTHON
+language = all.language
+DIRECTORY = all.DIRECTORY
+LANGUAGE = all.LANGUAGE
+PYTHON = all.PYTHON

@@ -1,38 +1,12 @@
 """Celestine Image Viewer"""
-"""Load and save user settings from a file."""
-
-import sys
-import configparser
-
-
-from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import LANGUAGE
-from celestine.keyword.main import TASK
-
-from celestine.keyword.main import CELESTINE
-
-
-"""Load and save user settings from a file."""
-import configparser
+from celestine.session.argument import Argument
+from celestine.session.attribute import Attribute
 
 from celestine.core import load
 
-from celestine.keyword.main import CELESTINE
-from celestine.keyword.main import CONFIGURATION
-from celestine.keyword.main import WRITE
-from celestine.keyword.main import UTF_8
-
-"""Parse arguments."""
-import argparse
-import dataclasses
-
-from celestine.keyword.main import APPLICATION
-from celestine.keyword.main import CELESTINE
-from celestine.keyword.main import LANGUAGE
-from celestine.keyword.main import TASK
-from celestine.keyword.main import application
-from celestine.keyword.main import language
-
+from celestine.keyword.all import APPLICATION
+from celestine.keyword.all import LANGUAGE
+from celestine.keyword.all import TASK
 
 PYTHON = "python"
 
@@ -43,86 +17,7 @@ PYTHON_3_9 = "python_3_9"
 PYTHON_3_10 = "python_3_10"
 PYTHON_3_11 = "python_3_11"
 
-
-@dataclasses.dataclass
-class Argument():
-    def __init__(self, exit_on_error):
-        self.parser = argparse.ArgumentParser(
-            prog=CELESTINE,
-            exit_on_error=exit_on_error,
-        )
-
-        self.parser.add_argument(
-            APPLICATION,
-            choices=application,
-            help="Select which application to run.",
-        )
-
-        self.parser.add_argument(
-            "-l",
-            "--language",
-            choices=language,
-            help="""
-                The EU has 24 official languages: Bulgarian, Croatian, Czech,
-                Danish, Dutch, English, Estonian, Finnish, French, German,
-                Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, Maltese,
-                Polish, Portuguese, Romanian, Slovak, Slovenian, Spanish and
-                Swedish.
-            """,
-            metavar="LANGUAGE",
-            type=str.lower,
-        )
-
-        self.subparser = self.parser.add_subparsers(
-            dest=TASK,
-            required=False,
-        )
-
-        self.main = self.subparser.add_parser(
-            "main",
-            help="The default main application.",
-        )
-
-
-@dataclasses.dataclass
-class Attribute():
-    def __init__(self, argument, directory, module, section):
-        configuration = Configuration.make(directory)
-
-        attribute = module.attribute()
-        default = module.default()
-
-        for (name, failover) in zip(attribute, default, strict=True):
-            database = configuration.get(section, name, fallback=None)
-            override = getattr(argument, name, None)
-            value = override or database or failover
-            setattr(self, name, value)
-
-
-class Configuration():
-    """parse configuration stuff."""
-
-    def __init__(self, directory):
-        self.directory = directory
-        self.path = load.path(directory, CELESTINE, CONFIGURATION)
-
-    def load(self, path=None):
-        """Load the configuration file."""
-        configuration = configparser.ConfigParser()
-        configuration.read(path or self.path, encoding=UTF_8)
-        return configuration
-
-    @staticmethod
-    def make(directory):
-        """Make a new configuration file."""
-        configuration = Configuration(directory)
-        return configuration.load()
-
-    def save(self, configuration, path=None):
-        """Save the configuration file."""
-        with open(path or self.path, WRITE, encoding=UTF_8) as file:
-            configuration.write(file, True)
-
+from celestine.keyword.all import CELESTINE
 
 class Session():
     def __init__(self, directory, args, exit_on_error):
