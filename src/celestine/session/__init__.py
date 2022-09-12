@@ -46,10 +46,10 @@ PYTHON_3_11 = "python_3_11"
 
 @dataclasses.dataclass
 class Argument1():
-    def __init__(self):
+    def __init__(self, exit_on_error):
         self.parser = argparse.ArgumentParser(
             prog=CELESTINE,
-            exit_on_error=False,
+            exit_on_error=exit_on_error,
         )
 
         self.parser.add_argument(
@@ -64,13 +64,28 @@ class Argument1():
             help="Select which application to run.",
         )
 
+        self.parser.add_argument(
+            "-l",
+            "--language",
+            choices=language,
+            help="""
+                The EU has 24 official languages: Bulgarian, Croatian, Czech,
+                Danish, Dutch, English, Estonian, Finnish, French, German,
+                Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, Maltese,
+                Polish, Portuguese, Romanian, Slovak, Slovenian, Spanish and
+                Swedish.
+            """,
+            metavar="LANGUAGE",
+            type=str.lower,
+        )
+
 
 @dataclasses.dataclass
 class Argument2():
-    def __init__(self):
+    def __init__(self, exit_on_error):
         self.parser = argparse.ArgumentParser(
             prog=CELESTINE,
-            exit_on_error=False,
+            exit_on_error=exit_on_error,
         )
 
         self.parser.add_argument(
@@ -80,11 +95,18 @@ class Argument2():
         )
 
         self.parser.add_argument(
-            "-l, --language",
+            "-l",
+            "--language",
             choices=language,
-            help="Choose a language.",
-            dest=LANGUAGE,
-            metavar="language",
+            help="""
+                The EU has 24 official languages: Bulgarian, Croatian, Czech,
+                Danish, Dutch, English, Estonian, Finnish, French, German,
+                Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, Maltese,
+                Polish, Portuguese, Romanian, Slovak, Slovenian, Spanish and
+                Swedish.
+            """,
+            metavar="LANGUAGE",
+            type=str.lower,
         )
 
         self.subparser = self.parser.add_subparsers(
@@ -117,7 +139,7 @@ class Configuration():
             configuration.write(file, True)
 
 
-class Attribute(Configuration):
+class Attribute():
     def __init__(self, argument, directory, module, section):
         configuration = Configuration(directory)
         configuration = configuration.load()
@@ -133,10 +155,10 @@ class Attribute(Configuration):
 
 
 class Session():
-    def __init__(self, directory, args):
+    def __init__(self, directory, args, exit_on_error):
         args = args or ["tkinter"]
 
-        argument = Argument1()
+        argument = Argument1(exit_on_error)
 
         attribute = Attribute(
             argument.parser.parse_args(args),
@@ -147,7 +169,7 @@ class Session():
 
         module = load.module(APPLICATION, attribute.application)
 
-        argument = Argument2()
+        argument = Argument2(exit_on_error)
         argument = module.argument(argument)
         attribute = Attribute(
             argument.parser.parse_args(args),
