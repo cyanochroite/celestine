@@ -6,6 +6,10 @@ from celestine.session.configuration import Configuration
 @dataclasses.dataclass
 class Attribute():
     def __init__(self, argument, directory, module, section):
+        self.application = None
+        self.language = None
+        self.task = None
+
         configuration = Configuration.make(directory)
 
         attribute = module.attribute()
@@ -16,6 +20,3 @@ class Attribute():
             override = getattr(argument, name, None)
             value = override or database or failover
             setattr(self, name, value)
-
-
-

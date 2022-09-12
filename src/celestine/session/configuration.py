@@ -1,6 +1,7 @@
 import configparser
 
 from celestine.core import load
+
 from celestine.keyword.all import CELESTINE
 from celestine.keyword.all import CONFIGURATION
 from celestine.keyword.all import WRITE
@@ -30,5 +31,3 @@ class Configuration():
         """Save the configuration file."""
         with open(path or self.path, WRITE, encoding=UTF_8) as file:
             configuration.write(file, True)
-
-
