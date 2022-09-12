@@ -1,4 +1,6 @@
 __pycache__/
+celestine.wpr
+celestine.wpu
 dist/
 src/celestine.egg-info/
 *.ini

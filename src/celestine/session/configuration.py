@@ -1,6 +1,4 @@
 import configparser
-import sys
-print(sys.path)
 
 from celestine.core import load
 from celestine.keyword.main import CELESTINE
