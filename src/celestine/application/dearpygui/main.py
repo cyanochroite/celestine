@@ -127,18 +127,21 @@ def file_dialog(frame, tag, bind, cord_x, cord_y):
             custom_text="header",
         )
         dpg.add_file_extension(".py", color=(0, 255, 0, 255))
-    button = dpg.add_button(
-        label="Show File Selector",
-        user_data=dpg.last_container(),
-        callback=callback_dvd
-    )
+
+    grid[cord_y][cord_x] = (dpg.add_button, (), {
+        "tag": key,
+        "label": "Show File Selector",
+        "user_data": dpg.last_container(),
+        "callback": callback_dvd,
+    })
+
     item[tag] = button
 
 
 def image(frame, tag, image, cord_x, cord_y):
     """Make image."""
     key = item_key(frame, tag)
-    grid[cord_y][cord_x] = (dpg.add_text, (image.name), {})
+    grid[cord_y][cord_x] = (dpg.add_image, (image.name), {})
     #image = dpg.add_image(image.name)
     item[key] = image
 
@@ -160,8 +163,8 @@ def main(session):
     global item
     global grid
 
-    cols = 1
-    rows = 3
+    cols = 4
+    rows = 8
     item = {}
 
     title = session.language.APPLICATION_TITLE
@@ -208,11 +211,12 @@ def main(session):
                 for index_a in range(rows):
                     with dpg.table_row():
                         for index_b in range(cols):
-                            (func, args, kw) = grid[index_a][index_b]
-                            if args:
-                                func(args, **kw)
-                            else:
-                                func(**kw)
+                            if grid[index_a][index_b]:
+                                (func, args, kw) = grid[index_a][index_b]
+                                if args:
+                                    func(args, **kw)
+                                else:
+                                    func(**kw)
 
         dpg.configure_item(key, show=False)
         index += 1

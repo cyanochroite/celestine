@@ -24,6 +24,7 @@ def setup(session):
 
     directory = "D:\\file\\"
     directory = "D:\\todo\\"
+    directory = "D:\\grid\\"
     images = execute(session, directory)
     for imaged in images:
         image.append(window.image_load(imaged))
@@ -35,8 +36,11 @@ def main(session, frame):
     window = session.task
     setup(session)
 
-    for imaged in image:
-        window.image(frame, "00", imaged)
+    window.label(frame, "Settings",
+                 "no puppy. File Explorer using Tkinter", 0, 0)
+    window.file_dialog(frame, "set", "Settings", 0, 1)
 
-    window.label(frame, "Settings", "no puppy. File Explorer using Tkinter")
-    window.file_dialog(frame, "set", "Settings")
+    index = 8
+    for imaged in image:
+        window.image(frame, "00", imaged, index % 4, index // 4)
+        index += 1

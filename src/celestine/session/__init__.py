@@ -43,7 +43,7 @@ class Session():
             module,
             attribute.application,
         )
-        # self.directory = directory  # me no like
+        self.directory = directory  # me no like
         self.image_format = module.image_format()
         self.language = load.module(
             LANGUAGE,
@@ -56,7 +56,7 @@ class Session():
             attribute.task,
         )
         self.window = []
-        # self.window.append(load.module("window", "main"))
+        self.window.append(load.module("window", "main"))
         self.window.append(load.module("window", "zero"))
         self.window.append(load.module("window", "one"))
         self.window.append(load.module("window", "two"))

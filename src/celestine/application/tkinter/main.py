@@ -147,14 +147,13 @@ def main(session):
     root.geometry("1920x1080")
     root.minsize(640, 480)
     root.maxsize(3840, 2160)
+    root.config(bg="blue")
 
-    container = tkinter.Frame(root)
-    container.grid(column=0, row=0)
 
     index = 0
     for window in session.window:
-        frame = tkinter.Frame(container, padx=5, pady=5)
-        frame.config(bg="skyblue")
+        frame = tkinter.Frame(root, padx=5, pady=5, bg="skyblue")
+
         key = frame_key(index)
         frame_set(key, frame)
         window.main(session, key)
