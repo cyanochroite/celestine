@@ -85,19 +85,26 @@ def image_load(file):
     return Image(file)
 
 
-def button(frame, tag, bind):
+def button(frame, tag, bind, cord_x, cord_y):
     """Make file dialog."""
     key = item_key(frame, tag)
-    button = dpg.add_button(
-        tag=key,
-        label=tag,
-        user_data=bind,
-        callback=show_frame,
-    )
+    grid[cord_y][cord_x] = (dpg.add_button, (), {
+        "tag": key,
+        "label": F"{tag}{bind}",
+        "user_data": bind,
+        "callback": show_frame,
+    })
+
+    # button = dpg.add_button(
+    #    tag = key,
+  #      label = tag,
+  #      user_data = bind,
+  #      callback = show_frame,
+   # )
     item[key] = button
 
 
-def file_dialog(frame, tag, bind):
+def file_dialog(frame, tag, bind, cord_x, cord_y):
     """Make file dialog."""
     key = item_key(frame, tag)
     with dpg.file_dialog(
@@ -128,23 +135,33 @@ def file_dialog(frame, tag, bind):
     item[tag] = button
 
 
-def image(frame, tag, image):
+def image(frame, tag, image, cord_x, cord_y):
     """Make image."""
     key = item_key(frame, tag)
-    image = dpg.add_image(image.name)
+    grid[cord_y][cord_x] = (dpg.add_text, (image.name), {})
+    #image = dpg.add_image(image.name)
     item[key] = image
 
 
-def label(frame, tag, text):
+def label(frame, tag, text, cord_x, cord_y):
     """Make a label."""
     key = item_key(frame, tag)
-    text = dpg.add_text(text, tag=key, label="Label", show_label=True)
+    grid[cord_y][cord_x] = (dpg.add_text, (text), {
+                            "tag": key, "label": "Label", "show_label": True})
+#    text = dpg.add_text(text, tag=key, label="Label", show_label=True)
     item[key] = text
+
+
+grid = []
 
 
 def main(session):
     """def main"""
     global item
+    global grid
+
+    cols = 1
+    rows = 3
     item = {}
 
     title = session.language.APPLICATION_TITLE
@@ -170,12 +187,34 @@ def main(session):
 
     index = 0
     for window in session.window:
-        key = frame_key(index)
-        #frame_set(key, frame)
-        with dpg.window(tag=key):
-            window.main(session, key)
-            dpg.configure_item(key, show=False)
+        grid = []
+        for rowrow in range(rows):
+            temp = []
+            for colcol in range(cols):
+                temp.append(None)
+            grid.append(temp)
 
+        grid[0][0] = (dpg.add_text, (f"moo Row{0} Column{4}"), {})
+        grid[1][0] = (dpg.add_text, (f"moo Row{1} Column{6}"), {})
+        grid[2][0] = (dpg.add_text, (f"moo Row{2} Column{8}"), {})
+
+        key = frame_key(index)
+        window.main(session, key)
+
+        with dpg.window(tag=key):
+            with dpg.table(header_row=False):
+                for colcol in range(cols):
+                    dpg.add_table_column()
+                for index_a in range(rows):
+                    with dpg.table_row():
+                        for index_b in range(cols):
+                            (func, args, kw) = grid[index_a][index_b]
+                            if args:
+                                func(args, **kw)
+                            else:
+                                func(**kw)
+
+        dpg.configure_item(key, show=False)
         index += 1
 
     show_frame_simple(frame_key(0))

@@ -1,9 +1,9 @@
 """Package tkinter."""
 
 
-def argument(argument):
+def argument(arguments):
     """Build up the argument."""
-    return argument
+    return arguments
 
 
 def attribute():

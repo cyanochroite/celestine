@@ -78,7 +78,7 @@ def image_load(file):
 
 
 
-def button(frame, tag, text):
+def button(frame, tag, text, cord_x, cord_y):
     """pass"""
     item_set(
         frame,
@@ -89,10 +89,10 @@ def button(frame, tag, text):
             command=lambda: show_frame(text),
         ),
     )
-    item_get(frame, tag).pack()
+    item_get(frame, tag).grid(column=cord_x, row=cord_y)
 
 
-def file_dialog(frame, tag, bind):
+def file_dialog(frame, tag, bind, cord_x, cord_y):
     """pass"""
     item_set(
         frame,
@@ -103,10 +103,10 @@ def file_dialog(frame, tag, bind):
             command=partial(file_dialog_load, frame, bind),
         ),
     )
-    item_get(frame, tag).pack()
+    item_get(frame, tag).grid(column=cord_x, row=cord_y)
 
 
-def image(frame, tag, _image):
+def image(frame, tag, _image, cord_x, cord_y):
     """pass"""
     item_set(
         frame,
@@ -116,10 +116,10 @@ def image(frame, tag, _image):
             image=_image.image,
         ),
     )
-    item_get(frame, tag).pack()
+    item_get(frame, tag).grid(column=cord_x, row=cord_y)
 
 
-def label(frame, tag, text):
+def label(frame, tag, text, cord_x, cord_y):
     """pass"""
     item_set(
         frame,
@@ -132,7 +132,7 @@ def label(frame, tag, text):
             fg="blue",
         ),
     )
-    item_get(frame, tag).pack()
+    item_get(frame, tag).grid(column=cord_x, row=cord_y)
 
 
 def main(session):
@@ -149,9 +149,7 @@ def main(session):
     root.maxsize(3840, 2160)
 
     container = tkinter.Frame(root)
-    container.pack(side="top", fill="both", expand=True)
-    container.grid_rowconfigure(0, weight=1)
-    container.grid_columnconfigure(0, weight=1)
+    container.grid(column=0, row=0)
 
     index = 0
     for window in session.window:
