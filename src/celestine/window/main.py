@@ -17,9 +17,8 @@ def execute(session, directory):
     return images
 
 
-def setup(session):
+def setup(session, window):
     global image
-    window = session.task
     directory = session.directory
 
     directory = "D:\\file\\"
@@ -30,11 +29,10 @@ def setup(session):
         image.append(window.image_load(imaged))
 
 
-def main(session, frame):
+def main(session, frame, window):
     global image
 
-    window = session.task
-    setup(session)
+    setup(session, window)
 
     window.label(frame, "Settings",
                  "no puppy. File Explorer using Tkinter", 0, 0)

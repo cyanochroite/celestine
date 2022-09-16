@@ -3,47 +3,6 @@
 import dearpygui.dearpygui as dpg
 
 
-def item_key(frame, tag):
-    global item
-    return F"{frame}-{tag}"
-
-
-def item_get(frame, tag):
-    global item
-    return item[item_key(frame, tag)]
-
-
-def item_set(frame, tag, value):
-    global item
-    item[item_key(frame, tag)] = value
-
-
-def frame_key(index):
-    return F"Page {index}"
-
-
-def frame_get(frame):
-    global item
-    return item[frame]
-
-
-def frame_set(frame, value):
-    global item
-    item[frame] = value
-
-
-def show_frame(sender, app_data, user_data):
-    """Some other callback thing."""
-    current = sender.split("-")[0]
-    dpg.hide_item(current)
-    show_frame_simple(user_data)
-
-
-def show_frame_simple(frame):
-    dpg.show_item(frame)
-    dpg.set_primary_window(frame, True)
-
-
 class Image():
     """Something to hold the images in."""
 
@@ -66,164 +25,185 @@ class Image():
             )
 
 
-def callback_dvd(sender, app_data, user_data):
-    """Some other callback thing."""
-    dpg.configure_item(user_data, show=True)
+class Window():
 
+    def item_key(self, frame, tag):
+        return F"{frame}-{tag}"
 
-def callback_file(sender, app_data, user_data):
-    """File dialaog callback."""
-    array = list(app_data["selections"])
-    item = ""
-    if len(array) > 0:
-        item = array[0]
-    dpg.set_value(user_data, item)
+    def item_get(self, frame, tag):
+        return self.item[item_key(frame, tag)]
 
+    def item_set(self, frame, tag, value):
+        self.item[item_key(frame, tag)] = value
 
-def image_load(file):
-    """Load image."""
-    return Image(file)
+    def frame_key(self, index):
+        return F"Page {index}"
 
+    def frame_get(self, frame):
+        return self.item[frame]
 
-def button(frame, tag, bind, cord_x, cord_y):
-    """Make file dialog."""
-    key = item_key(frame, tag)
-    grid[cord_y][cord_x] = (dpg.add_button, (), {
-        "tag": key,
-        "label": F"{tag}{bind}",
-        "user_data": bind,
-        "callback": show_frame,
-    })
+    def frame_set(self, frame, value):
+        self.item[frame] = value
 
-    # button = dpg.add_button(
-    #    tag = key,
-  #      label = tag,
-  #      user_data = bind,
-  #      callback = show_frame,
-   # )
-    item[key] = button
+    def show_frame(self, sender, app_data, user_data):
+        """Some other callback thing."""
+        current = sender.split("-")[0]
+        dpg.hide_item(current)
+        self.show_frame_simple(user_data)
 
+    def show_frame_simple(self, frame):
+        dpg.show_item(frame)
+        dpg.set_primary_window(frame, True)
 
-def file_dialog(frame, tag, bind, cord_x, cord_y):
-    """Make file dialog."""
-    key = item_key(frame, tag)
-    with dpg.file_dialog(
-        label="Demo File Dialog",
-        width=800,
-        height=600,
-        show=False,
-        callback=callback_file,
-        tag=key + "__demo_filedialog",
-        user_data=bind,
-    ):
-        dpg.add_file_extension(".*", color=(255, 255, 255, 255))
-        dpg.add_file_extension(
-            "Source files (*.cpp *.h *.hpp){.cpp,.h,.hpp}",
-            color=(0, 255, 255, 255),
+    def callback_dvd(self, sender, app_data, user_data):
+        """Some other callback thing."""
+        dpg.configure_item(user_data, show=True)
+
+    def callback_file(self, sender, app_data, user_data):
+        """File dialaog callback."""
+        array = list(app_data["selections"])
+        item = ""
+        if len(array) > 0:
+            item = array[0]
+        dpg.set_value(user_data, item)
+
+    def image_load(self, file):
+        """Load image."""
+        return Image(file)
+
+    def button(self, frame, tag, bind, cord_x, cord_y):
+        """Make file dialog."""
+        key = self.item_key(frame, tag)
+        self.grid[cord_y][cord_x] = (dpg.add_button, (), {
+            "tag": key,
+            "label": F"{tag}{bind}",
+            "user_data": bind,
+            "callback": self.show_frame,
+        })
+
+        # button = dpg.add_button(
+        #    tag = key,
+      #      label = tag,
+      #      user_data = bind,
+      #      callback = show_frame,
+       # )
+        self.item[key] = self.grid[cord_y][cord_x]
+
+    def file_dialog(self, frame, tag, bind, cord_x, cord_y):
+        """Make file dialog."""
+        key = self.item_key(frame, tag)
+        with dpg.file_dialog(
+            label="Demo File Dialog",
+            width=800,
+            height=600,
+            show=False,
+            callback=self.callback_file,
+            tag=key + "__demo_filedialog",
+            user_data=bind,
+        ):
+            dpg.add_file_extension(".*", color=(255, 255, 255, 255))
+            dpg.add_file_extension(
+                "Source files (*.cpp *.h *.hpp){.cpp,.h,.hpp}",
+                color=(0, 255, 255, 255),
+            )
+            dpg.add_file_extension(".txt", color=(255, 255, 0, 255))
+            dpg.add_file_extension(
+                ".gif", color=(255, 0, 255, 255),
+                custom_text="header",
+            )
+            dpg.add_file_extension(".py", color=(0, 255, 0, 255))
+
+        self.grid[cord_y][cord_x] = (dpg.add_button, (), {
+            "tag": key,
+            "label": "Show File Selector",
+            "user_data": dpg.last_container(),
+            "callback": self.callback_dvd,
+        })
+
+        self.item[tag] = self.grid[cord_y][cord_x]
+
+    def image(self, frame, tag, image, cord_x, cord_y):
+        """Make image."""
+        key = self.item_key(frame, tag)
+        self.grid[cord_y][cord_x] = (dpg.add_image, (image.name), {})
+        #image = dpg.add_image(image.name)
+        self.item[key] = image
+
+    def label(self, frame, tag, text, cord_x, cord_y):
+        """Make a label."""
+        key = self.item_key(frame, tag)
+        self.grid[cord_y][cord_x] = (dpg.add_text, (text), {
+            "tag": key, "label": "Label", "show_label": True})
+    #    text = dpg.add_text(text, tag=key, label="Label", show_label=True)
+        self.item[key] = text
+
+    def __init__(self):
+        self.item = {}
+        self.grid = []
+        self.cols = 4
+        self.rows = 8
+
+    def main(self, session):
+        """def main"""
+
+        title = session.language.APPLICATION_TITLE
+        dpg.create_context()
+        dpg.create_viewport(
+            title=title,
+            small_icon="celestine_small.ico",
+            large_icon="celestine_large.ico",
+            width=1920,
+            height=1080,
+            x_pos=256,
+            y_pos=256,
+            min_width=640,
+            max_width=3840,
+            min_height=480,
+            max_height=2160,
+            resizable=True,
+            vsync=True,
+            always_on_top=False,
+            decorated=True,
+            clear_color=(0, 0, 0)
         )
-        dpg.add_file_extension(".txt", color=(255, 255, 0, 255))
-        dpg.add_file_extension(
-            ".gif", color=(255, 0, 255, 255),
-            custom_text="header",
-        )
-        dpg.add_file_extension(".py", color=(0, 255, 0, 255))
 
-    grid[cord_y][cord_x] = (dpg.add_button, (), {
-        "tag": key,
-        "label": "Show File Selector",
-        "user_data": dpg.last_container(),
-        "callback": callback_dvd,
-    })
+        index = 0
+        for window in session.window:
+            self.grid = []
+            for rowrow in range(self.rows):
+                temp = []
+                for colcol in range(self.cols):
+                    temp.append(None)
+                self.grid.append(temp)
 
-    item[tag] = button
+            self.grid[0][0] = (dpg.add_text, (f"moo Row{0} Column{4}"), {})
+            self.grid[1][0] = (dpg.add_text, (f"moo Row{1} Column{6}"), {})
+            self.grid[2][0] = (dpg.add_text, (f"moo Row{2} Column{8}"), {})
 
+            key = self.frame_key(index)
+            window.main(session, key, self)
 
-def image(frame, tag, image, cord_x, cord_y):
-    """Make image."""
-    key = item_key(frame, tag)
-    grid[cord_y][cord_x] = (dpg.add_image, (image.name), {})
-    #image = dpg.add_image(image.name)
-    item[key] = image
+            with dpg.window(tag=key):
+                with dpg.table(header_row=False):
+                    for colcol in range(self.cols):
+                        dpg.add_table_column()
+                    for index_a in range(self.rows):
+                        with dpg.table_row():
+                            for index_b in range(self.cols):
+                                if self.grid[index_a][index_b]:
+                                    (func, args,
+                                     kw) = self.grid[index_a][index_b]
+                                    if args:
+                                        func(args, **kw)
+                                    else:
+                                        func(**kw)
 
+            dpg.configure_item(key, show=False)
+            index += 1
 
-def label(frame, tag, text, cord_x, cord_y):
-    """Make a label."""
-    key = item_key(frame, tag)
-    grid[cord_y][cord_x] = (dpg.add_text, (text), {
-                            "tag": key, "label": "Label", "show_label": True})
-#    text = dpg.add_text(text, tag=key, label="Label", show_label=True)
-    item[key] = text
+        self.show_frame_simple(self.frame_key(0))
 
-
-grid = []
-
-
-def main(session):
-    """def main"""
-    global item
-    global grid
-
-    cols = 4
-    rows = 8
-    item = {}
-
-    title = session.language.APPLICATION_TITLE
-    dpg.create_context()
-    dpg.create_viewport(
-        title=title,
-        small_icon="celestine_small.ico",
-        large_icon="celestine_large.ico",
-        width=1920,
-        height=1080,
-        x_pos=256,
-        y_pos=256,
-        min_width=640,
-        max_width=3840,
-        min_height=480,
-        max_height=2160,
-        resizable=True,
-        vsync=True,
-        always_on_top=False,
-        decorated=True,
-        clear_color=(0, 0, 0)
-    )
-
-    index = 0
-    for window in session.window:
-        grid = []
-        for rowrow in range(rows):
-            temp = []
-            for colcol in range(cols):
-                temp.append(None)
-            grid.append(temp)
-
-        grid[0][0] = (dpg.add_text, (f"moo Row{0} Column{4}"), {})
-        grid[1][0] = (dpg.add_text, (f"moo Row{1} Column{6}"), {})
-        grid[2][0] = (dpg.add_text, (f"moo Row{2} Column{8}"), {})
-
-        key = frame_key(index)
-        window.main(session, key)
-
-        with dpg.window(tag=key):
-            with dpg.table(header_row=False):
-                for colcol in range(cols):
-                    dpg.add_table_column()
-                for index_a in range(rows):
-                    with dpg.table_row():
-                        for index_b in range(cols):
-                            if grid[index_a][index_b]:
-                                (func, args, kw) = grid[index_a][index_b]
-                                if args:
-                                    func(args, **kw)
-                                else:
-                                    func(**kw)
-
-        dpg.configure_item(key, show=False)
-        index += 1
-
-    show_frame_simple(frame_key(0))
-
-    dpg.setup_dearpygui()
-    dpg.show_viewport(minimized=False, maximized=False)
-    dpg.start_dearpygui()
-    dpg.destroy_context()
+        dpg.setup_dearpygui()
+        dpg.show_viewport(minimized=False, maximized=False)
+        dpg.start_dearpygui()
+        dpg.destroy_context()

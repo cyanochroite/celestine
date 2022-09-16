@@ -7,45 +7,6 @@ import tkinter.filedialog
 from functools import partial
 
 
-def item_key(frame, tag):
-    global item
-    return F"{frame}-{tag}"
-
-
-def item_get(frame, tag):
-    global item
-    return item[item_key(frame, tag)]
-
-
-def item_set(frame, tag, value):
-    global item
-    item[item_key(frame, tag)] = value
-
-
-def frame_key(index):
-    return F"Page {index}"
-
-
-def frame_get(frame):
-    global item
-    return item[frame]
-
-
-def frame_set(frame, value):
-    global item
-    item[frame] = value
-
-
-def show_frame(text):
-    global item
-
-    frame = item[text]
-    frame.grid(row=0, column=0, sticky="nsew")
-
-    frame.tkraise()
-
-
-
 class Image():
     """Holds an image."""
 
@@ -57,108 +18,127 @@ class Image():
         self.name = file
 
 
-def file_dialog_load(frame, tag):
-    """pass"""
-    filename = tkinter.filedialog.askopenfilename(
-        initialdir="/",
-        title="Select a File",
-        filetypes=(
-            ("Text files", "*.txt*"),
-            ("all files", "*.*")
+class Window():
+
+    def item_key(self, frame, tag):
+        return F"{frame}-{tag}"
+
+    def item_get(self, frame, tag):
+        return self.item[self.item_key(frame, tag)]
+
+    def item_set(self, frame, tag, value):
+        self.item[self.item_key(frame, tag)] = value
+
+    def frame_key(self, index):
+        return F"Page {index}"
+
+    def frame_get(self, frame):
+        return self.item[frame]
+
+    def frame_set(self, frame, value):
+        self.item[frame] = value
+
+    def show_frame(self, text):
+
+        frame = self.item[text]
+        frame.grid(row=0, column=0, sticky="nsew")
+
+        frame.tkraise()
+
+    def file_dialog_load(self, frame, tag):
+        """pass"""
+        filename = tkinter.filedialog.askopenfilename(
+            initialdir="/",
+            title="Select a File",
+            filetypes=(
+                ("Text files", "*.txt*"),
+                ("all files", "*.*")
+            )
         )
-    )
-    item_get(frame, tag).configure(text="File Opened: " + filename)
+        self.item_get(frame, tag).configure(text="File Opened: " + filename)
 
+    def image_load(self, file):
+        """pass"""
+        return Image(file)
 
-def image_load(file):
-    """pass"""
-    return Image(file)
+    def button(self, frame, tag, text, cord_x, cord_y):
+        """pass"""
+        self.item_set(
+            frame,
+            tag,
+            tkinter.Button(
+                self.frame_get(frame),
+                text=text,
+                command=lambda: self.show_frame(text),
+            ),
+        )
+        self.item_get(frame, tag).grid(column=cord_x, row=cord_y)
 
+    def file_dialog(self, frame, tag, bind, cord_x, cord_y):
+        """pass"""
+        self.item_set(
+            frame,
+            tag,
+            tkinter.Button(
+                self.frame_get(frame),
+                text="Config find Exit",
+                command=partial(self.file_dialog_load, frame, bind),
+            ),
+        )
+        self.item_get(frame, tag).grid(column=cord_x, row=cord_y)
 
+    def image(self, frame, tag, _image, cord_x, cord_y):
+        """pass"""
+        self.item_set(
+            frame,
+            tag,
+            tkinter.Label(
+                self.frame_get(frame),
+                image=_image.image,
+            ),
+        )
+        self.item_get(frame, tag).grid(column=cord_x, row=cord_y)
 
+    def label(self, frame, tag, text, cord_x, cord_y):
+        """pass"""
+        self.item_set(
+            frame,
+            tag,
+            tkinter.Label(
+                self.frame_get(frame),
+                text=text,
+                width=100,
+                height=4,
+                fg="blue",
+            ),
+        )
+        self.item_get(frame, tag).grid(column=cord_x, row=cord_y)
 
+    def __init__(self):
+        self.item = {}
+        self.root = None
 
-def button(frame, tag, text, cord_x, cord_y):
-    """pass"""
-    item_set(
-        frame,
-        tag,
-        tkinter.Button(
-            frame_get(frame),
-            text=text,
-            command=lambda: show_frame(text),
-        ),
-    )
-    item_get(frame, tag).grid(column=cord_x, row=cord_y)
+    def main(self, session):
+        """def main"""
 
+        global root
+        self.root = tkinter.Tk()
+        self.root.title(session.language.APPLICATION_TITLE)
 
-def file_dialog(frame, tag, bind, cord_x, cord_y):
-    """pass"""
-    item_set(
-        frame,
-        tag,
-        tkinter.Button(
-            frame_get(frame),
-            text="Config find Exit",
-            command=partial(file_dialog_load, frame, bind),
-        ),
-    )
-    item_get(frame, tag).grid(column=cord_x, row=cord_y)
+        self.root.geometry("1920x1080")
+        self.root.minsize(640, 480)
+        self.root.maxsize(3840, 2160)
+        self.root.config(bg="blue")
 
+        index = 0
+        for window in session.window:
+            frame = tkinter.Frame(self.root, padx=5, pady=5, bg="skyblue")
 
-def image(frame, tag, _image, cord_x, cord_y):
-    """pass"""
-    item_set(
-        frame,
-        tag,
-        tkinter.Label(
-            frame_get(frame),
-            image=_image.image,
-        ),
-    )
-    item_get(frame, tag).grid(column=cord_x, row=cord_y)
+            key = self.frame_key(index)
+            self.frame_set(key, frame)
+            window.main(session, key, self)
+            index += 1
 
+        self.show_frame(self.frame_key(0))
 
-def label(frame, tag, text, cord_x, cord_y):
-    """pass"""
-    item_set(
-        frame,
-        tag,
-        tkinter.Label(
-            frame_get(frame),
-            text=text,
-            width=100,
-            height=4,
-            fg="blue",
-        ),
-    )
-    item_get(frame, tag).grid(column=cord_x, row=cord_y)
-
-
-def main(session):
-    """def main"""
-    global item
-    item = {}
-
-    global root
-    root = tkinter.Tk()
-    root.title(session.language.APPLICATION_TITLE)
-
-    root.geometry("1920x1080")
-    root.minsize(640, 480)
-    root.maxsize(3840, 2160)
-    root.config(bg="blue")
-
-
-    index = 0
-    for window in session.window:
-        frame = tkinter.Frame(root, padx=5, pady=5, bg="skyblue")
-
-        key = frame_key(index)
-        frame_set(key, frame)
-        window.main(session, key)
-        index += 1
-
-    show_frame(frame_key(0))
-
-    root.mainloop()
+        self.root.mainloop()

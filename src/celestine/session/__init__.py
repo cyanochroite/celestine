@@ -74,4 +74,5 @@ class Session():
         return configuration
 
     def main(self):
-        return self.task.main(self)
+        window = self.task.Window()
+        return window.main(self)
