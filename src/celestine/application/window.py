@@ -1,3 +1,21 @@
+class Frame():
+    def __init__(self, frame):
+        self.frame = frame
+        self.item = {}
+
+    def item_get(self, tag):
+        return self.item[tag]
+
+    def item_set(self, tag, value):
+        self.item[tag] = value
+
+    def clear(self):
+        self.frame.clear()
+
+    def noutrefresh(self):
+        self.frame.noutrefresh()
+
+
 class Window():
 
     def __init__(self, session):
@@ -11,18 +29,16 @@ class Window():
         return F"{frame}-{tag}"
 
     def item_get(self, frame, tag):
-        return self.item[self.item_key(frame, tag)]
-        # return self.item[frame].item_get(tag)
+        return self.item[frame].item_get(tag)
 
     def item_set(self, frame, tag, value):
-        self.item[self.item_key(frame, tag)] = value
-        #self.item[frame].item_set(tag, value)
+        self.item[frame].item_set(tag, value)
 
     def _frame_key(self, index):
         return F"Page {index}"
 
-    def frame_get(self, frame):
-        return self.item[self._frame_key(frame)]
+    def frame_get(self, index):
+        return self.item[index].frame
 
-    def frame_set(self, frame, value):
-        self.item[self._frame_key(frame)] = value
+    def frame_set(self, index, value):
+        self.item[index] = Frame(value)

@@ -8,6 +8,7 @@ from functools import partial
 
 from celestine.application.window import Window as Window_
 
+
 class Image():
     """Holds an image."""
 
@@ -24,7 +25,6 @@ class Window(Window_):
     def __init__(self, session):
         super().__init__(session)
         self.root = None
-
 
     def show_frame(self, index):
         if index == 0:

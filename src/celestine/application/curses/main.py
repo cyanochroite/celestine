@@ -1,23 +1,14 @@
 """Package celestine."""
 import curses
 from celestine.application.window import Window as Window_
+from celestine.application.window import Frame as Frame_
 
 
 HEIGHT = 24
 WIDTH = 80
 
 
-class Frame():
-    def __init__(self, frame):
-        self.frame = frame
-        self.item = {}
-
-    def item_get(self, tag):
-        return self.item[tag]
-
-    def item_set(self, tag, value):
-        self.item[tag] = value
-
+class Frame(Frame_):
     def clear(self):
         self.frame.clear()
 
@@ -92,8 +83,6 @@ class Curses():
         begin_x = column
         return window.subwin(nlines, ncols, begin_y, begin_x)
 
-
-
     @staticmethod
     def doupdate():
         curses.doupdate()
@@ -104,19 +93,6 @@ class Window(Window_):
     def __init__(self, session):
         super().__init__(session)
         ignore = None
-
-    def item_get(self, frame, tag):
-        return self.item[frame].item_get(tag)
-
-    def item_set(self, frame, tag, value):
-        self.item[frame].item_set(tag, value)
-
-
-    def frame_get(self, index):
-        return self.item[index].frame
-
-    def frame_set(self, index, value):
-        self.item[index] = value
 
     def show_frame(self, index):
         return self.frame_get(index)
@@ -157,13 +133,12 @@ class Window(Window_):
         header2.addstr(self.session.language.CURSES_EXIT)
 
         for index in range(len(self.session.window)):
-            _frame = Curses.window(
+            frame = Curses.window(
                 1,
                 1,
                 WIDTH - 1,
                 HEIGHT - 2,
             )
-            frame = Frame(_frame)
             self.frame_set(index, frame)
 
         display_it_now = 0

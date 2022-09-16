@@ -35,7 +35,7 @@ class Window(Window_):
 
     def show_frame(self, sender, app_data, user_data):
         """Some other callback thing."""
-        current = sender.split("-")[0]
+        current = int(sender.split("-")[0])
         index = self.frame_get(current)
         dpg.hide_item(index)
         # to field
