@@ -56,7 +56,7 @@ class Session():
             attribute.task,
         )
         self.window = []
-        self.window.append(load.module("window", "main"))
+        #self.window.append(load.module("window", "main"))
         self.window.append(load.module("window", "zero"))
         self.window.append(load.module("window", "one"))
         self.window.append(load.module("window", "two"))
@@ -74,5 +74,5 @@ class Session():
         return configuration
 
     def main(self):
-        window = self.task.Window()
-        return window.main(self)
+        window = self.task.Window(self)
+        return window.main()

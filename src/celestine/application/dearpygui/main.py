@@ -2,6 +2,8 @@
 # https://dearpygui.readthedocs.io/en/latest/
 import dearpygui.dearpygui as dpg
 
+from celestine.application.window import Window as Window_
+
 
 class Image():
     """Something to hold the images in."""
@@ -25,33 +27,23 @@ class Image():
             )
 
 
-class Window():
+class Window(Window_):
 
-    def item_key(self, frame, tag):
-        return F"{frame}-{tag}"
-
-    def item_get(self, frame, tag):
-        return self.item[item_key(frame, tag)]
-
-    def item_set(self, frame, tag, value):
-        self.item[item_key(frame, tag)] = value
-
-    def frame_key(self, index):
-        return F"Page {index}"
-
-    def frame_get(self, frame):
-        return self.item[frame]
-
-    def frame_set(self, frame, value):
-        self.item[frame] = value
+    def __init__(self, session):
+        super().__init__(session)
+        ignore = None
 
     def show_frame(self, sender, app_data, user_data):
         """Some other callback thing."""
         current = sender.split("-")[0]
-        dpg.hide_item(current)
-        self.show_frame_simple(user_data)
+        index = self.frame_get(current)
+        dpg.hide_item(index)
+        # to field
+        goto = int(user_data.split(" ")[1])
+        self.show_frame_simple(goto)
 
-    def show_frame_simple(self, frame):
+    def show_frame_simple(self, index):
+        frame = self.frame_get(index)
         dpg.show_item(frame)
         dpg.set_primary_window(frame, True)
 
@@ -137,16 +129,10 @@ class Window():
     #    text = dpg.add_text(text, tag=key, label="Label", show_label=True)
         self.item[key] = text
 
-    def __init__(self):
-        self.item = {}
-        self.grid = []
-        self.cols = 4
-        self.rows = 8
-
-    def main(self, session):
+    def main(self):
         """def main"""
 
-        title = session.language.APPLICATION_TITLE
+        title = self.session.language.APPLICATION_TITLE
         dpg.create_context()
         dpg.create_viewport(
             title=title,
@@ -168,7 +154,7 @@ class Window():
         )
 
         index = 0
-        for window in session.window:
+        for window in self.session.window:
             self.grid = []
             for rowrow in range(self.rows):
                 temp = []
@@ -180,8 +166,9 @@ class Window():
             self.grid[1][0] = (dpg.add_text, (f"moo Row{1} Column{6}"), {})
             self.grid[2][0] = (dpg.add_text, (f"moo Row{2} Column{8}"), {})
 
-            key = self.frame_key(index)
-            window.main(session, key, self)
+            key = self._frame_key(index)
+            window.main(self.session, index, self)
+            self.frame_set(index, key)
 
             with dpg.window(tag=key):
                 with dpg.table(header_row=False):
@@ -201,7 +188,7 @@ class Window():
             dpg.configure_item(key, show=False)
             index += 1
 
-        self.show_frame_simple(self.frame_key(0))
+        self.show_frame_simple(0)
 
         dpg.setup_dearpygui()
         dpg.show_viewport(minimized=False, maximized=False)

@@ -1,10 +1,10 @@
 """Package celestine."""
 import curses
+from celestine.application.window import Window as Window_
 
 
 HEIGHT = 24
 WIDTH = 80
-ITEM = {}
 
 
 class Frame():
@@ -92,120 +92,118 @@ class Curses():
         begin_x = column
         return window.subwin(nlines, ncols, begin_y, begin_x)
 
-    @staticmethod
-    def string(frame, tag, string, cord_x, cord_y):
-        window = frame_get(frame)
-        thing = String(cord_x, cord_y, string)
-        thing.draw(window)
-        item_set(frame, tag, thing)
+
 
     @staticmethod
     def doupdate():
         curses.doupdate()
 
 
-def item_get(frame, tag):
-    return ITEM[frame].item_get(tag)
+class Window(Window_):
+
+    def __init__(self, session):
+        super().__init__(session)
+        ignore = None
+
+    def item_get(self, frame, tag):
+        return self.item[frame].item_get(tag)
+
+    def item_set(self, frame, tag, value):
+        self.item[frame].item_set(tag, value)
 
 
-def item_set(frame, tag, value):
-    ITEM[frame].item_set(tag, value)
+    def frame_get(self, index):
+        return self.item[index].frame
 
+    def frame_set(self, index, value):
+        self.item[index] = value
 
-def frame_get(index):
-    return ITEM[index].frame
+    def show_frame(self, index):
+        return self.frame_get(index)
 
+    def image_load(self, file):
+        return file
 
-def frame_set(index, value):
-    ITEM[index] = value
+    def curses_string(self, frame, tag, string, cord_x, cord_y):
+        window = self.frame_get(frame)
+        thing = String(cord_x, cord_y, string)
+        thing.draw(window)
+        self.item_set(frame, tag, thing)
 
+    def button(self, frame, tag, text, cord_x, cord_y):
+        self.curses_string(frame, tag, F"button:{text}", cord_x, cord_y)
 
-def show_frame(index):
-    return frame_get(index)
+    def file_dialog(self, frame, tag, _, cord_x, cord_y):
+        self.curses_string(frame, tag, "File dialog thing.", cord_x, cord_y)
 
+    def image(self, frame, tag, _image, cord_x, cord_y):
+        self.curses_string(frame, tag, _image, cord_x, cord_y)
 
-def image_load(file):
-    return file
+    def label(self, frame, tag, text, cord_x, cord_y):
+        self.curses_string(frame, tag, F"label:{text}", cord_x, cord_y)
 
+    def main_it(self, stdscr):
+        key = ord(' ')
 
-def button(frame, tag, text, cord_x, cord_y):
-    Curses.string(frame, tag, F"button:{text}", cord_x, cord_y)
+        cursor = Cursor(self.session, stdscr)
 
+        background = Curses.window(0, 0, WIDTH, HEIGHT)
+        background.box()
 
-def file_dialog(frame, tag, _, cord_x, cord_y):
-    Curses.string(frame, tag, "File dialog thing.", cord_x, cord_y)
+        header1 = Curses.subwindow(background, 0, 0, WIDTH, 1)
+        header1.addstr(self.session.language.APPLICATION_TITLE)
 
+        header2 = Curses.subwindow(background, 0, HEIGHT - 1, WIDTH, 1)
+        header2.addstr(self.session.language.CURSES_EXIT)
 
-def image(frame, tag, _image, cord_x, cord_y):
-    Curses.string(frame, tag, _image, cord_x, cord_y)
+        for index in range(len(self.session.window)):
+            _frame = Curses.window(
+                1,
+                1,
+                WIDTH - 1,
+                HEIGHT - 2,
+            )
+            frame = Frame(_frame)
+            self.frame_set(index, frame)
 
+        display_it_now = 0
 
-def label(frame, tag, text, cord_x, cord_y):
-    Curses.string(frame, tag, F"label:{text}", cord_x, cord_y)
+        frame = self.show_frame(display_it_now)
+        self.session.window[0].main(self.session, 0, self)
 
+        #  refresh
+        stdscr.noutrefresh()
+        background.noutrefresh()
+        frame.noutrefresh()
+        Curses.doupdate()
 
-def main_it(stdscr, session):
-    key = ord(' ')
+        while key != ord('q'):
 
-    cursor = Cursor(session, stdscr)
+            if key == ord(' '):
 
-    background = Curses.window(0, 0, WIDTH, HEIGHT)
-    background.box()
+                for key, thing in self.item[display_it_now].item.items():
+                    if thing.select(cursor.cord_x - 1, cursor.cord_y - 1):
+                        new = thing.text.split(":")[1]
+                        indexer = int(new.split(" ")[1])
 
-    header1 = Curses.subwindow(background, 0, 0, WIDTH, 1)
-    header1.addstr(session.language.APPLICATION_TITLE)
+                        frame.clear()
+                        frame = self.frame_get(indexer)
 
-    header2 = Curses.subwindow(background, 0, HEIGHT - 1, WIDTH, 1)
-    header2.addstr(session.language.CURSES_EXIT)
+                        self.session.window[indexer].main(
+                            self.session, indexer, self)
 
-    for index in range(len(session.window)):
-        _frame = Curses.window(
-            1,
-            1,
-            WIDTH - 1,
-            HEIGHT - 2,
-        )
-        frame = Frame(_frame)
-        frame_set(index, frame)
+                        display_it_now = indexer
 
-    display_it_now = 0
+                        #  refresh
+                        stdscr.noutrefresh()
+                        background.noutrefresh()
+                        frame.noutrefresh()
+                        Curses.doupdate()
 
-    frame = show_frame(display_it_now)
-    session.window[0].main(session, 0)
+            cursor.input(key)
+            cursor.move()
 
-    #  refresh
-    stdscr.noutrefresh()
-    background.noutrefresh()
-    frame.noutrefresh()
-    Curses.doupdate()
+            key = stdscr.getch()
 
-    while key != ord('q'):
-
-        if key == ord(' '):
-
-            for key, thing in ITEM[display_it_now].item.items():
-                if thing.select(cursor.cord_x - 1, cursor.cord_y - 1):
-                    new = thing.text.split(":")[1]
-                    indexer = int(new.split(" ")[1])
-
-                    frame.clear()
-                    frame = frame_get(indexer)
-
-                    session.window[indexer].main(session, indexer)
-
-                    display_it_now = indexer
-
-                    #  refresh
-                    stdscr.noutrefresh()
-                    background.noutrefresh()
-                    frame.noutrefresh()
-                    Curses.doupdate()
-
-        cursor.input(key)
-        cursor.move()
-
-        key = stdscr.getch()
-
-
-def main(session):
-    curses.wrapper(main_it, session)
+    def main(self):
+        curses.wrapper(self.main_it)

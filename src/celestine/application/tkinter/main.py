@@ -6,6 +6,7 @@ import tkinter.ttk
 import tkinter.filedialog
 from functools import partial
 
+from celestine.application.window import Window as Window_
 
 class Image():
     """Holds an image."""
@@ -18,32 +19,21 @@ class Image():
         self.name = file
 
 
-class Window():
+class Window(Window_):
 
-    def item_key(self, frame, tag):
-        return F"{frame}-{tag}"
+    def __init__(self, session):
+        super().__init__(session)
+        self.root = None
 
-    def item_get(self, frame, tag):
-        return self.item[self.item_key(frame, tag)]
 
-    def item_set(self, frame, tag, value):
-        self.item[self.item_key(frame, tag)] = value
-
-    def frame_key(self, index):
-        return F"Page {index}"
-
-    def frame_get(self, frame):
-        return self.item[frame]
-
-    def frame_set(self, frame, value):
-        self.item[frame] = value
-
-    def show_frame(self, text):
-
-        frame = self.item[text]
-        frame.grid(row=0, column=0, sticky="nsew")
-
-        frame.tkraise()
+    def show_frame(self, index):
+        if index == 0:
+            frame = self.frame_get(index)
+            frame.tkraise()
+        else:
+            goto = int(index.split(" ")[-1])
+            frame = self.frame_get(goto)
+            frame.tkraise()
 
     def file_dialog_load(self, frame, tag):
         """pass"""
@@ -114,16 +104,11 @@ class Window():
         )
         self.item_get(frame, tag).grid(column=cord_x, row=cord_y)
 
-    def __init__(self):
-        self.item = {}
-        self.root = None
-
-    def main(self, session):
+    def main(self):
         """def main"""
 
-        global root
         self.root = tkinter.Tk()
-        self.root.title(session.language.APPLICATION_TITLE)
+        self.root.title(self.session.language.APPLICATION_TITLE)
 
         self.root.geometry("1920x1080")
         self.root.minsize(640, 480)
@@ -131,14 +116,14 @@ class Window():
         self.root.config(bg="blue")
 
         index = 0
-        for window in session.window:
+        for window in self.session.window:
             frame = tkinter.Frame(self.root, padx=5, pady=5, bg="skyblue")
+            frame.grid(row=0, column=0, sticky="nsew")
 
-            key = self.frame_key(index)
-            self.frame_set(key, frame)
-            window.main(session, key, self)
+            self.frame_set(index, frame)
+            window.main(self.session, index, self)
             index += 1
 
-        self.show_frame(self.frame_key(0))
+        self.show_frame(0)
 
         self.root.mainloop()
