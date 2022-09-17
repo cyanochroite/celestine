@@ -9,6 +9,16 @@ from functools import partial
 from celestine.application.window import Window as Window_
 
 
+class Button():
+    def __init__(self, frame, text, command, cord_x, cord_y):
+        self.button = tkinter.Button(
+            frame,
+            text=text,
+            command=command,
+        )
+        self.button.grid(column=cord_x, row=cord_y)
+
+
 class Image():
     """Holds an image."""
 
@@ -27,13 +37,8 @@ class Window(Window_):
         self.root = None
 
     def show_frame(self, index):
-        if index == 0:
-            frame = self.frame_get(index)
-            frame.tkraise()
-        else:
-            goto = int(index.split(" ")[-1])
-            frame = self.frame_get(goto)
-            frame.tkraise()
+        frame = self.frame_get(index)
+        frame.tkraise()
 
     def file_dialog_load(self, frame, tag):
         """pass"""
@@ -51,18 +56,18 @@ class Window(Window_):
         """pass"""
         return Image(file)
 
-    def button(self, frame, tag, text, cord_x, cord_y):
-        """pass"""
+    def button(self, frame, tag, text, action, cord_x, cord_y):
         self.item_set(
             frame,
             tag,
-            tkinter.Button(
+            Button(
                 self.frame_get(frame),
-                text=text,
-                command=lambda: self.show_frame(text),
+                text,
+                lambda: self.show_frame(action),
+                cord_x,
+                cord_y,
             ),
         )
-        self.item_get(frame, tag).grid(column=cord_x, row=cord_y)
 
     def file_dialog(self, frame, tag, bind, cord_x, cord_y):
         """pass"""

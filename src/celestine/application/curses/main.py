@@ -45,6 +45,7 @@ class Wiget():
         self.cord_y = row
         self.width = width
         self.height = height
+        self.type = "wiget"
 
     def select(self, cord_x, cord_y):
         temp_a = cord_x >= self.cord_x
@@ -61,6 +62,16 @@ class String(Wiget):
     def __init__(self, x, y, text):
         super().__init__(x, y, len(text), 1)
         self.text = text
+        self.type = "string"
+
+    def draw(self, window):
+        window.addstr(self.cord_y, self.cord_x, self.text)
+
+
+class Button(String):
+    def __init__(self, x, y, text):
+        super().__init__(x, y, text)
+        self.type = "button"
 
     def draw(self, window):
         window.addstr(self.cord_y, self.cord_x, self.text)
@@ -106,8 +117,11 @@ class Window(Window_):
         thing.draw(window)
         self.item_set(frame, tag, thing)
 
-    def button(self, frame, tag, text, cord_x, cord_y):
-        self.curses_string(frame, tag, F"button:{text}", cord_x, cord_y)
+    def button(self, frame, tag, text, action, cord_x, cord_y):
+        window = self.frame_get(frame)
+        thing = Button(cord_x, cord_y, F"button:{text}")
+        thing.draw(window)
+        self.item_set(frame, tag, thing)
 
     def file_dialog(self, frame, tag, _, cord_x, cord_y):
         self.curses_string(frame, tag, "File dialog thing.", cord_x, cord_y)
@@ -158,22 +172,23 @@ class Window(Window_):
 
                 for key, thing in self.item[display_it_now].item.items():
                     if thing.select(cursor.cord_x - 1, cursor.cord_y - 1):
-                        new = thing.text.split(":")[1]
-                        indexer = int(new.split(" ")[1])
+                        if thing.type == "button":
+                            new = thing.text.split(":")[1]
+                            indexer = int(new.split(" ")[1])
 
-                        frame.clear()
-                        frame = self.frame_get(indexer)
+                            frame.clear()
+                            frame = self.frame_get(indexer)
 
-                        self.session.window[indexer].main(
-                            self.session, indexer, self)
+                            self.session.window[indexer].main(
+                                self.session, indexer, self)
 
-                        display_it_now = indexer
+                            display_it_now = indexer
 
-                        #  refresh
-                        stdscr.noutrefresh()
-                        background.noutrefresh()
-                        frame.noutrefresh()
-                        Curses.doupdate()
+                            #  refresh
+                            stdscr.noutrefresh()
+                            background.noutrefresh()
+                            frame.noutrefresh()
+                            Curses.doupdate()
 
             cursor.input(key)
             cursor.move()
