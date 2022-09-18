@@ -35,10 +35,12 @@ def main(session, frame, window):
     setup(session, window)
 
     window.label(frame, "Settings",
-                 "no puppy. File Explorer using Tkinter", 0, 0)
-    window.file_dialog(frame, "set", "Settings", 0, 1)
+                 "no puppy. File Explorer using Tkinter").grid(0, 0)
+    window.file_dialog(frame, "set", "Settings").grid(0, 1)
 
     index = 8
     for imaged in image:
-        window.image(frame, "00", imaged, index % 4, index // 4)
+        x = index % 4
+        y = index // 4
+        window.image(frame, F"{x}-{y}", imaged).grid(x, y)
         index += 1

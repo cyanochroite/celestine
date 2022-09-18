@@ -29,14 +29,11 @@ class Button(Wiget):
 
 
 class Label(Wiget):
-    def __init__(self, frame, text, width, height, fg):
+    def __init__(self, frame, **kwargs):
         super().__init__(
             tkinter.Label(
                 frame,
-                text=text,
-                width=width,
-                height=height,
-                fg=fg,
+                **kwargs,
             )
         )
 
@@ -72,7 +69,7 @@ class Window(Window_):
                 ("all files", "*.*")
             )
         )
-        self.item_get(frame, tag).configure(text="File Opened: " + filename)
+        self.item_get(frame, tag).item.configure(text="File Opened: " + filename)
 
     def image_load(self, file):
         """pass"""
@@ -87,36 +84,27 @@ class Window(Window_):
         self.item_set(frame, tag, item)
         return item
 
-
-    def file_dialog(self, frame, tag, bind, cord_x, cord_y):
-        """pass"""
-        self.item_set(
-            frame,
-            tag,
-            tkinter.Button(
-                self.frame_get(frame),
-                text="Config find Exit",
-                command=partial(self.file_dialog_load, frame, bind),
-            ),
+    def file_dialog(self, frame, tag, action):
+        item = Button(
+            self.frame_get(frame),
+            "Config find Exit",
+            partial(self.file_dialog_load, frame, action),
         )
-        self.item_get(frame, tag).grid(column=cord_x, row=cord_y)
+        self.item_set(frame, tag, item)
+        return item
 
-    def image(self, frame, tag, _image, cord_x, cord_y):
-        """pass"""
-        self.item_set(
-            frame,
-            tag,
-            tkinter.Label(
-                self.frame_get(frame),
-                image=_image.image,
-            ),
+    def image(self, frame, tag, _image):
+        item = Label(
+            self.frame_get(frame),
+            image=_image.image,
         )
-        self.item_get(frame, tag).grid(column=cord_x, row=cord_y)
+        self.item_set(frame, tag, item)
+        return item
 
     def label(self, frame, tag, text):
         item = Label(
             self.frame_get(frame),
-            text,
+            text=text,
             width=100,
             height=4,
             fg="blue",
@@ -125,8 +113,6 @@ class Window(Window_):
         return item
 
     def main(self):
-        """def main"""
-
         self.root = tkinter.Tk()
         self.root.title(self.session.language.APPLICATION_TITLE)
 

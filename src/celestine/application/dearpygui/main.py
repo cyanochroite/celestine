@@ -46,8 +46,58 @@ class Label(Wiget):
             ),
         )
 
+class Image(Wiget):
+    def __init__(self, window, frame, tag, image):
+        super().__init__(
+            window,
+            (
+                dpg.add_image,
+                (image.name),
+                {
+                    "tag": window.item_key(frame, tag),
+                }
+            ),
+        )
 
-class Image():
+
+class Filee(Wiget):
+    def __init__(self, window, frame, tag, bind):
+        with dpg.file_dialog(
+            label="Demo File Dialog",
+            width=800,
+            height=600,
+            show=False,
+            callback=window.callback_file,
+            tag=window.item_key(frame, tag) + "__demo_filedialog",
+            user_data=bind,
+        ):
+            dpg.add_file_extension(".*", color=(255, 255, 255, 255))
+            dpg.add_file_extension(
+                "Source files (*.cpp *.h *.hpp){.cpp,.h,.hpp}",
+                color=(0, 255, 255, 255),
+            )
+            dpg.add_file_extension(".txt", color=(255, 255, 0, 255))
+            dpg.add_file_extension(
+                ".gif", color=(255, 0, 255, 255),
+                custom_text="header",
+            )
+            dpg.add_file_extension(".py", color=(0, 255, 0, 255))
+
+        super().__init__(
+            window,
+            (
+                dpg.add_button,
+                (),
+                {
+                    "tag": window.item_key(frame, tag),
+                    "label": "Show File Selector",
+                    "user_data": dpg.last_container(),
+                    "callback": window.callback_dvd,
+                }
+            ),
+        )
+
+class Image_load():
     """Something to hold the images in."""
 
     def __init__(self, file):
@@ -104,11 +154,13 @@ class Window(Window_):
         item = ""
         if len(array) > 0:
             item = array[0]
-        dpg.set_value(user_data, item)
+        tag = sender[0:4]  # hacky
+        tag = F"{tag}{user_data}"
+        dpg.set_value(tag, item)
 
     def image_load(self, file):
         """Load image."""
-        return Image(file)
+        return Image_load(file)
 
     def button(self, frame, tag, label, action):
         item = Button(
@@ -121,45 +173,25 @@ class Window(Window_):
         self.item_set(frame, tag, item)
         return item
 
-    def file_dialog(self, frame, tag, bind, cord_x, cord_y):
-        """Make file dialog."""
-        key = self.item_key(frame, tag)
-        with dpg.file_dialog(
-            label="Demo File Dialog",
-            width=800,
-            height=600,
-            show=False,
-            callback=self.callback_file,
-            tag=key + "__demo_filedialog",
-            user_data=bind,
-        ):
-            dpg.add_file_extension(".*", color=(255, 255, 255, 255))
-            dpg.add_file_extension(
-                "Source files (*.cpp *.h *.hpp){.cpp,.h,.hpp}",
-                color=(0, 255, 255, 255),
-            )
-            dpg.add_file_extension(".txt", color=(255, 255, 0, 255))
-            dpg.add_file_extension(
-                ".gif", color=(255, 0, 255, 255),
-                custom_text="header",
-            )
-            dpg.add_file_extension(".py", color=(0, 255, 0, 255))
+    def file_dialog(self, frame, tag, bind):
+        item = Filee(
+            self,
+            frame,
+            tag,
+            bind,
+        )
+        self.item_set(frame, tag, item)
+        return item
 
-        self.grid[cord_y][cord_x] = (dpg.add_button, (), {
-            "tag": key,
-            "label": "Show File Selector",
-            "user_data": dpg.last_container(),
-            "callback": self.callback_dvd,
-        })
-
-        self.item[tag] = self.grid[cord_y][cord_x]
-
-    def image(self, frame, tag, image, cord_x, cord_y):
-        """Make image."""
-        key = self.item_key(frame, tag)
-        self.grid[cord_y][cord_x] = (dpg.add_image, (image.name), {})
-        #image = dpg.add_image(image.name)
-        self.item[key] = image
+    def image(self, frame, tag, image):
+        item = Image(
+            self,
+            frame,
+            tag,
+            image,
+        )
+        self.item_set(frame, tag, item)
+        return item
 
     def label(self, frame, tag, text):
         item = Label(

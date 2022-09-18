@@ -93,7 +93,7 @@ class Wiget():
         self.cord_y = cord_y
         self.width = len(self.item)
         self.height = 1
-        self.frame.addstr(cord_y, cord_x, self.item)
+        self.frame.addstr(cord_y, cord_x * 20, self.item)
 
 
 class Button(Wiget):
@@ -162,11 +162,21 @@ class Window(Window_):
         self.item_set(frame, tag, item)
         return item
 
-    def file_dialog(self, frame, tag, _, cord_x, cord_y):
-        self.curses_string(frame, tag, "File dialog thing.", cord_x, cord_y)
+    def file_dialog(self, frame, tag, _):
+        item = Label(
+            self.frame_get(frame),
+            "File dialog thing.",
+        )
+        self.item_set(frame, tag, item)
+        return item
 
-    def image(self, frame, tag, _image, cord_x, cord_y):
-        self.curses_string(frame, tag, _image, cord_x, cord_y)
+    def image(self, frame, tag, _image):
+        item = Label(
+            self.frame_get(frame),
+            _image,
+        )
+        self.item_set(frame, tag, item)
+        return item
 
     def label(self, frame, tag, label):
         item = Label(
