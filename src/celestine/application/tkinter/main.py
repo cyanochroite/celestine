@@ -9,14 +9,36 @@ from functools import partial
 from celestine.application.window import Window as Window_
 
 
-class Button():
-    def __init__(self, frame, text, command, cord_x, cord_y):
-        self.button = tkinter.Button(
-            frame,
-            text=text,
-            command=command,
+class Wiget():
+    def __init__(self, item):
+        self.item = item
+
+    def grid(self, cord_x, cord_y):
+        self.item.grid(column=cord_x, row=cord_y)
+
+
+class Button(Wiget):
+    def __init__(self, frame, text, command):
+        super().__init__(
+            tkinter.Button(
+                frame,
+                text=text,
+                command=command,
+            )
         )
-        self.button.grid(column=cord_x, row=cord_y)
+
+
+class Label(Wiget):
+    def __init__(self, frame, text, width, height, fg):
+        super().__init__(
+            tkinter.Label(
+                frame,
+                text=text,
+                width=width,
+                height=height,
+                fg=fg,
+            )
+        )
 
 
 class Image():
@@ -56,18 +78,15 @@ class Window(Window_):
         """pass"""
         return Image(file)
 
-    def button(self, frame, tag, text, action, cord_x, cord_y):
-        self.item_set(
-            frame,
-            tag,
-            Button(
-                self.frame_get(frame),
-                text,
-                lambda: self.show_frame(action),
-                cord_x,
-                cord_y,
-            ),
+    def button(self, frame, tag, label, action):
+        item = Button(
+            self.frame_get(frame),
+            label,
+            lambda: self.show_frame(action),
         )
+        self.item_set(frame, tag, item)
+        return item
+
 
     def file_dialog(self, frame, tag, bind, cord_x, cord_y):
         """pass"""
@@ -94,20 +113,16 @@ class Window(Window_):
         )
         self.item_get(frame, tag).grid(column=cord_x, row=cord_y)
 
-    def label(self, frame, tag, text, cord_x, cord_y):
-        """pass"""
-        self.item_set(
-            frame,
-            tag,
-            tkinter.Label(
-                self.frame_get(frame),
-                text=text,
-                width=100,
-                height=4,
-                fg="blue",
-            ),
+    def label(self, frame, tag, text):
+        item = Label(
+            self.frame_get(frame),
+            text,
+            width=100,
+            height=4,
+            fg="blue",
         )
-        self.item_get(frame, tag).grid(column=cord_x, row=cord_y)
+        self.item_set(frame, tag, item)
+        return item
 
     def main(self):
         """def main"""

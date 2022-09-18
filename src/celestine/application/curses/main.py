@@ -68,13 +68,50 @@ class String(Wiget):
         window.addstr(self.cord_y, self.cord_x, self.text)
 
 
-class Button(String):
-    def __init__(self, x, y, text):
-        super().__init__(x, y, text)
-        self.type = "button"
+class Wiget():
+    def __init__(self, frame, item, kind):
+        self.frame = frame
+        self.item = item
+        self.type = kind
+        self.cord_x = 0
+        self.cord_y = 0
+        self.width = 0
+        self.height = 0
 
-    def draw(self, window):
-        window.addstr(self.cord_y, self.cord_x, self.text)
+    def select(self, cord_x, cord_y):
+        temp_a = cord_x >= self.cord_x
+        temp_b = cord_x < self.cord_x + self.width
+        temp_c = cord_y >= self.cord_y
+        temp_d = cord_y < self.cord_y + self.height
+        return temp_a and temp_b and temp_c and temp_d
+
+    def unselect(self, cord_x, cord_y):
+        return not self.select(cord_x, cord_y)
+
+    def grid(self, cord_x, cord_y):
+        self.cord_x = cord_x
+        self.cord_y = cord_y
+        self.width = len(self.item)
+        self.height = 1
+        self.frame.addstr(cord_y, cord_x, self.item)
+
+
+class Button(Wiget):
+    def __init__(self, frame, text):
+        super().__init__(
+            frame,
+            F"button:{text}",
+            "button",
+        )
+
+
+class Label(Wiget):
+    def __init__(self, frame, text):
+        super().__init__(
+            frame,
+            F"label:{text}",
+            "label",
+        )
 
 
 class Curses():
@@ -117,11 +154,13 @@ class Window(Window_):
         thing.draw(window)
         self.item_set(frame, tag, thing)
 
-    def button(self, frame, tag, text, action, cord_x, cord_y):
-        window = self.frame_get(frame)
-        thing = Button(cord_x, cord_y, F"button:{text}")
-        thing.draw(window)
-        self.item_set(frame, tag, thing)
+    def button(self, frame, tag, label, _):
+        item = Button(
+            self.frame_get(frame),
+            label,
+        )
+        self.item_set(frame, tag, item)
+        return item
 
     def file_dialog(self, frame, tag, _, cord_x, cord_y):
         self.curses_string(frame, tag, "File dialog thing.", cord_x, cord_y)
@@ -129,8 +168,13 @@ class Window(Window_):
     def image(self, frame, tag, _image, cord_x, cord_y):
         self.curses_string(frame, tag, _image, cord_x, cord_y)
 
-    def label(self, frame, tag, text, cord_x, cord_y):
-        self.curses_string(frame, tag, F"label:{text}", cord_x, cord_y)
+    def label(self, frame, tag, label):
+        item = Label(
+            self.frame_get(frame),
+            label,
+        )
+        self.item_set(frame, tag, item)
+        return item
 
     def main_it(self, stdscr):
         key = ord(' ')
@@ -173,7 +217,7 @@ class Window(Window_):
                 for key, thing in self.item[display_it_now].item.items():
                     if thing.select(cursor.cord_x - 1, cursor.cord_y - 1):
                         if thing.type == "button":
-                            new = thing.text.split(":")[1]
+                            new = thing.item.split(":")[1]
                             indexer = int(new.split(" ")[1])
 
                             frame.clear()

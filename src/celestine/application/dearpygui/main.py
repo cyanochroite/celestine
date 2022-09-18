@@ -5,20 +5,46 @@ import dearpygui.dearpygui as dpg
 from celestine.application.window import Window as Window_
 
 
-class Button():
-    def __init__(self, window, frame, tag, label, action, cord_x, cord_y):
-        key = window.item_key(frame, tag)
-        button = (
-            dpg.add_button,
-            (),
-            {
-                "tag": key,
-                "label": F"{tag}{label}",
-                "user_data": action,
-                "callback": window.show_frame,
-            }
+class Wiget():
+    def __init__(self, window, item):
+        self.window = window
+        self.item = item
+
+    def grid(self, cord_x, cord_y):
+        self.window.grid[cord_y][cord_x] = self.item
+
+
+class Button(Wiget):
+    def __init__(self, window, frame, tag, label, action):
+        super().__init__(
+            window,
+            (
+                dpg.add_button,
+                (),
+                {
+                    "tag": window.item_key(frame, tag),
+                    "label": F"{tag}{label}",
+                    "user_data": action,
+                    "callback": window.show_frame,
+                }
+            ),
         )
-        window.grid[cord_y][cord_x] = button
+
+
+class Label(Wiget):
+    def __init__(self, window, frame, tag, label, text):
+        super().__init__(
+            window,
+            (
+                dpg.add_text,
+                (text),
+                {
+                    "tag": window.item_key(frame, tag),
+                    "label": F"{tag}{label}",
+                    "show_label": True,
+                }
+            ),
+        )
 
 
 class Image():
@@ -84,20 +110,16 @@ class Window(Window_):
         """Load image."""
         return Image(file)
 
-    def button(self, frame, tag, label, action, cord_x, cord_y):
-        self.item_set(
+    def button(self, frame, tag, label, action):
+        item = Button(
+            self,
             frame,
             tag,
-            Button(
-                self,
-                frame,
-                tag,
-                label,
-                action,
-                cord_x,
-                cord_y
-            ),
+            label,
+            action,
         )
+        self.item_set(frame, tag, item)
+        return item
 
     def file_dialog(self, frame, tag, bind, cord_x, cord_y):
         """Make file dialog."""
@@ -139,13 +161,16 @@ class Window(Window_):
         #image = dpg.add_image(image.name)
         self.item[key] = image
 
-    def label(self, frame, tag, text, cord_x, cord_y):
-        """Make a label."""
-        key = self.item_key(frame, tag)
-        self.grid[cord_y][cord_x] = (dpg.add_text, (text), {
-            "tag": key, "label": "Label", "show_label": True})
-    #    text = dpg.add_text(text, tag=key, label="Label", show_label=True)
-        self.item[key] = text
+    def label(self, frame, tag, text):
+        item = Label(
+            self,
+            frame,
+            tag,
+            "Label",
+            text,
+        )
+        self.item_set(frame, tag, item)
+        return item
 
     def main(self):
         """def main"""
