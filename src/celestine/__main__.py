@@ -1,4 +1,3 @@
-"""This is the main file. It runs first."""
 import os
 import sys
 

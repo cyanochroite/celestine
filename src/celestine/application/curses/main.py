@@ -39,7 +39,7 @@ class Cursor():
         self.cord_y = cord_y % self.height
 
 
-class Wiget():
+class Widget():
     def __init__(self, column, row, width, height):
         self.cord_x = column
         self.cord_y = row
@@ -58,7 +58,7 @@ class Wiget():
         return not self.select(cord_x, cord_y)
 
 
-class String(Wiget):
+class String(Widget):
     def __init__(self, x, y, text):
         super().__init__(x, y, len(text), 1)
         self.text = text
@@ -68,7 +68,7 @@ class String(Wiget):
         window.addstr(self.cord_y, self.cord_x, self.text)
 
 
-class Wiget():
+class Widget():
     def __init__(self, frame, item, kind):
         self.frame = frame
         self.item = item
@@ -96,7 +96,7 @@ class Wiget():
         self.frame.addstr(cord_y, cord_x * 20, self.item)
 
 
-class Button(Wiget):
+class Button(Widget):
     def __init__(self, frame, text):
         super().__init__(
             frame,
@@ -105,7 +105,7 @@ class Button(Wiget):
         )
 
 
-class Label(Wiget):
+class Label(Widget):
     def __init__(self, frame, text):
         super().__init__(
             frame,

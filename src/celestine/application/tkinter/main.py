@@ -1,15 +1,13 @@
 """Package tkinter."""
 # https://docs.python.org/3/library/tk.html
 # https://www.tcl.tk/man/tcl8.6/TkCmd/contents.html
-import tkinter
-import tkinter.ttk
-import tkinter.filedialog
 from functools import partial
 
 from celestine.application.window import Window as Window_
+from celestine.package import tkinter
 
 
-class Wiget():
+class Widget():
     def __init__(self, item):
         self.item = item
 
@@ -17,7 +15,7 @@ class Wiget():
         self.item.grid(column=cord_x, row=cord_y)
 
 
-class Button(Wiget):
+class Button(Widget):
     def __init__(self, frame, text, command):
         super().__init__(
             tkinter.Button(
@@ -28,7 +26,7 @@ class Button(Wiget):
         )
 
 
-class Label(Wiget):
+class Label(Widget):
     def __init__(self, frame, **kwargs):
         super().__init__(
             tkinter.Label(
@@ -69,7 +67,8 @@ class Window(Window_):
                 ("all files", "*.*")
             )
         )
-        self.item_get(frame, tag).item.configure(text="File Opened: " + filename)
+        self.item_get(frame, tag).item.configure(
+            text="File Opened: " + filename)
 
     def image_load(self, file):
         """pass"""
