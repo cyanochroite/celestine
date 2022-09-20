@@ -10,6 +10,7 @@ from celestine.package import tkinter
 class Widget():
     def __init__(self, item):
         self.item = item
+        self.item.pack(side = tkinter.LEFT)
 
     def grid(self, cord_x, cord_y):
         self.item.grid(column=cord_x, row=cord_y)
@@ -47,6 +48,73 @@ class Image():
         self.name = file
 
 
+
+class Frame():
+    def item_get(self, tag):
+        return self.item[tag]
+
+    def item_set(self, tag, value):
+        self.item[tag] = value
+        return value
+
+    def __init__(self, window):
+        self.window = window
+        self.item = {}
+        self.frame = tkinter.Frame(
+            self.window.root,
+            padx=5,
+            pady=5,
+            bg="skyblue",
+        )
+
+    def __enter__(self):
+        self.frame.grid(row=0, column=0, sticky="nsew")
+        self.index = len(self.window.item)
+        self.window.frame_set(self.frame)
+        return self
+
+    def __exit__(self, *_):
+        return False
+
+    def row(self, tag):
+        return self.item_set(tag, Row(self, tag))
+
+
+class Row():
+    def __init__(self, frame, tag):
+        self.frame = frame
+        self.tag = tag
+        self.row = tkinter.Frame(frame.frame)
+
+    def __enter__(self):
+        self.row.pack()
+        return self
+
+    def __exit__(self, *_):
+        return False
+
+    def button(self, tag, label, action):
+        return self.frame.item_set(
+            tag,
+            Button(
+                self.row,
+                label,
+                lambda: self.frame.window.show_frame(action),
+            ),
+        )
+
+    def label(self, tag, text):
+        return self.frame.item_set(
+            tag,
+            Label(
+                self.row,
+                text=text,
+                width=100,
+                height=4,
+                fg="blue",
+            ),
+        )
+
 class Window(Window_):
 
     def __init__(self, session):
@@ -74,7 +142,7 @@ class Window(Window_):
         """pass"""
         return Image(file)
 
-    def button(self, frame, tag, label, action):
+    def _button(self, frame, tag, label, action):
         item = Button(
             self.frame_get(frame),
             label,
@@ -100,16 +168,23 @@ class Window(Window_):
         self.item_set(frame, tag, item)
         return item
 
-    def label(self, frame, tag, text):
+    def _label(self, index, frame, tag, text):
         item = Label(
-            self.frame_get(frame),
+            frame,
             text=text,
             width=100,
             height=4,
             fg="blue",
         )
-        self.item_set(frame, tag, item)
+        self.item_set(index, tag, item)
         return item
+
+    def frame(self):
+        return Frame(self)
+
+    def _row(self, index, tag):
+        frame = self.frame_get(index)
+        return Row(frame, tag)
 
     def main(self):
         self.root = tkinter.Tk()
@@ -120,14 +195,8 @@ class Window(Window_):
         self.root.maxsize(3840, 2160)
         self.root.config(bg="blue")
 
-        index = 0
         for window in self.session.window:
-            frame = tkinter.Frame(self.root, padx=5, pady=5, bg="skyblue")
-            frame.grid(row=0, column=0, sticky="nsew")
-
-            self.frame_set(index, frame)
-            window.main(self.session, index, self)
-            index += 1
+            window.main(self)
 
         self.show_frame(0)
 

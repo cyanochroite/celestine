@@ -1,4 +1,7 @@
-def main(_, frame, window):
-    window.label(frame, "title", "Page 2").grid(0, 0)
-    window.button(frame, "previous", "Page 1", 1).grid(0, 1)
-    window.button(frame, "next", "Page 0", 0).grid(0, 2)
+def main(window):
+    with window.frame() as frame:
+        with frame.row("head") as row:
+            row.label("title", "Page 2")
+        with frame.row("body") as row:
+            row.button("past", "Page 1", 1)
+            row.button("next", "Page 0", 0)

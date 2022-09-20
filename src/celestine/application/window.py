@@ -38,7 +38,7 @@ class Window():
 
     def __init__(self, session):
         self.session = session
-        self.item = {}
+        self.item = []
         self.grid = []
         self.cols = 4
         self.rows = 8
@@ -52,5 +52,5 @@ class Window():
     def frame_get(self, index):
         return self.item[index].frame
 
-    def frame_set(self, index, value):
-        self.item[index] = Frame(value)
+    def frame_set(self, value):
+        self.item.append(Frame(value))
