@@ -1,9 +1,14 @@
-"""Package curses."""
+# <pep8-80 compliant>
+"""Package blender."""
 
-
-def argument(arguments):
+def argument(argument):
     """Build up the argument."""
-    return arguments
+    verify = argument.subparser.add_parser(
+        "verify",
+        help="you are a fish",
+    )
+
+    return argument
 
 
 def attribute():
@@ -35,10 +40,4 @@ def image_format():
         ".tif",
         ".tiff",
         ".webp",
-        ".pbm",
-        ".pgm",
-        ".ppm",
-        ".pnm",
-        ".gif",
-        ".png",
     ]

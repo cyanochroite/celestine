@@ -1,21 +1,46 @@
 import celestine.core.load as load
+import celestine.core.os as os
 
-image = {}
+#image = {}
+image = []
 
-def setup(session):
+
+def execute(session, directory):
+    (path, file) = os.walk_directory(directory)
+    images = []
+    for (filenames) in file:
+        (dirpath, name) = filenames
+        ext = os.file_extension(name).lower()
+        if ext in session.image_format:
+            merge = os.join(dirpath, name)
+            images.append(merge)
+    return images
+
+
+def setup(session, window):
     global image
-    window = session.module
-    directory =  session.directory
-    image1 = load.path(directory, "celestine", "file", "anitest.gif")
-    image2 = load.path(directory, "celestine", "file", "test4.gif")
-    image["image1"] = window.image_load(image1)
-    image["image2"] = window.image_load(image2)
+    directory = session.directory
+
+    directory = "D:\\file\\"
+    directory = "D:\\todo\\"
+    directory = "D:\\grid\\"
+    images = execute(session, directory)
+    for imaged in images:
+        image.append(window.image_load(imaged))
 
 
-def view(session):
+def main(session, frame, window):
     global image
-    window = session.module
-    window.image("00", image["image1"])
-    window.image("01", image["image2"])
-    window.label("Settings", "no puppy. File Explorer using Tkinter")
-    window.file_dialog("set", "Settings")
+
+    setup(session, window)
+
+    window.label(frame, "Settings",
+                 "no puppy. File Explorer using Tkinter").grid(0, 0)
+    window.file_dialog(frame, "set", "Settings").grid(0, 1)
+
+    index = 8
+    for imaged in image:
+        x = index % 4
+        y = index // 4
+        window.image(frame, F"{x}-{y}", imaged).grid(x, y)
+        index += 1

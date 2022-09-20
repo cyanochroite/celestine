@@ -156,19 +156,18 @@ celestine.rtfd.io
 PACKAGE
 python -m pip install --upgrade pip
 python -m pip install --upgrade build
-python -m build
 python -m pip install --upgrade twine
+python -m build
+python -m twine check --strict dist/*
 
 
 # test
-python -m twine check --strict dist/*
 python -m twine upload --verbose --repository testpypi dist/*
 python -m pip install --index-url https://test.pypi.org/simple/ --no-deps celestine
 python -m pip install --index-url https://test.pypi.org/simple/ celestine
 
 
 # real
-python -m twine check --strict dist/*
 python -m twine upload --verbose dist/*
 python -m pip install celestine
 

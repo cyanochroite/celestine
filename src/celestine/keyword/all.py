@@ -204,6 +204,7 @@ APPLICATION = "application"
 TERMINAL = "terminal"
 
 application = [
+    "blender",
     CELESTINE,
     CURSES,
     DEARPYGUI,

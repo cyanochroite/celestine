@@ -1,6 +1,8 @@
 __pycache__/
 dist/
-docs/.vscode/
 src/celestine.egg-info/
+src/celestine.wpu
+src/celestine.wpr
 *.ini
-src/.coverage
+.coverage
+.vscode

@@ -1,16 +1,32 @@
 """Package dearpygui."""
 
 
-def argument(argument):
+def argument(arguments):
     """Build up the argument."""
-    return argument
+    return arguments
 
 
 def attribute():
     """Build up the attribute file."""
-    return []
+    return ()
 
 
-def default(default):
+def default():
     """Build up the default file."""
-    return default
+    return ()
+
+
+def image_format():
+    return [
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".bmp",
+        ".gif",
+        ".hdr",
+        ".pic",
+        ".pbm",
+        ".pgm",
+        ".ppm",
+        ".pnm",
+    ]

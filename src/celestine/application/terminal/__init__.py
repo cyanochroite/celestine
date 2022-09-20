@@ -1,31 +1,20 @@
-import configparser
-
-
-from .keyword import CELESTINE
-
-
-from celestine.application.terminal.keyword import APPLICATION
-from celestine.application.terminal.keyword import LANGUAGE
-from celestine.application.terminal.keyword import PYTHON
-
-
-TERMINAL = "terminal"
-ENGLISH = "english"
-PYTHON_3_10 = "python_3_10"
-CELESTINE = "celestine"
-
+"""The terminal application."""
 
 
 def argument(argument):
+    """Build up the argument."""
     return argument
 
 
 def attribute():
     """Build up the attribute file."""
-    return []
+    return ()
 
 
-
-def default(default):
+def default():
     """Build up the default file."""
-    return default
+    return ()
+
+
+def image_format():
+    return []

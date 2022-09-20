@@ -19,9 +19,13 @@ def argument(argument):
 
 def attribute():
     """Build up the attribute file."""
-    return []
+    return ()
 
 
-def default(default):
+def default():
     """Build up the default file."""
-    return default
+    return ()
+
+
+def image_format():
+    return []
