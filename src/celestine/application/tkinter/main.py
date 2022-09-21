@@ -10,7 +10,7 @@ from celestine.package import tkinter
 class Widget():
     def __init__(self, item):
         self.item = item
-        self.item.pack(side = tkinter.LEFT)
+        self.item.pack(side=tkinter.LEFT)
 
     def grid(self, cord_x, cord_y):
         self.item.grid(column=cord_x, row=cord_y)
@@ -182,9 +182,6 @@ class Window(Window_):
     def frame(self):
         return Frame(self)
 
-    def _row(self, index, tag):
-        frame = self.frame_get(index)
-        return Row(frame, tag)
 
     def main(self):
         self.root = tkinter.Tk()
