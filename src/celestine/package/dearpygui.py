@@ -30,3 +30,5 @@ table = dearpygui.dearpygui.table
 table_row = dearpygui.dearpygui.table_row
 texture_registry = dearpygui.dearpygui.texture_registry
 window = dearpygui.dearpygui.window
+
+group = dearpygui.dearpygui.group

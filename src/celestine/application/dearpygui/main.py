@@ -12,35 +12,22 @@ class Widget():
 
 
 class Button(Widget):
-    def __init__(self, window, frame, tag, label, action):
-        super().__init__(
-            window,
-            (
-                dearpygui.add_button,
-                (),
-                {
-                    "tag": window.item_key(frame, tag),
-                    "label": F"{tag}{label}",
-                    "user_data": action,
-                    "callback": window.show_frame,
-                }
-            ),
+    def __init__(self, sender, tag, label, action, function):
+        dearpygui.add_button(
+            tag=tag,
+            label= label,
+            user_data= (sender, action),
+            callback=function,
         )
 
 
 class Label(Widget):
-    def __init__(self, window, frame, tag, label, text):
-        super().__init__(
-            window,
-            (
-                dearpygui.add_text,
-                (text),
-                {
-                    "tag": window.item_key(frame, tag),
-                    "label": F"{tag}{label}",
-                    "show_label": True,
-                }
-            ),
+    def __init__(self, tag, text, label):
+        dearpygui.add_text(
+            text,
+            tag=tag,
+            label=F"{tag}{label}",
+            show_label=True,
         )
 
 
@@ -118,6 +105,70 @@ class Image_load():
             )
 
 
+class Frame():
+    def item_get(self, tag):
+        return self.item[tag]
+
+    def item_set(self, tag, value):
+        self.item[tag] = value
+        return value
+
+    def __init__(self, window, tag):
+        self.window = window
+        self.item = {}
+        self.tag = tag
+        self.frame = dearpygui.window(tag=tag)
+
+    def __enter__(self):
+        self.frame.__enter__()
+        dearpygui.configure_item(self.tag, show=False)
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.frame.__exit__(exc_type, exc_value, traceback)
+        return False
+
+    def row(self, tag):
+        return self.item_set(tag, Row(self, tag))
+
+
+class Row():
+    def __init__(self, frame, tag):
+        self.frame = frame
+        self.tag = tag
+        self.row = dearpygui.group(horizontal=True)
+
+    def __enter__(self):
+        self.row.__enter__()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.row.__exit__(exc_type, exc_value, traceback)
+        return False
+
+    def button(self, tag, label, action):
+        return self.frame.item_set(
+            tag,
+            Button(
+                self.frame.tag,
+                self.frame.window.item_key(self.frame.tag, tag),
+                label,
+                action,
+                self.frame.window.show_frame_simple,
+            ),
+        )
+
+    def label(self, tag, text):
+        return self.frame.item_set(
+            tag,
+            Label(
+                self.frame.window.item_key(self.frame.tag, tag),
+                text,
+                "Label",
+            ),
+        )
+
+
 class Window(Window_):
 
     def __init__(self, session):
@@ -130,18 +181,16 @@ class Window(Window_):
     def frame_key(self, index):
         return F"Page {index}"
 
-    def show_frame(self, sender, app_data, user_data):
+    def show_frame_simple(self, sender, app_data, user_data):
         """Some other callback thing."""
-        current = int(sender.split("_")[1])
-        index = self.frame_get(current)
-        dearpygui.hide_item(index)
-        # to field
-        self.show_frame_simple(user_data)
+        (sent, frame) = user_data
+        dearpygui.hide_item(sent)
+        self.show_frame(frame)
 
-    def show_frame_simple(self, index):
-        frame = self.frame_get(index)
-        dearpygui.show_item(frame)
-        dearpygui.set_primary_window(frame, True)
+    def show_frame(self, index):
+        tag = self.item[index].tag
+        dearpygui.show_item(tag)
+        dearpygui.set_primary_window(tag, True)
 
     def callback_dvd(self, sender, app_data, user_data):
         """Some other callback thing."""
@@ -203,6 +252,12 @@ class Window(Window_):
         self.item_set(frame, tag, item)
         return item
 
+    def frame(self):
+        index = F"Page_{len(self.item)}"
+        value = Frame(self, index)
+        self.item.append(value)
+        return value
+
     def main(self):
         """def main"""
 
@@ -227,46 +282,10 @@ class Window(Window_):
             clear_color=(0, 0, 0)
         )
 
-        index = 0
         for window in self.session.window:
-            self.grid = []
-            for rowrow in range(self.rows):
-                temp = []
-                for colcol in range(self.cols):
-                    temp.append(None)
-                self.grid.append(temp)
+            window.main(self)
 
-            self.grid[0][0] = (dearpygui.add_text,
-                               (f"moo Row{0} Column{4}"), {})
-            self.grid[1][0] = (dearpygui.add_text,
-                               (f"moo Row{1} Column{6}"), {})
-            self.grid[2][0] = (dearpygui.add_text,
-                               (f"moo Row{2} Column{8}"), {})
-
-            key = self.frame_key(index)
-            self.frame_set(index, key)
-
-            window.main(self.session, index, self)
-
-            with dearpygui.window(tag=key):
-                with dearpygui.table(header_row=False):
-                    for colcol in range(self.cols):
-                        dearpygui.add_table_column()
-                    for index_a in range(self.rows):
-                        with dearpygui.table_row():
-                            for index_b in range(self.cols):
-                                if self.grid[index_a][index_b]:
-                                    (func, args,
-                                     kw) = self.grid[index_a][index_b]
-                                    if args:
-                                        func(args, **kw)
-                                    else:
-                                        func(**kw)
-
-            dearpygui.configure_item(key, show=False)
-            index += 1
-
-        self.show_frame_simple(0)
+        self.show_frame(0)
 
         dearpygui.setup_dearpygui()
         dearpygui.show_viewport(minimized=False, maximized=False)
