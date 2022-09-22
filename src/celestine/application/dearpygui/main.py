@@ -3,22 +3,37 @@ from celestine.package import dearpygui
 
 
 class Widget():
-    def __init__(self, window, item):
-        self.window = window
-        self.item = item
-
-    def grid(self, cord_x, cord_y):
-        self.window.grid[cord_y][cord_x] = self.item
+    pass
 
 
 class Button(Widget):
-    def __init__(self, sender, tag, label, action, function):
+    def __init__(self, tag, label, sender, action, function):
         dearpygui.add_button(
             tag=tag,
-            label= label,
-            user_data= (sender, action),
+            label=label,
+            user_data=(sender, action),
             callback=function,
         )
+
+
+class Image(Widget):
+    def __init__(self, tag, file):
+        image = dearpygui.load_image(file) or (0, 0, 0, [])
+        self.width = image[0]
+        self.height = image[1]
+        self.channels = image[2]
+        self.image = image[3]
+        self.name = file
+
+        with dearpygui.texture_registry(show=False):
+            dearpygui.add_static_texture(
+                width=self.width,
+                height=self.height,
+                default_value=self.image,
+                tag=self.name
+            )
+
+        dearpygui.add_image(self.name, tag=tag)
 
 
 class Label(Widget):
@@ -28,20 +43,6 @@ class Label(Widget):
             tag=tag,
             label=F"{tag}{label}",
             show_label=True,
-        )
-
-
-class Image(Widget):
-    def __init__(self, window, frame, tag, image):
-        super().__init__(
-            window,
-            (
-                dearpygui.add_image,
-                (image.name),
-                {
-                    "tag": window.item_key(frame, tag),
-                }
-            ),
         )
 
 
@@ -81,28 +82,6 @@ class Filee(Widget):
                 }
             ),
         )
-
-
-class Image_load():
-    """Something to hold the images in."""
-
-    def __init__(self, file):
-        image = dearpygui.load_image(file)
-        if image is None:
-            image = (0, 0, 0, [])
-        self.width = image[0]
-        self.height = image[1]
-        #self.channels = image[2]
-        self.image = image[3]
-        self.name = file
-
-        with dearpygui.texture_registry(show=False):
-            dearpygui.add_static_texture(
-                width=self.width,
-                height=self.height,
-                default_value=self.image,
-                tag=self.name
-            )
 
 
 class Frame():
@@ -150,11 +129,20 @@ class Row():
         return self.frame.item_set(
             tag,
             Button(
-                self.frame.tag,
                 self.frame.window.item_key(self.frame.tag, tag),
                 label,
+                self.frame.tag,
                 action,
                 self.frame.window.show_frame_simple,
+            ),
+        )
+
+    def image(self, tag, image):
+        return self.frame.item_set(
+            tag,
+            Image(
+                self.frame.window.item_key(self.frame.tag, tag),
+                image,
             ),
         )
 
@@ -173,7 +161,6 @@ class Window(Window_):
 
     def __init__(self, session):
         super().__init__(session)
-        ignore = None
 
     def item_key(self, frame, tag):
         return F"_{frame}__{tag}"
@@ -206,48 +193,12 @@ class Window(Window_):
         tag = F"{tag}{user_data}"
         dearpygui.set_value(tag, item)
 
-    def image_load(self, file):
-        """Load image."""
-        return Image_load(file)
-
-    def button(self, frame, tag, label, action):
-        item = Button(
-            self,
-            frame,
-            tag,
-            label,
-            action,
-        )
-        self.item_set(frame, tag, item)
-        return item
-
     def file_dialog(self, frame, tag, bind):
         item = Filee(
             self,
             frame,
             tag,
             bind,
-        )
-        self.item_set(frame, tag, item)
-        return item
-
-    def image(self, frame, tag, image):
-        item = Image(
-            self,
-            frame,
-            tag,
-            image,
-        )
-        self.item_set(frame, tag, item)
-        return item
-
-    def label(self, frame, tag, text):
-        item = Label(
-            self,
-            frame,
-            tag,
-            "Label",
-            text,
         )
         self.item_set(frame, tag, item)
         return item

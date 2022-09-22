@@ -7,6 +7,64 @@ from celestine.application.window import Frame as Frame_
 HEIGHT = 24
 WIDTH = 80
 
+class Widget():
+    def __init__(self, frame, text, kind):
+        self.frame = frame
+        self.text = text
+        self.type = kind
+        self.cord_x = 0
+        self.cord_y = 0
+        self.width = 0
+        self.height = 0
+
+    def select(self, cord_x, cord_y):
+        temp_a = cord_x >= self.cord_x
+        temp_b = cord_x < self.cord_x + self.width
+        temp_c = cord_y >= self.cord_y
+        temp_d = cord_y < self.cord_y + self.height
+        return temp_a and temp_b and temp_c and temp_d
+
+    def unselect(self, cord_x, cord_y):
+        return not self.select(cord_x, cord_y)
+
+    def grid(self, cord_x, cord_y):
+        self.cord_x = cord_x
+        self.cord_y = cord_y
+        self.width = len(self.text)
+        self.height = 1
+        self.frame.addstr(cord_y, cord_x * 20, self.text)
+        return self
+
+
+
+
+class Button(Widget):
+    def __init__(self, frame, text, action):
+        super().__init__(
+            frame,
+            F"button:{text}",
+            "button",
+        )
+        self.action = action
+
+
+class Image(Widget):
+    def __init__(self, frame, text):
+        super().__init__(
+            frame,
+            F"image:{text}",
+            "image",
+        )
+
+class Label(Widget):
+    def __init__(self, frame, text):
+        super().__init__(
+            frame,
+            F"label:{text}",
+            "label",
+        )
+
+
 
 class Frame(Frame_):
     def clear(self):
@@ -79,6 +137,15 @@ class Row():
             ),
         ).grid(self.frame.cord_x, self.frame.cords_y())
 
+    def image(self, tag, label):
+        return self.frame.item_set(
+            tag,
+            Image(
+                self.row,
+                label,
+            ),
+        ).grid(self.frame.cord_x, self.frame.cords_y())
+
     def label(self, tag, label):
         return self.frame.item_set(
             tag,
@@ -112,64 +179,8 @@ class Cursor():
         self.cord_y = cord_y % self.height
 
 
-class Widget():
-    def __init__(self, frame, text, kind):
-        self.frame = frame
-        self.text = text
-        self.type = kind
-        self.cord_x = 0
-        self.cord_y = 0
-        self.width = 0
-        self.height = 0
 
-    def select(self, cord_x, cord_y):
-        temp_a = cord_x >= self.cord_x
-        temp_b = cord_x < self.cord_x + self.width
-        temp_c = cord_y >= self.cord_y
-        temp_d = cord_y < self.cord_y + self.height
-        return temp_a and temp_b and temp_c and temp_d
-
-    def unselect(self, cord_x, cord_y):
-        return not self.select(cord_x, cord_y)
-
-    def grid(self, cord_x, cord_y):
-        self.cord_x = cord_x
-        self.cord_y = cord_y
-        self.width = len(self.text)
-        self.height = 1
-        self.frame.addstr(cord_y, cord_x * 20, self.text)
-        return self
-
-
-class String(Widget):
-    def __init__(self, x, y, text):
-        super().__init__(x, y, len(text), 1)
-        self.text = text
-        self.type = "string"
-
-    def draw(self, window):
-        window.addstr(self.cord_y, self.cord_x, self.text)
-
-
-class Button(Widget):
-    def __init__(self, frame, text, action):
-        super().__init__(
-            frame,
-            F"button:{text}",
-            "button",
-        )
-        self.action = action
-
-
-class Label(Widget):
-    def __init__(self, frame, text):
-        super().__init__(
-            frame,
-            F"label:{text}",
-            "label",
-        )
-
-
+# put into package
 class Curses():
     @staticmethod
     def window(column, row, width, height):
@@ -190,6 +201,15 @@ class Curses():
     @staticmethod
     def doupdate():
         curses.doupdate()
+
+class String(Widget):
+    def __init__(self, x, y, text):
+        super().__init__(x, y, len(text), 1)
+        self.text = text
+        self.type = "string"
+
+    def draw(self, window):
+        window.addstr(self.cord_y, self.cord_x, self.text)
 
 
 class Window(Window_):

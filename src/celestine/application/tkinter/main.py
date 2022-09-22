@@ -12,9 +12,6 @@ class Widget():
         self.item = item
         self.item.pack(side=tkinter.LEFT)
 
-    def grid(self, cord_x, cord_y):
-        self.item.grid(column=cord_x, row=cord_y)
-
 
 class Button(Widget):
     def __init__(self, frame, text, command):
@@ -27,6 +24,21 @@ class Button(Widget):
         )
 
 
+class Image(Widget):
+    def __init__(self, frame, file):
+        image = tkinter.PhotoImage(file=file)
+        self.height = image.height()
+        self.image = image
+        self.width = image.width()
+        self.name = file
+        super().__init__(
+            tkinter.Label(
+                frame,
+                image=image,
+            )
+        )
+
+
 class Label(Widget):
     def __init__(self, frame, **kwargs):
         super().__init__(
@@ -35,18 +47,6 @@ class Label(Widget):
                 **kwargs,
             )
         )
-
-
-class Image():
-    """Holds an image."""
-
-    def __init__(self, file):
-        _image = tkinter.PhotoImage(file=file)
-        self.height = _image.height()
-        self.image = _image
-        self.width = _image.width()
-        self.name = file
-
 
 
 class Frame():
@@ -103,6 +103,15 @@ class Row():
             ),
         )
 
+    def image(self, tag, file):
+        return self.frame.item_set(
+            tag,
+            Image(
+                self.row,
+                file,
+            ),
+        )
+
     def label(self, tag, text):
         return self.frame.item_set(
             tag,
@@ -114,6 +123,7 @@ class Row():
                 fg="blue",
             ),
         )
+
 
 class Window(Window_):
 
@@ -138,19 +148,6 @@ class Window(Window_):
         self.item_get(frame, tag).item.configure(
             text="File Opened: " + filename)
 
-    def image_load(self, file):
-        """pass"""
-        return Image(file)
-
-    def _button(self, frame, tag, label, action):
-        item = Button(
-            self.frame_get(frame),
-            label,
-            lambda: self.show_frame(action),
-        )
-        self.item_set(frame, tag, item)
-        return item
-
     def file_dialog(self, frame, tag, action):
         item = Button(
             self.frame_get(frame),
@@ -160,28 +157,8 @@ class Window(Window_):
         self.item_set(frame, tag, item)
         return item
 
-    def image(self, frame, tag, _image):
-        item = Label(
-            self.frame_get(frame),
-            image=_image.image,
-        )
-        self.item_set(frame, tag, item)
-        return item
-
-    def _label(self, index, frame, tag, text):
-        item = Label(
-            frame,
-            text=text,
-            width=100,
-            height=4,
-            fg="blue",
-        )
-        self.item_set(index, tag, item)
-        return item
-
     def frame(self):
         return Frame(self)
-
 
     def main(self):
         self.root = tkinter.Tk()
