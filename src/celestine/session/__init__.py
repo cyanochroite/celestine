@@ -55,11 +55,13 @@ class Session():
             attribute.application,
             attribute.task,
         )
+
+        window = load.module("application", "main")
         self.window = []
-        #self.window.append(load.module("window", "main"))
-        self.window.append(load.module("window", "zero"))
-        self.window.append(load.module("window", "one"))
-        self.window.append(load.module("window", "two"))
+        # self.window.append(window.main)
+        self.window.append(window.zero)
+        self.window.append(window.one)
+        self.window.append(window.two)
 
     def add_configuration(self, configuration, module, application):
         """Build up the configuration file."""
@@ -74,5 +76,8 @@ class Session():
         return configuration
 
     def main(self):
-        window = self.task.Window(self)
-        return window.main()
+        with self.task.Window(self) as application:
+            for window in self.window:
+                with application.frame() as frame:
+                    window(frame)
+            application.show_frame(0)

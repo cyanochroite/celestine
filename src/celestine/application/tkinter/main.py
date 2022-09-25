@@ -160,7 +160,7 @@ class Window(Window_):
     def frame(self):
         return Frame(self)
 
-    def main(self):
+    def __enter__(self):
         self.root = tkinter.Tk()
         self.root.title(self.session.language.APPLICATION_TITLE)
 
@@ -168,10 +168,9 @@ class Window(Window_):
         self.root.minsize(640, 480)
         self.root.maxsize(3840, 2160)
         self.root.config(bg="blue")
+        return self
 
-        for window in self.session.window:
-            window.main(self)
-
-        self.show_frame(0)
-
+    def __exit__(self, *_):
         self.root.mainloop()
+        return False
+
