@@ -8,6 +8,6 @@ sys.path.append(directory)
 
 
 module = __import__("celestine")
-args = sys.argv[1:]
-main = module.main(directory, args, True)
+argv = sys.argv[1:]
+main = module.main(directory, argv, True)
 sys.exit(main)

@@ -98,6 +98,7 @@ class Frame(Frame_):
         self.cord_y = 0
 
     def __enter__(self):
+        # clear
         self.clear()
         return self
 
@@ -216,11 +217,11 @@ class Window(Window_):
 
     def __init__(self, session):
         super().__init__(session)
-        ignore = None
+        self.window = 0
         self.now_frame = None
 
     def show_frame(self, index):
-        return self.frame_get(index)
+        self.window = index
 
     def image_load(self, file):
         return file
@@ -235,6 +236,7 @@ class Window(Window_):
         item = Button(
             self.frame_get(frame),
             label,
+            None,
         )
         self.item_set(frame, tag, item)
         return item
@@ -297,9 +299,9 @@ class Window(Window_):
                 for key, thing in self.now_frame.item.items():
                     if thing.select(cursor.cord_x - 1, cursor.cord_y - 1):
                         if thing.type == "button":
-                            indexer = thing.action
+                            self.show_frame(thing.action)
 
-                            self.session.window[indexer].main(self)
+                            self.session.window[self.window].main(self)
 
                             #  refresh
                             stdscr.noutrefresh()
