@@ -7,7 +7,6 @@ directory = os.path.dirname(path)
 sys.path.append(directory)
 
 
-module = __import__("celestine")
+celestine = __import__("celestine")
 argv = sys.argv[1:]
-main = module.main(directory, argv, True)
-sys.exit(main)
+celestine.main(directory, argv, True)
