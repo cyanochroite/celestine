@@ -8,7 +8,7 @@ from celestine.application.blender import UV
 from booru import preferences
 
 import sys
-import celestine 
+import celestine
 
 ready = False
 Image_Formats = [
@@ -67,8 +67,6 @@ class BOORU_mesh_make(bpy.types.Operator):
             object.data.materials.append(material)
         print("done")
         return {'FINISHED'}
-
-
 
 
 class BOORU_main(bpy.types.Panel):

@@ -34,17 +34,8 @@ def unregister():
     load.module(BLENDER).unregister()
 
 
-def main(directory, argv, exit_on_error, window=None):
+def main(directory, argv, exit_on_error, window):
     """Run the main program."""
-    if not window:
-        module = load.module("application", "main")
-        window = [
-            # module.main,
-            module.zero,
-            module.one,
-            module.two,
-        ]
-
     session = Session(directory, argv, exit_on_error)
     with session.task.Window(session) as application:
         for _window in window:
