@@ -7,6 +7,7 @@ from celestine.application.window import Frame as Frame_
 HEIGHT = 24
 WIDTH = 80
 
+
 class Widget():
     def __init__(self, frame, text, kind):
         self.frame = frame
@@ -36,8 +37,6 @@ class Widget():
         return self
 
 
-
-
 class Button(Widget):
     def __init__(self, frame, text, action):
         super().__init__(
@@ -56,6 +55,7 @@ class Image(Widget):
             "image",
         )
 
+
 class Label(Widget):
     def __init__(self, frame, text):
         super().__init__(
@@ -63,7 +63,6 @@ class Label(Widget):
             F"label:{text}",
             "label",
         )
-
 
 
 class Frame(Frame_):
@@ -180,7 +179,6 @@ class Cursor():
         self.cord_y = cord_y % self.height
 
 
-
 # put into package
 class Curses():
     @staticmethod
@@ -202,6 +200,7 @@ class Curses():
     @staticmethod
     def doupdate():
         curses.doupdate()
+
 
 class String(Widget):
     def __init__(self, x, y, text):
@@ -314,5 +313,10 @@ class Window(Window_):
 
             key = stdscr.getch()
 
-    def main(self):
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_):
         curses.wrapper(self.main_it)
+        return False
+

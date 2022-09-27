@@ -288,7 +288,7 @@ class Window(Window_):
     def frame(self):
         return Frame(self)
 
-    def main(self):
+    def __enter__(self):
         try:
             data.register()
             preferences.register()
@@ -314,8 +314,8 @@ class Window(Window_):
 
         camera = data.camera.make("camera")
         camera.location = (+20, -10, +60)
+        return self
 
-        for window in self.session.window:
-            window.main(self)
+    def __exit__(self, *_):
+        return False
 
-        self.show_frame(0)

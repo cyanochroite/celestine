@@ -209,9 +209,7 @@ class Window(Window_):
         self.item.append(value)
         return value
 
-    def main(self):
-        """def main"""
-
+    def __enter__(self):
         title = self.session.language.APPLICATION_TITLE
         dearpygui.create_context()
         dearpygui.create_viewport(
@@ -232,13 +230,12 @@ class Window(Window_):
             decorated=True,
             clear_color=(0, 0, 0)
         )
+        return self
 
-        for window in self.session.window:
-            window.main(self)
-
-        self.show_frame(0)
-
+    def __exit__(self, *_):
         dearpygui.setup_dearpygui()
         dearpygui.show_viewport(minimized=False, maximized=False)
         dearpygui.start_dearpygui()
         dearpygui.destroy_context()
+        return False
+
