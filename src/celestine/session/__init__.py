@@ -53,7 +53,6 @@ class Session():
         self.task = load.module(
             APPLICATION,
             attribute.application,
-            attribute.task,
         )
 
     def add_configuration(self, configuration, module, application):

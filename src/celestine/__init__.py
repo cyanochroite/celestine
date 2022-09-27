@@ -34,11 +34,12 @@ def unregister():
     load.module(BLENDER).unregister()
 
 
-def main(directory, argv, exit_on_error, window):
+def main(directory, argv, exit_on_error, application):
     """Run the main program."""
     session = Session(directory, argv, exit_on_error)
-    with session.task.Window(session) as application:
-        for _window in window:
-            with application.frame() as frame:
-                _window(frame)
-        application.show_frame(0)
+    with session.task.window(session) as window:
+        for document in application:
+            with window.page() as page:
+                document(page)
+        window[0]
+        # .turn_page(0)

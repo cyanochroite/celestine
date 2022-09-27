@@ -39,25 +39,25 @@ def main(window):
                 index += 1
 
 
-def zero(frame):
-    with frame.row("head") as row:
+def zero(window):
+    with window.row("head") as row:
         row.label("title", "Page 0")
-    with frame.row("body") as row:
+    with window.row("body") as row:
         row.button("past", "Page 1", 1)
         row.button("next", "Page 2", 2)
 
 
-def one(frame):
-    with frame.row("head") as row:
-        row.label("title", "Page 1")
-    with frame.row("body") as row:
-        row.button("past", "Page 0", 0)
-        row.button("next", "Page 2", 2)
+def one(page):
+    with page.row("head") as line:
+        line.label("title", "Page 1")
+    with page.row("body") as line:
+        line.button("past", "Page 0", 0)
+        line.button("next", "Page 2", 2)
 
 
-def two(frame):
-    with frame.row("head") as row:
-        row.label("title", "Page 2")
-    with frame.row("body") as row:
-        row.button("past", "Page 1", 1)
-        row.button("next", "Page 0", 0)
+def two(document):
+    with document.row("head") as add:
+        add.label("title", "Page 2")
+    with document.row("body") as add:
+        add.button("past", "Page 1", 1)
+        add.button("next", "Page 0", 0)
