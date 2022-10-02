@@ -35,7 +35,6 @@ class Frame():
 
 
 class Window():
-
     def __init__(self, session):
         self.session = session
         self.item = []

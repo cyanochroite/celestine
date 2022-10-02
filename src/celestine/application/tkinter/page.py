@@ -29,5 +29,5 @@ class Page():
     def __exit__(self, *_):
         return False
 
-    def row(self, tag):
+    def line(self, tag):
         return self.item_set(tag, Line(self, tag))

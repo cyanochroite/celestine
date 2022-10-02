@@ -41,5 +41,3 @@ def main(directory, argv, exit_on_error, application):
         for document in application:
             with window.page() as page:
                 document(page)
-        window[0]
-        # .turn_page(0)

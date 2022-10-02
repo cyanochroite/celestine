@@ -23,7 +23,7 @@ class Line():
             Button(
                 self.row,
                 label,
-                lambda: self.frame.window[action],
+                lambda: self.frame.window.turn(action),
             ),
         )
 
