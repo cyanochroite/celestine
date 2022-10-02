@@ -1,4 +1,5 @@
 """Package dearpygui."""
+from celestine.application.dearpygui.window import Window
 
 
 def argument(arguments):
@@ -30,3 +31,7 @@ def image_format():
         ".ppm",
         ".pnm",
     ]
+
+
+def window(session):
+    return Window(session)

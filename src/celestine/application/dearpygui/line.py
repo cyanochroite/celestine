@@ -1,4 +1,4 @@
-from . import tkinter
+from . import dearpygui
 from .button import Button
 from .image import Image
 from .label import Label
@@ -8,31 +8,34 @@ class Line():
     def __init__(self, frame, tag):
         self.frame = frame
         self.tag = tag
-        self.row = tkinter.Frame(frame.frame)
+        self.row = dearpygui.group(horizontal=True)
 
     def __enter__(self):
-        self.row.pack()
+        self.row.__enter__()
         return self
 
-    def __exit__(self, *_):
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.row.__exit__(exc_type, exc_value, traceback)
         return False
 
     def button(self, tag, label, action):
         return self.frame.item_set(
             tag,
             Button(
-                self.row,
+                self.frame.window.item_key(self.frame.tag, tag),
                 label,
-                lambda: self.frame.window.turn(action),
+                self.frame.tag,
+                action,
+                self.frame.window.show_frame_simple,
             ),
         )
 
-    def image(self, tag, file):
+    def image(self, tag, image):
         return self.frame.item_set(
             tag,
             Image(
-                self.row,
-                file,
+                self.frame.window.item_key(self.frame.tag, tag),
+                image,
             ),
         )
 
@@ -40,10 +43,8 @@ class Line():
         return self.frame.item_set(
             tag,
             Label(
-                self.row,
-                text=text,
-                width=100,
-                height=4,
-                fg="blue",
+                self.frame.window.item_key(self.frame.tag, tag),
+                text,
+                "Label",
             ),
         )

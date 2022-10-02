@@ -1,6 +1,7 @@
-from celestine.package import tkinter
-from celestine.application.tkinter.page import Page
 from celestine.application.window import Window as Window_
+
+from . import tkinter
+from .page import Page
 
 
 class Window(Window_):

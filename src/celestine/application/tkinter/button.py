@@ -1,5 +1,5 @@
-from celestine.package import tkinter
-from celestine.application.tkinter.widget import Widget
+from . import tkinter
+from .widget import Widget
 
 
 class Button(Widget):

@@ -1,4 +1,4 @@
-from celestine.package import tkinter
+from . import tkinter
 
 
 class Widget():

@@ -1,5 +1,5 @@
 """Package tkinter."""
-from celestine.application.tkinter.window import Window
+from .window import Window
 
 
 def argument(arguments):

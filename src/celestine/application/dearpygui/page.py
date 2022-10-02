@@ -1,4 +1,4 @@
-from . import tkinter
+from . import dearpygui
 from .line import Line
 
 
@@ -10,23 +10,19 @@ class Page():
         self.item[tag] = value
         return value
 
-    def __init__(self, window):
+    def __init__(self, window, tag):
         self.window = window
         self.item = {}
-        self.frame = tkinter.Frame(
-            self.window.root,
-            padx=5,
-            pady=5,
-            bg="skyblue",
-        )
+        self.tag = tag
+        self.frame = dearpygui.window(tag=tag)
 
     def __enter__(self):
-        self.frame.grid(row=0, column=0, sticky="nsew")
-        self.index = len(self.window.item)
-        self.window.frame_set(self.frame)
+        self.frame.__enter__()
+        dearpygui.configure_item(self.tag, show=False)
         return self
 
-    def __exit__(self, *_):
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.frame.__exit__(exc_type, exc_value, traceback)
         return False
 
     def line(self, tag):
