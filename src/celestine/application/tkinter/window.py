@@ -6,8 +6,8 @@ from .page import Page
 
 class Window(Window_):
 
-    def page(self):
-        return Page(self)
+    def page(self, document):
+        return Page(self, document)
 
     def turn(self, page):
         frame = self.frame_get(page)

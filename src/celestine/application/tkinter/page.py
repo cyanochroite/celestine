@@ -10,7 +10,7 @@ class Page():
         self.item[tag] = value
         return value
 
-    def __init__(self, window):
+    def __init__(self, window, document):
         self.window = window
         self.item = {}
         self.frame = tkinter.Frame(

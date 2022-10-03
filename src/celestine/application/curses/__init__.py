@@ -1,4 +1,5 @@
 """Package curses."""
+from .window import Window
 
 
 def argument(arguments):
@@ -42,3 +43,7 @@ def image_format():
         ".gif",
         ".png",
     ]
+
+
+def window(session):
+    return Window(session)

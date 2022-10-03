@@ -61,6 +61,4 @@ class Window():
         pass
 
     def __exit__(self, exc_type, exc_value, traceback):
-        if exc_type or exc_value or traceback:
-            raise ValueError
         self.turn(0)

@@ -3,6 +3,8 @@ import curses
 from celestine.application.window import Window as Window_
 from celestine.application.window import Frame as Frame_
 
+from _curses import *
+
 
 HEIGHT = 24
 WIDTH = 80
@@ -65,7 +67,7 @@ class Label(Widget):
         )
 
 
-class Frame(Frame_):
+class Page(Frame_):
     def clear(self):
         self.frame.clear()
 
@@ -84,7 +86,8 @@ class Frame(Frame_):
         self.cord_y += 1
         return value
 
-    def __init__(self, window):
+    def __init__(self, window, document):
+        self.document = document
         self.window = window
         self.item = {}
         self.frame = Curses.window(
@@ -105,11 +108,11 @@ class Frame(Frame_):
         self.frame.noutrefresh()
         return False
 
-    def row(self, tag):
-        return self.item_set(tag, Row(self, tag))
+    def line(self, tag):
+        return self.item_set(tag, Line(self, tag))
 
 
-class Row():
+class Line():
     def __init__(self, frame, tag):
         self.frame = frame
         self.tag = tag
@@ -218,9 +221,17 @@ class Window(Window_):
         super().__init__(session)
         self.window = 0
         self.now_frame = None
+        self.session_window = []
+        self.document = []
 
-    def show_frame(self, index):
-        self.window = index
+
+    def turn(self, page):
+        self.now_frame = Page(self, self.document[page])
+        self.now_frame.document(self.now_frame)
+        self.stdscr.noutrefresh()
+        self.background.noutrefresh()
+        self.now_frame.noutrefresh()
+        Curses.doupdate()
 
     def image_load(self, file):
         return file
@@ -264,59 +275,62 @@ class Window(Window_):
         self.item_set(frame, tag, item)
         return item
 
-    def frame(self):
-        self.now_frame = Frame(self)
-        return self.now_frame
-
-    def main_it(self, stdscr):
-        key = ord(' ')
-
-        cursor = Cursor(self.session, stdscr)
-
-        background = Curses.window(0, 0, WIDTH, HEIGHT)
-        background.box()
-
-        header1 = Curses.subwindow(background, 0, 0, WIDTH, 1)
-        header1.addstr(self.session.language.APPLICATION_TITLE)
-
-        header2 = Curses.subwindow(background, 0, HEIGHT - 1, WIDTH, 1)
-        header2.addstr(self.session.language.CURSES_EXIT)
-
-        stdscr.noutrefresh()
-        background.noutrefresh()
-
-        for window in self.session.window:
-            window.main(self)
-
-        self.session.window[0].main(self)
-
-        Curses.doupdate()
-        while key != ord('q'):
-
-            if key == ord(' '):
-
-                for key, thing in self.now_frame.item.items():
-                    if thing.select(cursor.cord_x - 1, cursor.cord_y - 1):
-                        if thing.type == "button":
-                            self.show_frame(thing.action)
-
-                            self.session.window[self.window].main(self)
-
-                            #  refresh
-                            stdscr.noutrefresh()
-                            background.noutrefresh()
-                            # frame.noutrefresh()
-                            Curses.doupdate()
-
-            cursor.input(key)
-            cursor.move()
-
-            key = stdscr.getch()
+    def page(self, document):
+        self.document.append(document)
+        page = Page(self, document)
+        self.session_window.append(page)
+        self.now_frame = page
+        return page
 
     def __enter__(self):
+        self.stdscr = initscr()
+        noecho()
+        cbreak()
+        self.stdscr.keypad(1)
+        start_color()
+
+        # start
+
+        self.key = ord(' ')
+
+        self.cursor = Cursor(self.session, self.stdscr)
+
+        self.background = Curses.window(0, 0, WIDTH, HEIGHT)
+        self.background.box()
+
+        header1 = Curses.subwindow(self.background, 0, 0, WIDTH, 1)
+        header1.addstr(self.session.language.APPLICATION_TITLE)
+
+        header2 = Curses.subwindow(self.background, 0, HEIGHT - 1, WIDTH, 1)
+        header2.addstr(self.session.language.CURSES_EXIT)
+
+        self.stdscr.noutrefresh()
+        self.background.noutrefresh()
+
         return self
 
-    def __exit__(self, *_):
-        curses.wrapper(self.main_it)
+    def __exit__(self, exc_type, exc_value, traceback):
+        super().__exit__(exc_type, exc_value, traceback)
+        while self.key != ord('q'):
+
+            if self.key == ord(' '):
+
+                for self.key, thing in self.now_frame.item.items():
+                    if thing.select(self.cursor.cord_x - 1, self.cursor.cord_y - 1):
+                        if thing.type == "button":
+                            self.turn(thing.action)
+
+            self.cursor.input(self.key)
+            self.cursor.move()
+
+            self.key = self.stdscr.getch()
+
+        # end
+
+        self.stdscr.keypad(0)
+        echo()
+        nocbreak()
+        endwin()
+
         return False
 

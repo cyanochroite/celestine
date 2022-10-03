@@ -39,5 +39,5 @@ def main(directory, argv, exit_on_error, application):
     session = Session(directory, argv, exit_on_error)
     with session.task.window(session) as window:
         for document in application:
-            with window.page() as page:
+            with window.page(document) as page:
                 document(page)

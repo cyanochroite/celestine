@@ -40,9 +40,9 @@ class Window(Window_):
         tag = F"{tag}{user_data}"
         dearpygui.set_value(tag, item)
 
-    def page(self):
+    def page(self, document):
         index = F"Page_{len(self.item)}"
-        value = Page(self, index)
+        value = Page(self, document, index)
         self.item.append(value)
         return value
 

@@ -10,7 +10,7 @@ class Page():
         self.item[tag] = value
         return value
 
-    def __init__(self, window, tag):
+    def __init__(self, window, document, tag):
         self.window = window
         self.item = {}
         self.tag = tag
