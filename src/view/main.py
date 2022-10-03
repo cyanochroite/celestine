@@ -1,4 +1,4 @@
-from celestine.core import os
+from view.core import os
 
 
 def execute(session, directory):

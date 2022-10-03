@@ -3,7 +3,7 @@ from celestine.session.argument import Argument
 from celestine.session.attribute import Attribute
 from celestine.session import python
 
-from celestine.core import load
+from celestine.session import load
 
 from celestine.keyword.all import APPLICATION
 from celestine.keyword.all import CELESTINE

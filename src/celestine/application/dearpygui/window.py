@@ -21,8 +21,8 @@ class Window(Window_):
         dearpygui.hide_item(sent)
         self.turn(frame)
 
-    def turn(self, index):
-        tag = self.item[index].tag
+    def turn(self, page):
+        tag = self.item[page].tag
         dearpygui.show_item(tag)
         dearpygui.set_primary_window(tag, True)
 
@@ -39,7 +39,6 @@ class Window(Window_):
         tag = sender[0:4]  # hacky
         tag = F"{tag}{user_data}"
         dearpygui.set_value(tag, item)
-
 
     def page(self):
         index = F"Page_{len(self.item)}"
@@ -70,8 +69,8 @@ class Window(Window_):
         )
         return self
 
-    def __exit__(self, *_):
-        self.turn(0)
+    def __exit__(self, exc_type, exc_value, traceback):
+        super().__exit__(exc_type, exc_value, traceback)
         dearpygui.setup_dearpygui()
         dearpygui.show_viewport(minimized=False, maximized=False)
         dearpygui.start_dearpygui()

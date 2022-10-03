@@ -9,8 +9,8 @@ class Window(Window_):
     def page(self):
         return Page(self)
 
-    def turn(self, key):
-        frame = self.frame_get(key)
+    def turn(self, page):
+        frame = self.frame_get(page)
         frame.tkraise()
 
     def __enter__(self):
@@ -22,8 +22,8 @@ class Window(Window_):
         self.root.config(bg="blue")
         return self
 
-    def __exit__(self, *_):
-        self.turn(0)
+    def __exit__(self, exc_type, exc_value, traceback):
+        super().__exit__(exc_type, exc_value, traceback)
         self.root.mainloop()
         return False
 

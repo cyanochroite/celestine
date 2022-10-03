@@ -1,4 +1,4 @@
-from celestine.core import load
+from celestine.session import load
 from celestine.session import Session
 
 BLENDER = "blender"

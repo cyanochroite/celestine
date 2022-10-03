@@ -53,3 +53,14 @@ class Window():
 
     def frame_set(self, value):
         self.item.append(Frame(value))
+
+    def turn(self, page):
+        pass
+
+    def __enter__(self):
+        pass
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type or exc_value or traceback:
+            raise ValueError
+        self.turn(0)
