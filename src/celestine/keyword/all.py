@@ -205,14 +205,10 @@ TERMINAL = "terminal"
 
 application = [
     "blender",
-    CELESTINE,
     CURSES,
     DEARPYGUI,
-    LANGUAGE,
-    "star",
-    TERMINAL,
     TKINTER,
-    "verify",
+    "pygame",
 ]
 
 TASK = "task"
