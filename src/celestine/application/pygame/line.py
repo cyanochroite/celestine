@@ -1,3 +1,4 @@
+from . import package
 from .button import Button
 from .image import Image
 from .label import Label
@@ -22,10 +23,37 @@ class Line():
         return False
 
     def button(self, tag, label, action):
-        pass
+        item = Button(
+            self.row,
+            label,
+            action,
+        )
+        item.grid(self.frame.cord_x, self.frame.cords_y())
+
+        package.draw.line(self.row, (255, 255, 255),
+                          (200, 20), (200, 580), 5)
+
+        return item
 
     def image(self, tag, label):
-        pass
+        item = Image(
+            self.row,
+            label,
+        )
+        item.grid(self.frame.cord_x, self.frame.cords_y())
+
+        package.draw.line(self.row, (255, 255, 255),
+                          (400, 20), (400, 580), 5)
+
+        return item
 
     def label(self, tag, label):
-        pass
+        item = Label(
+            self.row,
+            label,
+        )
+        item.grid(self.frame.cord_x, self.frame.cords_y())
+        package.draw.line(self.row, (255, 255, 255),
+                          (20, 200), (580, 200), 5)
+
+        return item

@@ -10,17 +10,23 @@ class Page():
         self.item[tag] = value
         return value
 
+    def cords_y(self):
+        value = self.cord_y
+        self.cord_y += 1
+        return value
+
     def __init__(self, window, document):
         self.document = document
         self.window = window
         self.item = {}
 
-        self.frame = None
+        self.frame = window.screen
 
         self.cord_x = 0
         self.cord_y = 0
 
     def __enter__(self):
+        self.frame.fill((0, 0, 0))
         return self
 
     def __exit__(self, *_):
