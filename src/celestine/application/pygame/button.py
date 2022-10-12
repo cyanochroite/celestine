@@ -53,11 +53,12 @@ class Button():
         ])
         screen.blit(self.buttonSurface, self.buttonRect)
 
+
 class Button(Widget):
-    def __init__(self, frame, text, action):
+    def __init__(self, window, font, text, action, cord_x, cord_y):
         super().__init__(
-            frame,
-            F"button:{text}",
-            "button",
+            window,
+            font.render(F"Button{text}", True, (255, 255, 255)),
+            (cord_x, cord_y)
         )
         self.action = action

@@ -1,8 +1,11 @@
+import pygame
 from . import package
 from .line import Line
 
+from .rectangle import Rectangle
 
-class Page():
+
+class Page(Rectangle):
     def item_get(self, tag):
         return self.item[tag]
 
@@ -10,27 +13,23 @@ class Page():
         self.item[tag] = value
         return value
 
-    def cords_y(self):
-        value = self.cord_y
-        self.cord_y += 1
-        return value
-
     def __init__(self, window, document):
+        super().__init__(0, 0, 640, 480)  # load from window
         self.document = document
-        self.window = window
+        self.window = window.screen
+        self.font = window.font
         self.item = {}
 
-        self.frame = window.screen
-
-        self.cord_x = 0
-        self.cord_y = 0
-
     def __enter__(self):
-        self.frame.fill((0, 0, 0))
+        self.window.fill((0, 0, 0))
         return self
 
     def __exit__(self, *_):
+        pygame.display.flip()
         return False
 
     def line(self, tag):
         return self.item_set(tag, Line(self, tag))
+
+    def action(self):
+        pass

@@ -5,10 +5,11 @@ from .label import Label
 
 
 class Line():
-    def __init__(self, frame, tag):
-        self.frame = frame
+    def __init__(self, page, tag):
         self.tag = tag
-        self.row = frame.frame
+        self.page = page
+        self.window = page.window
+        self.font = page.font
 
     def __enter__(self):
         return self
@@ -22,17 +23,15 @@ class Line():
     def unselect(self, cord_x, cord_y):
         return False
 
-    def button(self, tag, label, action):
+    def button(self, tag, text, action):
         item = Button(
-            self.row,
-            label,
+            self.window,
+            self.font,
+            text,
             action,
+            self.page.cord_x,
+            self.page.cords_y()
         )
-        item.grid(self.frame.cord_x, self.frame.cords_y())
-
-        package.draw.line(self.row, (255, 255, 255),
-                          (200, 20), (200, 580), 5)
-
         return item
 
     def image(self, tag, label):
@@ -47,13 +46,12 @@ class Line():
 
         return item
 
-    def label(self, tag, label):
+    def label(self, tag, text):
         item = Label(
-            self.row,
-            label,
+            self.window,
+            self.font,
+            text,
+            self.page.cord_x,
+            self.page.cords_y()
         )
-        item.grid(self.frame.cord_x, self.frame.cords_y())
-        package.draw.line(self.row, (255, 255, 255),
-                          (20, 200), (580, 200), 5)
-
         return item

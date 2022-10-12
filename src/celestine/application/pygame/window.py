@@ -11,6 +11,7 @@ from . import package
 
 
 
+
 class Window(Window_):
 
     def __init__(self, session):
@@ -20,9 +21,14 @@ class Window(Window_):
         self.session_window = []
         self.document = []
 
-    def turn(self, page):
-        self.now_frame = Page(self, self.document[page])
-        self.now_frame.document(self.now_frame)
+        pygame.init()
+        self.font = pygame.font.SysFont("Arial", 64)
+
+    def turn(self, index):
+        with Page(self, None) as page:
+            self.now_frame = page
+            self.document[index](page)
+
 
     def page(self, document):
         self.document.append(document)
@@ -31,10 +37,17 @@ class Window(Window_):
         self.now_frame = page
         return page
 
+    def select(self, cord_x, cord_y):
+        for self.key, thing in self.now_frame.item.items():
+            select = thing.select(cord_x, cord_y)
+            if select:
+                return select
+        return self.now_frame
+
+
+
+
     def __enter__(self):
-        pygame.init()
-        self.fps = 60
-        self.fpsClock = pygame.time.Clock()
         width = 640
         height = 480
         self.screen = pygame.display.set_mode((width, height), 8, 0)
@@ -43,23 +56,15 @@ class Window(Window_):
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-
-        playing = True
-        while playing:
-            cord_x = 0
-            cord_y = 0
+        cord_x = 0
+        cord_y = 0
+        while True:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    playing = False
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    cord_x, cord_y = pygame.mouse.get_pos()
+                match event.type:
+                    case pygame.QUIT:
+                        return False
+                    case pygame.MOUSEBUTTONDOWN:
+                        cord_x, cord_y = pygame.mouse.get_pos()
+                        item = self.select(cord_x, cord_y)
+                        item.action()
 
-            for self.key, thing in self.now_frame.item.items():
-                if thing.select(cord_x, cord_y):
-                    if thing.type == "button":
-                        self.turn(thing.action)
-
-            pygame.display.flip()
-            self.fpsClock.tick(self.fps)
-
-        return False
