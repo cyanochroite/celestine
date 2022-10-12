@@ -3,9 +3,18 @@ from .button import Button
 from .image import Image
 from .label import Label
 
+from .rectangle import Row
+from .rectangle import Collection
 
-class Line():
-    def __init__(self, page, tag):
+
+class Line(Row, Collection):
+    def __init__(self, page, tag, rectangle):
+        super().__init__(
+            cord_x=rectangle.cord_x,
+            cord_y=rectangle.cord_y,
+            width=rectangle.width,
+            height=rectangle.height,
+        )
         self.tag = tag
         self.page = page
         self.window = page.window
@@ -17,22 +26,26 @@ class Line():
     def __exit__(self, *_):
         return False
 
-    def select(self, cord_x, cord_y):
-        return False
+    def action(self):
+        pass
 
-    def unselect(self, cord_x, cord_y):
-        return False
+    def select(self, cord_x, cord_y):
+        if self.inside(cord_x, cord_y):
+            self.action()
+            for child in self.children():
+                child.select(cord_x, cord_y)
 
     def button(self, tag, text, action):
-        item = Button(
-            self.window,
-            self.font,
-            text,
-            action,
-            self.page.cord_x,
-            self.page.cords_y()
+        return self.item_set(
+            tag,
+            Button(
+                self.window,
+                self.font,
+                text,
+                action,
+                self.spawn(),
+            ),
         )
-        return item
 
     def image(self, tag, label):
         item = Image(
@@ -47,11 +60,12 @@ class Line():
         return item
 
     def label(self, tag, text):
-        item = Label(
-            self.window,
-            self.font,
-            text,
-            self.page.cord_x,
-            self.page.cords_y()
+        return self.item_set(
+            tag,
+            Label(
+                self.window,
+                self.font,
+                text,
+                self.spawn(),
+            ),
         )
-        return item

@@ -9,7 +9,7 @@ from .page import Page
 from . import package
 
 
-
+from .rectangle import Rectangle
 
 
 class Window(Window_):
@@ -25,14 +25,16 @@ class Window(Window_):
         self.font = pygame.font.SysFont("Arial", 64)
 
     def turn(self, index):
-        with Page(self, None) as page:
+        rectangle = Rectangle(0, 0, 640, 480, 0, 0)
+        with Page(self, None, rectangle) as page:
             self.now_frame = page
             self.document[index](page)
 
 
     def page(self, document):
         self.document.append(document)
-        page = Page(self, document)
+        rectangle = Rectangle(0, 0, 640, 480, 0, 0)
+        page = Page(self, document, rectangle)
         self.session_window.append(page)
         self.now_frame = page
         return page
@@ -65,6 +67,5 @@ class Window(Window_):
                         return False
                     case pygame.MOUSEBUTTONDOWN:
                         cord_x, cord_y = pygame.mouse.get_pos()
-                        item = self.select(cord_x, cord_y)
-                        item.action()
+                        self.now_frame.select(cord_x, cord_y)
 

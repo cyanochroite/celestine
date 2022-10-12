@@ -1,22 +1,48 @@
-from tkinter import *
+class A():
+    def food(self):
+        super().food()
+        print('A.food()')
 
-root = Tk()
-frame = Frame(root)
-frame.pack()
 
-bottomframe = Frame(root)
-bottomframe.pack( side = BOTTOM )
+class B():
+    def food(self):
+        print('B.food()')
 
-redbutton = Button(frame, text="Red", fg="red")
-redbutton.pack(side = LEFT)
 
-greenbutton = Button(frame, text="green", fg="green")
-greenbutton.pack( side = LEFT )
+class C(A, B):
+    def food(self):
+        super().food()
+        print('C.food()')
 
-bluebutton = Button(frame, text="Blue", fg="blue")
-bluebutton.pack( side = LEFT )
 
-blackbutton = Button(bottomframe, text="Black", fg="black")
-blackbutton.pack( side = BOTTOM)
+cat = C()
+cat.food()
 
-root.mainloop()
+
+class AAA:
+    def __init__(self):
+        self.hat = 0
+
+    def cat(self):
+        print("HI")
+
+
+class BBB:
+    def __init__(self):
+        self.item = {}
+
+    def cat(self):
+        print("moo")
+
+
+class Page(BBB, AAA):
+    def __init__(self, window, document):
+        super().__init__()
+
+    def cat(self):
+        super().cat()
+        print("oink")
+
+
+pat = Page(None, None)
+pat.cat()

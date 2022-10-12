@@ -55,10 +55,10 @@ class Button():
 
 
 class Button(Widget):
-    def __init__(self, window, font, text, action, cord_x, cord_y):
+    def __init__(self, window, font, text, action, rectangle):
         super().__init__(
             window,
             font.render(F"Button{text}", True, (255, 255, 255)),
-            (cord_x, cord_y)
+            rectangle,
         )
         self.action = action
