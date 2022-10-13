@@ -36,11 +36,12 @@ class Page(Col, Collection):
 
     def __init__(self, window, document, rectangle):
         super().__init__(
-            cord_x=rectangle.cord_x,
-            cord_y=rectangle.cord_y,
-            width=rectangle.width,
-            height=rectangle.height,
+            cord_x_min=rectangle.cord_x_min,
+            cord_y_min=rectangle.cord_y_min,
+            cord_x_max=rectangle.cord_x_max,
+            cord_y_max=rectangle.cord_y_max,
         )
+        self.book = window
         self.document = document
         self.window = window.screen
         self.font = window.font

@@ -3,72 +3,76 @@ class Base:
         pass
 
 
-class Rectangle(Base):
-    def __init__(self, cord_x, cord_y, width, height, right, top, **kwargs):
+class Box(Base):
+    def __init__(self, cord_x_min, cord_y_min, cord_x_max, cord_y_max, **kwargs):
         super().__init__(**kwargs)
-        self.cord_x = cord_x
-        self.cord_y = cord_y
-        self.width = width
-        self.height = height
-        self.right = right
-        self.top = top
+        self.cord_x_min = cord_x_min
+        self.cord_y_min = cord_y_min
+        self.cord_x_max = cord_x_max
+        self.cord_y_max = cord_y_max
 
-    def cords_x(self):
-        value = self.cord_x
-        self.cord_x += self.right
+    def inside(self, cord_x, cord_y):
+        aaa = self.cord_x_min < cord_x
+        bbb = self.cord_y_min < cord_y
+        ccc = self.cord_x_max > cord_x
+        ddd = self.cord_y_max > cord_y
+        return aaa and bbb and ccc and ddd
+
+
+class Rectangle(Box):
+    def __init__(self, cord_x_min, cord_y_min, cord_x_max, cord_y_max, offset_x=0, offset_y=0):
+        super().__init__(
+            cord_x_min = cord_x_min,
+            cord_y_min = cord_y_min,
+            cord_x_max = cord_x_max,
+            cord_y_max = cord_y_max,
+        )
+        self.move_x_min = cord_x_min
+        self.move_y_min = cord_y_min
+        self.move_x_max = cord_x_max
+        self.move_y_max = cord_y_max
+        self.offset_x = offset_x
+        self.offset_y = offset_y
+
+    def get_x_min(self):
+        value = self.move_x_min
+        self.move_x_min += self.offset_x
         return value
 
-    def cords_y(self):
-        value = self.cord_y
-        self.cord_y += self.top
+    def get_y_min(self):
+        value = self.move_y_min
+        self.move_y_min += self.offset_y
         return value
+
+    def get_x_max(self):
+        # only works if you call get_x_min first
+        return self.move_x_min if self.offset_x else self.cord_x_max
+
+    def get_y_max(self):
+        # only works if you call get_y_min first
+        return self.move_y_min if self.offset_y else self.cord_y_max
 
     def spawn(self):
         return Rectangle(
-            self.cords_x(),
-            self.cords_y(),
-            0,
-            0,
-            self.right,
-            self.top,
+            self.get_x_min(),
+            self.get_y_min(),
+            self.get_x_max(),
+            self.get_y_max(),
+            self.offset_x,
+            self.offset_y,
         )
 
-    def inside(self, cord_x, cord_y):
-        left = self.cord_x < cord_x
-        right = self.cord_x + self.width > cord_x
-        top = self.cord_y < cord_y
-        bottom = self.cord_y + self.height > cord_y
-        return left and right and top and bottom
+
 
 
 class Row(Rectangle):
-    def __init__(self, cord_x, cord_y, width, height, **kwargs):
-        super().__init__(cord_x, cord_y, width, height, 200, 0, **kwargs)
-
-    def spawn(self):
-        return Rectangle(
-            self.cords_x(),
-            self.cords_y(),
-            200,
-            self.height,
-            self.right,
-            self.top,
-        )
+    def __init__(self, cord_x_min, cord_y_min, cord_x_max, cord_y_max, **kwargs):
+        super().__init__(cord_x_min, cord_y_min, cord_x_max, cord_y_max, 200, 0, **kwargs)
 
 
 class Col(Rectangle):
-    def __init__(self, cord_x, cord_y, width, height, **kwargs):
-        super().__init__(cord_x, cord_y, width, height, 0, 50, **kwargs)
-
-    def spawn(self):
-        return Rectangle(
-            self.cords_x(),
-            self.cords_y(),
-            self.width,
-            50,
-            self.right,
-            self.top,
-        )
+    def __init__(self, cord_x_min, cord_y_min, cord_x_max, cord_y_max, **kwargs):
+        super().__init__(cord_x_min, cord_y_min, cord_x_max, cord_y_max, 0, 50, **kwargs)
 
 
 class Collection(Base):
@@ -84,5 +88,5 @@ class Collection(Base):
         return value
 
     def children(self):
-        for key, thing in self.item.items():
+        for _, thing in self.item.items():
             yield thing

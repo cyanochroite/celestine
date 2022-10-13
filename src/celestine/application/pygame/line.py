@@ -10,10 +10,10 @@ from .rectangle import Collection
 class Line(Row, Collection):
     def __init__(self, page, tag, rectangle):
         super().__init__(
-            cord_x=rectangle.cord_x,
-            cord_y=rectangle.cord_y,
-            width=rectangle.width,
-            height=rectangle.height,
+            cord_x_min=rectangle.cord_x_min,
+            cord_y_min=rectangle.cord_y_min,
+            cord_x_max=rectangle.cord_x_max,
+            cord_y_max=rectangle.cord_y_max,
         )
         self.tag = tag
         self.page = page
@@ -42,7 +42,7 @@ class Line(Row, Collection):
                 self.window,
                 self.font,
                 text,
-                action,
+                lambda: self.page.book.turn(action),
                 self.spawn(),
             ),
         )
