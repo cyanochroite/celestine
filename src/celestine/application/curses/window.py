@@ -13,6 +13,7 @@ from . import curses
 HEIGHT = 24
 WIDTH = 80
 
+
 class Cursor():
     def __init__(self, session, stdscr):
         self.session = session
@@ -36,9 +37,6 @@ class Cursor():
         self.cord_y = cord_y % self.height
 
 
-
-
-
 class String(Widget):
     def __init__(self, x, y, text):
         super().__init__(x, y, len(text), 1)
@@ -58,7 +56,6 @@ class Window(Window_):
         self.session_window = []
         self.document = []
 
-
     def turn(self, page):
         self.now_frame = Page(self, self.document[page])
         self.now_frame.document(self.now_frame)
@@ -76,14 +73,6 @@ class Window(Window_):
         thing.draw(window)
         self.item_set(frame, tag, thing)
 
-    def button(self, frame, tag, label, _):
-        item = Button(
-            self.frame_get(frame),
-            label,
-            None,
-        )
-        self.item_set(frame, tag, item)
-        return item
 
     def file_dialog(self, frame, tag, _):
         item = Label(
@@ -101,13 +90,6 @@ class Window(Window_):
         self.item_set(frame, tag, item)
         return item
 
-    def label(self, frame, tag, label):
-        item = Label(
-            self.frame_get(frame),
-            label,
-        )
-        self.item_set(frame, tag, item)
-        return item
 
     def page(self, document):
         self.document.append(document)
@@ -124,8 +106,6 @@ class Window(Window_):
         curses.start_color()
 
         # start
-
-        self.key = ord(' ')
 
         self.cursor = Cursor(self.session, self.stdscr)
 
@@ -145,21 +125,18 @@ class Window(Window_):
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-        while self.key != ord('q'):
-
-            if self.key == ord(' '):
-
-                for self.key, thing in self.now_frame.item.items():
-                    if thing.select(self.cursor.cord_x - 1, self.cursor.cord_y - 1):
-                        if thing.type == "button":
-                            self.turn(thing.action)
-
-            self.cursor.input(self.key)
-            self.cursor.move()
-
-            self.key = self.stdscr.getch()
-
-        # end
+        while True:
+            match self.stdscr.getch():
+                case 258 | 259 | 260 | 261 as key:
+                    self.cursor.input(key)
+                    self.cursor.move()
+                case curses.KEY_Q:
+                    break
+                case curses.KEY_SPACE as key:
+                    for key, thing in self.now_frame.item.items():
+                        if thing.select(self.cursor.cord_x - 1, self.cursor.cord_y - 1):
+                            if thing.type == "button":
+                                self.turn(thing.action)
 
         self.stdscr.keypad(0)
         curses.echo()

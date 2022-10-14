@@ -31,7 +31,15 @@ KEY_UP = curses.KEY_UP
 KEY_DOWN = curses.KEY_DOWN
 KEY_LEFT = curses.KEY_LEFT
 KEY_RIGHT = curses.KEY_RIGHT
+KEY_Q = 113  # ord('q'):
+KEY_SPACE = 32  # ord(' ')
 
+space = 32
+quit = 113
+down = 258
+up = 259
+left = 260
+right = 261
 
 noecho = _curses.noecho
 initscr = _curses.initscr

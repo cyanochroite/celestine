@@ -13,24 +13,6 @@ from .rectangle import Rectangle
 
 
 class Window(Window_):
-
-    def __init__(self, session):
-        super().__init__(session)
-        self.window = 0
-        self.now_frame = None
-        self.session_window = []
-        self.document = []
-
-        pygame.init()
-        self.font = pygame.font.SysFont("Arial", 64)
-
-    def turn(self, index):
-        rectangle = Rectangle(0, 0, 640, 480, 0, 0)
-        with Page(self, None, rectangle) as page:
-            self.now_frame = page
-            self.document[index](page)
-
-
     def page(self, document):
         self.document.append(document)
         rectangle = Rectangle(0, 0, 640, 480, 0, 0)
@@ -39,15 +21,11 @@ class Window(Window_):
         self.now_frame = page
         return page
 
-    def select(self, cord_x, cord_y):
-        for self.key, thing in self.now_frame.item.items():
-            select = thing.select(cord_x, cord_y)
-            if select:
-                return select
-        return self.now_frame
-
-
-
+    def turn(self, index):
+        rectangle = Rectangle(0, 0, 640, 480, 0, 0)
+        with Page(self, None, rectangle) as page:
+            self.now_frame = page
+            self.document[index](page)
 
     def __enter__(self):
         width = 640
@@ -58,14 +36,21 @@ class Window(Window_):
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-        cord_x = 0
-        cord_y = 0
         while True:
-            for event in pygame.event.get():
-                match event.type:
-                    case pygame.QUIT:
-                        return False
-                    case pygame.MOUSEBUTTONDOWN:
-                        cord_x, cord_y = pygame.mouse.get_pos()
-                        self.now_frame.select(cord_x, cord_y)
+            match pygame.event.wait().type:
+                case pygame.QUIT:
+                    break
+                case pygame.MOUSEBUTTONDOWN:
+                    self.now_frame.select(*pygame.mouse.get_pos())
 
+        return False
+
+    def __init__(self, session):
+        super().__init__(session)
+        self.window = 0
+        self.now_frame = None
+        self.session_window = []
+        self.document = []
+
+        pygame.init()
+        self.font = pygame.font.SysFont("Arial", 64)
