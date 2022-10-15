@@ -5,7 +5,6 @@ from .page import Page
 
 
 class Window(master):
-
     def page(self, document):
         return Page(self, document)
 

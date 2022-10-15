@@ -1,9 +1,7 @@
 from celestine.package.master.window import Window as master
 
-
 from . import package
 from .page import Page
-
 
 import pygame
 from .rectangle import Rectangle
@@ -18,11 +16,11 @@ class Window(master):
         self.now_frame = page
         return page
 
-    def turn(self, index):
+    def turn(self, page):
         rectangle = Rectangle(0, 0, 640, 480, 0, 0)
         with Page(self, None, rectangle) as page:
             self.now_frame = page
-            self.document[index](page)
+            self.document[page](page)
 
     def __enter__(self):
         width = 640

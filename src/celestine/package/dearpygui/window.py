@@ -5,46 +5,18 @@ from .page import Page
 
 
 class Window(master):
-
-    def __init__(self, session):
-        super().__init__(session)
-
-    def item_key(self, frame, tag):
-        return F"_{frame}__{tag}"
-
-    def frame_key(self, index):
-        return F"Page {index}"
-
-    def show_frame_simple(self, sender, app_data, user_data):
-        """Some other callback thing."""
-        (sent, frame) = user_data
-        package.hide_item(sent)
-        self.turn(frame)
-
-    def turn(self, page):
-        tag = self.item[page].tag
-        package.show_item(tag)
-        package.set_primary_window(tag, True)
-
-    def callback_dvd(self, sender, app_data, user_data):
-        """Some other callback thing."""
-        package.configure_item(user_data, show=True)
-
-    def callback_file(self, sender, app_data, user_data):
-        """File dialaog callback."""
-        array = list(app_data["selections"])
-        item = ""
-        if len(array) > 0:
-            item = array[0]
-        tag = sender[0:4]  # hacky
-        tag = F"{tag}{user_data}"
-        package.set_value(tag, item)
-
     def page(self, document):
         index = F"Page_{len(self.item)}"
         value = Page(self, document, index)
         self.item.append(value)
         return value
+
+    def turn(self, page, sent=None):
+        if sent:
+            package.hide_item(sent)
+        tag = self.item[page].tag
+        package.show_item(tag)
+        package.set_primary_window(tag, True)
 
     def __enter__(self):
         title = self.session.language.APPLICATION_TITLE
@@ -76,3 +48,6 @@ class Window(master):
         package.start_dearpygui()
         package.destroy_context()
         return False
+
+    def __init__(self, session):
+        super().__init__(session)

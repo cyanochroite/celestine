@@ -9,6 +9,7 @@ class Line():
         self.frame = frame
         self.tag = tag
         self.row = package.group(horizontal=True)
+        self.turn = self.frame.window.turn
 
     def __enter__(self):
         self.row.__enter__()
@@ -22,11 +23,11 @@ class Line():
         return self.frame.item_set(
             tag,
             Button(
-                self.frame.window.item_key(self.frame.tag, tag),
+                package.item_key(self.frame.tag, tag),
                 label,
                 self.frame.tag,
                 action,
-                self.frame.window.show_frame_simple,
+                lambda sender, app_data, user_data: self.turn(*user_data),
             ),
         )
 
@@ -34,7 +35,7 @@ class Line():
         return self.frame.item_set(
             tag,
             Image(
-                self.frame.window.item_key(self.frame.tag, tag),
+                package.item_key(self.frame.tag, tag),
                 image,
             ),
         )
@@ -43,7 +44,7 @@ class Line():
         return self.frame.item_set(
             tag,
             Label(
-                self.frame.window.item_key(self.frame.tag, tag),
+                package.item_key(self.frame.tag, tag),
                 text,
                 "Label",
             ),

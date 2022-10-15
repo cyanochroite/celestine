@@ -1,23 +1,15 @@
-# <pep8-80 compliant>
-"""Package blender."""
+from .window import Window
 
-def argument(argument):
-    """Build up the argument."""
-    verify = argument.subparser.add_parser(
-        "verify",
-        help="you are a fish",
-    )
 
-    return argument
+def argument(arguments):
+    return arguments
 
 
 def attribute():
-    """Build up the attribute file."""
     return ()
 
 
 def default():
-    """Build up the default file."""
     return ()
 
 
@@ -41,3 +33,7 @@ def image_format():
         ".tiff",
         ".webp",
     ]
+
+
+def window(session):
+    return Window(session)

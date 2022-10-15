@@ -7,6 +7,6 @@ class Button(Widget):
         package.add_button(
             tag=tag,
             label=label,
-            user_data=(sender, action),
+            user_data=(action, sender),
             callback=function,
         )
