@@ -1,4 +1,4 @@
-from . import tkinter
+from . import package
 from .button import Button
 from .image import Image
 from .label import Label
@@ -8,7 +8,7 @@ class Line():
     def __init__(self, frame, tag):
         self.frame = frame
         self.tag = tag
-        self.row = tkinter.Frame(frame.frame)
+        self.row = package.Frame(frame.frame)
 
     def __enter__(self):
         self.row.pack()

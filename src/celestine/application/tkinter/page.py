@@ -1,4 +1,4 @@
-from . import tkinter
+from . import package
 from .line import Line
 
 
@@ -13,7 +13,7 @@ class Page():
     def __init__(self, window, document):
         self.window = window
         self.item = {}
-        self.frame = tkinter.Frame(
+        self.frame = package.Frame(
             self.window.root,
             padx=5,
             pady=5,

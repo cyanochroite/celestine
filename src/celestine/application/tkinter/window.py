@@ -1,10 +1,10 @@
-from celestine.application.window import Window as Window_
+from celestine.application.master.window import Window as master
 
-from . import tkinter
+from . import package
 from .page import Page
 
 
-class Window(Window_):
+class Window(master):
 
     def page(self, document):
         return Page(self, document)
@@ -14,7 +14,7 @@ class Window(Window_):
         frame.tkraise()
 
     def __enter__(self):
-        self.root = tkinter.Tk()
+        self.root = package.Tk()
         self.root.title(self.session.language.APPLICATION_TITLE)
         self.root.geometry("1920x1080")
         self.root.minsize(640, 480)

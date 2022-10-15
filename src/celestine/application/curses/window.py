@@ -1,6 +1,9 @@
-"""Package celestine."""
+from celestine.application.master.window import Window as master
+
+
 import curses
 from celestine.application.window import Window as Window_
+
 from celestine.application.window import Frame as Frame_
 
 from .widget import Widget
@@ -47,7 +50,7 @@ class String(Widget):
         window.addstr(self.cord_y, self.cord_x, self.text)
 
 
-class Window(Window_):
+class Window(master):
 
     def __init__(self, session):
         super().__init__(session)

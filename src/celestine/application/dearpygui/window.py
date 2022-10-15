@@ -1,10 +1,10 @@
-from celestine.application.window import Window as Window_
+from celestine.application.master.window import Window as master
 
-from . import dearpygui
+from . import package
 from .page import Page
 
 
-class Window(Window_):
+class Window(master):
 
     def __init__(self, session):
         super().__init__(session)
@@ -18,17 +18,17 @@ class Window(Window_):
     def show_frame_simple(self, sender, app_data, user_data):
         """Some other callback thing."""
         (sent, frame) = user_data
-        dearpygui.hide_item(sent)
+        package.hide_item(sent)
         self.turn(frame)
 
     def turn(self, page):
         tag = self.item[page].tag
-        dearpygui.show_item(tag)
-        dearpygui.set_primary_window(tag, True)
+        package.show_item(tag)
+        package.set_primary_window(tag, True)
 
     def callback_dvd(self, sender, app_data, user_data):
         """Some other callback thing."""
-        dearpygui.configure_item(user_data, show=True)
+        package.configure_item(user_data, show=True)
 
     def callback_file(self, sender, app_data, user_data):
         """File dialaog callback."""
@@ -38,7 +38,7 @@ class Window(Window_):
             item = array[0]
         tag = sender[0:4]  # hacky
         tag = F"{tag}{user_data}"
-        dearpygui.set_value(tag, item)
+        package.set_value(tag, item)
 
     def page(self, document):
         index = F"Page_{len(self.item)}"
@@ -48,8 +48,8 @@ class Window(Window_):
 
     def __enter__(self):
         title = self.session.language.APPLICATION_TITLE
-        dearpygui.create_context()
-        dearpygui.create_viewport(
+        package.create_context()
+        package.create_viewport(
             title=title,
             small_icon="celestine_small.ico",
             large_icon="celestine_large.ico",
@@ -71,8 +71,8 @@ class Window(Window_):
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-        dearpygui.setup_dearpygui()
-        dearpygui.show_viewport(minimized=False, maximized=False)
-        dearpygui.start_dearpygui()
-        dearpygui.destroy_context()
+        package.setup_dearpygui()
+        package.show_viewport(minimized=False, maximized=False)
+        package.start_dearpygui()
+        package.destroy_context()
         return False

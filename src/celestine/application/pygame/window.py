@@ -1,18 +1,15 @@
-"""Package celestine."""
-import pygame
+from celestine.application.master.window import Window as master
 
-from celestine.application.window import Window as Window_
-
-
-from .page import Page
 
 from . import package
+from .page import Page
 
 
+import pygame
 from .rectangle import Rectangle
 
 
-class Window(Window_):
+class Window(master):
     def page(self, document):
         self.document.append(document)
         rectangle = Rectangle(0, 0, 640, 480, 0, 0)

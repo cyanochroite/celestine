@@ -1,11 +1,11 @@
-from . import tkinter
+from . import package
 from .widget import Widget
 
 
 class Button(Widget):
     def __init__(self, frame, text, command):
         super().__init__(
-            tkinter.Button(
+            package.Button(
                 frame,
                 text=text,
                 command=command,
