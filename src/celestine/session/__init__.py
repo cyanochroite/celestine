@@ -9,6 +9,7 @@ from celestine.keyword.all import APPLICATION
 from celestine.keyword.all import CELESTINE
 from celestine.keyword.all import LANGUAGE
 
+APPLICATION = "package"
 
 class Session():
     def __init__(self, directory, args, exit_on_error):

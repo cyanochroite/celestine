@@ -1,4 +1,4 @@
-from celestine.application.master.window import Window as master
+from celestine.package.master.window import Window as master
 
 
 from . import package

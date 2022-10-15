@@ -1,16 +1,10 @@
-from celestine.application.master.window import Window as master
-
-
-import curses
-from celestine.application.window import Window as Window_
-
-from celestine.application.window import Frame as Frame_
+from celestine.package.master.window import Window as master
 
 from .widget import Widget
 
 from .page import Page
 
-from . import curses
+from . import package
 
 
 HEIGHT = 24
@@ -32,7 +26,7 @@ class Cursor():
     def input(self, key):
         (cord_x, cord_y) = self.session.python.curses_cursor_input_match(
             key,
-            curses,
+            package,
             self.cord_x,
             self.cord_y
         )
@@ -65,7 +59,7 @@ class Window(master):
         self.stdscr.noutrefresh()
         self.background.noutrefresh()
         self.now_frame.noutrefresh()
-        curses.doupdate()
+        package.doupdate()
 
     def image_load(self, file):
         return file
@@ -102,23 +96,23 @@ class Window(master):
         return page
 
     def __enter__(self):
-        self.stdscr = curses.initscr()
-        curses.noecho()
-        curses.cbreak()
+        self.stdscr = package.initscr()
+        package.noecho()
+        package.cbreak()
         self.stdscr.keypad(1)
-        curses.start_color()
+        package.start_color()
 
         # start
 
         self.cursor = Cursor(self.session, self.stdscr)
 
-        self.background = curses.window(0, 0, WIDTH, HEIGHT)
+        self.background = package.window(0, 0, WIDTH, HEIGHT)
         self.background.box()
 
-        header1 = curses.subwindow(self.background, 0, 0, WIDTH, 1)
+        header1 = package.subwindow(self.background, 0, 0, WIDTH, 1)
         header1.addstr(self.session.language.APPLICATION_TITLE)
 
-        header2 = curses.subwindow(self.background, 0, HEIGHT - 1, WIDTH, 1)
+        header2 = package.subwindow(self.background, 0, HEIGHT - 1, WIDTH, 1)
         header2.addstr(self.session.language.CURSES_EXIT)
 
         self.stdscr.noutrefresh()
@@ -133,18 +127,17 @@ class Window(master):
                 case 258 | 259 | 260 | 261 as key:
                     self.cursor.input(key)
                     self.cursor.move()
-                case curses.KEY_Q:
+                case package.KEY_Q:
                     break
-                case curses.KEY_SPACE as key:
+                case package.KEY_SPACE as key:
                     for key, thing in self.now_frame.item.items():
                         if thing.select(self.cursor.cord_x - 1, self.cursor.cord_y - 1):
                             if thing.type == "button":
                                 self.turn(thing.action)
 
         self.stdscr.keypad(0)
-        curses.echo()
-        curses.nocbreak()
-        curses.endwin()
+        package.echo()
+        package.nocbreak()
+        package.endwin()
 
         return False
-

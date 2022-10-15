@@ -1,4 +1,4 @@
-from . import curses
+from . import package
 from .line import Line
 
 HEIGHT = 24
@@ -27,7 +27,7 @@ class Page():
         self.document = document
         self.window = window
         self.item = {}
-        self.frame = curses.window(
+        self.frame = package.window(
             1,
             1,
             WIDTH - 1,

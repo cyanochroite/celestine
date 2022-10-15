@@ -1,5 +1,5 @@
 """Package dearpygui."""
-from celestine.application.dearpygui.window import Window
+from .window import Window
 
 
 def argument(arguments):

@@ -1,4 +1,4 @@
-from . import dearpygui
+from . import package
 from .line import Line
 
 
@@ -14,11 +14,11 @@ class Page():
         self.window = window
         self.item = {}
         self.tag = tag
-        self.frame = dearpygui.window(tag=tag)
+        self.frame = package.window(tag=tag)
 
     def __enter__(self):
         self.frame.__enter__()
-        dearpygui.configure_item(self.tag, show=False)
+        package.configure_item(self.tag, show=False)
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):

@@ -1,4 +1,4 @@
-from . import dearpygui
+from . import package
 from .button import Button
 from .image import Image
 from .label import Label
@@ -8,7 +8,7 @@ class Line():
     def __init__(self, frame, tag):
         self.frame = frame
         self.tag = tag
-        self.row = dearpygui.group(horizontal=True)
+        self.row = package.group(horizontal=True)
 
     def __enter__(self):
         self.row.__enter__()
