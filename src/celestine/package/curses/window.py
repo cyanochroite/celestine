@@ -6,18 +6,18 @@ from .page import Page
 
 class Window(master):
     def page(self, document):
-        self.document.append(document)
-        page = Page(self, document)
-        self.session_window.append(page)
-        self.now_frame = page
+        index = len(self.item)
+        self.item_set(index, document)
+        page = Page(self)
+        self.frame = page
         return page
 
     def turn(self, page):
-        self.now_frame = Page(self, self.document[page])
-        self.now_frame.document(self.now_frame)
+        self.frame = Page(self)
+        self.item_get(page)(self.frame)
         self.stdscr.noutrefresh()
         self.background.noutrefresh()
-        self.now_frame.noutrefresh()
+        self.frame.frame.noutrefresh()
         package.doupdate()
 
     def __enter__(self):
@@ -42,12 +42,13 @@ class Window(master):
         self.stdscr.noutrefresh()
         self.background.noutrefresh()
 
-        return self
+        return super().__enter__()
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
         while True:
-            match self.stdscr.getch():
+            key = self.stdscr.getch()
+            match key:
                 case 258 | 259 | 260 | 261 as key:
                     match key:
                         case package.KEY_UP:
@@ -65,7 +66,7 @@ class Window(master):
                 case package.KEY_Q:
                     break
                 case package.KEY_SPACE as key:
-                    for key, thing in self.now_frame.item.items():
+                    for key, thing in self.frame.item.items():
                         if thing.select(self.cord_x - 1, self.cord_y - 1):
                             if thing.type == "button":
                                 self.turn(thing.action)
@@ -75,7 +76,7 @@ class Window(master):
         package.nocbreak()
         package.endwin()
 
-        return False
+        return super().__exit__(exc_type, exc_value, traceback)
 
     def __init__(self, session):
         super().__init__(session)
@@ -85,6 +86,4 @@ class Window(master):
         self.width = 80
 
         self.window = 0
-        self.now_frame = None
-        self.session_window = []
-        self.document = []
+        self.frame = None

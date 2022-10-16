@@ -9,43 +9,37 @@ from .rectangle import Rectangle
 
 class Window(master):
     def page(self, document):
-        self.document.append(document)
+        index = len(self.item)
+        self.item_set(index, document)
         rectangle = Rectangle(0, 0, 640, 480, 0, 0)
-        page = Page(self, document, rectangle)
-        self.session_window.append(page)
-        self.now_frame = page
+        page = Page(self, rectangle)
+        self.frame = page
         return page
 
     def turn(self, page):
         rectangle = Rectangle(0, 0, 640, 480, 0, 0)
-        with Page(self, None, rectangle) as page:
-            self.now_frame = page
-            self.document[page](page)
+        with Page(self, rectangle) as page2:
+            self.frame = page2
+            self.item_get(page)(page2)
 
     def __enter__(self):
-        width = 640
-        height = 480
-        self.screen = pygame.display.set_mode((width, height), 8, 0)
+        pygame.init()
+        self.book = pygame.display.set_mode((self.width, self.height), 8, 0)
         self.font = pygame.font.SysFont('Arial', 40)
-        return self
+        return super().__enter__()
 
     def __exit__(self, exc_type, exc_value, traceback):
-        super().__exit__(exc_type, exc_value, traceback)
         while True:
             match pygame.event.wait().type:
                 case pygame.QUIT:
                     break
                 case pygame.MOUSEBUTTONDOWN:
-                    self.now_frame.select(*pygame.mouse.get_pos())
-
-        return False
+                    self.frame.select(*pygame.mouse.get_pos())
+        return super().__exit__(exc_type, exc_value, traceback)
 
     def __init__(self, session):
         super().__init__(session)
-        self.window = 0
-        self.now_frame = None
-        self.session_window = []
-        self.document = []
-
-        pygame.init()
-        self.font = pygame.font.SysFont("Arial", 64)
+        self.book = None
+        self.frame = None
+        self.width = 640
+        self.height = 480

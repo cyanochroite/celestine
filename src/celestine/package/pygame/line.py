@@ -16,7 +16,7 @@ class Line(Row, Collection):
             cord_y_max=rectangle.cord_y_max,
         )
         self.tag = tag
-        self.page = page
+        self.turn = page.turn
         self.window = page.window
         self.font = page.font
 
@@ -42,7 +42,7 @@ class Line(Row, Collection):
                 self.window,
                 self.font,
                 text,
-                lambda: self.page.book.turn(action),
+                lambda: self.turn(action),
                 self.spawn(),
             ),
         )

@@ -1,64 +1,20 @@
-class Button():
-    def __init__(self, frame):
-        self.frame = frame
-        self.item = {}
-
-    def item_get(self, tag):
-        return self.item[tag]
-
-    def item_set(self, tag, value):
-        self.item[tag] = value
-
-    def clear(self):
-        self.frame.clear()
-
-    def noutrefresh(self):
-        self.frame.noutrefresh()
+from .collection import Collection
 
 
-class Frame():
-    def __init__(self, frame):
-        self.frame = frame
-        self.item = {}
-
-    def item_get(self, tag):
-        return self.item[tag]
-
-    def item_set(self, tag, value):
-        self.item[tag] = value
-
-    def clear(self):
-        self.frame.clear()
-
-    def noutrefresh(self):
-        self.frame.noutrefresh()
-
-
-class Window():
-    def __init__(self, session):
-        self.session = session
-        self.item = []
-        self.grid = []
-        self.cols = 4
-        self.rows = 8
-
-    def item_get(self, frame, tag):
-        return self.item[frame].item_get(tag)
-
-    def item_set(self, frame, tag, value):
-        self.item[frame].item_set(tag, value)
-
-    def frame_get(self, index):
-        return self.item[index].frame
-
-    def frame_set(self, value):
-        self.item.append(Frame(value))
+class Window(Collection):
+    def page(self, document):
+        pass
 
     def turn(self, page):
         pass
 
     def __enter__(self):
-        pass
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.turn(0)
+        return False
+
+    def __init__(self, session):
+        super().__init__()
+        self.session = session

@@ -8,7 +8,7 @@ class Window(master):
     def page(self, document):
         index = F"Page_{len(self.item)}"
         value = Page(self, document, index)
-        self.item.append(value)
+        self.item_set(index, value)
         return value
 
     def turn(self, page, sent=None):
@@ -39,15 +39,14 @@ class Window(master):
             decorated=True,
             clear_color=(0, 0, 0)
         )
-        return self
+        return super().__enter__()
 
     def __exit__(self, exc_type, exc_value, traceback):
-        super().__exit__(exc_type, exc_value, traceback)
         package.setup_dearpygui()
         package.show_viewport(minimized=False, maximized=False)
         package.start_dearpygui()
         package.destroy_context()
-        return False
+        return super().__exit__(exc_type, exc_value, traceback)
 
     def __init__(self, session):
         super().__init__(session)

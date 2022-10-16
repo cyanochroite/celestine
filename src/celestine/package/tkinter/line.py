@@ -6,6 +6,7 @@ from .label import Label
 
 class Line():
     def __init__(self, frame, tag):
+        self.turn = frame.turn
         self.frame = frame
         self.tag = tag
         self.row = package.Frame(frame.frame)
@@ -23,7 +24,7 @@ class Line():
             Button(
                 self.row,
                 label,
-                lambda: self.frame.window.turn(action),
+                lambda: self.turn(action),
             ),
         )
 

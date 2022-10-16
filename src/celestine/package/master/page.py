@@ -1,29 +1,21 @@
-from . import package
-from .line import Line
+from .collection import Collection
 
-class Page():
-    def item_get(self, tag):
-        return self.item[tag]
 
-    def item_set(self, tag, value):
-        self.item[tag] = value
-        return value
+class Page(Collection):
+    def action(self):
+        pass
 
-    def __init__(self, window, document):
-        self.document = document
-        self.window = window
-        self.item = {}
-
-        self.frame = None
-
-        self.cord_x = 0
-        self.cord_y = 0
+    def select(self, cord_x, cord_y):
+        if self.inside(cord_x, cord_y):
+            self.action()
+            for child in self.children():
+                child.select(cord_x, cord_y)
 
     def __enter__(self):
         return self
 
-    def __exit__(self, *_):
+    def __exit__(self, exc_type, exc_value, traceback):
         return False
 
-    def line(self, tag, line):
-        return self.item_set(tag, line(self, tag))
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
