@@ -23,22 +23,24 @@ class Window(master):
             self.item_get(page)(page2)
 
     def __enter__(self):
+        super().__enter__()
         pygame.init()
         self.book = pygame.display.set_mode((self.width, self.height), 8, 0)
         self.font = pygame.font.SysFont('Arial', 40)
-        return super().__enter__()
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        super().__exit__(exc_type, exc_value, traceback)
         while True:
             match pygame.event.wait().type:
                 case pygame.QUIT:
                     break
                 case pygame.MOUSEBUTTONDOWN:
                     self.frame.select(*pygame.mouse.get_pos())
-        return super().__exit__(exc_type, exc_value, traceback)
+        return False
 
-    def __init__(self, session):
-        super().__init__(session)
+    def __init__(self, session, **kwargs):
+        super().__init__(session, **kwargs)
         self.book = None
         self.frame = None
         self.width = 640

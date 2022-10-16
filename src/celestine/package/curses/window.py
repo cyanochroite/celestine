@@ -21,6 +21,7 @@ class Window(master):
         package.doupdate()
 
     def __enter__(self):
+        super().__enter__()
         self.stdscr = package.initscr()
         package.noecho()
         package.cbreak()
@@ -41,8 +42,7 @@ class Window(master):
 
         self.stdscr.noutrefresh()
         self.background.noutrefresh()
-
-        return super().__enter__()
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
@@ -75,11 +75,10 @@ class Window(master):
         package.echo()
         package.nocbreak()
         package.endwin()
+        return False
 
-        return super().__exit__(exc_type, exc_value, traceback)
-
-    def __init__(self, session):
-        super().__init__(session)
+    def __init__(self, session, **kwargs):
+        super().__init__(session, **kwargs)
         self.cord_x = 0
         self.cord_y = 0
         self.height = 24

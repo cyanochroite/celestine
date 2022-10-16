@@ -15,6 +15,7 @@ class Window(Collection):
         self.turn(0)
         return False
 
-    def __init__(self, session):
-        super().__init__()
+    def __init__(self, session, **kwargs):
+        super().__init__(**kwargs)
         self.session = session
+

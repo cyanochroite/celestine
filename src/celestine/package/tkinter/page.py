@@ -9,14 +9,16 @@ class Page(master):
         return self.item_set(tag, Line(self, tag))
 
     def __enter__(self):
+        super().__enter__()
         self.frame.grid(row=0, column=0, sticky="nsew")
-        return super().__enter__()
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        return super().__exit__(exc_type, exc_value, traceback)
+        super().__exit__(exc_type, exc_value, traceback)
+        return False
 
-    def __init__(self, window):
-        super().__init__()
+    def __init__(self, window, **kwargs):
+        super().__init__(**kwargs)
         self.turn = window.turn
         self.frame = package.Frame(
             window.root,

@@ -1,4 +1,6 @@
-fish = ["ape", ".", ".package", "..", "cow"]
-fish.sort()
+import sys
 
-print(fish)
+cat = sys.exc_info
+dog = sys.exc_info()
+
+hi = True

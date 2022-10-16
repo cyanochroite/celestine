@@ -14,16 +14,18 @@ class Page(master):
         return self.item_set(tag, Line(self, tag))
 
     def __enter__(self):
+        super().__enter__()
         self.frame.clear()
-        return super().__enter__()
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        super().__exit__(exc_type, exc_value, traceback)
         self.frame.noutrefresh()
-        return super().__exit__(exc_type, exc_value, traceback)
+        return False
 
-    def __init__(self, window):
+    def __init__(self, window, **kwargs):
+        super().__init__(**kwargs)
         self.window = window
-        self.item = {}
         self.height = 24
         self.width = 80
         self.frame = package.window(

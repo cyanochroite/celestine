@@ -6,19 +6,20 @@ from .page import Page
 
 class Window(master):
     def page(self, document):
-        index = F"Page_{len(self.item)}"
-        value = Page(self, document, index)
+        index = len(self.item)
+        value = Page(self, str(index))
         self.item_set(index, value)
         return value
 
     def turn(self, page, sent=None):
         if sent:
             package.hide_item(sent)
-        tag = self.item[page].tag
+        tag = self.item_get(page).tag
         package.show_item(tag)
         package.set_primary_window(tag, True)
 
     def __enter__(self):
+        super().__enter__()
         title = self.session.language.APPLICATION_TITLE
         package.create_context()
         package.create_viewport(
@@ -39,14 +40,15 @@ class Window(master):
             decorated=True,
             clear_color=(0, 0, 0)
         )
-        return super().__enter__()
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        super().__exit__(exc_type, exc_value, traceback)
         package.setup_dearpygui()
         package.show_viewport(minimized=False, maximized=False)
         package.start_dearpygui()
         package.destroy_context()
-        return super().__exit__(exc_type, exc_value, traceback)
+        return False
 
-    def __init__(self, session):
-        super().__init__(session)
+    def __init__(self, session, **kwargs):
+        super().__init__(session, **kwargs)

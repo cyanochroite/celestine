@@ -16,18 +16,20 @@ class Window(master):
         frame.frame.tkraise()
 
     def __enter__(self):
+        super().__enter__()
         self.root = package.Tk()
         self.root.title(self.session.language.APPLICATION_TITLE)
         self.root.geometry("1920x1080")
         self.root.minsize(640, 480)
         self.root.maxsize(3840, 2160)
         self.root.config(bg="blue")
-        return super().__enter__()
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        super().__exit__(exc_type, exc_value, traceback)
         self.root.mainloop()
-        return super().__exit__(exc_type, exc_value, traceback)
+        return False
 
-    def __init__(self, session):
-        super().__init__(session)
+    def __init__(self, session, **kwargs):
+        super().__init__(session, **kwargs)
         self.root = None
