@@ -5,19 +5,6 @@ from .label import Label
 
 
 class Line():
-    def __init__(self, frame, tag):
-        self.turn = frame.turn
-        self.frame = frame
-        self.tag = tag
-        self.row = package.Frame(frame.frame)
-
-    def __enter__(self):
-        self.row.pack()
-        return self
-
-    def __exit__(self, *_):
-        return False
-
     def button(self, tag, label, action):
         return self.frame.item_set(
             tag,
@@ -48,3 +35,16 @@ class Line():
                 fg="blue",
             ),
         )
+
+    def __init__(self, frame, tag):
+        self.turn = frame.turn
+        self.frame = frame
+        self.tag = tag
+        self.row = package.Frame(frame.frame)
+
+    def __enter__(self):
+        self.row.pack()
+        return self
+
+    def __exit__(self, *_):
+        return False

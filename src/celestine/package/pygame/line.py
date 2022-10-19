@@ -1,31 +1,15 @@
+from celestine.package.master.line import Line as master
+from celestine.package.master.collection import Rectangle
+
 from . import package
 from .button import Button
 from .image import Image
 from .label import Label
 
-from .rectangle import Row
-from .rectangle import Collection
 
 
-class Line(Row, Collection):
-    def __init__(self, page, tag, rectangle):
-        super().__init__(
-            cord_x_min=rectangle.cord_x_min,
-            cord_y_min=rectangle.cord_y_min,
-            cord_x_max=rectangle.cord_x_max,
-            cord_y_max=rectangle.cord_y_max,
-        )
-        self.tag = tag
-        self.turn = page.turn
-        self.window = page.window
-        self.font = page.font
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *_):
-        return False
-
+class Line(Rectangle):
     def action(self):
         pass
 
@@ -69,3 +53,22 @@ class Line(Row, Collection):
                 self.spawn(),
             ),
         )
+
+    def __init__(self, page, tag, rectangle):
+        super().__init__(
+            cord_x_min=rectangle.cord_x_min,
+            cord_y_min=rectangle.cord_y_min,
+            cord_x_max=rectangle.cord_x_max,
+            cord_y_max=rectangle.cord_y_max,
+            row=True,
+        )
+        self.tag = tag
+        self.turn = page.turn
+        self.window = page.window
+        self.font = page.font
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_):
+        return False

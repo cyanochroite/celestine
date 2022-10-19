@@ -1,15 +1,9 @@
-from .collection import Collection
+from .collection import Rectangle
 
 
-class Page(Collection):
-    def action(self):
+class Page(Rectangle):
+    def line(self, tag):
         pass
-
-    def select(self, cord_x, cord_y):
-        if self.inside(cord_x, cord_y):
-            self.action()
-            for child in self.children():
-                child.select(cord_x, cord_y)
 
     def __enter__(self):
         return self

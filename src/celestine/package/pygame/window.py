@@ -1,10 +1,11 @@
 from celestine.package.master.window import Window as master
 
+from celestine.package.master.collection import Rectangle
+
 from . import package
 from .page import Page
 
 import pygame
-from .rectangle import Rectangle
 
 
 class Window(master):
