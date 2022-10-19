@@ -10,7 +10,6 @@ class Page(master):
 
     def __enter__(self):
         super().__enter__()
-        self.frame.grid(row=0, column=0, sticky="nsew")
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):

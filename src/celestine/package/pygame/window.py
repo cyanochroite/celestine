@@ -22,6 +22,8 @@ class Window(master):
         with Page(self, rectangle) as page2:
             self.frame = page2
             self.item_get(page)(page2)
+        package.display.flip()
+
 
     def __enter__(self):
         super().__enter__()

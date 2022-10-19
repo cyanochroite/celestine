@@ -7,8 +7,10 @@ from .page import Page
 class Window(master):
     def page(self, document):
         page = Page(self)
+        page.frame.grid(row=0, column=0, sticky="nsew")
         index = len(self.item)
         self.item_set(index, page)
+        document(page)
         return page
 
     def turn(self, page):

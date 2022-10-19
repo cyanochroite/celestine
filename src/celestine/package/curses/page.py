@@ -15,12 +15,10 @@ class Page(master):
 
     def __enter__(self):
         super().__enter__()
-        self.frame.clear()
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-        self.frame.noutrefresh()
         return False
 
     def __init__(self, window, **kwargs):

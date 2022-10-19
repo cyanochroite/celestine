@@ -22,7 +22,6 @@ class Page(master):
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-        package.display.flip()
         return False
 
     def __init__(self, window, rectangle, **kwargs):

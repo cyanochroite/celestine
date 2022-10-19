@@ -6,9 +6,12 @@ from .page import Page
 
 class Window(master):
     def page(self, document):
-        index = len(self.item)
-        value = Page(self, str(index))
-        self.item_set(index, value)
+        tag = str(len(self.item))
+        value = Page(self, tag)
+        self.item_set(tag, value)
+        with value.frame:
+            package.configure_item(tag, show=False)
+            document(value)
         return value
 
     def turn(self, page, sent=None):

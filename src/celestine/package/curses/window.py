@@ -13,6 +13,7 @@ class Window(master):
         return page
 
     def turn(self, page):
+        self.frame.frame.clear()
         self.frame = Page(self)
         self.item_get(page)(self.frame)
         self.stdscr.noutrefresh()
