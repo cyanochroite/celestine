@@ -15,15 +15,6 @@ class Page(master):
             ),
         )
 
-    def __enter__(self):
-        super().__enter__()
-        self.window.fill((0, 0, 0))
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        super().__exit__(exc_type, exc_value, traceback)
-        return False
-
     def __init__(self, window, rectangle, **kwargs):
         super().__init__(
             cord_x_min=rectangle.cord_x_min,

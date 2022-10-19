@@ -19,9 +19,10 @@ class Window(master):
 
     def turn(self, page):
         rectangle = Rectangle(0, 0, 640, 480, 0, 0)
-        with Page(self, rectangle) as page2:
-            self.frame = page2
-            self.item_get(page)(page2)
+        page2 = Page(self, rectangle)
+        page2.window.fill((0, 0, 0))
+        self.frame = page2
+        self.item_get(page)(page2)
         package.display.flip()
 
 
