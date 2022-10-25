@@ -2,8 +2,9 @@ import os
 import sys
 
 
-path = sys.path[0]
-directory = os.path.dirname(path)
+PATH = sys.path[0]
+print(sys.path)
+directory = os.path.dirname(PATH)
 sys.path.append(directory)
 
 

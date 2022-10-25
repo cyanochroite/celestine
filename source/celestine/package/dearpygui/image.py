@@ -12,7 +12,7 @@ class Image(Widget):
         self.name = file
 
         with package.texture_registry(show=False):
-            dearpygui.add_static_texture(
+            package.add_static_texture(
                 width=self.width,
                 height=self.height,
                 default_value=self.image,
