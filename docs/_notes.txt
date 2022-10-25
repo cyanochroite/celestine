@@ -5,8 +5,6 @@ Quaternary
 Quinary
 secondary, tertiary, and quaternary layers
 
-   
-
 
 I believe that record is held by the codepoint U+FBF9 (ﯹ), “ARABIC LIGATURE UIGHUR KIRGHIZ YEH WITH HAMZA ABOVE WITH ALEF MAKSURA ISOLATED FORM,” which is 83 characters. There are a couple of other Arabic ligatures that are close to that count, as well.
 The next longest name for a different sort of character is U+1F502 (🔂), “CLOCKWISE RIGHTWARDS AND LEFTWARDS OPEN CIRCLE ARROWS WITH CIRCLED ONE OVERLAY” which is 78 characters.
@@ -148,7 +146,7 @@ https://semver.org/
 https://libraries.io/
 
 celestine.readthedocs.io
-celestine.rtfd.io 
+celestine.rtfd.io
 
 
 
@@ -250,8 +248,8 @@ Add gamma to photos? Both TK and dearpygui support this
 
 	m n s g
 	M 	N 	S 	G
-M 
-N 
+M
+N
 
 m  true
 n false
@@ -261,7 +259,7 @@ s neighr
 and	M	N	S	G
 M	M	N	S	G
 N	N	N	N	N
-S	S	N	
+S	S	N
 G	G	N
 
 
@@ -337,7 +335,7 @@ zero
 
 1
 2
-dual	having two parts	
+dual	having two parts
 null	not important	value 0		meaningless
 4
 
@@ -352,56 +350,56 @@ S	G
 G	S
 
 
-and		M	N	S	G	
-						
-M		M	N	S	G	
-N		N	N	N	N	
-S		S	N	S		
-G		G	N		G	
+and		M	N	S	G
+
+M		M	N	S	G
+N		N	N	N	N
+S		S	N	S
+G		G	N		G
 
 
-or		M	N	S	G	
-						
-M		M	M	M	M	
-N		M	N	S	G	
-S		M	S	S		
-G		M	G		G	
+or		M	N	S	G
 
-
-
-
-and		M	S	G	N	
-						
-M		M	S	G	N	
-S		S	S	G	N	
-G		G	G	G	N	
-N		N	N	N	N	
-
-
-or		M	S	G	N	
-						
-M		M	M	M	M	
-S		M	S	S	S	
-G		M	S	G	G	
-N		M	S	G	N	
+M		M	M	M	M
+N		M	N	S	G
+S		M	S	S
+G		M	G		G
 
 
 
 
-and		M	G	S	N	
-						
-M		M	G	S	N	
-G		G	G	S	N	
-S		S	S	S	N	
-N		N	N	N	N	
+and		M	S	G	N
+
+M		M	S	G	N
+S		S	S	G	N
+G		G	G	G	N
+N		N	N	N	N
 
 
-or		M	G	S	N	
-						
-M		M	M	M	M	
-G		M	G	G	G	
-S		M	G	S	S	
-N		M	G	S	N	
+or		M	S	G	N
+
+M		M	M	M	M
+S		M	S	S	S
+G		M	S	G	G
+N		M	S	G	N
+
+
+
+
+and		M	G	S	N
+
+M		M	G	S	N
+G		G	G	S	N
+S		S	S	S	N
+N		N	N	N	N
+
+
+or		M	G	S	N
+
+M		M	M	M	M
+G		M	G	G	G
+S		M	G	S	S
+N		M	G	S	N
 
 
 
