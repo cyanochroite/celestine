@@ -1,5 +1,17 @@
+
+
+
+
+
 The Celestine Image Viewer
 ##########################
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Contents:
+
+    test
+    wing
 
 - About_
 - Goals_
@@ -28,7 +40,6 @@ More
 ----
 
  * :doc:`wing`
- * :doc:`../extra/video-tutorials`
 
 
 .. _Goals:

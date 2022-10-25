@@ -1,5 +1,6 @@
 __pycache__/
 dist/
+build/
 source/celestine.egg-info/
 source/celestine.wpu
 source/celestine.wpr
