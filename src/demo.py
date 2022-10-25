@@ -1,6 +1,10 @@
-import sys
+def greeting(name: str) -> str:
+    return 'Hello ' + name
 
-cat = sys.exc_info
-dog = sys.exc_info()
 
-hi = True
+print(greeting("7"))
+car = input("carwash")
+print(car)
+
+h = o
+

@@ -244,15 +244,20 @@ ToDo Features:
 Add gamma to photos? Both TK and dearpygui support this
 
 
+Packages - Development:
+flake8
+mypy
+pep8
+pylint
 
+Packages - User:
+pygame
 
+flake8
+mypy
+pep8
+pylint
 
-
-make theme folder for various window apearances.
-could also use different packages
-
-3 gui (2 mouse 1 terminal)
-comand line
 
 
 
