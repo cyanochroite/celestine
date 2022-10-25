@@ -1,10 +1,21 @@
+
+
+
+
+
 The Celestine Image Viewer
 ##########################
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Contents:
+
+    test
+    wing
 
 - About_
 - Goals_
 - Requirements_
-- Package_
 - Inspiration_
 - Info_
 
@@ -25,12 +36,18 @@ Decided that the main reason behind this was an attempt to use HTML as my GUI.
 Most files in this project are dedicated to viewing and modifying local images.
 Will try to update the project to reflect that.
 
+More
+----
+
+ * :doc:`wing`
+
+
 .. _Goals:
 
 Primary Goals
 *************
 - Is an offline only application. (The only internet used is when you use pip.)
-- Has no required dependencies. (All you need to run this package is Python.)
+- Minimal required dependencies. (All you need to run this package is Python.)
 - Can be customized to use different packages. (See the list below for supported packages.)
 
 
@@ -40,8 +57,16 @@ The only internet you need is when you install with pip.
 
 No Required Dependencies
 ^^^^^^^^^^^^^^^^^^^^^^^^
-Celestine is very independent and can run without any dependecies.
-However she also likes gifts. Try giving her a Package_.
+
+The goal is that this will run without any external dependencies.
+Which means you can just download the source code and it will just work.
+However, this uses a Graphical User Interface, and Python does not (always) come with a Graphical User Interface.
+In this case, it will run, but it will not do much or be very easy to use. This is a problem.
+
+The solution is to make it appear as if this runs without any external dependencies.
+There are a lot of Graphical User Interfaces out there, and odds are the user has at least one of them installed.
+So, all I need to do is to support all the major ones and I can achieve the goal.
+
 
 Custom Install
 ^^^^^^^^^^^^^^
@@ -62,61 +87,74 @@ What this is not:
 
 Requirements
 ************
-I recommend doing a full install of Python.
-It will still work if you don't, but I use a lot of these features.
-It may reduce your want for external dependecies.
-+-----------+-------------+-------------------+----------------------------------------+
-| Python    | Need        | Optional Features | Why                                    |
-+===========+=============+===================+========================================+
-| python_   | REQUIRED    |                   | This project is written in Python.     |
-+-----------+-------------+-------------------+----------------------------------------+
-| tkinter_  | RECOMMENDED | tcl/tk and IDLE   | Use this if you don't trust DearPyGui. |
-+-----------+-------------+-------------------+----------------------------------------+
-| unittest_ | RECOMMENDED | Python test suite | Use this to run the tests yourself.    |
-+-----------+-------------+-------------------+----------------------------------------+
 
-.. _python: https://www.python.org/downloads/
-.. _tkinter: https://docs.python.org/3/library/tkinter.html
-.. _unittest: https://docs.python.org/3/library/unittest.html
+The Python Programming Language
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Package
-********
+Currently supporting Python 3.10 - 3.11
+
+This is a Python application, and so it needs Python in order to run.
+Don't feel like installing Python? Try running it in Blender insead!
+
+
+A Graphical User Interface
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you want celestine to be more then just a command line tool, you will need at least one of these installed:
+
++-------------------+-------------------------+--------------------------------------------------------+-----------------------------------------------------------------------+
+| Interface         | Type                    | How                                                    | Information                                                           |
++===================+=========================+========================================================+=======================================================================+
+| `Blender`_        | Application             | Install celestine as a Blender Add-on                  | Secondary scripts, called Add-ons that extends Blender functionality. |
++-------------------+-------------------------+--------------------------------------------------------+-----------------------------------------------------------------------+
+| `Curses`_         | Python Standard Library | Python Installer                                       | The Windows version of Python does not include the curses module.     |
++-------------------+-------------------------+--------------------------------------------------------+-----------------------------------------------------------------------+
+| `Dear PyGui`_     | Python Package Index    | pip install dearpygui                                  | DearPyGui: A simple Python GUI Toolkit.                               |
++-------------------+-------------------------+--------------------------------------------------------+-----------------------------------------------------------------------+
+| `Pygame`_         | Python Package Index    | pip install pygame                                     | Python Game Development.                                              |
++-------------------+-------------------------+--------------------------------------------------------+-----------------------------------------------------------------------+
+| `Tkinter`_        | Python Standard Library | Python Installer > Optional Features > tcl/tk and IDLE | The tkinter package is a thin object-oriented layer on top of Tcl/Tk. |
++-------------------+-------------------------+--------------------------------------------------------+-----------------------------------------------------------------------+
+| `Windows Curses`_ | Python Package Index    | pip install windows-curses                             | Support for the standard curses module on Windows.                    |
++-------------------+-------------------------+--------------------------------------------------------+-----------------------------------------------------------------------+
+
+.. _`Blender`: https://www.blender.org/
+.. _`Curses`: https://docs.python.org/3/howto/curses.html
+.. _`Dear PyGui`: https://github.com/hoffstadt/DearPyGui/
+.. _`Pygame`: https://www.pygame.org/
+.. _`Tkinter`: https://docs.python.org/3/library/tk.html
+.. _`Windows Curses`: https://github.com/zephyrproject-rtos/windows-curses/
+
+Extensions
+^^^^^^^^^^
 
 These packages are optional. But features and performance may be lacking without them.
 
-+-------------------+----------------------------+------------------------------------------------------------+
-| Package           | Install                    | Description                                                |
-+===================+============================+============================================================+
-| `Dear PyGui`_     | pip install dearpygui      | DearPyGui: A simple Python GUI Toolkit                     |
-+-------------------+----------------------------+------------------------------------------------------------+
-| `More Itertools`_ | pip install more-itertools | More routines for operating on iterables, beyond itertools |
-+-------------------+----------------------------+------------------------------------------------------------+
-| `Pillow`_         | pip install Pillow         | Python Imaging Library (Fork)                              |
-+-------------------+----------------------------+------------------------------------------------------------+
++-------------------+----------------------+----------------------------+-------------------------------------------------------------+
+| Package           | Type                 | How                        | Information                                                 |
++===================+======================+============================+=============================================================+
+| `More Itertools`_ | Python Package Index | pip install more-itertools | More routines for operating on iterables, beyond itertools. |
++-------------------+----------------------+----------------------------+-------------------------------------------------------------+
+| `Pillow`_         | Python Package Index | pip install Pillow         | Python Imaging Library (Fork).                              |
++-------------------+----------------------+----------------------------+-------------------------------------------------------------+
+
+.. _`More Itertools`: https://pypi.org/project/Pillow/
+.. _`Pillow`: https://pypi.org/project/Pillow/
 
 
 
-+-----------+-----+-----+-----+-----+------+------+
-| Package   | 3.6 | 3.7 | 3.8 | 3.9 | 3.10 | 3.11 |
-+===========+=====+=====+=====+=====+======+======+
-| celestine | yes | yes | yes | yes | yes  | yes  |
-+-----------+-----+-----+-----+-----+------+------+
-| curses    | yes | yes | yes | yes | yes  | no*  |
-+-----------+-----+-----+-----+-----+------+------+
-| dearpygui | no  | yes | yes | yes | yes  | no   |
-+-----------+-----+-----+-----+-----+------+------+
-| tkinter_  | yes | yes | yes | yes | yes  | yes  |
-+-----------+-----+-----+-----+-----+------+------+
-| unittest_ | yes | yes | yes | yes | yes  | yes  |
-+-----------+-----+-----+-----+-----+------+------+
 
-
-
+.. _python: https://www.python.org/downloads/
+.. _unittest: https://docs.python.org/3/library/unittest.html
 .. _PyPi: https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-pypi
 .. _`Celestine`: https://test.pypi.org/project/celestine/
-.. _`Dear PyGui`: https://pypi.org/project/dearpygui/
-.. _`Pillow`: https://pypi.org/project/Pillow/
-.. _`More Itertools`: https://pypi.org/project/Pillow/
+
+
+
+
+
+.. _python: https://www.python.org/downloads/
+.. _unittest: https://docs.python.org/3/library/unittest.html
 
 (Old notes. Still useful. Need to add to table above somehow.)
 
