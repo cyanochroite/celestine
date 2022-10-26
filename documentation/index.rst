@@ -1,8 +1,3 @@
-
-
-
-
-
 The Celestine Image Viewer
 ##########################
 
@@ -36,10 +31,7 @@ Decided that the main reason behind this was an attempt to use HTML as my GUI.
 Most files in this project are dedicated to viewing and modifying local images.
 Will try to update the project to reflect that.
 
-More
-----
-
- * :doc:`wing`
+Development settings at :doc:`wing`.
 
 
 .. _Goals:
