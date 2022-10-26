@@ -1,4 +1,4 @@
-%APPDATA%\..\Local\Programs\Python\Python310\python.exe view curses
-%APPDATA%\..\Local\Programs\Python\Python310\python.exe view dearpygui
-%APPDATA%\..\Local\Programs\Python\Python310\python.exe view tkinter
-%APPDATA%\..\Local\Programs\Python\Python310\python.exe view pygame
+%APPDATA%\..\Local\Programs\Python\Python310\python.exe viewer curses
+%APPDATA%\..\Local\Programs\Python\Python310\python.exe viewer dearpygui
+%APPDATA%\..\Local\Programs\Python\Python310\python.exe viewer tkinter
+%APPDATA%\..\Local\Programs\Python\Python310\python.exe viewer pygame

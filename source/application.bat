@@ -1,4 +1,4 @@
-python view curses
-python view dearpygui
-python view tkinter
-python view pygame
+python viewer curses
+python viewer dearpygui
+python viewer tkinter
+python viewer pygame

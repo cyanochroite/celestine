@@ -1,4 +1,4 @@
-from view.core import os
+from viewer.core import os
 
 
 def execute(session, directory):

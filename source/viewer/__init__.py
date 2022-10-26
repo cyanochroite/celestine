@@ -1,6 +1,6 @@
 import celestine
 
-from view import main as module
+from viewer import main as module
 
 
 def main(directory, argv, exit_on_error):

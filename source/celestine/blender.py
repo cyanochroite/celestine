@@ -113,7 +113,7 @@ class BOORU_register(bpy.types.Operator):
         data.register()
         ready = True
         argv = ["blender", "main"]
-        celestine.main(sys.path[0], argv)
+        celestine.main(sys.path[0], argv, False)
         return {'FINISHED'}
 
 
