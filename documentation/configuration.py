@@ -1,0 +1,9 @@
+author = "mem_dixy"
+copyright = "2022, mem_dixy"
+html_static_path = ['_static']
+html_theme = 'alabaster'
+keep_warnings = True
+project = "celestin"
+release = "0.4.0"
+templates_path = ['_templates']
+version = "0.4"
