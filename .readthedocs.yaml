@@ -12,7 +12,7 @@ python:
 
 sphinx:
     builder: dirhtml
-    configuration: documentation/configuration.py
+    configuration: documentation/conf.py
     fail_on_warning: true
 
 version: 2
