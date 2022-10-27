@@ -3,11 +3,12 @@ import bpy  # pylint: disable=import-error
 
 CELESTINE = "celestine"
 
+
 def content():
     return bpy.context.preferences.addons[CELESTINE].preferences
 
 
-class BooruAddonPreferences(bpy.types.AddonPreferences):
+class CelestineAddonPreferences(bpy.types.AddonPreferences):
     bl_idname = CELESTINE
 
     root: bpy.props.StringProperty(
@@ -40,6 +41,12 @@ class BooruAddonPreferences(bpy.types.AddonPreferences):
         default=False
     )
 
+    ready: bpy.props.BoolProperty(
+        name="Application Ready",
+        description="Tells the program everything is set up and go to go.",
+        default=False
+    )
+
     blender_id_password: bpy.props.StringProperty(
         name='Password',
         default='',
@@ -55,12 +62,13 @@ class BooruAddonPreferences(bpy.types.AddonPreferences):
         layout.prop(self, "filepath")
         layout.prop(self, "change")
         layout.prop(self, "number")
+        layout.prop(self, "ready")
         layout.prop(self, "boolean")
 
 
 def register():
-    bpy.utils.register_class(BooruAddonPreferences)
+    bpy.utils.register_class(CelestineAddonPreferences)
 
 
 def unregister():
-    bpy.utils.unregister_class(BooruAddonPreferences)
+    bpy.utils.unregister_class(CelestineAddonPreferences)

@@ -2,8 +2,8 @@
 # <pep8-80 compliant>
 import bpy
 
-from celestine.application.blender.data.light import _light as light
-from celestine.application.blender.data.texture import _texture as texture
+from celestine.package.blender.package.data.light import _light as light
+from celestine.package.blender.package.data.texture import _texture as texture
 
 
 class all_stuff():
@@ -42,6 +42,7 @@ class most(all_stuff):
 
 class object(all_stuff):
     pass
+
 
 class camera(all_stuff):
     """Camera data-block for storing camera settings."""

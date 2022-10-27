@@ -6,4 +6,5 @@ source/celestine.wpu
 source/celestine.wpr
 *.ini
 .coverage
+.mypy_cache/
 .vscode

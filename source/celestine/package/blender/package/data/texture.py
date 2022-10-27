@@ -2,7 +2,7 @@
 """bpy.types.Texture"""
 import bpy  # pylint: disable=import-error
 
-from celestine.application.blender.data.most import most
+from celestine.package.blender.package.data.most import most
 
 
 class _texture(most):

@@ -3,12 +3,12 @@
 import bpy  # pylint: disable=import-error
 import bmesh  # pylint: disable=import-error
 
-from celestine.application.blender import data
-from celestine.application.blender import preferences
-from celestine.application.blender import UV
+from celestine.package.blender.package import data
+from celestine.package.blender.package import preferences
+from celestine.package.blender.package import UV
 
 
-from celestine.application.window import Window as Window_
+from celestine.package.master import Window as Window_
 
 
 def new_image(image):

@@ -1,10 +1,12 @@
 from celestine.session import load
 from celestine.session import Session
 
+PACKAGE = "package"
 BLENDER = "blender"
+MAIN = "main"
 
 bl_info = {
-    "name": "Celestine Image Viewer",
+    "name": "Celestine",
     "description": "Blnder stuff can do stuff wow cool.",
     "author": "Mem Dixy",
     "version": (0, 4, 0),
@@ -23,7 +25,7 @@ def register():
     This is a function which only runs when enabling the add-on, this means the
     module can be loaded without activating the add-on.
     """
-    load.module(BLENDER).register()
+    load.module(PACKAGE, BLENDER, MAIN).register()
 
 
 def unregister():
@@ -31,10 +33,15 @@ def unregister():
     This is a function to unload anything setup by register, this is called
     when the add-on is disabled.
     """
-    load.module(BLENDER).unregister()
+    load.module(PACKAGE, BLENDER, MAIN).unregister()
 
 
-def main(directory, argv, exit_on_error, application):
+def zero(page):
+    with page.line("head") as line:
+        line.label("title", "Page 0")
+
+
+def main(directory, argv, exit_on_error, application=zero):
     """Run the main program."""
     session = Session(directory, argv, exit_on_error)
     with session.task.window(session) as window:
