@@ -2,10 +2,9 @@ from .widget import Widget
 
 
 class Button(Widget):
-    def __init__(self, frame, text, action):
+    def __init__(self, text, action, rectangle):
         super().__init__(
-            frame,
-            F"button:{text}",
-            "button",
+            text,
+            rectangle,
         )
         self.action = action

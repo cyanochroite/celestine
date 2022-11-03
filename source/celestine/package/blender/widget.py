@@ -1,5 +1,11 @@
+from celestine.package.blender.package.data import mesh as make_mesh
+from celestine.package.blender.package import mesh
+
+
 class Widget():
-    def __init__(self, frame, text, kind):
+    def __init__(self, text, rectangle):
+        frame = None
+        kind = None
         self.frame = frame
         self.text = text
         self.type = kind
@@ -7,6 +13,8 @@ class Widget():
         self.cord_y = 0
         self.width = 0
         self.height = 0
+        self.mush = make_mesh.make("green", mesh.plane())
+        self.mush.location = (rectangle.cord_x_min, rectangle.cord_y_min, 0)
 
     def select(self, cord_x, cord_y):
         temp_a = cord_x >= self.cord_x
@@ -17,11 +25,3 @@ class Widget():
 
     def unselect(self, cord_x, cord_y):
         return not self.select(cord_x, cord_y)
-
-    def grid(self, cord_x, cord_y):
-        self.cord_x = cord_x
-        self.cord_y = cord_y
-        self.width = len(self.text)
-        self.height = 1
-        self.frame.addstr(cord_y, cord_x * 20, self.text)
-        return self

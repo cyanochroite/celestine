@@ -1,50 +1,66 @@
+from celestine.package.master.line import Line as master
+from celestine.package.master.collection import Rectangle
+
+from . import package
 from .button import Button
 from .image import Image
 from .label import Label
 
 
-class Line():
+class Line(Rectangle):
+    def action(self):
+        pass
+
     def select(self, cord_x, cord_y):
-        return False
+        if self.inside(cord_x, cord_y):
+            self.action()
+            for child in self.children():
+                child.select(cord_x, cord_y)
 
-    def unselect(self, cord_x, cord_y):
-        return False
-
-    def button(self, tag, label, action):
-        return self.frame.item_set(
+    def button(self, tag, text, action):
+        return self.item_set(
             tag,
             Button(
-                self.row,
-                label,
-                action,
+                text,
+                lambda: self.turn(action),
+                self.spawn(),
             ),
-        ).grid(self.frame.cord_x, self.frame.cords_y())
+        )
 
     def image(self, tag, label):
-        return self.frame.item_set(
-            tag,
-            Image(
-                self.row,
-                label,
-            ),
-        ).grid(self.frame.cord_x, self.frame.cords_y())
+        item = Image(
+            self.row,
+            label,
+        )
+        item.grid(self.frame.cord_x, self.frame.cords_y())
 
-    def label(self, tag, label):
-        return self.frame.item_set(
+        package.draw.line(self.row, (255, 255, 255),
+                          (400, 20), (400, 580), 5)
+
+        return item
+
+    def label(self, tag, text):
+        return self.item_set(
             tag,
             Label(
-                self.row,
-                label,
+                text,
+                self.spawn(),
             ),
-        ).grid(self.frame.cord_x, self.frame.cords_y())
-
-    def __init__(self, frame, tag):
-        self.frame = frame
-        self.tag = tag
-        self.row = frame.frame
+        )
 
     def __enter__(self):
         return self
 
     def __exit__(self, *_):
         return False
+
+    def __init__(self, page, tag, rectangle):
+        super().__init__(
+            cord_x_min=rectangle.cord_x_min,
+            cord_y_min=rectangle.cord_y_min,
+            cord_x_max=rectangle.cord_x_max,
+            cord_y_max=rectangle.cord_y_max,
+            offset_x=2.5,
+        )
+        self.tag = tag
+        self.turn = page.turn

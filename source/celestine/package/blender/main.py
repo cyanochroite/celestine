@@ -6,13 +6,16 @@ from .package import mesh
 from .package import UV
 from .package import preferences
 
+import viewer  # REMOVE IN FUTURE UPDATES
+
 
 class celestine_click(bpy.types.Operator):
-    bl_label = "Plane"
+    bl_label = "Mouse Click"
     bl_idname = "celestine.click"
 
     def execute(self, context):
         print("start")
+        viewer.main("", ["blender"], False)
         print("done")
         return {'FINISHED'}
 

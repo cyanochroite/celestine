@@ -1,28 +1,45 @@
+import bpy
+
 from celestine.package.master.page import Page as master
 
 from . import package
+from .package import data
 from .line import Line
 
 
 class Page(master):
-    def cords_y(self):
-        value = self.cord_y
-        self.cord_y += 1
-        return value
-
     def line(self, tag):
-        return self.item_set(tag, Line(self, tag))
-
-    def __init__(self, window, **kwargs):
-        super().__init__(**kwargs)
-        self.window = window
-        self.height = 24
-        self.width = 80
-        self.frame = package.window(
-            1,
-            1,
-            self.width - 1,
-            self.height - 2,
+        return self.item_set(
+            tag,
+            Line(
+                self,
+                tag,
+                self.spawn(),
+            ),
         )
-        self.cord_x = 0
-        self.cord_y = 0
+
+    def __enter__(self):
+        # clear
+        for material in bpy.data.materials:
+            data.material.remove(material)
+        for mesh in bpy.data.meshes:
+            data.mesh.remove(mesh)
+        for image in bpy.data.images:
+            data.image.remove(image)
+        for texture in bpy.data.textures:
+            data.texture.remove(texture)
+        return self
+
+    def __exit__(self, *_):
+        return False
+
+    def __init__(self, window, rectangle, **kwargs):
+        super().__init__(
+            cord_x_min=rectangle.cord_x_min,
+            cord_y_min=rectangle.cord_y_min,
+            cord_x_max=rectangle.cord_x_max,
+            cord_y_max=rectangle.cord_y_max,
+            offset_y=-2.5,
+            ** kwargs,
+        )
+        self.turn = window.turn

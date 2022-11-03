@@ -1,10 +1,9 @@
-__pycache__/
-dist/
-build/
-source/celestine.egg-info/
-source/celestine.wpu
-source/celestine.wpr
 *.ini
 .coverage
 .mypy_cache/
 .vscode
+__pycache__/
+build/
+dist/
+source/celestine.egg-info/
+source/celestine.wpu

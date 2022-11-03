@@ -8,13 +8,13 @@ MAIN = "main"
 bl_info = {
     "name": "Celestine",
     "description": "Blnder stuff can do stuff wow cool.",
-    "author": "Mem Dixy",
+    "author": "mem_dixy",
     "version": (0, 4, 0),
     "blender": (3, 0, 0),
     "location": "View 3D > Sidebar > Viewer",
     "warning": "Does not work. Work in progress. Not ready for publication.",
-    "wiki_url": "https://mem-dixy.ch/",
-    "tracker_url": "https://github.com/Mem-Dixy/Blender-Booru-Builder",
+    "wiki_url": "https://celestine.readthedocs.io/en/latest/",
+    "tracker_url": "https://github.com/mem-dixy/celestine/",
     "support": "COMMUNITY",
     "category": "3D View",
 }

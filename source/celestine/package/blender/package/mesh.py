@@ -1,96 +1,51 @@
 # <pep8-80 compliant>
-import bmesh
+import bmesh as bmesh_
 import mathutils
 
 from celestine.package.blender.package import data
 
 
-class Mesh():
-    """Create a mesh in Blender."""
+def mesh(name, verts, edges, faces, layers):
+    bmesh = bmesh_.new(use_operators=False)
 
-    def __init__(self):
-        self.bmesh = bmesh.new(use_operators=False)
-        self.verts = self.bmesh.verts
-        self.edges = self.bmesh.edges
-        self.faces = self.bmesh.faces
+    for vert in verts:
+        bmesh.verts.new(vert)
+    bmesh.verts.ensure_lookup_table()
 
-    def vertex_add(self, vector):
-        """Add 'vertex' to the mesh."""
-        coordinate = (vector.x, vector.y, vector.z)
-        self.verts.new(coordinate)
+    for (one, two) in edges:
+        bmesh.edges.new((bmesh.verts[one], bmesh.verts[two]))
+    bmesh.edges.ensure_lookup_table()
 
-    def vertex_finalize(self):
-        """Call this after adding all 'vertex' to mesh."""
-        self.verts.ensure_lookup_table()
+    for face in faces:
+        bmesh.faces.new(map(lambda vert: bmesh.verts[vert], face))
+    bmesh.faces.ensure_lookup_table()
 
-    def edge_add(self, vertex_a, vertex_b,):
-        """Add 'edge' to the mesh."""
-        vert_a = self.verts[vertex_a]
-        vert_b = self.verts[vertex_b]
-        vertices = (vert_a, vert_b)
-        self.edges.new(vertices)
+    layer = bmesh.loops.layers.uv.verify()
+    for (face, loop, one, two) in layers:
+        bmesh.faces[face].loops[loop][layer].uv = (one, two)
 
-    def edge_finalize(self):
-        """Call this after adding all 'edge' to mesh."""
-        self.edges.ensure_lookup_table()
-
-    def face_add(self, vertex_a, vertex_b, vertex_c, vertex_d):
-        """Add 'face' to the mesh."""
-        vert_a = self.verts[vertex_a]
-        vert_b = self.verts[vertex_b]
-        vert_c = self.verts[vertex_c]
-        vert_d = self.verts[vertex_d]
-        vertices = (vert_a, vert_b, vert_c, vert_d)
-        self.faces.new(vertices)
-
-    def face_finalize(self):
-        """Call this after adding all 'face' to mesh."""
-        self.faces.ensure_lookup_table()
-
-    def uv_add(self, face, loop, point):
-        """Add 'uv' to the mesh."""
-        index_uv = self.bmesh.loops.layers.uv.verify()
-        self.faces[face].loops[loop][index_uv].uv = (point.x, point.y)
-
-    def uv_finalize(self):
-        """Call this after adding all 'uv' to mesh."""
-
-    def finalize(self, name):
-        """Call this after adding all the stuff to mesh."""
-        mesh = data.mesh.new(name)
-        self.bmesh.to_mesh(mesh)
-        self.bmesh.free()
-        return mesh
+    mesh_ = data.mesh.new(name)
+    bmesh.to_mesh(mesh_)
+    bmesh.free()
+    return mesh_
 
 
-class Quadrilateral(Mesh):
-    def vertex(self, zero, one, two, three):
-        self.vertex_add(zero)
-        self.vertex_add(one)
-        self.vertex_add(two)
-        self.vertex_add(three)
-        self.vertex_finalize()
+def quadrilateral(name, verts, layers):
+    edges = [
+        (0, 1),
+        (1, 2),
+        (2, 3),
+        (3, 0),
+    ]
 
-    def edge(self):
-        self.edge_add(0, 1)
-        self.edge_add(1, 2)
-        self.edge_add(2, 3)
-        self.edge_add(3, 0)
-        self.edge_finalize()
+    faces = [
+        (0, 1, 2, 3),
+    ]
 
-    def face(self):
-        self.face_add(0, 1, 2, 3)
-        self.face_finalize()
-
-    def uv(self, zero, one, two, three):
-        self.uv_add(0, 0, zero)
-        self.uv_add(0, 1, one)
-        self.uv_add(0, 2, two)
-        self.uv_add(0, 3, three)
-        self.uv_finalize()
+    return mesh(name, verts, edges, faces, layers)
 
 
-class Planar(Quadrilateral):
+class Planar():
     def __init__(self):
         super().__init__()
         self.normal = mathutils.Vector((+0, +0, +1))
@@ -104,43 +59,29 @@ class Planar(Quadrilateral):
 
 
 class Plane(Planar):
-    def vertex(self, normal=(+1, +1, +1)):
+    def make(self, name, normal=(+0, +0, +1), uv_x=0, uv_y=0):
         normal = mathutils.Vector(normal)
 
-        vector_a = self.vertex_new((+1, +1), normal)
-        vector_b = self.vertex_new((-1, +1), normal)
-        vector_c = self.vertex_new((-1, -1), normal)
-        vector_d = self.vertex_new((+1, -1), normal)
+        verts = [
+            self.vertex_new((+1, +1), normal),
+            self.vertex_new((-1, +1), normal),
+            self.vertex_new((-1, -1), normal),
+            self.vertex_new((+1, -1), normal),
+        ]
 
-        super().vertex(vector_a, vector_b, vector_c, vector_d)
+        layers = [
+            (0, 0, 1 + uv_x, 1 + uv_y),
+            (0, 1, 0 - uv_x, 1 + uv_y),
+            (0, 2, 0 - uv_x, 0 - uv_y),
+            (0, 3, 1 + uv_x, 0 - uv_y),
+        ]
 
-    def edge(self):
-        self.edge_add(0, 1)
-        self.edge_add(1, 2)
-        self.edge_add(2, 3)
-        self.edge_add(3, 0)
-        self.edge_finalize()
-
-    def face(self):
-        self.face_add(0, 1, 2, 3)
-        self.face_finalize()
-
-    def uv(self, uv_x=0, uv_y=0):
-        self.uv_add(0, 0, mathutils.Vector((1 + uv_x, 1 + uv_y)))
-        self.uv_add(0, 1, mathutils.Vector((0 - uv_x, 1 + uv_y)))
-        self.uv_add(0, 2, mathutils.Vector((0 - uv_x, 0 - uv_y)))
-        self.uv_add(0, 3, mathutils.Vector((1 + uv_x, 0 - uv_y)))
-        self.uv_finalize()
+        return quadrilateral(name, verts, layers)
 
 
 def plane(uv_x=0, uv_y=0):
     box = Plane()
-    box.vertex()
-    box.edge()
-    box.face()
-    box.uv(uv_x, uv_y)
-    name = "Plane"
-    return box.finalize(name)
+    return box.make("Plane")
 
 
 def _offset(numerator, denominator):

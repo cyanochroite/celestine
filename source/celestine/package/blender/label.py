@@ -2,9 +2,9 @@ from .widget import Widget
 
 
 class Label(Widget):
-    def __init__(self, frame, text):
+    def __init__(self, text, rectangle):
         super().__init__(
-            frame,
-            F"label:{text}",
-            "label",
+            text,
+            rectangle,
         )
+

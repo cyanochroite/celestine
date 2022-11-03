@@ -1,39 +1,36 @@
-# <pep8-80 compliant>
 """ bpy.types.Light"""
-import bpy  # pylint: disable=import-error
-
-from celestine.package.blender.package.data.most import most
+from celestine.package.blender.package.data.spawn import _real
 
 
-class _light(most):
+class _light(_real):
     """Light data-block for lighting a scene."""
-#    try:
-#        data = bpy.data.lights
-#    except AttributeError:
-#        pass
+    area = None
+    point = None
+    spot = None
+    sun = None
 
 
 class _area(_light):
     """Area – Directional area light source."""
-    type_ = 'AREA'
+    type_ = "AREA"
 
 
 class _point(_light):
     """Point – Omnidirectional point light source."""
-    type_ = 'POINT'
+    type_ = "POINT"
 
 
 class _spot(_light):
     """Spot – Directional cone light source."""
-    type_ = 'SPOT'
+    type_ = "SPOT"
 
 
 class _sun(_light):
     """Sun – Constant direction parallel ray light source."""
-    type_ = 'SUN'
+    type_ = "SUN"
 
 
-_light.area = _area
-_light.point = _point
-_light.spot = _spot
-_light.sun = _sun
+setattr(_light, "area", _area)
+setattr(_light, "point", _point)
+setattr(_light, "spot", _spot)
+setattr(_light, "sun", _sun)

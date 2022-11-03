@@ -1,89 +1,71 @@
 from celestine.package.master.window import Window as master
 
+from celestine.package.master.collection import Rectangle
+from celestine.package.blender.package import data
+
+import bpy
+
 from . import package
 from .page import Page
+
+
+def context():
+    for area in bpy.context.screen.areas:
+        if area.type == 'VIEW_3D':
+            override = bpy.context.copy()
+            override['area'] = area
+            return override
+    return None
 
 
 class Window(master):
     def page(self, document):
         index = len(self.item)
         self.item_set(index, document)
-        page = Page(self)
+        rectangle = Rectangle(0, 0, 20, 10, 0, 0)
+        page = Page(self, rectangle)
         self.frame = page
         return page
 
     def turn(self, page):
-        self.frame.frame.clear()
-        self.frame = Page(self)
-        self.item_get(page)(self.frame)
-        self.stdscr.noutrefresh()
-        self.background.noutrefresh()
-        self.frame.frame.noutrefresh()
-        package.doupdate()
+        rectangle = Rectangle(0, 0, 20, 10, 0, 0)
+        page2 = Page(self, rectangle)
+        self.frame = page2
+        self.item_get(page)(page2)
 
     def __enter__(self):
         super().__enter__()
-        self.stdscr = package.initscr()
-        package.noecho()
-        package.cbreak()
-        self.stdscr.keypad(1)
-        package.start_color()
+        for camera in bpy.data.cameras:
+            data.camera.remove(camera)
+        for light in bpy.data.lights:
+            data.light.remove(light)
+        for material in bpy.data.materials:
+            data.material.remove(material)
+        for mesh in bpy.data.meshes:
+            data.mesh.remove(mesh)
+        for image in bpy.data.images:
+            data.image.remove(image)
+        for texture in bpy.data.textures:
+            data.texture.remove(texture)
 
-        # start
+        camera = data.camera.make("camera")
+        camera.location = (+20, -10, +60)
 
-        self.background = package.window(0, 0, self.width, self.height)
-        self.background.box()
+        light = data.light.sun.make("light")
+        light.location = (0, 0, 1)
 
-        header1 = package.subwindow(self.background, 0, 0, self.width, 1)
-        header1.addstr(self.session.language.APPLICATION_TITLE)
+        override = context()
+        bpy.ops.view3d.toggle_shading(override, type='RENDERED')
+        bpy.ops.view3d.view_camera(override)
 
-        header2 = package.subwindow(
-            self.background, 0, self.height - 1, self.width, 1)
-        header2.addstr(self.session.language.CURSES_EXIT)
-
-        self.stdscr.noutrefresh()
-        self.background.noutrefresh()
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-        while True:
-            key = self.stdscr.getch()
-            match key:
-                case 258 | 259 | 260 | 261 as key:
-                    match key:
-                        case package.KEY_UP:
-                            self.cord_y -= 1
-                        case package.KEY_DOWN:
-                            self.cord_y += 1
-                        case package.KEY_LEFT:
-                            self.cord_x -= 1
-                        case package.KEY_RIGHT:
-                            self.cord_x += 1
-
-                    self.cord_x %= self.width
-                    self.cord_y %= self.height
-                    self.stdscr.move(self.cord_y, self.cord_x)
-                case package.KEY_Q:
-                    break
-                case package.KEY_SPACE as key:
-                    for key, thing in self.frame.item.items():
-                        if thing.select(self.cord_x - 1, self.cord_y - 1):
-                            if thing.type == "button":
-                                self.turn(thing.action)
-
-        self.stdscr.keypad(0)
-        package.echo()
-        package.nocbreak()
-        package.endwin()
         return False
 
     def __init__(self, session, **kwargs):
         super().__init__(session, **kwargs)
-        self.cord_x = 0
-        self.cord_y = 0
-        self.height = 24
-        self.width = 80
-
-        self.window = 0
         self.frame = None
+        self.width = 20
+        self.height = 10
