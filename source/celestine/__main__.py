@@ -9,4 +9,4 @@ sys.path.append(directory)
 
 celestine = __import__("celestine")
 argv = sys.argv[1:]
-celestine.main(directory, argv, True)
+celestine.main(argv)

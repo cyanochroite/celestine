@@ -9,4 +9,4 @@ sys.path.append(directory)
 
 viewer = __import__("viewer")
 argv = sys.argv[1:]
-viewer.main(directory, argv, True)
+viewer.main(argv)

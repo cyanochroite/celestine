@@ -41,9 +41,9 @@ def zero(page):
         line.label("title", "Page 0")
 
 
-def main(directory, argv, exit_on_error, application=zero):
+def main(argv, application=[zero], exit_on_error=True):
     """Run the main program."""
-    session = Session(directory, argv, exit_on_error)
+    session = Session(argv, exit_on_error)
     with session.task.window(session) as window:
         for document in application:
             window.page(document)

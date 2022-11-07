@@ -1,5 +1,3 @@
-import sys
-
 bl_info = {
     "name": "Celestine - Image Viewer",
     "description": "Blnder stuff can do stuff wow cool.",
@@ -20,7 +18,8 @@ def register():
     This is a function which only runs when enabling the add-on, this means the
     module can be loaded without activating the add-on.
     """
-    main(sys.path[0], ["blender", "main"], False)
+    argv = ["blender", "main"]
+    main(argv, False)
 
 
 def unregister():
@@ -40,7 +39,7 @@ def module(*paths):
     return file
 
 
-def main(directory, argv, exit_on_error):
+def main(argv, exit_on_error=True):
     """Run the main program."""
     celestine = __import__("celestine")
     window = module("window")
@@ -51,4 +50,4 @@ def main(directory, argv, exit_on_error):
         window.one,
         window.two,
     ]
-    celestine.main(directory, argv, exit_on_error, application)
+    celestine.main(argv, application, exit_on_error)

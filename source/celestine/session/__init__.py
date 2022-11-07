@@ -11,8 +11,10 @@ from celestine.keyword.all import LANGUAGE
 
 APPLICATION = "package"
 
+
 class Session():
-    def __init__(self, directory, args, exit_on_error):
+    def __init__(self, args, exit_on_error):
+        directory = ""
         args = args or ["tkinter"]
 
         argument = Argument(exit_on_error)
@@ -44,7 +46,6 @@ class Session():
             module,
             attribute.application,
         )
-        self.directory = directory  # me no like
         self.image_format = module.image_format()
         self.language = load.module(
             LANGUAGE,
