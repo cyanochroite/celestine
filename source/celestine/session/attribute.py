@@ -5,15 +5,12 @@ from celestine.session.configuration import Configuration
 
 @dataclasses.dataclass
 class Attribute():
-    def __init__(self, argument, directory, module, section):
+    def __init__(self, argument, directory, attribute, default, section):
         self.application = None
         self.language = None
         self.task = None
 
         configuration = Configuration.make(directory)
-
-        attribute = module.attribute()
-        default = module.default()
 
         for (name, failover) in zip(attribute, default, strict=True):
             database = configuration.get(section, name, fallback=None)
