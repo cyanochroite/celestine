@@ -5,21 +5,14 @@ from celestine.session import python
 
 from celestine.session import load
 
-from celestine.keyword.all import APPLICATION
-from celestine.keyword.all import CELESTINE
-from celestine.keyword.all import LANGUAGE
-from celestine.keyword.all import CELESTINE
-
 
 from celestine.keyword.all import APPLICATION
-from celestine.keyword.all import LANGUAGE
+from celestine.keyword.all import CELESTINE
+from celestine.keyword.language import LANGUAGE
+
+
 from celestine.keyword.all import PYTHON
 
-from celestine.keyword.all import application
-from celestine.keyword.all import language
-
-
-APPLICATION = "package"
 
 TERMINAL = "terminal"
 ENGLISH = "english"
@@ -80,15 +73,3 @@ class Session():
             APPLICATION,
             attribute.application,
         )
-
-    def add_configuration(self, configuration, module, application):
-        """Build up the configuration file."""
-        if not configuration.has_section(application):
-            configuration.add_section(application)
-        attribute = module.attribute()
-        default = module.default()
-        for item in zip(attribute, default, strict=True):
-            (name, value) = item
-            configuration.set(application, name, value)
-
-        return configuration

@@ -1,12 +1,12 @@
 from celestine.session import load
 
-from celestine.keyword.all import PYTHON
-from celestine.keyword.all import PYTHON_3_6
-from celestine.keyword.all import PYTHON_3_7
-from celestine.keyword.all import PYTHON_3_8
-from celestine.keyword.all import PYTHON_3_9
-from celestine.keyword.all import PYTHON_3_10
-from celestine.keyword.all import PYTHON_3_11
+from celestine.keyword.session import PYTHON
+from celestine.keyword.session import PYTHON_3_6
+from celestine.keyword.session import PYTHON_3_7
+from celestine.keyword.session import PYTHON_3_8
+from celestine.keyword.session import PYTHON_3_9
+from celestine.keyword.session import PYTHON_3_10
+from celestine.keyword.session import PYTHON_3_11
 
 
 def version():

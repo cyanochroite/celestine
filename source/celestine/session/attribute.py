@@ -9,6 +9,7 @@ class Attribute():
         self.application = None
         self.language = None
         self.task = None
+        self.package = None
 
         configuration = Configuration.make(directory)
 

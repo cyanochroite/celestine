@@ -6,11 +6,26 @@ from celestine.keyword.all import APPLICATION
 from celestine.keyword.all import CELESTINE
 from celestine.keyword.all import TASK
 from celestine.keyword.all import application
-from celestine.keyword.all import language
+
+from celestine.keyword.language import LANGUAGE
+from celestine.keyword.language import language
+
+from celestine.keyword.unicode import HYPHEN_MINUS
 
 
 @dataclasses.dataclass
 class Argument():
+    def flag(self, name):
+        iterable = (HYPHEN_MINUS, name[:1])
+        return str().join(iterable)
+
+    def name(self, name):
+        iterable = (HYPHEN_MINUS, HYPHEN_MINUS, name)
+        return str().join(iterable)
+
+    def meta(self, name):
+        return name.upper()
+
     def __init__(self, exit_on_error):
         self.parser = argparse.ArgumentParser(
             prog=CELESTINE,
@@ -24,8 +39,8 @@ class Argument():
         )
 
         self.parser.add_argument(
-            "-l",
-            "--language",
+            self.flag(LANGUAGE),
+            self.name(LANGUAGE),
             choices=language,
             help="""
                 The EU has 24 official languages: Bulgarian, Croatian, Czech,
@@ -34,7 +49,7 @@ class Argument():
                 Polish, Portuguese, Romanian, Slovak, Slovenian, Spanish and
                 Swedish.
             """,
-            metavar="LANGUAGE",
+            metavar=self.meta(LANGUAGE),
             type=str.lower,
         )
 
