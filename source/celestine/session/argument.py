@@ -18,6 +18,7 @@ from celestine.keyword.unicode import HYPHEN_MINUS
 from celestine.keyword.language import code
 
 APPLICATION = "application"
+HELP = "help"
 # help
 INTERFACE = "interface"
 # language
@@ -25,34 +26,40 @@ PYTHON = "python"
 VERSION = "version"
 
 
+def flag(name):
+    iterable = (HYPHEN_MINUS, name[:1])
+    return str().join(iterable)
+
+
+def name(name):
+    iterable = (HYPHEN_MINUS, HYPHEN_MINUS, name)
+    return str().join(iterable)
+
+
 @dataclasses.dataclass
 class Argument():
-    def flag(self, name):
-        iterable = (HYPHEN_MINUS, name[:1])
-        return str().join(iterable)
-
-    def name(self, name):
-        iterable = (HYPHEN_MINUS, HYPHEN_MINUS, name)
-        return str().join(iterable)
-
-    def meta(self, name):
-        return name.upper()
-
     def __init__(self, exit_on_error, translate):
         self.parser = argparse.ArgumentParser(
+            add_help=False,
             prog=CELESTINE,
             exit_on_error=exit_on_error,
         )
 
         self.parser.add_argument(
-            self.flag(APPLICATION),
-            self.name(APPLICATION),
+            flag(APPLICATION),
+            name(APPLICATION),
         )
 
         self.parser.add_argument(
-            self.flag(INTERFACE),
-            self.name(INTERFACE),
-            metavar=self.meta(INTERFACE),
+            flag(HELP),
+            name(HELP),
+            action=HELP,
+            help="I ate a fish!",
+        )
+
+        self.parser.add_argument(
+            flag(INTERFACE),
+            name(INTERFACE),
         )
 
         self.parser.add_argument(
@@ -64,16 +71,16 @@ class Argument():
         )
 
         self.parser.add_argument(
-            self.flag(PYTHON),
-            self.name(PYTHON),
+            flag(PYTHON),
+            name(PYTHON),
             choices=["3.7", "3.8"],
-            metavar="cow",
         )
 
         self.parser.add_argument(
-            self.flag(VERSION),
-            self.name(VERSION),
+            flag(VERSION),
+            name(VERSION),
             action=VERSION,
+            help="Go Fishing trip!",
             version="0.4.0",
         )
 
@@ -88,28 +95,17 @@ class Argument():
         )
 
 
-def flag(name):
-    iterable = (HYPHEN_MINUS, name[:1])
-    return str().join(iterable)
-
-
-def name(name):
-    iterable = (HYPHEN_MINUS, HYPHEN_MINUS, name)
-    return str().join(iterable)
-
-
-def meta(name):
-    return name.upper()
-
-
 def language(args, exit_on_error):
-    parser = ArgumentParser(prog=CELESTINE, exit_on_error=exit_on_error)
+    parser = ArgumentParser(
+        add_help=False,
+        exit_on_error=exit_on_error,
+        prog=CELESTINE,
+    )
     parser.add_argument(
         flag(LANGUAGE),
         name(LANGUAGE),
         choices=code,
         default=EN,
     )
-    car = parser.parse_known_args(args)
-    argument = parser.parse_known_args(args)[0]
+    (argument, _) = parser.parse_known_args(args)
     return argument.language
