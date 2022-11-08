@@ -5,3 +5,7 @@ English, Estonian, Finnish, French, German, Greek, Hungarian, Irish, Italian,
 Latvian, Lithuanian, Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian,
 Spanish and Swedish.
 """
+
+
+APPLICATION_TITLE = "Celestine Image Viewer"
+CURSES_EXIT = "Press 'q' key to exit."

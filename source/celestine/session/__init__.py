@@ -13,6 +13,7 @@ from celestine.keyword.language import LANGUAGE
 
 from celestine.keyword.all import PYTHON
 
+import celestine.session.argument as fish
 
 TERMINAL = "terminal"
 ENGLISH = "english"
@@ -23,14 +24,12 @@ STORE = "store"
 
 class Session():
     def __init__(self, args, exit_on_error):
-        argv = args or ["en"]
-        lang = argv[0]
-        print(lang)
+        language = fish.language(args, exit_on_error)
+        translate = load.module(LANGUAGE, language)
 
         directory = ""
-        args = args or ["tkinter"]
 
-        argument = Argument(exit_on_error)
+        argument = Argument(exit_on_error, translate)
 
         default1 = ("tkinter", ENGLISH, PYTHON_3_10, "main")
         attribute1 = (APPLICATION, LANGUAGE, PYTHON, "task")

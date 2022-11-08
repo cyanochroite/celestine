@@ -54,7 +54,7 @@ language = [
     SWEDISH,
 ]
 
-
+# microsoft translator
 BG = "bg"
 HR = "hr"
 CS = "cs"
@@ -133,3 +133,57 @@ languages = {
     ES: SPANISH,
     SV: SWEDISH,
 }
+
+#  EU
+BG = "bg"
+CS = "cs"
+DA = "da"
+DE = "de"
+EL = "el"
+EN = "en"
+ES = "es"
+ET = "et"
+FI = "fi"
+FR = "fr"
+GA = "ga"
+HR = "hr"
+HU = "hu"
+IT = "it"
+LT = "lt"
+LV = "lv"
+MT = "mt"
+NL = "nl"
+PL = "pl"
+PT = "pt"
+RO = "ro"
+SK = "sk"
+SL = "sl"
+SV = "sv"
+
+
+code = [
+    BG,
+    CS,
+    DA,
+    DE,
+    EL,
+    EN,
+    ES,
+    ET,
+    FI,
+    FR,
+    GA,
+    HR,
+    HU,
+    IT,
+    LT,
+    LV,
+    MT,
+    NL,
+    PL,
+    PT,
+    RO,
+    SK,
+    SL,
+    SV,
+]
