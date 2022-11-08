@@ -23,6 +23,10 @@ STORE = "store"
 
 class Session():
     def __init__(self, args, exit_on_error):
+        argv = args or ["en"]
+        lang = argv[0]
+        print(lang)
+
         directory = ""
         args = args or ["tkinter"]
 

@@ -13,6 +13,17 @@ from celestine.keyword.language import language
 from celestine.keyword.unicode import HYPHEN_MINUS
 
 
+from celestine.languages import en as translate  # FIX
+
+from celestine.keyword.language import code
+
+DIRECTORY = "directory"
+# help
+INTERFACE = "interface"
+# language
+PYTHON = "python"
+
+
 @dataclasses.dataclass
 class Argument():
     def flag(self, name):
@@ -33,24 +44,26 @@ class Argument():
         )
 
         self.parser.add_argument(
-            APPLICATION,
-            choices=application,
-            help="Select which application to run.",
+            LANGUAGE,
+            choices=code,
+            help=translate.LANGUAGE,
         )
 
         self.parser.add_argument(
-            self.flag(LANGUAGE),
-            self.name(LANGUAGE),
-            choices=language,
-            help="""
-                The EU has 24 official languages: Bulgarian, Croatian, Czech,
-                Danish, Dutch, English, Estonian, Finnish, French, German,
-                Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, Maltese,
-                Polish, Portuguese, Romanian, Slovak, Slovenian, Spanish and
-                Swedish.
-            """,
-            metavar=self.meta(LANGUAGE),
-            type=str.lower,
+            self.flag(DIRECTORY),
+            self.name(DIRECTORY),
+            metavar=self.meta(DIRECTORY),
+        )
+
+        self.parser.add_argument(
+            self.flag(INTERFACE),
+            self.name(INTERFACE),
+            metavar=self.meta(INTERFACE),
+        )
+        self.parser.add_argument(
+            self.flag(PYTHON),
+            self.name(PYTHON),
+            metavar=self.meta(PYTHON),
         )
 
         self.subparser = self.parser.add_subparsers(
