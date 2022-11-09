@@ -30,8 +30,11 @@ TKINTER = "tkinter"
 
 class Session():
     def __init__(self, args, exit_on_error):
-        language = fish.language(args, exit_on_error)
+        language = fish.fast_pass(args, exit_on_error)
         translate = load.module(LANGUAGE, language)
+
+        # temp until translation happen
+        translate = load.module("keyword", "translation")
 
         directory = ""
 

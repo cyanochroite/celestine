@@ -8,6 +8,8 @@ PYTHON = "python"
 TASK = "task"
 VERSION = "version"
 
+VERSION_NUMBER = "0.4.0"
+
 
 EN = "en"
 TKINTER = "tkinter"
