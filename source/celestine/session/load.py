@@ -7,6 +7,9 @@ from celestine.keyword.unicode import LOW_LINE
 from celestine.keyword.all import CELESTINE
 
 
+import sys
+
+
 def attempt(name):
     """Attempt to load a package and return the result."""
     try:
@@ -39,7 +42,9 @@ def directory(_path):
 
 
 def dictionary(_module):
-    """Load from module all key value pairs and turn them into dictionary."""
+    """
+    Load from module all key value pairs and turn them into dictionary.
+    """
     _dictionary = vars(_module)
     mapping = {
         key: value
@@ -48,3 +53,23 @@ def dictionary(_module):
         if not key.startswith(LOW_LINE)
     }
     return mapping
+
+
+def argument(*paths):
+    """
+    Reads all files in a directory. Returns a list of all non private
+    python files with the extension removed.
+    """
+    def private(string):
+        return string.startswith("_") or string.startswith(".")
+
+    sys_path = sys.path[0]
+    os_path_join = os.path.join(sys_path, *paths)
+    directory = os.listdir(os_path_join)
+
+    splitext = os.path.splitext
+
+    split = [splitext(path) for path in directory if not private(path)]
+    array = [root for (root, ext) in split]
+    array.sort()
+    return array
