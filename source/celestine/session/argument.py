@@ -1,25 +1,20 @@
+import argparse
+import dataclasses
+
+from celestine.keyword.all import APPLICATION
+from celestine.keyword.all import CELESTINE
+from celestine.keyword.all import HELP
+from celestine.keyword.all import INTERFACE
+from celestine.keyword.all import LANGUAGE
+from celestine.keyword.all import PYTHON
+from celestine.keyword.all import TASK
+from celestine.keyword.all import VERSION
+
 from celestine.keyword.language import code
 from celestine.keyword.unicode import HYPHEN_MINUS
 from celestine.keyword.language import EN
-from celestine.keyword.language import language
-from celestine.keyword.language import LANGUAGE
-from celestine.keyword.all import application
-from celestine.keyword.all import TASK
-from celestine.keyword.all import CELESTINE
-from celestine.keyword.all import APPLICATION
-import dataclasses
-import argparse
-from argparse import ArgumentParser
 
 from celestine.session import load
-
-APPLICATION = "application"
-HELP = "help"
-# help
-INTERFACE = "interface"
-# language
-PYTHON = "python"
-VERSION = "version"
 
 
 def flag(name):
@@ -80,7 +75,7 @@ class Argument():
         override.add_argument(
             flag(INTERFACE),
             name(INTERFACE),
-            choices=load.argument("package"),
+            choices=load.argument(INTERFACE),
         )
 
         override.add_argument(
@@ -111,7 +106,7 @@ class Argument():
 
 
 def language(args, exit_on_error):
-    parser = ArgumentParser(
+    parser = argparse.ArgumentParser(
         add_help=False,
         exit_on_error=exit_on_error,
         prog=CELESTINE,

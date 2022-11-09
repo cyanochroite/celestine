@@ -26,7 +26,9 @@ class _imaginary():
 class _real(_imaginary):
     @classmethod
     def make(cls, name, item=None):
-        return cls.object_(name, item or cls.new(name))
+        fake = item or cls.new(name)
+        real = cls.object_(name, fake)
+        return _real(real, fake)
 
     @classmethod
     def object_(cls, name, object_data):
@@ -34,4 +36,18 @@ class _real(_imaginary):
         bpy.context.scene.collection.objects.link(object_)
         return object_
 
+    def __init__(self, real, fake):
+        self.__dict__["real"] = real
+        self.__dict__["fake"] = fake
+        self.__dict__["data"] = ["location", "rotation_euler", "scale"]
 
+    def __getattr__(self, name):
+        if name in self.__dict__["data"]:
+            return getattr(self.__dict__["real"], name)
+        return getattr(self.__dict__["fake"], name)
+
+    def __setattr__(self, name, value):
+        if name in self.__dict__["data"]:
+            setattr(self.real, name, value)
+        else:
+            setattr(self.fake, name, value)

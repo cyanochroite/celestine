@@ -1,5 +1,5 @@
-from celestine.package.master.line import Line as master
-from celestine.package.master.collection import Rectangle
+from celestine.window.line import Line as master
+from celestine.window.collection import Rectangle
 
 from . import package
 from .button import Button

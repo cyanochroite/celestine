@@ -15,7 +15,13 @@ class celestine_click(bpy.types.Operator):
 
     def execute(self, context):
         print("start")
-        viewer.main("", ["blender"], False)
+        # viewer.main("", ["blender"], False)
+        mouse = next(obj for obj in bpy.data.objects if obj.name == "mouse")
+        location = mouse.location
+        x = round(location.x / 2.5) * 2.5
+        y = round(location.y / 2.5) * 2.5
+        z = 1
+        mouse.location = (x, y, z)
         print("done")
         return {'FINISHED'}
 

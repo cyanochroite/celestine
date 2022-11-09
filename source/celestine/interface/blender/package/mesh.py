@@ -79,9 +79,9 @@ class Plane(Planar):
         return quadrilateral(name, verts, layers)
 
 
-def plane(uv_x=0, uv_y=0):
+def plane(text, uv_x=0, uv_y=0):
     box = Plane()
-    return box.make("Plane")
+    return box.make(text)
 
 
 def _offset(numerator, denominator):

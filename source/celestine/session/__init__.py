@@ -8,7 +8,12 @@ from celestine.session import load
 
 from celestine.keyword.all import APPLICATION
 from celestine.keyword.all import CELESTINE
-from celestine.keyword.language import LANGUAGE
+from celestine.keyword.all import LANGUAGE
+
+
+from celestine.keyword.all import INTERFACE
+from celestine.keyword.all import LANGUAGE
+from celestine.keyword.all import PYTHON
 
 
 from celestine.keyword.all import PYTHON
@@ -20,6 +25,7 @@ ENGLISH = "english"
 PYTHON_3_10 = "python_3_10"
 CONFIGURE = "configure"
 STORE = "store"
+TKINTER = "tkinter"
 
 
 class Session():
@@ -34,6 +40,9 @@ class Session():
         default1 = ("tkinter", ENGLISH, PYTHON_3_10, "main")
         attribute1 = (APPLICATION, LANGUAGE, PYTHON, "task")
 
+        default1 = (TKINTER, "en", "main")
+        attribute1 = (INTERFACE, LANGUAGE, "task")
+
         attribute = Attribute(
             argument.parser.parse_args(args),
             directory,
@@ -42,8 +51,7 @@ class Session():
             CELESTINE,
         )
 
-        attribute.application = attribute.package
-        module = load.module(APPLICATION, attribute.application)
+        module = load.module(INTERFACE, attribute.interface)
 
         argument = module.argument(argument)
         attribute = Attribute(
@@ -53,18 +61,17 @@ class Session():
             default1,
             CELESTINE,
         )
-        attribute.application = attribute.package
 
         self.application = load.module(
-            APPLICATION,
-            attribute.application,
+            INTERFACE,
+            attribute.interface,
         )
         self.attribute = Attribute(
             argument.parser.parse_args(args),
             directory,
             module.attribute(),
             module.default(),
-            attribute.application,
+            attribute.interface,
         )
         self.image_format = module.image_format()
         self.language = load.module(
@@ -73,6 +80,6 @@ class Session():
         )
         self.python = python.version()
         self.task = load.module(
-            APPLICATION,
-            attribute.application,
+            INTERFACE,
+            attribute.interface,
         )

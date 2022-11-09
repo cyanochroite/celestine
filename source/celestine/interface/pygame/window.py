@@ -1,6 +1,6 @@
-from celestine.package.master.window import Window as master
+from celestine.window.window import Window as master
 
-from celestine.package.master.collection import Rectangle
+from celestine.window.collection import Rectangle
 
 from . import package
 from .page import Page
@@ -24,7 +24,6 @@ class Window(master):
         self.frame = page2
         self.item_get(page)(page2)
         package.display.flip()
-
 
     def __enter__(self):
         super().__enter__()

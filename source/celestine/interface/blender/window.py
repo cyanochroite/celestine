@@ -1,12 +1,13 @@
-from celestine.package.master.window import Window as master
+from celestine.window.window import Window as master
 
-from celestine.package.master.collection import Rectangle
+from celestine.window.collection import Rectangle
 from celestine.package.blender.package import data
 
 import bpy
 
 from . import package
 from .page import Page
+from .mouse import Mouse
 
 
 def context():
@@ -49,10 +50,14 @@ class Window(master):
             data.texture.remove(texture)
 
         camera = data.camera.make("camera")
-        camera.location = (+20, -10, +60)
+        camera.location = (+16.0, -08.5, +60.0)
+        camera.ortho_scale = +35.0
+        camera.type = 'ORTHO'
 
         light = data.light.sun.make("light")
         light.location = (0, 0, 1)
+
+        self.mouse = Mouse(Rectangle())
 
         override = context()
         bpy.ops.view3d.toggle_shading(override, type='RENDERED')
@@ -69,3 +74,4 @@ class Window(master):
         self.frame = None
         self.width = 20
         self.height = 10
+        self.mouse = None

@@ -1,4 +1,4 @@
-from celestine.package.master.page import Page as master
+from celestine.window.page import Page as master
 
 from . import package
 from .line import Line

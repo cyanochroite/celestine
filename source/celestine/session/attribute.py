@@ -6,10 +6,9 @@ from celestine.session.configuration import Configuration
 @dataclasses.dataclass
 class Attribute():
     def __init__(self, argument, directory, attribute, default, section):
-        self.application = None
         self.language = None
         self.task = None
-        self.package = None
+        self.interface = None
 
         configuration = Configuration.make(directory)
 

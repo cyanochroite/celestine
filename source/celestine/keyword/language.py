@@ -1,7 +1,3 @@
-
-
-LANGUAGE = "language"
-
 BULGARIAN = "bulgarian"
 CROATIAN = "croatian"
 CZECH = "czech"

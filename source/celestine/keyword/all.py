@@ -1,40 +1,16 @@
 """Keywords used throughout the application."""
 APPLICATION = "application"
-
-PACKAGE = "package"
-
 CELESTINE = "celestine"
-CURSES = "curses"
-DEARPYGUI = "dearpygui"
-TKINTER = "tkinter"
-UNITTEST = "unittest"
-
-package = [
-    CELESTINE,
-    CURSES,
-    DEARPYGUI,
-    TKINTER,
-    UNITTEST,
-]
-
-
+HELP = "help"
+INTERFACE = "interface"
+LANGUAGE = "language"
 PYTHON = "python"
+TASK = "task"
+VERSION = "version"
 
-PYTHON_3_6 = "python_3_6"
-PYTHON_3_7 = "python_3_7"
-PYTHON_3_8 = "python_3_8"
-PYTHON_3_9 = "python_3_9"
-PYTHON_3_10 = "python_3_10"
-PYTHON_3_11 = "python_3_11"
 
-python = [
-    PYTHON_3_6,
-    PYTHON_3_7,
-    PYTHON_3_8,
-    PYTHON_3_9,
-    PYTHON_3_10,
-    PYTHON_3_11,
-]
+EN = "en"
+TKINTER = "tkinter"
 
 
 CACHE = "cache"
@@ -64,17 +40,3 @@ READ = "rt"
 WRITE = "wt"
 UTF_8 = "utf_8"
 
-
-APPLICATION = PACKAGE
-
-TERMINAL = "terminal"
-
-application = [
-    "blender",
-    CURSES,
-    DEARPYGUI,
-    TKINTER,
-    "pygame",
-]
-
-TASK = "task"

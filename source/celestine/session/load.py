@@ -60,11 +60,14 @@ def argument(*paths):
     '_private'. (First letter is not a symbol.)
     Strip off all file extensions, if any.
     """
-    join = os.path.join
-    listdir = os.listdir
-    splitext = os.path.splitext
+    sys_path = sys.path[0]
+    os_path_dirname = os.path.dirname(sys_path)
+    os_path_join = os.path.join(os_path_dirname, CELESTINE, *paths)
+    os_listdir = os.listdir(os_path_join)
 
-    folder = listdir(join(sys.path[0], *paths))
+    folder = os_listdir
+    splitext = os.path.splitext
     result = [splitext(file)[0] for file in folder if file[0].isalpha()]
+
     result.sort()
     return result
