@@ -35,8 +35,6 @@ def name(name):
 @dataclasses.dataclass
 class Argument():
     def __init__(self, exit_on_error, translate):
-        array = load.argument("application")
-        print(array)
         self.parser = argparse.ArgumentParser(
             add_help=False,
             prog=CELESTINE,
@@ -46,6 +44,7 @@ class Argument():
         self.parser.add_argument(
             flag(APPLICATION),
             name(APPLICATION),
+            choices=load.argument(APPLICATION),
         )
 
         information = self.parser.add_argument_group(
@@ -97,6 +96,8 @@ class Argument():
             name(PYTHON),
             choices=load.argument(PYTHON),
         )
+
+        ###
 
         self.subparser = self.parser.add_subparsers(
             dest=TASK,

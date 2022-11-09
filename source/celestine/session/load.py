@@ -1,13 +1,11 @@
 """Central place for loading and importing external files."""
 import os.path
+import sys
 
 from celestine.keyword.unicode import FULL_STOP
 from celestine.keyword.unicode import LOW_LINE
 
 from celestine.keyword.all import CELESTINE
-
-
-import sys
 
 
 def attempt(name):
@@ -57,19 +55,16 @@ def dictionary(_module):
 
 def argument(*paths):
     """
-    Reads all files in a directory. Returns a list of all non private
-    python files with the extension removed.
+    Build a path to the selected package. Scan all items in directory.
+    Return a list of items that are not private, such as '.private' or
+    '_private'. (First letter is not a symbol.)
+    Strip off all file extensions, if any.
     """
-    def private(string):
-        return string.startswith("_") or string.startswith(".")
-
-    sys_path = sys.path[0]
-    os_path_join = os.path.join(sys_path, *paths)
-    directory = os.listdir(os_path_join)
-
+    join = os.path.join
+    listdir = os.listdir
     splitext = os.path.splitext
 
-    split = [splitext(path) for path in directory if not private(path)]
-    array = [root for (root, ext) in split]
-    array.sort()
-    return array
+    folder = listdir(join(sys.path[0], *paths))
+    result = [splitext(file)[0] for file in folder if file[0].isalpha()]
+    result.sort()
+    return result
