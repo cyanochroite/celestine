@@ -1,22 +1,17 @@
 """Celestine Image Viewer"""
 from celestine.session.argument import Argument
 from celestine.session.attribute import Attribute
-from celestine.session import python
 
 from celestine.session import load
 
 
 from celestine.keyword.all import APPLICATION
 from celestine.keyword.all import CELESTINE
-from celestine.keyword.all import LANGUAGE
-
 
 from celestine.keyword.all import INTERFACE
 from celestine.keyword.all import LANGUAGE
 from celestine.keyword.all import PYTHON
 
-
-from celestine.keyword.all import PYTHON
 
 import celestine.session.argument as fish
 
@@ -28,6 +23,16 @@ STORE = "store"
 TKINTER = "tkinter"
 
 
+def python_version():
+    items = load.argument(PYTHON)
+    try:
+        for version in items:
+            python = load.module(PYTHON, version)
+    except SyntaxError:
+        pass
+    return python
+
+
 class Session():
     def __init__(self, args, exit_on_error):
         language = fish.fast_pass(args, exit_on_error)
@@ -37,6 +42,7 @@ class Session():
         translate = load.module("keyword", "translation")
 
         directory = ""
+        print(directory)
 
         argument = Argument(exit_on_error, translate)
 
@@ -81,7 +87,7 @@ class Session():
             LANGUAGE,
             attribute.language,
         )
-        self.python = python.version()
+        self.python = python_version()
         self.task = load.module(
             INTERFACE,
             attribute.interface,

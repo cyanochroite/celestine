@@ -1,5 +1,5 @@
 """Python 3.9"""
-from celestine.python import python_3_8 as python
+from celestine.python import python_3_08 as python
 
 
 def curses_cursor_input_match(key, curses, mouse_x, mouse_y):
