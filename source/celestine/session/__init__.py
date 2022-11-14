@@ -44,11 +44,17 @@ class Session():
         attribute1 = (INTERFACE, LANGUAGE, "task")
 
         default1 = (
+            load.argument_default(APPLICATION),
             load.argument_default(INTERFACE),
-            load.argument_default(PYTHON),
             EN,
+            load.argument_default(PYTHON),
         )
-        attribute1 = (INTERFACE, PYTHON, LANGUAGE)
+        attribute1 = (
+            APPLICATION,
+            INTERFACE,
+            LANGUAGE,
+            PYTHON,
+        )
 
         attribute = Attribute(
             argument.parser.parse_args(args),
@@ -68,11 +74,6 @@ class Session():
             default1,
             CELESTINE,
         )
-
-        self.application = load.module(
-            INTERFACE,
-            attribute.interface,
-        )
         self.attribute = Attribute(
             argument.parser.parse_args(args),
             directory,
@@ -81,12 +82,21 @@ class Session():
             attribute.interface,
         )
         self.image_format = module.image_format()
+        self.task = load.module(
+            INTERFACE,
+            attribute.interface,
+        )
+        #
+        self.application = load.module(
+            APPLICATION,
+            attribute.application,
+        )
+        self.interface = load.module(
+            INTERFACE,
+            attribute.interface,
+        )
         self.language = load.module(
             LANGUAGE,
             attribute.language,
         )
         self.python = attribute.python
-        self.task = load.module(
-            INTERFACE,
-            attribute.interface,
-        )

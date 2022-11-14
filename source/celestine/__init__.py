@@ -26,6 +26,8 @@ def register():
     module can be loaded without activating the add-on.
     """
     load.module(PACKAGE, BLENDER, MAIN).register()
+    argv = ["blender", "main"]
+    main(argv, False)
 
 
 def unregister():
@@ -41,9 +43,9 @@ def zero(page):
         line.label("title", "Page 0")
 
 
-def main(argv, application=[zero], exit_on_error=True):
+def main(argv, exit_on_error=True):
     """Run the main program."""
     session = Session(argv, exit_on_error)
     with session.task.window(session) as window:
-        for document in application:
+        for document in session.application.main(session):
             window.page(document)

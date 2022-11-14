@@ -14,4 +14,4 @@ proj.file-type = 'shared'
 proj.launch-config = {loc('view/__main__.py'): ('project',
         ('curses',
          ''))}
-proj.main-file = loc('viewer/__main__.py')
+proj.main-file = loc('celestine/__main__.py')
