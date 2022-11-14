@@ -1,7 +1,7 @@
 from celestine.window.window import Window as master
 
 from celestine.window.collection import Rectangle
-from celestine.package.blender.package import data
+from .package import data
 
 import bpy
 

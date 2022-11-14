@@ -8,6 +8,7 @@ class Attribute():
     def __init__(self, argument, directory, attribute, default, section):
         self.interface = None
         self.language = None
+        self.python = None
         self.task = None
 
         configuration = Configuration.make(directory)

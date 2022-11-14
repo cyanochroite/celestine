@@ -3,7 +3,7 @@
 .mypy_cache/
 .vscode
 __pycache__/
-build/
 dist/
+html/
 source/celestine.egg-info/
 source/celestine.wpu

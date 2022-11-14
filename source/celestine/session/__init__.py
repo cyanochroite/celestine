@@ -21,16 +21,7 @@ PYTHON_3_10 = "python_3_10"
 CONFIGURE = "configure"
 STORE = "store"
 TKINTER = "tkinter"
-
-
-def python_version():
-    items = load.argument(PYTHON)
-    try:
-        for version in items:
-            python = load.module(PYTHON, version)
-    except SyntaxError:
-        pass
-    return python
+EN = "en"
 
 
 class Session():
@@ -51,6 +42,13 @@ class Session():
 
         default1 = (TKINTER, "en", "main")
         attribute1 = (INTERFACE, LANGUAGE, "task")
+
+        default1 = (
+            load.argument_default(INTERFACE),
+            load.argument_default(PYTHON),
+            EN,
+        )
+        attribute1 = (INTERFACE, PYTHON, LANGUAGE)
 
         attribute = Attribute(
             argument.parser.parse_args(args),
@@ -87,7 +85,7 @@ class Session():
             LANGUAGE,
             attribute.language,
         )
-        self.python = python_version()
+        self.python = attribute.python
         self.task = load.module(
             INTERFACE,
             attribute.interface,

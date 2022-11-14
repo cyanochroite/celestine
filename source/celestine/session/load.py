@@ -53,6 +53,21 @@ def dictionary(_module):
     return mapping
 
 
+def argument_default(path):
+    array = argument(path)
+    result = None
+    for item in array:
+        try:
+            module(path, item)
+            result = item
+        except (SyntaxError, ModuleNotFoundError):
+            pass
+    if not result:
+        message = F"Failed to load any package in '{path}' directory."
+        raise ReferenceError(message)
+    return result
+
+
 def argument(*paths):
     """
     Build a path to the selected package. Scan all items in directory.
