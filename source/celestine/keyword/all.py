@@ -1,6 +1,7 @@
 """Keywords used throughout the application."""
 APPLICATION = "application"
 CELESTINE = "celestine"
+DEFAULT = "default"
 HELP = "help"
 INTERFACE = "interface"
 LANGUAGE = "language"

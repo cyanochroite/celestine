@@ -18,12 +18,6 @@ def attempt(name):
     return False
 
 
-def path(one, *paths):
-    """Load a file from absolute path."""
-    _path = os.path.join(one, *paths)
-    return _path
-
-
 def module(*paths):
     """Load an internal module from anywhere in the application."""
     iterable = [CELESTINE, *paths]
@@ -32,11 +26,6 @@ def module(*paths):
     for _path in paths:
         file = getattr(file, _path)
     return file
-
-
-def directory(_path):
-    """Load file contents from a directory."""
-    print(_path)
 
 
 def dictionary(_module):
@@ -75,12 +64,10 @@ def argument(*paths):
     '_private'. (First letter is not a symbol.)
     Strip off all file extensions, if any.
     """
-    sys_path = sys.path[0]
-    os_path_dirname = os.path.dirname(sys_path)
-    os_path_join = os.path.join(os_path_dirname, CELESTINE, *paths)
-    os_listdir = os.listdir(os_path_join)
+    path = sys.path[0]
+    directory = os.path.join(path, *paths)
+    folder = os.listdir(directory)
 
-    folder = os_listdir
     splitext = os.path.splitext
     result = [splitext(file)[0] for file in folder if file[0].isalpha()]
 

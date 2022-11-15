@@ -1,6 +1,5 @@
 import configparser
-
-from celestine.session import load
+import os
 
 from celestine.keyword.all import CELESTINE
 from celestine.keyword.session import CONFIGURATION
@@ -13,7 +12,7 @@ class Configuration():
 
     def __init__(self, directory):
         self.directory = directory
-        self.path = load.path(directory, CELESTINE, CONFIGURATION)
+        self.path = os.path.join(directory, CELESTINE, CONFIGURATION)
 
     def load(self, path=None):
         """Load the configuration file."""

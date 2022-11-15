@@ -13,8 +13,6 @@ from celestine.keyword.all import LANGUAGE
 from celestine.keyword.all import PYTHON
 
 
-import celestine.session.argument as fish
-
 TERMINAL = "terminal"
 ENGLISH = "english"
 PYTHON_3_10 = "python_3_10"
@@ -22,16 +20,12 @@ CONFIGURE = "configure"
 STORE = "store"
 TKINTER = "tkinter"
 EN = "en"
+TASK = "task"
 
 
 class Session():
     def __init__(self, args, exit_on_error):
-        fast_pass = fish.fast_pass(args, exit_on_error)
-
-        directory = ""
-        print(directory)
-
-        argument = Argument(exit_on_error, fast_pass.language)
+        argument = Argument(args, exit_on_error)
 
         default1 = ("tkinter", ENGLISH, PYTHON_3_10, "main")
         attribute1 = (APPLICATION, LANGUAGE, PYTHON, "task")
@@ -39,60 +33,54 @@ class Session():
         default1 = (TKINTER, "en", "main")
         attribute1 = (INTERFACE, LANGUAGE, "task")
 
-        default1 = (
+        default = [
             load.argument_default(APPLICATION),
             load.argument_default(INTERFACE),
             EN,
             load.argument_default(PYTHON),
-        )
-        attribute1 = (
+            "main"
+        ]
+        attribute = [
             APPLICATION,
             INTERFACE,
             LANGUAGE,
             PYTHON,
-        )
+            "task",
+        ]
 
-        attribute = Attribute(
-            argument.parser.parse_args(args),
-            directory,
-            attribute1,
-            default1,
-            CELESTINE,
-        )
+        applications = load.argument(APPLICATION)
+        for application in applications:
+            module = load.module(APPLICATION, application)
+            one = attribute
+            two = module.attribute()
 
-        module = load.module(INTERFACE, attribute.interface)
+            attribute.extend(module.attribute())
+            default.extend(module.default())
 
-        argument = module.argument(argument)
-        attribute = Attribute(
-            argument.parser.parse_args(args),
-            directory,
-            attribute1,
-            default1,
-            CELESTINE,
-        )
         self.attribute = Attribute(
             argument.parser.parse_args(args),
-            directory,
-            module.attribute(),
-            module.default(),
-            attribute.interface,
+            attribute,
+            default,
         )
-        self.image_format = module.image_format()
-        self.task = load.module(
-            INTERFACE,
-            attribute.interface,
-        )
-        #
+
         self.application = load.module(
             APPLICATION,
-            attribute.application,
+            self.attribute.application,
         )
         self.interface = load.module(
             INTERFACE,
-            attribute.interface,
+            self.attribute.interface,
         )
         self.language = load.module(
             LANGUAGE,
-            attribute.language,
+            self.attribute.language,
         )
-        self.python = attribute.python
+        self.python = load.module(
+            PYTHON,
+            self.attribute.python,
+        )
+        self.task = load.module(
+            APPLICATION,
+            self.attribute.application,
+            self.attribute.task,
+        )

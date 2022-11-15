@@ -39,9 +39,9 @@ def unregister():
     load.module(PACKAGE, BLENDER, MAIN).unregister()
 
 
-def main(argv, exit_on_error=True):
+def main(argv, exit_on_error):
     """Run the main program."""
     session = Session(argv, exit_on_error)
-    with session.task.window(session) as window:
-        for document in session.application.main(session):
+    with session.interface.window(session) as window:
+        for document in session.task.main(session):
             window.page(document)
