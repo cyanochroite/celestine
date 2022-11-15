@@ -42,3 +42,6 @@ READ = "rt"
 WRITE = "wt"
 UTF_8 = "utf_8"
 
+PACKAGE = "package"
+BLENDER = "blender"
+MAIN = "main"

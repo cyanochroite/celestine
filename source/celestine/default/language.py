@@ -30,5 +30,3 @@ Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian,
 Spanish and Swedish.
 """
 ARGUMENT_PYTHON_HELP = "Select which version of Python you are using."
-
-

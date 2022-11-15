@@ -38,8 +38,7 @@ class Argument():
         )
 
         self.parser.add_argument(
-            flag(APPLICATION),
-            name(APPLICATION),
+            APPLICATION,
             choices=load.argument(APPLICATION),
         )
 
@@ -102,17 +101,40 @@ class Argument():
         )
 
 
+DEFAULT = "default"
+
+
+def default(argument, attribute):
+    choice = getattr(argument, attribute, None)
+    choices = load.argument(attribute),
+
+    if choice in choices:
+        value = load.module(attribute, choice)
+    else:
+        value = load.module(DEFAULT, attribute)
+
+    setattr(argument, attribute, value)
+
+
 def fast_pass(args, exit_on_error):
     parser = argparse.ArgumentParser(
         add_help=False,
         exit_on_error=exit_on_error,
-        prog=CELESTINE,
+        prog="FAKE NEWS"
     )
     parser.add_argument(
         flag(LANGUAGE),
         name(LANGUAGE),
-        choices=code,
-        default=EN,
+        # choices=load.argument(LANGUAGE),
+        # default=EN,
     )
+
+#    parser = ArgumentParser(add_help=False, exit_on_error=exit_on_error)
+#    parser.add_argument(flag(LANGUAGE), name(LANGUAGE))
+
     (argument, _) = parser.parse_known_args(args)
-    return argument.language
+
+    default(argument, LANGUAGE)
+    default(argument, APPLICATION)
+
+    return argument

@@ -1,9 +1,10 @@
 from celestine.session import load
 from celestine.session import Session
 
-PACKAGE = "package"
-BLENDER = "blender"
-MAIN = "main"
+from celestine.keyword.all import PACKAGE
+from celestine.keyword.all import BLENDER
+from celestine.keyword.all import MAIN
+
 
 bl_info = {
     "name": "Celestine",
@@ -26,7 +27,7 @@ def register():
     module can be loaded without activating the add-on.
     """
     load.module(PACKAGE, BLENDER, MAIN).register()
-    argv = ["blender", "main"]
+    argv = [BLENDER, MAIN]
     main(argv, False)
 
 
@@ -36,11 +37,6 @@ def unregister():
     when the add-on is disabled.
     """
     load.module(PACKAGE, BLENDER, MAIN).unregister()
-
-
-def zero(page):
-    with page.line("head") as line:
-        line.label("title", "Page 0")
 
 
 def main(argv, exit_on_error=True):

@@ -26,16 +26,12 @@ EN = "en"
 
 class Session():
     def __init__(self, args, exit_on_error):
-        language = fish.fast_pass(args, exit_on_error)
-        translate = load.module(LANGUAGE, language)
-
-        # temp until translation happen
-        translate = load.module("keyword", "translation")
+        fast_pass = fish.fast_pass(args, exit_on_error)
 
         directory = ""
         print(directory)
 
-        argument = Argument(exit_on_error, translate)
+        argument = Argument(exit_on_error, fast_pass.language)
 
         default1 = ("tkinter", ENGLISH, PYTHON_3_10, "main")
         attribute1 = (APPLICATION, LANGUAGE, PYTHON, "task")
