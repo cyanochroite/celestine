@@ -8,12 +8,12 @@ TASK = "task"
 
 def argument(argument):
     """Build up the argument."""
-    argument.main = argument.subparser.add_parser(
-        "main",
+    parser = argument.subparser.add_parser(
+        "self",
         help="The default main application.",
     )
 
-    argument.main.add_argument(
+    parser.add_argument(
         argument.flag(DIRECTORY),
         argument.name(DIRECTORY),
     )

@@ -59,11 +59,6 @@ class Argument():
             exit_on_error=exit_on_error,
         )
 
-        self.parser.add_argument(
-            APPLICATION,
-            choices=load.argument(APPLICATION),
-        )
-
         information = self.parser.add_argument_group(
             title=language.ARGUMENT_INFORMATION_TITLE,
             description=language.ARGUMENT_INFORMATION_DESCRIPTION,
@@ -111,16 +106,15 @@ class Argument():
         )
 
         self.subparser = self.parser.add_subparsers(
-            dest=TASK,
+            title=APPLICATION,
+            description="Choose an applicanion. They have more option.",
+            dest=APPLICATION,
             required=False,
         )
-        #  new
+
+        # do outside function?
 
         applications = load.argument(APPLICATION)
         for application in applications:
             module = load.module(APPLICATION, application)
             module.argument(self)
-
-
-
-

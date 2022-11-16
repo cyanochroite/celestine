@@ -5,21 +5,24 @@ CONFIGURE = "configure"
 DIRECTORY = "directory"
 TASK = "task"
 
+VIEWER = "viewer"
+
 
 def argument(argument):
     """Build up the argument."""
-    argument.main = argument.subparser.add_parser(
-        "main",
+    parser = argument.subparser.add_parser(
+        "viewer",
         help="The default main application.",
     )
 
-    argument.main.add_argument(
+    parser.add_argument(
         argument.flag(DIRECTORY),
         argument.name(DIRECTORY),
     )
 
     configure = argument.subparser.add_parser(
-        CONFIGURE,
+        "viewer_configure",
+        # CONFIGURE,
         help="you are a fish",
     )
 

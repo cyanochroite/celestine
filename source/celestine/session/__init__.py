@@ -27,12 +27,6 @@ class Session():
     def __init__(self, args, exit_on_error):
         argument = Argument(args, exit_on_error)
 
-        default1 = ("tkinter", ENGLISH, PYTHON_3_10, "main")
-        attribute1 = (APPLICATION, LANGUAGE, PYTHON, "task")
-
-        default1 = (TKINTER, "en", "main")
-        attribute1 = (INTERFACE, LANGUAGE, "task")
-
         default = [
             load.argument_default(APPLICATION),
             load.argument_default(INTERFACE),
@@ -51,9 +45,6 @@ class Session():
         applications = load.argument(APPLICATION)
         for application in applications:
             module = load.module(APPLICATION, application)
-            one = attribute
-            two = module.attribute()
-
             attribute.extend(module.attribute())
             default.extend(module.default())
 
