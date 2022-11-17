@@ -1,10 +1,10 @@
 import configparser
 import os
 
-from celestine.keywords.all import CELESTINE
-from celestine.keywords.session import CONFIGURATION
-from celestine.keywords.session import WRITE
-from celestine.keywords.session import UTF_8
+from celestine.string.all import CELESTINE
+from celestine.string.session import CONFIGURATION
+from celestine.string.session import WRITE
+from celestine.string.session import UTF_8
 
 
 class Configuration():

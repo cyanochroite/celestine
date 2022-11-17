@@ -1,19 +1,18 @@
 """Application for translating text to other languages."""
-import argparse
-import configparser
 
-from celestine.keywords.all import LANGUAGE
-from .keyword import NONE
+from celestine.string.all import LANGUAGE
 
-from .keyword import KEY
-from .keyword import REGION
-from .keyword import URL
+from celestine.application.translator.keyword import NONE
 
-from .keyword import CONFIGURE
-from .keyword import REPORT
-from .keyword import TRANSLATE
+from celestine.application.translator.keyword import KEY
+from celestine.application.translator.keyword import REGION
+from celestine.application.translator.keyword import URL
 
-from .keyword import STORE
+from celestine.application.translator.keyword import CONFIGURE
+from celestine.application.translator.keyword import REPORT
+from celestine.application.translator.keyword import TRANSLATE
+
+from celestine.application.translator.keyword import STORE
 
 
 def argument(arguments):

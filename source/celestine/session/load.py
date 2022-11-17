@@ -2,10 +2,10 @@
 import os.path
 import sys
 
-from celestine.keywords.unicode import FULL_STOP
-from celestine.keywords.unicode import LOW_LINE
+from celestine.string.unicode import FULL_STOP
+from celestine.string.unicode import LOW_LINE
 
-from celestine.keywords.all import CELESTINE
+from celestine.string.all import CELESTINE
 
 
 def attempt(name):
@@ -40,6 +40,10 @@ def dictionary(_module):
         if not key.startswith(LOW_LINE)
     }
     return mapping
+
+
+def pathway(*paths):
+    return os.path.join(sys.path[0], *paths)
 
 
 def argument_default(path):

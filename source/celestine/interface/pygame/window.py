@@ -2,6 +2,8 @@ from celestine.window.window import Window as master
 
 from celestine.window.collection import Rectangle
 
+from celestine.session import load
+
 from . import package
 from .page import Page
 
@@ -29,7 +31,8 @@ class Window(master):
         super().__enter__()
         pygame.init()
         self.book = pygame.display.set_mode((self.width, self.height), 8, 0)
-        self.font = pygame.font.SysFont('Arial', 40)
+        path = load.pathway("asset", "CascadiaCode.ttf")
+        self.font = pygame.font.Font(path, 40)
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):

@@ -2,6 +2,7 @@ class Object:
     def __init__(self, **_):
         super().__init__()
 
+
 class Box(Object):
     def __init__(self, cord_x_min, cord_y_min, cord_x_max, cord_y_max, **kwargs):
         super().__init__(**kwargs)
@@ -45,7 +46,7 @@ class Rectangle(Box, Collection):
             **kwargs,
         )
         if "row" in kwargs:
-            offset_x = 200
+            offset_x = 300
         if "col" in kwargs:
             offset_y = 50
         self.move_x_min = cord_x_min
