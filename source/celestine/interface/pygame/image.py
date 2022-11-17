@@ -1,10 +1,12 @@
 from .widget import Widget
 
+import pygame
+
 
 class Image(Widget):
-    def __init__(self, frame, text):
+    def __init__(self, window, image, rectangle):
         super().__init__(
-            frame,
-            F"image:{text}",
-            "image",
+            window,
+            pygame.image.load(image),
+            rectangle,
         )

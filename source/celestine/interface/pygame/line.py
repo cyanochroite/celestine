@@ -29,17 +29,15 @@ class Line(Rectangle):
             ),
         )
 
-    def image(self, tag, label):
-        item = Image(
-            self.row,
-            label,
+    def image(self, tag, image):
+        return self.item_set(
+            tag,
+            Image(
+                self.window,
+                image,
+                self.spawn(),
+            ),
         )
-        item.grid(self.frame.cord_x, self.frame.cords_y())
-
-        package.draw.line(self.row, (255, 255, 255),
-                          (400, 20), (400, 580), 5)
-
-        return item
 
     def label(self, tag, text):
         return self.item_set(

@@ -12,13 +12,13 @@ class Window(master):
     def page(self, document):
         index = len(self.item)
         self.item_set(index, document)
-        rectangle = Rectangle(0, 0, 640, 480, 0, 0)
+        rectangle = Rectangle(0, 0, 1280, 960, 0, 0)
         page = Page(self, rectangle)
         self.frame = page
         return page
 
     def turn(self, page):
-        rectangle = Rectangle(0, 0, 640, 480, 0, 0)
+        rectangle = Rectangle(0, 0, 1280, 960, 0, 0)
         page2 = Page(self, rectangle)
         page2.window.fill((0, 0, 0))
         self.frame = page2
@@ -46,5 +46,5 @@ class Window(master):
         super().__init__(session, **kwargs)
         self.book = None
         self.frame = None
-        self.width = 640
-        self.height = 480
+        self.width = 1280
+        self.height = 960

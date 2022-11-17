@@ -2,10 +2,10 @@
 import os.path
 import sys
 
-from celestine.keyword.unicode import FULL_STOP
-from celestine.keyword.unicode import LOW_LINE
+from celestine.keywords.unicode import FULL_STOP
+from celestine.keywords.unicode import LOW_LINE
 
-from celestine.keyword.all import CELESTINE
+from celestine.keywords.all import CELESTINE
 
 
 def attempt(name):

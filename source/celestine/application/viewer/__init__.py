@@ -1,7 +1,10 @@
+DIRECTORY = "directory"
+
+
 def argument(argument):
-    parser = argument.subparser.add_parser(
-        "demo",
-        help="The default main application.",
+    argument.parser.add_argument(
+        argument.flag(DIRECTORY),
+        argument.name(DIRECTORY),
     )
 
     return argument

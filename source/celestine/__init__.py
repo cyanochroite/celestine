@@ -1,9 +1,9 @@
 from celestine.session import load
 from celestine.session import Session
 
-from celestine.keyword.all import PACKAGE
-from celestine.keyword.all import BLENDER
-from celestine.keyword.all import MAIN
+from celestine.keywords.all import PACKAGE
+from celestine.keywords.all import BLENDER
+from celestine.keywords.all import MAIN
 
 
 bl_info = {
