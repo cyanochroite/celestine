@@ -56,7 +56,7 @@ class Argument():
 
         (argument, _) = parser.parse_known_args(args)
 
-        application = self.default(APPLICATION, argument.application)
+        application = argument.application
         language = self.default(LANGUAGE, argument.language)
 
         return (application, language)
@@ -116,11 +116,18 @@ class Argument():
             help=language.ARGUMENT_PYTHON_HELP,
         )
 
-        application.argument(self)
+        load.module(APPLICATION, application).argument(self)
 
         self.subparser = self.parser.add_argument(
             APPLICATION,
             choices=load.argument(APPLICATION),
+            help="Choose an applicanion. They have more option.",
+            nargs=QUESTION_MARK,
+        )
+
+        self.subparser = self.parser.add_argument(
+            TASK,
+            choices=load.argument(APPLICATION, application),
             help="Choose an applicanion. They have more option.",
             nargs=QUESTION_MARK,
         )
