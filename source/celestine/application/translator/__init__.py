@@ -2,17 +2,17 @@
 
 from celestine.string.all import LANGUAGE
 
-from celestine.application.translator.keyword import NONE
+from .string import NONE
 
-from celestine.application.translator.keyword import KEY
-from celestine.application.translator.keyword import REGION
-from celestine.application.translator.keyword import URL
+from .string import KEY
+from .string import REGION
+from .string import URL
 
-from celestine.application.translator.keyword import CONFIGURE
-from celestine.application.translator.keyword import REPORT
-from celestine.application.translator.keyword import TRANSLATE
+from .string import CONFIGURE
+from .string import REPORT
+from .string import TRANSLATE
 
-from celestine.application.translator.keyword import STORE
+from .string import STORE
 
 
 def argument(arguments):

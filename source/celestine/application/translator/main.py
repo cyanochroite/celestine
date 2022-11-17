@@ -1,20 +1,19 @@
 """Application for translating text to other languages."""
-from celestine.session import load
-from celestine.application.translator.file import File
-from celestine.application.translator.translator import Translator
 import uuid
 import os.path
 import shutil
-
-
 import requests
 
+from celestine.session import load
+from celestine.application.translator.file import File
+from celestine.application.translator.translator import Translator
 
-from celestine.keywords.all import code
-from celestine.keywords.all import language as language_list
-from celestine.keywords.all import languages
-from celestine.keywords.all import WRITE
-from celestine.keywords.all import UTF_8
+
+from .string import code
+from .string import language as language_list
+from .string import languages
+from .string import WRITE
+from .string import UTF_8
 
 
 SESSION = "session"
@@ -28,7 +27,7 @@ def parser_magic():
     for name in language_list:
         moose[name] = []
 
-    module = load.module("keyword", "language")
+    module = load.module("string", "language")
     thelist = load.dictionary(module)
     for name, value in thelist.items():
         add_item(name, value)
@@ -101,3 +100,35 @@ def main(a_session):
 
     print(moose)
     print("done")
+
+
+def zero(page):
+    with page.line("head") as line:
+        line.label("title", "Page 0")
+    with page.line("body") as line:
+        line.button("past", "Page 1", 1)
+        line.button("next", "Page 2", 2)
+
+
+def one(page):
+    with page.line("head") as line:
+        line.label("title", "Page 1")
+    with page.line("body") as line:
+        line.button("past", "Page 0", 0)
+        line.button("next", "Page 2", 2)
+
+
+def two(page):
+    with page.line("head") as line:
+        line.label("title", "Page 2")
+    with page.line("body") as line:
+        line.button("past", "Page 1", 1)
+        line.button("next", "Page 0", 0)
+
+
+def main(_):
+    return [
+        zero,
+        one,
+        two,
+    ]

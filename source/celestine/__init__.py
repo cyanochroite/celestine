@@ -27,8 +27,7 @@ def register():
     module can be loaded without activating the add-on.
     """
     load.module(PACKAGE, BLENDER, MAIN).register()
-    argv = [BLENDER, MAIN]
-    main(argv, False)
+    main([BLENDER, MAIN], False)
 
 
 def unregister():

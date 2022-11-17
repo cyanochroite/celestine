@@ -43,7 +43,7 @@ def dictionary(_module):
 
 
 def pathway(*paths):
-    return os.path.join(sys.path[0], *paths)
+    return os.path.join(sys.path[0], CELESTINE, *paths)
 
 
 def argument_default(path):
@@ -68,8 +68,7 @@ def argument(*paths):
     '_private'. (First letter is not a symbol.)
     Strip off all file extensions, if any.
     """
-    path = sys.path[0]
-    directory = os.path.join(path, *paths)
+    directory = pathway(*paths)
     folder = os.listdir(directory)
 
     splitext = os.path.splitext

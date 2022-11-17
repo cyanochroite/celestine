@@ -3,8 +3,8 @@ import keyword
 
 from celestine.session import load
 
-from celestine.keywords.all import WRITE
-from celestine.keywords.all import UTF_8
+from celestine.string.all import WRITE
+from celestine.string.all import UTF_8
 
 
 class File():
