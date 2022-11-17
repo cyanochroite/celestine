@@ -28,3 +28,7 @@ def main(_):
         one,
         two,
     ]
+
+
+def argument(argument):
+    return argument

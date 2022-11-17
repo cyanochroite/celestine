@@ -11,6 +11,7 @@ from celestine.keyword.all import VERSION
 from celestine.keyword.all import VERSION_NUMBER
 
 from celestine.keyword.unicode import HYPHEN_MINUS
+from celestine.keyword.unicode import QUESTION_MARK
 
 from celestine.session import load
 
@@ -26,11 +27,26 @@ class Argument():
         iterable = (HYPHEN_MINUS, HYPHEN_MINUS, name)
         return str().join(iterable)
 
+    def default(self, name, value):
+        values = load.argument(name)
+
+        if value in values:
+            module = load.module(name, value)
+        else:
+            module = load.module(DEFAULT, name)
+
+        return module
+
     def region(self, args, exit_on_error):
 
         parser = argparse.ArgumentParser(
             add_help=False,
             exit_on_error=exit_on_error,
+        )
+
+        parser.add_argument(
+            APPLICATION,
+            nargs=QUESTION_MARK,
         )
 
         parser.add_argument(
@@ -40,18 +56,13 @@ class Argument():
 
         (argument, _) = parser.parse_known_args(args)
 
-        language = argument.language
-        languages = load.argument(LANGUAGE)
+        application = self.default(APPLICATION, argument.application)
+        language = self.default(LANGUAGE, argument.language)
 
-        if language in languages:
-            module = load.module(LANGUAGE, language)
-        else:
-            module = load.module(DEFAULT, LANGUAGE)
-
-        return module
+        return (application, language)
 
     def __init__(self, args, exit_on_error):
-        language = self.region(args, exit_on_error)
+        (application, language) = self.region(args, exit_on_error)
 
         self.parser = argparse.ArgumentParser(
             add_help=False,
@@ -105,16 +116,11 @@ class Argument():
             help=language.ARGUMENT_PYTHON_HELP,
         )
 
-        self.subparser = self.parser.add_subparsers(
-            title=APPLICATION,
-            description="Choose an applicanion. They have more option.",
-            dest=APPLICATION,
-            required=False,
+        application.argument(self)
+
+        self.subparser = self.parser.add_argument(
+            APPLICATION,
+            choices=load.argument(APPLICATION),
+            help="Choose an applicanion. They have more option.",
+            nargs=QUESTION_MARK,
         )
-
-        # do outside function?
-
-        applications = load.argument(APPLICATION)
-        for application in applications:
-            module = load.module(APPLICATION, application)
-            module.argument(self)
