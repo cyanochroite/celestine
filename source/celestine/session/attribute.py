@@ -1,19 +1,22 @@
 import dataclasses
+import os
 
 from celestine.session.configuration import Configuration
 
 
 @dataclasses.dataclass
 class Attribute():
-    def __init__(self, argument, directory, module, section):
+    def __init__(self, argument, attribute, default):
         self.application = None
+        self.interface = None
         self.language = None
+        self.python = None
         self.task = None
 
-        configuration = Configuration.make(directory)
+        directory = os.getcwd()
+        section = argument.application
 
-        attribute = module.attribute()
-        default = module.default()
+        configuration = Configuration.make(directory)
 
         for (name, failover) in zip(attribute, default, strict=True):
             database = configuration.get(section, name, fallback=None)

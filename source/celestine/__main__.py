@@ -2,12 +2,6 @@ import os
 import sys
 
 
-path = sys.path[0]
-directory = os.path.dirname(path)
-sys.path.append(directory)
+sys.path[0] = os.path.dirname(sys.path[0])
 
-
-module = __import__("celestine")
-args = sys.argv[1:]
-main = module.main(directory, args, True)
-sys.exit(main)
+__import__("celestine").main(sys.argv[1:], True)

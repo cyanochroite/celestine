@@ -7,6 +7,16 @@ Code Warnings
 Configuration Defaults
 ^^^^^^^^^^^^^^^^^^^^^^
 
+Unused Symbols
+~~~~~~~~~~~~~~
+
+Variables Not Used Configuration
+""""""""""""""""""""""""""""""""
+Always Show Globals Not Used in File = False
+Show Extra Unpacked Variables Not Used
+Use Regular Expressions to Identify Variables Intentionally Not Used = True
+Values = ["_"]
+
 External Checkers
 ~~~~~~~~~~~~~~~~~
 

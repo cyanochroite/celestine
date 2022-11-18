@@ -1,78 +1,77 @@
 """Celestine Image Viewer"""
 from celestine.session.argument import Argument
 from celestine.session.attribute import Attribute
-from celestine.session import python
 
-from celestine.core import load
+from celestine.session import load
 
-from celestine.keyword.all import APPLICATION
-from celestine.keyword.all import CELESTINE
-from celestine.keyword.all import LANGUAGE
+
+from celestine.string.all import APPLICATION
+from celestine.string.all import CELESTINE
+
+from celestine.string.all import INTERFACE
+from celestine.string.all import LANGUAGE
+from celestine.string.all import PYTHON
+
+
+TERMINAL = "terminal"
+ENGLISH = "english"
+PYTHON_3_10 = "python_3_10"
+CONFIGURE = "configure"
+STORE = "store"
+TKINTER = "tkinter"
+EN = "en"
+TASK = "task"
 
 
 class Session():
-    def __init__(self, directory, args, exit_on_error):
-        args = args or ["tkinter"]
+    def __init__(self, args, exit_on_error):
+        argument = Argument(args, exit_on_error)
 
-        argument = Argument(exit_on_error)
+        default = [
+            load.argument_default(APPLICATION),
+            load.argument_default(INTERFACE),
+            EN,
+            load.argument_default(PYTHON),
+            "main"
+        ]
+        attribute = [
+            APPLICATION,
+            INTERFACE,
+            LANGUAGE,
+            PYTHON,
+            "task",
+        ]
 
-        attribute = Attribute(
+        applications = load.argument(APPLICATION)
+        for application in applications:
+            module = load.module(APPLICATION, application)
+            attribute.extend(module.attribute())
+            default.extend(module.default())
+
+        self.attribute = Attribute(
             argument.parser.parse_args(args),
-            directory,
-            load.module("internal"),
-            CELESTINE,
-        )
-
-        module = load.module(APPLICATION, attribute.application)
-
-        argument = module.argument(argument)
-        attribute = Attribute(
-            argument.parser.parse_args(args),
-            directory,
-            load.module("internal"),
-            CELESTINE,
+            attribute,
+            default,
         )
 
         self.application = load.module(
             APPLICATION,
-            attribute.application,
+            self.attribute.application,
         )
-        self.attribute = Attribute(
-            argument.parser.parse_args(args),
-            directory,
-            module,
-            attribute.application,
+        self.interface = load.module(
+            INTERFACE,
+            self.attribute.interface,
         )
-        self.directory = directory  # me no like
-        self.image_format = module.image_format()
         self.language = load.module(
             LANGUAGE,
-            attribute.language,
+            self.attribute.language,
         )
-        self.python = python.version()
+        self.python = load.module(
+            PYTHON,
+            self.attribute.python,
+        )
         self.task = load.module(
             APPLICATION,
-            attribute.application,
-            attribute.task,
+            self.attribute.application,
+            self.attribute.task,
         )
-        self.window = []
-        self.window.append(load.module("window", "main"))
-        self.window.append(load.module("window", "zero"))
-        self.window.append(load.module("window", "one"))
-        self.window.append(load.module("window", "two"))
-
-    def add_configuration(self, configuration, module, application):
-        """Build up the configuration file."""
-        if not configuration.has_section(application):
-            configuration.add_section(application)
-        attribute = module.attribute()
-        default = module.default()
-        for item in zip(attribute, default, strict=True):
-            (name, value) = item
-            configuration.set(application, name, value)
-
-        return configuration
-
-    def main(self):
-        window = self.task.Window(self)
-        return window.main()
