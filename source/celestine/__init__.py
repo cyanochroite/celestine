@@ -44,3 +44,5 @@ def main(argv, exit_on_error):
     with session.interface.window(session) as window:
         for document in session.task.main(session):
             window.page(document)
+
+# , . :

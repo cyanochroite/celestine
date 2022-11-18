@@ -1,8 +1,6 @@
 """Central place for loading and importing external files."""
 import keyword
 
-from celestine.session import load
-
 from celestine.string.all import WRITE
 from celestine.string.all import UTF_8
 
@@ -15,9 +13,8 @@ class File():
         self.head = F'"""{header}"""\n'
         self.body = map(self.line, iterable)
 
-    def save(self, directory, *paths):
+    def save(self, path):
         """Save the items."""
-        path = load.path(directory, *paths, self.name)
         with open(path, WRITE, encoding=UTF_8) as file:
             file.write(self.head)
             file.writelines(self.body)
