@@ -4,10 +4,9 @@ from celestine.window.collection import Rectangle
 
 from celestine.session import load
 
-from . import package
 from .page import Page
 
-import pygame
+from . import package
 
 
 class Window(master):
@@ -29,20 +28,20 @@ class Window(master):
 
     def __enter__(self):
         super().__enter__()
-        pygame.init()
-        self.book = pygame.display.set_mode((self.width, self.height), 8, 0)
+        package.init()
+        self.book = package.display.set_mode((self.width, self.height), 8, 0)
         path = load.pathway("asset", "CascadiaCode.ttf")
-        self.font = pygame.font.Font(path, 40)
+        self.font = package.font.Font(path, 40)
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
         while True:
-            match pygame.event.wait().type:
-                case pygame.QUIT:
+            match package.event.wait().type:
+                case package.QUIT:
                     break
-                case pygame.MOUSEBUTTONDOWN:
-                    self.frame.select(*pygame.mouse.get_pos())
+                case package.MOUSEBUTTONDOWN:
+                    self.frame.select(*package.mouse.get_pos())
         return False
 
     def __init__(self, session, **kwargs):

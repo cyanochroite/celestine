@@ -1,4 +1,7 @@
 """Application for translating text to other languages."""
+from .report import main as train
+from .string import LANGUAGE
+from .string import language
 import uuid
 import os.path
 import shutil
@@ -102,12 +105,11 @@ def main(a_session):
     print("done")
 
 
-def zero(page):
+def report(page):
     with page.line("head") as line:
         line.label("title", "Page 0")
     with page.line("body") as line:
-        line.button("past", "Page 1", 1)
-        line.button("next", "Page 2", 2)
+        line.button("past", "Do Work", "reporter")
 
 
 def one(page):
@@ -127,8 +129,9 @@ def two(page):
 
 
 def main(_):
+    train(_)
     return [
-        zero,
+        report,
         one,
         two,
     ]

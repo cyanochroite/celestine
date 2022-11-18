@@ -1,8 +1,7 @@
 """Print out the lengths of the translations."""
-from celestine.core import load
+from celestine.session import load
 
-from celestine.application.language.keyword import language
-from celestine.application.language.keyword import LANGUAGE
+from .string import LANGUAGE
 
 
 def main(_):
@@ -10,8 +9,9 @@ def main(_):
     minimum = {}
     maximum = {}
 
-    for lang in language:
-        module = load.module(LANGUAGE, lang)
+    languages = load.argument(LANGUAGE)
+    for language in languages:
+        module = load.module(LANGUAGE, language)
         dictionary = load.dictionary(module)
         for key, value in dictionary.items():
             length = len(value)

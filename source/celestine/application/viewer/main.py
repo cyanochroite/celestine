@@ -26,13 +26,17 @@ def window(page):
     image = setup(page)
     with page.line("head") as line:
         line.label("Settings", "no puppy. File Explorer using Tkinter")
-    with page.line("body") as line:
-        index = 8
-        for imaged in image:
-            x = index % 4
-            y = index // 4
-            line.image(F"{x}-{y}", imaged)
-            index += 1
+    index_y = 0
+    limit_y = min(len(image) // 4, 4)
+    while index_y < limit_y:
+        index_x = 0
+        limit_x = min(len(image) - limit_y * index_y, 4)
+        with page.line(F"line {index_x}") as line:
+            while index_x < limit_x:
+                imaged = image[index_y * 4 + index_x]
+                line.image(F"{index_x}-{index_y}", imaged)
+                index_x += 1
+        index_y += 1
 
 
 def main(_):
