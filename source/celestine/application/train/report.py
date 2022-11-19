@@ -3,14 +3,19 @@ from celestine.session import load
 
 from celestine.application.translator.string import LANGUAGE
 from celestine.application.translator.file import File
+from celestine.application.translator.file import item
 
 TRANSLATION = "translation"
+
+
+item()
 
 
 def main():
     """The main function."""
     minimum = {}
     maximum = {}
+    return []
 
     translations = load.argument(TRANSLATION)
     for translation in translations:

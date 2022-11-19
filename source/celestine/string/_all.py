@@ -212,3 +212,13 @@ application = [
 ]
 
 TASK = "task"
+
+
+punctuation = [
+    COLON,
+    COMMA,
+    EXCLAMATION_MARK,
+    FULL_STOP,
+    QUESTION_MARK,
+    SEMICOLON,
+]
