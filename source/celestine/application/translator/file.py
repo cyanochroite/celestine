@@ -1,5 +1,4 @@
 """Central place for loading and importing external files."""
-import re
 import io
 import keyword
 
@@ -20,31 +19,23 @@ from celestine.string.unicode import SEMICOLON
 from celestine.string.unicode import COLON
 
 
-from celestine.string.unicode import SPACE
 from celestine.string.unicode import CHARACTER_TABULATION
-from celestine.string.unicode import LINE_FEED
 from celestine.string.unicode import LINE_TABULATION
 from celestine.string.unicode import FORM_FEED
 from celestine.string.unicode import CARRIAGE_RETURN
 
-
-from celestine.string.unicode import LINE_FEED
-from celestine.string.unicode import CARRIAGE_RETURN
-from celestine.string.unicode import LINE_TABULATION
-from celestine.string.unicode import FORM_FEED
 
 from celestine.string.unicode import INFORMATION_SEPARATOR_FOUR
 from celestine.string.unicode import INFORMATION_SEPARATOR_THREE
 from celestine.string.unicode import INFORMATION_SEPARATOR_TWO
-from celestine.string.unicode import INFORMATION_SEPARATOR_ONE  # unused?
+
+from celestine.string.unicode import BREAK_PERMITTED_HERE
+from celestine.string.unicode import NO_BREAK_HERE
 
 from celestine.string.unicode import NEXT_LINE
 
 from celestine.string.unicode import LINE_SEPARATOR
 from celestine.string.unicode import PARAGRAPH_SEPARATOR
-
-import string
-car = string.punctuation
 
 
 class File():
@@ -54,6 +45,8 @@ class File():
         self.name = F"{name}.py"
         self.head = F'"""{header}"""\n'
         self.body = map(self.line, iterable)
+
+        self.column = 0
 
     def save(self, path):
         """Save the items."""
@@ -72,36 +65,70 @@ class File():
         value = value.replace('"', "'")
         return F'{key} = "{value}"\n'
 
+    def write_item(self, item):
+        self.column += self.string.write(item)
+        if self.column > MAXIMUM_LINE_LENGTH:
+            raise ValueError("Text overflowed maximum length.")
+
+    def write_line(self, item):
+        self.write_item(" \\")
+        self.write_item(LINE_FEED)
+        if self.column > MAXIMUM_LINE_LENGTH:
+            print("OVERFLOW")
+
+        self.column = 0
+        self.write_item(item)
+
+    def write_smart(self, item, extra, last):
+        size = len(item)
+        if self.column + size + extra <= MAXIMUM_LINE_LENGTH:
+            self.column += self.string.write(item)
+            if not last:
+                self.column += self.string.write(SPACE)
+        else:
+            self.column += self.string.write("\\")
+            self.column += self.string.write(LINE_FEED)
+            if self.column > MAXIMUM_LINE_LENGTH + 1:
+                raise ValueError("Text overflowed maximum length.")
+            self.column = 0
+            #
+            self.column += self.string.write(item)
+            if not last:
+                self.column += self.string.write(SPACE)
+
+    def write_value(self, key, value):
+        self.string = io.StringIO()
+        self.column = 0
+        self.column += self.string.write(key)
+        self.column += self.string.write(SPACE)
+        self.column += self.string.write(EQUALS_SIGN)
+        self.column += self.string.write(SPACE)
+        self.column += self.string.write(QUOTATION_MARK)
+        key = ['fish', 'dog', 'frog']
+        index = 0
+
+        index = 0
+        length = len(value) - 1
+        while index < length:
+            item = value[index]
+            self.write_smart(item, 2, False)
+            index += 1
+        item = value[index]
+        self.write_smart(item, 1, True)
+
+        self.column += self.string.write(QUOTATION_MARK)
+        self.column += self.string.write(LINE_FEED)
+        result = self.string.getvalue()
+        self.string.close()
+        return result
+
 
 MAXIMUM_LINE_LENGTH = 72
 
 
 LANGUAGE = "  В ЕС има 24\rофициални\nезика:\tанглийски, български,\
-гръцки, датски, естонски?, ? испански!, италиански,, латвийски, литовски, малтийски, немски, нидерландски, полски, португалски, румънски, словашки, словенски, унгарски, фински, френски, хърватски, чешки и шведски. m "
+гръцки, 123, датски, естонски?, ? испански!, италиански,, латвийски, литовски, малтийски, немски, нидерландски, полски, португалски, румънски, словашки, словенски, унгарски, фински, френски, хърватски, чешки и шведски. m "
 
-
-punctuation = [
-    CARRIAGE_RETURN,
-    CHARACTER_TABULATION,
-    COLON,
-    COMMA,
-    EXCLAMATION_MARK,
-    FORM_FEED,
-    FULL_STOP,
-    INFORMATION_SEPARATOR_FOUR,
-    INFORMATION_SEPARATOR_ONE,
-    INFORMATION_SEPARATOR_THREE,
-    INFORMATION_SEPARATOR_TWO,
-    LINE_FEED,
-    LINE_SEPARATOR,
-    LINE_SEPARATOR,
-    LINE_TABULATION,
-    NEXT_LINE,
-    PARAGRAPH_SEPARATOR,
-    QUESTION_MARK,
-    SEMICOLON,
-    SPACE,
-]
 
 punctuation = [
     COLON,
@@ -117,7 +144,6 @@ whitespace = [
     CHARACTER_TABULATION,
     FORM_FEED,
     INFORMATION_SEPARATOR_FOUR,
-    INFORMATION_SEPARATOR_ONE,
     INFORMATION_SEPARATOR_THREE,
     INFORMATION_SEPARATOR_TWO,
     LINE_FEED,
@@ -132,10 +158,9 @@ whitespace = [
 
 def normalize(word):
     """
-    Convert all whitespace to spaces.
-    Remove all spaces around punctuation.
-    Ensure all words have a space before them if preceeded by a word
-    or punctuation.
+    Remove all whitespace characters.
+    Preserve gaps between words.
+    Only permit line breaks after punctuation.
     """
     string = io.StringIO()
     blank = 1
@@ -153,61 +178,36 @@ def normalize(word):
             if state == blank:
                 string.write(SPACE)
             if state == symbol:
-                string.write(SPACE)
+                string.write(BREAK_PERMITTED_HERE)
             string.write(line)
             state = letter
     value = string.getvalue()
-    return value
+    split = value.split(BREAK_PERMITTED_HERE)
+    return split
 
+#
 
-special = str().join(punctuation)
-search = F"([{special}]+)"
-pattern = re.compile(search)
-repl = r"<\1>"
-
-hold = str().join(whitespace)
-search = F"[{hold}]+"
-
-output = re.sub(
-    search,
-    SPACE,
-    LANGUAGE,
-)
-
-hold = str().join(punctuation)
-search = F"(\S)*([{punctuation}]+)(\S*)"
-
-output = re.sub(
-    search,
-    r'\2',
-    LANGUAGE,
-)
-
-output = re.sub(pattern, repl, LANGUAGE)
-
-print(output)
 
 cat = normalize(LANGUAGE)
+file = File("name", "header", [])
+car = file.write_value("cat", cat)
+print(car)
+item("cat", cat)
 
+cat = "В ЕС има 24 официални езика: английски, български, гръцки, \
+1234, датски, естонски?,? испански!, италиански,, латвийски, литовски, \
+малтийски, немски, нидерландски, полски, португалски, румънски, \
+словашки, словенски, унгарски, фински, френски, хърватски, \
+чешки и шведски. m"
 
-def item():
-    string = io.StringIO()
-    key = "a"
-    value = "b"
-    column = 0
-    column += string.write(key)
-    column += string.write(SPACE)
-    column += string.write(EQUALS_SIGN)
-    column += string.write(SPACE)
-    column += string.write(QUOTATION_MARK)
-    column += string.write(value)
-    column += string.write(QUOTATION_MARK)
-    column += string.write(LINE_FEED)
-    print(column)
-    cat = string.getvalue()
-    print(string.getvalue())
-    print("cowbo")
-    car = string
-    string.close()
+cat = "В ЕС има 24 официални езика: английски, български, гръцки, \
+12345, датски, естонски?,? испански!, италиански,, латвийски, \
+литовски, малтийски, немски, нидерландски, полски, португалски, \
+румънски, словашки, словенски, унгарски, фински, френски, хърватски, \
+чешки и шведски. m"
 
-
+cat = "В ЕС има 24 официални езика: английски, български, гръцки, 123, \
+датски, естонски?,? испански!, италиански,, латвийски, литовски, \
+малтийски, немски, нидерландски, полски, португалски, румънски, \
+словашки, словенски, унгарски, фински, френски, хърватски, \
+чешки и шведски. m"
