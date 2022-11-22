@@ -7,7 +7,6 @@ import sys
 #from celestine.tag.alphabet import *
 
 
-
 from celestine.tag.alphabet import convert
 from celestine.tag.alphabet import letter
 from celestine.tag.alphabet import comparison
@@ -43,9 +42,6 @@ mouse = []
 
 state_now = State.NONE
 state_past = State.NONE
-
-
-
 
 
 def add_token():
@@ -113,15 +109,18 @@ class translator():
             ]
         )
 
+
 class tokenizer():
     @staticmethod
     def tokenize(string):
         return string
 
+
 class parser():
     @staticmethod
     def parse(string):
         return string.split()
+
 
 string = translator.translate(string)
 string = tokenizer.tokenize(string)

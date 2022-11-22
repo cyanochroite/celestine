@@ -1,4 +1,5 @@
 """Central place for loading and importing external files."""
+import enum
 import io
 import keyword
 
@@ -65,63 +66,6 @@ class File():
         value = value.replace('"', "'")
         return F'{key} = "{value}"\n'
 
-    def write_item(self, item):
-        self.column += self.string.write(item)
-        if self.column > MAXIMUM_LINE_LENGTH:
-            raise ValueError("Text overflowed maximum length.")
-
-    def write_line(self, item):
-        self.write_item(" \\")
-        self.write_item(LINE_FEED)
-        if self.column > MAXIMUM_LINE_LENGTH:
-            print("OVERFLOW")
-
-        self.column = 0
-        self.write_item(item)
-
-    def write_smart(self, item, extra, last):
-        size = len(item)
-        if self.column + size + extra <= MAXIMUM_LINE_LENGTH:
-            self.column += self.string.write(item)
-            if not last:
-                self.column += self.string.write(SPACE)
-        else:
-            self.column += self.string.write("\\")
-            self.column += self.string.write(LINE_FEED)
-            if self.column > MAXIMUM_LINE_LENGTH + 1:
-                raise ValueError("Text overflowed maximum length.")
-            self.column = 0
-            #
-            self.column += self.string.write(item)
-            if not last:
-                self.column += self.string.write(SPACE)
-
-    def write_value(self, key, value):
-        self.string = io.StringIO()
-        self.column = 0
-        self.column += self.string.write(key)
-        self.column += self.string.write(SPACE)
-        self.column += self.string.write(EQUALS_SIGN)
-        self.column += self.string.write(SPACE)
-        self.column += self.string.write(QUOTATION_MARK)
-        key = ['fish', 'dog', 'frog']
-        index = 0
-
-        index = 0
-        length = len(value) - 1
-        while index < length:
-            item = value[index]
-            self.write_smart(item, 2, False)
-            index += 1
-        item = value[index]
-        self.write_smart(item, 1, True)
-
-        self.column += self.string.write(QUOTATION_MARK)
-        self.column += self.string.write(LINE_FEED)
-        result = self.string.getvalue()
-        self.string.close()
-        return result
-
 
 MAXIMUM_LINE_LENGTH = 72
 
@@ -156,6 +100,86 @@ whitespace = [
 ]
 
 
+def write_value(key, value):
+    string = io.StringIO()
+    column = 0
+    column += string.write(key)
+    column += string.write(SPACE)
+    column += string.write(EQUALS_SIGN)
+    column += string.write(SPACE)
+
+    column += string.write(QUOTATION_MARK)
+
+    index = 0
+    length = len(value) - 1
+
+    extra = 2
+    last = True
+
+    while True:
+        test = index < length
+
+        if not test:
+            extra = 1
+            last = False
+
+        item = value[index]
+        size = len(item)
+        if column + size + extra <= MAXIMUM_LINE_LENGTH:
+            column += string.write(item)
+            if not last:
+                column += string.write(SPACE)
+        else:
+            column += string.write("\\")
+            column += string.write(LINE_FEED)
+            if column > MAXIMUM_LINE_LENGTH + 1:
+                raise ValueError("Text overflowed maximum length.")
+            column = 0
+            #
+            column += string.write(item)
+            if not last:
+                column += string.write(SPACE)
+        index += 1
+        if not test:
+            break
+
+    column += string.write(QUOTATION_MARK)
+    column += string.write(LINE_FEED)
+    result = string.getvalue()
+    string.close()
+    return result
+
+
+class Character(enum.Enum):
+    IDENTIFIER = enum.auto()
+    NONE = enum.auto()
+    PUNCTUATION = enum.auto()
+    WHITESPACE = enum.auto()
+
+
+symbol = {
+    CARRIAGE_RETURN: Character.WHITESPACE,
+    CHARACTER_TABULATION: Character.WHITESPACE,
+    COLON: Character.PUNCTUATION,
+    COMMA: Character.PUNCTUATION,
+    EXCLAMATION_MARK: Character.PUNCTUATION,
+    FORM_FEED: Character.WHITESPACE,
+    FULL_STOP: Character.PUNCTUATION,
+    INFORMATION_SEPARATOR_FOUR: Character.WHITESPACE,
+    INFORMATION_SEPARATOR_THREE: Character.WHITESPACE,
+    INFORMATION_SEPARATOR_TWO: Character.WHITESPACE,
+    LINE_FEED: Character.WHITESPACE,
+    LINE_SEPARATOR: Character.WHITESPACE,
+    LINE_SEPARATOR: Character.WHITESPACE,
+    LINE_TABULATION: Character.WHITESPACE,
+    NEXT_LINE: Character.WHITESPACE,
+    PARAGRAPH_SEPARATOR: Character.WHITESPACE,
+    QUESTION_MARK: Character.PUNCTUATION,
+    SEMICOLON: Character.PUNCTUATION,
+    SPACE: Character.WHITESPACE,
+}
+
+
 def normalize(word):
     """
     Remove all whitespace characters.
@@ -163,24 +187,21 @@ def normalize(word):
     Only permit line breaks after punctuation.
     """
     string = io.StringIO()
-    blank = 1
-    letter = 2
-    symbol = 3
-    state = 0
+    state = Character.NONE
     for line in word:
         if line in whitespace:
-            if state == letter:
-                state = blank
+            if state == Character.IDENTIFIER:
+                state = Character.WHITESPACE
         elif line in punctuation:
             string.write(line)
-            state = symbol
+            state = Character.PUNCTUATION
         else:
-            if state == blank:
+            if state == Character.WHITESPACE:
                 string.write(SPACE)
-            if state == symbol:
+            if state == Character.PUNCTUATION:
                 string.write(BREAK_PERMITTED_HERE)
             string.write(line)
-            state = letter
+            state = Character.IDENTIFIER
     value = string.getvalue()
     split = value.split(BREAK_PERMITTED_HERE)
     return split
@@ -188,26 +209,345 @@ def normalize(word):
 #
 
 
-cat = normalize(LANGUAGE)
-file = File("name", "header", [])
-car = file.write_value("cat", cat)
+def normalize(word):
+    """
+    Remove all whitespace characters.
+    Preserve gaps between words.
+    Only permit line breaks after punctuation.
+    """
+    string = io.StringIO()
+    state = Character.NONE
+    for line in word:
+        match symbol.get(line, Character.IDENTIFIER):
+            case Character.IDENTIFIER:
+                match state:
+                    case Character.PUNCTUATION:
+                        string.write(BREAK_PERMITTED_HERE)
+                    case Character.WHITESPACE:
+                        string.write(SPACE)
+                string.write(line)
+                state = Character.IDENTIFIER
+            case Character.PUNCTUATION:
+                string.write(line)
+                state = Character.PUNCTUATION
+            case Character.WHITESPACE:
+                match state:
+                    case Character.IDENTIFIER:
+                        state = Character.WHITESPACE
+    value = string.getvalue()
+    split = value.split(BREAK_PERMITTED_HERE)
+    return split
+
+
+def normalize(word):
+    """
+    Remove all whitespace characters.
+    Preserve gaps between words.
+    Only permit line breaks after punctuation.
+    """
+    string = io.StringIO()
+    state = Character.NONE
+    for line in word:
+        hat = symbol.get(line, Character.IDENTIFIER)
+        match (hat, state):
+            case (Character.WHITESPACE, Character.IDENTIFIER):
+                state = Character.WHITESPACE
+            case (Character.PUNCTUATION, *_):
+                string.write(line)
+                state = Character.PUNCTUATION
+            case (Character.IDENTIFIER, Character.PUNCTUATION):
+                string.write(BREAK_PERMITTED_HERE)
+                string.write(line)
+                state = Character.IDENTIFIER
+            case (Character.IDENTIFIER, Character.WHITESPACE):
+                string.write(SPACE)
+                string.write(line)
+                state = Character.IDENTIFIER
+    value = string.getvalue()
+    split = value.split(BREAK_PERMITTED_HERE)
+    return split
+
+# global test
+
+
+def write_value(string, key, value):
+    column = 0
+    column += string.write(key)
+    column += string.write(SPACE)
+    column += string.write(EQUALS_SIGN)
+    column += string.write(SPACE)
+
+    column += string.write(QUOTATION_MARK)
+
+    index = 0
+    length = len(value) - 1
+
+    extra = 2
+    last = True
+
+    while True:
+        test = index < length
+
+        if not test:
+            extra = 1
+            last = False
+
+        item = value[index]
+        size = len(item)
+        if column + size + extra <= MAXIMUM_LINE_LENGTH:
+            column += string.write(item)
+            if not last:
+                column += string.write(SPACE)
+        else:
+            column += string.write("\\")
+            column += string.write(LINE_FEED)
+            if column > MAXIMUM_LINE_LENGTH + 1:
+                raise ValueError("Text overflowed maximum length.")
+            column = 0
+            #
+            column += string.write(item)
+            if not last:
+                column += string.write(SPACE)
+        index += 1
+        if not test:
+            break
+
+    column += string.write(QUOTATION_MARK)
+    column += string.write(LINE_FEED)
+
+
+def normalize(string, word):
+    """
+    Remove all whitespace characters.
+    Preserve gaps between words.
+    Only permit line breaks after punctuation.
+    """
+    state = Character.NONE
+    for line in word:
+        match symbol.get(line, Character.IDENTIFIER):
+            case Character.IDENTIFIER:
+                match state:
+                    case Character.PUNCTUATION:
+                        string.write(BREAK_PERMITTED_HERE)
+                    case Character.WHITESPACE:
+                        string.write(SPACE)
+                string.write(line)
+                state = Character.IDENTIFIER
+            case Character.PUNCTUATION:
+                string.write(line)
+                state = Character.PUNCTUATION
+            case Character.WHITESPACE:
+                match state:
+                    case Character.IDENTIFIER:
+                        state = Character.WHITESPACE
+
+# string = io.StringIO()
+# cat = normalize(string, LANGUAGE)
+# value = string.getvalue()
+# split = value.split(BREAK_PERMITTED_HERE)
+
+# car = write_value(string, "cat", split)
+# result = string.getvalue()
+# string.close()
+
+
+def write_line(string, key, value):
+    column = 0
+    column += string.write(key)
+    column += string.write(SPACE)
+    column += string.write(EQUALS_SIGN)
+    column += string.write(SPACE)
+
+    column += string.write(QUOTATION_MARK)
+
+    index = 0
+    length = len(value) - 1
+
+    extra = 2
+    last = True
+
+    while True:
+        test = index < length
+
+        if not test:
+            extra = 1
+            last = False
+
+        item = value[index]
+        size = len(item)
+        if column + size + extra <= MAXIMUM_LINE_LENGTH:
+            column += string.write(item)
+            if not last:
+                column += string.write(SPACE)
+        else:
+            column += string.write("\\")
+            column += string.write(LINE_FEED)
+            if column > MAXIMUM_LINE_LENGTH + 1:
+                raise ValueError("Text overflowed maximum length.")
+            column = 0
+            #
+            column += string.write(item)
+            if not last:
+                column += string.write(SPACE)
+        index += 1
+        if not test:
+            break
+
+    column += string.write(QUOTATION_MARK)
+    column += string.write(LINE_FEED)
+
+
+def write_value(key, value):
+    string = io.StringIO()
+
+    string.write(key)
+    string.write(SPACE)
+    string.write(EQUALS_SIGN)
+    string.write(SPACE)
+
+    string.write(QUOTATION_MARK)
+
+    for item in value:
+        string.write(item)
+
+    string.write(QUOTATION_MARK)
+    string.write(LINE_FEED)
+
+    value = string.getvalue()
+    split = value.split(BREAK_PERMITTED_HERE)
+
+    string.close()
+    return split
+
+
+def normalize_whitespace(word):
+    """
+    Remove all whitespace characters.
+    Preserve gaps between words.
+    Only permit line breaks after punctuation.
+    """
+    state = Character.NONE
+    for line in word:
+        match symbol.get(line, Character.IDENTIFIER):
+            case Character.IDENTIFIER:
+                match state:
+                    case Character.PUNCTUATION:
+                        yield BREAK_PERMITTED_HERE
+                    case Character.WHITESPACE:
+                        yield NO_BREAK_HERE
+                yield line
+                state = Character.IDENTIFIER
+            case Character.PUNCTUATION:
+                yield line
+                state = Character.PUNCTUATION
+            case Character.WHITESPACE:
+                match state:
+                    case Character.IDENTIFIER:
+                        state = Character.WHITESPACE
+
+
+def normalize(word):
+    """
+    Remove all whitespace characters.
+    Preserve gaps between words.
+    Only permit line breaks after punctuation.
+    """
+    state = Character.NONE
+    for line in word:
+        if line in punctuation:
+            yield line
+            state = Character.PUNCTUATION
+        elif line == SPACE:
+            match state:
+                case Character.IDENTIFIER:
+                    state = Character.WHITESPACE
+        else:
+            match state:
+                case Character.PUNCTUATION:
+                    yield BREAK_PERMITTED_HERE
+                case Character.WHITESPACE:
+                    yield NO_BREAK_HERE
+            yield line
+            state = Character.IDENTIFIER
+
+
+def normalize(word):
+    """
+    Remove all whitespace characters.
+    Preserve gaps between words.
+    Only permit line breaks after punctuation.
+    """
+    state = Character.NONE
+    for line in word:
+        if line in punctuation:
+            yield line
+            state = Character.PUNCTUATION
+        elif line == SPACE:
+            match state:
+                case Character.IDENTIFIER:
+                    state = Character.WHITESPACE
+        else:
+            match state:
+                case Character.PUNCTUATION:
+                    yield BREAK_PERMITTED_HERE
+                case Character.WHITESPACE:
+                    yield NO_BREAK_HERE
+            yield line
+            state = Character.IDENTIFIER
+
+
+def normalize_whitespace(string):
+    for character in string:
+        yield SPACE if character in whitespace else character
+
+
+def normalize_whitespace(string):
+    previous = False
+    for character in string:
+        current = character != SPACE
+        if current or previous:
+            yield character
+        previous = current
+
+
+def whitespace_collapse(string):
+    """
+    Remove all consecutive whitespace characters.
+    Return a copy of the string with the leading
+    and trailing whitespace characters removed.
+    """
+    previous = False
+    for character in string:
+        current = character != SPACE
+        if current:
+            if not previous:
+                yield SPACE
+            yield character
+        previous = current
+
+
+def normalize_whitespace(string):
+    """
+    All whitespace characters become spaces.
+    Remove all consecutive whitespace characters.
+    Return a copy of the string with the leading
+    and trailing whitespace characters removed.
+    """
+    previous = False
+    for character in string:
+        current = character not in whitespace
+        if current:
+            if not previous:
+                yield SPACE
+            yield character
+        previous = current
+
+
+#
+zero = LANGUAGE
+one = normalize_whitespace(zero)
+two = normalize(one)
+
+car = write_value("cat", two)
+
 print(car)
-item("cat", cat)
-
-cat = "В ЕС има 24 официални езика: английски, български, гръцки, \
-1234, датски, естонски?,? испански!, италиански,, латвийски, литовски, \
-малтийски, немски, нидерландски, полски, португалски, румънски, \
-словашки, словенски, унгарски, фински, френски, хърватски, \
-чешки и шведски. m"
-
-cat = "В ЕС има 24 официални езика: английски, български, гръцки, \
-12345, датски, естонски?,? испански!, италиански,, латвийски, \
-литовски, малтийски, немски, нидерландски, полски, португалски, \
-румънски, словашки, словенски, унгарски, фински, френски, хърватски, \
-чешки и шведски. m"
-
-cat = "В ЕС има 24 официални езика: английски, български, гръцки, 123, \
-датски, естонски?,? испански!, италиански,, латвийски, литовски, \
-малтийски, немски, нидерландски, полски, португалски, румънски, \
-словашки, словенски, унгарски, фински, френски, хърватски, \
-чешки и шведски. m"
