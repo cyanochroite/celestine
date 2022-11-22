@@ -1,40 +1,24 @@
-import pygame
+def yld123u(u):
+    for i in range(1, 4):
+        received = yield i * u  # a sent value will be assigned to 'received'
+        u = u if received is None else received
 
 
-pygame.init()
+for x in yld123u(4):
+    print(x)
 
+gen = yld123u(4)
+v0 = next(gen)
+v1 = next(gen)
+v2 = gen.send(4)
+v = gen.send(4)
+gen.close()
+v2 = gen.send(4)
+print(v0, v1, v2)
 
-display_width = 800
-display_height = 600
-
-gameDisplay = pygame.display.set_mode((display_width, display_height))
-pygame.display.set_caption('A bit Racey')
-
-black = (0, 0, 0)
-white = (255, 255, 255)
-
-clock = pygame.time.Clock()
-crashed = False
-carImg = pygame.image.load('racecar.png')
-
-
-def car(x, y):
-    gameDisplay.blit(carImg, (x, y))
-
-
-x = (display_width * 0.45)
-y = (display_height * 0.8)
-
-while not crashed:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            crashed = True
-
-    gameDisplay.fill(white)
-    car(x, y)
-
-    pygame.display.update()
-    clock.tick(60)
-
-pygame.quit()
-quit()
+if None:
+    print(1)
+if '':
+    print(2)
+if ' ':
+    print(3)
