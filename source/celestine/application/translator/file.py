@@ -19,6 +19,8 @@ from celestine.string.unicode import COMMA
 from celestine.string.unicode import SEMICOLON
 from celestine.string.unicode import COLON
 
+from celestine.string.unicode import APOSTROPHE
+
 
 from celestine.string.unicode import CHARACTER_TABULATION
 from celestine.string.unicode import LINE_TABULATION
@@ -71,7 +73,7 @@ MAXIMUM_LINE_LENGTH = 72
 
 
 LANGUAGE = "  В ЕС има 24\rофициални\nезика:\tанглийски, български,\
-гръцки, 123, датски, естонски?, ? испански!, италиански,, латвийски, литовски, малтийски, немски, нидерландски, полски, португалски, румънски, словашки, словенски, унгарски, фински, френски, хърватски, чешки и шведски. m "
+гръцки, 123 ' s , датски, естонски?, ? испански!, италиански,, латвийски, литовски, малтийски, немски, нидерландски, полски, португалски, румънски, словашки, словенски, унгарски, фински, френски, хърватски, чешки и шведски. m "
 
 
 punctuation = [
@@ -97,6 +99,10 @@ whitespace = [
     NEXT_LINE,
     PARAGRAPH_SEPARATOR,
     SPACE,
+]
+
+apostrophe = [
+    APOSTROPHE,
 ]
 
 
@@ -150,7 +156,15 @@ def write_value(key, value):
     return result
 
 
+class Insert(enum.Enum):
+    BREAK_PERMITTED_HERE = enum.auto()
+    CHARACTER = enum.auto()
+    NO_BREAK_HERE = enum.auto()
+    WHITESPACE = enum.auto()
+
+
 class Character(enum.Enum):
+    APOSTROPHE = enum.auto()
     IDENTIFIER = enum.auto()
     NONE = enum.auto()
     PUNCTUATION = enum.auto()
@@ -158,6 +172,7 @@ class Character(enum.Enum):
 
 
 symbol = {
+    APOSTROPHE: Character.APOSTROPHE,
     CARRIAGE_RETURN: Character.WHITESPACE,
     CHARACTER_TABULATION: Character.WHITESPACE,
     COLON: Character.PUNCTUATION,
@@ -177,6 +192,7 @@ symbol = {
     QUESTION_MARK: Character.PUNCTUATION,
     SEMICOLON: Character.PUNCTUATION,
     SPACE: Character.WHITESPACE,
+    None: Character.NONE,
 }
 
 
@@ -249,255 +265,115 @@ def write_value(key, value):
     return split
 
 
-def normalize(word):
-    """
-    Remove all whitespace characters.
-    Preserve gaps between words.
-    Only permit line breaks after punctuation.
-    """
+def magic():
+    character = yield
     state = Character.NONE
-    for line in word:
-        if line in punctuation:
-            yield line
-            state = Character.PUNCTUATION
-        elif line == SPACE:
-            match state:
-                case Character.IDENTIFIER:
-                    state = Character.WHITESPACE
-        else:
-            match state:
-                case Character.PUNCTUATION:
-                    yield BREAK_PERMITTED_HERE
-                case Character.WHITESPACE:
-                    yield NO_BREAK_HERE
-            yield line
-            state = Character.IDENTIFIER
-
-
-def normalize(word):
-    """
-    Remove all whitespace characters.
-    Preserve gaps between words.
-    Only permit line breaks after punctuation.
-    """
-    state = Character.NONE
-    for line in word:
-        if line in punctuation:
-            if state != Character.WHITESPACE:
-                yield line
-            state = Character.PUNCTUATION
-        elif line == SPACE:
-            match state:
-                case Character.IDENTIFIER:
-                    state = Character.WHITESPACE
-        else:
-            match state:
-                case Character.PUNCTUATION:
-                    yield BREAK_PERMITTED_HERE
-                case Character.WHITESPACE:
-                    yield NO_BREAK_HERE
-            yield line
-            state = Character.IDENTIFIER
-
-
-def normalize_whitespace(string):
-    """
-    All whitespace characters become spaces.
-    Remove all consecutive whitespace characters.
-    Return a copy of the string with the leading
-    and trailing whitespace characters removed.
-    """
-    previous_is_whitespace = False
-    for character in string:
-        current_not_whitespace = character not in whitespace
-        if current_not_whitespace:
-            if previous_is_whitespace:
-                yield SPACE
-            yield character
-        previous_is_whitespace = not current_not_whitespace
-
-
-def add_whitespace(string):
-    """
-    All whitespace characters become spaces.
-    Remove all consecutive whitespace characters.
-    Return a copy of the string with the leading
-    and trailing whitespace characters removed.
-    """
-    previous_is_identifier = None
-    previous_is_punctuation = None
-    current_is_identifier = None
-    current_is_punctuation = None
-    for character in string:
-        current_not_whitespace = character not in whitespace
-        if current_not_whitespace:
-            if previous_is_whitespace:
-                yield SPACE
-            yield character
-        previous_is_whitespace = not current_not_whitespace
-
-
-def add_whitespace(string):
-    """
-    All whitespace characters become spaces.
-    Remove all consecutive whitespace characters.
-    Return a copy of the string with the leading
-    and trailing whitespace characters removed.
-    """
-    previous_is_punctuation = None
-    current_is_punctuation = None
-    for character in string:
-        current_is_punctuation = character in punctuation
-        if current_not_whitespace:
-            if previous_is_whitespace:
-                yield SPACE
-            yield character
-        previous_is_whitespace = not current_not_whitespace
-
-
-def normalize(word):
-    """
-    Remove all whitespace characters.
-    Preserve gaps between words.
-    Only permit line breaks after punctuation.
-    """
-    state = Character.NONE
-    for line in word:
-        if line in punctuation:
-            if state != Character.WHITESPACE:
-                yield line
-            state = Character.PUNCTUATION
-        elif line == SPACE:
-            match state:
-                case Character.IDENTIFIER:
-                    state = Character.WHITESPACE
-        else:
-            match state:
-                case Character.PUNCTUATION:
-                    yield BREAK_PERMITTED_HERE
-                case Character.WHITESPACE:
-                    yield NO_BREAK_HERE
-            yield line
-            state = Character.IDENTIFIER
-
-
-def normalize_whitespace2(string):
-    """
-    All whitespace characters become spaces.
-    Remove all consecutive whitespace characters.
-    Return a copy of the string with the leading
-    and trailing whitespace characters removed.
-    """
-    current_is_whitespace = character in whitespace
-    current_is_alpha = character in whitespace
-    current_is_punch = character in whitespace
-    current = Character.NONE
-    previous = Character.NONE
-    found_whitespace = False
-    for character in string:
-        if current_is_whitespace:
-            found_whitespace = True
-        if current_is_punch:
-            yield character
-            state = Character.PUNCTUATION
-            found_whitespace = False
-        if current_is_alpha:
-            if state == Character.PUNCTUATION:
-                yield BREAK_PERMITTED_HERE
-            elif state == Character.WHITESPACE:
-                yield NO_BREAK_HERE
-            yield character
-
-            state = Character.IDENTIFIER
-            found_whitespace = False
-
-        else:
-            is_it_a_letter = character in punctuation
-            if not previous:
-                yield SPACE
-            yield character
-            was_it_a_letter = is_it_a_letter
-        previous_was_whitespace = current_is_whitespace
-        previous_was_alpha = current_is_alpha
-        previous_was_punch = current_is_punch
-
-
-def normalize(word):
-    """
-    Remove all whitespace characters.
-    Preserve gaps between words.
-    Only permit line breaks after punctuation.
-    """
-    state = Character.NONE
-    for line in word:
-        if line in punctuation:
-            if state != Character.WHITESPACE:
-                yield line
-            state = Character.PUNCTUATION
-        elif line in whitespace:
-            match state:
-                case Character.IDENTIFIER:
-                    state = Character.WHITESPACE
-        else:
-            match state:
-                case Character.PUNCTUATION:
-                    yield BREAK_PERMITTED_HERE
-                case Character.WHITESPACE:
-                    yield NO_BREAK_HERE
-            yield line
-            state = Character.IDENTIFIER
-
-
-class Insert(enum.Enum):
-    BREAK_PERMITTED_HERE = enum.auto()
-    CHARACTER = enum.auto()
-    NO_BREAK_HERE = enum.auto()
-    WHITESPACE = enum.auto()
-
-
-class Character(enum.Enum):
-    IDENTIFIER = enum.auto()
-    NONE = enum.auto()
-    PUNCTUATION = enum.auto()
-    WHITESPACE = enum.auto()
+    while True:
+        value = symbol.get(character, Character.IDENTIFIER)
+        match value:
+            case Character.IDENTIFIER:
+                match state:
+                    case Character.IDENTIFIER:
+                        character = yield Insert.CHARACTER
+                    case Character.NONE:
+                        character = yield Insert.CHARACTER
+                    case Character.PUNCTUATION:
+                        character = yield Insert.BREAK_PERMITTED_HERE
+                    case Character.WHITESPACE:
+                        character = yield Insert.NO_BREAK_HERE
+                state = Character.IDENTIFIER
+            case Character.NONE:
+                pass
+            case Character.PUNCTUATION:
+                match state:
+                    case Character.IDENTIFIER:
+                        character = yield Insert.CHARACTER
+                    case Character.NONE:
+                        character = yield Insert.CHARACTER
+                    case Character.PUNCTUATION:
+                        character = yield Insert.CHARACTER
+                    case Character.WHITESPACE:
+                        pass
+                state = Character.PUNCTUATION
+            case Character.WHITESPACE:
+                match state:
+                    case Character.IDENTIFIER:
+                        state = Character.WHITESPACE
+                    case Character.NONE:
+                        character = yield Insert.WHITESPACE
+                    case Character.PUNCTUATION:
+                        character = yield Insert.WHITESPACE
+                    case Character.WHITESPACE:
+                        character = yield Insert.WHITESPACE
 
 
 def magic():
     character = yield
     state = Character.NONE
     while True:
-        if character in punctuation:
-            match state:
-                case Character.IDENTIFIER:
-                    character = yield Insert.CHARACTER
-                case Character.NONE:
-                    character = yield Insert.CHARACTER
-                case Character.PUNCTUATION:
-                    character = yield Insert.CHARACTER
-                case Character.WHITESPACE:
-                    pass
-            state = Character.PUNCTUATION
-        elif character in whitespace:
-            match state:
-                case Character.IDENTIFIER:
-                    state = Character.WHITESPACE
-                case Character.NONE:
-                    character = yield Insert.WHITESPACE
-                case Character.PUNCTUATION:
-                    character = yield Insert.WHITESPACE
-                case Character.WHITESPACE:
-                    character = yield Insert.WHITESPACE
+        value = symbol.get(character, Character.IDENTIFIER)
+        match value:
+            case Character.IDENTIFIER:
+                match state:
+                    case Character.PUNCTUATION:
+                        character = yield Insert.BREAK_PERMITTED_HERE
+                    case Character.WHITESPACE:
+                        character = yield Insert.NO_BREAK_HERE
+                    case _:
+                        character = yield Insert.CHARACTER
+                state = Character.IDENTIFIER
+            case Character.PUNCTUATION:
+                match state:
+                    case Character.WHITESPACE:
+                        pass
+                    case _:
+                        character = yield Insert.CHARACTER
+                state = Character.PUNCTUATION
+            case Character.WHITESPACE:
+                match state:
+                    case Character.IDENTIFIER:
+                        state = Character.WHITESPACE
+                    case _:
+                        character = yield Insert.WHITESPACE
+
+
+a = ["(", "<"]
+b = [")", ">"]
+c = ["!", "."]
+d = ["'"]
+e = []
+f = []
+
+
+def magic():
+    character = yield
+    state = Character.NONE
+    white_people = False
+    while True:
+        value = symbol.get(character, Character.IDENTIFIER)
+        match value:
+            case Character.APOSTROPHE:
+                character = yield Insert.CHARACTER
+            case Character.IDENTIFIER:
+                match state:
+                    case Character.PUNCTUATION:
+                        character = yield Insert.BREAK_PERMITTED_HERE
+                    case Character.NONE:
+                        character = yield Insert.CHARACTER
+                    case Character.IDENTIFIER:
+                        if white_people:
+                            character = yield Insert.NO_BREAK_HERE
+                        else:
+                            character = yield Insert.CHARACTER
+            case Character.PUNCTUATION:
+                character = yield Insert.CHARACTER
+            case _:
+                character = yield Insert.WHITESPACE
+        if value == Character.WHITESPACE:
+            white_people = True
         else:
-            match state:
-                case Character.IDENTIFIER:
-                    character = yield Insert.CHARACTER
-                case Character.NONE:
-                    character = yield Insert.CHARACTER
-                case Character.PUNCTUATION:
-                    character = yield Insert.BREAK_PERMITTED_HERE
-                case Character.WHITESPACE:
-                    character = yield Insert.NO_BREAK_HERE
-            state = Character.IDENTIFIER
+            white_people = False
+            state = value
 
 
 def normalize(string):
@@ -508,20 +384,17 @@ def normalize(string):
             case Insert.CHARACTER:
                 yield character
             case Insert.BREAK_PERMITTED_HERE:
-                #                yield BREAK_PERMITTED_HERE
                 yield "_"
+                # yield BREAK_PERMITTED_HERE
                 yield character
             case Insert.NO_BREAK_HERE:
-                #                yield NO_BREAK_HERE
                 yield "-"
+                # yield NO_BREAK_HERE
                 yield character
     check.close()
 
 
 #
-zero = LANGUAGE
-one = normalize_whitespace(zero)
-two = normalize(one)
 
 dog = normalize(LANGUAGE)
 string = io.StringIO()
@@ -529,6 +402,6 @@ for item in dog:
     string.write(item)
 
 cat = string.getvalue()
-car = write_value("cat", two)
+car = write_value("cat", cat)
 
 print(car)
