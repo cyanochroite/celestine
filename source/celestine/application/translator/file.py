@@ -241,100 +241,50 @@ def write_line(string, key, value):
     column += string.write(QUOTATION_MARK)
     column += string.write(LINE_FEED)
 
+#########
 
-def write_value(key, value):
+
+def write_line(text):
     string = io.StringIO()
 
-    string.write(key)
-    string.write(SPACE)
-    string.write(EQUALS_SIGN)
-    string.write(SPACE)
+    value = text.replace(NO_BREAK_HERE, SPACE)
+    line = value.split(BREAK_PERMITTED_HERE)
 
-    string.write(QUOTATION_MARK)
+    not_first = False
+    column = 0
+    for item in line:
+        if not_first:
+            column += string.write(SPACE)
+
+        size = len(item) + len(SPACE)
+
+        if column + size >= MAXIMUM_LINE_LENGTH:
+            column += string.write("\\")
+            column += string.write(LINE_FEED)
+            if column > MAXIMUM_LINE_LENGTH + len(LINE_FEED):
+                raise ValueError("Text overflowed maximum length.")
+            column = 0
+
+        column += string.write(item)
+        not_first = True
+
+    alldone = string.getvalue()
+    string.close()
+    return alldone
+
+
+def assignment(key, value):
+    yield key
+    yield SPACE
+    yield EQUALS_SIGN
+    yield SPACE
+    yield QUOTATION_MARK
 
     for item in value:
-        string.write(item)
+        yield item
 
-    string.write(QUOTATION_MARK)
-    string.write(LINE_FEED)
-
-    value = string.getvalue()
-    split = value.split(BREAK_PERMITTED_HERE)
-
-    string.close()
-    return split
-
-
-def magic():
-    character = yield
-    state = Character.NONE
-    while True:
-        value = symbol.get(character, Character.IDENTIFIER)
-        match value:
-            case Character.IDENTIFIER:
-                match state:
-                    case Character.IDENTIFIER:
-                        character = yield Insert.CHARACTER
-                    case Character.NONE:
-                        character = yield Insert.CHARACTER
-                    case Character.PUNCTUATION:
-                        character = yield Insert.BREAK_PERMITTED_HERE
-                    case Character.WHITESPACE:
-                        character = yield Insert.NO_BREAK_HERE
-                state = Character.IDENTIFIER
-            case Character.NONE:
-                pass
-            case Character.PUNCTUATION:
-                match state:
-                    case Character.IDENTIFIER:
-                        character = yield Insert.CHARACTER
-                    case Character.NONE:
-                        character = yield Insert.CHARACTER
-                    case Character.PUNCTUATION:
-                        character = yield Insert.CHARACTER
-                    case Character.WHITESPACE:
-                        pass
-                state = Character.PUNCTUATION
-            case Character.WHITESPACE:
-                match state:
-                    case Character.IDENTIFIER:
-                        state = Character.WHITESPACE
-                    case Character.NONE:
-                        character = yield Insert.WHITESPACE
-                    case Character.PUNCTUATION:
-                        character = yield Insert.WHITESPACE
-                    case Character.WHITESPACE:
-                        character = yield Insert.WHITESPACE
-
-
-def magic():
-    character = yield
-    state = Character.NONE
-    while True:
-        value = symbol.get(character, Character.IDENTIFIER)
-        match value:
-            case Character.IDENTIFIER:
-                match state:
-                    case Character.PUNCTUATION:
-                        character = yield Insert.BREAK_PERMITTED_HERE
-                    case Character.WHITESPACE:
-                        character = yield Insert.NO_BREAK_HERE
-                    case _:
-                        character = yield Insert.CHARACTER
-                state = Character.IDENTIFIER
-            case Character.PUNCTUATION:
-                match state:
-                    case Character.WHITESPACE:
-                        pass
-                    case _:
-                        character = yield Insert.CHARACTER
-                state = Character.PUNCTUATION
-            case Character.WHITESPACE:
-                match state:
-                    case Character.IDENTIFIER:
-                        state = Character.WHITESPACE
-                    case _:
-                        character = yield Insert.WHITESPACE
+    yield QUOTATION_MARK
+    yield LINE_FEED
 
 
 a = ["(", "<"]
@@ -384,24 +334,55 @@ def normalize(string):
             case Insert.CHARACTER:
                 yield character
             case Insert.BREAK_PERMITTED_HERE:
-                yield "_"
-                # yield BREAK_PERMITTED_HERE
+                yield BREAK_PERMITTED_HERE
                 yield character
             case Insert.NO_BREAK_HERE:
-                yield "-"
-                # yield NO_BREAK_HERE
+                yield NO_BREAK_HERE
                 yield character
     check.close()
 
 
 #
 
-dog = normalize(LANGUAGE)
-string = io.StringIO()
-for item in dog:
-    string.write(item)
+def work(value):
+    string = io.StringIO()
 
-cat = string.getvalue()
-car = write_value("cat", cat)
+    for item2 in value:
+        string.write(item2)
 
-print(car)
+    string.seek(0, io.SEEK_SET)
+
+    while True:
+        line = string.readline()
+
+        if not line:
+            break
+
+        yield write_line(line)
+
+    string.close()
+
+
+string2 = io.StringIO()
+
+gofish = {
+    "language": LANGUAGE,
+    "choo_choo": LANGUAGE,
+    "finish": LANGUAGE,
+    "oink": LANGUAGE,
+}
+
+for (go, fish) in gofish.items():
+    moo = normalize(fish)
+    cow = assignment(go, moo)
+    pig = work(cow)
+    for item in pig:
+        string2.write(item)
+
+cat = string2.getvalue()
+
+string2.close()
+
+print(cat)
+
+
