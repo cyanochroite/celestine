@@ -1,18 +1,7 @@
-def print_me(count):
-    i = 0
-    while i < count:
-        val = (yield i)
-        if val is not None:
-            i = val
-        else:
-            i += 1
 
 
-gen = print_me(10)
-gen.send(8)
+LANGUAGE = "  В ЕС има 24\rофициални\nезика:\tанглийски, български,\
+гръцки, 123 ' s , датски, естонски?, ? испански!, италиански,, латвийски, литовски, малтийски, немски, нидерландски, полски, португалски, румънски, словашки, словенски, унгарски, фински, френски, хърватски, чешки и шведски. m "
 
-for i in gen:
-    if i == 5:
-        gen.send(8)
-    else:
-        print(i)
+for item in range(0x10):
+    print(item)

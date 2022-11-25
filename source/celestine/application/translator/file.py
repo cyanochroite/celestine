@@ -85,7 +85,6 @@ symbol = {
     QUESTION_MARK: Character.PUNCTUATION,
     SEMICOLON: Character.PUNCTUATION,
     SPACE: Character.WHITESPACE,
-    None: Character.NONE,
 }
 
 
@@ -235,6 +234,163 @@ def normalize(string):
             state = value
 
 
+def normalize(string):
+    state = Character.NONE
+    whitespace = False
+
+    for character in string:
+        value = symbol.get(character, Character.IDENTIFIER)
+        if value == Character.IDENTIFIER:
+            match state:
+                case Character.PUNCTUATION:
+                    yield SPACE
+                    yield BREAK_PERMITTED_HERE
+                case Character.IDENTIFIER:
+                    if whitespace:
+                        yield SPACE
+
+        whitespace = value == Character.WHITESPACE
+        if not whitespace:
+            yield character
+            state = value
+
+####
+
+
+apostrophe = frozenset({
+    APOSTROPHE,
+})
+
+punctuation = frozenset({
+    COLON,
+    COMMA,
+    EXCLAMATION_MARK,
+    FULL_STOP,
+    QUESTION_MARK,
+    SEMICOLON,
+})
+
+whitespace = frozenset({
+    CARRIAGE_RETURN,
+    CHARACTER_TABULATION,
+    FORM_FEED,
+    INFORMATION_SEPARATOR_FOUR,
+    INFORMATION_SEPARATOR_THREE,
+    INFORMATION_SEPARATOR_TWO,
+    LINE_FEED,
+    LINE_SEPARATOR,
+    LINE_SEPARATOR,
+    LINE_TABULATION,
+    NEXT_LINE,
+    PARAGRAPH_SEPARATOR,
+    SPACE,
+})
+
+plane_0 = set({})
+for index in range(0x10000):
+    plane_0.add(chr(index))
+
+basic_multilingual_plane = frozenset(plane_0)
+
+not_identifier = apostrophe | punctuation | whitespace
+
+identifier = basic_multilingual_plane - not_identifier
+
+
+def normalize(string):
+    state = Character.NONE
+    white_space = False
+    last = APOSTROPHE
+
+    for character in string:
+        if character not in not_identifier:
+            value = symbol.get(last, Character.IDENTIFIER)
+            state = value
+            match state:
+                case Character.PUNCTUATION:
+                    yield SPACE
+                    yield BREAK_PERMITTED_HERE
+                case Character.IDENTIFIER:
+                    if white_space:
+                        yield SPACE
+
+        value = symbol.get(character, Character.IDENTIFIER)
+        white_space = value == Character.WHITESPACE
+        if not white_space:
+            yield character
+            last = character
+
+
+def normalize(string):
+    white_space = False
+    last = APOSTROPHE
+
+    for character in string:
+        if character in identifier:
+            if last in punctuation:
+                yield SPACE
+                yield BREAK_PERMITTED_HERE
+            elif last in identifier:
+                if white_space:
+                    yield SPACE
+
+        value = symbol.get(character, Character.IDENTIFIER)
+        white_space = value == Character.WHITESPACE
+        if not white_space:
+            yield character
+            last = character
+
+
+class Characteuuieir(enum.Enum):
+    NONE = enum.auto()
+    WHITESPACE = enum.auto()
+    APOSTROPHE = enum.auto()
+
+
+asymbol = [
+    APOSTROPHE,
+    CARRIAGE_RETURN,
+    CHARACTER_TABULATION,
+    COLON,
+    COMMA,
+    EXCLAMATION_MARK,
+    FORM_FEED,
+    FULL_STOP,
+    INFORMATION_SEPARATOR_FOUR,
+    INFORMATION_SEPARATOR_THREE,
+    INFORMATION_SEPARATOR_TWO,
+    LINE_FEED,
+    LINE_SEPARATOR,
+    LINE_SEPARATOR,
+    LINE_TABULATION,
+    NEXT_LINE,
+    PARAGRAPH_SEPARATOR,
+    QUESTION_MARK,
+    SEMICOLON,
+    SPACE,
+]
+
+
+def anormalize(string):
+    state = Character.WHITESPACE
+    whitespace = False
+
+    for character in string:
+        if character not in symbol:
+            match state:
+                case Character.PUNCTUATION:
+                    yield SPACE
+                    yield BREAK_PERMITTED_HERE
+                case Character.IDENTIFIER:
+                    if whitespace:
+                        yield SPACE
+
+        whitespace = value == Character.WHITESPACE
+        if not whitespace:
+            yield character
+            state = value
+
+
 def work(value):
     string = io.StringIO()
 
@@ -280,7 +436,6 @@ def testaa():
 
 
 testaa()
-
 
 cho_choSch = "В ЕС има 24 официални езика: английски, български, \
 гръцки, 123's, датски, естонски?,? испански!, италиански,, латвийски, \
