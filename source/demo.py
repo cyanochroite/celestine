@@ -1,19 +1,8 @@
-import io
+cow = ["a", "b"]
+print("".join(cow))
 
+dog = str()
+print(dog.join(cow))
 
-string = io.StringIO()
-string.write("I ate a puppy\nYum Yum.\n")
-string.write("I sat on a puppy\n")
-string.write("I ran over a puppy\n\nWhat fun!\n")
-
-string.seek(0, io.SEEK_SET)
-
-while True:
-    line = string.readline()
-
-    if not line:
-        break
-
-    print(line)
-
-string.close()
+moo = chr(50)
+print(moo.join(cow))

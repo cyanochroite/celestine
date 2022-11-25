@@ -7,9 +7,8 @@ ARGUMENT_APPLICATION_HELP = "Choose an application to run."
 
 
 ARGUMENT_INFORMATION_TITLE = "Information"
-ARGUMENT_INFORMATION_DESCRIPTION = """
-Including these will end the program to display information.
-"""
+ARGUMENT_INFORMATION_DESCRIPTION = "\
+Including these will end the program to display information."
 
 ARGUMENT_HELP_HELP = "Shows this help screen."
 ARGUMENT_VERSION_HELP = "Shows the current version."
@@ -30,3 +29,7 @@ Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian,
 Spanish and Swedish.
 """
 ARGUMENT_PYTHON_HELP = "Select which version of Python you are using."
+
+TRANSLATOR_FILE_ERROR_OVERFLOW = "Text overflowed maximum length."
+TRANSLATOR_FILE_ERROR_OVERFLOW = ""
+TRANSLATOR_FILE_ERROR_OVERFLOW = ""
