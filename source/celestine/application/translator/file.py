@@ -118,32 +118,6 @@ class File():
 
 
 def write_line(text):
-    string = io.StringIO()
-
-    line = text.split(BREAK_PERMITTED_HERE)
-
-    column = 0
-    for item in line:
-        size = len(item)
-
-        if column + size >= MAXIMUM_LINE_LENGTH:
-            yield REVERSE_SOLIDUS
-            yield LINE_FEED
-
-            column += string.write()
-            column += string.write(LINE_FEED)
-            if column > MAXIMUM_LINE_LENGTH + len(LINE_FEED):
-                raise ValueError("Text overflowed maximum length.")
-            column = 0
-
-        column += string.write(item)
-
-    alldone = string.getvalue()
-    string.close()
-    return alldone
-
-
-def write_line(text):
     line = text.split(BREAK_PERMITTED_HERE)
 
     column = 0
@@ -185,7 +159,7 @@ def assignment(key, value):
 
 
 def magic():
-    character = yield
+    character = None
     state = Character.NONE
     white_people = False
     while True:
@@ -233,6 +207,33 @@ def normalize(string):
 
 
 #
+
+
+def normalize(string):
+    state = Character.NONE
+    white_people = False
+
+    for character in string:
+        value = symbol.get(character, Character.IDENTIFIER)
+        match value:
+            case Character.IDENTIFIER:
+                match state:
+                    case Character.PUNCTUATION:
+                        yield SPACE
+                        yield BREAK_PERMITTED_HERE
+                    case Character.IDENTIFIER:
+                        if white_people:
+                            yield SPACE
+
+        if value != Character.WHITESPACE and value != Character.NONE:
+            yield character
+
+        if value == Character.WHITESPACE:
+            white_people = True
+        else:
+            white_people = False
+            state = value
+
 
 def work(value):
     string = io.StringIO()
@@ -291,8 +292,8 @@ choo_choo = "В ЕС има 24 официални езика: английски
 литовски, малтийски, немски, нидерландски, полски, португалски, \
 румънски, словашки, словенски, унгарски, фински, френски, хърватски, \
 чешки и шведски. m"
-language = "В ЕС има 24 официални езика: английски, български, \
-гръцки, 123's, датски, естонски?,? испански!, италиански,, латвийски, \
+language = "В ЕС има 24 официални езика: английски, български, гръцки, \
+123's, датски, естонски?,? испански!, италиански,, латвийски, \
 литовски, малтийски, немски, нидерландски, полски, португалски, \
 румънски, словашки, словенски, унгарски, фински, френски, хърватски, \
 чешки и шведски. m"
