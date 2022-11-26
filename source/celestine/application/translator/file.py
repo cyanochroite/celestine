@@ -42,11 +42,19 @@ from celestine.string.unicode import PARAGRAPH_SEPARATOR
 
 
 MAXIMUM_LINE_LENGTH = 72
-apostrophe = frozenset({
+LINE_BUFFERING = 1
+STRICT = "strict"
+WRITE_TEXT = WRITE
+CLOSE = True
+OPENER = None
+
+NONE = ""
+
+unicode_apostrophe = frozenset({
     APOSTROPHE,
 })
 
-punctuation = frozenset({
+unicode_punctuation = frozenset({
     COLON,
     COMMA,
     EXCLAMATION_MARK,
@@ -55,7 +63,7 @@ punctuation = frozenset({
     SEMICOLON,
 })
 
-whitespace = frozenset({
+unicode_whitespace = frozenset({
     CARRIAGE_RETURN,
     CHARACTER_TABULATION,
     FORM_FEED,
@@ -63,7 +71,6 @@ whitespace = frozenset({
     INFORMATION_SEPARATOR_THREE,
     INFORMATION_SEPARATOR_TWO,
     LINE_FEED,
-    LINE_SEPARATOR,
     LINE_SEPARATOR,
     LINE_TABULATION,
     NEXT_LINE,
@@ -77,9 +84,12 @@ for index in range(0x10000):
 
 basic_multilingual_plane = frozenset(plane_0)
 
-not_identifier = apostrophe | punctuation | whitespace
+not_identifier = set({})
+not_identifier |= unicode_apostrophe
+not_identifier |= unicode_punctuation
+not_identifier |= unicode_whitespace
 
-identifier = basic_multilingual_plane - not_identifier
+unicode_identifier = basic_multilingual_plane - not_identifier
 
 
 LANGUAGE = "  В ЕС има 24\rофициални\nезика:\tанглийски, български,\
@@ -96,13 +106,25 @@ class File():
 
         self.column = 0
 
-    def save(self, path):
+    def savedf(self, path):
         """Save the items."""
         with open(path, WRITE, encoding=UTF_8) as file:
             file.write(self.head)
             file.writelines(self.body)
 
-    @staticmethod
+    def save(self, path, string):
+        with open(path, WRITE_TEXT, LINE_BUFFERING, UTF_8, STRICT,
+                  LINE_FEED, True, None) as file:
+            for character in word_wrap(string):
+                file.write(character)
+
+    def save(self, path, string):
+        with open(path, WRITE_TEXT, LINE_BUFFERING, UTF_8, STRICT,
+                  LINE_FEED, True, None) as file:
+            for character in string:
+                file.write(character)
+
+    @ staticmethod
     def line(item):
         """Make a line for the file from a key value pair."""
         (key, value) = item
@@ -114,7 +136,7 @@ class File():
         return F'{key} = "{value}"\n'
 
 
-def write_line(text):
+def word_wrap(text):
     line = text.split(BREAK_PERMITTED_HERE)
 
     column = 0
@@ -127,32 +149,46 @@ def write_line(text):
             yield LINE_FEED
             column = 0
 
+        yield item
         column += size
-        yield item
 
 
-def assignment(key, value):
-    """
-    Make a line for the file from a key value pair.
-    return F'{key} = "{value}"\n'
-    """
-    if not key.isidentifier():
-        raise ValueError("Not a valid identifier.")
-    if keyword.iskeyword(key) or keyword.issoftkeyword(key):
-        raise ValueError("This word is a keyword.")
+def buffer_readline(buffer):
+    buffer.write(CARRIAGE_RETURN)
+    buffer.seek(0, io.SEEK_SET)
+    string = buffer.readline()
+    for character in string:
+        if character == LINE_SEPARATOR:
+            yield LINE_FEED
+        elif character != CARRIAGE_RETURN:
+            yield character
+    buffer.seek(0, io.SEEK_SET)
 
-    yield key
-    yield SPACE
-    yield EQUALS_SIGN
-    yield SPACE
-    yield QUOTATION_MARK
-    yield BREAK_PERMITTED_HERE
 
-    for item in value:
-        yield item
+def word_wrap(string):
+    buffer = io.StringIO(NONE, CARRIAGE_RETURN)
 
-    yield QUOTATION_MARK
-    yield LINE_FEED
+    column = 0
+    size = 0
+
+    for character in string:
+        if character == BREAK_PERMITTED_HERE:
+
+            if column + size >= MAXIMUM_LINE_LENGTH:
+                yield REVERSE_SOLIDUS
+                yield LINE_FEED
+                column = 0
+
+            yield from buffer_readline(buffer)
+
+            column += size
+            size = 0
+
+        else:
+            buffer.write(character)
+            size += 1
+
+    yield from buffer_readline(buffer)
 
 
 def normalize_whitespace(string):
@@ -166,22 +202,45 @@ def normalize_whitespace(string):
     Allow line breaks after punctuation.
     """
     previous = None
-    white_space = None
+    whitespace = None
 
     for character in string:
-        if character in identifier:
-            if previous in punctuation:
+        if character in unicode_identifier:
+            if previous in unicode_punctuation:
                 yield SPACE
                 yield BREAK_PERMITTED_HERE
-            elif previous in identifier:
-                if white_space:
+            elif previous in unicode_identifier:
+                if whitespace:
                     yield SPACE
 
-        white_space = character in whitespace
+        whitespace = character in unicode_whitespace
 
-        if not white_space:
+        if not whitespace:
             yield character
             previous = character
+
+
+def assignment_expression(identifier, expression):
+    """
+    Make a line for the file from a key value pair.
+    return F'{identifier} = "{expression}"\n'
+    """
+    if not identifier.isidentifier():
+        raise ValueError("Not a valid identifier.")
+    if keyword.iskeyword(identifier):
+        raise ValueError("This word is a keyword.")
+    if keyword.issoftkeyword(identifier):
+        raise ValueError("This word is a soft keyword.")
+
+    yield identifier
+    yield SPACE
+    yield EQUALS_SIGN
+    yield SPACE
+    yield QUOTATION_MARK
+    yield BREAK_PERMITTED_HERE
+    yield from normalize_whitespace(expression)
+    yield QUOTATION_MARK
+    yield LINE_SEPARATOR
 
 
 def work(value):
@@ -198,7 +257,7 @@ def work(value):
         if not line:
             break
 
-        yield from write_line(line)
+        yield from word_wrap(line)
 
     string.close()
 
@@ -207,16 +266,16 @@ def testaa():
     string2 = io.StringIO()
 
     gofish = {
-        "cho_choSch": LANGUAGE,
+        "A": "B",
+        "fast_train": LANGUAGE,
         "choo_choo": LANGUAGE,
         "language": LANGUAGE,
         "dancing": LANGUAGE,
         "dancer": LANGUAGE,
     }
 
-    for (go, fish) in gofish.items():
-        moo = normalize_whitespace(fish)
-        cow = assignment(go, moo)
+    for (key, value) in gofish.items():
+        cow = assignment_expression(key, value)
         pig = work(cow)
         for item in pig:
             string2.write(item)
@@ -229,7 +288,8 @@ def testaa():
 
 
 testaa()
-cho_choSch = "В ЕС има 24 официални езика: английски, български, \
+A = "B"
+fast_train = "В ЕС има 24 официални езика: английски, български, \
 гръцки, 123's, датски, естонски?,? испански!, италиански,, латвийски, \
 литовски, малтийски, немски, нидерландски, полски, португалски, \
 румънски, словашки, словенски, унгарски, фински, френски, хърватски, \
