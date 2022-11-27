@@ -136,23 +136,6 @@ class File():
         return F'{key} = "{value}"\n'
 
 
-def word_wrap(text):
-    line = text.split(BREAK_PERMITTED_HERE)
-
-    column = 0
-
-    for item in line:
-        size = len(item)
-
-        if column + size >= MAXIMUM_LINE_LENGTH:
-            yield REVERSE_SOLIDUS
-            yield LINE_FEED
-            column = 0
-
-        yield item
-        column += size
-
-
 def buffer_readline(buffer):
     buffer.write(CARRIAGE_RETURN)
     buffer.seek(0, io.SEEK_SET)
@@ -172,9 +155,80 @@ def word_wrap(string):
     size = 0
 
     for character in string:
-        if character == BREAK_PERMITTED_HERE:
+        break_permitted_here = character == BREAK_PERMITTED_HERE
+        line_separator = character == LINE_SEPARATOR
+        if break_permitted_here or line_separator:
 
             if column + size >= MAXIMUM_LINE_LENGTH:
+                yield REVERSE_SOLIDUS
+                yield LINE_FEED
+                column = 0
+
+            yield from buffer_readline(buffer)
+
+            column += size
+            size = 0
+
+        else:
+            buffer.write(character)
+            size += 1
+
+    yield from buffer_readline(buffer)
+
+
+def word_wrap(string):
+    buffer = io.StringIO(NONE, CARRIAGE_RETURN)
+
+    column = 0
+    size = 0
+
+    for character in string:
+
+        if character == LINE_SEPARATOR:
+            yield from buffer_readline(buffer)
+            yield LINE_FEED
+            column = 0
+            size = 0
+
+        elif character == BREAK_PERMITTED_HERE:
+
+            if column + size >= MAXIMUM_LINE_LENGTH:
+                yield REVERSE_SOLIDUS
+                yield LINE_FEED
+                column = 0
+
+            yield from buffer_readline(buffer)
+
+            column += size
+            size = 0
+
+        else:
+            buffer.write(character)
+            size += 1
+
+    yield from buffer_readline(buffer)
+
+
+def word_wrap(string):
+    buffer = io.StringIO(NONE, CARRIAGE_RETURN)
+
+    column = 0
+    size = 0
+
+    for character in string:
+
+        if character == LINE_SEPARATOR:
+            if column + size > MAXIMUM_LINE_LENGTH:
+                yield LINE_FEED
+
+            yield from buffer_readline(buffer)
+            yield LINE_FEED
+            column = 0
+            size = 0
+
+        elif character == BREAK_PERMITTED_HERE:
+
+            if column + size > MAXIMUM_LINE_LENGTH - 1:
                 yield REVERSE_SOLIDUS
                 yield LINE_FEED
                 column = 0
@@ -232,7 +286,7 @@ def assignment_expression(identifier, expression):
     if keyword.issoftkeyword(identifier):
         raise ValueError("This word is a soft keyword.")
 
-    yield identifier
+    yield from identifier
     yield SPACE
     yield EQUALS_SIGN
     yield SPACE
@@ -243,28 +297,7 @@ def assignment_expression(identifier, expression):
     yield LINE_SEPARATOR
 
 
-def work(value):
-    string = io.StringIO()
-
-    for item2 in value:
-        string.write(item2)
-
-    string.seek(0, io.SEEK_SET)
-
-    while True:
-        line = string.readline()
-
-        if not line:
-            break
-
-        yield from word_wrap(line)
-
-    string.close()
-
-
-def testaa():
-    string2 = io.StringIO()
-
+def work():
     gofish = {
         "A": "B",
         "fast_train": LANGUAGE,
@@ -275,10 +308,16 @@ def testaa():
     }
 
     for (key, value) in gofish.items():
-        cow = assignment_expression(key, value)
-        pig = work(cow)
-        for item in pig:
-            string2.write(item)
+        yield from assignment_expression(key, value)
+
+
+def testaa():
+    string2 = io.StringIO()
+    car = work()
+
+    pig = word_wrap(car)
+    for item in pig:
+        string2.write(item)
 
     cat = string2.getvalue()
 
@@ -288,6 +327,7 @@ def testaa():
 
 
 testaa()
+
 A = "B"
 fast_train = "В ЕС има 24 официални езика: английски, български, \
 гръцки, 123's, датски, естонски?,? испански!, италиански,, латвийски, \
