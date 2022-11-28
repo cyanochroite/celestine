@@ -38,10 +38,7 @@ PILLOW = "pillow"
 
 CONFIGURATION = "celestine.ini"
 CONFIGURATION_TRANSLATOR = "key.ini"
-ERRORS = "strict"
-READ = "rt"
-WRITE = "wt"
-UTF_8 = "utf_8"
+
 
 PACKAGE = "package"
 BLENDER = "blender"

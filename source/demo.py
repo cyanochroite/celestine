@@ -1,11 +1,15 @@
-import io
-import keyword
+def yld123u(u):
+    for i in range(1, 4):
+        u = yield i * u
 
 
-print(" cat ".isidentifier())
+cat = range(1, 4)
+print(list(cat))
 
-LANGUAGE = "  В ЕС има 24\rофициални\nезика:\tанглийски, български,\
-гръцки, 123 ' s , датски, естонски?, ? испански!, италиански,, латвийски, литовски, малтийски, немски, нидерландски, полски, португалски, румънски, словашки, словенски, унгарски, фински, френски, хърватски, чешки и шведски. m "
+gen = yld123u(4)
+print(gen.send(None))
+print(gen.send(3))
+print(gen.send(5))
+print(gen.send(6))
+print(gen.send(7))
 
-for item in range(0x10):
-    print(item)
