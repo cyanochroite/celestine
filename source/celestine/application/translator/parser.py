@@ -196,9 +196,25 @@ def assignment_expression(identifier, expression):
 
 
 def transverse_dictionary(dictionary):
-    for (key, value) in dictionary.items():
+    for (key, value) in sorted(dictionary.items()):
         yield from assignment_expression(key, value)
 
 
 def word_wrap_dictionary(dictionary):
+    yield from word_wrap(transverse_dictionary(dictionary))
+
+
+def dictionary_to_file(dictionary):
+    yield from QUOTATION_MARK
+    yield from QUOTATION_MARK
+    yield from QUOTATION_MARK
+    yield from dictionary["LANGUAGE_TAG_ISO"]
+    yield from SPACE
+    yield from dictionary["LANGUAGE_NAME_ENGLISH"]
+    yield from SPACE
+    yield from dictionary["LANGUAGE_NAME_NATIVE"]
+    yield from QUOTATION_MARK
+    yield from QUOTATION_MARK
+    yield from QUOTATION_MARK
+    yield from LINE_FEED
     yield from word_wrap(transverse_dictionary(dictionary))

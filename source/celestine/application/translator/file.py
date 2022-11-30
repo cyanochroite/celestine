@@ -10,7 +10,8 @@ class File():
         self.name = F"{name}.py"
         self.head = F'"""{header}"""\n'
 
-    def save(self, path, string):
+    @classmethod
+    def save(cls, path, string):
         mode = stream.WRITE_TEXT
         buffering = 1
         encoding = stream.UTF_8
