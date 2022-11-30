@@ -1,4 +1,5 @@
 """Print out the lengths of the translations."""
+from celestine.application.translator.parser import word_wrap_dictionary
 from celestine.session import load
 
 from celestine.application.translator.string import LANGUAGE
@@ -11,7 +12,7 @@ def main():
     """The main function."""
     minimum = {}
     maximum = {}
-    return []
+#    return []
 
     translations = load.argument(TRANSLATION)
     for translation in translations:
@@ -21,17 +22,17 @@ def main():
         module2 = load.module(LANGUAGE, translation)
         dictionary2 = load.dictionary(module2)
 
-        for key, value in dictionary1.items():
-            dictionary2[key] = value
+        dictionary2 |= dictionary1
 
         array = []
         for key, value in dictionary2.items():
             array.append((key, value))
 
         name = translation
-        file = File(name, F"Lookup table for {name}.", array)
+        file = File(name, F"Lookup table for {name}.")
         path = load.pathway(LANGUAGE, F"{name}.py")
-        file.save(path)
+        string = word_wrap_dictionary(dictionary2)
+        file.save(path, string)
 
     label = []
     for key, value in minimum.items():

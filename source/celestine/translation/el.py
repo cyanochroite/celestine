@@ -6,3 +6,7 @@ LANGUAGE = """
 ολλανδικά, ουγγρικά, πολωνικά, πορτογαλικά, ρουμανικά, σλοβακικά,
 σλοβενικά, σουηδικά, τσεχικά και φινλανδικά.
 """
+LANGUAGE_NAME_ENGLISH = "Greek"
+LANGUAGE_NAME_NATIVE = "ελληνικά"
+LANGUAGE_TAG_AZURE = "el"
+LANGUAGE_TAG_ISO = "el"

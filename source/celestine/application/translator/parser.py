@@ -115,6 +115,7 @@ def word_wrap(string):
 
         if character == LINE_SEPARATOR:
             if column + size > MAXIMUM_LINE_LENGTH:
+                yield from REVERSE_SOLIDUS
                 yield from LINE_FEED
 
             yield from buffer_readline(buffer)
