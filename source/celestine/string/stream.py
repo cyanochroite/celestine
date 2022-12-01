@@ -2,6 +2,9 @@ from celestine.string.unicode import CARRIAGE_RETURN
 from celestine.string.unicode import LINE_FEED
 from celestine.string.unicode import NONE
 
+
+FILE_NAME_EXTENSION = ".py"
+
 # encoding
 ASCII = "ascii"
 ISO_8859_1 = "iso_8859_1"

@@ -3,24 +3,24 @@
 from celestine.string import stream
 
 
-class File():
-    """Write a key value pair python file."""
-
-    def __init__(self, name, header):
-        self.name = F"{name}.py"
-        self.head = F'"""{header}"""\n'
-
-    @classmethod
-    def save(cls, path, string):
-        mode = stream.WRITE_TEXT
-        buffering = 1
-        encoding = stream.UTF_8
-        errors = stream.STRICT
-        newline = stream.UNIVERSAL
-        closefd = True
-        opener = None
-
-        with open(path, mode, buffering, encoding,
-                  errors, newline, closefd, opener) as file:
-            for character in string:
-                file.write(character)
+def save(path, string):
+    file = path
+    mode = stream.WRITE_TEXT
+    buffering = 1  # use line buffering
+    encoding = stream.UTF_8
+    errors = stream.STRICT
+    newline = stream.UNIVERSAL
+    closefd = True  # close file descriptor
+    opener = None  # use default opener
+    with open(
+        file,
+        mode,
+        buffering,
+        encoding,
+        errors,
+        newline,
+        closefd,
+        opener,
+    ) as file_object:
+        for character in string:
+            file_object.write(character)

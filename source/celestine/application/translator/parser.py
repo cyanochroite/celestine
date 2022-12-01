@@ -43,10 +43,6 @@ from celestine.string.unicode import PARAGRAPH_SEPARATOR
 MAXIMUM_LINE_LENGTH = 72
 
 
-unicode_apostrophe = frozenset({
-    APOSTROPHE,
-})
-
 unicode_punctuation = frozenset({
     COLON,
     COMMA,
@@ -77,10 +73,7 @@ for index in range(0x10000):
 
 basic_multilingual_plane = frozenset(plane_0)
 
-not_identifier = set({})
-not_identifier |= unicode_apostrophe
-not_identifier |= unicode_punctuation
-not_identifier |= unicode_whitespace
+not_identifier = unicode_punctuation | unicode_whitespace
 
 unicode_identifier = basic_multilingual_plane - not_identifier
 

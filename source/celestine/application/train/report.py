@@ -4,7 +4,7 @@ from celestine.application.translator.parser import dictionary_to_file
 from celestine.session import load
 
 from celestine.application.translator.string import LANGUAGE
-from celestine.application.translator.file import File
+from celestine.application.translator.file import save
 
 TRANSLATION = "translation"
 
@@ -15,9 +15,9 @@ def fix_source():
         module = load.module(TRANSLATION, translation)
         dictionary = load.dictionary(module)
 
-        path = load.pathway(TRANSLATION, F"{translation}.py")
+        path = load.python(TRANSLATION, translation)
         string = dictionary_to_file(dictionary)
-        File.save(path, string)
+        save(path, string)
 
 
 def main():
@@ -45,10 +45,9 @@ def main():
             array.append((key, value))
 
         name = translation
-        file = File(name, F"Lookup table for {name}.")
         path = load.pathway(LANGUAGE, F"{name}.py")
         string = word_wrap_dictionary(dictionary2)
-        file.save(path, string)
+        save(path, string)
 
     label = []
     for key, value in minimum.items():

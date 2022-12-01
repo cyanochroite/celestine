@@ -7,6 +7,9 @@ from celestine.string.unicode import LOW_LINE
 
 from celestine.string.all import CELESTINE
 
+from celestine.string.stream import FILE_NAME_EXTENSION
+from celestine.string.unicode import NONE
+
 
 def attempt(name):
     """Attempt to load a package and return the result."""
@@ -18,12 +21,12 @@ def attempt(name):
     return False
 
 
-def module(*paths):
+def module(*path):
     """Load an internal module from anywhere in the application."""
-    iterable = [CELESTINE, *paths]
+    iterable = [CELESTINE, *path]
     name = FULL_STOP.join(iterable)
     file = __import__(name)
-    for _path in paths:
+    for _path in path:
         file = getattr(file, _path)
     return file
 
@@ -42,8 +45,12 @@ def dictionary(_module):
     return mapping
 
 
-def pathway(*paths):
-    return os.path.join(sys.path[0], CELESTINE, *paths)
+def pathway(*path):
+    return os.path.join(sys.path[0], CELESTINE, *path)
+
+
+def python(*path):
+    return NONE.join([pathway(*path), FILE_NAME_EXTENSION])
 
 
 def argument_default(path):
@@ -61,14 +68,14 @@ def argument_default(path):
     return result
 
 
-def argument(*paths):
+def argument(*path):
     """
     Build a path to the selected package. Scan all items in directory.
     Return a list of items that are not private, such as '.private' or
     '_private'. (First letter is not a symbol.)
     Strip off all file extensions, if any.
     """
-    directory = pathway(*paths)
+    directory = pathway(*path)
     folder = os.listdir(directory)
 
     splitext = os.path.splitext
