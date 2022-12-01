@@ -1,22 +1,26 @@
 """Application for translating text to other languages."""
+from celestine.application.translator.file import save
+from celestine.application.translator.string import LANGUAGE
+from celestine.application.translator.parser import dictionary_to_file
 from .report import main as train
 from .string import LANGUAGE
-from .string import language
+
 import uuid
 import os.path
 import shutil
 import requests
 
 from celestine.session import load
-from celestine.application.translator.file import File
 from celestine.application.translator.translator import Translator
 
 
-from .string import code
-from .string import language as language_list
-from .string import languages
 from .string import WRITE
 from .string import UTF_8
+
+from celestine.application.translator.parser import word_wrap_dictionary
+
+
+TRANSLATION = "translation"
 
 
 SESSION = "session"
@@ -25,20 +29,47 @@ TEXT = "text"
 TO = "to"
 
 
-def parser_magic():
+def parser_magic(session):
     """Do all parser stuff here."""
-    for name in language_list:
-        moose[name] = []
+    dictionary = {}
+    azure_to_iso = {}
+    override = {}
+    code = []
 
-    module = load.module("string", "language")
+    dir_translation = load.argument(TRANSLATION)
+    for translation in dir_translation:
+        module = load.module(TRANSLATION, translation)
+        wow = load.dictionary(module)
+
+        key = wow["LANGUAGE_TAG_AZURE"]
+        value = wow["LANGUAGE_TAG_ISO"]
+        azure_to_iso[key] = value
+        code.append(key)
+
+        override[translation] = wow
+        dictionary[translation] = {}
+
+    module = load.module("default", "language")
     thelist = load.dictionary(module)
     for name, value in thelist.items():
-        add_item(name, value)
+
+        items = post(session, code, value)
+        for item in items:
+            translations = item[TRANSLATIONS]
+            for translation in translations:
+                text = translation[TEXT]
+                key = azure_to_iso[translation[TO]]
+                dictionary[key][name] = text
+
+    for translation in dir_translation:
+        dictionary[translation] |= override[translation]
+
+    return dictionary
 
 
 def reset():
     """Remove the directory and rebuild it."""
-    path = os.path.join(session.directory, "celestine", "language")
+    path = load.pathway(LANGUAGE)
     if os.path.islink(path):
         raise RuntimeError
 
@@ -50,20 +81,22 @@ def reset():
 
 def header():
     """Write the header."""
-    path = os.path.join(session.directory, "celestine",
-                        "language", "__init__.py")
+    path = load.python(LANGUAGE, "__init__")
     with open(path, WRITE, encoding=UTF_8) as file:
         file.write('"""Lookup table for languages."""\n')
 
 
-def save_item():
+def save_item(dictionarys):
     """Save the items."""
-    for name in language_list:
-        file = File(name, F"Lookup table for {name}.", moose[name])
-        file.save(session.directory, "celestine", "language")
+    translations = load.argument(TRANSLATION)
+    for translation in translations:
+        dictionary = dictionarys[translation]
+        path = load.python(LANGUAGE, translation)
+        string = dictionary_to_file(dictionary)
+        save(path, string)
 
 
-def post(text):
+def post(session, code, text):
     """Generate a post request."""
     translator = Translator(session.attribute)
     url = translator.endpoint()
@@ -73,36 +106,6 @@ def post(text):
     params = translator.parameter(code)
     request = requests.post(url, data, json, headers=headers, params=params)
     return request.json()
-
-
-def add_item(key, value):
-    """Add item to parsers."""
-    items = post(value)
-    for item in items:
-        translations = item[TRANSLATIONS]
-        for translation in translations:
-            text = translation[TEXT]
-            put = languages[translation[TO]]
-            name = put
-            moose[name].append((key, text))
-
-
-def main(a_session):
-    """def main"""
-    global session
-    session = a_session
-    global moose
-    moose = {}
-
-    parser_magic()
-
-    reset()
-    header()
-
-    save_item()
-
-    print(moose)
-    print("done")
 
 
 def report(page):
@@ -128,8 +131,19 @@ def two(page):
         line.button("next", "Page 0", 0)
 
 
-def main(_):
-    train(_)
+def main(session):
+    """def main"""
+
+    dictionary = parser_magic(session)
+
+    # directory stuff
+    # reset()
+    # header()
+
+    save_item(dictionary)
+
+    print(dictionary)
+    print("done")
     return [
         report,
         one,

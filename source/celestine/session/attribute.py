@@ -1,5 +1,5 @@
 import dataclasses
-import os
+import sys
 
 from celestine.session.configuration import Configuration
 
@@ -13,7 +13,7 @@ class Attribute():
         self.python = None
         self.task = None
 
-        directory = os.getcwd()
+        directory = sys.path[0]
         section = argument.application
 
         configuration = Configuration.make(directory)
