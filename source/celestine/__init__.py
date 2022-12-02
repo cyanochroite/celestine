@@ -21,7 +21,7 @@ bl_info = {
 }
 
 
-def register():
+def register() -> None:
     """
     This is a function which only runs when enabling the add-on, this means the
     module can be loaded without activating the add-on.
@@ -30,7 +30,7 @@ def register():
     main([BLENDER, MAIN], False)
 
 
-def unregister():
+def unregister() -> None:
     """
     This is a function to unload anything setup by register, this is called
     when the add-on is disabled.
@@ -38,11 +38,9 @@ def unregister():
     load.module(PACKAGE, BLENDER, MAIN).unregister()
 
 
-def main(argv, exit_on_error):
+def main(argv: list[str], exit_on_error: bool) -> None:
     """Run the main program."""
     session = Session(argv, exit_on_error)
     with session.interface.window(session) as window:
         for document in session.task.main(session):
             window.page(document)
-
-# , . :

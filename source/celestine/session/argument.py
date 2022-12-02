@@ -19,15 +19,18 @@ TASK = "task"
 
 
 class Argument():
-    def flag(self, name):
+    @staticmethod
+    def flag(name):
         iterable = (HYPHEN_MINUS, name[:1])
         return str().join(iterable)
 
-    def name(self, name):
+    @staticmethod
+    def name(name):
         iterable = (HYPHEN_MINUS, HYPHEN_MINUS, name)
         return str().join(iterable)
 
-    def default(self, name, value):
+    @staticmethod
+    def default(name, value):
         values = load.argument(name)
 
         if value in values:
@@ -37,7 +40,8 @@ class Argument():
 
         return module
 
-    def region(self, args, exit_on_error):
+    @classmethod
+    def region(cls, args, exit_on_error):
 
         parser = argparse.ArgumentParser(
             add_help=False,
@@ -50,14 +54,14 @@ class Argument():
         )
 
         parser.add_argument(
-            self.flag(LANGUAGE),
-            self.name(LANGUAGE),
+            cls.flag(LANGUAGE),
+            cls.name(LANGUAGE),
         )
 
         (argument, _) = parser.parse_known_args(args)
 
         application = argument.application
-        language = self.default(LANGUAGE, argument.language)
+        language = cls.default(LANGUAGE, argument.language)
 
         return (application, language)
 
@@ -116,7 +120,7 @@ class Argument():
             help=language.ARGUMENT_PYTHON_HELP,
         )
 
-        load.module(APPLICATION, application).argument(self)
+        load.module(APPLICATION, application).add_argument(self)
 
         self.subparser = self.parser.add_argument(
             APPLICATION,

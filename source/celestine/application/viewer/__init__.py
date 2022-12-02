@@ -1,18 +1,18 @@
-DIRECTORY = "directory"
+import os
+
+from celestine.session.argument import Argument
+
+from .string import DIRECTORY
 
 
-def argument(argument):
+def add_argument(argument: Argument) -> None:
     argument.parser.add_argument(
         argument.flag(DIRECTORY),
         argument.name(DIRECTORY),
     )
 
-    return argument
 
-
-def attribute():
-    return []
-
-
-def default():
-    return []
+def attribute() -> None:
+    return {
+        DIRECTORY: os.getcwd(),
+    }
