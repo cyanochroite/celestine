@@ -1,6 +1,6 @@
-from celestine.string.unicode import CARRIAGE_RETURN
-from celestine.string.unicode import LINE_FEED
-from celestine.string.unicode import NONE
+from celestine.text.unicode import CARRIAGE_RETURN
+from celestine.text.unicode import LINE_FEED
+from celestine.text.unicode import NONE
 
 
 FILE_NAME_EXTENSION = ".py"

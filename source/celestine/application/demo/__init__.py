@@ -4,7 +4,7 @@
 DIRECTORY = "directory"
 
 
-def argument(argument):
+def add_argument(argument):
     """Build up the argument."""
     argument.parser.add_argument(
         argument.flag(DIRECTORY),

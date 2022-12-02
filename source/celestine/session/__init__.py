@@ -5,12 +5,12 @@ from celestine.session.attribute import Attribute
 from celestine.session import load
 
 
-from celestine.string.all import APPLICATION
-from celestine.string.all import CELESTINE
+from celestine.text.all import APPLICATION
+from celestine.text.all import CELESTINE
 
-from celestine.string.all import INTERFACE
-from celestine.string.all import LANGUAGE
-from celestine.string.all import PYTHON
+from celestine.text.all import INTERFACE
+from celestine.text.all import LANGUAGE
+from celestine.text.all import PYTHON
 
 
 TERMINAL = "terminal"

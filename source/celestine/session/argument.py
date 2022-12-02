@@ -1,17 +1,17 @@
 import argparse
 
-from celestine.string.all import APPLICATION
-from celestine.string.all import CELESTINE
-from celestine.string.all import DEFAULT
-from celestine.string.all import HELP
-from celestine.string.all import INTERFACE
-from celestine.string.all import LANGUAGE
-from celestine.string.all import PYTHON
-from celestine.string.all import VERSION
-from celestine.string.all import VERSION_NUMBER
+from celestine.text.all import APPLICATION
+from celestine.text.all import CELESTINE
+from celestine.text.all import DEFAULT
+from celestine.text.all import HELP
+from celestine.text.all import INTERFACE
+from celestine.text.all import LANGUAGE
+from celestine.text.all import PYTHON
+from celestine.text.all import VERSION
+from celestine.text.all import VERSION_NUMBER
 
-from celestine.string.unicode import HYPHEN_MINUS
-from celestine.string.unicode import QUESTION_MARK
+from celestine.text.unicode import HYPHEN_MINUS
+from celestine.text.unicode import QUESTION_MARK
 
 from celestine.session import load
 

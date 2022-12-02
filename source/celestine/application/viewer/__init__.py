@@ -2,7 +2,7 @@ import os
 
 from celestine.session.argument import Argument
 
-from .string import DIRECTORY
+from .text import DIRECTORY
 
 
 def add_argument(argument: Argument) -> None:
@@ -16,3 +16,14 @@ def attribute() -> None:
     return {
         DIRECTORY: os.getcwd(),
     }
+
+
+def default():
+    """Build up the default file."""
+    return ["main"]
+
+
+def attribute():
+    """Build up the attribute file."""
+    return ["task"]
+

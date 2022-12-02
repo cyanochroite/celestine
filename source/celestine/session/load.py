@@ -2,13 +2,13 @@
 import os.path
 import sys
 
-from celestine.string.unicode import FULL_STOP
-from celestine.string.unicode import LOW_LINE
+from celestine.text.unicode import FULL_STOP
+from celestine.text.unicode import LOW_LINE
 
-from celestine.string.all import CELESTINE
+from celestine.text.all import CELESTINE
 
-from celestine.string.stream import FILE_NAME_EXTENSION
-from celestine.string.unicode import NONE
+from celestine.text.stream import FILE_NAME_EXTENSION
+from celestine.text.unicode import NONE
 
 
 def attempt(name):

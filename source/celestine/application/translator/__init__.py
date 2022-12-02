@@ -1,18 +1,18 @@
 """Application for translating text to other languages."""
 
-from celestine.string.all import LANGUAGE
+from celestine.text.all import LANGUAGE
 
-from .string import NONE
+from .text import NONE
 
-from .string import KEY
-from .string import REGION
-from .string import URL
+from .text import KEY
+from .text import REGION
+from .text import URL
 
-from .string import CONFIGURE
-from .string import REPORT
-from .string import TRANSLATE
+from .text import CONFIGURE
+from .text import REPORT
+from .text import TRANSLATE
 
-from .string import STORE
+from .text import STORE
 
 
 def argument(arguments):
