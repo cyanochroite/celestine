@@ -147,6 +147,17 @@ Blender’s Python API is an integral part of the software, used to define the u
 
 
 
+
+All addons and plugins, skins, textures, whatever, should also be free.
+
+No:
+DLC, micro transactions, premium, patron, special stuff, ads,
+clickbait, promotions, donations, NFTs.
+
+Way to many people and games do this and its super annoying.
+This is free for everyone, hopefully forever. Lets keep it that way.
+
+
 Custom Install
 ^^^^^^^^^^^^^^
 Choose which packages to use.

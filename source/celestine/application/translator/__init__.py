@@ -1,5 +1,4 @@
 """Application for translating text to other languages."""
-import typing
 
 from celestine.session.argument import Argument
 
@@ -9,37 +8,29 @@ from .text import KEY
 from .text import REGION
 from .text import URL
 
-from .text import STORE
 
-
-def add_argument(argument: Argument) -> None:
+def add_argument(
+    argument: Argument
+) -> None:
     """Build up the argument."""
-    argument.parser.add_argument(
-        argument.flag(KEY),
-        argument.name(KEY),
-        action=STORE,
-        help="A brief description of what the argument does.",
+
+    argument.add_argument(
+        default=NONE,
+        description="",
+        name=KEY,
+        required=False,
     )
 
-    argument.parser.add_argument(
-        argument.flag(REGION),
-        argument.name(REGION),
-        action=STORE,
-        help="A brief description of what the argument does.",
+    argument.add_argument(
+        default=NONE,
+        description="",
+        name=REGION,
+        required=False,
     )
 
-    argument.parser.add_argument(
-        argument.flag(URL),
-        argument.name(URL),
-        action=STORE,
-        help="A brief description of what the argument does.",
+    argument.add_argument(
+        default=NONE,
+        description="",
+        name=URL,
+        required=False,
     )
-
-
-def attribute() -> typing.Dict[str, str]:
-    return {
-        KEY: NONE,
-        REGION: NONE,
-        URL: NONE,
-    }
-

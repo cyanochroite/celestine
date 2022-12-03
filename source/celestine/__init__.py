@@ -1,3 +1,5 @@
+""""""
+
 from celestine.session import load
 from celestine.session import Session
 
@@ -21,25 +23,33 @@ bl_info = {
 }
 
 
-def register() -> None:
+def register(
+) -> None:
     """
-    This is a function which only runs when enabling the add-on, this means the
-    module can be loaded without activating the add-on.
+    This is a function which only runs when enabling the add-on, this
+    means the module can be loaded without activating the add-on.
     """
+
     load.module(PACKAGE, BLENDER, MAIN).register()
     main([BLENDER, MAIN], False)
 
 
-def unregister() -> None:
+def unregister(
+) -> None:
     """
-    This is a function to unload anything setup by register, this is called
-    when the add-on is disabled.
+    This is a function to unload anything setup by register, this is
+    called when the add-on is disabled.
     """
+
     load.module(PACKAGE, BLENDER, MAIN).unregister()
 
 
-def main(argv: list[str], exit_on_error: bool) -> None:
+def main(
+    argv: list[str],
+    exit_on_error: bool
+) -> None:
     """Run the main program."""
+
     session = Session(argv, exit_on_error)
     with session.interface.window(session) as window:
         for document in session.task.main(session):

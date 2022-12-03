@@ -1,4 +1,8 @@
+""""""
+
 import argparse
+import types
+import typing
 
 from celestine.text.all import APPLICATION
 from celestine.text.all import CELESTINE
@@ -19,18 +23,33 @@ TASK = "task"
 
 
 class Argument():
+    """"""
+
     @staticmethod
-    def flag(name):
+    def flag(
+        name: str
+    ) -> str:
+        """"""
+
         iterable = (HYPHEN_MINUS, name[:1])
         return str().join(iterable)
 
     @staticmethod
-    def name(name):
+    def name(
+        name: str
+    ) -> str:
+        """"""
+
         iterable = (HYPHEN_MINUS, HYPHEN_MINUS, name)
         return str().join(iterable)
 
     @staticmethod
-    def default(name, value):
+    def default(
+        name: str,
+        value: str
+    ) -> types.ModuleType:
+        """"""
+
         values = load.argument(name)
 
         if value in values:
@@ -41,7 +60,12 @@ class Argument():
         return module
 
     @classmethod
-    def region(cls, args, exit_on_error):
+    def region(
+        cls,
+        args: list[str],
+        exit_on_error: bool
+    ) -> typing.Tuple[str, types.ModuleType]:
+        """"""
 
         parser = argparse.ArgumentParser(
             add_help=False,
@@ -60,12 +84,20 @@ class Argument():
 
         (argument, _) = parser.parse_known_args(args)
 
-        application = argument.application
+        application = str(argument.application)
         language = cls.default(LANGUAGE, argument.language)
 
         return (application, language)
 
-    def __init__(self, args, exit_on_error):
+    def __init__(
+        self,
+        args: list[str],
+        exit_on_error: bool
+    ) -> None:
+        """"""
+
+        self.dictionary: typing.Dict[str, str] = {}
+
         (application, language) = self.region(args, exit_on_error)
 
         self.parser = argparse.ArgumentParser(
@@ -135,3 +167,26 @@ class Argument():
             help="Choose an applicanion. They have more option.",
             nargs=QUESTION_MARK,
         )
+
+    def add_argument(
+        self,
+        default: str,
+        description: str,
+        name: str,
+        required: bool,
+    ) -> None:
+        """"""
+
+        self.dictionary[name] = default
+
+        if required:
+            self.parser.add_argument(
+                name,
+                help=description,
+            )
+        else:
+            self.parser.add_argument(
+                self.flag(name),
+                self.name(name),
+                help=description,
+            )
