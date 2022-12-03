@@ -1,4 +1,5 @@
 import os
+import typing
 
 from celestine.session.argument import Argument
 
@@ -12,18 +13,8 @@ def add_argument(argument: Argument) -> None:
     )
 
 
-def attribute() -> None:
+def attribute() -> typing.Dict[str, str]:
     return {
         DIRECTORY: os.getcwd(),
     }
-
-
-def default():
-    """Build up the default file."""
-    return ["main"]
-
-
-def attribute():
-    """Build up the attribute file."""
-    return ["task"]
 

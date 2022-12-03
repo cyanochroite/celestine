@@ -1,12 +1,18 @@
+import typing
 import dataclasses
 import sys
 
+from celestine.session.argument import Argument
 from celestine.session.configuration import Configuration
 
 
 @dataclasses.dataclass
 class Attribute():
-    def __init__(self, argument, attribute, default):
+    def __init__(
+        self,
+        argument: Argument,
+        attribute: typing.Dict[str, str],
+    ):
         self.application = None
         self.interface = None
         self.language = None
@@ -18,7 +24,7 @@ class Attribute():
 
         configuration = Configuration.make(directory)
 
-        for (name, failover) in zip(attribute, default, strict=True):
+        for (name, failover) in attribute.items():
             database = configuration.get(section, name, fallback=None)
             override = getattr(argument, name, None)
             value = override or database or failover

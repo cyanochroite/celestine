@@ -13,7 +13,7 @@ bl_info = {
     "version": (0, 4, 0),
     "blender": (3, 0, 0),
     "location": "View 3D > Sidebar > Viewer",
-    "warning": "Does not work. Work in progress. Not ready for publication.",
+    "warning": "Not all features have been implemented yet.",
     "wiki_url": "https://celestine.readthedocs.io/en/latest/",
     "tracker_url": "https://github.com/mem-dixy/celestine/",
     "support": "COMMUNITY",

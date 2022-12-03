@@ -1,14 +1,13 @@
-def argument(arguments):
-    return arguments
+import typing
+
+from celestine.session.argument import Argument
 
 
-def attribute():
-    return []
+def add_argument(_: Argument) -> None:
+    pass
 
 
-def default():
-    return []
+def attribute() -> typing.Dict[str, str]:
+    return {
+    }
 
-
-def image_format():
-    return []

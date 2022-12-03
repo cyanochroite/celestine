@@ -1,25 +1,13 @@
-"""Load and save user settings from a file."""
+import typing
+
+from celestine.session.argument import Argument
 
 
-DIRECTORY = "directory"
+def add_argument(_: Argument) -> None:
+    pass
 
 
-def add_argument(argument):
-    """Build up the argument."""
-    argument.parser.add_argument(
-        argument.flag(DIRECTORY),
-        argument.name(DIRECTORY),
-    )
-
-    return argument
-
-
-def default():
-    """Build up the default file."""
-    return ["main"]
-
-
-def attribute():
-    """Build up the attribute file."""
-    return ["task"]
+def attribute() -> typing.Dict[str, str]:
+    return {
+    }
 

@@ -6,7 +6,6 @@ from celestine.session import load
 
 
 from celestine.text.all import APPLICATION
-from celestine.text.all import CELESTINE
 
 from celestine.text.all import INTERFACE
 from celestine.text.all import LANGUAGE
@@ -24,34 +23,25 @@ TASK = "task"
 
 
 class Session():
-    def __init__(self, args, exit_on_error):
+    def __init__(self, args: list[str], exit_on_error: bool) -> None:
         argument = Argument(args, exit_on_error)
 
-        default = [
-            load.argument_default(APPLICATION),
-            load.argument_default(INTERFACE),
-            EN,
-            load.argument_default(PYTHON),
-            "main"
-        ]
-        attribute = [
-            APPLICATION,
-            INTERFACE,
-            LANGUAGE,
-            PYTHON,
-            "task",
-        ]
+        attribute = {
+            APPLICATION: load.argument_default(APPLICATION),
+            INTERFACE: load.argument_default(INTERFACE),
+            LANGUAGE: EN,
+            PYTHON: load.argument_default(PYTHON),
+            "task": "main",
+        }
 
         applications = load.argument(APPLICATION)
         for application in applications:
             module = load.module(APPLICATION, application)
-            attribute.extend(module.attribute())
-            default.extend(module.default())
+            attribute |= module.attribute()
 
         self.attribute = Attribute(
             argument.parser.parse_args(args),
             attribute,
-            default,
         )
 
         self.application = load.module(

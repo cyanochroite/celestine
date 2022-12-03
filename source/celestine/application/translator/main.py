@@ -1,9 +1,9 @@
 """Application for translating text to other languages."""
 from celestine.application.translator.file import save
-from celestine.application.translator.string import LANGUAGE
+from celestine.application.translator.text import LANGUAGE
 from celestine.application.translator.parser import dictionary_to_file
 from .report import main as train
-from .string import LANGUAGE
+from .text import LANGUAGE
 
 import uuid
 import os.path
@@ -14,8 +14,8 @@ from celestine.session import load
 from celestine.application.translator.translator import Translator
 
 
-from .string import WRITE
-from .string import UTF_8
+from .text import WRITE
+from .text import UTF_8
 
 from celestine.application.translator.parser import word_wrap_dictionary
 
@@ -137,8 +137,8 @@ def main(session):
     dictionary = parser_magic(session)
 
     # directory stuff
-    # reset()
-    # header()
+    reset()
+    header()
 
     save_item(dictionary)
 
