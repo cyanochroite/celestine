@@ -26,22 +26,9 @@ class Session():
     def __init__(self, args: list[str], exit_on_error: bool) -> None:
         argument = Argument(args, exit_on_error)
 
-        attribute = {
-            APPLICATION: load.argument_default(APPLICATION),
-            INTERFACE: load.argument_default(INTERFACE),
-            LANGUAGE: EN,
-            PYTHON: load.argument_default(PYTHON),
-            "task": "main",
-        }
-
-        applications = load.argument(APPLICATION)
-        for application in applications:
-            module = load.module(APPLICATION, application)
-            attribute |= module.attribute()
-
         self.attribute = Attribute(
-            argument.parser.parse_args(args),
-            attribute,
+            argument,
+            args,
         )
 
         self.application = load.module(

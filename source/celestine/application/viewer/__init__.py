@@ -12,10 +12,9 @@ def add_argument(
 ) -> None:
     """"""
 
-    argument.add_argument(
-        default=os.getcwd(),
-        description="",
-        name=DIRECTORY,
-        required=False,
+    argument.add_optional(
+        DIRECTORY,
+        "",
+        os.getcwd(),
     )
 

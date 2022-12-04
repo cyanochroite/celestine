@@ -14,10 +14,7 @@ def execute(session, directory):
 
 
 def setup(window):
-    # directory = window.session.directory
-    directory = "D:\\file\\"
-    directory = "D:\\todo\\"
-    directory = "D:\\grid\\"
+    directory = window.session.attribute.directory
     image = execute(window.session, directory)
     return image
 

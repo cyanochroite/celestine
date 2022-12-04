@@ -14,23 +14,20 @@ def add_argument(
 ) -> None:
     """Build up the argument."""
 
-    argument.add_argument(
-        default=NONE,
-        description="",
-        name=KEY,
-        required=False,
+    argument.add_optional(
+        KEY,
+        "",
+        NONE,
     )
 
-    argument.add_argument(
-        default=NONE,
-        description="",
-        name=REGION,
-        required=False,
+    argument.add_optional(
+        REGION,
+        "",
+        NONE,
     )
 
-    argument.add_argument(
-        default=NONE,
-        description="",
-        name=URL,
-        required=False,
+    argument.add_optional(
+        URL,
+        "",
+        NONE,
     )

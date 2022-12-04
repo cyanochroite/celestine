@@ -106,19 +106,34 @@ class Argument():
             exit_on_error=exit_on_error,
         )
 
-        information = self.parser.add_argument_group(
+        self.information = self.parser.add_argument_group(
             title=language.ARGUMENT_INFORMATION_TITLE,
             description=language.ARGUMENT_INFORMATION_DESCRIPTION,
         )
 
-        information.add_argument(
+        self.override = self.parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE,
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
+        )
+
+        self.positional = self.parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
+            description =language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+        )
+
+        self.optional = self.parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
+            description =language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+        )
+
+        self.information.add_argument(
             self.flag(HELP),
             self.name(HELP),
             action=HELP,
             help=language.ARGUMENT_HELP_HELP,
         )
 
-        information.add_argument(
+        self.information.add_argument(
             self.flag(VERSION),
             self.name(VERSION),
             action=VERSION,
@@ -126,67 +141,80 @@ class Argument():
             version=VERSION_NUMBER,
         )
 
-        override = self.parser.add_argument_group(
-            title=language.ARGUMENT_OVERRIDE_TITLE,
-            description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
-        )
-
-        override.add_argument(
+        self.override.add_argument(
             self.flag(INTERFACE),
             self.name(INTERFACE),
             choices=load.argument(INTERFACE),
             help=language.ARGUMENT_INTERFACE_HELP,
         )
 
-        override.add_argument(
+        self.override.add_argument(
             self.flag(LANGUAGE),
             self.name(LANGUAGE),
             choices=load.argument(LANGUAGE),
             help=language.ARGUMENT_LANGUAGE_HELP,
         )
 
-        override.add_argument(
+        self.override.add_argument(
             self.flag(PYTHON),
             self.name(PYTHON),
             choices=load.argument(PYTHON),
             help=language.ARGUMENT_PYTHON_HELP,
         )
 
+        self.add_positional(
+            APPLICATION,
+            "Choose an applicanion. They have more option.",
+            load.argument_default(APPLICATION),
+            load.argument(APPLICATION),
+        )
+
+        self.add_positional(
+            TASK,
+            "Choose an applicanion. They have more option.",
+            "main",
+            load.argument(APPLICATION, application),
+        )
+
         load.module(APPLICATION, application).add_argument(self)
 
-        self.subparser = self.parser.add_argument(
-            APPLICATION,
-            choices=load.argument(APPLICATION),
-            help="Choose an applicanion. They have more option.",
-            nargs=QUESTION_MARK,
-        )
-
-        self.subparser = self.parser.add_argument(
-            TASK,
-            choices=load.argument(APPLICATION, application),
-            help="Choose an applicanion. They have more option.",
-            nargs=QUESTION_MARK,
-        )
-
-    def add_argument(
+    def add_positional(
         self,
-        default: str,
-        description: str,
         name: str,
-        required: bool,
+        description: str,
+        default: str,
+        choice: list[str],
     ) -> None:
         """"""
 
         self.dictionary[name] = default
 
-        if required:
-            self.parser.add_argument(
-                name,
-                help=description,
-            )
-        else:
-            self.parser.add_argument(
-                self.flag(name),
-                self.name(name),
-                help=description,
-            )
+        self.positional.add_argument(
+            name,
+            choices=choice,
+            help=description,
+            nargs=QUESTION_MARK,
+        )
+
+    def add_optional(
+        self,
+        name: str,
+        description: str,
+        default: str,
+    ) -> None:
+        """"""
+
+        self.dictionary[name] = default
+
+        self.optional.add_argument(
+            self.flag(name),
+            self.name(name),
+            help=description,
+        )
+
+    def get_argument(
+        self,
+    ) -> typing.Dict[str, str]:
+        """"""
+
+        return self.dictionary
