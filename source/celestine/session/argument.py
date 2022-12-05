@@ -4,22 +4,24 @@ import argparse
 import types
 import typing
 
-from celestine.text.all import APPLICATION
-from celestine.text.all import CELESTINE
-from celestine.text.all import DEFAULT
-from celestine.text.all import HELP
-from celestine.text.all import INTERFACE
-from celestine.text.all import LANGUAGE
-from celestine.text.all import PYTHON
-from celestine.text.all import VERSION
-from celestine.text.all import VERSION_NUMBER
+from celestine.session import load
+
+from celestine.text import CELESTINE
+from celestine.text import VERSION_NUMBER
+
+from celestine.text.directory import APPLICATION
+from celestine.text.directory import DEFAULT
+from celestine.text.directory import INTERFACE
+from celestine.text.directory import LANGUAGE
+from celestine.text.directory import PYTHON
+
+from celestine.text.session import HELP
+from celestine.text.session import TASK
+from celestine.text.session import VERSION
+
 
 from celestine.text.unicode import HYPHEN_MINUS
 from celestine.text.unicode import QUESTION_MARK
-
-from celestine.session import load
-
-TASK = "task"
 
 
 class Argument():
@@ -84,8 +86,14 @@ class Argument():
 
         (argument, _) = parser.parse_known_args(args)
 
-        application = str(argument.application)
-        language = cls.default(LANGUAGE, argument.language)
+        default_application = load.argument_default(APPLICATION)
+        default_language = load.argument_default(LANGUAGE)
+
+        application = argument.application or default_application
+        language = argument.language or default_language
+        print("language default is weird")
+
+        language = load.module(LANGUAGE, language)
 
         return (application, language)
 

@@ -1,7 +1,8 @@
 import configparser
 import os
 
-from celestine.text.all import CELESTINE
+from celestine.text import CELESTINE
+
 from celestine.text.session import CONFIGURATION
 from celestine.text.session import WRITE
 from celestine.text.session import UTF_8

@@ -1,3 +1,11 @@
+"""Keywords used throughout the application."""
+
+HELP = "help"
+TASK = "task"
+VERSION = "version"
+
+#
+
 CONFIGURATION = "celestine.ini"
 READ = "rt"
 WRITE = "wt"

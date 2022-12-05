@@ -8,8 +8,6 @@ from celestine.session.configuration import Configuration
 from celestine.session import load
 
 
-from celestine.text.all import APPLICATION
-
 TERMINAL = "terminal"
 ENGLISH = "english"
 PYTHON_3_10 = "python_3_10"

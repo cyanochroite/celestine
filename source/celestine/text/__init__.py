@@ -1,1 +1,6 @@
+""""""
 
+CELESTINE = "celestine"
+VERSION_BLENDER = (3, 0, 0)
+VERSION_CELESTINE = (0, 4, 0)
+VERSION_NUMBER = "0.4.0"

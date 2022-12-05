@@ -1,7 +1,4 @@
-from celestine.text.unicode import CARRIAGE_RETURN
-from celestine.text.unicode import LINE_FEED
-from celestine.text.unicode import NONE
-
+""""""
 
 FILE_NAME_EXTENSION = ".py"
 
@@ -38,8 +35,8 @@ WRITE_BINARY = "wb"
 WRITE_TEXT = "wt"
 
 # newline
-APPLE = LINE_FEED  # \n
-COMMODORE = CARRIAGE_RETURN  # \r
-MICROSOFT = CARRIAGE_RETURN + LINE_FEED  # \r\n
+APPLE = "\n"
+COMMODORE = "\r"
+MICROSOFT = "\r\n"
 UNIVERSAL = None
-UNTRANSLATED = NONE  # ""
+UNTRANSLATED = ""

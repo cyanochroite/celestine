@@ -69,19 +69,3 @@ class celestine_unregister(bpy.types.Operator):
         content.ready = False
         data.unregister()
         return {'FINISHED'}
-
-
-def register():
-    bpy.utils.register_class(celestine_unregister)
-    preferences.register()
-    bpy.utils.register_class(celestine_main)
-    bpy.utils.register_class(celestine_click)
-    bpy.utils.register_class(celestine_register)
-
-
-def unregister():
-    bpy.utils.unregister_class(celestine_register)
-    bpy.utils.unregister_class(celestine_click)
-    bpy.utils.unregister_class(celestine_main)
-    preferences.unregister()
-    bpy.utils.unregister_class(celestine_unregister)
