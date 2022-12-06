@@ -1,3 +1,5 @@
+""""""
+
 import dataclasses
 import sys
 import typing
@@ -5,29 +7,17 @@ import typing
 from celestine.session.argument import Argument
 from celestine.session.configuration import Configuration
 
-from celestine.session import load
-
-
-TERMINAL = "terminal"
-ENGLISH = "english"
-PYTHON_3_10 = "python_3_10"
-CONFIGURE = "configure"
-STORE = "store"
-TKINTER = "tkinter"
-EN = "en"
-TASK = "task"
-INTERFACE = "interface"
-LANGUAGE = "language"
-PYTHON = "python"
-
 
 @dataclasses.dataclass
 class Attribute():
+    """"""
+
     def __init__(
         self,
         arguments: Argument,
         args: list[str],
     ):
+        """"""
 
         argument = arguments.parser.parse_args(args)
 
@@ -40,7 +30,7 @@ class Attribute():
         directory = sys.path[0]
         application = arguments.application
 
-        attribute: typing.Dict[str, str] = arguments.get_argument()
+        attribute: typing.Dict[str, str] = arguments.dictionary
 
         configuration = Configuration.make(directory)
 

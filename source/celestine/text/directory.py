@@ -1,7 +1,7 @@
 """"""
 
 APPLICATION = "application"
-DEFAULT = "default"
+DEFAULT = "default"  # unused?
 INTERFACE = "interface"
 LANGUAGE = "language"
 PYTHON = "python"

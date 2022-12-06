@@ -47,8 +47,7 @@ class Session():
             PYTHON,
             self.attribute.python,
         )
-        self.task = load.module(
-            APPLICATION,
-            self.attribute.application,
+        self.task = getattr(
+            self.application,
             self.attribute.task,
         )

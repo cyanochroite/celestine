@@ -41,6 +41,18 @@ def module(
     return file
 
 
+def module_fallback(
+    *path: str
+) -> types.ModuleType:
+    """
+    Load an internal module from anywhere in the application.
+    If the last item is none then load the package instead.
+    """
+
+    iterable = [*path]
+    return module(*path) if iterable.pop(-1) else module(*iterable)
+
+
 def dictionary(
     *path: str
 ) -> typing.Dict[str, str]:

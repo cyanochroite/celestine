@@ -11,7 +11,6 @@ from celestine.text import CELESTINE
 from celestine.text import VERSION_NUMBER
 
 from celestine.text.directory import APPLICATION
-from celestine.text.directory import DEFAULT
 from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 from celestine.text.directory import PYTHON
@@ -80,8 +79,8 @@ class Argument():
             load.argument_default(APPLICATION)
         )
 
-        application = argument.application or VIEWER
-        language = load.module(LANGUAGE, argument.language or EN)
+        application = argument.application
+        language = load.module_fallback(LANGUAGE, argument.language)
 
         return (application, language)
 
