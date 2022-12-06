@@ -4,6 +4,7 @@ import argparse
 import types
 import typing
 
+
 from celestine.session import load
 
 from celestine.text import CELESTINE
@@ -22,6 +23,9 @@ from celestine.text.session import VERSION
 
 from celestine.text.unicode import HYPHEN_MINUS
 from celestine.text.unicode import QUESTION_MARK
+
+EN = "en"
+VIEWER = "viewer"
 
 
 class Argument():
@@ -45,24 +49,8 @@ class Argument():
         iterable = (HYPHEN_MINUS, HYPHEN_MINUS, name)
         return str().join(iterable)
 
-    @staticmethod
-    def default(
-        name: str,
-        value: str
-    ) -> types.ModuleType:
-        """"""
-
-        values = load.argument(name)
-
-        if value in values:
-            module = load.module(name, value)
-        else:
-            module = load.module(DEFAULT, name)
-
-        return module
-
     @classmethod
-    def region(
+    def essential(
         cls,
         args: list[str],
         exit_on_error: bool
@@ -86,14 +74,14 @@ class Argument():
 
         (argument, _) = parser.parse_known_args(args)
 
-        default_application = load.argument_default(APPLICATION)
-        default_language = load.argument_default(LANGUAGE)
+        application = getattr(
+            argument,
+            APPLICATION,
+            load.argument_default(APPLICATION)
+        )
 
-        application = argument.application or default_application
-        language = argument.language or default_language
-        print("language default is weird")
-
-        language = load.module(LANGUAGE, language)
+        application = argument.application or VIEWER
+        language = load.module(LANGUAGE, argument.language or EN)
 
         return (application, language)
 
@@ -104,10 +92,10 @@ class Argument():
     ) -> None:
         """"""
 
+        (application, language) = self.essential(args, exit_on_error)
+
+        self.application = application
         self.dictionary: typing.Dict[str, str] = {}
-
-        (application, language) = self.region(args, exit_on_error)
-
         self.parser = argparse.ArgumentParser(
             add_help=False,
             prog=CELESTINE,
@@ -126,12 +114,12 @@ class Argument():
 
         self.positional = self.parser.add_argument_group(
             title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-            description =language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
         )
 
         self.optional = self.parser.add_argument_group(
             title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-            description =language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
         )
 
         self.information.add_argument(
@@ -149,25 +137,25 @@ class Argument():
             version=VERSION_NUMBER,
         )
 
-        self.override.add_argument(
-            self.flag(INTERFACE),
-            self.name(INTERFACE),
-            choices=load.argument(INTERFACE),
-            help=language.ARGUMENT_INTERFACE_HELP,
+        self.add_override(
+            INTERFACE,
+            language.ARGUMENT_INTERFACE_HELP,
+            load.argument_default(INTERFACE),
+            load.argument(INTERFACE),
         )
 
-        self.override.add_argument(
-            self.flag(LANGUAGE),
-            self.name(LANGUAGE),
-            choices=load.argument(LANGUAGE),
-            help=language.ARGUMENT_LANGUAGE_HELP,
+        self.add_override(
+            LANGUAGE,
+            language.ARGUMENT_LANGUAGE_HELP,
+            EN,
+            load.argument(LANGUAGE),
         )
 
-        self.override.add_argument(
-            self.flag(PYTHON),
-            self.name(PYTHON),
-            choices=load.argument(PYTHON),
-            help=language.ARGUMENT_PYTHON_HELP,
+        self.add_override(
+            PYTHON,
+            language.ARGUMENT_PYTHON_HELP,
+            load.argument_default(PYTHON),
+            load.argument(PYTHON),
         )
 
         self.add_positional(
@@ -220,9 +208,20 @@ class Argument():
             help=description,
         )
 
-    def get_argument(
+    def add_override(
         self,
-    ) -> typing.Dict[str, str]:
+        name: str,
+        description: str,
+        default: str,
+        choice: list[str],
+    ) -> None:
         """"""
 
-        return self.dictionary
+        self.dictionary[name] = default
+
+        self.override.add_argument(
+            self.flag(name),
+            self.name(name),
+            choices=choice,
+            help=description,
+        )

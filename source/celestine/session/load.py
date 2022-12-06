@@ -1,4 +1,8 @@
 """Central place for loading and importing external files."""
+
+import types
+import typing
+
 import os.path
 import sys
 
@@ -11,8 +15,11 @@ from celestine.text.stream import FILE_NAME_EXTENSION
 from celestine.text.unicode import NONE
 
 
-def attempt(name):
+def attempt(
+    name: str
+) -> bool:
     """Attempt to load a package and return the result."""
+
     try:
         __import__(name)
         return True
@@ -21,8 +28,11 @@ def attempt(name):
     return False
 
 
-def module(*path):
+def module(
+    *path: str
+) -> types.ModuleType:
     """Load an internal module from anywhere in the application."""
+
     iterable = [CELESTINE, *path]
     name = FULL_STOP.join(iterable)
     file = __import__(name)
@@ -31,10 +41,14 @@ def module(*path):
     return file
 
 
-def dictionary(_module):
+def dictionary(
+    *path: str
+) -> typing.Dict[str, str]:
     """
     Load from module all key value pairs and turn them into dictionary.
     """
+
+    _module = module(*path)
     _dictionary = vars(_module)
     mapping = {
         key: value
@@ -45,20 +59,32 @@ def dictionary(_module):
     return mapping
 
 
-def pathway(*path):
+def pathway(
+    *path: str
+) -> str:
+    """"""
+
     return os.path.join(sys.path[0], CELESTINE, *path)
 
 
-def python(*path):
+def python(
+    *path: str
+) -> str:
+    """"""
+
     return NONE.join([pathway(*path), FILE_NAME_EXTENSION])
 
 
-def argument_default(path):
+def argument_default(
+    path: str
+) -> str:
+    """"""
+
     array = argument(path)
     result = None
     for item in array:
         try:
-            module(path, item)
+            _ = module(path, item)
             result = item
         except (SyntaxError, ModuleNotFoundError):
             pass
@@ -68,13 +94,16 @@ def argument_default(path):
     return result
 
 
-def argument(*path):
+def argument(
+    *path: str
+) -> list[str]:
     """
     Build a path to the selected package. Scan all items in directory.
     Return a list of items that are not private, such as '.private' or
     '_private'. (First letter is not a symbol.)
     Strip off all file extensions, if any.
     """
+
     directory = pathway(*path)
     folder = os.listdir(directory)
 

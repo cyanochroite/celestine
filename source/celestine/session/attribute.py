@@ -37,17 +37,10 @@ class Attribute():
         self.python = None
         self.task = None
 
-        attribute: typing.Dict[str, str]
-        attribute = {
-            INTERFACE: load.argument_default(INTERFACE),
-            LANGUAGE: EN,
-            PYTHON: load.argument_default(PYTHON),
-        }
-
         directory = sys.path[0]
-        application = argument.application
+        application = arguments.application
 
-        attribute |= arguments.get_argument()
+        attribute: typing.Dict[str, str] = arguments.get_argument()
 
         configuration = Configuration.make(directory)
 
