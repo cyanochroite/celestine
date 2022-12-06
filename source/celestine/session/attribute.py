@@ -12,25 +12,25 @@ from celestine.session.configuration import Configuration
 class Attribute():
     """"""
 
+    application: str
+    interface: str
+    language: str
+    main: str
+    python: str
+
     def __init__(
         self,
-        arguments: Argument,
+        argument: Argument,
         args: list[str],
     ):
         """"""
 
-        argument = arguments.parser.parse_args(args)
-
-        self.application = None
-        self.interface = None
-        self.language = None
-        self.python = None
-        self.task = None
+        parse_args = argument.parser.parse_args(args)
 
         directory = sys.path[0]
-        application = arguments.application
+        application = argument.application
 
-        attribute: typing.Dict[str, str] = arguments.dictionary
+        attribute: typing.Dict[str, str] = argument.dictionary
 
         configuration = Configuration.make(directory)
 
@@ -40,6 +40,6 @@ class Attribute():
                 name,
                 fallback=None,
             )
-            override = getattr(argument, name, None)
+            override = getattr(parse_args, name, None)
             value = override or database or failover
             setattr(self, name, value)

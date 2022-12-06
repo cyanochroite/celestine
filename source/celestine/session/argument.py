@@ -16,7 +16,6 @@ from celestine.text.directory import LANGUAGE
 from celestine.text.directory import PYTHON
 
 from celestine.text.session import HELP
-from celestine.text.session import TASK
 from celestine.text.session import VERSION
 
 
@@ -25,6 +24,7 @@ from celestine.text.unicode import QUESTION_MARK
 
 EN = "en"
 VIEWER = "viewer"
+MAIN = "main"
 
 
 class Argument():
@@ -34,16 +34,16 @@ class Argument():
     def flag(
         name: str
     ) -> str:
-        """"""
+        """name = -n"""
 
-        iterable = (HYPHEN_MINUS, name[:1])
+        iterable = (HYPHEN_MINUS, name[0])
         return str().join(iterable)
 
     @staticmethod
     def name(
         name: str
     ) -> str:
-        """"""
+        """name = --name"""
 
         iterable = (HYPHEN_MINUS, HYPHEN_MINUS, name)
         return str().join(iterable)
@@ -165,10 +165,11 @@ class Argument():
         )
 
         self.add_positional(
-            TASK,
+            MAIN,
             "Choose an applicanion. They have more option.",
-            "main",
-            load.argument(APPLICATION, application),
+            MAIN,
+            [MAIN],
+            #            load.argument(APPLICATION, application),
         )
 
         load.module(APPLICATION, application).add_argument(self)

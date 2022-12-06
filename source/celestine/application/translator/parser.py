@@ -3,41 +3,39 @@ import io
 import keyword
 
 
-from celestine.string.unicode import NONE
+from celestine.text.unicode import NONE
 
-from celestine.string.unicode import EQUALS_SIGN
-from celestine.string.unicode import LINE_FEED
-from celestine.string.unicode import QUOTATION_MARK
-from celestine.string.unicode import SPACE
-
-
-from celestine.string.unicode import FULL_STOP
-from celestine.string.unicode import QUESTION_MARK
-from celestine.string.unicode import EXCLAMATION_MARK
-from celestine.string.unicode import COMMA
-from celestine.string.unicode import SEMICOLON
-from celestine.string.unicode import COLON
-
-from celestine.string.unicode import APOSTROPHE
+from celestine.text.unicode import EQUALS_SIGN
+from celestine.text.unicode import LINE_FEED
+from celestine.text.unicode import QUOTATION_MARK
+from celestine.text.unicode import SPACE
 
 
-from celestine.string.unicode import CHARACTER_TABULATION
-from celestine.string.unicode import LINE_TABULATION
-from celestine.string.unicode import FORM_FEED
-from celestine.string.unicode import CARRIAGE_RETURN
+from celestine.text.unicode import FULL_STOP
+from celestine.text.unicode import QUESTION_MARK
+from celestine.text.unicode import EXCLAMATION_MARK
+from celestine.text.unicode import COMMA
+from celestine.text.unicode import SEMICOLON
+from celestine.text.unicode import COLON
 
 
-from celestine.string.unicode import INFORMATION_SEPARATOR_FOUR
-from celestine.string.unicode import INFORMATION_SEPARATOR_THREE
-from celestine.string.unicode import INFORMATION_SEPARATOR_TWO
+from celestine.text.unicode import CHARACTER_TABULATION
+from celestine.text.unicode import LINE_TABULATION
+from celestine.text.unicode import FORM_FEED
+from celestine.text.unicode import CARRIAGE_RETURN
 
-from celestine.string.unicode import BREAK_PERMITTED_HERE
-from celestine.string.unicode import REVERSE_SOLIDUS
 
-from celestine.string.unicode import NEXT_LINE
+from celestine.text.unicode import INFORMATION_SEPARATOR_FOUR
+from celestine.text.unicode import INFORMATION_SEPARATOR_THREE
+from celestine.text.unicode import INFORMATION_SEPARATOR_TWO
 
-from celestine.string.unicode import LINE_SEPARATOR
-from celestine.string.unicode import PARAGRAPH_SEPARATOR
+from celestine.text.unicode import BREAK_PERMITTED_HERE
+from celestine.text.unicode import REVERSE_SOLIDUS
+
+from celestine.text.unicode import NEXT_LINE
+
+from celestine.text.unicode import LINE_SEPARATOR
+from celestine.text.unicode import PARAGRAPH_SEPARATOR
 
 
 MAXIMUM_LINE_LENGTH = 72

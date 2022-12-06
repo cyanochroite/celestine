@@ -1,7 +1,6 @@
 """Keywords used throughout the application."""
 
 HELP = "help"
-TASK = "task"
 VERSION = "version"
 
 #

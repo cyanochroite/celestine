@@ -72,5 +72,5 @@ def main(
 
     session = Session(argv, exit_on_error)
     with session.interface.window(session) as window:
-        for document in session.task(session):
+        for document in session.main(session):
             window.page(document)

@@ -1,12 +1,14 @@
 """Celestine Image Viewer"""
 
+import types
+import typing
 import dataclasses
 
 from celestine.session.argument import Argument
 from celestine.session.attribute import Attribute
+from celestine.window.page import Page
 
 from celestine.session import load
-
 
 from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
@@ -18,6 +20,15 @@ from celestine.text.directory import PYTHON
 class Session():
     """"""
 
+    attribute: Attribute
+
+    application: types.ModuleType
+    interface: types.ModuleType
+    language: types.ModuleType
+    python: types.ModuleType
+
+    main: list[typing.Callable[[Page], None]]
+
     def __init__(
         self,
         args: list[str],
@@ -25,12 +36,11 @@ class Session():
     ) -> None:
         """"""
 
-        argument = Argument(args, exit_on_error)
-
         self.attribute = Attribute(
-            argument,
+            Argument(args, exit_on_error),
             args,
         )
+
         self.application = load.module(
             APPLICATION,
             self.attribute.application,
@@ -47,7 +57,10 @@ class Session():
             PYTHON,
             self.attribute.python,
         )
-        self.task = getattr(
+
+        self.main = getattr(
             self.application,
-            self.attribute.task,
+            self.attribute.main,
         )
+
+
