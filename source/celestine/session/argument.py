@@ -13,7 +13,6 @@ from celestine.text import VERSION_NUMBER
 from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
-from celestine.text.directory import PYTHON
 
 from celestine.text.session import HELP
 from celestine.text.session import VERSION
@@ -148,13 +147,6 @@ class Argument():
             language.ARGUMENT_LANGUAGE_HELP,
             EN,
             load.argument(LANGUAGE),
-        )
-
-        self.add_override(
-            PYTHON,
-            language.ARGUMENT_PYTHON_HELP,
-            load.argument_default(PYTHON),
-            load.argument(PYTHON),
         )
 
         self.add_positional(

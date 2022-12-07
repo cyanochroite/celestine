@@ -98,7 +98,7 @@ def argument_default(
         try:
             _ = module(path, item)
             result = item
-        except (SyntaxError, ModuleNotFoundError):
+        except ModuleNotFoundError:
             pass
     if not result:
         message = F"Failed to load any package in '{path}' directory."

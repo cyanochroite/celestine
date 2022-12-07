@@ -13,7 +13,6 @@ from celestine.session import load
 from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
-from celestine.text.directory import PYTHON
 
 
 @dataclasses.dataclass
@@ -25,7 +24,6 @@ class Session():
     application: types.ModuleType
     interface: types.ModuleType
     language: types.ModuleType
-    python: types.ModuleType
 
     main: list[typing.Callable[[Page], None]]
 
@@ -52,10 +50,6 @@ class Session():
         self.language = load.module(
             LANGUAGE,
             self.attribute.language,
-        )
-        self.python = load.module(
-            PYTHON,
-            self.attribute.python,
         )
 
         self.main = getattr(
