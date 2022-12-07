@@ -1,6 +1,0 @@
-
-[dearpygui]
-dearpygui
-
-[windows]
-windows-curses

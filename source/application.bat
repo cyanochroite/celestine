@@ -1,4 +1,3 @@
-python viewer curses
-python viewer dearpygui
-python viewer tkinter
-python viewer pygame
+python celestine celestine
+python celestine demo
+python celestine viewer
