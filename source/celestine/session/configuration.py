@@ -1,36 +1,80 @@
-import configparser
-import os
+""""""
 
-from celestine.text import CELESTINE
+import configparser
 
 from celestine.text.session import CONFIGURATION
-from celestine.text.session import WRITE
-from celestine.text.session import UTF_8
+
+from celestine.text.stream import WRITE_TEXT
+from celestine.text.stream import UTF_8
+
+from celestine.session import load
+from celestine.text import CELESTINE
+
+from celestine.text.unicode import NONE
+
+import typing
 
 
 class Configuration():
     """parse configuration stuff."""
 
-    def __init__(self, directory):
-        self.directory = directory
-        self.path = os.path.join(directory, CELESTINE, CONFIGURATION)
+    def __init__(
+        self,
+    ) -> None:
+        """"""
 
-    def load(self, path=None):
+        self.path = load.pathway(CONFIGURATION)
+
+        defaults: typing.Mapping[str, str] = {}
+
+        self.configuration = configparser.ConfigParser(
+            defaults=defaults,
+            delimiters=("="),
+            comment_prefixes=("#"),
+            strict=True,
+            empty_lines_in_values=False,
+            default_section=CELESTINE,
+        )
+
+    def load(
+        self,
+    ) -> None:
         """Load the configuration file."""
-        configuration = configparser.ConfigParser()
-        configuration.read(path or self.path, encoding=UTF_8)
-        return configuration
 
-    @staticmethod
-    def make(directory):
-        """Make a new configuration file."""
-        configuration = Configuration(directory)
-        return configuration.load()
+        self.configuration.read(self.path, encoding=UTF_8)
 
-    def save(self, configuration, path=None):
+    def save(
+        self,
+    ) -> None:
         """Save the configuration file."""
-        with open(path or self.path, WRITE, encoding=UTF_8) as file:
-            configuration.write(file, True)
+
+        with open(self.path, WRITE_TEXT, encoding=UTF_8) as file:
+            self.configuration.write(file, True)
+
+    def get(
+        self,
+        section: str,
+        option: str
+    ) -> str:
+        """"""
+
+        try:
+            return self.configuration[section][option]
+        except KeyError:
+            return NONE
+
+    def set(
+        self,
+        section: str,
+        option: str,
+        value: str,
+    ) -> None:
+        """"""
+
+        if not self.configuration.has_section(section):
+            self.configuration.add_section(section)
+
+        self.configuration[section][option] = value
 
     def add_configuration(self, configuration, module, application):
         """Build up the configuration file."""

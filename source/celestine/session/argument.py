@@ -15,12 +15,16 @@ from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 
 from celestine.text.session import HELP
+from celestine.text.session import STORE_TRUE
 from celestine.text.session import VERSION
 
 
 from celestine.text.unicode import HYPHEN_MINUS
 from celestine.text.unicode import QUESTION_MARK
 
+CONFIGURATION = "configuration"
+
+# action
 EN = "en"
 VIEWER = "viewer"
 MAIN = "main"
@@ -100,6 +104,7 @@ class Argument():
             exit_on_error=exit_on_error,
         )
 
+        # FLAGS WITH NO PARAMETER
         self.information = self.parser.add_argument_group(
             title=language.ARGUMENT_INFORMATION_TITLE,
             description=language.ARGUMENT_INFORMATION_DESCRIPTION,
@@ -118,6 +123,13 @@ class Argument():
         self.optional = self.parser.add_argument_group(
             title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
             description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+        )
+
+        self.information.add_argument(
+            self.flag(CONFIGURATION),
+            self.name(CONFIGURATION),
+            action=STORE_TRUE,
+            help=language.ARGUMENT_HELP_HELP,
         )
 
         self.information.add_argument(
