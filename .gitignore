@@ -1,9 +1,11 @@
+*.egg-info/
 *.ini
+*.wpu
 .coverage
 .mypy_cache/
 .vscode
 __pycache__/
 dist/
 html/
-source/celestine.egg-info/
-source/celestine.wpu
+
+source/python_3_10.wpr
