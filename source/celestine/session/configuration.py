@@ -12,7 +12,24 @@ from celestine.text import CELESTINE
 
 from celestine.text.unicode import NONE
 
+
 import typing
+
+from typing import Self
+
+
+class Foo:
+    """BYE"""
+
+    def return_self(self) -> Self:
+        """HI"""
+        return self
+
+
+cat = Foo()
+dog = cat.return_self()
+
+dog.return_self
 
 
 class Configuration():
@@ -25,16 +42,22 @@ class Configuration():
 
         self.path = load.pathway(CONFIGURATION)
 
-        defaults: typing.Mapping[str, str] = {}
-
         self.configuration = configparser.ConfigParser(
-            defaults=defaults,
             delimiters=("="),
             comment_prefixes=("#"),
             strict=True,
             empty_lines_in_values=False,
             default_section=CELESTINE,
         )
+
+    def make(
+        self: typing.Self,
+    ) -> typing.Self:
+        """Load the configuration file."""
+
+        configuration = self()
+        configuration.load()
+        return configuration
 
     def load(
         self,
@@ -58,10 +81,11 @@ class Configuration():
     ) -> str:
         """"""
 
-        try:
-            return self.configuration[section][option]
-        except KeyError:
-            return NONE
+        if self.configuration.has_section(section):
+            if self.configuration.has_option(section, option):
+                return self.configuration[section][option]
+
+        return NONE
 
     def set(
         self,
@@ -71,19 +95,10 @@ class Configuration():
     ) -> None:
         """"""
 
+        if not value:
+            return
+
         if not self.configuration.has_section(section):
             self.configuration.add_section(section)
 
         self.configuration[section][option] = value
-
-    def add_configuration(self, configuration, module, application):
-        """Build up the configuration file."""
-        if not configuration.has_section(application):
-            configuration.add_section(application)
-        attribute = module.attribute()
-        default = module.default()
-        for item in zip(attribute, default, strict=True):
-            (name, value) = item
-            configuration.set(application, name, value)
-
-        return configuration

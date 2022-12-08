@@ -22,6 +22,8 @@ from celestine.text.session import VERSION
 from celestine.text.unicode import HYPHEN_MINUS
 from celestine.text.unicode import QUESTION_MARK
 
+from celestine.session.configuration import Configuration
+
 CONFIGURATION = "configuration"
 
 # action
@@ -76,13 +78,18 @@ class Argument():
 
         (argument, _) = parser.parse_known_args(args)
 
-        application = getattr(
-            argument,
-            APPLICATION,
-            load.argument_default(APPLICATION)
-        )
+        configuration = Configuration.make()
 
-        application = argument.application
+        override = argument.application
+        database = configuration.get(CELESTINE, APPLICATION)
+        fallback = "__init__"
+        application = override or database or fallback
+
+        override = argument.language
+        database = configuration.get(CELESTINE, LANGUAGE)
+        fallback = "__init__"
+        language = override or database or fallback
+
         language = load.module_fallback(LANGUAGE, argument.language)
 
         return (application, language)

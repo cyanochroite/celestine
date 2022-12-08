@@ -7,6 +7,8 @@ import typing
 from celestine.session.argument import Argument
 from celestine.session.configuration import Configuration
 
+from celestine.text.unicode import NONE
+
 
 @dataclasses.dataclass
 class Attribute():
@@ -34,13 +36,13 @@ class Attribute():
         configuration = Configuration()
         configuration.load()
 
-        if parse_args.configuration:
-            configuration.set("pig", "dig", "hole")
+        for (name, fallback) in attribute.items():
+
+            override = getattr(parse_args, name, NONE)
+            database = configuration.get(application, name)
+            value = override or database or fallback
+            setattr(self, name, value)
+            if parse_args.configuration:
+                configuration.set(application, name, override)
 
         configuration.save()
-
-        for (name, failover) in attribute.items():
-            database = configuration.get(application, name)
-            override = getattr(parse_args, name, None)
-            value = override or database or failover
-            setattr(self, name, value)

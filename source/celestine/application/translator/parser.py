@@ -38,6 +38,10 @@ from celestine.text.unicode import LINE_SEPARATOR
 from celestine.text.unicode import PARAGRAPH_SEPARATOR
 
 
+from celestine.text.unicode import QUOTATION_MARK
+from celestine.text.unicode import APOSTROPHE
+
+
 MAXIMUM_LINE_LENGTH = 72
 
 
@@ -163,6 +167,17 @@ def normalize_whitespace(string):
             previous = character
 
 
+def normalize_quotation(string):
+    """
+    """
+
+    for character in string:
+        if character == QUOTATION_MARK:
+            yield from APOSTROPHE
+        else:
+            yield from character
+
+
 def assignment_expression(identifier, expression):
     """
     Make a line for the file from a key value pair.
@@ -181,7 +196,7 @@ def assignment_expression(identifier, expression):
     yield from SPACE
     yield from QUOTATION_MARK
     yield from BREAK_PERMITTED_HERE
-    yield from normalize_whitespace(expression)
+    yield from normalize_quotation(normalize_whitespace(expression))
     yield from QUOTATION_MARK
     yield from LINE_SEPARATOR
 
