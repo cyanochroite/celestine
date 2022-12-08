@@ -1,7 +1,7 @@
 """"""
 
 from celestine.text.unicode import NONE
-
+from celestine.session.argument import Argument
 import sys
 import dataclasses
 import argparse
@@ -39,20 +39,43 @@ MAIN = "main"
 """"""
 
 
-""""""
-
-
 @dataclasses.dataclass
 class Attribute():
     """"""
 
+    application: str
+    interface: str
+    language: str
+    main: str
+    python: str
 
-@dataclasses.dataclass
-class Optional():
-    """"""
+    def __init__(
+        self,
+        argument: Argument,
+        args: list[str],
+    ):
+        """"""
 
-    def __init__(self, value):
-        self.value = value
+        # combine this with argument
+        parse_args = argument.parser.parse_args(args)
+
+        application = argument.application
+
+        attribute: typing.Dict[str, str] = argument.dictionary
+
+        configuration = Configuration()
+        configuration.load()
+
+        for (name, fallback) in attribute.items():
+
+            override = getattr(parse_args, name, NONE)
+            database = configuration.get(application, name)
+            value = override or database or fallback
+            setattr(self, name, value)
+            if parse_args.configuration:
+                configuration.set(application, name, override)
+
+        configuration.save()
 
 
 class Argument():
@@ -76,11 +99,12 @@ class Argument():
         iterable = (HYPHEN_MINUS, HYPHEN_MINUS, name)
         return str().join(iterable)
 
-    def __init__(
-        self,
+    @classmethod
+    def essential(
+        cls,
         args: list[str],
         exit_on_error: bool
-    ) -> None:
+    ) -> typing.Tuple[str, types.ModuleType]:
         """"""
 
         parser = argparse.ArgumentParser(
@@ -94,8 +118,8 @@ class Argument():
         )
 
         parser.add_argument(
-            self.flag(LANGUAGE),
-            self.name(LANGUAGE),
+            cls.flag(LANGUAGE),
+            cls.name(LANGUAGE),
         )
 
         (argument, _) = parser.parse_known_args(args)
@@ -114,8 +138,18 @@ class Argument():
 
         language = load.module_fallback(LANGUAGE, argument.language)
 
-        #(application, language) = self.essential(args, exit_on_error)
+        return (application, language)
 
+    def __init__(
+        self,
+        args: list[str],
+        exit_on_error: bool
+    ) -> None:
+        """"""
+
+        (application, language) = self.essential(args, exit_on_error)
+
+        self.application = application
         self.dictionary: typing.Dict[str, str] = {}
         self.parser = argparse.ArgumentParser(
             add_help=False,
@@ -197,37 +231,7 @@ class Argument():
 
         load.module(APPLICATION, application).add_argument(self)
         # combine this with attribute
-
-        self.attribute = Attribute()
-        self.new_attribute = self.attribute
-
-        # combine this with argument
-        parse_args = self.parser.parse_args(args)
-
-        attribute: typing.Dict[str, str] = self.dictionary
-
-        configuration = Configuration()
-        configuration.load()
-
-        for (name, fallback) in attribute.items():
-
-            override = getattr(parse_args, name, NONE)
-            database = configuration.get(application, name)
-            value = override or database or fallback
-            setattr(self.attribute, name, value)
-            if parse_args.configuration:
-                configuration.set(application, name, override)
-
-        configuration.save()
-
-    def do_work(self, configuration):
-        for (name, fallback) in attribute.items():
-            override = getattr(parse_args, name, NONE)
-            database = configuration.get(application, name)
-            value = override or database or fallback
-            setattr(self.attribute, name, value)
-            if parse_args.configuration:
-                configuration.set(application, name, override)
+        self.attribute = Attribute(argument, args)
 
     def add_positional(
         self,

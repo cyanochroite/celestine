@@ -5,6 +5,7 @@ import typing
 import dataclasses
 
 from celestine.session.argument import Argument
+from celestine.session.attribute import Attribute
 from celestine.window.page import Page
 
 from celestine.session import load
@@ -17,6 +18,8 @@ from celestine.text.directory import LANGUAGE
 @dataclasses.dataclass
 class Session():
     """"""
+
+    attribute: Attribute
 
     application: types.ModuleType
     interface: types.ModuleType
@@ -31,34 +34,27 @@ class Session():
     ) -> None:
         """"""
 
-        # (self.attribute, attribute) = Argument.make(args, exit_on_error)
-
-        argument = Argument(args, exit_on_error)
-        self.attribute = argument.attribute
-        attribute = argument.new_attribute
+        self.attribute = Attribute(
+            Argument(args, exit_on_error),
+            args,
+        )
 
         self.application = load.module(
             APPLICATION,
-            attribute.application,
+            self.attribute.application,
         )
         self.interface = load.module(
             INTERFACE,
-            attribute.interface,
+            self.attribute.interface,
         )
         self.language = load.module(
             LANGUAGE,
-            attribute.language,
+            self.attribute.language,
         )
 
         self.main = getattr(
             self.application,
-            attribute.main,
+            self.attribute.main,
         )
-
-        # self.application = load.module(APPLICATION, attribute.application)
-        # self.interface = load.module(INTERFACE, attribute.interface)
-        # self.language = load.module(LANGUAGE, attribute.language)
-
-        # self.main = getattr(self.application, attribute.main)
 
 
