@@ -3,7 +3,7 @@
 import types
 import typing
 
-import os.path
+import os
 import sys
 
 from celestine.text.unicode import FULL_STOP

@@ -1,5 +1,9 @@
 """"""
 
+from celestine.text.unicode import NONE
+from celestine.session.argument import Argument
+import sys
+import dataclasses
 import argparse
 import types
 import typing
@@ -30,6 +34,48 @@ CONFIGURATION = "configuration"
 EN = "en"
 VIEWER = "viewer"
 MAIN = "main"
+
+
+""""""
+
+
+@dataclasses.dataclass
+class Attribute():
+    """"""
+
+    application: str
+    interface: str
+    language: str
+    main: str
+    python: str
+
+    def __init__(
+        self,
+        argument: Argument,
+        args: list[str],
+    ):
+        """"""
+
+        # combine this with argument
+        parse_args = argument.parser.parse_args(args)
+
+        application = argument.application
+
+        attribute: typing.Dict[str, str] = argument.dictionary
+
+        configuration = Configuration()
+        configuration.load()
+
+        for (name, fallback) in attribute.items():
+
+            override = getattr(parse_args, name, NONE)
+            database = configuration.get(application, name)
+            value = override or database or fallback
+            setattr(self, name, value)
+            if parse_args.configuration:
+                configuration.set(application, name, override)
+
+        configuration.save()
 
 
 class Argument():
@@ -184,6 +230,8 @@ class Argument():
         )
 
         load.module(APPLICATION, application).add_argument(self)
+        # combine this with attribute
+        self.attribute = Attribute(argument, args)
 
     def add_positional(
         self,

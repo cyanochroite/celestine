@@ -1,6 +1,7 @@
 """"""
 
 import configparser
+import typing
 
 from celestine.text.session import CONFIGURATION
 
@@ -11,25 +12,6 @@ from celestine.session import load
 from celestine.text import CELESTINE
 
 from celestine.text.unicode import NONE
-
-
-import typing
-
-from typing import Self
-
-
-class Foo:
-    """BYE"""
-
-    def return_self(self) -> Self:
-        """HI"""
-        return self
-
-
-cat = Foo()
-dog = cat.return_self()
-
-dog.return_self
 
 
 class Configuration():
@@ -52,7 +34,7 @@ class Configuration():
 
     @classmethod
     def make(
-        cls: typing.Self,
+        cls,
     ) -> typing.Self:
         """Load the configuration file."""
 

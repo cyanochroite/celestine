@@ -27,6 +27,7 @@ class Attribute():
     ):
         """"""
 
+        # combine this with argument
         parse_args = argument.parser.parse_args(args)
 
         application = argument.application
