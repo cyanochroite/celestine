@@ -44,8 +44,9 @@ MAIN = "main"
 
 
 class Hats(enum.Enum):
-    Optional = enum.auto()
-    YES = enum.auto()
+    optional = enum.auto()
+    override = enum.auto()
+    positional = enum.auto()
 
 
 @dataclasses.dataclass
@@ -55,6 +56,7 @@ class Cats():
     hats: Hats
     default: str
     description: str
+    choice: list[str]
 
 
 @dataclasses.dataclass
@@ -173,57 +175,57 @@ class Argument():
             version=VERSION_NUMBER,
         )
 
-        self.add_override(
-            INTERFACE,
-            language.ARGUMENT_INTERFACE_HELP,
-            load.argument_default(INTERFACE),
-            load.argument(INTERFACE),
-        )
+        space = {
+            INTERFACE: Cats(
+                Hats.override,
+                load.argument_default(INTERFACE),
+                language.ARGUMENT_INTERFACE_HELP,
+                load.argument(INTERFACE),
+            ),
+            LANGUAGE: Cats(
+                Hats.override,
+                EN,
+                language.ARGUMENT_LANGUAGE_HELP,
+                load.argument(LANGUAGE),
+            ),
+            APPLICATION: Cats(
+                Hats.positional,
+                load.argument_default(APPLICATION),
+                "Choose an applicanion. They have more option.",
+                load.argument(APPLICATION),
+            ),
+            MAIN: Cats(
+                Hats.positional,
+                MAIN,
+                "Choose an applicanion. They have more option.",
+                [MAIN],
+            ),
+        }
 
-        self.add_override(
-            LANGUAGE,
-            language.ARGUMENT_LANGUAGE_HELP,
-            EN,
-            load.argument(LANGUAGE),
-        )
-
-        self.add_positional(
-            APPLICATION,
-            "Choose an applicanion. They have more option.",
-            load.argument_default(APPLICATION),
-            load.argument(APPLICATION),
-        )
-
-        self.add_positional(
-            MAIN,
-            "Choose an applicanion. They have more option.",
-            MAIN,
-            [MAIN],
-            #            load.argument(APPLICATION, application),
-        )
+        special = self.feed_the_parser(space)
 
         attribute = load.module(APPLICATION, application).attribute
-        dictionary: typing.Dict[str, Cats] = {}
 
-        for (name, cats) in attribute.items():
-            match cats.hats:
-                case Hats.Optional:
-                    self.add_optional(
-                        name,
-                        cats.description,
-                        cats.default,
-                    )
+        dictionary = self.feed_the_parser(attribute)
 
         self.attribute = Attribute()
-        self.new_attribute = self.attribute
+        self.new_attribute = Attribute()
 
-        # combine this with argument
         parse_args = self.parser.parse_args(args)
+        # combine this with argument
 
-        module = load.module(APPLICATION, application)
-        fish_food = module.attribute
+        for (name, fallback) in special.items():
 
-        for (name, fallback) in fish_food.items():
+            override = getattr(parse_args, name, NONE)
+            database = configuration.get(application, name)
+            value = override or database or fallback
+            setattr(self.new_attribute, name, value)
+            if parse_args.configuration:
+                configuration.set(application, name, override)
+
+        #
+
+        for (name, fallback) in dictionary.items():
 
             override = getattr(parse_args, name, NONE)
             database = configuration.get(application, name)
@@ -231,28 +233,14 @@ class Argument():
             setattr(self.attribute, name, value)
             if parse_args.configuration:
                 configuration.set(application, name, override)
-
-        configuration.save()
 
         # combine this with attribute
-
-        attribute: typing.Dict[str, str] = self.dictionary
-
-        configuration = Configuration()
-        configuration.load()
-
-        for (name, fallback) in attribute.items():
-
-            override = getattr(parse_args, name, NONE)
-            database = configuration.get(application, name)
-            value = override or database or fallback
-            setattr(self.attribute, name, value)
-            if parse_args.configuration:
-                configuration.set(application, name, override)
 
         configuration.save()
 
     def do_work(self, configuration):
+        """"""
+
         for (name, fallback) in attribute.items():
             override = getattr(parse_args, name, NONE)
             database = configuration.get(application, name)
@@ -261,54 +249,34 @@ class Argument():
             if parse_args.configuration:
                 configuration.set(application, name, override)
 
-    def add_positional(
-        self,
-        name: str,
-        description: str,
-        default: str,
-        choice: list[str],
-    ) -> None:
+    def feed_the_parser(self, attribute):
         """"""
 
-        self.dictionary[name] = default
+        dictionary = {}
 
-        self.positional.add_argument(
-            name,
-            choices=choice,
-            help=description,
-            nargs=QUESTION_MARK,
-        )
+        for (name, cats) in attribute.items():
+            dictionary[name] = cats.default
 
-    def add_optional(
-        self,
-        name: str,
-        description: str,
-        default: str,
-    ) -> None:
-        """"""
+            match cats.hats:
+                case Hats.optional:
+                    self.optional.add_argument(
+                        self.flag(name),
+                        self.name(name),
+                        help=cats.description,
+                    )
+                case Hats.override:
+                    self.override.add_argument(
+                        self.flag(name),
+                        self.name(name),
+                        choices=cats.choice,
+                        help=cats.description,
+                    )
+                case Hats.positional:
+                    self.positional.add_argument(
+                        name,
+                        choices=cats.choice,
+                        help=cats.description,
+                        nargs=QUESTION_MARK,
+                    )
 
-        self.dictionary[name] = default
-
-        self.optional.add_argument(
-            self.flag(name),
-            self.name(name),
-            help=description,
-        )
-
-    def add_override(
-        self,
-        name: str,
-        description: str,
-        default: str,
-        choice: list[str],
-    ) -> None:
-        """"""
-
-        self.dictionary[name] = default
-
-        self.override.add_argument(
-            self.flag(name),
-            self.name(name),
-            choices=choice,
-            help=description,
-        )
+        return dictionary
