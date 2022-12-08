@@ -7,14 +7,18 @@ import os
 from celestine.session.argument import Hats
 from celestine.session.argument import Cats
 
+from celestine.session.attribute import Optional
+from celestine.session.attribute import Override
+from celestine.session.attribute import Positional
+
 from .main import window
 from .text import DIRECTORY
 
 
 attribute = {
-    DIRECTORY: Cats(Hats.optional, os.getcwd(), "pick your nose", []),
-    "ape": Cats(Hats.optional, "four", "moo", []),
-    "you": Cats(Hats.optional, "seves", "cow", []),
+    DIRECTORY: Optional(os.getcwd(), "pick your nose"),
+    "ape": Override("four", "moo", []),
+    "you": Positional("seves", "cow", []),
 }
 
 

@@ -1,5 +1,6 @@
 """"""
 
+from celestine.session import attribute as attack
 from celestine.text.unicode import NONE
 
 import sys
@@ -175,27 +176,25 @@ class Argument():
             version=VERSION_NUMBER,
         )
 
+        # ignore above for now
+
         space = {
-            INTERFACE: Cats(
-                Hats.override,
+            INTERFACE: attack.Override(
                 load.argument_default(INTERFACE),
                 language.ARGUMENT_INTERFACE_HELP,
                 load.argument(INTERFACE),
             ),
-            LANGUAGE: Cats(
-                Hats.override,
+            LANGUAGE: attack.Override(
                 EN,
                 language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),
             ),
-            APPLICATION: Cats(
-                Hats.positional,
+            APPLICATION: attack.Positional(
                 load.argument_default(APPLICATION),
                 "Choose an applicanion. They have more option.",
                 load.argument(APPLICATION),
             ),
-            MAIN: Cats(
-                Hats.positional,
+            MAIN: attack.Positional(
                 MAIN,
                 "Choose an applicanion. They have more option.",
                 [MAIN],
@@ -208,46 +207,39 @@ class Argument():
 
         dictionary = self.feed_the_parser(attribute)
 
-        self.attribute = Attribute()
-        self.new_attribute = Attribute()
-
         parse_args = self.parser.parse_args(args)
-        # combine this with argument
 
-        for (name, fallback) in special.items():
-
-            override = getattr(parse_args, name, NONE)
-            database = configuration.get(application, name)
-            value = override or database or fallback
-            setattr(self.new_attribute, name, value)
-            if parse_args.configuration:
-                configuration.set(application, name, override)
-
-        #
-
-        for (name, fallback) in dictionary.items():
-
-            override = getattr(parse_args, name, NONE)
-            database = configuration.get(application, name)
-            value = override or database or fallback
-            setattr(self.attribute, name, value)
-            if parse_args.configuration:
-                configuration.set(application, name, override)
+        self.attribute = self.do_work(
+            special,
+            parse_args,
+            configuration,
+            CELESTINE,
+        )
+        self.new_attribute = self.do_work(
+            dictionary,
+            parse_args,
+            configuration,
+            application,
+        )
 
         # combine this with attribute
 
         configuration.save()
 
-    def do_work(self, configuration):
+    def do_work(self, dictionary, parse_args, configuration, application):
         """"""
 
-        for (name, fallback) in attribute.items():
+        attribute = Attribute()
+
+        for (name, fallback) in dictionary.items():
             override = getattr(parse_args, name, NONE)
             database = configuration.get(application, name)
             value = override or database or fallback
-            setattr(self.attribute, name, value)
+            setattr(attribute, name, value)
             if parse_args.configuration:
                 configuration.set(application, name, override)
+
+        return attribute
 
     def feed_the_parser(self, attribute):
         """"""
@@ -257,21 +249,22 @@ class Argument():
         for (name, cats) in attribute.items():
             dictionary[name] = cats.default
 
-            match cats.hats:
-                case Hats.optional:
+            # might be able to call this directly from class
+            match type(cats):
+                case attack.Optional:
                     self.optional.add_argument(
                         self.flag(name),
                         self.name(name),
                         help=cats.description,
                     )
-                case Hats.override:
+                case attack.Override:
                     self.override.add_argument(
                         self.flag(name),
                         self.name(name),
                         choices=cats.choice,
                         help=cats.description,
                     )
-                case Hats.positional:
+                case attack.Positional:
                     self.positional.add_argument(
                         name,
                         choices=cats.choice,

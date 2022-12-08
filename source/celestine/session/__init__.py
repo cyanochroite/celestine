@@ -34,8 +34,8 @@ class Session():
         # (self.attribute, attribute) = Argument.make(args, exit_on_error)
 
         argument = Argument(args, exit_on_error)
-        self.attribute = argument.attribute
-        attribute = argument.new_attribute
+        self.attribute = argument.new_attribute
+        attribute = argument.attribute
 
         self.application = load.module(
             APPLICATION,
