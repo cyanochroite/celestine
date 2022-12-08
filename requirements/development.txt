@@ -3,5 +3,7 @@ mypy
 pycodestyle
 pylint
 
+pyright
+
 # unittest
 # sphinx

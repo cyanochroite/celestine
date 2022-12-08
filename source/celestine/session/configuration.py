@@ -50,12 +50,13 @@ class Configuration():
             default_section=CELESTINE,
         )
 
+    @classmethod
     def make(
-        self: typing.Self,
+        cls: typing.Self,
     ) -> typing.Self:
         """Load the configuration file."""
 
-        configuration = self()
+        configuration = cls()
         configuration.load()
         return configuration
 
