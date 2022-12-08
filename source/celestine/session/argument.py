@@ -7,6 +7,7 @@ import dataclasses
 import argparse
 import types
 import typing
+import enum
 
 
 from celestine.session import load
@@ -42,17 +43,23 @@ MAIN = "main"
 """"""
 
 
+class Hats(enum.Enum):
+    Optional = enum.auto()
+    YES = enum.auto()
+
+
+@dataclasses.dataclass
+class Cats():
+    """"""
+
+    hats: Hats
+    default: str
+    description: str
+
+
 @dataclasses.dataclass
 class Attribute():
     """"""
-
-
-@dataclasses.dataclass
-class Optional():
-    """"""
-
-    def __init__(self, value):
-        self.value = value
 
 
 class Argument():
@@ -195,14 +202,39 @@ class Argument():
             #            load.argument(APPLICATION, application),
         )
 
-        load.module(APPLICATION, application).add_argument(self)
-        # combine this with attribute
+        attribute = load.module(APPLICATION, application).attribute
+        dictionary: typing.Dict[str, Cats] = {}
+
+        for (name, cats) in attribute.items():
+            match cats.hats:
+                case Hats.Optional:
+                    self.add_optional(
+                        name,
+                        cats.description,
+                        cats.default,
+                    )
 
         self.attribute = Attribute()
         self.new_attribute = self.attribute
 
         # combine this with argument
         parse_args = self.parser.parse_args(args)
+
+        module = load.module(APPLICATION, application)
+        fish_food = module.attribute
+
+        for (name, fallback) in fish_food.items():
+
+            override = getattr(parse_args, name, NONE)
+            database = configuration.get(application, name)
+            value = override or database or fallback
+            setattr(self.attribute, name, value)
+            if parse_args.configuration:
+                configuration.set(application, name, override)
+
+        configuration.save()
+
+        # combine this with attribute
 
         attribute: typing.Dict[str, str] = self.dictionary
 
