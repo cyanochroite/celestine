@@ -1,5 +1,6 @@
 """"""
 
+from celestine.session.attribute import Attribute
 from celestine.session import attribute as attack
 from celestine.text.unicode import NONE
 
@@ -38,31 +39,39 @@ VIEWER = "viewer"
 MAIN = "main"
 
 
+def get_attribute(
+    language: types.ModuleType
+) -> typing.Dict[str, Attribute]:
+    """"""
+
+    return {
+        INTERFACE: attack.Override(
+            load.argument_default(INTERFACE),
+            language.ARGUMENT_INTERFACE_HELP,
+            load.argument(INTERFACE),
+        ),
+        LANGUAGE: attack.Override(
+            EN,
+            language.ARGUMENT_LANGUAGE_HELP,
+            load.argument(LANGUAGE),
+        ),
+        APPLICATION: attack.Positional(
+            load.argument_default(APPLICATION),
+            "Choose an applicanion. They have more option.",
+            load.argument(APPLICATION),
+        ),
+        MAIN: attack.Positional(
+            MAIN,
+            "Choose an applicanion. They have more option.",
+            [MAIN],
+        ),
+    }
+
+
 """"""
 
 
 """"""
-
-
-class Hats(enum.Enum):
-    optional = enum.auto()
-    override = enum.auto()
-    positional = enum.auto()
-
-
-@dataclasses.dataclass
-class Cats():
-    """"""
-
-    hats: Hats
-    default: str
-    description: str
-    choice: list[str]
-
-
-@dataclasses.dataclass
-class Attribute():
-    """"""
 
 
 class Argument():
@@ -178,34 +187,11 @@ class Argument():
 
         # ignore above for now
 
-        space = {
-            INTERFACE: attack.Override(
-                load.argument_default(INTERFACE),
-                language.ARGUMENT_INTERFACE_HELP,
-                load.argument(INTERFACE),
-            ),
-            LANGUAGE: attack.Override(
-                EN,
-                language.ARGUMENT_LANGUAGE_HELP,
-                load.argument(LANGUAGE),
-            ),
-            APPLICATION: attack.Positional(
-                load.argument_default(APPLICATION),
-                "Choose an applicanion. They have more option.",
-                load.argument(APPLICATION),
-            ),
-            MAIN: attack.Positional(
-                MAIN,
-                "Choose an applicanion. They have more option.",
-                [MAIN],
-            ),
-        }
+        special = self.feed_the_parser(get_attribute(language))
 
-        special = self.feed_the_parser(space)
-
-        attribute = load.module(APPLICATION, application).attribute
-
-        dictionary = self.feed_the_parser(attribute)
+        dictionary = self.feed_the_parser(
+            load.module(APPLICATION, application).attribute(language)
+        )
 
         parse_args = self.parser.parse_args(args)
 

@@ -4,7 +4,12 @@ import dataclasses
 
 
 @dataclasses.dataclass
-class Optional():
+class Attribute():
+    """"""
+
+
+@dataclasses.dataclass
+class Optional(Attribute):
     """"""
 
     default: str
@@ -12,7 +17,7 @@ class Optional():
 
 
 @dataclasses.dataclass
-class Override():
+class Override(Attribute):
     """"""
 
     default: str
@@ -21,7 +26,7 @@ class Override():
 
 
 @dataclasses.dataclass
-class Positional():
+class Positional(Attribute):
     """"""
 
     default: str
