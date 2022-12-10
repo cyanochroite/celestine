@@ -38,6 +38,9 @@ EN = "en"
 VIEWER = "viewer"
 MAIN = "main"
 
+HELP = "help"
+CHOICES = "choices"
+
 
 def get_attribute(
     language: types.ModuleType
@@ -70,14 +73,72 @@ def get_attribute(
 
 """"""
 
+# dataclass(frozen=True)
+# field(default_factory())
+# __post_init_
 
-""""""
+# fields(class_or_instance) or asdict
+# metadata
+
+
+@dataclasses.dataclass
+class FinalHippo():
+    """"""
+    application: str
+    interface: str
+    languager: str
+    main: str = dataclasses.field(
+        default="main",
+        metadata={
+            HELP: "language.ARGUMENT_LANGUAGE_HELP",
+            CHOICES: [MAIN]
+        }
+    )
+
+
+class Hippo():
+    """"""
+    application: str
+    interface: str
+    language: str
+    main: str
+
+    def nope(self):
+        """"""
+
+    def yes(self):
+        """"""
+
+    def attribute(self, language):
+        """"""
+        return {
+            INTERFACE: attack.Override(
+                load.argument_default(INTERFACE),
+                language.ARGUMENT_INTERFACE_HELP,
+                load.argument(INTERFACE),
+            ),
+            LANGUAGE: attack.Override(
+                EN,
+                language.ARGUMENT_LANGUAGE_HELP,
+                load.argument(LANGUAGE),
+            ),
+            APPLICATION: attack.Positional(
+                load.argument_default(APPLICATION),
+                "Choose an applicanion. They have more option.",
+                load.argument(APPLICATION),
+            ),
+            MAIN: attack.Positional(
+                MAIN,
+                "Choose an applicanion. They have more option.",
+                [MAIN],
+            ),
+        }
 
 
 class Argument():
     """"""
 
-    @staticmethod
+    @ staticmethod
     def flag(
         name: str
     ) -> str:
@@ -86,7 +147,7 @@ class Argument():
         iterable = (HYPHEN_MINUS, name[0])
         return str().join(iterable)
 
-    @staticmethod
+    @ staticmethod
     def name(
         name: str
     ) -> str:
@@ -133,7 +194,7 @@ class Argument():
 
         language = load.module_fallback(LANGUAGE, argument.language)
 
-        #(application, language) = self.essential(args, exit_on_error)
+        # (application, language) = self.essential(args, exit_on_error)
 
         self.dictionary: typing.Dict[str, str] = {}
         self.parser = argparse.ArgumentParser(
@@ -187,11 +248,19 @@ class Argument():
 
         # ignore above for now
 
-        special = self.feed_the_parser(get_attribute(language))
+        hippo = Hippo()
+        special = hippo.attribute(language)
+        self.feed_the_parser(special)
 
-        dictionary = self.feed_the_parser(
-            load.module(APPLICATION, application).attribute(language)
-        )
+        module = load.module(APPLICATION, application)
+        with module.Attribute2(
+            application,
+            language,
+            self.parser,
+            args,
+            configuration,
+        ) as dictionary:
+            self.feed_the_parser(dictionary)
 
         parse_args = self.parser.parse_args(args)
 
@@ -201,6 +270,7 @@ class Argument():
             configuration,
             CELESTINE,
         )
+
         self.new_attribute = self.do_work(
             dictionary,
             parse_args,
@@ -227,13 +297,10 @@ class Argument():
 
         return attribute
 
-    def feed_the_parser(self, attribute):
+    def feed_the_parser(self, dictionary):
         """"""
 
-        dictionary = {}
-
-        for (name, cats) in attribute.items():
-            dictionary[name] = cats.default
+        for (name, cats) in dictionary.items():
 
             # might be able to call this directly from class
             match type(cats):
@@ -257,5 +324,3 @@ class Argument():
                         help=cats.description,
                         nargs=QUESTION_MARK,
                     )
-
-        return dictionary

@@ -13,6 +13,8 @@ from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 
+from celestine.session.argument import Hippo
+
 
 @dataclasses.dataclass
 class Session():
@@ -52,7 +54,7 @@ class Session():
 
         self.main = getattr(
             self.application,
-            attribute.main,
+            attribute.main.default,
         )
 
         # self.application = load.module(APPLICATION, attribute.application)
