@@ -36,6 +36,10 @@ class Session():
         # (self.attribute, attribute) = Argument.make(args, exit_on_error)
 
         argument = Argument(args, exit_on_error)
+
+        with argument:
+            pass
+
         self.attribute = argument.new_attribute
         attribute = argument.attribute
 

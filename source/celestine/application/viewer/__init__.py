@@ -3,7 +3,6 @@
 import typing
 import types
 import os
-import dataclasses
 
 from celestine.session.attribute import Optional
 from celestine.session.attribute import Override
@@ -15,7 +14,6 @@ from .main import window
 from .text import DIRECTORY
 
 
-@dataclasses.dataclass
 class Attribute2():
     """"""
 
@@ -23,13 +21,13 @@ class Attribute2():
     ape: str
     you: str
 
-    def __init__(
-        self,
+    @staticmethod
+    def dictionary(
         language: types.ModuleType,
-    ) -> None:
+    ) -> typing.Dict[str, Attribute]:
         """"""
 
-        self.dictionary = {
+        return {
             DIRECTORY: Optional(
                 os.getcwd(),
                 "pick your nose",

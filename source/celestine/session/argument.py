@@ -103,13 +103,13 @@ class Hippo():
     language: str
     main: str
 
-    def __init__(
-        self,
+    @staticmethod
+    def dictionary(
         language: types.ModuleType,
-    ) -> None:
+    ) -> typing.Dict[str, Attribute]:
         """"""
 
-        self.dictionary = {
+        return {
             INTERFACE: attack.Override(
                 load.argument_default(INTERFACE),
                 language.ARGUMENT_INTERFACE_HELP,
@@ -245,42 +245,63 @@ class Argument():
         )
 
         # ignore above for now
+        self.args = args
+        self.application = application
+        self.language = language
+        self.configuration = configuration
 
-        module = load.module(APPLICATION, application)
-        special = Hippo(language)
-        self.feed_the_parser(special)
+    def __enter__(self):
 
-        dictionary = module.Attribute2(language)
-        self.feed_the_parser(dictionary)
+        module = load.module(APPLICATION, self.application)
+        special = Hippo
+        special_dict = special.dictionary(self.language)
+        self.feed_the_parser(special_dict)
 
-        parse_args = self.parser.parse_args(args)
+        magic = module.Attribute2
+        magic_dict = magic.dictionary(self.language)
+        self.feed_the_parser(magic_dict)
 
-        self.do_work(
+        parse_args = self.parser.parse_args(self.args)
+
+        self.attribute = self.do_work(
             special,
+            special_dict,
             parse_args,
-            configuration,
+            self.configuration,
             CELESTINE,
         )
-        self.attribute = special
 
-        self.do_work(
-            dictionary,
+        self.new_attribute = self.do_work(
+            magic,
+            magic_dict,
             parse_args,
-            configuration,
-            application,
+            self.configuration,
+            self.application,
         )
-        self.new_attribute = dictionary
 
         # combine this with attribute
 
-        configuration.save()
+        self.configuration.save()
 
-    def do_work(self, attribute, parse_args, configuration, application):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        return False
+
+    def do_work(
+        self,
+        attribute_class,
+        dictionary,
+        parse_args,
+        configuration,
+        application
+    ):
         """
         override the values in dictionary
         """
 
-        for (name, fallback) in attribute.dictionary.items():
+        attribute = attribute_class()
+        for (name, fallback) in dictionary.items():
             override = getattr(parse_args, name, NONE)
             database = configuration.get(application, name)
             value = override or database or fallback.default
@@ -288,10 +309,12 @@ class Argument():
             if parse_args.configuration:
                 configuration.set(application, name, override)
 
-    def feed_the_parser(self, attribute):
+        return attribute
+
+    def feed_the_parser(self, dictionary):
         """"""
 
-        for (name, cats) in attribute.dictionary.items():
+        for (name, cats) in dictionary.items():
 
             # might be able to call this directly from class
             match type(cats):
