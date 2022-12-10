@@ -54,7 +54,7 @@ class Session():
 
         self.main = getattr(
             self.application,
-            attribute.main.default,
+            attribute.main,
         )
 
         # self.application = load.module(APPLICATION, attribute.application)

@@ -103,15 +103,13 @@ class Hippo():
     language: str
     main: str
 
-    def nope(self):
+    def __init__(
+        self,
+        language: types.ModuleType,
+    ) -> None:
         """"""
 
-    def yes(self):
-        """"""
-
-    def attribute(self, language):
-        """"""
-        return {
+        self.dictionary = {
             INTERFACE: attack.Override(
                 load.argument_default(INTERFACE),
                 language.ARGUMENT_INTERFACE_HELP,
@@ -248,59 +246,52 @@ class Argument():
 
         # ignore above for now
 
-        hippo = Hippo()
-        special = hippo.attribute(language)
+        module = load.module(APPLICATION, application)
+        special = Hippo(language)
         self.feed_the_parser(special)
 
-        module = load.module(APPLICATION, application)
-        with module.Attribute2(
-            application,
-            language,
-            self.parser,
-            args,
-            configuration,
-        ) as dictionary:
-            self.feed_the_parser(dictionary)
+        dictionary = module.Attribute2(language)
+        self.feed_the_parser(dictionary)
 
         parse_args = self.parser.parse_args(args)
 
-        self.attribute = self.do_work(
+        self.do_work(
             special,
             parse_args,
             configuration,
             CELESTINE,
         )
+        self.attribute = special
 
-        self.new_attribute = self.do_work(
+        self.do_work(
             dictionary,
             parse_args,
             configuration,
             application,
         )
+        self.new_attribute = dictionary
 
         # combine this with attribute
 
         configuration.save()
 
-    def do_work(self, dictionary, parse_args, configuration, application):
-        """"""
+    def do_work(self, attribute, parse_args, configuration, application):
+        """
+        override the values in dictionary
+        """
 
-        attribute = Attribute()
-
-        for (name, fallback) in dictionary.items():
+        for (name, fallback) in attribute.dictionary.items():
             override = getattr(parse_args, name, NONE)
             database = configuration.get(application, name)
-            value = override or database or fallback
+            value = override or database or fallback.default
             setattr(attribute, name, value)
             if parse_args.configuration:
                 configuration.set(application, name, override)
 
-        return attribute
-
-    def feed_the_parser(self, dictionary):
+    def feed_the_parser(self, attribute):
         """"""
 
-        for (name, cats) in dictionary.items():
+        for (name, cats) in attribute.dictionary.items():
 
             # might be able to call this directly from class
             match type(cats):
@@ -324,3 +315,15 @@ class Argument():
                         help=cats.description,
                         nargs=QUESTION_MARK,
                     )
+
+
+"""
+get the dictionary A
+get the dictionary B
+
+feed the parser A
+feed the parser B
+
+update B
+update A
+"""
