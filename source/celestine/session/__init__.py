@@ -13,8 +13,6 @@ from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 
-from celestine.session.argument import Hippo
-
 
 @dataclasses.dataclass
 class Session():
@@ -36,9 +34,7 @@ class Session():
         # (self.attribute, attribute) = Argument.make(args, exit_on_error)
 
         argument = Argument(args, exit_on_error)
-
-        with argument:
-            pass
+        argument.dostuff()
 
         self.attribute = argument.new_attribute
         attribute = argument.attribute
