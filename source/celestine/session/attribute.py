@@ -47,7 +47,7 @@ class Positional(Attribute):
     choice: list[str]
 
 
-class Hippo():
+class Attribute2():
     """"""
     application: str
     interface: str

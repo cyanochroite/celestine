@@ -2,6 +2,7 @@
 
 from celestine.session import load
 from celestine.session import Session
+from celestine.session.argument import Argument
 
 from celestine.text import CELESTINE
 from celestine.text import VERSION_BLENDER
@@ -70,7 +71,14 @@ def main(
 ) -> None:
     """Run the main program."""
 
-    session = Session(argv, exit_on_error)
+    argument = Argument(argv, exit_on_error)
+    argument.dostuff()
+
+    new_attribute = argument.new_attribute
+    attribute = argument.attribute
+
+    session = Session(new_attribute, attribute)
+
     with session.interface.window(session) as window:
         for document in session.main(session):
             window.page(document)
