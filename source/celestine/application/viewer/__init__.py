@@ -4,17 +4,17 @@ import typing
 import types
 import os
 
-from celestine.session.attribute import Optional
-from celestine.session.attribute import Override
-from celestine.session.attribute import Positional
+from celestine.session.argument import Optional
+from celestine.session.argument import Override
+from celestine.session.argument import Positional
 
-from celestine.session.attribute import Attribute
+from celestine.session.argument import Argument
 
 from .main import window
 from .text import DIRECTORY
 
 
-class Attribute2():
+class Session():
     """"""
 
     directory: str
@@ -24,7 +24,7 @@ class Attribute2():
     @staticmethod
     def dictionary(
         language: types.ModuleType,
-    ) -> typing.Dict[str, Attribute]:
+    ) -> typing.Dict[str, Argument]:
         """"""
 
         return {

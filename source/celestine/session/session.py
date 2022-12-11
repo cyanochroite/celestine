@@ -1,13 +1,20 @@
-""""""
-import dataclasses
+"""Celestine Image Viewer"""
+
 import types
 import typing
 
-from celestine.text.directory import LANGUAGE
-from celestine.text.directory import INTERFACE
-from celestine.text.directory import APPLICATION
+from celestine.window.page import Page
 
 from celestine.session import load
+
+from celestine.session.argument import Argument
+from celestine.session.argument import Override
+from celestine.session.argument import Positional
+
+
+from celestine.text.directory import APPLICATION
+from celestine.text.directory import INTERFACE
+from celestine.text.directory import LANGUAGE
 
 EN = "en"
 VIEWER = "viewer"
@@ -16,48 +23,19 @@ MAIN = "main"
 CHOICES = "choices"
 
 
-@dataclasses.dataclass
-class Attribute():
+class Session():
     """"""
 
-
-@dataclasses.dataclass
-class Optional(Attribute):
-    """"""
-
-    default: str
-    description: str
-
-
-@dataclasses.dataclass
-class Override(Attribute):
-    """"""
-
-    default: str
-    description: str
-    choice: list[str]
-
-
-@dataclasses.dataclass
-class Positional(Attribute):
-    """"""
-
-    default: str
-    description: str
-    choice: list[str]
-
-
-class Attribute2():
-    """"""
     application: types.ModuleType
     interface: types.ModuleType
     language: types.ModuleType
-    main: str
+
+    main: list[typing.Callable[[Page], None]]
 
     @staticmethod
     def dictionary(
         language,
-    ) -> typing.Dict[str, Attribute]:
+    ) -> typing.Dict[str, Argument]:
         """"""
 
         return {

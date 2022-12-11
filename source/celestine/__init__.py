@@ -1,8 +1,7 @@
 """"""
 
 from celestine.session import load
-from celestine.session import Session
-from celestine.session.argument import Argument
+from celestine.session.parser import Parser
 
 from celestine.text import CELESTINE
 from celestine.text import VERSION_BLENDER
@@ -71,7 +70,7 @@ def main(
 ) -> None:
     """Run the main program."""
 
-    argument = Argument(argv, exit_on_error)
+    argument = Parser(argv, exit_on_error)
     argument.dostuff()
 
     new_attribute = argument.new_attribute

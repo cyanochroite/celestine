@@ -3,7 +3,7 @@
 import typing
 
 from celestine.session.argument import Argument
-from celestine.session import Session
+from celestine.session.session import Session
 from celestine.window.page import Page
 
 
