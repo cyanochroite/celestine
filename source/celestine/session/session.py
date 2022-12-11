@@ -50,7 +50,7 @@ class Session():
                 load.argument(LANGUAGE),
             ),
             APPLICATION: Positional(
-                load.argument_default(APPLICATION),
+                "demo",
                 "Choose an applicanion. They have more option.",
                 load.argument(APPLICATION),
             ),
