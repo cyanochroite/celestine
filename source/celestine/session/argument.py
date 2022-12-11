@@ -96,6 +96,25 @@ class FinalHippo():
     )
 
 
+class Hippo():
+    """"""
+
+    def __init__(
+        self,
+        application: str,
+        language: str,
+        directory,
+        file
+    ):
+        self.application = application
+        self.language = language
+
+        module = load.module(directory, file)
+
+        self.attribute = module.Attribute2()
+        self.dictionary = self.attribute.dictionary(self.language)
+
+
 class Argument():
     """"""
 
@@ -215,20 +234,31 @@ class Argument():
 
     def dostuff(self):
 
-        self.head("session", "attribute")
-        self.head(APPLICATION, self.application)
+        attribute = Hippo(
+            self.application,
+            self.language,
+            "session",
+            "attribute",
+        )
+        new_attribute = Hippo(
+            self.application,
+            self.language,
+            APPLICATION,
+            self.application,
+        )
 
+        self.head(attribute)
+        self.head(new_attribute)
         self.parse_args = self.parser.parse_args(self.args)
+        self.foot(attribute)
+        self.foot(new_attribute)
 
-        self.attribute = self.foot("session", "attribute")
-        self.new_attribute = self.foot(APPLICATION, self.application)
-
+        self.attribute = attribute.attribute
+        self.new_attribute = new_attribute.attribute
         self.configuration.save()
 
-    def head(self, directory, file):
-        module = load.module(directory, file)
-        magic = module.Attribute2
-        dictionary = magic.dictionary(self.language)
+    def head(self, attribute):
+        dictionary = attribute.dictionary
 
         for (name, cats) in dictionary.items():
 
@@ -255,18 +285,16 @@ class Argument():
                         nargs=QUESTION_MARK,
                     )
 
-    def foot(self, directory, application):
-        module = load.module(directory, application)
-        attribute = module.Attribute2()
-        dictionary = attribute.dictionary(self.language)
+    def foot(self, attribute):
+        application = attribute.application
+        dictionary = attribute.dictionary
 
         for (name, fallback) in dictionary.items():
             override = getattr(self.parse_args, name, NONE)
             database = self.configuration.get(application, name)
             value = override or database or fallback.default
-            setattr(attribute, name, value)
+            setattr(attribute.attribute, name, value)
             if self.parse_args.configuration:
                 self.configuration.set(application, name, override)
 
-        return attribute
 

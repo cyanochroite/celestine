@@ -49,14 +49,14 @@ class Positional(Attribute):
 
 class Attribute2():
     """"""
-    application: str
-    interface: str
-    language: str
+    application: types.ModuleType
+    interface: types.ModuleType
+    language: types.ModuleType
     main: str
 
     @staticmethod
     def dictionary(
-        language: types.ModuleType,
+        language,
     ) -> typing.Dict[str, Attribute]:
         """"""
 
@@ -82,3 +82,14 @@ class Attribute2():
                 [MAIN],
             ),
         }
+
+    def __setattr__(self, name, value):
+        match name:
+            case "main":
+                main = getattr(self.application, value)
+                super().__setattr__(name, main)
+            case "attribute":
+                super().__setattr__(name, value)
+            case _:
+                module = load.module(name, value)
+                super().__setattr__(name, module)

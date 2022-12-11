@@ -77,7 +77,8 @@ def main(
     new_attribute = argument.new_attribute
     attribute = argument.attribute
 
-    session = Session(new_attribute, attribute)
+    session = attribute
+    session.attribute = new_attribute
 
     with session.interface.window(session) as window:
         for document in session.main(session):

@@ -16,12 +16,12 @@ from celestine.text.unicode import NONE
 
 
 def attempt(
-    name: str
+    *path: str
 ) -> bool:
     """Attempt to load a package and return the result."""
 
     try:
-        __import__(name)
+        module(*path)
         return True
     except ModuleNotFoundError:
         pass
