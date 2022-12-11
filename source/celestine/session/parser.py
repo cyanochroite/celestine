@@ -1,15 +1,11 @@
 """"""
 
-from celestine.session.argument import Argument
-from celestine.session import argument
-from celestine.text.unicode import NONE
-
-import sys
-import dataclasses
 import argparse
-import types
-import typing
-import enum
+
+
+from celestine.session import argument
+
+from celestine.text.unicode import NONE
 
 
 from celestine.session import load
@@ -18,13 +14,11 @@ from celestine.text import CELESTINE
 from celestine.text import VERSION_NUMBER
 
 from celestine.text.directory import APPLICATION
-from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 
 from celestine.text.session import HELP
 from celestine.text.session import STORE_TRUE
 from celestine.text.session import VERSION
-
 
 from celestine.text.unicode import HYPHEN_MINUS
 from celestine.text.unicode import QUESTION_MARK
@@ -32,39 +26,6 @@ from celestine.text.unicode import QUESTION_MARK
 from celestine.session.configuration import Configuration
 
 CONFIGURATION = "configuration"
-
-# action
-EN = "en"
-VIEWER = "viewer"
-MAIN = "main"
-
-HELP = "help"
-CHOICES = "choices"
-
-
-""""""
-
-# dataclass(frozen=True)
-# field(default_factory())
-# __post_init_
-
-# fields(class_or_instance) or asdict
-# metadata
-
-
-@dataclasses.dataclass
-class FinalHippo():
-    """"""
-    application: str
-    interface: str
-    languager: str
-    main: str = dataclasses.field(
-        default="main",
-        metadata={
-            HELP: "language.ARGUMENT_LANGUAGE_HELP",
-            CHOICES: [MAIN]
-        }
-    )
 
 
 class Hippo():
@@ -129,21 +90,21 @@ class Parser():
             self.name(LANGUAGE),
         )
 
-        (argument, _) = parser.parse_known_args(args)
+        (parse_known_args, _) = parser.parse_known_args(args)
 
         configuration = Configuration.make()
 
-        override = argument.application
+        override = parse_known_args.application
         database = configuration.get(CELESTINE, APPLICATION)
         fallback = "__init__"
         application = override or database or fallback
 
-        override = argument.language
+        override = parse_known_args.language
         database = configuration.get(CELESTINE, LANGUAGE)
         fallback = "__init__"
         language = override or database or fallback
 
-        language = load.module_fallback(LANGUAGE, argument.language)
+        language = load.module_fallback(LANGUAGE, parse_known_args.language)
 
         # (application, language) = self.essential(args, exit_on_error)
 

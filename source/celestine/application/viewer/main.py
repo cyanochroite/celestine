@@ -34,9 +34,3 @@ def window(page):
                 line.image(F"{index_x}-{index_y}", imaged)
                 index_x += 1
         index_y += 1
-
-
-def main(_):
-    return [
-        window,
-    ]

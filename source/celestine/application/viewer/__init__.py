@@ -1,8 +1,9 @@
 """"""
 
-import typing
-import types
+import dataclasses
 import os
+import types
+import typing
 
 from celestine.session.argument import Optional
 from celestine.session.argument import Override
@@ -14,6 +15,7 @@ from .main import window
 from .text import DIRECTORY
 
 
+@dataclasses.dataclass(init=False)
 class Session():
     """"""
 

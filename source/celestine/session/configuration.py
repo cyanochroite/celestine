@@ -81,7 +81,8 @@ class Configuration():
         if not value:
             return
 
-        if not self.configuration.has_section(section) and section != CELESTINE:
-            self.configuration.add_section(section)
+        if not self.configuration.has_section(section):
+            if section != CELESTINE:
+                self.configuration.add_section(section)
 
         self.configuration[section][option] = value
