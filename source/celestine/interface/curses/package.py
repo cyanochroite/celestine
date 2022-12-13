@@ -6,6 +6,9 @@ Putting alias here to contain errors to this file only.
 import curses
 import _curses
 
+from celestine.text.unicode import ESCAPE
+from celestine.text.unicode import SPACE
+
 
 def window(column, row, width, height):
     nlines = height
@@ -31,8 +34,9 @@ KEY_UP = curses.KEY_UP
 KEY_DOWN = curses.KEY_DOWN
 KEY_LEFT = curses.KEY_LEFT
 KEY_RIGHT = curses.KEY_RIGHT
-KEY_Q = 113  # ord('q'):
-KEY_SPACE = 32  # ord(' ')
+
+KEY_EXIT = ord(ESCAPE)
+KEY_CLICK = ord(SPACE)
 
 space = 32
 quit = 113

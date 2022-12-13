@@ -3,13 +3,13 @@
 import dataclasses
 import typing
 
-from celestine.text.unicode import QUESTION_MARK
-from celestine.text.unicode import NONE
 from celestine.text.unicode import HYPHEN_MINUS
+from celestine.text.unicode import NONE
+from celestine.text.unicode import QUESTION_MARK
 
 
-Name: typing.TypeAlias = typing.Tuple[str]
-Flag: typing.TypeAlias = typing.Tuple[str, str]
+KEY = "key"
+DEFAULT = "default"
 
 
 @dataclasses.dataclass
@@ -19,73 +19,69 @@ class Argument():
     default: str
     help: str
 
-    def value(
-        self,
-    ) -> typing.Dict[str, str]:
-        """"""
+    @staticmethod
+    def dictionary(x):
+        candy = {k: v for (k, v) in x if k not in [KEY, DEFAULT]}
 
-        asdict = dataclasses.asdict(self)
-        del asdict["default"]
-        return asdict
-
-    def fish(
-        self,
-        value: Name | Flag,
-    ) -> typing.Tuple[Name | Flag, typing.Dict[str, str]]:
-        """"""
-        asdict = dataclasses.asdict(self)
-        del asdict["default"]
-        del asdict["key"]
-        # field magic
-        return (value, asdict)
+        return candy
 
 
 @dataclasses.dataclass
 class Optional(Argument):
     """"""
 
-    key: str = "optional"
-
-    def valued(
+    def value(
         self,
         name: str,
-    ) -> typing.Tuple[Name | Flag, typing.Dict[str, str]]:
+    ) -> typing.Tuple[typing.Tuple[str, str], typing.Dict[str, str]]:
         """"""
-        one = NONE.join((HYPHEN_MINUS, name[0]))
-        two = NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name))
 
-        return self.fish((one, two))
+        return (
+            (
+                NONE.join((HYPHEN_MINUS, name[0])),
+                NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name)),
+            ),
+            dataclasses.asdict(
+                self,
+                dict_factory=self.dictionary,
+            ),
+        )
 
 
 @dataclasses.dataclass
 class Positional(Argument):
     """"""
 
-    choices: list[str]
-    key: str = "positional"
-    nargs: str = QUESTION_MARK
-
-    def valued(
+    def value(
         self,
         name: str,
-    ) -> typing.Tuple[Name | Flag, typing.Dict[str, str]]:
+    ) -> typing.Tuple[typing.Tuple[str], typing.Dict[str, str]]:
         """"""
 
-        return self.fish((name, ))
+        return (
+            (
+                name,
+            ),
+            dataclasses.asdict(
+                self,
+                dict_factory=self.dictionary,
+            ),
+        )
 
 
 @dataclasses.dataclass
 class Optionaly(Optional):
     """"""
 
-    key: str = "optional"
+    key: str = dataclasses.field(default="optional", init=False)
 
 
 @dataclasses.dataclass
-class Overridey(Positional):
+class Overridey(Optional):
     """"""
 
-    key: str = "override"
+    choices: list[str]
+    key: str = dataclasses.field(default="override", init=False)
 
 
 @dataclasses.dataclass
@@ -93,6 +89,5 @@ class Positionaly(Positional):
     """"""
 
     choices: list[str]
-    key: str = "positional"
-    nargs: str = QUESTION_MARK
-
+    key: str = dataclasses.field(default="positional", init=False)
+    nargs: str = dataclasses.field(default=QUESTION_MARK, init=False)

@@ -64,9 +64,9 @@ class Window(master):
                     self.cord_x %= self.width
                     self.cord_y %= self.height
                     self.stdscr.move(self.cord_y, self.cord_x)
-                case package.KEY_Q:
+                case package.KEY_EXIT:
                     break
-                case package.KEY_SPACE as key:
+                case package.KEY_CLICK as key:
                     for key, thing in self.frame.item.items():
                         if thing.select(self.cord_x - 1, self.cord_y - 1):
                             if thing.type == "button":

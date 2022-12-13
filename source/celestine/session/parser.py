@@ -201,23 +201,12 @@ class Parser():
 
         for (name, cats) in dictionary.items():
 
-            # (fish, stick) = cats.valued(name)
-            # self.optional.add_argument(fish, **stick)
-            # dog = dataclasses.asdict(cats)
+            (args, kwargs) = cats.value(name)
 
-            (args, kwargs) = cats.valued(name)
+            # self.add_argument[cats.key].add_argument(*args, **kwargs)
 
-            # might be able to call this directly from class
-           # self.optional.add_argument(*args, **kwargs)
-            match type(cats):
-                case argument.Optionaly:
-                    self.optional.add_argument(*args, **kwargs)
-                case argument.Overridey:
-                    self.override.add_argument(*args, **kwargs)
-                case argument.Positionaly:
-                    self.positional.add_argument(*args, **kwargs)
-            # fish = self.add_argument.get(name.key)
-            # fish.add_argument(**cats.value())
+            parser = self.add_argument[cats.key]
+            parser.add_argument(*args, **kwargs)
 
     def foot(self, attribute):
         application = attribute.application
