@@ -5,9 +5,9 @@ import os
 import types
 import typing
 
-from celestine.session.argument import Optional
-from celestine.session.argument import Override
-from celestine.session.argument import Positional
+from celestine.session.argument import Optionaly
+from celestine.session.argument import Overridey
+from celestine.session.argument import Positionaly
 
 from celestine.session.argument import Argument
 
@@ -30,16 +30,16 @@ class Session():
         """"""
 
         return {
-            DIRECTORY: Optional(
+            DIRECTORY: Optionaly(
                 os.getcwd(),
                 "pick your nose",
             ),
-            "ape": Override(
+            "ape": Overridey(
                 "four",
                 "moo",
                 [],
             ),
-            "you": Positional(
+            "you": Positionaly(
                 language.ARGUMENT_OVERRIDE_TITLE,
                 "cow",
                 [],

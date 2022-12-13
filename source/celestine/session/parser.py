@@ -1,7 +1,7 @@
 """"""
 
 import argparse
-
+import dataclasses
 
 from celestine.session import argument
 
@@ -159,6 +159,13 @@ class Parser():
         )
 
         # ignore above for now
+
+        self.add_argument = {}
+        self.add_argument["optional"] = self.optional
+        self.add_argument["override"] = self.override
+        self.add_argument["positional"] = self.positional
+
+        # rest of stuff
         self.args = args
         self.application = application
         self.language = language
@@ -194,28 +201,34 @@ class Parser():
 
         for (name, cats) in dictionary.items():
 
+            # (fish, stick) = cats.valued(name)
+            # self.optional.add_argument(fish, **stick)
+
+            (fish, stick) = cats.valued(name)
+            dog = dataclasses.asdict(cats)
             # might be able to call this directly from class
+            self.optional.add_argument(*fish, **stick)
             match type(cats):
-                case argument.Optional:
+                case argument.Optionaly:
                     self.optional.add_argument(
-                        self.flag(name),
-                        self.name(name),
-                        help=cats.description,
+                        name=(self.flag(name), self.name(name)),
+                        help=cats.help,
                     )
-                case argument.Override:
+                case argument.Overridey:
                     self.override.add_argument(
-                        self.flag(name),
-                        self.name(name),
-                        choices=cats.choice,
-                        help=cats.description,
+                        name=(self.flag(name), self.name(name)),
+                        choices=cats.choices,
+                        help=cats.help,
                     )
-                case argument.Positional:
+                case argument.Positionaly:
                     self.positional.add_argument(
-                        name,
-                        choices=cats.choice,
-                        help=cats.description,
+                        name=name,
+                        choices=cats.choices,
+                        help=cats.help,
                         nargs=QUESTION_MARK,
                     )
+            # fish = self.add_argument.get(name.key)
+            # fish.add_argument(**cats.value())
 
     def foot(self, attribute):
         application = attribute.application
