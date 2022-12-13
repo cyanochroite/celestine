@@ -8,6 +8,10 @@ from celestine.text.unicode import NONE
 from celestine.text.unicode import HYPHEN_MINUS
 
 
+Name: typing.TypeAlias = typing.Tuple[str]
+Flag: typing.TypeAlias = typing.Tuple[str, str]
+
+
 @dataclasses.dataclass
 class Argument():
     """"""
@@ -24,6 +28,17 @@ class Argument():
         del asdict["default"]
         return asdict
 
+    def fish(
+        self,
+        value: Name | Flag,
+    ) -> typing.Tuple[Name | Flag, typing.Dict[str, str]]:
+        """"""
+        asdict = dataclasses.asdict(self)
+        del asdict["default"]
+        del asdict["key"]
+        # field magic
+        return (value, asdict)
+
 
 @dataclasses.dataclass
 class Optional(Argument):
@@ -34,16 +49,12 @@ class Optional(Argument):
     def valued(
         self,
         name: str,
-    ) -> typing.Tuple[str, typing.Dict[str, str]]:
+    ) -> typing.Tuple[Name | Flag, typing.Dict[str, str]]:
         """"""
         one = NONE.join((HYPHEN_MINUS, name[0]))
         two = NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name))
 
-        asdict = dataclasses.asdict(self)
-        del asdict["default"]
-        del asdict["key"]
-        # field magic
-        return ((one, two), asdict)
+        return self.fish((one, two))
 
 
 @dataclasses.dataclass
@@ -57,14 +68,10 @@ class Positional(Argument):
     def valued(
         self,
         name: str,
-    ) -> typing.Tuple[str, typing.Dict[str, str]]:
+    ) -> typing.Tuple[Name | Flag, typing.Dict[str, str]]:
         """"""
 
-        asdict = dataclasses.asdict(self)
-        del asdict["default"]
-        del asdict["key"]
-        # field magic
-        return (tuple(name), asdict)
+        return self.fish((name, ))
 
 
 @dataclasses.dataclass

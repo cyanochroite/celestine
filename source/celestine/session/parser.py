@@ -203,30 +203,19 @@ class Parser():
 
             # (fish, stick) = cats.valued(name)
             # self.optional.add_argument(fish, **stick)
+            # dog = dataclasses.asdict(cats)
 
-            (fish, stick) = cats.valued(name)
-            dog = dataclasses.asdict(cats)
+            (args, kwargs) = cats.valued(name)
+
             # might be able to call this directly from class
-            self.optional.add_argument(*fish, **stick)
+           # self.optional.add_argument(*args, **kwargs)
             match type(cats):
                 case argument.Optionaly:
-                    self.optional.add_argument(
-                        name=(self.flag(name), self.name(name)),
-                        help=cats.help,
-                    )
+                    self.optional.add_argument(*args, **kwargs)
                 case argument.Overridey:
-                    self.override.add_argument(
-                        name=(self.flag(name), self.name(name)),
-                        choices=cats.choices,
-                        help=cats.help,
-                    )
+                    self.override.add_argument(*args, **kwargs)
                 case argument.Positionaly:
-                    self.positional.add_argument(
-                        name=name,
-                        choices=cats.choices,
-                        help=cats.help,
-                        nargs=QUESTION_MARK,
-                    )
+                    self.positional.add_argument(*args, **kwargs)
             # fish = self.add_argument.get(name.key)
             # fish.add_argument(**cats.value())
 
