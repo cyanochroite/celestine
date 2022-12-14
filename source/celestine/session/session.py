@@ -39,6 +39,11 @@ class Session():
         """"""
 
         return {
+            APPLICATION: Positionaly(
+                "demo",
+                "Choose an applicanion. They have more option.",
+                load.argument(APPLICATION),
+            ),
             INTERFACE: Overridey(
                 load.argument_default(INTERFACE),
                 language.ARGUMENT_INTERFACE_HELP,
@@ -48,11 +53,6 @@ class Session():
                 EN,
                 language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),
-            ),
-            APPLICATION: Positionaly(
-                "demo",
-                "Choose an applicanion. They have more option.",
-                load.argument(APPLICATION),
             ),
             MAIN: Positionaly(
                 MAIN,

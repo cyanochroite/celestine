@@ -94,6 +94,8 @@ class Parser():
 
         configuration = Configuration.make()
 
+        # TODO: FIX INPUT: celestine -i curses
+
         override = parse_known_args.application
         database = configuration.get(CELESTINE, APPLICATION)
         fallback = "__init__"
@@ -161,9 +163,11 @@ class Parser():
         # ignore above for now
 
         self.add_argument = {}
-        self.add_argument["optional"] = self.optional
-        self.add_argument["override"] = self.override
-        self.add_argument["positional"] = self.positional
+        self.add_argument[argument.Optionaly(None, None)] = self.optional
+        self.add_argument[argument.Overridey(
+            None, None, None)] = self.optional
+        self.add_argument[argument.Positionaly(
+            None, None, None)] = self.optional
 
         # rest of stuff
         self.args = args
@@ -200,12 +204,13 @@ class Parser():
         dictionary = attribute.dictionary
 
         for (name, cats) in dictionary.items():
+            car = str(cats)
 
             (args, kwargs) = cats.value(name)
 
             # self.add_argument[cats.key].add_argument(*args, **kwargs)
 
-            parser = self.add_argument[cats.key]
+            parser = self.add_argument[cats]
             parser.add_argument(*args, **kwargs)
 
     def foot(self, attribute):

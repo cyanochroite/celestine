@@ -12,7 +12,6 @@ KEY = "key"
 DEFAULT = "default"
 
 
-@dataclasses.dataclass
 class Argument():
     """"""
 
@@ -25,8 +24,25 @@ class Argument():
 
         return candy
 
+    def __str__(self):
+        candy = super().__str__()
+        cat = candy.split(" ")
+        fish = cat[0]
+        dog = fish.split("<", )
+        doorbell = dog[1]
+        canopen = doorbell.split(".", )
+        frog = canopen[-1]
+        return frog
 
-@dataclasses.dataclass
+#        return super().__str__().split("(")[0]
+
+    def __hash__(self):
+        return hash(str(self))
+
+    def __eq__(self, other):
+        return str(self) == str(other)
+
+
 class Optional(Argument):
     """"""
 
@@ -41,14 +57,10 @@ class Optional(Argument):
                 NONE.join((HYPHEN_MINUS, name[0])),
                 NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name)),
             ),
-            dataclasses.asdict(
-                self,
-                dict_factory=self.dictionary,
-            ),
+            self.asdict(),
         )
 
 
-@dataclasses.dataclass
 class Positional(Argument):
     """"""
 
@@ -62,32 +74,80 @@ class Positional(Argument):
             (
                 name,
             ),
-            dataclasses.asdict(
-                self,
-                dict_factory=self.dictionary,
-            ),
+            self.asdict(),
         )
 
 
-@dataclasses.dataclass
 class Optionaly(Optional):
     """"""
 
-    key: str = dataclasses.field(default="optional", init=False)
+    def asdict(self):
+        return {
+            "help": self.help,
+        }
+
+    def __init__(
+        self,
+        default: str,
+        help: str,
+    ) -> None:
+        """"""
+
+        self.default = default
+        self.help = help
 
 
-@dataclasses.dataclass
 class Overridey(Optional):
     """"""
 
     choices: list[str]
-    key: str = dataclasses.field(default="override", init=False)
+
+    def asdict(self):
+        return {
+            "help": self.help,
+            "choices": self.choices,
+        }
+
+    def __init__(
+        self,
+        default: str,
+        help: str,
+        choices: list[str],
+    ) -> None:
+        """"""
+
+        self.default = default
+        self.help = help
+        self.choices = choices
 
 
-@dataclasses.dataclass
 class Positionaly(Positional):
     """"""
 
     choices: list[str]
-    key: str = dataclasses.field(default="positional", init=False)
-    nargs: str = dataclasses.field(default=QUESTION_MARK, init=False)
+    nargs: str = QUESTION_MARK
+
+    def asdict(self):
+        return {
+            "help": self.help,
+            "choices": self.choices,
+            "nargs": self.nargs,
+        }
+
+    def __init__(
+        self,
+        default: str,
+        help: str,
+        choices: list[str],
+        nargs: str = QUESTION_MARK,
+    ) -> None:
+        """"""
+
+        self.default = default
+        self.help = help
+        self.choices = choices
+        self.nargs = nargs
+
+
+
+
