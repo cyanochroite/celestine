@@ -3,7 +3,15 @@
 import argparse
 import dataclasses
 
-from celestine.session import argument
+import types
+import typing
+
+from celestine.session.argument import Argument
+from celestine.session.argument import Optionaly
+from celestine.session.argument import Override
+
+from celestine.session.argument import Positionaly
+
 
 from celestine.text.unicode import NONE
 
@@ -35,16 +43,23 @@ class Hippo():
         self,
         application: str,
         language: str,
-        directory,
-        file
+        *path: str,
     ):
+
         self.application = application
         self.language = language
 
-        module = load.module(directory, file)
+        module = load.module(*path)
 
         self.attribute = module.Session()
         self.dictionary = self.attribute.dictionary(self.language)
+
+    def items(
+        self,
+    ) -> typing.Tuple[str, str]:
+        """"""
+
+        return self.dictionary.items()
 
 
 class Parser():
@@ -81,8 +96,8 @@ class Parser():
         )
 
         parser.add_argument(
-            APPLICATION,
-            nargs=QUESTION_MARK,
+            self.flag(APPLICATION),
+            self.name(APPLICATION),
         )
 
         parser.add_argument(
@@ -93,8 +108,6 @@ class Parser():
         (parse_known_args, _) = parser.parse_known_args(args)
 
         configuration = Configuration.make()
-
-        # TODO: FIX INPUT: celestine -i curses
 
         override = parse_known_args.application
         database = configuration.get(CELESTINE, APPLICATION)
@@ -163,10 +176,9 @@ class Parser():
         # ignore above for now
 
         self.add_argument = {}
-        self.add_argument[argument.Optionaly(None, None)] = self.optional
-        self.add_argument[argument.Overridey(
-            None, None, None)] = self.optional
-        self.add_argument[argument.Positionaly(
+        self.add_argument[Optionaly(None, None)] = self.optional
+        self.add_argument[Override()] = self.optional
+        self.add_argument[Positionaly(
             None, None, None)] = self.optional
 
         # rest of stuff
@@ -200,24 +212,26 @@ class Parser():
         self.new_attribute = new_attribute.attribute
         self.configuration.save()
 
-    def head(self, attribute):
-        dictionary = attribute.dictionary
+    def head(  # feed the parser
+        self,
+        attribute: Hippo,
+    ) -> None:
+        """"""
 
-        for (name, cats) in dictionary.items():
-            car = str(cats)
-
-            (args, kwargs) = cats.value(name)
-
-            # self.add_argument[cats.key].add_argument(*args, **kwargs)
-
-            parser = self.add_argument[cats]
+        for (name, argument) in attribute.items():
+            (args, kwargs) = argument.value(name)
+            parser = self.add_argument[argument]
             parser.add_argument(*args, **kwargs)
 
-    def foot(self, attribute):
-        application = attribute.application
-        dictionary = attribute.dictionary
+    def foot(
+        self,
+        attribute: Hippo,
+    ) -> None:
+        """"""
 
-        for (name, fallback) in dictionary.items():
+        application = attribute.application
+
+        for (name, fallback) in attribute.items():
             override = getattr(self.parse_args, name, NONE)
             database = self.configuration.get(application, name)
             value = override or database or fallback.default

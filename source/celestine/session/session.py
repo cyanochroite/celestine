@@ -8,8 +8,7 @@ from celestine.window.page import Page
 from celestine.session import load
 
 from celestine.session.argument import Argument
-from celestine.session.argument import Overridey
-from celestine.session.argument import Positionaly
+from celestine.session.argument import Override
 
 
 from celestine.text.directory import APPLICATION
@@ -39,22 +38,22 @@ class Session():
         """"""
 
         return {
-            APPLICATION: Positionaly(
+            APPLICATION: Override(
                 "demo",
                 "Choose an applicanion. They have more option.",
                 load.argument(APPLICATION),
             ),
-            INTERFACE: Overridey(
+            INTERFACE: Override(
                 load.argument_default(INTERFACE),
                 language.ARGUMENT_INTERFACE_HELP,
                 load.argument(INTERFACE),
             ),
-            LANGUAGE: Overridey(
+            LANGUAGE: Override(
                 EN,
                 language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),
             ),
-            MAIN: Positionaly(
+            MAIN: Override(
                 MAIN,
                 "Choose an applicanion. They have more option.",
                 [MAIN],

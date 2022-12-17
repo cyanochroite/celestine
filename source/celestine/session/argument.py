@@ -8,7 +8,6 @@ from celestine.text.unicode import NONE
 from celestine.text.unicode import QUESTION_MARK
 
 
-KEY = "key"
 DEFAULT = "default"
 
 
@@ -20,7 +19,7 @@ class Argument():
 
     @staticmethod
     def dictionary(x):
-        candy = {k: v for (k, v) in x if k not in [KEY, DEFAULT]}
+        candy = {k: v for (k, v) in x if k not in [DEFAULT]}
 
         return candy
 
@@ -97,7 +96,7 @@ class Optionaly(Optional):
         self.help = help
 
 
-class Overridey(Optional):
+class Override(Optional):
     """"""
 
     choices: list[str]
@@ -110,9 +109,9 @@ class Overridey(Optional):
 
     def __init__(
         self,
-        default: str,
-        help: str,
-        choices: list[str],
+        default: str = "",
+        help: str = "",
+        choices: list[str] = [],
     ) -> None:
         """"""
 

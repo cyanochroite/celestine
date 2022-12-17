@@ -6,7 +6,7 @@ import types
 import typing
 
 from celestine.session.argument import Optionaly
-from celestine.session.argument import Overridey
+from celestine.session.argument import Override
 from celestine.session.argument import Positionaly
 
 from celestine.session.argument import Argument
@@ -34,7 +34,7 @@ class Session():
                 os.getcwd(),
                 "pick your nose",
             ),
-            "ape": Overridey(
+            "tape": Override(
                 "four",
                 "moo",
                 [],
