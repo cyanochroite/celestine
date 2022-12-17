@@ -175,11 +175,29 @@ class Parser():
 
         # ignore above for now
 
+        # print(str(Argument))
+        print("********")
+
         self.add_argument = {}
-        self.add_argument[Optionaly(None, None)] = self.optional
-        self.add_argument[Override()] = self.optional
-        self.add_argument[Positionaly(
-            None, None, None)] = self.optional
+        self.add_argument[Argument] = self.optional
+        self.add_argument[Optionaly] = self.optional
+        pig = Argument()
+        self.add_argument[pig] = self.optional
+
+        print(pig)
+        print(Argument)
+        dog = Argument()
+        self.add_argument[dog] = "meow"
+        print(self.add_argument.get(pig))
+        self.add_argument[pig] = "catfish"
+        print(self.add_argument.get(Argument))
+        self.add_argument[Argument] = "doggy"
+        print(self.add_argument.get(Argument))
+
+        print("********")
+        self.add_argument[Optionaly] = self.optional
+        self.add_argument[Override] = self.optional
+        self.add_argument[Positionaly] = self.optional
 
         # rest of stuff
         self.args = args

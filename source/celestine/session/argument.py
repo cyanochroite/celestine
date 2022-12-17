@@ -11,7 +11,33 @@ from celestine.text.unicode import QUESTION_MARK
 DEFAULT = "default"
 
 
-class Argument():
+class ArgumentParser(type):
+    """<class 'celestine.session.argument.Argument'>"""
+
+    def __eq__(
+        cls,
+        other: typing.Self
+    ):
+
+        return str(cls) == str(other)
+
+    def __hash__(
+        cls,
+    ) -> int:
+
+        return hash(str(cls))
+
+    def __str__(
+        cls,
+    ) -> str:
+
+        string = super().__str__()
+        (_, _, after) = string.rpartition(".")
+        (before, _, _) = after.partition("'")
+        return before
+
+
+class Argument(metaclass=ArgumentParser):
     """"""
 
     default: str
@@ -23,23 +49,27 @@ class Argument():
 
         return candy
 
-    def __str__(self):
-        candy = super().__str__()
-        cat = candy.split(" ")
-        fish = cat[0]
-        dog = fish.split("<", )
-        doorbell = dog[1]
-        canopen = doorbell.split(".", )
-        frog = canopen[-1]
-        return frog
+    def __eq__(
+        self,
+        other: typing.Self
+    ):
 
-#        return super().__str__().split("(")[0]
+        return str(self) == str(other)
 
-    def __hash__(self):
+    def __hash__(
+        self,
+    ) -> int:
+
         return hash(str(self))
 
-    def __eq__(self, other):
-        return str(self) == str(other)
+    def __str__(
+        self,
+    ) -> str:
+
+        string = super().__str__()
+        (_, _, after) = string.rpartition(".")
+        (before, _, _) = after.partition(" ")
+        return before
 
 
 class Optional(Argument):
