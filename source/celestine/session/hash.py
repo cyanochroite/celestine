@@ -1,0 +1,74 @@
+"""
+Make it so class objects and class instances map to the same slot in a
+dictionary. Essentially this is just a weird fancy Enum.
+
+dictionary = {}
+
+class Test(HashClass):
+    pass
+
+instance = Test()
+
+dictionary[instance] = "test"
+print(dictionary[Test]) -> "test"
+"""
+
+import typing
+
+
+class HashMetaClass(type):
+    """"""
+
+    def __eq__(
+        cls,
+        other: typing.Self
+    ):
+        """This seems to always be called even on class instances."""
+
+        return str(cls) == str(other)
+
+    def __hash__(
+        cls,
+    ) -> int:
+        """"""
+
+        return hash(str(cls))
+
+    def __str__(
+        cls,
+    ) -> str:
+        """<class 'celestine.session.argument.Argument'>"""
+
+        string = super().__str__()
+        (_, _, after) = string.rpartition(".")
+        (before, _, _) = after.partition("'")
+        return before
+
+
+class HashClass(metaclass=HashMetaClass):
+    """"""
+
+    def __eq__(
+        self,
+        other: typing.Self
+    ):
+        """This might never be called but wont hurt to keep it."""
+
+        return str(self) == str(other)
+
+    def __hash__(
+        self,
+    ) -> int:
+        """"""
+
+        return hash(str(self))
+
+    def __str__(
+        self,
+    ) -> str:
+        """<celestine.session.argument.Argument object at 0x00000000>"""
+
+        string = super().__str__()
+        (_, _, after) = string.rpartition(".")
+        (before, _, _) = after.partition(" ")
+        return before

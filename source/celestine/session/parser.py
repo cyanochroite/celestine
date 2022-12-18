@@ -9,6 +9,7 @@ import typing
 from celestine.session.argument import Argument
 from celestine.session.argument import Optional
 from celestine.session.argument import Override
+from celestine.session.argument import Name
 
 from celestine.session.argument import Positional
 
@@ -94,6 +95,11 @@ class Parser():
             add_help=False,
             exit_on_error=exit_on_error,
         )
+
+        idea = {
+            APPLICATION: Name(APPLICATION),
+            LANGUAGE: Name(LANGUAGE),
+        }
 
         parser.add_argument(
             self.flag(APPLICATION),
