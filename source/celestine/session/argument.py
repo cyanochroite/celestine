@@ -10,6 +10,70 @@ from celestine.text.unicode import QUESTION_MARK
 DEFAULT = "default"
 
 
+class Attribute():
+    """"""
+
+    def dictionary(
+        self,
+    ) -> typing.Dict[str, str]:
+        """
+        Do not map 'fallback' for it is not a valid ArgumentParser
+        option. It functions a lot like 'default' where it is used only
+        when all sources are found to be None.
+        """
+
+        return {"help": self.help}
+
+    def __init__(
+        self,
+        fallback: str,
+        help: str,
+    ) -> None:
+        """"""
+
+        self.fallback = fallback
+        self.help = help
+
+
+class Choices(Attribute):
+    """"""
+
+    def dictionary(
+        self,
+    ):
+        """"""
+
+        return super().dictionary() | {"choices": self.choices}
+
+    def __init__(
+        self,
+        choices: list[str],
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
+        self.choices = choices
+
+
+class Nargs(Attribute):
+    """"""
+
+    def dictionary(
+        self,
+    ):
+        """"""
+
+        return super().dictionary() | {"nargs": self.nargs}
+
+    def __init__(
+        self,
+        nargs: str,
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
+        self.nargs = nargs
+
+
+#############
 class ArgumentParser(type):
     """<class 'celestine.session.argument.Argument'>"""
 
@@ -39,33 +103,6 @@ class ArgumentParser(type):
 class Argument(metaclass=ArgumentParser):
     """"""
 
-    default: str
-    help: str
-
-    def dictionary(
-        self
-    ):
-        """"""
-
-        return {"default": self.default}
-
-    def asdict(
-        self,
-    ) -> typing.Dict[str, str]:
-        """"""
-
-        return {
-            "help": self.help,
-        }
-
-    def value(
-        self,
-        name: str,
-    ) -> typing.Tuple[str, typing.Dict[str, str]]:
-        """type hinting broken on this function"""
-
-        return (name, self.asdict())
-
     def __eq__(
         self,
         other: typing.Self
@@ -89,109 +126,73 @@ class Argument(metaclass=ArgumentParser):
         return before
 
 
-class Flag(Argument):
+class Flag(Argument, Attribute):
     """"""
 
     def value(
         self,
-        name,
-    ):
-        """type hinting broken on this function"""
+        name: str,
+    ) -> typing.Tuple[typing.Tuple[str, str], typing.Dict[str, str]]:
+        """"""
 
-        return super().value(
+        return (
             (
                 NONE.join((HYPHEN_MINUS, name[0])),
                 NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name)),
-            )
+            ),
+            self.dictionary(),
         )
 
 
-class Name(Argument):
+class Name(Argument, Attribute):
     """"""
 
     def value(
         self,
-        name,
-    ):
-        """type hinting broken on this function"""
+        name: str,
+    ) -> typing.Tuple[typing.Tuple[str], typing.Dict[str, str]]:
+        """"""
 
-        return super().value(
+        return (
             (
                 name,
-            )
+            ),
+            self.dictionary(),
         )
 
 
 class Optional(Flag):
     """"""
 
-    def asdict(self):
-        return {
-            "help": self.help,
-        }
 
-    def __init__(
-        self,
-        default: str,
-        help: str,
-    ) -> None:
-        """"""
-
-        self.default = default
-        self.help = help
-
-
-class Override(Flag):
+class Override(Flag, Choices):
     """"""
 
-    choices: list[str]
-
-    def asdict(self):
-        return {
-            "help": self.help,
-            "choices": self.choices,
-        }
-
     def __init__(
         self,
-        default: str = "",
-        help: str = "",
-        choices: list[str] = [],
-    ) -> None:
-        """"""
-
-        self.default = default
-        self.help = help
-        self.choices = choices
-
-
-class Positional(Name):
-    """"""
-
-    choices: list[str]
-    nargs: str = QUESTION_MARK
-
-    def asdict(self):
-        return {
-            "help": self.help,
-            "choices": self.choices,
-            "nargs": self.nargs,
-        }
-
-    def __init__(
-        self,
-        default: str,
+        fallback: str,
         help: str,
         choices: list[str],
-        nargs: str = QUESTION_MARK,
-    ) -> None:
-        """"""
-
-        self.default = default
-        self.help = help
-        self.choices = choices
-        self.nargs = nargs
+    ):
+        super().__init__(
+            fallback=fallback,
+            help=help,
+            choices=choices,
+        )
 
 
+class Positional(Name, Choices, Nargs):
+    """"""
 
-
+    def __init__(
+        self,
+        fallback: str,
+        help: str,
+        choices: list[str],
+    ):
+        super().__init__(
+            fallback=fallback,
+            help=help,
+            choices=choices,
+            nargs=QUESTION_MARK,
+        )

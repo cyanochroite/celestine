@@ -236,7 +236,7 @@ class Parser():
         for (name, fallback) in attribute.items():
             override = getattr(self.parse_args, name, NONE)
             database = self.configuration.get(application, name)
-            value = override or database or fallback.default
+            value = override or database or fallback.fallback
             setattr(attribute.attribute, name, value)
             if self.parse_args.configuration:
                 self.configuration.set(application, name, override)
