@@ -1,7 +1,7 @@
 """"""
 
 from celestine.session import load
-from celestine.session.parser import Parser
+from celestine.session.parser import start_session
 
 from celestine.text import CELESTINE
 from celestine.text import VERSION_BLENDER
@@ -66,19 +66,11 @@ def unregister(
 
 def main(
     argv: list[str],
-    exit_on_error: bool
+    exit_on_error: bool,
 ) -> None:
     """Run the main program."""
 
-    argument = Parser(argv, exit_on_error)
-    argument.dostuff()
-
-    new_attribute = argument.new_attribute
-    attribute = argument.attribute
-
-    session = attribute
-    session.attribute = new_attribute
-
+    session = start_session(argv, exit_on_error)
     with session.interface.window(session) as window:
         for document in session.main(session):
             window.page(document)

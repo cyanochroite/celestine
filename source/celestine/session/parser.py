@@ -7,10 +7,10 @@ import types
 import typing
 
 from celestine.session.argument import Argument
-from celestine.session.argument import Optionaly
+from celestine.session.argument import Optional
 from celestine.session.argument import Override
 
-from celestine.session.argument import Positionaly
+from celestine.session.argument import Positional
 
 
 from celestine.text.unicode import NONE
@@ -56,7 +56,7 @@ class Hippo():
 
     def items(
         self,
-    ) -> typing.Tuple[str, str]:
+    ) -> typing.Iterable[typing.Tuple[str, Argument]]:
         """"""
 
         return self.dictionary.items()
@@ -175,29 +175,10 @@ class Parser():
 
         # ignore above for now
 
-        # print(str(Argument))
-        print("********")
-
         self.add_argument = {}
-        self.add_argument[Argument] = self.optional
-        self.add_argument[Optionaly] = self.optional
-        pig = Argument()
-        self.add_argument[pig] = self.optional
-
-        print(pig)
-        print(Argument)
-        dog = Argument()
-        self.add_argument[dog] = "meow"
-        print(self.add_argument.get(pig))
-        self.add_argument[pig] = "catfish"
-        print(self.add_argument.get(Argument))
-        self.add_argument[Argument] = "doggy"
-        print(self.add_argument.get(Argument))
-
-        print("********")
-        self.add_argument[Optionaly] = self.optional
-        self.add_argument[Override] = self.optional
-        self.add_argument[Positionaly] = self.optional
+        self.add_argument[Positional] = self.positional
+        self.add_argument[Optional] = self.optional
+        self.add_argument[Override] = self.override
 
         # rest of stuff
         self.args = args
@@ -207,7 +188,7 @@ class Parser():
 
     def dostuff(self):
 
-        attribute = Hippo(
+        old_attribute = Hippo(
             self.application,
             self.language,
             "session",
@@ -220,15 +201,18 @@ class Parser():
             self.application,
         )
 
-        self.head(attribute)
+        self.head(old_attribute)
         self.head(new_attribute)
         self.parse_args = self.parser.parse_args(self.args)
-        self.foot(attribute)
+        self.foot(old_attribute)
         self.foot(new_attribute)
 
-        self.attribute = attribute.attribute
-        self.new_attribute = new_attribute.attribute
         self.configuration.save()
+
+        session = old_attribute.attribute
+        session.attribute = new_attribute.attribute
+
+        return session
 
     def head(  # feed the parser
         self,
@@ -258,3 +242,12 @@ class Parser():
                 self.configuration.set(application, name, override)
 
 
+def start_session(
+    argv: list[str],
+    exit_on_error: bool,
+) -> None:
+    """"""
+
+    argument = Parser(argv, exit_on_error)
+    session = argument.dostuff()
+    return session

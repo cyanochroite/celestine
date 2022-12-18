@@ -1,6 +1,5 @@
 """"""
 
-import dataclasses
 import typing
 
 from celestine.text.unicode import HYPHEN_MINUS
@@ -43,11 +42,29 @@ class Argument(metaclass=ArgumentParser):
     default: str
     help: str
 
-    @staticmethod
-    def dictionary(x):
-        candy = {k: v for (k, v) in x if k not in [DEFAULT]}
+    def dictionary(
+        self
+    ):
+        """"""
 
-        return candy
+        return {"default": self.default}
+
+    def asdict(
+        self,
+    ) -> typing.Dict[str, str]:
+        """"""
+
+        return {
+            "help": self.help,
+        }
+
+    def value(
+        self,
+        name: str,
+    ) -> typing.Tuple[str, typing.Dict[str, str]]:
+        """type hinting broken on this function"""
+
+        return (name, self.asdict())
 
     def __eq__(
         self,
@@ -72,42 +89,40 @@ class Argument(metaclass=ArgumentParser):
         return before
 
 
-class Optional(Argument):
+class Flag(Argument):
     """"""
 
     def value(
         self,
-        name: str,
-    ) -> typing.Tuple[typing.Tuple[str, str], typing.Dict[str, str]]:
-        """"""
+        name,
+    ):
+        """type hinting broken on this function"""
 
-        return (
+        return super().value(
             (
                 NONE.join((HYPHEN_MINUS, name[0])),
                 NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name)),
-            ),
-            self.asdict(),
+            )
         )
 
 
-class Positional(Argument):
+class Name(Argument):
     """"""
 
     def value(
         self,
-        name: str,
-    ) -> typing.Tuple[typing.Tuple[str], typing.Dict[str, str]]:
-        """"""
+        name,
+    ):
+        """type hinting broken on this function"""
 
-        return (
+        return super().value(
             (
                 name,
-            ),
-            self.asdict(),
+            )
         )
 
 
-class Optionaly(Optional):
+class Optional(Flag):
     """"""
 
     def asdict(self):
@@ -126,7 +141,7 @@ class Optionaly(Optional):
         self.help = help
 
 
-class Override(Optional):
+class Override(Flag):
     """"""
 
     choices: list[str]
@@ -150,7 +165,7 @@ class Override(Optional):
         self.choices = choices
 
 
-class Positionaly(Positional):
+class Positional(Name):
     """"""
 
     choices: list[str]
