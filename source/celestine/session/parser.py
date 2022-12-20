@@ -8,6 +8,7 @@ from celestine.session.argument import Argument
 from celestine.session.argument import Optional
 from celestine.session.argument import Override
 from celestine.session.argument import Name
+from celestine.session.argument import Flag
 
 from celestine.session.argument import Positional
 
@@ -24,7 +25,6 @@ from celestine.text.directory import APPLICATION
 from celestine.text.directory import LANGUAGE
 
 from celestine.text.unicode import HYPHEN_MINUS
-from celestine.text.unicode import QUESTION_MARK
 
 from .configuration import Configuration
 
@@ -65,23 +65,7 @@ class Hippo():
 class Parser():
     """"""
 
-    @ staticmethod
-    def flag(
-        name: str
-    ) -> str:
-        """name = -n"""
-
-        iterable = (HYPHEN_MINUS, name[0])
-        return str().join(iterable)
-
-    @ staticmethod
-    def name(
-        name: str
-    ) -> str:
-        """name = --name"""
-
-        iterable = (HYPHEN_MINUS, HYPHEN_MINUS, name)
-        return str().join(iterable)
+    add_argument: typing.Dict[Argument, argparse._ArgumentGroup]
 
     def __init__(
         self,
@@ -90,25 +74,30 @@ class Parser():
     ) -> None:
         """"""
 
+    def setup(
+        self,
+        args: list[str],
+        exit_on_error: bool
+    ) -> None:
+        """"""
+
+        one = Flag("__init__").key(APPLICATION)
+        two = Flag("__init__").key(LANGUAGE)
+
+        turbo = Hippo(
+            CELESTINE,
+            None,
+            "session",
+            "turbo",
+        )
+
         parser = argparse.ArgumentParser(
             add_help=False,
             exit_on_error=exit_on_error,
         )
 
-        idea = {
-            APPLICATION: Name(APPLICATION),
-            LANGUAGE: Name(LANGUAGE),
-        }
-
-        parser.add_argument(
-            self.flag(APPLICATION),
-            self.name(APPLICATION),
-        )
-
-        parser.add_argument(
-            self.flag(LANGUAGE),
-            self.name(LANGUAGE),
-        )
+        parser.add_argument(*one)
+        parser.add_argument(*two)
 
         (parse_known_args, _) = parser.parse_known_args(args)
 
@@ -157,26 +146,32 @@ class Parser():
             description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
         )
 
-        self.information.add_argument(
-            self.flag(CONFIGURATION),
-            self.name(CONFIGURATION),
-            action=STORE_TRUE,
-            help=language.ARGUMENT_HELP_HELP,
-        )
+        # self.information.add_argument(
+        #    self.flag(CONFIGURATION),
+        #    self.name(CONFIGURATION),
+        #    action=STORE_TRUE,
+        #    help=language.ARGUMENT_HELP_HELP,
+        # )
+
+        # self.information.add_argument(
+        #    self.flag(HELP),
+        #    self.name(HELP),
+        #    action=HELP,
+        #    help=language.ARGUMENT_HELP_HELP,
+        # )
+
+        # self.information.add_argument(
+        #    self.flag(VERSION),
+        #    self.name(VERSION),
+        #    action=VERSION,
+        #    help=language.ARGUMENT_VERSION_HELP,
+        #    version=VERSION_NUMBER,
+        # )
 
         self.information.add_argument(
-            self.flag(HELP),
-            self.name(HELP),
+            "-h", "--help",
             action=HELP,
             help=language.ARGUMENT_HELP_HELP,
-        )
-
-        self.information.add_argument(
-            self.flag(VERSION),
-            self.name(VERSION),
-            action=VERSION,
-            help=language.ARGUMENT_VERSION_HELP,
-            version=VERSION_NUMBER,
         )
 
         # ignore above for now
@@ -187,11 +182,12 @@ class Parser():
         self.add_argument[Override] = self.override
 
         # rest of stuff
-        self.args = args
         self.application = application
         self.language = language
 
-    def dostuff(self):
+        return self
+
+    def dostuff(self, args):
         """"""
 
         old_attribute = Hippo(
@@ -209,7 +205,7 @@ class Parser():
 
         self.head(old_attribute)
         self.head(new_attribute)
-        self.parse_args = self.parser.parse_args(self.args)
+        self.parse_args = self.parser.parse_args(args)
         self.foot(old_attribute)
         self.foot(new_attribute)
 
@@ -244,8 +240,8 @@ class Parser():
             database = self.configuration.get(application, name)
             value = override or database or fallback.fallback
             setattr(attribute.attribute, name, value)
-            if self.parse_args.configuration:
-                self.configuration.set(application, name, override)
+            # if self.parse_args.configuration:
+            #    self.configuration.set(application, name, override)
 
 
 def start_session(
@@ -255,5 +251,6 @@ def start_session(
     """"""
 
     argument = Parser(argv, exit_on_error)
-    session = argument.dostuff()
+    cat = argument.setup(argv, exit_on_error)
+    session = argument.dostuff(argv)
     return session

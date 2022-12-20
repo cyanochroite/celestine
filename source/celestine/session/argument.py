@@ -15,7 +15,10 @@ from .hash import HashClass
 
 
 class Argument(HashClass, Attribute):
-    """"""
+    """abstract class"""
+
+    def value(self, _):
+        """abstract method """
 
 
 class Flag(Argument):
@@ -33,6 +36,17 @@ class Flag(Argument):
                 NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name)),
             ),
             self.dictionary(),
+        )
+
+    def key(
+        self,
+        name,
+    ):
+        """"""
+
+        return (
+            NONE.join((HYPHEN_MINUS, name[0])),
+            NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name)),
         )
 
 

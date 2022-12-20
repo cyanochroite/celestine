@@ -39,4 +39,3 @@ for item in todo:
 
     path = F"../../hold/EUPL_1.2_{item}.txt"
     save(path, "\n".join(data))
-`
