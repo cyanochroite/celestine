@@ -1,6 +1,6 @@
 """Central place for loading and importing external files."""
 
-from celestine.string import stream
+from celestine.text import stream
 
 
 def save(path, string):
