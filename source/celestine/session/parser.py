@@ -1,9 +1,7 @@
 """"""
 
 import argparse
-import dataclasses
 
-import types
 import typing
 
 from celestine.session.argument import Argument
@@ -25,14 +23,15 @@ from celestine.text import VERSION_NUMBER
 from celestine.text.directory import APPLICATION
 from celestine.text.directory import LANGUAGE
 
-from celestine.text.session import HELP
-from celestine.text.session import STORE_TRUE
-from celestine.text.session import VERSION
-
 from celestine.text.unicode import HYPHEN_MINUS
 from celestine.text.unicode import QUESTION_MARK
 
-from celestine.session.configuration import Configuration
+from .configuration import Configuration
+
+from .text import HELP
+from .text import STORE_TRUE
+from .text import VERSION
+
 
 CONFIGURATION = "configuration"
 
@@ -113,15 +112,16 @@ class Parser():
 
         (parse_known_args, _) = parser.parse_known_args(args)
 
-        configuration = Configuration.make()
+        self.configuration = Configuration()
+        self.configuration.load()
 
         override = parse_known_args.application
-        database = configuration.get(CELESTINE, APPLICATION)
+        database = self.configuration.get(CELESTINE, APPLICATION)
         fallback = "__init__"
         application = override or database or fallback
 
         override = parse_known_args.language
-        database = configuration.get(CELESTINE, LANGUAGE)
+        database = self.configuration.get(CELESTINE, LANGUAGE)
         fallback = "__init__"
         language = override or database or fallback
 
@@ -190,9 +190,9 @@ class Parser():
         self.args = args
         self.application = application
         self.language = language
-        self.configuration = configuration
 
     def dostuff(self):
+        """"""
 
         old_attribute = Hippo(
             self.application,

@@ -6,12 +6,12 @@ from celestine.text.unicode import HYPHEN_MINUS
 from celestine.text.unicode import NONE
 from celestine.text.unicode import QUESTION_MARK
 
-from celestine.session.attribute import Attribute
-from celestine.session.attribute import Choices
-from celestine.session.attribute import Help
-from celestine.session.attribute import Nargs
+from .attribute import Attribute
+from .attribute import Choices
+from .attribute import Help
+from .attribute import Nargs
 
-from celestine.session.hash import HashClass
+from .hash import HashClass
 
 
 class Argument(HashClass, Attribute):

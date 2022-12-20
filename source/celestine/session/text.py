@@ -11,3 +11,8 @@ APPEND_CONST = "append_const"
 COUNT = "count"
 HELP = "help"
 VERSION = "version"
+
+# attribute
+CHOICES = "choices"
+HELP = "help"
+NARGS = "nargs"

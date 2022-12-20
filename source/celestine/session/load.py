@@ -1,17 +1,16 @@
 """Central place for loading and importing external files."""
 
-import types
-import typing
-
 import os
 import sys
-
-from celestine.text.unicode import FULL_STOP
-from celestine.text.unicode import LOW_LINE
+import types
+import typing
 
 from celestine.text import CELESTINE
 
 from celestine.text.stream import FILE_NAME_EXTENSION
+
+from celestine.text.unicode import FULL_STOP
+from celestine.text.unicode import LOW_LINE
 from celestine.text.unicode import NONE
 
 

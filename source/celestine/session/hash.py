@@ -15,6 +15,10 @@ print(dictionary[Test]) -> "test"
 
 import typing
 
+from celestine.text.unicode import APOSTROPHE
+from celestine.text.unicode import FULL_STOP
+from celestine.text.unicode import SPACE
+
 
 class HashMetaClass(type):
     """"""
@@ -40,8 +44,8 @@ class HashMetaClass(type):
         """<class 'celestine.session.argument.Argument'>"""
 
         string = super().__str__()
-        (_, _, after) = string.rpartition(".")
-        (before, _, _) = after.partition("'")
+        (_, _, after) = string.rpartition(FULL_STOP)
+        (before, _, _) = after.partition(APOSTROPHE)
         return before
 
 
@@ -69,6 +73,6 @@ class HashClass(metaclass=HashMetaClass):
         """<celestine.session.argument.Argument object at 0x00000000>"""
 
         string = super().__str__()
-        (_, _, after) = string.rpartition(".")
-        (before, _, _) = after.partition(" ")
+        (_, _, after) = string.rpartition(FULL_STOP)
+        (before, _, _) = after.partition(SPACE)
         return before

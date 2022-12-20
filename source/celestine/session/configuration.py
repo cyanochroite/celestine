@@ -1,9 +1,8 @@
 """"""
 
 import configparser
-import typing
 
-from celestine.text.session import CONFIGURATION
+from celestine.session.text import CONFIGURATION
 
 from celestine.text.stream import WRITE_TEXT
 from celestine.text.stream import UTF_8
@@ -31,16 +30,6 @@ class Configuration():
             empty_lines_in_values=False,
             default_section=CELESTINE,
         )
-
-    @classmethod
-    def make(
-        cls,
-    ) -> typing.Self:
-        """Load the configuration file."""
-
-        configuration = cls()
-        configuration.load()
-        return configuration
 
     def load(
         self,

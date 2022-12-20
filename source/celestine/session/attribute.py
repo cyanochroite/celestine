@@ -2,10 +2,9 @@
 
 import typing
 
-
-CHOICES = "choices"
-HELP = "help"
-NARGS = "nargs"
+from .text import CHOICES
+from .text import HELP
+from .text import NARGS
 
 
 class Attribute():
