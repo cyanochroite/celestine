@@ -6,6 +6,8 @@ from .text import CHOICES
 from .text import HELP
 from .text import NARGS
 
+ACTION = "action"
+
 
 class Attribute():
     """"""
@@ -28,6 +30,25 @@ class Attribute():
         """"""
 
         self.fallback = fallback
+
+
+class Action(Attribute):
+    """"""
+
+    def dictionary(
+        self,
+    ):
+        """"""
+
+        return super().dictionary() | {ACTION: self.action}
+
+    def __init__(
+        self,
+        action: str,
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
+        self.action = action
 
 
 class Choices(Attribute):
