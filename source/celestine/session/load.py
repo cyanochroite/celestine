@@ -14,11 +14,8 @@ from celestine.text.unicode import LOW_LINE
 from celestine.text.unicode import NONE
 
 
-def attempt(
-    *path: str
-) -> bool:
+def attempt(*path: str) -> bool:
     """Attempt to load a package and return the result."""
-
     try:
         module(*path)
         return True
@@ -27,11 +24,8 @@ def attempt(
     return False
 
 
-def module(
-    *path: str
-) -> types.ModuleType:
+def module(*path: str) -> types.ModuleType:
     """Load an internal module from anywhere in the application."""
-
     iterable = [CELESTINE, *path]
     name = FULL_STOP.join(iterable)
     file = __import__(name)
@@ -40,25 +34,19 @@ def module(
     return file
 
 
-def module_fallback(
-    *path: str
-) -> types.ModuleType:
+def module_fallback(*path: str) -> types.ModuleType:
     """
     Load an internal module from anywhere in the application.
     If the last item is none then load the package instead.
     """
-
     iterable = [*path]
     return module(*path) if iterable.pop(-1) else module(*iterable)
 
 
-def dictionary(
-    *path: str
-) -> typing.Dict[str, str]:
+def dictionary(*path: str) -> typing.Dict[str, str]:
     """
     Load from module all key value pairs and turn them into dictionary.
     """
-
     _module = module(*path)
     _dictionary = vars(_module)
     mapping = {
@@ -70,27 +58,18 @@ def dictionary(
     return mapping
 
 
-def pathway(
-    *path: str
-) -> str:
+def pathway(*path: str) -> str:
     """"""
-
     return os.path.join(sys.path[0], CELESTINE, *path)
 
 
-def python(
-    *path: str
-) -> str:
+def python(*path: str) -> str:
     """"""
-
     return NONE.join([pathway(*path), FILE_NAME_EXTENSION])
 
 
-def argument_default(
-    path: str
-) -> str:
+def argument_default(path: str) -> str:
     """"""
-
     array = argument(path)
     result = None
     for item in array:
@@ -105,16 +84,13 @@ def argument_default(
     return result
 
 
-def argument(
-    *path: str
-) -> list[str]:
+def argument(*path: str) -> list[str]:
     """
     Build a path to the selected package. Scan all items in directory.
     Return a list of items that are not private, such as '.private' or
     '_private'. (First letter is not a symbol.)
     Strip off all file extensions, if any.
     """
-
     directory = pathway(*path)
     folder = os.listdir(directory)
 

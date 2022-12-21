@@ -1,4 +1,4 @@
-"""Celestine Image Viewer"""
+""""""
 
 import typing
 
@@ -15,11 +15,8 @@ class Session():
     """"""
 
     @staticmethod
-    def dictionary(
-        language,
-    ) -> typing.Dict[str, Argument]:
+    def dictionary(language) -> typing.Dict[str, Argument]:
         """"""
-
         return {
             CONFIGURATION: Information(
                 "",

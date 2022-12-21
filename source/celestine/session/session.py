@@ -1,4 +1,4 @@
-"""Celestine Image Viewer"""
+""""""
 
 import types
 import typing
@@ -29,11 +29,8 @@ class Session():
     main: list[typing.Callable[[Page], None]]
 
     @staticmethod
-    def dictionary(
-        language,
-    ) -> typing.Dict[str, Argument]:
+    def dictionary(language) -> typing.Dict[str, Argument]:
         """"""
-
         return {
             APPLICATION: Override(
                 "demo",
@@ -57,7 +54,8 @@ class Session():
             ),
         }
 
-    def __setattr__(self, name, value):
+    def __setattr__(self, name: str, value: str) -> None:
+        """"""
         match name:
             case "main":
                 main = getattr(self.application, value)

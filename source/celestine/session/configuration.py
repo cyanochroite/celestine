@@ -17,11 +17,8 @@ from .text import FILE
 class Configuration():
     """parse configuration stuff."""
 
-    def __init__(
-        self,
-    ) -> None:
+    def __init__(self) -> None:
         """"""
-
         self.path = load.pathway(FILE)
 
         self.configuration = configparser.ConfigParser(
@@ -32,42 +29,25 @@ class Configuration():
             default_section=CELESTINE,
         )
 
-    def load(
-        self,
-    ) -> None:
+    def load(self) -> None:
         """Load the configuration file."""
-
         self.configuration.read(self.path, encoding=UTF_8)
 
-    def save(
-        self,
-    ) -> None:
+    def save(self) -> None:
         """Save the configuration file."""
-
         with open(self.path, WRITE_TEXT, encoding=UTF_8) as file:
             self.configuration.write(file, True)
 
-    def get(
-        self,
-        section: str,
-        option: str
-    ) -> str:
+    def get(self, section: str, option: str) -> str:
         """"""
-
         if self.configuration.has_section(section):
             if self.configuration.has_option(section, option):
                 return self.configuration[section][option]
 
         return NONE
 
-    def set(
-        self,
-        section: str,
-        option: str,
-        value: str,
-    ) -> None:
+    def set(self, section: str, option: str, value: str) -> None:
         """"""
-
         if not value:
             return
 

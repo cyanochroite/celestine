@@ -1,4 +1,4 @@
-"""Celestine Image Viewer"""
+""""""
 
 import typing
 
@@ -18,17 +18,15 @@ class Session():
     language: str
 
     @staticmethod
-    def dictionary(
-        _,
-    ) -> typing.Dict[str, Argument]:
+    def dictionary(_) -> typing.Dict[str, Argument]:
         """"""
-
         return {
             APPLICATION: Flag(True, "__init__"),
             LANGUAGE: Flag(True, "__init__"),
         }
 
-    def __setattr__(self, name, value):
+    def __setattr__(self, name: str, value: str) -> None:
+        """"""
         match name:
             case "application":
                 super().__setattr__(name, value)

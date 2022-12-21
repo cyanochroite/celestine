@@ -1,4 +1,5 @@
-"""The official names of character code points from the Unicode Standard."""
+"""A list of character code points from the Unicode Standard."""
+
 NONE = str()
 NULL = chr(0x0000)
 START_OF_HEADING = chr(0x0001)
