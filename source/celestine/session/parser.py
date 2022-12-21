@@ -81,43 +81,16 @@ class Parser():
         self.configuration = Configuration()
         self.configuration.load()
 
-        self.parser = argparse.ArgumentParser(
-            add_help=False,
-            prog=CELESTINE,
-            exit_on_error=exit_on_error,
-        )
-
-        self.add_argument = {}
-        self.add_argument[Information] = self.parser.add_argument_group(
-            title=language.ARGUMENT_INFORMATION_TITLE,
-            description=language.ARGUMENT_INFORMATION_DESCRIPTION,
-        )
-        self.add_argument[Optional] = self.parser.add_argument_group(
-            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
-        )
-        self.add_argument[Override] = self.parser.add_argument_group(
-            title=language.ARGUMENT_OVERRIDE_TITLE,
-            description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
-        )
-        self.add_argument[Positional] = self.parser.add_argument_group(
-            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
-        )
-
     @classmethod
     def dofilt(
         cls,
-        args: list[str],
+        argv: list[str],
         exit_on_error: bool
     ) -> None:
         """"""
 
         configuration = Configuration()
         configuration.load()
-
-        one = Flag(True, "__init__").key(APPLICATION)
-        two = Flag(True, "__init__").key(LANGUAGE)
 
         turbo = Hippo(
             CELESTINE,
@@ -132,18 +105,72 @@ class Parser():
             exit_on_error=exit_on_error,
         )
 
-        parser.add_argument(*one)
-        parser.add_argument(*two)
+        add_argument = {}
+        add_argument[Name] = parser
+        add_argument[Flag] = parser
 
-        (parse_known_args, _) = parser.parse_known_args(args)
+        cls.head(turbo, add_argument)
+
+        (parse_known_args, _) = parser.parse_known_args(argv)
         #         return namespace, args
 
         cls.foot(turbo, parse_known_args, configuration)
 
         return turbo
 
-    def dostuff(self, args, turbo):
+    @classmethod
+    def dostuff(cls, args, exit_on_error, turbo):
         """"""
+
+        language = turbo.attribute.language
+        parser = argparse.ArgumentParser(
+            add_help=False,
+            prog=CELESTINE,
+            exit_on_error=exit_on_error,
+        )
+
+        add_argument = {}
+        add_argument[Information] = parser.add_argument_group(
+            title=language.ARGUMENT_INFORMATION_TITLE,
+            description=language.ARGUMENT_INFORMATION_DESCRIPTION,
+        )
+        add_argument[Optional] = parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+        )
+        add_argument[Override] = parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE,
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
+        )
+        add_argument[Positional] = parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+        )
+
+        information = parser.add_argument_group(
+            title=language.ARGUMENT_INFORMATION_TITLE,
+            description=language.ARGUMENT_INFORMATION_DESCRIPTION,
+        )
+        optional = parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+        )
+        override = parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE,
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
+        )
+        positional = parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+        )
+
+        add_argument = {}
+        add_argument[Information] = information
+        add_argument[Optional] = optional
+        add_argument[Override] = override
+        add_argument[Positional] = positional
+        configuration = Configuration()
+        configuration.load()
 
         dull_attribute = Hippo(
             turbo.attribute.application,
@@ -167,32 +194,33 @@ class Parser():
             turbo.attribute.application,
         )
 
-        self.head(dull_attribute)
-        self.head(old_attribute)
-        self.head(new_attribute)
+        cls.head(dull_attribute, add_argument)
+        cls.head(old_attribute, add_argument)
+        cls.head(new_attribute, add_argument)
 
-        args = self.parser.parse_args(args)
+        args = parser.parse_args(args)
 
-        self.foot(dull_attribute, args, self.configuration)
-        self.foot(old_attribute, args, self.configuration)
-        self.foot(new_attribute, args, self.configuration)
+        cls.foot(dull_attribute, args, configuration)
+        cls.foot(old_attribute, args, configuration)
+        cls.foot(new_attribute, args, configuration)
 
-        self.configuration.save()
+        configuration.save()
 
         session = old_attribute.attribute
         session.attribute = new_attribute.attribute
 
         return session
 
+    @staticmethod
     def head(  # feed the parser
-        self,
         attribute: Hippo,
+        add_argument,
     ) -> None:
         """"""
 
         for (name, argument) in attribute.items():
             (args, kwargs) = argument.value(name)
-            parser = self.add_argument[argument]
+            parser = add_argument[argument]
             parser.add_argument(*args, **kwargs)
 
     @staticmethod
@@ -223,5 +251,5 @@ def start_session(
     """"""
     turbo = Parser.dofilt(argv, exit_on_error)
     argument = Parser(exit_on_error, turbo.attribute.language)
-    session = argument.dostuff(argv, turbo)
+    session = argument.dostuff(argv, exit_on_error, turbo)
     return session
