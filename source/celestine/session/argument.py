@@ -2,6 +2,7 @@
 
 import typing
 
+from celestine.text import VERSION_NUMBER
 from celestine.text.unicode import HYPHEN_MINUS
 from celestine.text.unicode import NONE
 from celestine.text.unicode import QUESTION_MARK
@@ -14,8 +15,7 @@ from .attribute import Nargs
 
 from .hash import HashClass
 
-from celestine.text import VERSION_NUMBER
-VERSION = "version"
+from .text import VERSION
 
 
 class Argument(HashClass, Attribute):

@@ -21,25 +21,30 @@ from celestine.text.unicode import NONE
 from celestine.session import load
 
 from celestine.text import CELESTINE
-from celestine.text import VERSION_NUMBER
 
 from celestine.text.directory import APPLICATION
 from celestine.text.directory import LANGUAGE
 
 
 from .configuration import Configuration
+from .protocol import Dictionary
 
 
-CONFIGURATION = "configuration"
+from .text import CONFIGURATION
 
 
 class Hippo():
     """"""
 
+    application: str
+    language: types.ModuleType
+    attribute: Dictionary
+    dictionary: typing.Dict[str, Argument]
+
     def __init__(
         self,
         application: str,
-        language: str,
+        language: types.ModuleType,
         name: str,
         *path: str,
     ):
@@ -64,19 +69,14 @@ class Hippo():
 def dofilt(
     argv: list[str],
     exit_on_error: bool
-) -> None:
+) -> Dictionary:
     """"""
+
+    add_argument: typing.Dict[Argument, argparse.ArgumentParser]
+    language = load.module(LANGUAGE, "en")
 
     configuration = Configuration()
     configuration.load()
-
-    turbo = Hippo(
-        CELESTINE,
-        "",
-        "Session",
-        "session",
-        "turbo",
-    )
 
     parser = argparse.ArgumentParser(
         add_help=False,
@@ -87,20 +87,28 @@ def dofilt(
     add_argument[Name] = parser
     add_argument[Flag] = parser
 
-    feed_the_parser(
+    attribute = feed_the_parser(
         add_argument,
         lambda: parser.parse_known_args(argv)[0],
         configuration,
-        [turbo],
+        [
+            Hippo(
+                CELESTINE,
+                language,
+                "Session",
+                "session",
+                "turbo",
+            ),
+        ],
     )
 
-    return turbo
+    return attribute[0]
 
 
 def dostuff(args, exit_on_error, turbo):
     """"""
 
-    language = turbo.attribute.language
+    language = turbo.language
     parser = argparse.ArgumentParser(
         add_help=False,
         prog=CELESTINE,
@@ -147,52 +155,53 @@ def dostuff(args, exit_on_error, turbo):
     add_argument[Optional] = optional
     add_argument[Override] = override
     add_argument[Positional] = positional
+
     configuration = Configuration()
     configuration.load()
 
-    dull_attribute = Hippo(
-        turbo.attribute.application,
-        turbo.attribute.language,
-        "Session",
-        "session",
-        "dull",
-    )
-    old_attribute = Hippo(
-        turbo.attribute.application,
-        turbo.attribute.language,
-        "Session",
-        "session",
-        "session",
-    )
-    new_attribute = Hippo(
-        turbo.attribute.application,
-        turbo.attribute.language,
-        "Session",
-        APPLICATION,
-        turbo.attribute.application,
-    )
-
-    feed_the_parser(
+    attribute = feed_the_parser(
         add_argument,
         lambda: parser.parse_args(args),
         configuration,
-        [dull_attribute, old_attribute, new_attribute],
+        [
+            Hippo(
+                turbo.application,
+                turbo.language,
+                "Session",
+                "session",
+                "session",
+            ),
+            Hippo(
+                turbo.application,
+                turbo.language,
+                "Session",
+                APPLICATION,
+                turbo.application,
+            ),
+            Hippo(
+                turbo.application,
+                turbo.language,
+                "Session",
+                "session",
+                "dull",
+            ),
+        ],
     )
 
     configuration.save()
 
-    session = old_attribute.attribute
-    session.attribute = new_attribute.attribute
+    session = attribute[0]
+    session.attribute = attribute[1]
 
     return session
 
 
 def feed_the_parser(
-    add_argument: typing.Dict[Argument, argparse._ArgumentGroup],
+    add_argument: typing.Dict[Argument, argparse.ArgumentParser],
     calling,
     configuration,
     attributes: list[Hippo],
-) -> None:
+) -> list[Dictionary]:
     """"""
 
     for attribute in attributes:
@@ -214,11 +223,13 @@ def feed_the_parser(
             if getattr(args, CONFIGURATION, NONE):
                 configuration.set(attribute.application, name, override)
 
+    return [attribute.attribute for attribute in attributes]
+
 
 def start_session(
     argv: list[str],
     exit_on_error: bool,
-) -> None:
+) -> Dictionary:
     """"""
     turbo = dofilt(argv, exit_on_error)
     session = dostuff(argv, exit_on_error, turbo)

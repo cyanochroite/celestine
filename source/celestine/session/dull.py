@@ -5,12 +5,10 @@ import typing
 from celestine.session.argument import Argument
 from celestine.session.argument import Information
 
-
+from .text import CONFIGURATION
 from .text import HELP
 from .text import STORE_TRUE
 from .text import VERSION
-
-CONFIGURATION = "configuration"
 
 
 class Session():

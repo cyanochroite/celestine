@@ -2,11 +2,10 @@
 
 import typing
 
+from .text import ACTION
 from .text import CHOICES
 from .text import HELP
 from .text import NARGS
-
-ACTION = "action"
 
 
 class Attribute():

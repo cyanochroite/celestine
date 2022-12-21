@@ -1,6 +1,6 @@
 """Keywords used throughout the application."""
 
-CONFIGURATION = "celestine.ini"
+FILE = "celestine.ini"
 
 # action
 STORE = "store"
@@ -13,6 +13,12 @@ HELP = "help"
 VERSION = "version"
 
 # attribute
+ACTION = "action"
 CHOICES = "choices"
 HELP = "help"
 NARGS = "nargs"
+
+# value
+CONFIGURATION = "configuration"
+EN = "en"
+MAIN = "main"

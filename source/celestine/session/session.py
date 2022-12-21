@@ -15,11 +15,8 @@ from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 
-EN = "en"
-VIEWER = "viewer"
-MAIN = "main"
-
-CHOICES = "choices"
+from .text import EN
+from .text import MAIN
 
 
 class Session():

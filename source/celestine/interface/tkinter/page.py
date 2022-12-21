@@ -5,7 +5,10 @@ from .line import Line
 
 
 class Page(master):
-    def line(self, tag):
+    def line(
+        self,
+        tag: str
+    ) -> Line:
         return self.item_set(tag, Line(self, tag))
 
     def __init__(self, window, **kwargs):

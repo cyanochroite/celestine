@@ -2,7 +2,6 @@
 
 import configparser
 
-from celestine.session.text import CONFIGURATION
 
 from celestine.text.stream import WRITE_TEXT
 from celestine.text.stream import UTF_8
@@ -11,6 +10,8 @@ from celestine.session import load
 from celestine.text import CELESTINE
 
 from celestine.text.unicode import NONE
+
+from .text import FILE
 
 
 class Configuration():
@@ -21,7 +22,7 @@ class Configuration():
     ) -> None:
         """"""
 
-        self.path = load.pathway(CONFIGURATION)
+        self.path = load.pathway(FILE)
 
         self.configuration = configparser.ConfigParser(
             delimiters=("="),
