@@ -28,9 +28,12 @@ from celestine.text.directory import LANGUAGE
 
 from .configuration import Configuration
 from .protocol import Dictionary
+from .protocol import Parser
 
 
 from .text import CONFIGURATION
+
+from celestine.session.protocol import Magic
 
 
 class Hippo():
@@ -72,7 +75,8 @@ def dofilt(
 ) -> Dictionary:
     """"""
 
-    add_argument: typing.Dict[Argument, argparse.ArgumentParser]
+    add_argument: Magic
+
     language = load.module(LANGUAGE, "en")
 
     configuration = Configuration()
@@ -105,10 +109,16 @@ def dofilt(
     return attribute[0]
 
 
-def dostuff(args, exit_on_error, turbo):
+def dostuff(
+    args: list[str],
+    exit_on_error: bool,
+    application: str,
+    language: types.ModuleType,
+) -> Dictionary:
     """"""
 
-    language = turbo.language
+    add_argument: Magic
+
     parser = argparse.ArgumentParser(
         add_help=False,
         prog=CELESTINE,
@@ -116,22 +126,6 @@ def dostuff(args, exit_on_error, turbo):
     )
 
     add_argument = {}
-    add_argument[Information] = parser.add_argument_group(
-        title=language.ARGUMENT_INFORMATION_TITLE,
-        description=language.ARGUMENT_INFORMATION_DESCRIPTION,
-    )
-    add_argument[Optional] = parser.add_argument_group(
-        title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-        description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
-    )
-    add_argument[Override] = parser.add_argument_group(
-        title=language.ARGUMENT_OVERRIDE_TITLE,
-        description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
-    )
-    add_argument[Positional] = parser.add_argument_group(
-        title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-        description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
-    )
 
     information = parser.add_argument_group(
         title=language.ARGUMENT_INFORMATION_TITLE,
@@ -165,22 +159,22 @@ def dostuff(args, exit_on_error, turbo):
         configuration,
         [
             Hippo(
-                turbo.application,
-                turbo.language,
+                application,
+                language,
                 "Session",
                 "session",
                 "session",
             ),
             Hippo(
-                turbo.application,
-                turbo.language,
+                application,
+                language,
                 "Session",
                 APPLICATION,
-                turbo.application,
+                application,
             ),
             Hippo(
-                turbo.application,
-                turbo.language,
+                application,
+                language,
                 "Session",
                 "session",
                 "dull",
@@ -197,7 +191,7 @@ def dostuff(args, exit_on_error, turbo):
 
 
 def feed_the_parser(
-    add_argument: typing.Dict[Argument, argparse.ArgumentParser],
+    add_argument: Magic,
     calling,
     configuration,
     attributes: list[Hippo],
@@ -206,8 +200,10 @@ def feed_the_parser(
 
     for attribute in attributes:
         for (name, argument) in attribute.items():
-            (args, kwargs) = argument.value(name)
             parser = add_argument[argument]
+            args = argument.key(name)
+            kwargs = argument.dictionary()
+
             parser.add_argument(*args, **kwargs)
 
     args = calling()
@@ -232,5 +228,8 @@ def start_session(
 ) -> Dictionary:
     """"""
     turbo = dofilt(argv, exit_on_error)
-    session = dostuff(argv, exit_on_error, turbo)
+    application = turbo.application
+    language = turbo.language
+
+    session = dostuff(argv, exit_on_error, application, language)
     return session

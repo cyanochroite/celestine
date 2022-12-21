@@ -1,7 +1,5 @@
 """"""
 
-import typing
-
 from celestine.text import VERSION_NUMBER
 from celestine.text.unicode import HYPHEN_MINUS
 from celestine.text.unicode import NONE
@@ -33,54 +31,40 @@ class Argument(HashClass, Attribute):
         self.fallback = fallback
         self.use = use
 
-    def value(self, _):
-        """abstract method """
+    def key(
+        self,
+        name: str,
+    ) -> list[str]:
+        ...
 
 
 class Flag(Argument):
     """"""
 
-    def value(
-        self,
-        name: str,
-    ) -> typing.Tuple[typing.Tuple[str, str], typing.Dict[str, str]]:
-        """"""
-
-        return (
-            (
-                NONE.join((HYPHEN_MINUS, name[0])),
-                NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name)),
-            ),
-            self.dictionary(),
-        )
-
     def key(
         self,
-        name,
-    ):
+        name: str,
+    ) -> list[str]:
         """"""
 
-        return (
+        return [
             NONE.join((HYPHEN_MINUS, name[0])),
             NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name)),
-        )
+        ]
 
 
 class Name(Argument):
     """"""
 
-    def value(
+    def key(
         self,
         name: str,
-    ) -> typing.Tuple[typing.Tuple[str], typing.Dict[str, str]]:
+    ) -> list[str]:
         """"""
 
-        return (
-            (
-                name,
-            ),
-            self.dictionary(),
-        )
+        return [
+            name,
+        ]
 
 
 class Optional(Flag, Help):
