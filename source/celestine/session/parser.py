@@ -2,6 +2,7 @@
 
 import argparse
 
+import types
 import typing
 
 from celestine.session.argument import Argument
@@ -33,6 +34,8 @@ from .text import HELP
 from .text import STORE_TRUE
 from .text import VERSION
 
+CONFIGURATION = "configuration"
+
 
 class Hippo():
     """"""
@@ -41,6 +44,7 @@ class Hippo():
         self,
         application: str,
         language: str,
+        name: str,
         *path: str,
     ):
 
@@ -49,7 +53,8 @@ class Hippo():
 
         module = load.module(*path)
 
-        self.attribute = module.Session()
+        session = getattr(module, name)
+        self.attribute = session()
         self.dictionary = self.attribute.dictionary(self.language)
 
     def items(
@@ -64,19 +69,40 @@ class Parser():
     """"""
 
     add_argument: typing.Dict[Argument, argparse._ArgumentGroup]
+    configuration: Configuration
+    parser: argparse.ArgumentParser
 
     def __init__(
         self,
-        args: list[str],
-        exit_on_error: bool
+        exit_on_error: bool,
+        language: types.ModuleType,
     ) -> None:
         """"""
         self.configuration = Configuration()
         self.configuration.load()
+
         self.parser = argparse.ArgumentParser(
             add_help=False,
             prog=CELESTINE,
             exit_on_error=exit_on_error,
+        )
+
+        self.add_argument = {}
+        self.add_argument[Information] = self.parser.add_argument_group(
+            title=language.ARGUMENT_INFORMATION_TITLE,
+            description=language.ARGUMENT_INFORMATION_DESCRIPTION,
+        )
+        self.add_argument[Optional] = self.parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+        )
+        self.add_argument[Override] = self.parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE,
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
+        )
+        self.add_argument[Positional] = self.parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
         )
 
     @classmethod
@@ -90,12 +116,13 @@ class Parser():
         configuration = Configuration()
         configuration.load()
 
-        one = Flag("__init__").key(APPLICATION)
-        two = Flag("__init__").key(LANGUAGE)
+        one = Flag(True, "__init__").key(APPLICATION)
+        two = Flag(True, "__init__").key(LANGUAGE)
 
         turbo = Hippo(
             CELESTINE,
-            None,
+            "",
+            "Session",
             "session",
             "turbo",
         )
@@ -111,48 +138,8 @@ class Parser():
         (parse_known_args, _) = parser.parse_known_args(args)
         #         return namespace, args
 
-        cls.footish(turbo, parse_known_args, configuration)
+        cls.foot(turbo, parse_known_args, configuration)
 
-        return turbo
-
-    def setup(
-        self,
-        turbo
-    ) -> None:
-        """"""
-
-        language = turbo.attribute.language
-
-        # FLAGS WITH NO PARAMETER
-        self.information = self.parser.add_argument_group(
-            title=language.ARGUMENT_INFORMATION_TITLE,
-            description=language.ARGUMENT_INFORMATION_DESCRIPTION,
-        )
-
-        self.override = self.parser.add_argument_group(
-            title=language.ARGUMENT_OVERRIDE_TITLE,
-            description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
-        )
-
-        self.positional = self.parser.add_argument_group(
-            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
-        )
-
-        self.optional = self.parser.add_argument_group(
-            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
-        )
-
-        # ignore above for now
-
-        self.add_argument = {}
-        self.add_argument[Information] = self.information
-        self.add_argument[Positional] = self.positional
-        self.add_argument[Optional] = self.optional
-        self.add_argument[Override] = self.override
-
-        # rest of stuff
         return turbo
 
     def dostuff(self, args, turbo):
@@ -161,18 +148,21 @@ class Parser():
         dull_attribute = Hippo(
             turbo.attribute.application,
             turbo.attribute.language,
+            "Session",
             "session",
             "dull",
         )
         old_attribute = Hippo(
             turbo.attribute.application,
             turbo.attribute.language,
+            "Session",
             "session",
             "session",
         )
         new_attribute = Hippo(
             turbo.attribute.application,
             turbo.attribute.language,
+            "Session",
             APPLICATION,
             turbo.attribute.application,
         )
@@ -183,8 +173,9 @@ class Parser():
 
         args = self.parser.parse_args(args)
 
-        self.foot(old_attribute, args)
-        self.foot(new_attribute, args)
+        self.foot(dull_attribute, args, self.configuration)
+        self.foot(old_attribute, args, self.configuration)
+        self.foot(new_attribute, args, self.configuration)
 
         self.configuration.save()
 
@@ -204,25 +195,8 @@ class Parser():
             parser = self.add_argument[argument]
             parser.add_argument(*args, **kwargs)
 
-    def foot(
-        self,
-        attribute: Hippo,
-        args,
-    ) -> None:
-        """"""
-
-        application = attribute.application
-
-        for (name, fallback) in attribute.items():
-            override = getattr(args, name, NONE)
-            database = self.configuration.get(application, name)
-            value = override or database or fallback.fallback
-            setattr(attribute.attribute, name, value)
-            # if self.parse_args.configuration:
-            #    self.configuration.set(application, name, override)
-
     @staticmethod
-    def footish(
+    def foot(
         attribute: Hippo,
         args,
         configuration,
@@ -231,11 +205,15 @@ class Parser():
 
         application = attribute.application
 
-        for (name, fallback) in attribute.items():
+        for (name, argument) in attribute.items():
+            if not argument.use:
+                continue
             override = getattr(args, name, NONE)
             database = configuration.get(application, name)
-            value = override or database or fallback.fallback
+            value = override or database or argument.fallback
             setattr(attribute.attribute, name, value)
+            if getattr(args, CONFIGURATION, NONE):
+                configuration.set(application, name, override)
 
 
 def start_session(
@@ -244,7 +222,6 @@ def start_session(
 ) -> None:
     """"""
     turbo = Parser.dofilt(argv, exit_on_error)
-    argument = Parser(argv, exit_on_error)
-    turbo = argument.setup(turbo)
+    argument = Parser(exit_on_error, turbo.attribute.language)
     session = argument.dostuff(argv, turbo)
     return session

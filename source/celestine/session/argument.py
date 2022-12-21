@@ -21,6 +21,18 @@ VERSION = "version"
 class Argument(HashClass, Attribute):
     """abstract class"""
 
+    def __init__(
+        self,
+        use: bool,
+        fallback: str,
+        **kwargs,
+    ) -> None:
+        """"""
+
+        super().__init__(**kwargs)
+        self.fallback = fallback
+        self.use = use
+
     def value(self, _):
         """abstract method """
 
@@ -80,6 +92,7 @@ class Optional(Flag, Help):
         help: str,
     ):
         super().__init__(
+            use=True,
             fallback=fallback,
             help=help,
         )
@@ -95,6 +108,7 @@ class Override(Flag, Help, Choices):
         choices: list[str],
     ):
         super().__init__(
+            use=True,
             fallback=fallback,
             help=help,
             choices=choices,
@@ -111,6 +125,7 @@ class Positional(Name, Help, Choices, Nargs):
         choices: list[str],
     ):
         super().__init__(
+            use=True,
             fallback=fallback,
             help=help,
             choices=choices,
@@ -139,6 +154,7 @@ class Information(Flag, Action, Help):
         version: bool
     ):
         super().__init__(
+            use=False,
             fallback=fallback,
             action=action,
             help=help,

@@ -25,11 +25,9 @@ class Attribute():
 
     def __init__(
         self,
-        fallback: str,
-    ) -> None:
-        """"""
-
-        self.fallback = fallback
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
 
 
 class Action(Attribute):

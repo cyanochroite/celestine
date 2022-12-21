@@ -24,8 +24,8 @@ class Session():
         """"""
 
         return {
-            APPLICATION: Flag("__init__"),
-            LANGUAGE: Flag("__init__"),
+            APPLICATION: Flag(True, "__init__"),
+            LANGUAGE: Flag(True, "__init__"),
         }
 
     def __setattr__(self, name, value):
