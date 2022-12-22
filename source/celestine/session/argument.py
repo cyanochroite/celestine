@@ -1,7 +1,5 @@
 """"""
 
-import typing
-
 from celestine.text.unicode import QUESTION_MARK
 from celestine.text.unicode import NONE
 from celestine.text.unicode import HYPHEN_MINUS
@@ -9,13 +7,14 @@ from celestine.text import VERSION_NUMBER
 
 from .text import VERSION
 from .hash import HashClass
-from .attribute import Nargs
-from .attribute import Help
-from .attribute import Choices
-from .attribute import Action
-from .attribute import Attribute
 
-AttributeTable: typing.TypeAlias = typing.Dict[str, str | list[str]]
+from .attribute import Attribute
+from .attribute import AttributeTable
+
+from .attribute import Action
+from .attribute import Choices
+from .attribute import Help
+from .attribute import Nargs
 
 
 class Argument(HashClass, Attribute):
@@ -27,7 +26,7 @@ class Argument(HashClass, Attribute):
         self.fallback = fallback
         self.use = use
 
-    def key(self, name: str) -> list[str]:
+    def key(self, _: str) -> list[str]:
         ...
 
 
@@ -97,8 +96,7 @@ class Information(Flag, Action, Help):
     def dictionary(self) -> AttributeTable:
         """"""
         true = {VERSION: VERSION_NUMBER}
-        false = {}
-        boolean = true if self.version is True else false
+        boolean = true if self.version is True else {}
         return super().dictionary() | boolean
 
     def __init__(self, fallback: str, action: str, help: str,

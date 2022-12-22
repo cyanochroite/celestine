@@ -25,15 +25,14 @@ from celestine.text import CELESTINE
 from celestine.text.directory import APPLICATION
 from celestine.text.directory import LANGUAGE
 
+from celestine.session.session import Magic
+
 
 from .configuration import Configuration
-from .protocol import Dictionary
-from .protocol import Parser
-
+from .session import Dictionary
+from .session import Session
 
 from .text import CONFIGURATION
-
-from celestine.session.protocol import Magic
 
 
 class Hippo():
@@ -99,9 +98,9 @@ def dofilt(
             Hippo(
                 CELESTINE,
                 language,
-                "Session",
+                "Turbo",
                 "session",
-                "turbo",
+                "session",
             ),
         ],
     )
@@ -114,7 +113,7 @@ def dostuff(
     exit_on_error: bool,
     application: str,
     language: types.ModuleType,
-) -> Dictionary:
+) -> Session:
     """"""
 
     add_argument: Magic
@@ -175,9 +174,9 @@ def dostuff(
             Hippo(
                 application,
                 language,
-                "Session",
+                "Dull",
                 "session",
-                "dull",
+                "session",
             ),
         ],
     )
@@ -222,10 +221,7 @@ def feed_the_parser(
     return [attribute.attribute for attribute in attributes]
 
 
-def start_session(
-    argv: list[str],
-    exit_on_error: bool,
-) -> Dictionary:
+def start_session(argv: list[str], exit_on_error: bool) -> Session:
     """"""
     turbo = dofilt(argv, exit_on_error)
     application = turbo.application

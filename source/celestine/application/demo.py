@@ -1,18 +1,12 @@
 """"""
 
 import types
-import dataclasses
 import typing
 
 from celestine.session.argument import Argument
-from celestine.session.session import Session
 from celestine.window.page import Page
 
 
-""""""
-
-
-@dataclasses.dataclass(init=False)
 class Session():
     """"""
 
