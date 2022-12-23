@@ -1,12 +1,10 @@
 """"""
 
-import dataclasses
 import typing
 import types
 from celestine.session.argument import Argument
 
 
-@dataclasses.dataclass(init=False)
 class Session():
     """"""
 

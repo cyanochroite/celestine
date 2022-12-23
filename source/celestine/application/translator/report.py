@@ -1,22 +1,39 @@
-"""Print out the lengths of the translations."""
-from celestine.session import load
+""""""
 
-from .string import LANGUAGE
+import types
+import typing
+
+from celestine.session.argument import Argument
+from celestine.window.page import Page
+
+from .report import main as train
 
 
-def main(_):
-    """The main function."""
-    minimum = {}
-    maximum = {}
+class Session():
+    """"""
 
-    languages = load.argument(LANGUAGE)
-    for language in languages:
-        module = load.module(LANGUAGE, language)
-        dictionary = load.dictionary(module)
-        for key, value in dictionary.items():
-            length = len(value)
-            minimum[key] = min(length, minimum.get(key, 256))
-            maximum[key] = max(length, maximum.get(key, 0))
+    @staticmethod
+    def dictionary(
+        _: types.ModuleType,
+    ) -> typing.Dict[str, Argument]:
+        """"""
 
-    print(minimum)
-    print(maximum)
+        return {
+        }
+
+
+def report(page: Page):
+    """"""
+    with page.line("head") as line:
+        line.label("title", "Page 0")
+    label = train()
+    for item in label:
+        with page.line("body") as line:
+            line.label(item, item)
+
+
+def main(__: Session) -> list[typing.Callable[[Page], None]]:
+    """"""
+    return [
+        report,
+    ]

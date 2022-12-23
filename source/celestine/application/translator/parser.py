@@ -38,7 +38,6 @@ from celestine.text.unicode import LINE_SEPARATOR
 from celestine.text.unicode import PARAGRAPH_SEPARATOR
 
 
-from celestine.text.unicode import QUOTATION_MARK
 from celestine.text.unicode import APOSTROPHE
 
 

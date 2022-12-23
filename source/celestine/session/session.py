@@ -3,18 +3,17 @@
 import types
 import typing
 
-from typing import Union as U
-from typing import Type as T
-from typing import Dict as D
-from typing import TypeAlias as TA
 from types import ModuleType as MT
+from typing import Dict as D
+from typing import Type as T
+from typing import Union as U
+from typing import TypeAlias as TA
+
 from argparse import _ArgumentGroup as AG
 from argparse import ArgumentParser as AP
 
 from celestine.session.argument import Information
 from celestine.session.argument import Flag
-
-from celestine.window.page import Page
 
 from celestine.session import load
 
@@ -31,17 +30,14 @@ from .text import STORE_TRUE
 from .text import HELP
 from .text import CONFIGURATION
 from .text import EN
-from .text import MAIN
 
 
 class Session():
     """"""
 
-    application: types.ModuleType
+    application: str
     interface: types.ModuleType
     language: types.ModuleType
-
-    main: typing.Callable[[typing.Self], list[Page]]
 
     @staticmethod
     def dictionary(language) -> typing.Dict[str, Argument]:
@@ -62,19 +58,11 @@ class Session():
                 language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),
             ),
-            MAIN: Override(
-                MAIN,
-                "Choose an applicanion. They have more option.",
-                [MAIN],
-            ),
         }
 
     def __setattr__(self, name: str, value: str) -> None:
         """"""
         match name:
-            case "main":
-                main = getattr(self.application, value)
-                super().__setattr__(name, main)
             case "attribute":
                 super().__setattr__(name, value)
             case _:

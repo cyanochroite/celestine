@@ -11,20 +11,14 @@ class Session():
     """"""
 
     @staticmethod
-    def dictionary(
-        _: types.ModuleType,
-    ) -> typing.Dict[str, Argument]:
+    def dictionary(_: types.ModuleType) -> typing.Dict[str, Argument]:
         """"""
-
         return {
         }
 
 
-def zero(
-    page: Page
-) -> None:
+def zero(page: Page) -> None:
     """"""
-
     with page.line("head") as line:
         line.label("title", "Page 0")
     with page.line("body") as line:
@@ -32,11 +26,8 @@ def zero(
         line.button("next", "Page 2", 2)
 
 
-def one(
-    page: Page
-) -> None:
+def one(page: Page) -> None:
     """"""
-
     with page.line("head") as line:
         line.label("title", "Page 1")
     with page.line("body") as line:
@@ -44,27 +35,10 @@ def one(
         line.button("next", "Page 2", 2)
 
 
-def two(
-    page: Page
-) -> None:
+def two(page: Page) -> None:
     """"""
-
     with page.line("head") as line:
         line.label("title", "Page 2")
     with page.line("body") as line:
         line.button("past", "Page 1", 1)
         line.button("next", "Page 0", 0)
-
-
-def main(
-    _: Session
-) -> list[typing.Callable[[Page], None]]:
-    """"""
-
-    return [
-        zero,
-        one,
-        two,
-    ]
-
-

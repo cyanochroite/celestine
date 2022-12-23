@@ -58,6 +58,21 @@ def dictionary(*path: str) -> typing.Dict[str, str]:
     return mapping
 
 
+def function(*path: str) -> list[typing.Callable[[None], None]]:
+    """
+    Load from module all functions and turn them into dictionary.
+    """
+    _module = module(*path)
+    _dictionary = vars(_module)
+    mapping = [
+        value
+        for key, value
+        in _dictionary.items()
+        if repr(value).startswith("<function")
+    ]
+    return mapping
+
+
 def pathway(*path: str) -> str:
     """"""
     return os.path.join(sys.path[0], CELESTINE, *path)
