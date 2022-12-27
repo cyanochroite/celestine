@@ -22,3 +22,5 @@ NARGS = "nargs"
 CONFIGURATION = "configuration"
 EN = "en"
 MAIN = "main"
+
+INIT = "__init__"

@@ -8,7 +8,7 @@ from celestine.window.page import Page as null_page
 
 class Window(master):
     def page(self, document):
-        index = document(null_page(None, None))
+        index = document(null_page(self.session, None))
         tag = str(index)
         value = Page(self, tag)
         self.item_set(tag, value)

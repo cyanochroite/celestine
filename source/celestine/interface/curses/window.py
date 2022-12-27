@@ -7,7 +7,7 @@ from .page import Page
 
 class Window(master):
     def page(self, document):
-        index = document(null_page(None, None))
+        index = document(null_page(self.session, None))
         self.item_set(index, document)
         page = Page(self)
         self.frame = page

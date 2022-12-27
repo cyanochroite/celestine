@@ -33,6 +33,7 @@ from .session import Dictionary
 from .session import Session
 
 from .text import CONFIGURATION
+from .text import INIT
 
 
 class Hippo():
@@ -76,7 +77,7 @@ def dofilt(
 
     add_argument: Magic
 
-    language = load.module(LANGUAGE, "en")
+    language = load.module(LANGUAGE, INIT)
 
     configuration = Configuration()
     configuration.load()

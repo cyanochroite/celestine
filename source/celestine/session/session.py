@@ -31,6 +31,7 @@ from .text import STORE_TRUE
 from .text import HELP
 from .text import CONFIGURATION
 from .text import EN
+from .text import INIT
 from .text import MAIN
 
 
@@ -47,7 +48,7 @@ class Session():
         """"""
         return {
             APPLICATION: Override(
-                "demo",
+                INIT,
                 "Choose an applicanion. They have more option.",
                 load.argument(APPLICATION),
             ),
@@ -87,8 +88,8 @@ class Turbo():
     def dictionary(_) -> typing.Dict[str, Argument]:
         """"""
         return {
-            APPLICATION: Flag(True, "__init__"),
-            LANGUAGE: Flag(True, "__init__"),
+            APPLICATION: Flag(True, INIT),
+            LANGUAGE: Flag(True, INIT),
         }
 
     def __setattr__(self, name: str, value: str) -> None:
