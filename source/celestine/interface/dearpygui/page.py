@@ -9,7 +9,10 @@ class Page(master):
         return self.item_set(tag, Line(self, tag))
 
     def __init__(self, window, tag, **kwargs):
-        super().__init__(window.session, **kwargs)
         self.window = window
         self.tag = tag
-        self.frame = package.window(tag=tag)
+        super().__init__(
+            session=window.session,
+            frame=package.window(tag=tag),
+            **kwargs,
+        )

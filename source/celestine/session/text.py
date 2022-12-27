@@ -21,4 +21,4 @@ NARGS = "nargs"
 # value
 CONFIGURATION = "configuration"
 EN = "en"
-# MAIN = "main"
+MAIN = "main"

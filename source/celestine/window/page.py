@@ -15,6 +15,7 @@ class Page(Rectangle):
 
         return self.item_set(tag, Line(self, tag))
 
-    def __init__(self, session, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, session, frame, **kwargs):
         self.session = session
+        self.frame = frame
+        super().__init__(**kwargs)

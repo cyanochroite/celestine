@@ -3,10 +3,13 @@ from celestine.window.window import Window as master
 from . import package
 from .page import Page
 
+from celestine.window.page import Page as null_page
+
 
 class Window(master):
     def page(self, document):
-        tag = str(len(self.item))
+        index = document(null_page(None, None))
+        tag = str(index)
         value = Page(self, tag)
         self.item_set(tag, value)
         with value.frame:

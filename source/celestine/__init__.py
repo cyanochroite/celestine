@@ -25,7 +25,6 @@ from celestine.text.main import SUPPORT_VALUE
 from celestine.text.main import CATEGORY_KEY
 from celestine.text.main import CATEGORY_VALUE
 
-from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
 
 bl_info = {
@@ -65,6 +64,7 @@ def main(argv: list[str], exit_on_error: bool) -> None:
     with session.interface.window(session) as window:
         # session.main = "demo"
         # function = load.function(APPLICATION, session.main)
-        function = load.function(APPLICATION, "demo")
+        function = load.function2(session.application)
+        # function = load.function(APPLICATION, "demo")
         for document in function:
             window.page(document)

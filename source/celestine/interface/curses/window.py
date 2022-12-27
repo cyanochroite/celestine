@@ -1,3 +1,4 @@
+from celestine.window.page import Page as null_page
 from celestine.window.window import Window as master
 
 from . import package
@@ -6,7 +7,7 @@ from .page import Page
 
 class Window(master):
     def page(self, document):
-        index = len(self.item)
+        index = document(null_page(None, None))
         self.item_set(index, document)
         page = Page(self)
         self.frame = page

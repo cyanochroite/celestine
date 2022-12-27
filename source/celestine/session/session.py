@@ -4,6 +4,7 @@ import types
 import typing
 
 from types import ModuleType as MT
+from typing import Callable as C
 from typing import Dict as D
 from typing import Type as T
 from typing import Union as U
@@ -30,14 +31,16 @@ from .text import STORE_TRUE
 from .text import HELP
 from .text import CONFIGURATION
 from .text import EN
+from .text import MAIN
 
 
 class Session():
     """"""
 
-    application: str
+    application: types.ModuleType
     interface: types.ModuleType
     language: types.ModuleType
+    main: str
 
     @staticmethod
     def dictionary(language) -> typing.Dict[str, Argument]:
@@ -58,11 +61,15 @@ class Session():
                 language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),
             ),
+
         }
 
     def __setattr__(self, name: str, value: str) -> None:
         """"""
         match name:
+            case "main":
+                main = getattr(self.application, value)
+                super().__setattr__(name, main)
             case "attribute":
                 super().__setattr__(name, value)
             case _:
