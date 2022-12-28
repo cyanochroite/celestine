@@ -86,6 +86,7 @@ def dofilt(
     parser = argparse.ArgumentParser(
         add_help=False,
         exit_on_error=exit_on_error,
+        usage="Bird eat you now."
     )
 
     add_argument = {}
@@ -126,6 +127,8 @@ def dofilt(
     parser = argparse.ArgumentParser(
         add_help=False,
         exit_on_error=exit_on_error,
+        usage="bird flu over grave.",
+
     )
 
     add_argument = {}
@@ -176,6 +179,8 @@ def dostuff(
         add_help=False,
         prog=CELESTINE,
         exit_on_error=exit_on_error,
+        usage="pack a man in a cage.",
+
     )
 
     add_argument = {}

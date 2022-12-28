@@ -6,34 +6,24 @@ import typing
 from celestine.session.argument import Argument
 from celestine.window.page import Page
 
-from .report import main as train
+from celestine.session import load
+
+LANGUAGE = "language"
 
 
-class Session():
-    """"""
+def _train():
+    """The main function."""
+    minimum = {}
+    maximum = {}
+    # language = load.argument(LANGUAGE)
+    language = ["el", "en"]
+    for lang in language:
+        dictionary = load.dictionary(LANGUAGE, lang)
+        for key, value in dictionary.items():
+            length = len(value)
+            minimum[key] = min(length, minimum.get(key, 256))
+            maximum[key] = max(length, maximum.get(key, 0))
 
-    @staticmethod
-    def dictionary(
-        _: types.ModuleType,
-    ) -> typing.Dict[str, Argument]:
-        """"""
-
-        return {
-        }
-
-
-def report(page: Page):
-    """"""
-    with page.line("head") as line:
-        line.label("title", "Page 0")
-    label = train()
-    for item in label:
-        with page.line("body") as line:
-            line.label(item, item)
+    return [minimum, maximum]
 
 
-def main(__: Session) -> list[typing.Callable[[Page], None]]:
-    """"""
-    return [
-        report,
-    ]
