@@ -9,8 +9,6 @@ from celestine.session.argument import Argument
 from celestine.session.argument import Optional
 from celestine.session.argument import Override
 from celestine.session.argument import Information
-from celestine.session.argument import Name
-from celestine.session.argument import Flag
 
 from celestine.session.argument import Positional
 
@@ -55,7 +53,10 @@ class Hippo():
         self.application = application
         self.language = language
 
-        module = load.module(*path)
+        try:
+            module = load.module(*path)
+        except TypeError:
+            module = self.application
 
         session = getattr(module, name)
         self.attribute = session()
@@ -104,6 +105,58 @@ def dofilt(
                 "session",
             ),
         ],
+    )
+
+    return attribute[0]
+
+
+def dofilt(
+    argv: list[str],
+    exit_on_error: bool,
+    language,
+    hippo: Hippo,
+) -> types.ModuleType | str:
+    """"""
+
+    add_argument: Magic
+
+    configuration = Configuration()
+    configuration.load()
+
+    parser = argparse.ArgumentParser(
+        add_help=False,
+        exit_on_error=exit_on_error,
+    )
+
+    add_argument = {}
+
+    information = parser.add_argument_group(
+        title=language.ARGUMENT_INFORMATION_TITLE,
+        description=language.ARGUMENT_INFORMATION_DESCRIPTION,
+    )
+    optional = parser.add_argument_group(
+        title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
+        description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+    )
+    override = parser.add_argument_group(
+        title=language.ARGUMENT_OVERRIDE_TITLE,
+        description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
+    )
+    positional = parser.add_argument_group(
+        title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
+        description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+    )
+
+    add_argument[Information] = information
+    add_argument[Optional] = optional
+    add_argument[Override] = override
+    add_argument[Positional] = positional
+
+    attribute = feed_the_parser(
+        add_argument,
+        lambda: parser.parse_known_args(argv)[0],
+        configuration,
+        [hippo],
     )
 
     return attribute[0]
@@ -200,6 +253,8 @@ def feed_the_parser(
 
     for attribute in attributes:
         for (name, argument) in attribute.items():
+            if not argument.argument:
+                continue
             parser = add_argument[argument]
             args = argument.key(name)
             kwargs = argument.dictionary()
@@ -210,7 +265,7 @@ def feed_the_parser(
 
     for attribute in attributes:
         for (name, argument) in attribute.items():
-            if not argument.use:
+            if not argument.attribute:
                 continue
             override = getattr(args, name, NONE)
             database = configuration.get(attribute.application, name)
@@ -224,9 +279,51 @@ def feed_the_parser(
 
 def start_session(argv: list[str], exit_on_error: bool) -> Session:
     """"""
-    turbo = dofilt(argv, exit_on_error)
-    application = turbo.application
-    language = turbo.language
+    def load_the_fish(name, value):
+        return getattr(
+            dofilt(
+                argv,
+                exit_on_error,
+                language,
+                Hippo(
+                    CELESTINE,
+                    language,
+                    name.capitalize(),
+                    "session",
+                    "session",
+                ),
+            ),
+            name,
+            value,
+        )
+
+    try:
+        application = load.module(APPLICATION)
+        language = load.module(LANGUAGE)
+
+        language = load_the_fish(LANGUAGE, language)
+        application = load_the_fish(APPLICATION, application)
+
+    except ModuleNotFoundError as error:
+        raise RuntimeError("Missing __init__ file.") from error
 
     session = dostuff(argv, exit_on_error, application, language)
+
     return session
+
+
+"""
+importer notes.
+
+language.py is all you need for 1 language.
+language/__init__.py can be used instead.
+
+Not recomended to use both. However, note that
+language/__init__.py takes priority over language.py
+
+Must have at least one of these.
+Recomend using directory version so you can add more languages.
+Error messages will assume this version.
+
+if you have more then 1 language you must use language/__init__.py
+"""

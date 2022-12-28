@@ -20,11 +20,13 @@ from .attribute import Nargs
 class Argument(HashClass, Attribute):
     """abstract class"""
 
-    def __init__(self, use: bool, fallback: str, **kwargs) -> None:
+    def __init__(self, argument: bool, attribute: bool, fallback: str,
+                 **kwargs) -> None:
         """"""
         super().__init__(**kwargs)
+        self.argument = argument
+        self.attribute = attribute
         self.fallback = fallback
-        self.use = use
 
     def key(self, _: str) -> list[str]:
         ...
@@ -55,7 +57,8 @@ class Optional(Flag, Help):
     def __init__(self, fallback: str, help: str) -> None:
         """"""
         super().__init__(
-            use=True,
+            argument=True,
+            attribute=True,
             fallback=fallback,
             help=help,
         )
@@ -68,7 +71,8 @@ class Override(Flag, Help, Choices):
                  choices: list[str]) -> None:
         """"""
         super().__init__(
-            use=True,
+            argument=bool(choices),
+            attribute=True,
             fallback=fallback,
             help=help,
             choices=choices,
@@ -82,7 +86,8 @@ class Positional(Name, Help, Choices, Nargs):
                  choices: list[str]) -> None:
         """"""
         super().__init__(
-            use=True,
+            argument=True,
+            attribute=True,
             fallback=fallback,
             help=help,
             choices=choices,
@@ -103,7 +108,8 @@ class Information(Flag, Action, Help):
                  version: bool) -> None:
         """"""
         super().__init__(
-            use=False,
+            argument=True,
+            attribute=False,
             fallback=fallback,
             action=action,
             help=help,

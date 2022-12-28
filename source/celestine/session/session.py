@@ -14,7 +14,6 @@ from argparse import _ArgumentGroup as AG
 from argparse import ArgumentParser as AP
 
 from celestine.session.argument import Information
-from celestine.session.argument import Flag
 
 from celestine.session import load
 
@@ -26,6 +25,8 @@ from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 
+from celestine.text.unicode import NONE
+
 from .text import VERSION
 from .text import STORE_TRUE
 from .text import HELP
@@ -33,73 +34,6 @@ from .text import CONFIGURATION
 from .text import EN
 from .text import INIT
 from .text import MAIN
-
-
-class Session():
-    """"""
-
-    application: types.ModuleType
-    interface: types.ModuleType
-    language: types.ModuleType
-    main: str
-
-    @staticmethod
-    def dictionary(language) -> typing.Dict[str, Argument]:
-        """"""
-        return {
-            APPLICATION: Override(
-                INIT,
-                "Choose an applicanion. They have more option.",
-                load.argument(APPLICATION),
-            ),
-            INTERFACE: Override(
-                load.argument_default(INTERFACE),
-                language.ARGUMENT_INTERFACE_HELP,
-                load.argument(INTERFACE),
-            ),
-            LANGUAGE: Override(
-                EN,
-                language.ARGUMENT_LANGUAGE_HELP,
-                load.argument(LANGUAGE),
-            ),
-
-        }
-
-    def __setattr__(self, name: str, value: str) -> None:
-        """"""
-        match name:
-            case "main":
-                main = getattr(self.application, value)
-                super().__setattr__(name, main)
-            case "attribute":
-                super().__setattr__(name, value)
-            case _:
-                module = load.module(name, value)
-                super().__setattr__(name, module)
-
-
-class Turbo():
-    """"""
-
-    application: str
-    language: str
-
-    @staticmethod
-    def dictionary(_) -> typing.Dict[str, Argument]:
-        """"""
-        return {
-            APPLICATION: Flag(True, INIT),
-            LANGUAGE: Flag(True, INIT),
-        }
-
-    def __setattr__(self, name: str, value: str) -> None:
-        """"""
-        match name:
-            case "application":
-                super().__setattr__(name, value)
-            case "language":
-                module = load.module(name, value)
-                super().__setattr__(name, module)
 
 
 class Dull():
@@ -130,12 +64,81 @@ class Dull():
         }
 
 
-class Dictionary(typing.Protocol):
+Magic: TA = D[U[Argument, T[Argument]], U[AP, AG]]
+
+Module: TA = MT
+
+
+class Dictionary():
     """"""
 
-    @staticmethod
-    def dictionary(_: MT) -> typing.Dict[str, Argument]:
-        ...
+    @classmethod
+    def dictionary(cls, _: Module) -> typing.Dict[str, Argument]:
+        return {}
+
+    def __setattr__(self, name: str, value: str) -> None:
+        """"""
+        self.__dict__[name] = load.module_fallback(name, value)
 
 
-Magic: TA = D[U[Argument, T[Argument]], U[AP, AG]]
+class Application(Dictionary):
+    """"""
+
+    application: types.ModuleType
+
+    @classmethod
+    def dictionary(cls, language: Module) -> typing.Dict[str, Argument]:
+        """"""
+        return super().dictionary(language) | {
+            APPLICATION: Override(
+                NONE,
+                "Choose an applicanion. They have more option.",
+                load.argument(APPLICATION),
+            ),
+        }
+
+
+class Interface(Dictionary):
+    """"""
+
+    interface: types.ModuleType
+
+    @classmethod
+    def dictionary(cls, language: Module) -> typing.Dict[str, Argument]:
+        """"""
+        return super().dictionary(language) | {
+            INTERFACE: Override(
+                load.argument_default(INTERFACE),  # TODO: change to NONE
+                language.ARGUMENT_INTERFACE_HELP,
+                load.argument(INTERFACE),
+            ),
+        }
+
+
+class Language(Dictionary):
+    """"""
+
+    language: types.ModuleType
+
+    @classmethod
+    def dictionary(cls, language: Module) -> typing.Dict[str, Argument]:
+        """"""
+        return super().dictionary(language) | {
+            LANGUAGE: Override(
+                NONE,
+                language.ARGUMENT_LANGUAGE_HELP,
+                load.argument(LANGUAGE),
+            ),
+        }
+
+
+class Session(Application, Interface, Language):
+    """"""
+
+    def __setattr__(self, name: str, value: str) -> None:
+        """"""
+        match name:
+            case "attribute":
+                self.__dict__[name] = value
+            case _:
+                super().__setattr__(name, value)

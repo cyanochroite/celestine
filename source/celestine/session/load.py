@@ -31,6 +31,8 @@ def module(*path: str) -> types.ModuleType:
     file = __import__(name)
     for _path in path:
         file = getattr(file, _path)
+    if "from" not in repr(file):
+        raise ModuleNotFoundError(F"Module failed to load: {name}")
     return file
 
 
@@ -107,7 +109,10 @@ def argument(*path: str) -> list[str]:
     Strip off all file extensions, if any.
     """
     directory = pathway(*path)
-    folder = os.listdir(directory)
+    try:
+        folder = os.listdir(directory)
+    except FileNotFoundError:
+        return []
 
     splitext = os.path.splitext
     result = [splitext(file)[0] for file in folder if file[0].isalpha()]
