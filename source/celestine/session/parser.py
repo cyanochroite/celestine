@@ -37,14 +37,14 @@ from .text import INIT
 class Hippo():
     """"""
 
-    application: str
+    application: types.ModuleType
     language: types.ModuleType
     attribute: Dictionary
     dictionary: typing.Dict[str, Argument]
 
     def __init__(
         self,
-        application: str,
+        application: types.ModuleType,
         language: types.ModuleType,
         name: str,
         *path: str,
@@ -60,7 +60,8 @@ class Hippo():
 
         session = getattr(module, name)
         self.attribute = session()
-        self.dictionary = self.attribute.dictionary(self.language)
+        dictionary = self.attribute.dictionary
+        self.dictionary = dictionary(application, language)
 
     def items(
         self,

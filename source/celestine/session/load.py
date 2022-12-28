@@ -7,6 +7,8 @@ import typing
 
 from celestine.text import CELESTINE
 
+from celestine.window.page import Page
+
 from celestine.text.stream import FILE_NAME_EXTENSION
 
 from celestine.text.unicode import FULL_STOP
@@ -60,19 +62,66 @@ def dictionary(*path: str) -> typing.Dict[str, str]:
     return mapping
 
 
-def function(_module: types.ModuleType) -> list[typing.Callable[[None], None]]:
+def function(_module: types.ModuleType) -> typing.Dict[str, typing.Callable[[None], None]]:
     """
     Load from module all functions and turn them into dictionary.
     """
     _dictionary = vars(_module)
-    mapping = [
-        value
+    mapping = {
+        key: value
         for key, value
         in _dictionary.items()
         if repr(value).startswith("<function") and
         not key.startswith("_")
+    }
+    return mapping
+
+
+def function_name(_module: types.ModuleType):
+    """
+    Load from module all functions and turn them into dictionary.
+    """
+
+    _dictionary = function(_module)
+    mapping = [
+        key
+        for key, value
+        in _dictionary.items()
     ]
     return mapping
+
+
+def function_value(_module: types.ModuleType) -> list[typing.Callable[[None], None]]:
+    """
+    Load from module all functions and turn them into dictionary.
+    """
+    _dictionary = function(_module)
+    mapping = [
+        value
+        for key, value
+        in _dictionary.items()
+    ]
+    return mapping
+
+
+def function_keys(_module: types.ModuleType) -> list[str]:
+    """
+    Load from module all functions and turn them into dictionary.
+    """
+    _dictionary = function(_module)
+    dictionary_key = [
+        key
+        for key, value
+        in _dictionary.items()
+    ]
+    dictionary_value = [
+        str(value(Page(None, None)))
+        for key, value
+        in _dictionary.items()
+    ]
+    merge = dictionary_key + dictionary_value
+    merge.sort()
+    return merge
 
 
 def pathway(*path: str) -> str:

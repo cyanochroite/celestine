@@ -4,7 +4,6 @@ import types
 import typing
 
 from types import ModuleType as MT
-from typing import Callable as C
 from typing import Dict as D
 from typing import Type as T
 from typing import Union as U
@@ -19,6 +18,7 @@ from celestine.session import load
 
 from celestine.session.argument import Argument
 from celestine.session.argument import Override
+from celestine.session.argument import Positional
 
 
 from celestine.text.directory import APPLICATION
@@ -35,12 +35,16 @@ from .text import EN
 from .text import INIT
 from .text import MAIN
 
+Magic: TA = D[U[Argument, T[Argument]], U[AP, AG]]
+
+AD: TA = D[str, Argument]
+
 
 class Dull():
     """"""
 
     @staticmethod
-    def dictionary(language) -> typing.Dict[str, Argument]:
+    def dictionary(_: MT, language: MT) -> AD:
         """"""
         return {
             CONFIGURATION: Information(
@@ -64,16 +68,11 @@ class Dull():
         }
 
 
-Magic: TA = D[U[Argument, T[Argument]], U[AP, AG]]
-
-Module: TA = MT
-
-
 class Dictionary():
     """"""
 
     @classmethod
-    def dictionary(cls, _: Module) -> typing.Dict[str, Argument]:
+    def dictionary(cls, application: MT, language: MT) -> AD:
         return {}
 
     def __setattr__(self, name: str, value: str) -> None:
@@ -87,9 +86,9 @@ class Application(Dictionary):
     application: types.ModuleType
 
     @classmethod
-    def dictionary(cls, language: Module) -> typing.Dict[str, Argument]:
+    def dictionary(cls, application: MT, language: MT) -> AD:
         """"""
-        return super().dictionary(language) | {
+        return super().dictionary(application, language) | {
             APPLICATION: Override(
                 NONE,
                 "Choose an applicanion. They have more option.",
@@ -104,9 +103,9 @@ class Interface(Dictionary):
     interface: types.ModuleType
 
     @classmethod
-    def dictionary(cls, language: Module) -> typing.Dict[str, Argument]:
+    def dictionary(cls, application: MT, language: MT) -> AD:
         """"""
-        return super().dictionary(language) | {
+        return super().dictionary(application, language) | {
             INTERFACE: Override(
                 load.argument_default(INTERFACE),  # TODO: change to NONE
                 language.ARGUMENT_INTERFACE_HELP,
@@ -121,9 +120,9 @@ class Language(Dictionary):
     language: types.ModuleType
 
     @classmethod
-    def dictionary(cls, language: Module) -> typing.Dict[str, Argument]:
+    def dictionary(cls, application: MT, language: MT) -> AD:
         """"""
-        return super().dictionary(language) | {
+        return super().dictionary(application, language) | {
             LANGUAGE: Override(
                 NONE,
                 language.ARGUMENT_LANGUAGE_HELP,
@@ -135,9 +134,24 @@ class Language(Dictionary):
 class Session(Application, Interface, Language):
     """"""
 
+    main: str
+
+    @classmethod
+    def dictionary(cls, application: MT, language: MT) -> AD:
+        """"""
+        return super().dictionary(application, language) | {
+            MAIN: Positional(
+                MAIN,
+                language.ARGUMENT_LANGUAGE_HELP,
+                load.function_keys(application),
+            ),
+        }
+
     def __setattr__(self, name: str, value: str) -> None:
         """"""
         match name:
+            case "main":
+                self.__dict__[name] = value
             case "attribute":
                 self.__dict__[name] = value
             case _:

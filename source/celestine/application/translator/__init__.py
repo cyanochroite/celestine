@@ -1,10 +1,15 @@
 """Application for translating text to other languages."""
 
-from celestine.window.page import Page
 import typing
 import types
+
+from types import ModuleType as MT
+from typing import Dict as D
+from typing import TypeAlias as TA
+
 from celestine.session.argument import Argument
 from celestine.session.argument import Optional
+from celestine.window.page import Page
 
 from celestine.text.unicode import NONE
 
@@ -15,15 +20,14 @@ from .text import URL
 from .report import _train
 
 
+AD: TA = D[str, Argument]
+
+
 class Session():
     """"""
 
-    @staticmethod
-    def dictionary(
-        _: types.ModuleType,
-    ) -> typing.Dict[str, Argument]:
+    def dictionary(cls, application: MT, language: MT) -> AD:
         """"""
-
         return {
             KEY: Optional(
                 NONE,
@@ -40,6 +44,14 @@ class Session():
         }
 
 
+def main(page: Page):
+    """"""
+    with page.line("head") as line:
+        line.label("title", "Page 0")
+    line.label("fish are friends", "fish are food")
+    return 0
+
+
 def report(page: Page):
     """"""
     with page.line("head") as line:
@@ -48,4 +60,4 @@ def report(page: Page):
     for item in label:
         with page.line("body") as line:
             line.label(item, item)
-    return 0
+    return 1

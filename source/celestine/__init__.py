@@ -62,9 +62,7 @@ def main(argv: list[str], exit_on_error: bool) -> None:
     """Run the main program."""
     session = start_session(argv, exit_on_error)
     with session.interface.window(session) as window:
-        # session.main = "demo"
-        # function = load.function(APPLICATION, session.main)
-        function = load.function(session.application)
-        # function = load.function(APPLICATION, "demo")
+        function = load.function_value(session.application)
         for document in function:
             window.page(document)
+        window.turn_page = session.main
