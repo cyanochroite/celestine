@@ -17,7 +17,7 @@ Zamiast tego możesz poprosić o użycie tych wartości."
 ARGUMENT_OVERRIDE_TITLE = "Zastąpić"
 ARGUMENT_PYTHON_HELP = "Wybierz używaną wersję języka Python."
 ARGUMENT_VERSION_HELP = "Pokazuje bieżącą wersję."
-CURSES_EXIT = "Naciśnij "q", aby wyjść."
+CURSES_EXIT = "Naciśnij 'q', aby wyjść."
 LANGUAGE = "W UE obowiązują 24 języki urzędowe: angielski, bułgarski, \
 chorwacki, czeski, duński, estoński, fiński, francuski, grecki, \
 hiszpański, irlandzki, litewski, łotewski, maltański, niderlandzki, \

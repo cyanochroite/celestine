@@ -19,7 +19,7 @@ Namiesto toho môžete požiadať o použitie týchto hodnôt."
 ARGUMENT_OVERRIDE_TITLE = "Prepísať"
 ARGUMENT_PYTHON_HELP = "Vyberte, ktorú verziu jazyka Python používate."
 ARGUMENT_VERSION_HELP = "Zobrazuje aktuálnu verziu."
-CURSES_EXIT = "Stlačením klávesu "q" ukončite akciu."
+CURSES_EXIT = "Stlačením klávesu 'q' ukončite akciu."
 LANGUAGE = "EÚ má 24 úradných jazykov, ktorými sú: angličtina, \
 bulharčina, čeština, dánčina, estónčina, fínčina, francúzština, \
 gréčtina, holandčina, chorvátčina, írčina, litovčina, lotyština, \

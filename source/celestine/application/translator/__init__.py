@@ -18,6 +18,7 @@ from .text import REGION
 from .text import URL
 
 from .report import _train
+from .main import _translate
 
 
 AD: TA = D[str, Argument]
@@ -48,12 +49,12 @@ class Session():
 def main(page: Page):
     """"""
     with page.line("head") as line:
-        line.label("title", "Page 0")
-    line.label("fish are friends", "fish are food")
-    return 0
+        line.label("title", "fish eat friends for food")
+    _translate(page.session)
 
 
-def report(page: Page):
+# TODO:figure out how to make actions not trigger on function load
+def _report(page: Page):
     """"""
     with page.line("head") as line:
         line.label("title", "Page main")
@@ -61,4 +62,3 @@ def report(page: Page):
     for (tag, text) in train.items():
         with page.line("body") as line:
             line.label(tag, text)
-    return 1

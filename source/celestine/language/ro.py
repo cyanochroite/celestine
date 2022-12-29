@@ -17,7 +17,7 @@ Puteți solicita să utilizați aceste valori în schimb."
 ARGUMENT_OVERRIDE_TITLE = "Suprascrie"
 ARGUMENT_PYTHON_HELP = "Selectați ce versiune de Python utilizați."
 ARGUMENT_VERSION_HELP = "Afișează versiunea curentă."
-CURSES_EXIT = "Apăsați tasta "q" pentru a ieși."
+CURSES_EXIT = "Apăsați tasta 'q' pentru a ieși."
 LANGUAGE = "UE numără 24 de limbi oficiale: bulgară, cehă, croată, \
 daneză, engleză, estonă, finlandeză, franceză, germană, greacă, \
 irlandeză, italiană, letonă, lituaniană, maghiară, malteză, \

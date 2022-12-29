@@ -2,7 +2,6 @@
 from celestine.application.translator.file import save
 from celestine.application.translator.text import LANGUAGE
 from celestine.application.translator.parser import dictionary_to_file
-from .report import main as train
 from .text import LANGUAGE
 
 import uuid
@@ -38,8 +37,7 @@ def parser_magic(session):
 
     dir_translation = load.argument(TRANSLATION)
     for translation in dir_translation:
-        module = load.module(TRANSLATION, translation)
-        wow = load.dictionary(module)
+        wow = load.dictionary(TRANSLATION, translation)
 
         key = wow["LANGUAGE_TAG_AZURE"]
         value = wow["LANGUAGE_TAG_ISO"]
@@ -49,8 +47,7 @@ def parser_magic(session):
         override[translation] = wow
         dictionary[translation] = {}
 
-    module = load.module("default", "language")
-    thelist = load.dictionary(module)
+    thelist = load.dictionary("default", "language")
     for name, value in thelist.items():
 
         items = post(session, code, value)
@@ -108,30 +105,7 @@ def post(session, code, text):
     return request.json()
 
 
-def report(page):
-    with page.line("head") as line:
-        line.label("title", "Page 0")
-    with page.line("body") as line:
-        line.button("past", "Do Work", "reporter")
-
-
-def one(page):
-    with page.line("head") as line:
-        line.label("title", "Page 1")
-    with page.line("body") as line:
-        line.button("past", "Page 0", 0)
-        line.button("next", "Page 2", 2)
-
-
-def two(page):
-    with page.line("head") as line:
-        line.label("title", "Page 2")
-    with page.line("body") as line:
-        line.button("past", "Page 1", 1)
-        line.button("next", "Page 0", 0)
-
-
-def main(session):
+def _translate(session):
     """def main"""
 
     dictionary = parser_magic(session)
@@ -144,8 +118,3 @@ def main(session):
 
     print(dictionary)
     print("done")
-    return [
-        report,
-        one,
-        two,
-    ]

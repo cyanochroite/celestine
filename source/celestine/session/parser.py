@@ -73,47 +73,6 @@ class Hippo():
 
 def dofilt(
     argv: list[str],
-    exit_on_error: bool
-) -> Dictionary:
-    """"""
-
-    add_argument: Magic
-
-    language = load.module(LANGUAGE, INIT)
-
-    configuration = Configuration()
-    configuration.load()
-
-    parser = argparse.ArgumentParser(
-        add_help=False,
-        exit_on_error=exit_on_error,
-        usage="Bird eat you now."
-    )
-
-    add_argument = {}
-    add_argument[Name] = parser
-    add_argument[Flag] = parser
-
-    attribute = feed_the_parser(
-        add_argument,
-        lambda: parser.parse_known_args(argv)[0],
-        configuration,
-        [
-            Hippo(
-                CELESTINE,
-                language,
-                "Turbo",
-                "session",
-                "session",
-            ),
-        ],
-    )
-
-    return attribute[0]
-
-
-def dofilt(
-    argv: list[str],
     exit_on_error: bool,
     language,
     hippo: Hippo,
@@ -292,7 +251,7 @@ def start_session(argv: list[str], exit_on_error: bool) -> Session:
                 exit_on_error,
                 language,
                 Hippo(
-                    CELESTINE,
+                    load.module(),
                     language,
                     name.capitalize(),
                     "session",

@@ -17,7 +17,7 @@ Místo toho můžete požádat o použití těchto hodnot."
 ARGUMENT_OVERRIDE_TITLE = "Schvátit"
 ARGUMENT_PYTHON_HELP = "Vyberte, kterou verzi Pythonu používáte."
 ARGUMENT_VERSION_HELP = "Zobrazuje aktuální verzi."
-CURSES_EXIT = "Stisknutím klávesy "q" ukončete program."
+CURSES_EXIT = "Stisknutím klávesy 'q' ukončete program."
 LANGUAGE = "EU má 24 úředních jazyků. Jsou jimi: angličtina, \
 bulharština, čeština, dánština, estonština, finština, francouzština, \
 chorvatština, irština, italština, litevština, lotyština, maďarština, \

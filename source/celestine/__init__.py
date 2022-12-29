@@ -65,10 +65,3 @@ def main(argv: list[str], exit_on_error: bool) -> None:
         function = load.function(session.application)
         for (name, document) in function.items():
             window.page(name, document)
-
-
-# why are we using int indexes anyways?
-# lets just replace it all with the name lookup.
-#  wont have to pre launch the pages in dearpygui just to get index
-
-#  ugh so no return values or error checking either

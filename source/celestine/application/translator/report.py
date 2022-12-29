@@ -15,8 +15,7 @@ def _train():
     """The main function."""
     minimum = {}
     maximum = {}
-    # language = load.argument(LANGUAGE)
-    language = ["el", "en"]
+    language = load.argument(LANGUAGE)
     for lang in language:
         dictionary = load.dictionary(LANGUAGE, lang)
         for key, value in dictionary.items():

@@ -17,7 +17,7 @@ Võite taotleda nende väärtuste kasutamist."
 ARGUMENT_OVERRIDE_TITLE = "Alistada"
 ARGUMENT_PYTHON_HELP = "Valige, millist Pythoni versiooni te kasutate."
 ARGUMENT_VERSION_HELP = "Näitab praegust versiooni."
-CURSES_EXIT = "Väljumiseks vajutage klahvi "q"."
+CURSES_EXIT = "Väljumiseks vajutage klahvi 'q'."
 LANGUAGE = "ELil on 24 ametlikku keelt: bulgaaria, eesti, hispaania, \
 hollandi, horvaadi, iiri, inglise, itaalia, kreeka, leedu, läti, \
 malta, poola, portugali, prantsuse, rootsi, rumeenia, saksa, slovaki, \

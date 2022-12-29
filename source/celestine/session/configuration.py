@@ -1,7 +1,7 @@
 """"""
 
 import configparser
-
+import types
 
 from celestine.text.stream import WRITE_TEXT
 from celestine.text.stream import UTF_8
@@ -38,8 +38,13 @@ class Configuration():
         with open(self.path, WRITE_TEXT, encoding=UTF_8) as file:
             self.configuration.write(file, True)
 
-    def get(self, section: str, option: str) -> str:
+    def get(self, module: types.ModuleType, option: str) -> str:
         """"""
+        string = repr(module)
+        array = string.split("'")
+        name = array[1]
+        split = name.split(".")
+        section = split[-1]
         if self.configuration.has_section(section):
             if self.configuration.has_option(section, option):
                 return self.configuration[section][option]

@@ -1,5 +1,5 @@
 """lt Lithuanian lietuvių"""
-APPLICATION_TITLE = ""Celestine" vaizdų peržiūros programa"
+APPLICATION_TITLE = "'Celestine' vaizdų peržiūros programa"
 ARGUMENT_APPLICATION_HELP = "Pasirinkite norimą paleisti programą."
 ARGUMENT_HELP_HELP = "Rodo šį pagalbos ekraną."
 ARGUMENT_INFORMATION_DESCRIPTION = "Įtraukus juos, \
@@ -16,7 +16,7 @@ Vietoj to galite paprašyti naudoti šias reikšmes."
 ARGUMENT_OVERRIDE_TITLE = "Nepaisyti"
 ARGUMENT_PYTHON_HELP = "Pasirinkite, kurią Python versiją naudojate."
 ARGUMENT_VERSION_HELP = "Rodo dabartinę versiją."
-CURSES_EXIT = "Paspauskite "q" klavišą, kad išeitumėte."
+CURSES_EXIT = "Paspauskite 'q' klavišą, kad išeitumėte."
 LANGUAGE = "ES yra 24 oficialiosios kalbos: airių, anglų, bulgarų, \
 čekų, danų, estų, graikų, ispanų, italų, kroatų, latvių, lenkų, \
 lietuvių, maltiečių, nyderlandų, portugalų, prancūzų, rumunų, slovakų, \

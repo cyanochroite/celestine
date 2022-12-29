@@ -18,7 +18,7 @@ ARGUMENT_OVERRIDE_TITLE = "Átgázol"
 ARGUMENT_PYTHON_HELP = "Válassza ki, \
 hogy a Python melyik verzióját használja."
 ARGUMENT_VERSION_HELP = "Az aktuális verziót jeleníti meg."
-CURSES_EXIT = "Nyomja meg a "q" gombot a kilépéshez."
+CURSES_EXIT = "Nyomja meg a 'q' gombot a kilépéshez."
 LANGUAGE = "Az Európai Uniónak 24 hivatalos nyelve van, \
 melyek a következők: angol, bolgár, cseh, dán, észt, finn, francia, \
 görög, holland, horvát, ír, lengyel, lett, litván, magyar, máltai, \
