@@ -1,44 +1,63 @@
-import configparser
-import os
+""""""
 
-from celestine.string.all import CELESTINE
-from celestine.string.session import CONFIGURATION
-from celestine.string.session import WRITE
-from celestine.string.session import UTF_8
+import configparser
+import types
+
+from celestine.text.stream import WRITE_TEXT
+from celestine.text.stream import UTF_8
+
+from celestine.session import load
+from celestine.text import CELESTINE
+
+from celestine.text.unicode import NONE
+
+from .text import FILE
 
 
 class Configuration():
     """parse configuration stuff."""
 
-    def __init__(self, directory):
-        self.directory = directory
-        self.path = os.path.join(directory, CELESTINE, CONFIGURATION)
+    def __init__(self) -> None:
+        """"""
+        self.path = load.pathway(FILE)
 
-    def load(self, path=None):
+        self.configuration = configparser.ConfigParser(
+            delimiters=("="),
+            comment_prefixes=("#"),
+            strict=True,
+            empty_lines_in_values=False,
+            default_section=CELESTINE,
+        )
+
+    def load(self) -> None:
         """Load the configuration file."""
-        configuration = configparser.ConfigParser()
-        configuration.read(path or self.path, encoding=UTF_8)
-        return configuration
+        self.configuration.read(self.path, encoding=UTF_8)
 
-    @staticmethod
-    def make(directory):
-        """Make a new configuration file."""
-        configuration = Configuration(directory)
-        return configuration.load()
-
-    def save(self, configuration, path=None):
+    def save(self) -> None:
         """Save the configuration file."""
-        with open(path or self.path, WRITE, encoding=UTF_8) as file:
-            configuration.write(file, True)
+        with open(self.path, WRITE_TEXT, encoding=UTF_8) as file:
+            self.configuration.write(file, True)
 
-    def add_configuration(self, configuration, module, application):
-        """Build up the configuration file."""
-        if not configuration.has_section(application):
-            configuration.add_section(application)
-        attribute = module.attribute()
-        default = module.default()
-        for item in zip(attribute, default, strict=True):
-            (name, value) = item
-            configuration.set(application, name, value)
+    def get(self, module: types.ModuleType, option: str) -> str:
+        """"""
+        string = repr(module)
+        array = string.split("'")
+        name = array[1]
+        split = name.split(".")
+        section = split[-1]
+        if self.configuration.has_section(section):
+            if self.configuration.has_option(section, option):
+                return self.configuration[section][option]
 
-        return configuration
+        return NONE
+
+    def set(self, section: str, option: str, value: str) -> None:
+        """"""
+        if not value:
+            return
+
+        if not self.configuration.has_section(section):
+            if section != CELESTINE:
+                self.configuration.add_section(section)
+
+        self.configuration[section][option] = value

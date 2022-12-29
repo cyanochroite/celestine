@@ -1,25 +1,70 @@
-import dataclasses
-import os
+""""""
 
-from celestine.session.configuration import Configuration
+import typing
+
+from .text import NARGS
+from .text import HELP
+from .text import CHOICES
+from .text import ACTION
+
+AttributeTable: typing.TypeAlias = typing.Dict[str, str | list[str]]
 
 
-@dataclasses.dataclass
 class Attribute():
-    def __init__(self, argument, attribute, default):
-        self.application = None
-        self.interface = None
-        self.language = None
-        self.python = None
-        self.task = None
+    """"""
 
-        directory = os.getcwd()
-        section = argument.application
+    def dictionary(self) -> AttributeTable:
+        """"""
+        return {}
 
-        configuration = Configuration.make(directory)
 
-        for (name, failover) in zip(attribute, default, strict=True):
-            database = configuration.get(section, name, fallback=None)
-            override = getattr(argument, name, None)
-            value = override or database or failover
-            setattr(self, name, value)
+class Action(Attribute):
+    """"""
+
+    def dictionary(self) -> AttributeTable:
+        """"""
+        return super().dictionary() | {ACTION: self.action}
+
+    def __init__(self, action: str, **kwargs) -> None:
+        """"""
+        super().__init__(**kwargs)
+        self.action = action
+
+
+class Choices(Attribute):
+    """"""
+
+    def dictionary(self) -> AttributeTable:
+        """"""
+        return super().dictionary() | {CHOICES: self.choices}
+
+    def __init__(self, choices: list[str], **kwargs) -> None:
+        """"""
+        super().__init__(**kwargs)
+        self.choices = choices
+
+
+class Help(Attribute):
+    """"""
+
+    def dictionary(self) -> AttributeTable:
+        """"""
+        return super().dictionary() | {HELP: self.help}
+
+    def __init__(self, help: str, **kwargs) -> None:
+        """"""
+        super().__init__(**kwargs)
+        self.help = help
+
+
+class Nargs(Attribute):
+    """"""
+
+    def dictionary(self) -> AttributeTable:
+        """"""
+        return super().dictionary() | {NARGS: self.nargs}
+
+    def __init__(self, nargs: str, **kwargs) -> None:
+        """"""
+        super().__init__(**kwargs)
+        self.nargs = nargs

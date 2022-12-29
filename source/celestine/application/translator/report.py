@@ -1,22 +1,28 @@
-"""Print out the lengths of the translations."""
+""""""
+
+import types
+import typing
+
+from celestine.session.argument import Argument
+from celestine.window.page import Page
+
 from celestine.session import load
 
-from .string import LANGUAGE
+LANGUAGE = "language"
 
 
-def main(_):
+def _train():
     """The main function."""
     minimum = {}
     maximum = {}
-
-    languages = load.argument(LANGUAGE)
-    for language in languages:
-        module = load.module(LANGUAGE, language)
-        dictionary = load.dictionary(module)
+    language = load.argument(LANGUAGE)
+    for lang in language:
+        dictionary = load.dictionary(LANGUAGE, lang)
         for key, value in dictionary.items():
             length = len(value)
             minimum[key] = min(length, minimum.get(key, 256))
             maximum[key] = max(length, maximum.get(key, 0))
 
-    print(minimum)
-    print(maximum)
+    return {"min": minimum, "max": maximum}
+
+

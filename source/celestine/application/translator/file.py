@@ -1,34 +1,26 @@
 """Central place for loading and importing external files."""
-import keyword
 
-from celestine.session import load
-
-from celestine.string.all import WRITE
-from celestine.string.all import UTF_8
+from celestine.text import stream
 
 
-class File():
-    """Write a key value pair python file."""
-
-    def __init__(self, name, header, iterable):
-        self.name = F"{name}.py"
-        self.head = F'"""{header}"""\n'
-        self.body = map(self.line, iterable)
-
-    def save(self, directory, *paths):
-        """Save the items."""
-        path = load.path(directory, *paths, self.name)
-        with open(path, WRITE, encoding=UTF_8) as file:
-            file.write(self.head)
-            file.writelines(self.body)
-
-    @staticmethod
-    def line(item):
-        """Make a line for the file from a key value pair."""
-        (key, value) = item
-        if not key.isidentifier():
-            raise ValueError("Not a valid identifier.")
-        if keyword.iskeyword(key) or keyword.issoftkeyword(key):
-            raise ValueError("This word is a keyword.")
-        value = value.replace('"', "'")
-        return F'{key} = "{value}"\n'
+def save(path, string):
+    file = path
+    mode = stream.WRITE_TEXT
+    buffering = 1  # use line buffering
+    encoding = stream.UTF_8
+    errors = stream.STRICT
+    newline = stream.UNIVERSAL
+    closefd = True  # close file descriptor
+    opener = None  # use default opener
+    with open(
+        file,
+        mode,
+        buffering,
+        encoding,
+        errors,
+        newline,
+        closefd,
+        opener,
+    ) as file_object:
+        for character in string:
+            file_object.write(character)

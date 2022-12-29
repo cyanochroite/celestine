@@ -1,133 +1,117 @@
-import argparse
+""""""
 
-from celestine.string.all import APPLICATION
-from celestine.string.all import CELESTINE
-from celestine.string.all import DEFAULT
-from celestine.string.all import HELP
-from celestine.string.all import INTERFACE
-from celestine.string.all import LANGUAGE
-from celestine.string.all import PYTHON
-from celestine.string.all import VERSION
-from celestine.string.all import VERSION_NUMBER
+from celestine.text.unicode import QUESTION_MARK
+from celestine.text.unicode import NONE
+from celestine.text.unicode import HYPHEN_MINUS
+from celestine.text import VERSION_NUMBER
 
-from celestine.string.unicode import HYPHEN_MINUS
-from celestine.string.unicode import QUESTION_MARK
+from .text import VERSION
+from .hash import HashClass
 
-from celestine.session import load
+from .attribute import Attribute
+from .attribute import AttributeTable
 
-TASK = "task"
+from .attribute import Action
+from .attribute import Choices
+from .attribute import Help
+from .attribute import Nargs
 
 
-class Argument():
-    def flag(self, name):
-        iterable = (HYPHEN_MINUS, name[:1])
-        return str().join(iterable)
+class Argument(HashClass, Attribute):
+    """abstract class"""
 
-    def name(self, name):
-        iterable = (HYPHEN_MINUS, HYPHEN_MINUS, name)
-        return str().join(iterable)
+    def __init__(self, argument: bool, attribute: bool, fallback: str,
+                 **kwargs) -> None:
+        """"""
+        super().__init__(**kwargs)
+        self.argument = argument
+        self.attribute = attribute
+        self.fallback = fallback
 
-    def default(self, name, value):
-        values = load.argument(name)
+    def key(self, _: str) -> list[str]:
+        ...
 
-        if value in values:
-            module = load.module(name, value)
-        else:
-            module = load.module(DEFAULT, name)
 
-        return module
+class Flag(Argument):
+    """"""
 
-    def region(self, args, exit_on_error):
+    def key(self, name: str) -> list[str]:
+        """"""
+        return [
+            NONE.join((HYPHEN_MINUS, name[0])),
+            NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name)),
+        ]
 
-        parser = argparse.ArgumentParser(
-            add_help=False,
-            exit_on_error=exit_on_error,
+
+class Name(Argument):
+    """"""
+
+    def key(self, name: str) -> list[str]:
+        """"""
+        return [name]
+
+
+class Optional(Flag, Help):
+    """"""
+
+    def __init__(self, fallback: str, help: str) -> None:
+        """"""
+        super().__init__(
+            argument=True,
+            attribute=True,
+            fallback=fallback,
+            help=help,
         )
 
-        parser.add_argument(
-            APPLICATION,
+
+class Override(Flag, Help, Choices):
+    """"""
+
+    def __init__(self, fallback: str, help: str,
+                 choices: list[str]) -> None:
+        """"""
+        super().__init__(
+            argument=bool(choices),
+            attribute=True,
+            fallback=fallback,
+            help=help,
+            choices=choices,
+        )
+
+
+class Positional(Name, Help, Choices, Nargs):
+    """"""
+
+    def __init__(self, fallback: str, help: str,
+                 choices: list[str]) -> None:
+        """"""
+        super().__init__(
+            argument=True,
+            attribute=True,
+            fallback=fallback,
+            help=help,
+            choices=choices,
             nargs=QUESTION_MARK,
         )
 
-        parser.add_argument(
-            self.flag(LANGUAGE),
-            self.name(LANGUAGE),
+
+class Information(Flag, Action, Help):
+    """"""
+
+    def dictionary(self) -> AttributeTable:
+        """"""
+        true = {VERSION: VERSION_NUMBER}
+        boolean = true if self.version is True else {}
+        return super().dictionary() | boolean
+
+    def __init__(self, fallback: str, action: str, help: str,
+                 version: bool) -> None:
+        """"""
+        super().__init__(
+            argument=True,
+            attribute=False,
+            fallback=fallback,
+            action=action,
+            help=help,
         )
-
-        (argument, _) = parser.parse_known_args(args)
-
-        application = argument.application
-        language = self.default(LANGUAGE, argument.language)
-
-        return (application, language)
-
-    def __init__(self, args, exit_on_error):
-        (application, language) = self.region(args, exit_on_error)
-
-        self.parser = argparse.ArgumentParser(
-            add_help=False,
-            prog=CELESTINE,
-            exit_on_error=exit_on_error,
-        )
-
-        information = self.parser.add_argument_group(
-            title=language.ARGUMENT_INFORMATION_TITLE,
-            description=language.ARGUMENT_INFORMATION_DESCRIPTION,
-        )
-
-        information.add_argument(
-            self.flag(HELP),
-            self.name(HELP),
-            action=HELP,
-            help=language.ARGUMENT_HELP_HELP,
-        )
-
-        information.add_argument(
-            self.flag(VERSION),
-            self.name(VERSION),
-            action=VERSION,
-            help=language.ARGUMENT_VERSION_HELP,
-            version=VERSION_NUMBER,
-        )
-
-        override = self.parser.add_argument_group(
-            title=language.ARGUMENT_OVERRIDE_TITLE,
-            description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
-        )
-
-        override.add_argument(
-            self.flag(INTERFACE),
-            self.name(INTERFACE),
-            choices=load.argument(INTERFACE),
-            help=language.ARGUMENT_INTERFACE_HELP,
-        )
-
-        override.add_argument(
-            self.flag(LANGUAGE),
-            self.name(LANGUAGE),
-            choices=load.argument(LANGUAGE),
-            help=language.ARGUMENT_LANGUAGE_HELP,
-        )
-
-        override.add_argument(
-            self.flag(PYTHON),
-            self.name(PYTHON),
-            choices=load.argument(PYTHON),
-            help=language.ARGUMENT_PYTHON_HELP,
-        )
-
-        load.module(APPLICATION, application).argument(self)
-
-        self.subparser = self.parser.add_argument(
-            APPLICATION,
-            choices=load.argument(APPLICATION),
-            help="Choose an applicanion. They have more option.",
-            nargs=QUESTION_MARK,
-        )
-
-        self.subparser = self.parser.add_argument(
-            TASK,
-            choices=load.argument(APPLICATION, application),
-            help="Choose an applicanion. They have more option.",
-            nargs=QUESTION_MARK,
-        )
+        self.version = version

@@ -14,15 +14,18 @@ class Page(master):
         return self.item_set(tag, Line(self, tag))
 
     def __init__(self, window, **kwargs):
-        super().__init__(window.session, **kwargs)
         self.window = window
         self.height = 24
         self.width = 80
-        self.frame = package.window(
-            1,
-            1,
-            self.width - 1,
-            self.height - 2,
-        )
         self.cord_x = 0
         self.cord_y = 0
+        super().__init__(
+            session=window.session,
+            frame=package.window(
+                1,
+                1,
+                self.width - 1,
+                self.height - 2,
+            ),
+            **kwargs,
+        )

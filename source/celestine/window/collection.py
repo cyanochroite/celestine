@@ -21,10 +21,10 @@ class Box(Object):
 
 class Collection(Object):
     def item_get(self, tag):
-        return self.item[str(tag)]
+        return self.item[tag]
 
     def item_set(self, tag, value):
-        self.item[str(tag)] = value
+        self.item[tag] = value
         return value
 
     def children(self):

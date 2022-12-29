@@ -1,46 +1,67 @@
+""""""
+
 from celestine.session import load
-from celestine.session import Session
+from celestine.session.parser import start_session
 
-from celestine.string.all import PACKAGE
-from celestine.string.all import BLENDER
-from celestine.string.all import MAIN
+from celestine.text import CELESTINE
+from celestine.text import VERSION_BLENDER
+from celestine.text import VERSION_CELESTINE
 
+from celestine.text.main import NAME
+from celestine.text.main import DESCRIPTION_KEY
+from celestine.text.main import DESCRIPTION_VALUE
+from celestine.text.main import AUTHOR_KEY
+from celestine.text.main import AUTHOR_VALUE
+from celestine.text.main import VERSION
+from celestine.text.main import BLENDER
+from celestine.text.main import LOCATION_KEY
+from celestine.text.main import LOCATION_VALUE
+from celestine.text.main import WIKI_URL_KEY
+from celestine.text.main import WIKI_URL_VALUE
+from celestine.text.main import TRACKER_URL_KEY
+from celestine.text.main import TRACKER_URL_VALUE
+from celestine.text.main import SUPPORT_KEY
+from celestine.text.main import SUPPORT_VALUE
+from celestine.text.main import CATEGORY_KEY
+from celestine.text.main import CATEGORY_VALUE
+
+from celestine.text.directory import INTERFACE
 
 bl_info = {
-    "name": "Celestine",
-    "description": "Blnder stuff can do stuff wow cool.",
-    "author": "mem_dixy",
-    "version": (0, 4, 0),
-    "blender": (3, 0, 0),
-    "location": "View 3D > Sidebar > Viewer",
-    "warning": "Does not work. Work in progress. Not ready for publication.",
-    "wiki_url": "https://celestine.readthedocs.io/en/latest/",
-    "tracker_url": "https://github.com/mem-dixy/celestine/",
-    "support": "COMMUNITY",
-    "category": "3D View",
+    NAME: CELESTINE,
+    DESCRIPTION_KEY: DESCRIPTION_VALUE,
+    AUTHOR_KEY: AUTHOR_VALUE,
+    VERSION: VERSION_CELESTINE,
+    BLENDER: VERSION_BLENDER,
+    LOCATION_KEY: LOCATION_VALUE,
+    WIKI_URL_KEY: WIKI_URL_VALUE,
+    TRACKER_URL_KEY: TRACKER_URL_VALUE,
+    SUPPORT_KEY: SUPPORT_VALUE,
+    CATEGORY_KEY: CATEGORY_VALUE,
 }
 
 
-def register():
+def register() -> None:
     """
-    This is a function which only runs when enabling the add-on, this means the
-    module can be loaded without activating the add-on.
+    This is a function which only runs when enabling the add-on, this
+    means the module can be loaded without activating the add-on.
     """
-    load.module(PACKAGE, BLENDER, MAIN).register()
-    main([BLENDER, MAIN], False)
+    load.module(INTERFACE, BLENDER).register()
+    main([BLENDER], False)
 
 
-def unregister():
+def unregister() -> None:
     """
-    This is a function to unload anything setup by register, this is called
-    when the add-on is disabled.
+    This is a function to unload anything setup by register, this is
+    called when the add-on is disabled.
     """
-    load.module(PACKAGE, BLENDER, MAIN).unregister()
+    load.module(INTERFACE, BLENDER).unregister()
 
 
-def main(argv, exit_on_error):
+def main(argv: list[str], exit_on_error: bool) -> None:
     """Run the main program."""
-    session = Session(argv, exit_on_error)
+    session = start_session(argv, exit_on_error)
     with session.interface.window(session) as window:
-        for document in session.task.main(session):
-            window.page(document)
+        function = load.function(session.application)
+        for (name, document) in function.items():
+            window.page(name, document)

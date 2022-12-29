@@ -1,55 +1,64 @@
 """Application for translating text to other languages."""
 
-from celestine.string.all import LANGUAGE
+import typing
+import types
 
-from .string import NONE
+from types import ModuleType as MT
+from typing import Dict as D
+from typing import TypeAlias as TA
 
-from .string import KEY
-from .string import REGION
-from .string import URL
+from celestine.session.argument import Argument
+from celestine.session.argument import Optional
+from celestine.window.page import Page
 
-from .string import CONFIGURE
-from .string import REPORT
-from .string import TRANSLATE
+from celestine.text.unicode import NONE
 
-from .string import STORE
+from .text import KEY
+from .text import REGION
+from .text import URL
 
-
-def argument(arguments):
-    """Build up the argument."""
-    arguments.parser.add_argument(
-        arguments.flag(KEY),
-        arguments.name(KEY),
-        action=STORE,
-        help="A brief description of what the argument does.",
-    )
-
-    arguments.parser.add_argument(
-        arguments.flag(REGION),
-        arguments.name(REGION),
-        action=STORE,
-        help="A brief description of what the argument does.",
-    )
-
-    arguments.parser.add_argument(
-        arguments.flag(URL),
-        arguments.name(URL),
-        action=STORE,
-        help="A brief description of what the argument does.",
-    )
-
-    return argument
+from .report import _train
+from .main import _translate
 
 
-def attribute():
-    """Build up the attribute file."""
-    return [KEY, REGION, URL]
+AD: TA = D[str, Argument]
 
 
-def default():
-    """Build up the default file."""
-    return [NONE, NONE, NONE]
+class Session():
+    """"""
+
+    @staticmethod
+    def dictionary(application: MT, language: MT) -> AD:
+        """"""
+        return {
+            KEY: Optional(
+                NONE,
+                "pick your nose",
+            ),
+            REGION: Optional(
+                NONE,
+                "pick your toes",
+            ),
+            URL: Optional(
+                NONE,
+                "pick your hoes",
+            ),
+        }
 
 
-def image_format():
-    return []
+def main(page: Page):
+    """"""
+    with page.line("head") as line:
+        line.label("title", "fish eat friends for food")
+    _translate(page.session)
+
+
+# TODO:figure out how to make actions not trigger on function load
+def _report(page: Page):
+    """"""
+    with page.line("head") as line:
+        line.label("title", "Page main")
+    train = _train()
+    for (tag, text) in train.items():
+        with page.line("body") as line:
+            line.label(tag, text)

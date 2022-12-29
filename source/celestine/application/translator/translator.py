@@ -3,6 +3,7 @@
 
 class Translator():
     """A translator."""
+
     def __init__(self, attribute):
         self.key = attribute.key
         self.region = attribute.region
@@ -21,11 +22,11 @@ class Translator():
             "X-ClientTraceId": trace,
         }
 
-    def parameter(self, to_language):
+    def parameter(self, language):
         """Return the parameter."""
         return {
             "api-version": "3.0",
-            "to": to_language,
+            "to": language,
             "category": "general",
             "from": "en",
             "includeAlignment": False,
