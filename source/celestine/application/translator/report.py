@@ -24,6 +24,6 @@ def _train():
             minimum[key] = min(length, minimum.get(key, 256))
             maximum[key] = max(length, maximum.get(key, 0))
 
-    return [minimum, maximum]
+    return {"min": minimum, "max": maximum}
 
 

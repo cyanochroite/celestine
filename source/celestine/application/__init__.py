@@ -1,47 +1,48 @@
 """"""
-
+from types import ModuleType as MT
+from typing import Dict as D
+from typing import TypeAlias as TA
 import types
 import typing
 
 from celestine.session.argument import Argument
 from celestine.window.page import Page
 
+AD: TA = D[str, Argument]
+
 
 class Session():
     """"""
 
     @staticmethod
-    def dictionary(_: types.ModuleType) -> typing.Dict[str, Argument]:
+    def dictionary(application: MT, language: MT) -> AD:
         """"""
         return {
         }
 
 
-def one(page: Page) -> int:
+def one(page: Page) -> None:
     """"""
     with page.line("head") as line:
-        line.label("title", "Page 1")
+        line.label("title", "Page one")
     with page.line("body") as line:
-        line.button("past", "Page 0", 0)
-        line.button("next", "Page 2", 2)
-    return 1
+        line.button("past", "Page main", "main")
+        line.button("next", "Page two", "two")
 
 
-def two(page: Page) -> int:
+def two(page: Page) -> None:
     """"""
     with page.line("head") as line:
-        line.label("title", "Page 2")
+        line.label("title", "Page two")
     with page.line("body") as line:
-        line.button("past", "Page 1", 1)
-        line.button("next", "Page 0", 0)
-    return 2
+        line.button("past", "Page one", "one")
+        line.button("next", "Page main", "main")
 
 
-def zero(page: Page) -> int:
+def main(page: Page) -> None:
     """"""
     with page.line("head") as line:
-        line.label("title", "Page 0")
+        line.label("title", "Page main")
     with page.line("body") as line:
-        line.button("past", "Page 1", 1)
-        line.button("next", "Page 2", 2)
-    return 0
+        line.button("past", "Page one", "one")
+        line.button("next", "Page two", "two")

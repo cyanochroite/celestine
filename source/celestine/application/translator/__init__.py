@@ -26,7 +26,8 @@ AD: TA = D[str, Argument]
 class Session():
     """"""
 
-    def dictionary(cls, application: MT, language: MT) -> AD:
+    @staticmethod
+    def dictionary(application: MT, language: MT) -> AD:
         """"""
         return {
             KEY: Optional(
@@ -55,9 +56,9 @@ def main(page: Page):
 def report(page: Page):
     """"""
     with page.line("head") as line:
-        line.label("title", "Page 0")
-    label = _train()
-    for item in label:
+        line.label("title", "Page main")
+    train = _train()
+    for (tag, text) in train.items():
         with page.line("body") as line:
-            line.label(item, item)
+            line.label(tag, text)
     return 1

@@ -1,4 +1,7 @@
 """"""
+from types import ModuleType as MT
+from typing import Dict as D
+from typing import TypeAlias as TA
 
 from celestine.application.viewer.core import os
 import dataclasses
@@ -16,6 +19,8 @@ from .text import DIRECTORY
 
 from .main import _setup
 
+AD: TA = D[str, Argument]
+
 
 @dataclasses.dataclass(init=False)
 class Session():
@@ -26,9 +31,8 @@ class Session():
     you: str
 
     @staticmethod
-    def dictionary(
-        language: types.ModuleType,
-    ) -> typing.Dict[str, Argument]:
+    @staticmethod
+    def dictionary(application: MT, language: MT) -> AD:
         """"""
 
         return {
@@ -49,7 +53,7 @@ class Session():
         }
 
 
-def window(page):
+def main(page):
     image = _setup(page)
     with page.line("head") as line:
         line.label("Settings", "no puppy. File Explorer using Tkinter")
@@ -64,4 +68,3 @@ def window(page):
                 line.image(F"{index_x}-{index_y}", imaged)
                 index_x += 1
         index_y += 1
-    return 0

@@ -24,23 +24,11 @@ class Window(Collection):
             raise RuntimeError(message) from error
         except KeyError as error:
             page = self.turn_page
-            message = F"Missing function with return value of {page}."
+            message = F"Missing function called {page}."
             raise RuntimeError(message) from error
         return False
-
-    def _turn_page(self, session):
-        dictionary_int = {}
-        dictionary_str = {}
-        function = load.function(session.application)
-        for (key, value) in function.items():
-            index = value(Page(self.session, None))
-            dictionary_int[index] = key
-            dictionary_str[key] = index
-        value_int = dictionary_int.get(session.main, None)
-        value_str = dictionary_str.get(session.main, None)
-        return value_int or value_str
 
     def __init__(self, session, **kwargs):
         super().__init__(**kwargs)
         self.session = session
-        self.turn_page = self._turn_page(session)
+        self.turn_page = session.main

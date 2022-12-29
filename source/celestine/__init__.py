@@ -62,7 +62,13 @@ def main(argv: list[str], exit_on_error: bool) -> None:
     """Run the main program."""
     session = start_session(argv, exit_on_error)
     with session.interface.window(session) as window:
-        function = load.function_value(session.application)
-        for document in function:
-            window.page(document)
-        window.turn_page = session.main
+        function = load.function(session.application)
+        for (name, document) in function.items():
+            window.page(name, document)
+
+
+# why are we using int indexes anyways?
+# lets just replace it all with the name lookup.
+#  wont have to pre launch the pages in dearpygui just to get index
+
+#  ugh so no return values or error checking either

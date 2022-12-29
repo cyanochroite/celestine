@@ -7,11 +7,10 @@ from celestine.window.page import Page as null_page
 
 
 class Window(master):
-    def page(self, document):
-        index = document(null_page(self.session, None))
-        tag = str(index)
+    def page(self, name, document):
+        tag = name
         value = Page(self, tag)
-        self.item_set(tag, value)
+        self.item_set(name, value)
         with value.frame:
             package.configure_item(tag, show=False)
             document(value)

@@ -143,7 +143,7 @@ class Session(Application, Interface, Language):
             MAIN: Positional(
                 MAIN,
                 language.ARGUMENT_LANGUAGE_HELP,
-                load.function_keys(application),
+                load.function_name(application),
             ),
         }
 

@@ -5,11 +5,11 @@ from .page import Page
 
 
 class Window(master):
-    def page(self, document):
+    def page(self, name, document):
         page = Page(self)
         page.frame.grid(row=0, column=0, sticky="nsew")
-        index = document(page)
-        self.item_set(index, page)
+        document(page)
+        self.item_set(name, page)
         return page
 
     def turn(self, page):

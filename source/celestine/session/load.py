@@ -71,8 +71,8 @@ def function(_module: types.ModuleType) -> typing.Dict[str, typing.Callable[[Non
         key: value
         for key, value
         in _dictionary.items()
-        if repr(value).startswith("<function") and
-        not key.startswith("_")
+        if repr(value).startswith("<function")
+        and not key.startswith("_")
     }
     return mapping
 
@@ -102,26 +102,6 @@ def function_value(_module: types.ModuleType) -> list[typing.Callable[[None], No
         in _dictionary.items()
     ]
     return mapping
-
-
-def function_keys(_module: types.ModuleType) -> list[str]:
-    """
-    Load from module all functions and turn them into dictionary.
-    """
-    _dictionary = function(_module)
-    dictionary_key = [
-        key
-        for key, value
-        in _dictionary.items()
-    ]
-    dictionary_value = [
-        str(value(Page(None, None)))
-        for key, value
-        in _dictionary.items()
-    ]
-    merge = dictionary_key + dictionary_value
-    merge.sort()
-    return merge
 
 
 def pathway(*path: str) -> str:
