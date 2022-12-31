@@ -47,7 +47,7 @@ def parser_magic(session):
         override[translation] = wow
         dictionary[translation] = {}
 
-    thelist = load.dictionary("default", "language")
+    thelist = load.dictionary("translation")
     for name, value in thelist.items():
 
         items = post(session, code, value)

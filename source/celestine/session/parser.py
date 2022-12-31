@@ -2,9 +2,12 @@
 
 import argparse
 
+import sys
+
 import types
 import typing
 
+import io
 from celestine.session.argument import Argument
 from celestine.session.argument import Optional
 from celestine.session.argument import Override
@@ -22,6 +25,15 @@ from celestine.text import CELESTINE
 
 from celestine.text.directory import APPLICATION
 from celestine.text.directory import LANGUAGE
+
+from celestine.text.unicode import COMMA
+from celestine.text.unicode import COLON
+from celestine.text.unicode import SPACE
+from celestine.text.unicode import LEFT_PARENTHESIS
+from celestine.text.unicode import RIGHT_PARENTHESIS
+from celestine.text.unicode import APOSTROPHE
+from celestine.text.unicode import LINE_FEED
+
 
 from celestine.session.session import Magic
 
@@ -133,14 +145,79 @@ def dostuff(
 ) -> Session:
     """"""
 
+    class Error(argparse.ArgumentError):
+        """Intercept help formating so translation can happen."""
+
+        def __str__(self):
+            string = io.StringIO()
+            if self.argument_name is not None:
+                string.write(language.ARGUMENT_PARSER_ARGUMENT)
+                string.write(SPACE)
+                string.write(self.argument_name)
+                string.write(COLON)
+                string.write(SPACE)
+            string.write(self.message)
+            message = string.getvalue()
+            return message
+
+    class Formatter(argparse.HelpFormatter):
+        """Intercept help formating so translation can happen."""
+
+        def add_usage(self, usage, actions, groups, prefix=None):
+            string = io.StringIO()
+            string.write(language.ARGUMENT_PARSER_USAGE)
+            string.write(COLON)
+            string.write(SPACE)
+            prefix = string.getvalue()
+            super().add_usage(usage, actions, groups, prefix)
+
+    class Parser(argparse.ArgumentParser):
+        """Intercept help formating so translation can happen."""
+
+        def _check_value(self, action, value):
+            try:
+                super()._check_value(action, value)
+            except argparse.ArgumentError as cat:
+                string = io.StringIO()
+                string.write(language.ARGUMENT_PARSER_CHOICE)
+                string.write(COLON)
+                string.write(SPACE)
+                string.write(APOSTROPHE)
+                string.write(value)
+                string.write(APOSTROPHE)
+                string.write(SPACE)
+                string.write(LEFT_PARENTHESIS)
+                string.write(language.ARGUMENT_PARSER_CHOOSE)
+                string.write(SPACE)
+                join = NONE.join([COMMA, SPACE])
+                string.write(join.join(map(repr, action.choices)))
+                string.write(RIGHT_PARENTHESIS)
+                msg = string.getvalue()
+                raise Error(action, msg) from cat
+
+        def error(self, message):
+            string = io.StringIO()
+            string.write(self.prog)
+            string.write(COLON)
+            string.write(SPACE)
+            string.write(language.ARGUMENT_PARSER_ERROR)
+            string.write(COLON)
+            string.write(SPACE)
+            string.write(message)
+            string.write(LINE_FEED)
+            message = string.getvalue()
+            self.exit(2, message)  # TODO: check if this kills blender.
+            self._print_message(message)  # unreachable code
+
     add_argument: Magic
 
-    parser = argparse.ArgumentParser(
+    parser = Parser(
         add_help=False,
+        description="(cow)",
+        epilog="<moo>",
+        formatter_class=Formatter,
         prog=CELESTINE,
         exit_on_error=exit_on_error,
-        usage="pack a man in a cage.",
-
     )
 
     add_argument = {}
