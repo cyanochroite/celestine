@@ -83,66 +83,13 @@ class Hippo():
         return self.dictionary.items()
 
 
-def dofilt(
-    argv: list[str],
-    exit_on_error: bool,
-    language,
-    hippo: Hippo,
-) -> types.ModuleType | str:
-    """"""
-
-    add_argument: Magic
-
-    configuration = Configuration()
-    configuration.load()
-
-    parser = argparse.ArgumentParser(
-        add_help=False,
-        exit_on_error=exit_on_error,
-        usage="bird flu over grave.",
-
-    )
-
-    add_argument = {}
-
-    information = parser.add_argument_group(
-        title=language.ARGUMENT_INFORMATION_TITLE,
-        description=language.ARGUMENT_INFORMATION_DESCRIPTION,
-    )
-    optional = parser.add_argument_group(
-        title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-        description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
-    )
-    override = parser.add_argument_group(
-        title=language.ARGUMENT_OVERRIDE_TITLE,
-        description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
-    )
-    positional = parser.add_argument_group(
-        title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-        description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
-    )
-
-    add_argument[Information] = information
-    add_argument[Optional] = optional
-    add_argument[Override] = override
-    add_argument[Positional] = positional
-
-    attribute = feed_the_parser(
-        add_argument,
-        lambda: parser.parse_known_args(argv)[0],
-        configuration,
-        [hippo],
-    )
-
-    return attribute[0]
-
-
-def dostuff(
+def get_parser(
     args: list[str],
     exit_on_error: bool,
-    application: str,
     language: types.ModuleType,
-) -> Session:
+    hippos: list[Hippo],
+    fast: bool,
+) -> list[Dictionary]:
     """"""
 
     class Error(argparse.ArgumentError):
@@ -248,41 +195,23 @@ def dostuff(
     configuration = Configuration()
     configuration.load()
 
+    def parse_known_args():
+        return parser.parse_known_args(args)[0]
+
+    def parse_args():
+        return parser.parse_args(args)
+
+    function = parse_known_args if fast else parse_args
     attribute = feed_the_parser(
         add_argument,
-        lambda: parser.parse_args(args),
+        function,
         configuration,
-        [
-            Hippo(
-                application,
-                language,
-                "Session",
-                "session",
-                "session",
-            ),
-            Hippo(
-                application,
-                language,
-                "Session",
-                APPLICATION,
-                application,
-            ),
-            Hippo(
-                application,
-                language,
-                "Dull",
-                "session",
-                "session",
-            ),
-        ],
+        hippos,
     )
 
     configuration.save()
 
-    session = attribute[0]
-    session.attribute = attribute[1]
-
-    return session
+    return attribute
 
 
 def feed_the_parser(
@@ -322,22 +251,24 @@ def feed_the_parser(
 def start_session(argv: list[str], exit_on_error: bool) -> Session:
     """"""
     def load_the_fish(name, value):
-        return getattr(
-            dofilt(
-                argv,
-                exit_on_error,
+        hippo = [
+            Hippo(
+                load.module(),
                 language,
-                Hippo(
-                    load.module(),
-                    language,
-                    name.capitalize(),
-                    "session",
-                    "session",
-                ),
+                name.capitalize(),
+                "session",
+                "session",
             ),
-            name,
-            value,
+        ]
+        parser = get_parser(
+            argv,
+            exit_on_error,
+            language,
+            hippo,
+            True,
         )
+        thing = getattr(parser, name, value)
+        return thing
 
     try:
         application = load.module(APPLICATION)
@@ -349,7 +280,38 @@ def start_session(argv: list[str], exit_on_error: bool) -> Session:
     except ModuleNotFoundError as error:
         raise RuntimeError("Missing __init__ file.") from error
 
-    session = dostuff(argv, exit_on_error, application, language)
+    hippos = [
+        Hippo(
+            application,
+            language,
+            "Session",
+            "session",
+            "session",
+        ),
+        Hippo(
+            application,
+            language,
+            "Session",
+            APPLICATION,
+            application,
+        ),
+        Hippo(
+            application,
+            language,
+            "Dull",
+            "session",
+            "session",
+        ),
+    ]
+    attribute = get_parser(
+        argv,
+        exit_on_error,
+        language,
+        hippos,
+        True,
+    )
+    session = attribute[0]
+    session.attribute = attribute[1]
 
     return session
 
