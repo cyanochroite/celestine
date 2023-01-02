@@ -8,18 +8,23 @@ ARGUMENT_INFORMATION_TITLE = "Informácia"
 ARGUMENT_INTERFACE_HELP = "\
 Ktoré grafické používateľské rozhranie chcete použiť?"
 ARGUMENT_LANGUAGE_HELP = "EÚ má 24 úradných jazykov: bulharčina, \
-chorvátčina, čeština, dánčina, holandčina, angličtina, estónčina, \
-fínčina, francúzština, nemčina, gréčtina, maďarčina, írčina, \
-taliančina, lotyština, litovčina, maltčina, poľština, portugalčina, \
-rumunčina, slovenčina, slovinčina, Španielčina a švédčina."
+chorvátčina, čeština, dánčina, estónčina, fínčina, francúzština, \
+nemčina, gréčtina, maďarčina, írčina, taliančina, lotyština, \
+litovčina, maltčina, poľština, portugalčina, rumunčina, slovenčina, \
+slovinčina, španielčina, švédčina a taliančina."
 ARGUMENT_OVERRIDE_DESCRIPTION = "\
 Celestine sa pokúsi uhádnuť najlepšie nastavenia, \
 ktoré sa majú použiť. \
 Namiesto toho môžete požiadať o použitie týchto hodnôt."
 ARGUMENT_OVERRIDE_TITLE = "Prepísať"
+ARGUMENT_PARSER_ARGUMENT = "argument"
+ARGUMENT_PARSER_CHOICE = "neplatná voľba"
+ARGUMENT_PARSER_CHOOSE = "Vyberte si z"
+ARGUMENT_PARSER_ERROR = "chyba"
+ARGUMENT_PARSER_USAGE = "použitie"
 ARGUMENT_PYTHON_HELP = "Vyberte, ktorú verziu jazyka Python používate."
 ARGUMENT_VERSION_HELP = "Zobrazuje aktuálnu verziu."
-CURSES_EXIT = "Stlačením klávesu 'q' ukončite akciu."
+CURSES_EXIT = "Stlačením klávesu ESC ukončite akciu."
 LANGUAGE = "EÚ má 24 úradných jazykov, ktorými sú: angličtina, \
 bulharčina, čeština, dánčina, estónčina, fínčina, francúzština, \
 gréčtina, holandčina, chorvátčina, írčina, litovčina, lotyština, \

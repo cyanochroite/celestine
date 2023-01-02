@@ -8,16 +8,21 @@ ARGUMENT_INFORMATION_TITLE = "Informaatio"
 ARGUMENT_INTERFACE_HELP = "\
 Mitä graafista käyttöliittymää haluat käyttää?"
 ARGUMENT_LANGUAGE_HELP = "EU: ssa on 24 virallista kieltä: bulgaria, \
-kroatia, tšekki, tanska, hollanti, englanti, viro, suomi, Ranska, \
-Saksa, Kreikka, Unkari, Irlanti, Italia, Latvia, Liettua, malta, \
-puola, portugali, romania, slovakki, sloveeni, Espanja ja ruotsi."
+englanti, espanja, hollanti, iiri, italia, kreikka, kroaatti, latvia, \
+liettua, malta, portugali, puola, ranska, romania, ruotsi, saksa, \
+slovakki, sloveeni, suomi, tanska, tšekki, unkari ja viro."
 ARGUMENT_OVERRIDE_DESCRIPTION = "\
 Celestine yrittää arvata parhaat käytettävät asetukset. \
 Voit pyytää saada käyttää näitä arvoja sen sijaan."
 ARGUMENT_OVERRIDE_TITLE = "Kumota"
+ARGUMENT_PARSER_ARGUMENT = "argumentti"
+ARGUMENT_PARSER_CHOICE = "virheellinen valinta"
+ARGUMENT_PARSER_CHOOSE = "Valitse"
+ARGUMENT_PARSER_ERROR = "virhe"
+ARGUMENT_PARSER_USAGE = "käyttö"
 ARGUMENT_PYTHON_HELP = "Valitse käyttämäsi Python-versio."
 ARGUMENT_VERSION_HELP = "Näyttää nykyisen version."
-CURSES_EXIT = "Paina 'q' -näppäintä poistuaksesi."
+CURSES_EXIT = "Paina ESC-näppäintä poistuaksesi."
 LANGUAGE = "EU: ssa on 24 virallista kieltä: bulgaria, englanti, \
 espanja, hollanti, iiri, italia, kreikka, kroaatti, latvia, liettua, \
 malta, portugali, puola, ranska, romania, ruotsi, saksa, slovakki, \

@@ -8,17 +8,22 @@ ARGUMENT_INFORMATION_TITLE = "Információ"
 ARGUMENT_INTERFACE_HELP = "\
 Melyik grafikus felhasználói felületet szeretné használni?"
 ARGUMENT_LANGUAGE_HELP = "Az EU-nak 24 hivatalos nyelve van: angol, \
-bolgár, cseh, dán, észt, finn, horvát, francia, görög, holland, ír, \
-lengyel, lett, litván, máltai, lengyel, portugál, román, szlovák, \
-szlovén, Spanyol és svéd."
+bolgár, cseh, dán, észt, finn, francia, görög, holland, horvát, ír, \
+lengyel, lett, litván, magyar, máltai, német, olasz, portugál, román, \
+spanyol, svéd, szlovák és szlovén."
 ARGUMENT_OVERRIDE_DESCRIPTION = "\
 A Celestine megpróbálja kitalálni a legjobb beállításokat. \
 Ehelyett kérheti ezeknek az értékeknek a használatát."
 ARGUMENT_OVERRIDE_TITLE = "Átgázol"
+ARGUMENT_PARSER_ARGUMENT = "vita"
+ARGUMENT_PARSER_CHOICE = "érvénytelen választás"
+ARGUMENT_PARSER_CHOOSE = "Válasszon a következők közül"
+ARGUMENT_PARSER_ERROR = "hiba"
+ARGUMENT_PARSER_USAGE = "használat"
 ARGUMENT_PYTHON_HELP = "Válassza ki, \
 hogy a Python melyik verzióját használja."
 ARGUMENT_VERSION_HELP = "Az aktuális verziót jeleníti meg."
-CURSES_EXIT = "Nyomja meg a 'q' gombot a kilépéshez."
+CURSES_EXIT = "A kilépéshez nyomja meg az ESC billentyűt."
 LANGUAGE = "Az Európai Uniónak 24 hivatalos nyelve van, \
 melyek a következők: angol, bolgár, cseh, dán, észt, finn, francia, \
 görög, holland, horvát, ír, lengyel, lett, litván, magyar, máltai, \

@@ -6,19 +6,24 @@ ARGUMENT_INFORMATION_DESCRIPTION = "\
 Incluindo estes terminará o programa para exibir informações."
 ARGUMENT_INFORMATION_TITLE = "Informação"
 ARGUMENT_INTERFACE_HELP = "Qual é o GUI que quer usar?"
-ARGUMENT_LANGUAGE_HELP = "A UE tem 24 línguas oficiais: Búlgaro, \
+ARGUMENT_LANGUAGE_HELP = "A UE tem 24 línguas oficiais: búlgaro, \
 croata, checo, dinamarquês, holandês, inglês, estónio, finlandês, \
-Francês, Alemão, Grego, Húngaro, Irlandês, Italiano, Letão, Lituano, \
-Maltês, polaco, português, romeno, eslovaco, esloveno, \
-Espanhol e sueco."
+francês, alemão, grego, húngaro, irlandês, italiano, letão, lituano, \
+maltês, polaco, português, romeno, eslovaco, esloveno, \
+espanhol e sueco."
 ARGUMENT_OVERRIDE_DESCRIPTION = "\
 Celestine tentará adivinhar as melhores configurações para usar. \
 Em vez disso, pode solicitar a utilização destes valores."
 ARGUMENT_OVERRIDE_TITLE = "Sobreposição"
+ARGUMENT_PARSER_ARGUMENT = "argumento"
+ARGUMENT_PARSER_CHOICE = "escolha inválida"
+ARGUMENT_PARSER_CHOOSE = "escolher de"
+ARGUMENT_PARSER_ERROR = "erro"
+ARGUMENT_PARSER_USAGE = "uso"
 ARGUMENT_PYTHON_HELP = "\
 Selecione qual a versão do Python que está a usar."
 ARGUMENT_VERSION_HELP = "Mostra a versão atual."
-CURSES_EXIT = "Prima a tecla 'q' para a saída."
+CURSES_EXIT = "Pressione a chave ESC para a saída."
 LANGUAGE = "A UE tem 24 línguas oficiais: alemão, búlgaro, checo, \
 croata, dinamarquês, eslovaco, esloveno, espanhol, estónio, finlandês, \
 francês, grego, húngaro, inglês, irlandês, italiano, letão, lituano, \

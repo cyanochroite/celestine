@@ -10,14 +10,19 @@ ARGUMENT_LANGUAGE_HELP = "UE are 24 de limbi oficiale: bulgară, \
 croată, cehă, daneză, olandeză, engleză, estonă, finlandeză, franceză, \
 germană, greacă, maghiară, irlandeză, italiană, letonă, lituaniană, \
 malteză, poloneză, portugheză, română, slovacă, slovenă, \
-Spaniolă și suedeză."
+spaniolă și suedeză."
 ARGUMENT_OVERRIDE_DESCRIPTION = "\
 Celestine va încerca să ghicească cele mai bune setări pentru a utiliza. \
 Puteți solicita să utilizați aceste valori în schimb."
 ARGUMENT_OVERRIDE_TITLE = "Suprascrie"
+ARGUMENT_PARSER_ARGUMENT = "argument"
+ARGUMENT_PARSER_CHOICE = "alegere nevalidă"
+ARGUMENT_PARSER_CHOOSE = "alege de la"
+ARGUMENT_PARSER_ERROR = "eroare"
+ARGUMENT_PARSER_USAGE = "obicei"
 ARGUMENT_PYTHON_HELP = "Selectați ce versiune de Python utilizați."
 ARGUMENT_VERSION_HELP = "Afișează versiunea curentă."
-CURSES_EXIT = "Apăsați tasta 'q' pentru a ieși."
+CURSES_EXIT = "Apăsați tasta ESC pentru a ieși."
 LANGUAGE = "UE numără 24 de limbi oficiale: bulgară, cehă, croată, \
 daneză, engleză, estonă, finlandeză, franceză, germană, greacă, \
 irlandeză, italiană, letonă, lituaniană, maghiară, malteză, \

@@ -6,17 +6,23 @@ ARGUMENT_INFORMATION_DESCRIPTION = "\
 Inkludering af disse vil afslutte programmet for at vise information."
 ARGUMENT_INFORMATION_TITLE = "Information"
 ARGUMENT_INTERFACE_HELP = "Hvilken GUI vil du bruge?"
-ARGUMENT_LANGUAGE_HELP = "EU har 24 officielle sprog: Bulgarsk, \
-kroatisk, tjekkisk, dansk, hollandsk, engelsk, estisk, finsk, Fransk, \
-tysk, græsk, ungarsk, irsk, italiensk, lettisk, litauisk, maltesisk, \
-polsk, portugisisk, rumænsk, slovakisk, slovensk, Spansk og svensk."
+ARGUMENT_LANGUAGE_HELP = "EU har 24 officielle sprog: bulgarsk, \
+kroatisk, tjekkisk, dansk, engelsk, estisk, finsk, fransk, græsk, \
+irsk, italiensk, lettisk, litauisk, maltesisk, nederlandsk, polsk, \
+portugisisk, rumænsk, slovakisk, slovensk, spansk, svensk, tjekkisk, \
+tysk, ungarsk, tjekkisk, tysk og ungarsk."
 ARGUMENT_OVERRIDE_DESCRIPTION = "\
 Celestine vil forsøge at gætte de bedste indstillinger, \
 der skal bruges. Du kan anmode om at bruge disse værdier i stedet."
 ARGUMENT_OVERRIDE_TITLE = "Tilsidesætte"
+ARGUMENT_PARSER_ARGUMENT = "argument"
+ARGUMENT_PARSER_CHOICE = "ugyldigt valg"
+ARGUMENT_PARSER_CHOOSE = "Vælg mellem"
+ARGUMENT_PARSER_ERROR = "fejl"
+ARGUMENT_PARSER_USAGE = "brug"
 ARGUMENT_PYTHON_HELP = "Vælg, hvilken version af Python du bruger."
 ARGUMENT_VERSION_HELP = "Viser den aktuelle version."
-CURSES_EXIT = "Tryk på 'q'-tasten for at afslutte."
+CURSES_EXIT = "Tryk på ESC-tasten for at afslutte."
 LANGUAGE = "EU har 24 officielle sprog: bulgarsk, dansk, engelsk, \
 estisk, finsk, fransk, græsk, irsk, italiensk, kroatisk, lettisk, \
 litauisk, maltesisk, nederlandsk, polsk, portugisisk, rumænsk, \

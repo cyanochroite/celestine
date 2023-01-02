@@ -15,9 +15,14 @@ ARGUMENT_OVERRIDE_DESCRIPTION = "\
 Celestine will try to guess the best settings to use. \
 You can request to use these values instead."
 ARGUMENT_OVERRIDE_TITLE = "Override"
+ARGUMENT_PARSER_ARGUMENT = "argument"
+ARGUMENT_PARSER_CHOICE = "invalid choice"
+ARGUMENT_PARSER_CHOOSE = "choose from"
+ARGUMENT_PARSER_ERROR = "error"
+ARGUMENT_PARSER_USAGE = "usage"
 ARGUMENT_PYTHON_HELP = "Select which version of Python you are using."
 ARGUMENT_VERSION_HELP = "Shows the current version."
-CURSES_EXIT = "Press 'q' key to exit."
+CURSES_EXIT = "Press the ESC key to exit."
 LANGUAGE = "The EU has 24 official languages: Bulgarian, Croatian, \
 Czech, Danish, Dutch, English, Estonian, Finnish, French, German, \
 Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, Maltese, \

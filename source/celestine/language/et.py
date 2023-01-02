@@ -6,18 +6,22 @@ ARGUMENT_INFORMATION_DESCRIPTION = "\
 Nende kaasamine lõpetab programmi teabe kuvamiseks."
 ARGUMENT_INFORMATION_TITLE = "Informatsioon"
 ARGUMENT_INTERFACE_HELP = "Millist GUI-d soovite kasutada?"
-ARGUMENT_LANGUAGE_HELP = "ELis on 24 ametlikku keelt: bulgaaria, \
-eesti, hispaania, hollandi, horvaadi, iiri, soome, taani, inglise, \
-soome, tšehhi, ungari, Prantsuse, saksa, kreeka, ungari, iiri, \
-itaalia, läti, leedu, malta, poola, portugali, rumeenia, slovaki, \
-sloveeni, Hispaania ja rootsi keel."
+ARGUMENT_LANGUAGE_HELP = "ELil on 24 ametlikku keelt: bulgaaria, \
+eesti, hispaania, hollandi, horvaadi, iiri, inglise, itaalia, kreeka, \
+leedu, läti, malta, poola, portugali, prantsuse, rootsi, rumeenia, \
+saksa, slovaki, sloveeni, soome, taani, tšehhi ja ungari keel."
 ARGUMENT_OVERRIDE_DESCRIPTION = "\
 Celestine püüab ära arvata parimad kasutatavad seaded. \
 Võite taotleda nende väärtuste kasutamist."
 ARGUMENT_OVERRIDE_TITLE = "Alistada"
+ARGUMENT_PARSER_ARGUMENT = "Argument"
+ARGUMENT_PARSER_CHOICE = "Vale valik"
+ARGUMENT_PARSER_CHOOSE = "vali"
+ARGUMENT_PARSER_ERROR = "viga"
+ARGUMENT_PARSER_USAGE = "kasutus"
 ARGUMENT_PYTHON_HELP = "Valige, millist Pythoni versiooni te kasutate."
 ARGUMENT_VERSION_HELP = "Näitab praegust versiooni."
-CURSES_EXIT = "Väljumiseks vajutage klahvi 'q'."
+CURSES_EXIT = "Väljumiseks vajutage paoklahvi (ESC)."
 LANGUAGE = "ELil on 24 ametlikku keelt: bulgaaria, eesti, hispaania, \
 hollandi, horvaadi, iiri, inglise, itaalia, kreeka, leedu, läti, \
 malta, poola, portugali, prantsuse, rootsi, rumeenia, saksa, slovaki, \

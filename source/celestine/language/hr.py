@@ -10,15 +10,20 @@ ARGUMENT_INTERFACE_HELP = "Koji GUI želite koristiti?"
 ARGUMENT_LANGUAGE_HELP = "EU ima 24 službena jezika: bugarski, \
 hrvatski, češki, danski, nizozemski, engleski, estonski, finski, \
 francuski, njemački, grčki, mađarski, irski, talijanski, latvijski, \
-litavski, Malteški, poljski, portugalski, rumunjski, slovački, \
-slovenski, Španjolski i švedski."
+litavski, malteški, poljski, portugalski, rumunjski, slovački, \
+slovenski, španjolski i švedski."
 ARGUMENT_OVERRIDE_DESCRIPTION = "\
 Celestine će pokušati pogoditi najbolje postavke za korištenje. \
 Umjesto toga možete zatražiti korištenje tih vrijednosti."
 ARGUMENT_OVERRIDE_TITLE = "Gaziti nogama"
+ARGUMENT_PARSER_ARGUMENT = "prepirka"
+ARGUMENT_PARSER_CHOICE = "izbor nije valjan"
+ARGUMENT_PARSER_CHOOSE = "birajte između"
+ARGUMENT_PARSER_ERROR = "greška"
+ARGUMENT_PARSER_USAGE = "korištenje"
 ARGUMENT_PYTHON_HELP = "Odaberite koju verziju Pythona koristite."
 ARGUMENT_VERSION_HELP = "Prikazuje trenutnu verziju."
-CURSES_EXIT = "Pritisnite tipku 'q' za izlaz."
+CURSES_EXIT = "Pritisnite tipku ESC da biste izašli."
 LANGUAGE = "EU ima 24 službena jezika: bugarski, češki, danski, \
 engleski, estonski, finski, francuski, grčki, hrvatski, irski, \
 latvijski, litavski, mađarski, malteški, nizozemski, njemački, \

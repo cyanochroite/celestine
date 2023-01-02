@@ -7,19 +7,24 @@ Inclure ceux-ci mettra fin au programme pour afficher des informations."
 ARGUMENT_INFORMATION_TITLE = "Information"
 ARGUMENT_INTERFACE_HELP = "\
 Quelle interface graphique souhaitez-vous utiliser?"
-ARGUMENT_LANGUAGE_HELP = "L’UE compte 24 langues officielles: bulgare, \
-croate, tchèque, danois, néerlandais, anglais, estonien, finnois, \
-Français, Allemand, Grec, Hongrois, Irlandais, Italien, Letton, \
-Lituanien, Maltais, Polonais, Portugais, Roumain, Slovaque, Slovène, \
-Espagnol et suédois."
+ARGUMENT_LANGUAGE_HELP = "L’UE compte 24 langues officielles: \
+allemand, anglais, bulgare, croate, danois, espagnol, estonien, \
+finnois, Français, grec, hongrois, irlandais, italien, letton, \
+lituanien, maltais, néerlandais, polonais, portugais, roumain, \
+slovaque, slovène, suédois et tchèque."
 ARGUMENT_OVERRIDE_DESCRIPTION = "\
 Célestine essaiera de deviner les meilleurs réglages à utiliser. \
 Vous pouvez demander à utiliser ces valeurs à la place."
 ARGUMENT_OVERRIDE_TITLE = "Outrepasser"
+ARGUMENT_PARSER_ARGUMENT = "argument"
+ARGUMENT_PARSER_CHOICE = "Choix non valide"
+ARGUMENT_PARSER_CHOOSE = "Choisissez parmi"
+ARGUMENT_PARSER_ERROR = "erreur"
+ARGUMENT_PARSER_USAGE = "usage"
 ARGUMENT_PYTHON_HELP = "\
 Sélectionnez la version de Python que vous utilisez."
 ARGUMENT_VERSION_HELP = "Affiche la version actuelle."
-CURSES_EXIT = "Appuyez sur la touche 'q' pour quitter."
+CURSES_EXIT = "Appuyez sur la touche ÉCHAP pour quitter."
 LANGUAGE = "L’UE compte 24 langues officielles: allemand, anglais, \
 bulgare, croate, danois, espagnol, estonien, finnois, français, grec, \
 hongrois, irlandais, italien, letton, lituanien, maltais, néerlandais, \

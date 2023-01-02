@@ -6,7 +6,7 @@ ARGUMENT_INFORMATION_DESCRIPTION = "\
 Lena n-áirítear iad seo cuirfidh siad deireadh leis an gclár chun eolas a thaispeáint."
 ARGUMENT_INFORMATION_TITLE = "Eolas"
 ARGUMENT_INTERFACE_HELP = "Cén GUI ar mhaith leat a úsáid?"
-ARGUMENT_LANGUAGE_HELP = "Tá 24 teanga oifigiúil ag an AE: Bulgáiris, \
+ARGUMENT_LANGUAGE_HELP = "Tá 24 theanga oifigiúla ag an AE: Bulgáiris, \
 Cróitis, Seicis, Danmhairgis, Ollainnis, Béarla, Eastóinis, \
 Fionlainnis, Fraincis, Gearmáinis, Gréigis, Ungáiris, Gaeilge, \
 Iodáilis, Laitvis, Liotuáinis, Máltais, Polainnis, Portaingéilis, \
@@ -15,10 +15,15 @@ ARGUMENT_OVERRIDE_DESCRIPTION = "\
 Déanfaidh Celestine iarracht buille faoi thuairim a thabhairt faoi na socruithe is fearr le húsáid. \
 Is féidir leat iarraidh na luachanna seo a úsáid ina ionad."
 ARGUMENT_OVERRIDE_TITLE = "Override"
+ARGUMENT_PARSER_ARGUMENT = "argóint"
+ARGUMENT_PARSER_CHOICE = "rogha neamhbhailí"
+ARGUMENT_PARSER_CHOOSE = "roghnaigh as"
+ARGUMENT_PARSER_ERROR = "earráid"
+ARGUMENT_PARSER_USAGE = "Conas Úsáid"
 ARGUMENT_PYTHON_HELP = "\
 Roghnaigh cén leagan de Python atá á úsáid agat."
 ARGUMENT_VERSION_HELP = "Taispeánann an leagan reatha."
-CURSES_EXIT = "Brúigh eochair 'q' chun imeacht."
+CURSES_EXIT = "Brúigh eochair ESC chun imeacht."
 LANGUAGE = "Tá 24 theanga oifigiúla san Aontas: Béarla, Bulgáiris, \
 Cróitis, Danmhairgis, Eastóinis, Fionlainnis, Fraincis, Gaeilge, \
 Gearmáinis, Gréigis, Iodáilis, Laitvis, Liotuáinis, Máltais, \
