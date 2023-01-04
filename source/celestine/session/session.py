@@ -77,7 +77,9 @@ class Dictionary():
 
     def __setattr__(self, name: str, value: str) -> None:
         """"""
-        self.__dict__[name] = load.module_fallback(name, value)
+        fallback = load.module_fallback(name, value)
+        self.__dict__[name] = fallback
+        # self.__dict__[name] = value
 
 
 class Application(Dictionary):

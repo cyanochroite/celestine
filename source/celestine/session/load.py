@@ -44,7 +44,9 @@ def module_fallback(*path: str) -> types.ModuleType:
     If the last item is none then load the package instead.
     """
     iterable = [*path]
-    return module(*path) if iterable.pop(-1) else module(*iterable)
+    pop = iterable.pop(-1)
+    fallback = module(*path) if pop else module(*iterable)
+    return fallback
 
 
 def dictionary(*path: str) -> typing.Dict[str, str]:

@@ -84,11 +84,12 @@ class Hippo():
 
 
 def get_parser(
-    args: list[str],
+    argv: list[str],
     exit_on_error: bool,
     language: types.ModuleType,
-    hippos: list[Hippo],
+    attributes: list[Hippo],
     fast: bool,
+    configuration,
 ) -> list[Dictionary]:
     """"""
 
@@ -167,8 +168,6 @@ def get_parser(
         exit_on_error=exit_on_error,
     )
 
-    add_argument = {}
-
     information = parser.add_argument_group(
         title=language.ARGUMENT_INFORMATION_TITLE,
         description=language.ARGUMENT_INFORMATION_DESCRIPTION,
@@ -192,47 +191,20 @@ def get_parser(
     add_argument[Override] = override
     add_argument[Positional] = positional
 
-    configuration = Configuration()
-    configuration.load()
-
-    def parse_known_args():
-        return parser.parse_known_args(args)[0]
-
-    def parse_args():
-        return parser.parse_args(args)
-
-    function = parse_known_args if fast else parse_args
-    attribute = feed_the_parser(
-        add_argument,
-        function,
-        configuration,
-        hippos,
-    )
-
-    configuration.save()
-
-    return attribute
-
-
-def feed_the_parser(
-    add_argument: Magic,
-    calling,
-    configuration,
-    attributes: list[Hippo],
-) -> list[Dictionary]:
-    """"""
-
     for attribute in attributes:
         for (name, argument) in attribute.items():
             if not argument.argument:
                 continue
-            parser = add_argument[argument]
+            _parser = add_argument[argument]
             args = argument.key(name)
             kwargs = argument.dictionary()
 
-            parser.add_argument(*args, **kwargs)
+            _parser.add_argument(*args, **kwargs)
 
-    args = calling()
+    if fast:
+        args = parser.parse_known_args(argv)[0]
+    else:
+        args = parser.parse_args(argv)
 
     for attribute in attributes:
         for (name, argument) in attribute.items():
@@ -245,11 +217,16 @@ def feed_the_parser(
             if getattr(args, CONFIGURATION, NONE):
                 configuration.set(attribute.application, name, override)
 
-    return [attribute.attribute for attribute in attributes]
+    attribute = [attribute.attribute for attribute in attributes]
+
+    return attribute
 
 
 def start_session(argv: list[str], exit_on_error: bool) -> Session:
     """"""
+    configuration = Configuration()
+    configuration.load()
+
     def load_the_fish(name, value):
         hippo = [
             Hippo(
@@ -266,7 +243,8 @@ def start_session(argv: list[str], exit_on_error: bool) -> Session:
             language,
             hippo,
             True,
-        )
+            configuration,
+        )[0]
         thing = getattr(parser, name, value)
         return thing
 
@@ -309,9 +287,13 @@ def start_session(argv: list[str], exit_on_error: bool) -> Session:
         language,
         hippos,
         True,
+        configuration,
     )
+
     session = attribute[0]
     session.attribute = attribute[1]
+
+    configuration.save()
 
     return session
 
