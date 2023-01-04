@@ -79,7 +79,6 @@ class Dictionary():
         """"""
         fallback = load.module_fallback(name, value)
         self.__dict__[name] = fallback
-        # self.__dict__[name] = value
 
 
 class Application(Dictionary):
