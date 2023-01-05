@@ -1,22 +1,11 @@
 """"""
 
-import types
-import typing
-
-from types import ModuleType as MT
-from typing import Dict as D
-from typing import Type as T
-from typing import Union as U
-from typing import TypeAlias as TA
-
-from argparse import _ArgumentGroup as AG
-from argparse import ArgumentParser as AP
 
 from celestine.session.argument import Information
 
 from celestine.session import load
 
-from celestine.session.argument import Argument
+
 from celestine.session.argument import Override
 from celestine.session.argument import Positional
 
@@ -31,13 +20,10 @@ from .text import VERSION
 from .text import STORE_TRUE
 from .text import HELP
 from .text import CONFIGURATION
-from .text import EN
-from .text import INIT
 from .text import MAIN
 
-Magic: TA = D[U[Argument, T[Argument]], U[AP, AG]]
-
-AD: TA = D[str, Argument]
+from .type import AD
+from .type import MT
 
 
 class Dull():
@@ -84,7 +70,7 @@ class Dictionary():
 class Application(Dictionary):
     """"""
 
-    application: types.ModuleType
+    application: MT
 
     @classmethod
     def dictionary(cls, application: MT, language: MT) -> AD:
@@ -101,7 +87,7 @@ class Application(Dictionary):
 class Interface(Dictionary):
     """"""
 
-    interface: types.ModuleType
+    interface: MT
 
     @classmethod
     def dictionary(cls, application: MT, language: MT) -> AD:
@@ -118,7 +104,7 @@ class Interface(Dictionary):
 class Language(Dictionary):
     """"""
 
-    language: types.ModuleType
+    language: MT
 
     @classmethod
     def dictionary(cls, application: MT, language: MT) -> AD:

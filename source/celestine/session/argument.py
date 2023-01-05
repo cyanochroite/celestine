@@ -9,19 +9,23 @@ from .text import VERSION
 from .hash import HashClass
 
 from .attribute import Attribute
-from .attribute import AttributeTable
 
 from .attribute import Action
 from .attribute import Choices
 from .attribute import Help
 from .attribute import Nargs
 
+from .type import AT
+from .type import B
+from .type import S
+from .type import SL
+from .type import N
+
 
 class Argument(HashClass, Attribute):
     """abstract class"""
 
-    def __init__(self, argument: bool, attribute: bool, fallback: str,
-                 **kwargs) -> None:
+    def __init__(self, argument: B, attribute: B, fallback: S, **kwargs) -> N:
         """"""
         super().__init__(**kwargs)
         self.argument = argument
@@ -35,7 +39,7 @@ class Argument(HashClass, Attribute):
 class Flag(Argument):
     """"""
 
-    def key(self, name: str) -> list[str]:
+    def key(self, name: S) -> SL:
         """"""
         return [
             NONE.join((HYPHEN_MINUS, name[0])),
@@ -46,7 +50,7 @@ class Flag(Argument):
 class Name(Argument):
     """"""
 
-    def key(self, name: str) -> list[str]:
+    def key(self, name: S) -> SL:
         """"""
         return [name]
 
@@ -54,7 +58,7 @@ class Name(Argument):
 class Optional(Flag, Help):
     """"""
 
-    def __init__(self, fallback: str, help: str) -> None:
+    def __init__(self, fallback: S, help: S) -> N:
         """"""
         super().__init__(
             argument=True,
@@ -67,8 +71,7 @@ class Optional(Flag, Help):
 class Override(Flag, Help, Choices):
     """"""
 
-    def __init__(self, fallback: str, help: str,
-                 choices: list[str]) -> None:
+    def __init__(self, fallback: S, help: S, choices: SL) -> N:
         """"""
         super().__init__(
             argument=bool(choices),
@@ -82,8 +85,7 @@ class Override(Flag, Help, Choices):
 class Positional(Name, Help, Choices, Nargs):
     """"""
 
-    def __init__(self, fallback: str, help: str,
-                 choices: list[str]) -> None:
+    def __init__(self, fallback: S, help: S, choices: SL) -> N:
         """"""
         super().__init__(
             argument=True,
@@ -98,14 +100,13 @@ class Positional(Name, Help, Choices, Nargs):
 class Information(Flag, Action, Help):
     """"""
 
-    def dictionary(self) -> AttributeTable:
+    def dictionary(self) -> AT:
         """"""
         true = {VERSION: VERSION_NUMBER}
         boolean = true if self.version is True else {}
         return super().dictionary() | boolean
 
-    def __init__(self, fallback: str, action: str, help: str,
-                 version: bool) -> None:
+    def __init__(self, fallback: S, action: S, help: S, version: B) -> N:
         """"""
         super().__init__(
             argument=True,

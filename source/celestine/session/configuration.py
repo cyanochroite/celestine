@@ -1,7 +1,6 @@
 """"""
 
 import configparser
-import types
 
 from celestine.text.stream import WRITE_TEXT
 from celestine.text.stream import UTF_8
@@ -13,11 +12,15 @@ from celestine.text.unicode import NONE
 
 from .text import FILE
 
+from .type import MT
+from .type import N
+from .type import S
+
 
 class Configuration():
     """parse configuration stuff."""
 
-    def __init__(self) -> None:
+    def __init__(self) -> N:
         """"""
         self.path = load.pathway(FILE)
 
@@ -29,16 +32,16 @@ class Configuration():
             default_section=CELESTINE,
         )
 
-    def load(self) -> None:
+    def load(self) -> N:
         """Load the configuration file."""
         self.configuration.read(self.path, encoding=UTF_8)
 
-    def save(self) -> None:
+    def save(self) -> N:
         """Save the configuration file."""
         with open(self.path, WRITE_TEXT, encoding=UTF_8) as file:
             self.configuration.write(file, True)
 
-    def get(self, module: types.ModuleType, option: str) -> str:
+    def get(self, module: MT, option: S) -> S:
         """"""
         string = repr(module)
         array = string.split("'")
@@ -51,7 +54,7 @@ class Configuration():
 
         return NONE
 
-    def set(self, section: str, option: str, value: str) -> None:
+    def set(self, section: S, option: S, value: S) -> N:
         """"""
         if not value:
             return

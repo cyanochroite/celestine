@@ -1,19 +1,17 @@
 """"""
 
-import typing
-
 from .text import NARGS
 from .text import HELP
 from .text import CHOICES
 from .text import ACTION
 
-AttributeTable: typing.TypeAlias = typing.Dict[str, str | list[str]]
+from .type import AT
 
 
 class Attribute():
     """"""
 
-    def dictionary(self) -> AttributeTable:
+    def dictionary(self) -> AT:
         """"""
         return {}
 
@@ -21,7 +19,7 @@ class Attribute():
 class Action(Attribute):
     """"""
 
-    def dictionary(self) -> AttributeTable:
+    def dictionary(self) -> AT:
         """"""
         return super().dictionary() | {ACTION: self.action}
 
@@ -34,7 +32,7 @@ class Action(Attribute):
 class Choices(Attribute):
     """"""
 
-    def dictionary(self) -> AttributeTable:
+    def dictionary(self) -> AT:
         """"""
         return super().dictionary() | {CHOICES: self.choices}
 
@@ -47,7 +45,7 @@ class Choices(Attribute):
 class Help(Attribute):
     """"""
 
-    def dictionary(self) -> AttributeTable:
+    def dictionary(self) -> AT:
         """"""
         return super().dictionary() | {HELP: self.help}
 
@@ -60,7 +58,7 @@ class Help(Attribute):
 class Nargs(Attribute):
     """"""
 
-    def dictionary(self) -> AttributeTable:
+    def dictionary(self) -> AT:
         """"""
         return super().dictionary() | {NARGS: self.nargs}
 

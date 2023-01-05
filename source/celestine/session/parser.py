@@ -2,57 +2,56 @@
 
 import argparse
 
+from typing import TypeAlias as TA
+from typing import Dict as D
+from typing import Union as U
+from typing import Type as T
+from argparse import _ArgumentGroup as AG
 
-import types
-import typing
-
-
-from celestine.session.argument import Argument
-from celestine.session.argument import Optional
-from celestine.session.argument import Override
-from celestine.session.argument import Information
-
-from celestine.session.argument import Positional
-
-
-from celestine.text.unicode import NONE
-
-
-from celestine.session import load
-
-from celestine.text import CELESTINE
-
-from celestine.session import string as stringy
-
-from celestine.text.directory import APPLICATION
 from celestine.text.directory import LANGUAGE
+from celestine.text.directory import APPLICATION
+from celestine.session import word
+from celestine.text import CELESTINE
+from celestine.session import load
+from celestine.text.unicode import NONE
+from celestine.session.argument import Positional
+from celestine.session.argument import Information
+from celestine.session.argument import Override
+from celestine.session.argument import Optional
+from celestine.session.argument import Argument
 
+# from celestine.session.type import string
 
-from celestine.session.session import Magic
-
-
-from .configuration import Configuration
-from .session import Dictionary
-from .session import Session
 
 from .text import CONFIGURATION
+from .session import Session
+from .session import Dictionary
+from .configuration import Configuration
+
+from .type import AD
+from .type import ADI
+from .type import AP
+# from .type import APD
+from .type import AT
+from .type import B
+from .type import I
+from .type import S
+from .type import SL
+from .type import MT
+from .type import N
+
+APD: TA = D[U[Argument, T[Argument]], U[AP, AG]]
 
 
 class Hippo():
     """"""
 
-    application: types.ModuleType
-    language: types.ModuleType
+    application: MT
+    language: MT
     attribute: Dictionary
-    dictionary: typing.Dict[str, Argument]
+    dictionary: AD
 
-    def __init__(
-        self,
-        application: types.ModuleType,
-        language: types.ModuleType,
-        name: str,
-        *path: str,
-    ):
+    def __init__(self, application: MT, language: MT, name: S, *path: S) -> N:
 
         self.application = application
         self.language = language
@@ -67,29 +66,20 @@ class Hippo():
         dictionary = self.attribute.dictionary
         self.dictionary = dictionary(application, language)
 
-    def items(
-        self,
-    ) -> typing.Iterable[typing.Tuple[str, Argument]]:
+    def items(self) -> ADI:
         """"""
 
         return self.dictionary.items()
 
 
-def get_parser(
-    argv: list[str],
-    exit_on_error: bool,
-    language: types.ModuleType,
-    attributes: list[Hippo],
-    fast: bool,
-    configuration,
-) -> list[Dictionary]:
+def make_parser(language: MT, exit_on_error: B) -> AP:
     """"""
 
     class Error(argparse.ArgumentError):
         """Intercept help formating so translation can happen."""
 
         def __str__(self):
-            value = stringy.parser_error(
+            value = word.parser_error(
                 language.ARGUMENT_PARSER_ARGUMENT,
                 self.argument_name,
                 self.message,
@@ -100,7 +90,7 @@ def get_parser(
         """Intercept help formating so translation can happen."""
 
         def add_usage(self, usage, actions, groups, prefix=None):
-            prefix = stringy.parser_formatter(
+            prefix = word.parser_formatter(
                 language.ARGUMENT_PARSER_USAGE,
             )
             super().add_usage(usage, actions, groups, prefix)
@@ -112,7 +102,7 @@ def get_parser(
             try:
                 super()._check_value(action, value)
             except argparse.ArgumentError as error:
-                value = stringy.parser_value(
+                value = word.parser_value(
                     language.ARGUMENT_PARSER_CHOICE,
                     value,
                     language.ARGUMENT_PARSER_CHOOSE,
@@ -121,15 +111,13 @@ def get_parser(
                 raise Error(action, value) from error
 
         def error(self, message):
-            value = stringy.parser_parser_error(
+            value = word.parser_parser_error(
                 self.prog,
                 language.ARGUMENT_PARSER_ERROR,
                 message,
             )
             self.exit(2, value)  # TODO: check if this kills blender.
             self._print_message(value)  # unreachable code
-
-    add_argument: Magic
 
     parser = Parser(
         add_help=False,
@@ -139,6 +127,12 @@ def get_parser(
         prog=CELESTINE,
         exit_on_error=exit_on_error,
     )
+
+    return parser
+
+
+def make_arguments(language: MT, parser: AP) -> APD:
+    """"""
 
     information = parser.add_argument_group(
         title=language.ARGUMENT_INFORMATION_TITLE,
@@ -157,20 +151,63 @@ def get_parser(
         description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
     )
 
-    add_argument = {}
-    add_argument[Information] = information
-    add_argument[Optional] = optional
-    add_argument[Override] = override
-    add_argument[Positional] = positional
+    arguments: APD = {}
+    arguments[Information] = information
+    arguments[Optional] = optional
+
+    arguments[Override] = override
+    arguments[Positional] = positional
+
+    return arguments
+
+
+def add_argument(arguments, attributes):
+    """"""
+    for attribute in attributes:
+        for (name, argument) in attribute.items():
+            if not argument.argument:
+                continue
+            parser = arguments[argument]
+            args = argument.key(name)
+            kwargs = argument.dictionary()
+            parser.add_argument(*args, **kwargs)
+
+
+def get_parser(argv: SL, exit_on_error: B, language: MT,
+               attributes: list[Hippo], fast: B,
+               configuration: Configuration) -> list[Dictionary]:
+    """"""
+
+    parser = make_parser(language, exit_on_error)
+
+    arguments = {
+        Information: parser.add_argument_group(
+            title=language.ARGUMENT_INFORMATION_TITLE,
+            description=language.ARGUMENT_INFORMATION_DESCRIPTION,
+        ),
+        Optional: parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+        ),
+        Override: parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE,
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
+        ),
+        Positional: parser.add_argument_group(
+            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
+            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+        ),
+    }
+
+    # add_argument(arguments, attributes)
 
     for attribute in attributes:
         for (name, argument) in attribute.items():
             if not argument.argument:
                 continue
-            _parser = add_argument[argument]
+            _parser = arguments[argument]
             args = argument.key(name)
             kwargs = argument.dictionary()
-
             _parser.add_argument(*args, **kwargs)
 
     if fast:
@@ -194,7 +231,7 @@ def get_parser(
     return attribute
 
 
-def start_session(argv: list[str], exit_on_error: bool) -> Session:
+def start_session(argv: SL, exit_on_error: B) -> Session:
     """"""
     configuration = Configuration()
     configuration.load()

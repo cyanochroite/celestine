@@ -2,8 +2,6 @@
 
 import io
 
-from typing import TypeAlias as TA
-
 from celestine.text.unicode import APOSTROPHE
 from celestine.text.unicode import COLON
 from celestine.text.unicode import COMMA
@@ -13,8 +11,8 @@ from celestine.text.unicode import NONE
 from celestine.text.unicode import RIGHT_PARENTHESIS
 from celestine.text.unicode import SPACE
 
-S: TA = str
-LS: TA = list[str]
+from .type import S
+from .type import SL
 
 
 def parser_error(argument: S, name: S, message: S) -> S:
@@ -41,7 +39,7 @@ def parser_formatter(usage: S) -> S:
     return value
 
 
-def parser_value(choice: S, value: S, choose: S, choices: LS) -> S:
+def parser_value(choice: S, value: S, choose: S, choices: SL) -> S:
     """"""
     string = io.StringIO()
     string.write(choice)
