@@ -5,7 +5,20 @@ from celestine.text.unicode import NONE
 from celestine.text.unicode import HYPHEN_MINUS
 from celestine.text import VERSION_NUMBER
 
+from celestine.typed import B
+from celestine.typed import S
+from celestine.typed import SL
+from celestine.typed import N
+
 from .text import VERSION
+
+from .text import VERSION
+from .text import STORE_TRUE
+from .text import HELP
+from .text import CONFIGURATION
+from .text import MAIN
+
+
 from .hash import HashClass
 
 from .attribute import Attribute
@@ -14,12 +27,7 @@ from .attribute import Action
 from .attribute import Choices
 from .attribute import Help
 from .attribute import Nargs
-
-from .type import AT
-from .type import B
-from .type import S
-from .type import SL
-from .type import N
+from .attribute import Version
 
 
 class Argument(HashClass, Attribute):
@@ -68,7 +76,7 @@ class Optional(Flag, Help):
         )
 
 
-class Override(Flag, Help, Choices):
+class Universal(Flag, Help, Choices):
     """"""
 
     def __init__(self, fallback: S, help: S, choices: SL) -> N:
@@ -97,22 +105,49 @@ class Positional(Name, Help, Choices, Nargs):
         )
 
 
-class Information(Flag, Action, Help):
+class Information (Flag, Action, Help):
     """"""
 
-    def dictionary(self) -> AT:
-        """"""
-        true = {VERSION: VERSION_NUMBER}
-        boolean = true if self.version is True else {}
-        return super().dictionary() | boolean
-
-    def __init__(self, fallback: S, action: S, help: S, version: B) -> N:
+    def __init__(self, action: S, help: S) -> N:
         """"""
         super().__init__(
             argument=True,
             attribute=False,
-            fallback=fallback,
+            fallback=NONE,
             action=action,
             help=help,
         )
-        self.version = version
+
+
+class InformationConfiguration(Information):
+    """"""
+
+    def __init__(self, help) -> N:
+        """"""
+        super().__init__(
+            action=STORE_TRUE,
+            help=help,
+        )
+
+
+class InformationHelp(Information):
+    """"""
+
+    def __init__(self, help: S) -> N:
+        """"""
+        super().__init__(
+            action=HELP,
+            help=help,
+        )
+
+
+class InformationVersion(Information, Version):
+    """"""
+
+    def __init__(self, help: S) -> N:
+        """"""
+        super().__init__(
+            action=VERSION,
+            help=help,
+        )
+

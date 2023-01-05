@@ -11,8 +11,8 @@ from celestine.text.unicode import NONE
 from celestine.text.unicode import RIGHT_PARENTHESIS
 from celestine.text.unicode import SPACE
 
-from .type import S
-from .type import SL
+from celestine.typed import S
+from celestine.typed import SL
 
 
 def parser_error(argument: S, name: S, message: S) -> S:

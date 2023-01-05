@@ -8,6 +8,11 @@ from typing import Union as U
 from typing import Type as T
 from argparse import _ArgumentGroup as AG
 
+from celestine.session.argument import InformationConfiguration
+from celestine.session.argument import InformationHelp
+from celestine.session.argument import InformationVersion
+
+
 from celestine.text.directory import LANGUAGE
 from celestine.text.directory import APPLICATION
 from celestine.session import word
@@ -16,7 +21,7 @@ from celestine.session import load
 from celestine.text.unicode import NONE
 from celestine.session.argument import Positional
 from celestine.session.argument import Information
-from celestine.session.argument import Override
+from celestine.session.argument import Universal
 from celestine.session.argument import Optional
 from celestine.session.argument import Argument
 
@@ -153,9 +158,12 @@ def make_arguments(language: MT, parser: AP) -> APD:
 
     arguments: APD = {}
     arguments[Information] = information
-    arguments[Optional] = optional
+    arguments[InformationConfiguration] = information
+    arguments[InformationHelp] = information
+    arguments[InformationVersion] = information
 
-    arguments[Override] = override
+    arguments[Optional] = optional
+    arguments[Universal] = override
     arguments[Positional] = positional
 
     return arguments
@@ -180,24 +188,7 @@ def get_parser(argv: SL, exit_on_error: B, language: MT,
 
     parser = make_parser(language, exit_on_error)
 
-    arguments = {
-        Information: parser.add_argument_group(
-            title=language.ARGUMENT_INFORMATION_TITLE,
-            description=language.ARGUMENT_INFORMATION_DESCRIPTION,
-        ),
-        Optional: parser.add_argument_group(
-            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
-        ),
-        Override: parser.add_argument_group(
-            title=language.ARGUMENT_OVERRIDE_TITLE,
-            description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
-        ),
-        Positional: parser.add_argument_group(
-            title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-            description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
-        ),
-    }
+    arguments = make_arguments(language, parser)
 
     # add_argument(arguments, attributes)
 
@@ -285,7 +276,7 @@ def start_session(argv: SL, exit_on_error: B) -> Session:
         Hippo(
             application,
             language,
-            "Dull",
+            "Information",
             "session",
             "session",
         ),
@@ -321,4 +312,9 @@ Recomend using directory version so you can add more languages.
 Error messages will assume this version.
 
 if you have more then 1 language you must use language/__init__.py
+"""
+
+
+"""
+configuration information will show your saved stuff
 """

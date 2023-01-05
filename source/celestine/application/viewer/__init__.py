@@ -4,13 +4,10 @@ from typing import Dict as D
 from typing import TypeAlias as TA
 
 from celestine.application.viewer.core import os
-import dataclasses
 import os
-import types
-import typing
 
 from celestine.session.argument import Optional
-from celestine.session.argument import Override
+from celestine.session.argument import Universal
 from celestine.session.argument import Positional
 
 from celestine.session.argument import Argument
@@ -22,15 +19,13 @@ from .main import _setup
 AD: TA = D[str, Argument]
 
 
-@dataclasses.dataclass(init=False)
 class Session():
     """"""
 
     directory: str
-    ape: str
+    tape: str
     you: str
 
-    @staticmethod
     @staticmethod
     def dictionary(application: MT, language: MT) -> AD:
         """"""
@@ -40,7 +35,7 @@ class Session():
                 os.getcwd(),
                 "pick your nose",
             ),
-            "tape": Override(
+            "tape": Universal(
                 "four",
                 "moo",
                 [],

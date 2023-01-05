@@ -1,12 +1,14 @@
 """"""
 
 
-from celestine.session.argument import Information
+from celestine.session.argument import InformationConfiguration
+from celestine.session.argument import InformationHelp
+from celestine.session.argument import InformationVersion
 
 from celestine.session import load
 
 
-from celestine.session.argument import Override
+from celestine.session.argument import Universal
 from celestine.session.argument import Positional
 
 
@@ -26,30 +28,21 @@ from .type import AD
 from .type import MT
 
 
-class Dull():
+class Information():
     """"""
 
     @staticmethod
     def dictionary(_: MT, language: MT) -> AD:
         """"""
         return {
-            CONFIGURATION: Information(
-                "",
-                STORE_TRUE,
+            CONFIGURATION: InformationConfiguration(
                 language.ARGUMENT_HELP_HELP,
-                False,
             ),
-            HELP: Information(
-                "",
-                HELP,
+            HELP: InformationHelp(
                 language.ARGUMENT_HELP_HELP,
-                False,
             ),
-            VERSION: Information(
-                "",
-                VERSION,
+            VERSION: InformationVersion(
                 language.ARGUMENT_VERSION_HELP,
-                True,
             ),
         }
 
@@ -76,7 +69,7 @@ class Application(Dictionary):
     def dictionary(cls, application: MT, language: MT) -> AD:
         """"""
         return super().dictionary(application, language) | {
-            APPLICATION: Override(
+            APPLICATION: Universal(
                 NONE,
                 "Choose an applicanion. They have more option.",
                 load.argument(APPLICATION),
@@ -93,7 +86,7 @@ class Interface(Dictionary):
     def dictionary(cls, application: MT, language: MT) -> AD:
         """"""
         return super().dictionary(application, language) | {
-            INTERFACE: Override(
+            INTERFACE: Universal(
                 load.argument_default(INTERFACE),  # TODO: change to NONE
                 language.ARGUMENT_INTERFACE_HELP,
                 load.argument(INTERFACE),
@@ -110,7 +103,7 @@ class Language(Dictionary):
     def dictionary(cls, application: MT, language: MT) -> AD:
         """"""
         return super().dictionary(application, language) | {
-            LANGUAGE: Override(
+            LANGUAGE: Universal(
                 NONE,
                 language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),

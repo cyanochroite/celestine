@@ -17,10 +17,10 @@ from celestine.text.unicode import APOSTROPHE
 from celestine.text.unicode import FULL_STOP
 from celestine.text.unicode import SPACE
 
-from .type import B
-from .type import I
-from .type import S
-from .type import SELF
+from celestine.typed import B
+from celestine.typed import I
+from celestine.typed import S
+from celestine.typed import SELF
 
 
 class HashMetaClass(type):

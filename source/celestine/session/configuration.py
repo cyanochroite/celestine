@@ -10,11 +10,11 @@ from celestine.text import CELESTINE
 
 from celestine.text.unicode import NONE
 
-from .text import FILE
+from celestine.typed import MT
+from celestine.typed import N
+from celestine.typed import S
 
-from .type import MT
-from .type import N
-from .type import S
+from .text import FILE
 
 
 class Configuration():
