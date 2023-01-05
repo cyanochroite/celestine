@@ -8,7 +8,7 @@ from celestine.session.argument import InformationVersion
 from celestine.session import load
 
 
-from celestine.session.argument import Universal
+from celestine.session.argument import Customization
 from celestine.session.argument import Positional
 
 
@@ -69,8 +69,7 @@ class Application(Dictionary):
     def dictionary(cls, application: MT, language: MT) -> AD:
         """"""
         return super().dictionary(application, language) | {
-            APPLICATION: Universal(
-                NONE,
+            APPLICATION: Customization(
                 "Choose an applicanion. They have more option.",
                 load.argument(APPLICATION),
             ),
@@ -86,8 +85,7 @@ class Interface(Dictionary):
     def dictionary(cls, application: MT, language: MT) -> AD:
         """"""
         return super().dictionary(application, language) | {
-            INTERFACE: Universal(
-                load.argument_default(INTERFACE),  # TODO: change to NONE
+            INTERFACE: Customization(
                 language.ARGUMENT_INTERFACE_HELP,
                 load.argument(INTERFACE),
             ),
@@ -103,8 +101,7 @@ class Language(Dictionary):
     def dictionary(cls, application: MT, language: MT) -> AD:
         """"""
         return super().dictionary(application, language) | {
-            LANGUAGE: Universal(
-                NONE,
+            LANGUAGE: Customization(
                 language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),
             ),

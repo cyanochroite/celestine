@@ -11,10 +11,21 @@ Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, French, \
 German, Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, \
 Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian, \
 Spanish and Swedish."
-ARGUMENT_OVERRIDE_DESCRIPTION = "\
+ARGUMENT_CUSTOMIZATION_DESCRIPTION = "\
 Celestine will try to guess the best settings to use. \
 You can request to use these values instead."
-ARGUMENT_OVERRIDE_TITLE = "Override"
+ARGUMENT_CUSTOMIZATION_TITLE = "Customization"
+
+
+ARGUMENT_APPLICATION_DESCRIPTION = "\
+Your program values goe here. Yay."
+ARGUMENT_APPLICATION_TITLE = "Application"
+
+ARGUMENT_MODIFICATION_DESCRIPTION = "\
+configure flags"
+ARGUMENT_MODIFICATION_TITLE = "Modification"
+
+
 ARGUMENT_PARSER_ARGUMENT = "argument"
 ARGUMENT_PARSER_CHOICE = "invalid choice"
 ARGUMENT_PARSER_CHOOSE = "choose from"

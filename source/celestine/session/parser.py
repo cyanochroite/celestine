@@ -15,15 +15,17 @@ from celestine.session.argument import InformationVersion
 
 from celestine.text.directory import LANGUAGE
 from celestine.text.directory import APPLICATION
+from celestine.text.directory import INTERFACE
+
 from celestine.session import word
 from celestine.text import CELESTINE
 from celestine.session import load
 from celestine.text.unicode import NONE
 from celestine.session.argument import Positional
 from celestine.session.argument import Information
-from celestine.session.argument import Universal
-from celestine.session.argument import Optional
+from celestine.session.argument import Application
 from celestine.session.argument import Argument
+from celestine.session.argument import Customization
 
 # from celestine.session.type import string
 
@@ -139,32 +141,40 @@ def make_parser(language: MT, exit_on_error: B) -> AP:
 def make_arguments(language: MT, parser: AP) -> APD:
     """"""
 
+    application = parser.add_argument_group(
+        title=language.ARGUMENT_APPLICATION_TITLE,
+        description=language.ARGUMENT_APPLICATION_DESCRIPTION,
+    )
+    """your program stuff goes here. usefull, noone"""
+
+    customization = parser.add_argument_group(
+        title=language.ARGUMENT_CUSTOMIZATION_TITLE,
+        description=language.ARGUMENT_CUSTOMIZATION_DESCRIPTION,
+    )
+    """all applications use these. usefull, everone"""
+
     information = parser.add_argument_group(
         title=language.ARGUMENT_INFORMATION_TITLE,
         description=language.ARGUMENT_INFORMATION_DESCRIPTION,
     )
-    optional = parser.add_argument_group(
-        title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-        description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
+    """displays information then exits. useless, noone"""
+
+    modification = parser.add_argument_group(
+        title=language.ARGUMENT_MODIFICATION_TITLE,
+        description=language.ARGUMENT_MODIFICATION_DESCRIPTION,
     )
-    override = parser.add_argument_group(
-        title=language.ARGUMENT_OVERRIDE_TITLE,
-        description=language.ARGUMENT_OVERRIDE_DESCRIPTION,
-    )
-    positional = parser.add_argument_group(
-        title=language.ARGUMENT_OVERRIDE_TITLE + "MOO",
-        description=language.ARGUMENT_OVERRIDE_DESCRIPTION + "COW",
-    )
+    """all applications use these. useless, everyone"""
 
     arguments: APD = {}
+    arguments[Application] = application
+    arguments[Customization] = customization
+
     arguments[Information] = information
     arguments[InformationConfiguration] = information
     arguments[InformationHelp] = information
     arguments[InformationVersion] = information
 
-    arguments[Optional] = optional
-    arguments[Universal] = override
-    arguments[Positional] = positional
+    arguments[Positional] = modification
 
     return arguments
 
@@ -249,10 +259,12 @@ def start_session(argv: SL, exit_on_error: B) -> Session:
         return thing
 
     try:
-        application = load.module(APPLICATION)
         language = load.module(LANGUAGE)
+        interface = load.module(INTERFACE)
+        application = load.module(APPLICATION)
 
         language = load_the_fish(LANGUAGE, language)
+        interface = load_the_fish(INTERFACE, interface)
         application = load_the_fish(APPLICATION, application)
 
     except ModuleNotFoundError as error:

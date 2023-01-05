@@ -3,7 +3,6 @@
 from celestine.text.unicode import QUESTION_MARK
 from celestine.text.unicode import NONE
 from celestine.text.unicode import HYPHEN_MINUS
-from celestine.text import VERSION_NUMBER
 
 from celestine.typed import B
 from celestine.typed import S
@@ -12,11 +11,8 @@ from celestine.typed import N
 
 from .text import VERSION
 
-from .text import VERSION
 from .text import STORE_TRUE
 from .text import HELP
-from .text import CONFIGURATION
-from .text import MAIN
 
 
 from .hash import HashClass
@@ -63,7 +59,7 @@ class Name(Argument):
         return [name]
 
 
-class Optional(Flag, Help):
+class Application(Flag, Help):
     """"""
 
     def __init__(self, fallback: S, help: S) -> N:
@@ -76,15 +72,15 @@ class Optional(Flag, Help):
         )
 
 
-class Universal(Flag, Help, Choices):
+class Customization(Flag, Help, Choices):
     """"""
 
-    def __init__(self, fallback: S, help: S, choices: SL) -> N:
+    def __init__(self, help: S, choices: SL) -> N:
         """"""
         super().__init__(
             argument=bool(choices),
             attribute=True,
-            fallback=fallback,
+            fallback=NONE,
             help=help,
             choices=choices,
         )

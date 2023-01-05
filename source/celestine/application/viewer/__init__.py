@@ -35,11 +35,6 @@ class Session():
                 os.getcwd(),
                 "pick your nose",
             ),
-            "tape": Universal(
-                "four",
-                "moo",
-                [],
-            ),
             "you": Positional(
                 language.ARGUMENT_OVERRIDE_TITLE,
                 "cow",
