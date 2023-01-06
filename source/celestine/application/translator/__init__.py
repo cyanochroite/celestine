@@ -28,7 +28,7 @@ class Session():
     """"""
 
     @staticmethod
-    def dictionary(application: MT, language: MT) -> AD:
+    def dictionary(language: MT) -> AD:
         """"""
         return {
             KEY: Optional(

@@ -50,35 +50,6 @@ from .type import N
 APD: TA = D[U[Argument, T[Argument]], U[AP, AG]]
 
 
-class Hippo():
-    """"""
-
-    application: MT
-    language: MT
-    attribute: Dictionary
-    dictionary: AD
-
-    def __init__(self, application: MT, language: MT, name: S, *path: S) -> N:
-
-        self.application = application
-        self.language = language
-
-        try:
-            module = load.module(*path)
-        except TypeError:
-            module = self.application
-
-        session = getattr(module, name)
-        self.attribute = session()
-        dictionary = self.attribute.dictionary
-        self.dictionary = dictionary(application, language)
-
-    def items(self) -> ADI:
-        """"""
-
-        return self.dictionary.items()
-
-
 def make_parser(language: MT, exit_on_error: B) -> AP:
     """"""
 
@@ -179,10 +150,11 @@ def make_arguments(language: MT, parser: AP) -> APD:
     return arguments
 
 
-def add_argument(arguments, attributes):
+def add_argument(attributes: list[Session], arguments: APD, language: MT) -> N:
     """"""
     for attribute in attributes:
-        for (name, argument) in attribute.items():
+        dictionary = attribute.dictionary(language)
+        for (name, argument) in dictionary.items():
             if not argument.argument:
                 continue
             parser = arguments[argument]
@@ -191,45 +163,50 @@ def add_argument(arguments, attributes):
             parser.add_argument(*args, **kwargs)
 
 
-def get_parser(argv: SL, exit_on_error: B, language: MT,
-               attributes: list[Hippo], fast: B,
+def add_attribute(attributes: list[Session],
+                  configuration: Configuration,
+                  args: argparse.Namespace,
+                  application: MT,
+                  language: MT) -> N:
+    """"""
+    for attribute in attributes:
+        dictionary = attribute.dictionary(language)
+        for (name, argument) in dictionary.items():
+            if not argument.attribute:
+                continue
+            override = getattr(args, name, NONE)
+            database = configuration.get(application, name)
+            value = override or database or argument.fallback
+            setattr(attribute, name, value)
+            if getattr(args, CONFIGURATION, NONE):
+                configuration.set(application, name, override)
+
+
+def get_parser(argv: SL, exit_on_error: B, application: MT,
+               language: MT,
+               attributes: list[Session], fast: B,
                configuration: Configuration) -> list[Dictionary]:
     """"""
-
     parser = make_parser(language, exit_on_error)
 
     arguments = make_arguments(language, parser)
 
-    # add_argument(arguments, attributes)
+    add_argument(attributes, arguments, language)
 
-    for attribute in attributes:
-        for (name, argument) in attribute.items():
-            if not argument.argument:
-                continue
-            _parser = arguments[argument]
-            args = argument.key(name)
-            kwargs = argument.dictionary()
-            _parser.add_argument(*args, **kwargs)
+    parse_known_args = parser.parse_known_args
+    parse_args = parser.parse_args
+    args = parse_known_args(argv)[0] if fast else parse_args(argv)
 
-    if fast:
-        args = parser.parse_known_args(argv)[0]
-    else:
-        args = parser.parse_args(argv)
+    add_attribute(attributes, configuration, args, application, language)
 
-    for attribute in attributes:
-        for (name, argument) in attribute.items():
-            if not argument.attribute:
-                continue
-            override = getattr(args, name, NONE)
-            database = configuration.get(attribute.application, name)
-            value = override or database or argument.fallback
-            setattr(attribute.attribute, name, value)
-            if getattr(args, CONFIGURATION, NONE):
-                configuration.set(attribute.application, name, override)
+    return attributes
 
-    attribute = [attribute.attribute for attribute in attributes]
 
-    return attribute
+def session_loader(name: str, *path: str) -> type[Session]:
+    """"""
+    module = load.module(*path)
+    session = getattr(module, name)
+    return session
 
 
 def start_session(argv: SL, exit_on_error: B) -> Session:
@@ -238,18 +215,14 @@ def start_session(argv: SL, exit_on_error: B) -> Session:
     configuration.load()
 
     def load_the_fish(name, value):
+        session = session_loader(name.capitalize(), "session", "session")
         hippo = [
-            Hippo(
-                load.module(),
-                language,
-                name.capitalize(),
-                "session",
-                "session",
-            ),
+            session(),
         ]
         parser = get_parser(
             argv,
             exit_on_error,
+            application,
             language,
             hippo,
             True,
@@ -270,32 +243,21 @@ def start_session(argv: SL, exit_on_error: B) -> Session:
     except ModuleNotFoundError as error:
         raise RuntimeError("Missing __init__ file.") from error
 
+    session1 = session_loader("Session", "session", "session")
+
+    get_name = repr(application).split("'")[1].split(".")[-1]
+    session2 = session_loader("Session", APPLICATION, get_name)
+    session3 = session_loader("Information", "session", "session")
+
     hippos = [
-        Hippo(
-            application,
-            language,
-            "Session",
-            "session",
-            "session",
-        ),
-        Hippo(
-            application,
-            language,
-            "Session",
-            APPLICATION,
-            application,
-        ),
-        Hippo(
-            application,
-            language,
-            "Information",
-            "session",
-            "session",
-        ),
+        session1(),
+        session2(),
+        session3(),
     ]
     attribute = get_parser(
         argv,
         exit_on_error,
+        application,
         language,
         hippos,
         True,

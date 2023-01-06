@@ -32,7 +32,7 @@ class Information():
     """"""
 
     @staticmethod
-    def dictionary(_: MT, language: MT) -> AD:
+    def dictionary(language: MT) -> AD:
         """"""
         return {
             CONFIGURATION: InformationConfiguration(
@@ -51,7 +51,7 @@ class Dictionary():
     """"""
 
     @classmethod
-    def dictionary(cls, application: MT, language: MT) -> AD:
+    def dictionary(cls, _: MT) -> AD:
         return {}
 
     def __setattr__(self, name: str, value: str) -> None:
@@ -66,9 +66,9 @@ class Application(Dictionary):
     application: MT
 
     @classmethod
-    def dictionary(cls, application: MT, language: MT) -> AD:
+    def dictionary(cls, language: MT) -> AD:
         """"""
-        return super().dictionary(application, language) | {
+        return super().dictionary(language) | {
             APPLICATION: Customization(
                 "Choose an applicanion. They have more option.",
                 load.argument(APPLICATION),
@@ -82,9 +82,9 @@ class Interface(Dictionary):
     interface: MT
 
     @classmethod
-    def dictionary(cls, application: MT, language: MT) -> AD:
+    def dictionary(cls, language: MT) -> AD:
         """"""
-        return super().dictionary(application, language) | {
+        return super().dictionary(language) | {
             INTERFACE: Customization(
                 language.ARGUMENT_INTERFACE_HELP,
                 load.argument(INTERFACE),
@@ -98,9 +98,9 @@ class Language(Dictionary):
     language: MT
 
     @classmethod
-    def dictionary(cls, application: MT, language: MT) -> AD:
+    def dictionary(cls, language: MT) -> AD:
         """"""
-        return super().dictionary(application, language) | {
+        return super().dictionary(language) | {
             LANGUAGE: Customization(
                 language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),
@@ -114,13 +114,14 @@ class Session(Application, Interface, Language):
     main: str
 
     @classmethod
-    def dictionary(cls, application: MT, language: MT) -> AD:
+    def dictionary(cls, language: MT) -> AD:
         """"""
-        return super().dictionary(application, language) | {
+        return super().dictionary(language) | {
             MAIN: Positional(
                 MAIN,
                 language.ARGUMENT_LANGUAGE_HELP,
-                load.function_name(application),
+                []  # TODO add choices
+                #                load.function_name(self.application),
             ),
         }
 
@@ -133,3 +134,5 @@ class Session(Application, Interface, Language):
                 self.__dict__[name] = value
             case _:
                 super().__setattr__(name, value)
+
+

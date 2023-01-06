@@ -3,7 +3,8 @@ from types import ModuleType as MT
 from typing import Dict as D
 from typing import TypeAlias as TA
 
-from celestine.application.viewer.core import os
+
+# from celestine.application.viewer.core import os
 import os
 
 from celestine.session.argument import Optional
@@ -27,7 +28,7 @@ class Session():
     you: str
 
     @staticmethod
-    def dictionary(application: MT, language: MT) -> AD:
+    def dictionary(language: MT) -> AD:
         """"""
 
         return {
