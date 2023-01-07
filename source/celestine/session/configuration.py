@@ -2,34 +2,33 @@
 
 import configparser
 
+from celestine.session import load
+
+from celestine.text import CELESTINE
+
 from celestine.text.stream import WRITE_TEXT
 from celestine.text.stream import UTF_8
 
-from celestine.session import load
-from celestine.text import CELESTINE
-
 from celestine.text.unicode import NONE
+from celestine.text.unicode import EQUALS_SIGN
+from celestine.text.unicode import POUND_SIGN
 
-from celestine.typed import MT
 from celestine.typed import N
 from celestine.typed import S
 
 from .text import FILE
-from .session import SuperState
 
 
-class Configuration(SuperState):
+class Configuration():
     """parse configuration stuff."""
 
-    def __init__(self, application: MT, interface: MT, language: MT) -> N:
+    def __init__(self) -> N:
         """"""
-        super().__init__(application, interface, language)
-
         self.path = load.pathway(FILE)
 
         self.configuration = configparser.ConfigParser(
-            delimiters=("="),
-            comment_prefixes=("#"),
+            delimiters=(EQUALS_SIGN),
+            comment_prefixes=(POUND_SIGN),
             strict=True,
             empty_lines_in_values=False,
             default_section=CELESTINE,
@@ -44,10 +43,8 @@ class Configuration(SuperState):
         with open(self.path, WRITE_TEXT, encoding=UTF_8) as file:
             self.configuration.write(file, True)
 
-    def get(self, module: MT) -> S:
+    def get(self, section: S, option: S) -> S:
         """"""
-        section = load.module_to_name(module)
-        option = load.module_to_name(self._application)
         if self.configuration.has_section(section):
             if self.configuration.has_option(section, option):
                 return self.configuration[section][option]

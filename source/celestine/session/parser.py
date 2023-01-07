@@ -171,7 +171,9 @@ def add_attribute(sessions: list[Session],
             if not argument.attribute:
                 continue
             override = getattr(args, name, NONE)
-            database = configuration.get(name)
+            section = load.module_to_name(session._application)
+
+            database = configuration.get(section, name)
             value = override or database or argument.fallback
             setattr(session, name, value)
             if getattr(args, CONFIGURATION, NONE):
@@ -207,15 +209,7 @@ def session_loader(name: str, *path: str) -> type[Session]:
 
 def start_session(argv: SL, exit_on_error: B) -> Session:
     """"""
-
-    try:
-        language = load.module(LANGUAGE)
-        interface = load.module(INTERFACE)
-        application = load.module(APPLICATION)
-    except ModuleNotFoundError as error:
-        raise RuntimeError("Missing __init__ file.") from error
-
-    configuration = Configuration(application, interface, language)
+    configuration = Configuration()
     configuration.load()
 
     def load_the_fish(name, value):
@@ -236,6 +230,10 @@ def start_session(argv: SL, exit_on_error: B) -> Session:
         return thing
 
     try:
+        language = load.module(LANGUAGE)
+        interface = load.module(INTERFACE)
+        application = load.module(APPLICATION)
+
         language = load_the_fish(LANGUAGE, language)
         interface = load_the_fish(INTERFACE, interface)
         application = load_the_fish(APPLICATION, application)
@@ -245,7 +243,7 @@ def start_session(argv: SL, exit_on_error: B) -> Session:
 
     session1 = session_loader("Session", "session", "session")
 
-    get_name = repr(application).split("'")[1].split(".")[-1]
+    get_name = load.module_to_name(application)
     session2 = session_loader("Session", APPLICATION, get_name)
     session3 = session_loader("Information", "session", "session")
 
