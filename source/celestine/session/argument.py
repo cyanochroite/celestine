@@ -1,12 +1,12 @@
 """"""
 
-from celestine.text.unicode import QUESTION_MARK
-from celestine.text.unicode import NONE
-from celestine.text.unicode import HYPHEN_MINUS
+from celestine.unicode import QUESTION_MARK
+from celestine.unicode import NONE
+from celestine.unicode import HYPHEN_MINUS
 
 from celestine.typed import B
+from celestine.typed import L
 from celestine.typed import S
-from celestine.typed import SL
 from celestine.typed import N
 
 from .text import VERSION
@@ -43,7 +43,7 @@ class Argument(HashClass, Attribute):
 class Flag(Argument):
     """"""
 
-    def key(self, name: S) -> SL:
+    def key(self, name: S) -> L[S]:
         """"""
         return [
             NONE.join((HYPHEN_MINUS, name[0])),
@@ -54,7 +54,7 @@ class Flag(Argument):
 class Name(Argument):
     """"""
 
-    def key(self, name: S) -> SL:
+    def key(self, name: S) -> L[S]:
         """"""
         return [name]
 
@@ -75,7 +75,7 @@ class Application(Flag, Help):
 class Customization(Flag, Help, Choices):
     """"""
 
-    def __init__(self, help: S, choices: SL) -> N:
+    def __init__(self, help: S, choices: L[S]) -> N:
         """"""
         super().__init__(
             argument=bool(choices),
@@ -89,7 +89,7 @@ class Customization(Flag, Help, Choices):
 class Positional(Name, Help, Choices, Nargs):
     """"""
 
-    def __init__(self, fallback: S, help: S, choices: SL) -> N:
+    def __init__(self, fallback: S, help: S, choices: L[S]) -> N:
         """"""
         super().__init__(
             argument=True,

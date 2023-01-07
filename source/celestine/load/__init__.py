@@ -11,9 +11,9 @@ from celestine.window.page import Page
 
 from celestine.text.stream import FILE_NAME_EXTENSION
 
-from celestine.text.unicode import FULL_STOP
-from celestine.text.unicode import LOW_LINE
-from celestine.text.unicode import NONE
+from celestine.unicode import FULL_STOP
+from celestine.unicode import LOW_LINE
+from celestine.unicode import NONE
 
 from .function import function
 from .function import function_name

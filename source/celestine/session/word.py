@@ -2,17 +2,17 @@
 
 import io
 
-from celestine.text.unicode import APOSTROPHE
-from celestine.text.unicode import COLON
-from celestine.text.unicode import COMMA
-from celestine.text.unicode import LEFT_PARENTHESIS
-from celestine.text.unicode import LINE_FEED
-from celestine.text.unicode import NONE
-from celestine.text.unicode import RIGHT_PARENTHESIS
-from celestine.text.unicode import SPACE
-
+from celestine.typed import L
 from celestine.typed import S
-from celestine.typed import SL
+
+from celestine.unicode import APOSTROPHE
+from celestine.unicode import COLON
+from celestine.unicode import COMMA
+from celestine.unicode import LEFT_PARENTHESIS
+from celestine.unicode import LINE_FEED
+from celestine.unicode import NONE
+from celestine.unicode import RIGHT_PARENTHESIS
+from celestine.unicode import SPACE
 
 
 def parser_error(argument: S, name: S, message: S) -> S:
@@ -39,7 +39,7 @@ def parser_formatter(usage: S) -> S:
     return value
 
 
-def parser_value(choice: S, value: S, choose: S, choices: SL) -> S:
+def parser_value(choice: S, value: S, choose: S, choices: L[S]) -> S:
     """"""
     string = io.StringIO()
     string.write(choice)

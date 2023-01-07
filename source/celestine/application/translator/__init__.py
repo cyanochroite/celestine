@@ -11,7 +11,7 @@ from celestine.session.argument import Argument
 from celestine.session.argument import Optional
 from celestine.window.page import Page
 
-from celestine.text.unicode import NONE
+from celestine.unicode import NONE
 
 from .text import KEY
 from .text import REGION

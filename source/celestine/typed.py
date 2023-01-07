@@ -24,7 +24,3 @@ I: typing.TypeAlias = int
 N: typing.TypeAlias = None
 S: typing.TypeAlias = str
 
-SL: typing.TypeAlias = list[str]
-BL: typing.TypeAlias = list[bool]
-IL: typing.TypeAlias = list[int]
-

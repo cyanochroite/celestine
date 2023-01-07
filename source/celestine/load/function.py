@@ -1,6 +1,6 @@
 """Central place for loading and importing external files."""
 
-from celestine.text.unicode import LOW_LINE
+from celestine.unicode import LOW_LINE
 
 from celestine.typed import MT
 from celestine.typed import D

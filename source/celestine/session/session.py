@@ -15,7 +15,7 @@ from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 
-from celestine.text.unicode import LOW_LINE
+from celestine.unicode import LOW_LINE
 
 from celestine.typed import S
 from celestine.typed import N

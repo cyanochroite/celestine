@@ -2,7 +2,7 @@
 
 from celestine.text import stream
 from celestine.application.translator.parser import dictionary_to_file
-from celestine.session import load
+from celestine import load
 
 
 def save_string(string, *path):

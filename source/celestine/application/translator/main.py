@@ -12,7 +12,7 @@ import os.path
 import shutil
 import requests
 
-from celestine.session import load
+from celestine import load
 from celestine.application.translator.translator import Translator
 
 INIT = "__init__"

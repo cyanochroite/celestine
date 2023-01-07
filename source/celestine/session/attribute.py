@@ -4,8 +4,8 @@ from celestine.text import VERSION_NUMBER
 
 from celestine.typed import D
 from celestine.typed import TA
+from celestine.typed import L
 from celestine.typed import S
-from celestine.typed import SL
 
 from .text import ACTION
 from .text import CHOICES
@@ -14,7 +14,7 @@ from .text import NARGS
 from .text import VERSION
 
 
-AT: TA = D[S, S | SL]
+AT: TA = D[S, S | L[S]]
 
 
 class Attribute():
@@ -45,7 +45,7 @@ class Choices(Attribute):
         """"""
         return super().dictionary() | {CHOICES: self.choices}
 
-    def __init__(self, choices: SL, **kwargs) -> None:
+    def __init__(self, choices: L[S], **kwargs) -> None:
         """"""
         super().__init__(**kwargs)
         self.choices = choices

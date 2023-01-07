@@ -9,9 +9,9 @@ from celestine.text import CELESTINE
 from celestine.text.stream import WRITE_TEXT
 from celestine.text.stream import UTF_8
 
-from celestine.text.unicode import NONE
-from celestine.text.unicode import EQUALS_SIGN
-from celestine.text.unicode import POUND_SIGN
+from celestine.unicode import NONE
+from celestine.unicode import EQUALS_SIGN
+from celestine.unicode import POUND_SIGN
 
 from celestine.typed import N
 from celestine.typed import S
