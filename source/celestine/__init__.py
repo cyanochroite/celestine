@@ -1,6 +1,7 @@
 """"""
 
-from celestine.session import load
+from celestine import load
+
 from celestine.session.parser import start_session
 
 from celestine.text import CELESTINE

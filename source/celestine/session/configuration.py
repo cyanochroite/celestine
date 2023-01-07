@@ -2,7 +2,7 @@
 
 import configparser
 
-from celestine.session import load
+from celestine import load
 
 from celestine.text import CELESTINE
 

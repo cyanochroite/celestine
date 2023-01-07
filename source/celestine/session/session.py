@@ -1,13 +1,10 @@
 """"""
 
-import typing
-import types
-
 from celestine.session.argument import InformationConfiguration
 from celestine.session.argument import InformationHelp
 from celestine.session.argument import InformationVersion
 
-from celestine.session import load
+from celestine import load
 
 
 from celestine.session.argument import Customization
@@ -18,28 +15,27 @@ from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 
-from celestine.text.unicode import NONE
 from celestine.text.unicode import LOW_LINE
 
-from celestine.typed import TA
-from celestine.typed import D
 from celestine.typed import S
 from celestine.typed import N
+from celestine.typed import MT
+from celestine.typed import TA
+from celestine.typed import D
+from celestine.typed import IT
 from celestine.typed import TU
 
+
 from .text import VERSION
-from .text import STORE_TRUE
 from .text import HELP
 from .text import CONFIGURATION
 from .text import MAIN
 
-from .type import MT
 
 from .argument import Argument
-# AD: TA = D[S, Argument]
 
-AD: typing.TypeAlias = typing.Dict[str, Argument]
-AI: typing.TypeAlias = typing.Iterable[typing.Tuple[S, Argument]]
+AD: TA = D[S, Argument]
+AI: TA = IT[TU[S, Argument]]
 
 
 class SuperState():
@@ -56,6 +52,7 @@ class SuperSession(SuperState):
     """"""
 
     def dictionary(self) -> AD:
+        """"""
         return {}
 
     def items(self) -> AI:
@@ -87,9 +84,11 @@ class Dictionary(SuperSession):
 
     def __setattr__(self, key: str, value: str) -> None:
         """"""
-        if not key.startswith(LOW_LINE):
-            value = load.module_fallback(key, value)
-        self.__dict__[key] = value
+        if key.startswith(LOW_LINE):
+            self.__dict__[key] = value
+        else:
+            module = load.module_fallback(key, value)
+            self.__dict__[key] = module
 
 
 class Application(Dictionary):
@@ -161,4 +160,3 @@ class Session(Application, Interface, Language):
                 self.__dict__[name] = value
             case _:
                 super().__setattr__(name, value)
-

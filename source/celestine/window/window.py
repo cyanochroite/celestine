@@ -1,5 +1,5 @@
 from .collection import Collection
-from celestine.session import load
+from celestine import load
 
 from celestine.window.page import Page
 

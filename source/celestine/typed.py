@@ -1,19 +1,30 @@
 """Define types here."""
 
 import typing
-import types
 
-N: typing.TypeAlias = None
 
-S: typing.TypeAlias = str
-SL: typing.TypeAlias = list[str]
+from typing import Self as SELF
+
+from typing import Callable as CA
+from typing import Iterable as IT
+from types import ModuleType as MT
+from typing import Type as TY
+from typing import TypeAlias as TA
+from typing import Union as UN
+
+
+from typing import Tuple as TU
+from typing import Dict as D
+
+from typing import List as L
+
+
 B: typing.TypeAlias = bool
-BL: typing.TypeAlias = list[bool]
 I: typing.TypeAlias = int
+N: typing.TypeAlias = None
+S: typing.TypeAlias = str
+
+SL: typing.TypeAlias = list[str]
+BL: typing.TypeAlias = list[bool]
 IL: typing.TypeAlias = list[int]
 
-D: typing.TypeAlias = typing.Dict
-MT: typing.TypeAlias = types.ModuleType
-SELF: typing.TypeAlias = typing.Self
-TA: typing.TypeAlias = typing.TypeAlias
-TU: typing.TypeAlias = typing.Tuple

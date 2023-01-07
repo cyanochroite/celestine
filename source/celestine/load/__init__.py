@@ -15,6 +15,10 @@ from celestine.text.unicode import FULL_STOP
 from celestine.text.unicode import LOW_LINE
 from celestine.text.unicode import NONE
 
+from .function import function
+from .function import function_name
+from .function import function_value
+
 
 from celestine.typed import MT
 from celestine.typed import S
@@ -65,48 +69,6 @@ def dictionary(*path: str) -> typing.Dict[str, str]:
         in _dictionary.items()
         if not key.startswith(LOW_LINE)
     }
-    return mapping
-
-
-def function(_module: types.ModuleType) -> typing.Dict[str, typing.Callable[[None], None]]:
-    """
-    Load from module all functions and turn them into dictionary.
-    """
-    _dictionary = vars(_module)
-    mapping = {
-        key: value
-        for key, value
-        in _dictionary.items()
-        if repr(value).startswith("<function")
-        and not key.startswith("_")
-    }
-    return mapping
-
-
-def function_name(_module: types.ModuleType):
-    """
-    Load from module all functions and turn them into dictionary.
-    """
-
-    _dictionary = function(_module)
-    mapping = [
-        key
-        for key, value
-        in _dictionary.items()
-    ]
-    return mapping
-
-
-def function_value(_module: types.ModuleType) -> list[typing.Callable[[None], None]]:
-    """
-    Load from module all functions and turn them into dictionary.
-    """
-    _dictionary = function(_module)
-    mapping = [
-        value
-        for key, value
-        in _dictionary.items()
-    ]
     return mapping
 
 

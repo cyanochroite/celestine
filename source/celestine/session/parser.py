@@ -19,7 +19,7 @@ from celestine.text.directory import INTERFACE
 
 from celestine.session import word
 from celestine.text import CELESTINE
-from celestine.session import load
+from celestine import load
 from celestine.text.unicode import NONE
 from celestine.session.argument import Positional
 from celestine.session.argument import Information
