@@ -16,6 +16,10 @@ from celestine.text.unicode import LOW_LINE
 from celestine.text.unicode import NONE
 
 
+from celestine.typed import MT
+from celestine.typed import S
+
+
 def attempt(*path: str) -> bool:
     """Attempt to load a package and return the result."""
     try:
@@ -150,3 +154,12 @@ def argument(*path: str) -> list[str]:
 
     result.sort()
     return result
+
+
+def module_to_name(module: MT) -> S:
+    string = repr(module)
+    array = string.split("'")
+    name = array[1]
+    split = name.split(".")
+    section = split[-1]
+    return section

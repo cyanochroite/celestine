@@ -150,11 +150,10 @@ def make_arguments(language: MT, parser: AP) -> APD:
     return arguments
 
 
-def add_argument(attributes: list[Session], arguments: APD, language: MT) -> N:
+def add_argument(sessions: list[Session], arguments: APD) -> N:
     """"""
-    for attribute in attributes:
-        dictionary = attribute.dictionary(language)
-        for (name, argument) in dictionary.items():
+    for session in sessions:
+        for (name, argument) in session.items():
             if not argument.argument:
                 continue
             parser = arguments[argument]
@@ -163,23 +162,20 @@ def add_argument(attributes: list[Session], arguments: APD, language: MT) -> N:
             parser.add_argument(*args, **kwargs)
 
 
-def add_attribute(attributes: list[Session],
+def add_attribute(sessions: list[Session],
                   configuration: Configuration,
-                  args: argparse.Namespace,
-                  application: MT,
-                  language: MT) -> N:
+                  args: argparse.Namespace) -> N:
     """"""
-    for attribute in attributes:
-        dictionary = attribute.dictionary(language)
-        for (name, argument) in dictionary.items():
+    for session in sessions:
+        for (name, argument) in session.items():
             if not argument.attribute:
                 continue
             override = getattr(args, name, NONE)
-            database = configuration.get(application, name)
+            database = configuration.get(name)
             value = override or database or argument.fallback
-            setattr(attribute, name, value)
+            setattr(session, name, value)
             if getattr(args, CONFIGURATION, NONE):
-                configuration.set(application, name, override)
+                configuration.set(name, override)
 
 
 def get_parser(argv: SL, exit_on_error: B, application: MT,
@@ -191,13 +187,13 @@ def get_parser(argv: SL, exit_on_error: B, application: MT,
 
     arguments = make_arguments(language, parser)
 
-    add_argument(attributes, arguments, language)
+    add_argument(attributes, arguments)
 
     parse_known_args = parser.parse_known_args
     parse_args = parser.parse_args
     args = parse_known_args(argv)[0] if fast else parse_args(argv)
 
-    add_attribute(attributes, configuration, args, application, language)
+    add_attribute(attributes, configuration, args)
 
     return attributes
 
@@ -211,13 +207,21 @@ def session_loader(name: str, *path: str) -> type[Session]:
 
 def start_session(argv: SL, exit_on_error: B) -> Session:
     """"""
-    configuration = Configuration()
+
+    try:
+        language = load.module(LANGUAGE)
+        interface = load.module(INTERFACE)
+        application = load.module(APPLICATION)
+    except ModuleNotFoundError as error:
+        raise RuntimeError("Missing __init__ file.") from error
+
+    configuration = Configuration(application, interface, language)
     configuration.load()
 
     def load_the_fish(name, value):
         session = session_loader(name.capitalize(), "session", "session")
         hippo = [
-            session(),
+            session(application, interface, language),
         ]
         parser = get_parser(
             argv,
@@ -232,10 +236,6 @@ def start_session(argv: SL, exit_on_error: B) -> Session:
         return thing
 
     try:
-        language = load.module(LANGUAGE)
-        interface = load.module(INTERFACE)
-        application = load.module(APPLICATION)
-
         language = load_the_fish(LANGUAGE, language)
         interface = load_the_fish(INTERFACE, interface)
         application = load_the_fish(APPLICATION, application)
@@ -250,9 +250,9 @@ def start_session(argv: SL, exit_on_error: B) -> Session:
     session3 = session_loader("Information", "session", "session")
 
     hippos = [
-        session1(),
-        session2(),
-        session3(),
+        session1(application, interface, language),
+        session2(application, interface, language),
+        session3(application, interface, language),
     ]
     attribute = get_parser(
         argv,

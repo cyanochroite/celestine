@@ -1,5 +1,7 @@
 """"""
 
+import typing
+import types
 
 from celestine.session.argument import InformationConfiguration
 from celestine.session.argument import InformationHelp
@@ -17,6 +19,13 @@ from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 
 from celestine.text.unicode import NONE
+from celestine.text.unicode import LOW_LINE
+
+from celestine.typed import TA
+from celestine.typed import D
+from celestine.typed import S
+from celestine.typed import N
+from celestine.typed import TU
 
 from .text import VERSION
 from .text import STORE_TRUE
@@ -24,40 +33,63 @@ from .text import HELP
 from .text import CONFIGURATION
 from .text import MAIN
 
-from .type import AD
 from .type import MT
 
+from .argument import Argument
+# AD: TA = D[S, Argument]
 
-class Information():
+AD: typing.TypeAlias = typing.Dict[str, Argument]
+AI: typing.TypeAlias = typing.Iterable[typing.Tuple[S, Argument]]
+
+
+class SuperState():
     """"""
 
-    @staticmethod
-    def dictionary(language: MT) -> AD:
+    def __init__(self, application: MT, interface: MT, language: MT) -> N:
+        """"""
+        self._application = application
+        self._interface = interface
+        self._language = language
+
+
+class SuperSession(SuperState):
+    """"""
+
+    def dictionary(self) -> AD:
+        return {}
+
+    def items(self) -> AI:
+        """"""
+        dictionary = self.dictionary()
+        return dictionary.items()
+
+
+class Information(SuperSession):
+    """"""
+
+    def dictionary(self) -> AD:
         """"""
         return {
             CONFIGURATION: InformationConfiguration(
-                language.ARGUMENT_HELP_HELP,
+                self._language.ARGUMENT_HELP_HELP,
             ),
             HELP: InformationHelp(
-                language.ARGUMENT_HELP_HELP,
+                self._language.ARGUMENT_HELP_HELP,
             ),
             VERSION: InformationVersion(
-                language.ARGUMENT_VERSION_HELP,
+                self._language.ARGUMENT_VERSION_HELP,
             ),
         }
 
 
-class Dictionary():
+class Dictionary(SuperSession):
     """"""
 
-    @classmethod
-    def dictionary(cls, _: MT) -> AD:
-        return {}
-
-    def __setattr__(self, name: str, value: str) -> None:
+    def __setattr__(self, key: str, value: str) -> None:
         """"""
-        fallback = load.module_fallback(name, value)
-        self.__dict__[name] = fallback
+        if not key.startswith(LOW_LINE):
+            value = load.module_fallback(key, value)
+        self.__dict__[key] = value
 
 
 class Application(Dictionary):
@@ -65,12 +97,11 @@ class Application(Dictionary):
 
     application: MT
 
-    @classmethod
-    def dictionary(cls, language: MT) -> AD:
+    def dictionary(self) -> AD:
         """"""
-        return super().dictionary(language) | {
+        return super().dictionary() | {
             APPLICATION: Customization(
-                "Choose an applicanion. They have more option.",
+                self._language.ARGUMENT_INTERFACE_HELP,
                 load.argument(APPLICATION),
             ),
         }
@@ -81,12 +112,11 @@ class Interface(Dictionary):
 
     interface: MT
 
-    @classmethod
-    def dictionary(cls, language: MT) -> AD:
+    def dictionary(self) -> AD:
         """"""
-        return super().dictionary(language) | {
+        return super().dictionary() | {
             INTERFACE: Customization(
-                language.ARGUMENT_INTERFACE_HELP,
+                self._language.ARGUMENT_INTERFACE_HELP,
                 load.argument(INTERFACE),
             ),
         }
@@ -97,12 +127,11 @@ class Language(Dictionary):
 
     language: MT
 
-    @classmethod
-    def dictionary(cls, language: MT) -> AD:
+    def dictionary(self) -> AD:
         """"""
-        return super().dictionary(language) | {
+        return super().dictionary() | {
             LANGUAGE: Customization(
-                language.ARGUMENT_LANGUAGE_HELP,
+                self._language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),
             ),
         }
@@ -113,15 +142,13 @@ class Session(Application, Interface, Language):
 
     main: str
 
-    @classmethod
-    def dictionary(cls, language: MT) -> AD:
+    def dictionary(self) -> AD:
         """"""
-        return super().dictionary(language) | {
+        return super().dictionary() | {
             MAIN: Positional(
                 MAIN,
-                language.ARGUMENT_LANGUAGE_HELP,
-                []  # TODO add choices
-                #                load.function_name(self.application),
+                self._language.ARGUMENT_LANGUAGE_HELP,
+                load.function_name(self._application),
             ),
         }
 
@@ -134,5 +161,4 @@ class Session(Application, Interface, Language):
                 self.__dict__[name] = value
             case _:
                 super().__setattr__(name, value)
-
 

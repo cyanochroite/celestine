@@ -16,4 +16,4 @@ D: typing.TypeAlias = typing.Dict
 MT: typing.TypeAlias = types.ModuleType
 SELF: typing.TypeAlias = typing.Self
 TA: typing.TypeAlias = typing.TypeAlias
-
+TU: typing.TypeAlias = typing.Tuple

@@ -15,13 +15,16 @@ from celestine.typed import N
 from celestine.typed import S
 
 from .text import FILE
+from .session import SuperState
 
 
-class Configuration():
+class Configuration(SuperState):
     """parse configuration stuff."""
 
-    def __init__(self) -> N:
+    def __init__(self, application: MT, interface: MT, language: MT) -> N:
         """"""
+        super().__init__(application, interface, language)
+
         self.path = load.pathway(FILE)
 
         self.configuration = configparser.ConfigParser(
@@ -41,13 +44,10 @@ class Configuration():
         with open(self.path, WRITE_TEXT, encoding=UTF_8) as file:
             self.configuration.write(file, True)
 
-    def get(self, module: MT, option: S) -> S:
+    def get(self, module: MT) -> S:
         """"""
-        string = repr(module)
-        array = string.split("'")
-        name = array[1]
-        split = name.split(".")
-        section = split[-1]
+        section = load.module_to_name(module)
+        option = load.module_to_name(self._application)
         if self.configuration.has_section(section):
             if self.configuration.has_option(section, option):
                 return self.configuration[section][option]

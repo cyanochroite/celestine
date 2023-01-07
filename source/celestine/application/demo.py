@@ -1,4 +1,5 @@
 """"""
+from celestine.session.session import SuperSession
 from types import ModuleType as MT
 from typing import Dict as D
 from typing import TypeAlias as TA
@@ -11,14 +12,8 @@ from celestine.window.page import Page
 AD: TA = D[str, Argument]
 
 
-class Session():
+class Session(SuperSession):
     """"""
-
-    @staticmethod
-    def dictionary(_: MT) -> AD:
-        """"""
-        return {
-        }
 
 
 def one(page: Page) -> None:
