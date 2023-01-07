@@ -1,29 +1,26 @@
 """"""
 
-from celestine.unicode import QUESTION_MARK
-from celestine.unicode import NONE
-from celestine.unicode import HYPHEN_MINUS
-
 from celestine.typed import B
 from celestine.typed import L
-from celestine.typed import S
 from celestine.typed import N
+from celestine.typed import S
 
-from .text import VERSION
-
-from .text import STORE_TRUE
-from .text import HELP
-
-
-from .hash import HashClass
-
-from .attribute import Attribute
+from celestine.unicode import HYPHEN_MINUS
+from celestine.unicode import NONE
+from celestine.unicode import QUESTION_MARK
 
 from .attribute import Action
+from .attribute import Attribute
 from .attribute import Choices
 from .attribute import Help
 from .attribute import Nargs
 from .attribute import Version
+
+from .hash import HashClass
+
+from .text import HELP
+from .text import STORE_TRUE
+from .text import VERSION
 
 
 class Argument(HashClass, Attribute):
@@ -146,4 +143,3 @@ class InformationVersion(Information, Version):
             action=VERSION,
             help=help,
         )
-

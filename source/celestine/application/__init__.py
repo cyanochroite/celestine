@@ -1,27 +1,25 @@
 """"""
-from types import ModuleType as MT
-from typing import Dict as D
-from typing import TypeAlias as TA
-import types
-import typing
 
 from celestine.session.argument import Argument
+
+from celestine.session.session import SuperSession
+
+from celestine.typed import D
+from celestine.typed import N
+from celestine.typed import S
+from celestine.typed import TA
+
 from celestine.window.page import Page
 
-AD: TA = D[str, Argument]
+
+AD: TA = D[S, Argument]
 
 
-class Session():
+class Session(SuperSession):
     """"""
 
-    @staticmethod
-    def dictionary(_: MT) -> AD:
-        """"""
-        return {
-        }
 
-
-def one(page: Page) -> None:
+def one(page: Page) -> N:
     """"""
     with page.line("head") as line:
         line.label("title", "Page one")
@@ -30,7 +28,7 @@ def one(page: Page) -> None:
         line.button("next", "Page two", "two")
 
 
-def two(page: Page) -> None:
+def two(page: Page) -> N:
     """"""
     with page.line("head") as line:
         line.label("title", "Page two")
@@ -39,7 +37,7 @@ def two(page: Page) -> None:
         line.button("next", "Page main", "main")
 
 
-def main(page: Page) -> None:
+def main(page: Page) -> N:
     """"""
     with page.line("head") as line:
         line.label("title", "Page main")

@@ -1,41 +1,36 @@
 """"""
 
+from celestine import load
+
+from celestine.session.argument import Customization
 from celestine.session.argument import InformationConfiguration
 from celestine.session.argument import InformationHelp
 from celestine.session.argument import InformationVersion
-
-from celestine import load
-
-
-from celestine.session.argument import Customization
 from celestine.session.argument import Positional
-
 
 from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 
-from celestine.unicode import LOW_LINE
-
-from celestine.typed import S
-from celestine.typed import N
-from celestine.typed import MT
-from celestine.typed import TA
 from celestine.typed import D
 from celestine.typed import IT
-from celestine.typed import TU
+from celestine.typed import MT
+from celestine.typed import N
+from celestine.typed import S
+from celestine.typed import T
+from celestine.typed import TA
 
-
-from .text import VERSION
-from .text import HELP
-from .text import CONFIGURATION
-from .text import MAIN
-
+from celestine.unicode import LOW_LINE
 
 from .argument import Argument
 
+from .text import CONFIGURATION
+from .text import HELP
+from .text import MAIN
+from .text import VERSION
+
 AD: TA = D[S, Argument]
-AI: TA = IT[TU[S, Argument]]
+AI: TA = IT[T[S, Argument]]
 
 
 class SuperState():
@@ -82,7 +77,7 @@ class Information(SuperSession):
 class Dictionary(SuperSession):
     """"""
 
-    def __setattr__(self, key: str, value: str) -> None:
+    def __setattr__(self, key: S, value: S) -> N:
         """"""
         if key.startswith(LOW_LINE):
             self.__dict__[key] = value
@@ -151,7 +146,7 @@ class Session(Application, Interface, Language):
             ),
         }
 
-    def __setattr__(self, name: str, value: str) -> None:
+    def __setattr__(self, name: S, value: S) -> N:
         """"""
         match name:
             case "main":

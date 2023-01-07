@@ -2,50 +2,50 @@
 
 import argparse
 
-from typing import TypeAlias as TA
-from typing import Dict as D
-from typing import Union as U
-from typing import Type as T
 from argparse import _ArgumentGroup as AG
+from argparse import ArgumentParser as AP
 
-from celestine.session.argument import InformationConfiguration
-from celestine.session.argument import InformationHelp
-from celestine.session.argument import InformationVersion
-
-
-from celestine.text.directory import LANGUAGE
-from celestine.text.directory import APPLICATION
-from celestine.text.directory import INTERFACE
+from celestine import load
 
 from celestine.session import word
-from celestine.text import CELESTINE
-from celestine import load
-from celestine.unicode import NONE
-from celestine.session.argument import Positional
-from celestine.session.argument import Information
+
 from celestine.session.argument import Application
 from celestine.session.argument import Argument
 from celestine.session.argument import Customization
+from celestine.session.argument import Information
+from celestine.session.argument import InformationConfiguration
+from celestine.session.argument import InformationHelp
+from celestine.session.argument import InformationVersion
+from celestine.session.argument import Positional
 
-# from celestine.session.type import string
+from celestine.text import CELESTINE
 
+from celestine.text.directory import APPLICATION
+from celestine.text.directory import INTERFACE
+from celestine.text.directory import LANGUAGE
 
-from .text import CONFIGURATION
-from .session import Session
-from .session import Dictionary
+from celestine.typed import B
+from celestine.typed import D
+from celestine.typed import L
+from celestine.typed import MT
+from celestine.typed import N
+from celestine.typed import S
+from celestine.typed import T
+from celestine.typed import TA
+from celestine.typed import TY
+from celestine.typed import U
+
+from celestine.unicode import NONE
+
 from .configuration import Configuration
 
-from .type import AD
-from .type import ADI
-from .type import AP
-# from .type import APD
-from .type import AT
-from .type import B
-from .type import I
-from .type import S
-from .type import SL
-from .type import MT
-from .type import N
+from .session import Dictionary
+from .session import Session
+
+from .text import CONFIGURATION
+
+
+# ADI: typing.TypeAlias = typing.Iterable[typing.Tuple[str, Argument]]
 
 APD: TA = D[U[Argument, T[Argument]], U[AP, AG]]
 
@@ -140,12 +140,11 @@ def make_arguments(language: MT, parser: AP) -> APD:
     arguments[Application] = application
     arguments[Customization] = customization
 
-    arguments[Information] = information
-    arguments[InformationConfiguration] = information
+    arguments[InformationConfiguration] = modification
     arguments[InformationHelp] = information
     arguments[InformationVersion] = information
 
-    arguments[Positional] = modification
+    arguments[Positional] = application
 
     return arguments
 
@@ -180,10 +179,10 @@ def add_attribute(sessions: list[Session],
                 configuration.set(name, override)
 
 
-def get_parser(argv: SL, exit_on_error: B, application: MT,
+def get_parser(argv: L[S], exit_on_error: B, application: MT,
                language: MT,
-               attributes: list[Session], fast: B,
-               configuration: Configuration) -> list[Dictionary]:
+               attributes: L[Session], fast: B,
+               configuration: Configuration) -> L[Dictionary]:
     """"""
     parser = make_parser(language, exit_on_error)
 
@@ -200,14 +199,14 @@ def get_parser(argv: SL, exit_on_error: B, application: MT,
     return attributes
 
 
-def session_loader(name: str, *path: str) -> type[Session]:
+def session_loader(name: S, *path: S) -> TY[Session]:
     """"""
     module = load.module(*path)
     session = getattr(module, name)
     return session
 
 
-def start_session(argv: SL, exit_on_error: B) -> Session:
+def start_session(argv: L[S], exit_on_error: B) -> Session:
     """"""
     configuration = Configuration()
     configuration.load()

@@ -13,14 +13,14 @@ dictionary[instance] = "test"
 print(dictionary[Test]) -> "test"
 """
 
-from celestine.unicode import APOSTROPHE
-from celestine.unicode import FULL_STOP
-from celestine.unicode import SPACE
-
 from celestine.typed import B
 from celestine.typed import I
 from celestine.typed import S
 from celestine.typed import SELF
+
+from celestine.unicode import APOSTROPHE
+from celestine.unicode import FULL_STOP
+from celestine.unicode import SPACE
 
 
 class HashMetaClass(type):
