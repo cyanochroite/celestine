@@ -1,11 +1,12 @@
 """"""
 
+from typing import TypeAlias as TA
+
 from celestine.text import VERSION_NUMBER
 
 from celestine.typed import D
 from celestine.typed import L
 from celestine.typed import S
-from celestine.typed import TA
 
 from .text import ACTION
 from .text import CHOICES

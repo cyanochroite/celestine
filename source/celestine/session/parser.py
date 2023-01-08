@@ -5,6 +5,8 @@ import argparse
 from argparse import _ArgumentGroup as AG
 from argparse import ArgumentParser as AP
 
+from typing import TypeAlias as TA
+
 from celestine import load
 
 from celestine.session import word
@@ -12,7 +14,7 @@ from celestine.session import word
 from celestine.session.argument import Application
 from celestine.session.argument import Argument
 from celestine.session.argument import Customization
-from celestine.session.argument import Information
+from celestine.session.argument import Input
 from celestine.session.argument import InformationConfiguration
 from celestine.session.argument import InformationHelp
 from celestine.session.argument import InformationVersion
@@ -31,7 +33,6 @@ from celestine.typed import MT
 from celestine.typed import N
 from celestine.typed import S
 from celestine.typed import T
-from celestine.typed import TA
 from celestine.typed import TY
 from celestine.typed import U
 
@@ -145,6 +146,7 @@ def make_arguments(language: MT, parser: AP) -> APD:
     arguments[InformationVersion] = information
 
     arguments[Positional] = application
+    arguments[Input] = application
 
     return arguments
 

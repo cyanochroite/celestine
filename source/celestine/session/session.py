@@ -1,5 +1,7 @@
 """"""
 
+from typing import TypeAlias as TA
+
 from celestine import load
 
 from celestine.session.argument import Customization
@@ -18,7 +20,6 @@ from celestine.typed import MT
 from celestine.typed import N
 from celestine.typed import S
 from celestine.typed import T
-from celestine.typed import TA
 
 from celestine.unicode import LOW_LINE
 
@@ -28,6 +29,7 @@ from .text import CONFIGURATION
 from .text import HELP
 from .text import MAIN
 from .text import VERSION
+
 
 AD: TA = D[S, Argument]
 AI: TA = IT[T[S, Argument]]
@@ -134,7 +136,7 @@ class Language(Dictionary):
 class Session(Application, Interface, Language):
     """"""
 
-    main: str
+    main: S
 
     def dictionary(self) -> AD:
         """"""

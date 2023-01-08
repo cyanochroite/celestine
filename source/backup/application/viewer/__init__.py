@@ -4,15 +4,21 @@
 import os
 
 from celestine.session.argument import Input
+from celestine.session.argument import Positional
+
+from celestine.session.argument import Argument
 
 from celestine.session.session import SuperSession
-from celestine.session.session import AD
 
+from celestine.typed import D
 from celestine.typed import S
+from celestine.typed import TA
 
 from .text import DIRECTORY
 
 from .main import _setup
+
+AD: TA = D[S, Argument]
 
 
 class Session(SuperSession):

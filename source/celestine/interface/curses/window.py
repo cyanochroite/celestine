@@ -1,11 +1,13 @@
 from celestine.window.page import Page as null_page
 from celestine.window.window import Window as master
 
-from . import package
+from .package import package
 from .page import Page
 
 
 class Window(master):
+    """"""
+
     def page(self, name, document):
         self.item_set(name, document)
         page = Page(self)
@@ -23,13 +25,6 @@ class Window(master):
 
     def __enter__(self):
         super().__enter__()
-        self.stdscr = package.initscr()
-        package.noecho()
-        package.cbreak()
-        self.stdscr.keypad(1)
-        package.start_color()
-
-        # start
 
         self.background = package.window(0, 0, self.width, self.height)
         self.background.box()
@@ -86,4 +81,12 @@ class Window(master):
         self.width = 80
 
         self.window = 0
-        self.frame = None
+
+        #
+        self.stdscr = package.initscr()
+        package.noecho()
+        package.cbreak()
+        self.stdscr.keypad(1)
+        package.start_color()
+        #
+        self.frame = Page(self)

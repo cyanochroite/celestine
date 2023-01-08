@@ -98,6 +98,19 @@ class Positional(Name, Help, Choices, Nargs):
         )
 
 
+class Input(Flag, Help):
+    """"""
+
+    def __init__(self, fallback: S, help: S) -> N:
+        """"""
+        super().__init__(
+            argument=True,
+            attribute=True,
+            fallback=fallback,
+            help=help,
+        )
+
+
 class Information (Flag, Action, Help):
     """"""
 

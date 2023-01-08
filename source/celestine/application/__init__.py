@@ -1,18 +1,11 @@
 """"""
 
-from celestine.session.argument import Argument
 
 from celestine.session.session import SuperSession
 
-from celestine.typed import D
 from celestine.typed import N
-from celestine.typed import S
-from celestine.typed import TA
 
 from celestine.window.page import Page
-
-
-AD: TA = D[S, Argument]
 
 
 class Session(SuperSession):

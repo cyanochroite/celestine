@@ -1,13 +1,17 @@
 """Application for translating text to other languages."""
 
+import typing
+import types
 
+from types import ModuleType as MT
+from typing import Dict as D
+from typing import TypeAlias as TA
+
+from celestine.session.argument import Argument
+from celestine.session.argument import Optional
 from celestine.window.page import Page
 
-from celestine.session.session import SuperSession
-from celestine.session.session import AD
-
 from celestine.unicode import NONE
-
 
 from .text import KEY
 from .text import REGION
@@ -17,11 +21,14 @@ from .report import _train
 from .main import _translate
 
 
-class Session(SuperSession):
+AD: TA = D[str, Argument]
+
+
+class Session():
     """"""
 
     @staticmethod
-    def dictionary() -> AD:
+    def dictionary(language: MT) -> AD:
         """"""
         return {
             KEY: Optional(

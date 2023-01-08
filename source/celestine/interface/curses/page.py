@@ -1,6 +1,6 @@
 from celestine.window.page import Page as master
 
-from . import package
+from .package import package
 from .line import Line
 
 

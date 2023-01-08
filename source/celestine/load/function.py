@@ -1,12 +1,13 @@
 """Central place for loading and importing external files."""
 
+from typing import TypeAlias as TA
+
 from celestine.unicode import LOW_LINE
 
 from celestine.typed import MT
 from celestine.typed import D
 from celestine.typed import N
 from celestine.typed import S
-from celestine.typed import TA
 from celestine.typed import CA
 from celestine.typed import L
 
