@@ -2,14 +2,14 @@
 
 from typing import TypeAlias as TA
 
-from celestine.unicode import LOW_LINE
-
-from celestine.typed import MT
+from celestine.typed import CA
 from celestine.typed import D
+from celestine.typed import L
+from celestine.typed import MT
 from celestine.typed import N
 from celestine.typed import S
-from celestine.typed import CA
-from celestine.typed import L
+
+from celestine.unicode import LOW_LINE
 
 from .text import FUNCTION
 
@@ -57,4 +57,3 @@ def function_value(module: MT) -> L[F]:
         in dictionary.items()
     ]
     return iterable
-

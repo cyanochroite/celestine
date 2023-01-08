@@ -2,29 +2,29 @@
 
 import os
 import sys
-import types
-import typing
 
 from celestine.text import CELESTINE
 
-from celestine.window.page import Page
-
 from celestine.text.stream import FILE_NAME_EXTENSION
+
+from celestine.typed import B
+from celestine.typed import D
+from celestine.typed import L
+from celestine.typed import MT
+from celestine.typed import S
 
 from celestine.unicode import FULL_STOP
 from celestine.unicode import LOW_LINE
 from celestine.unicode import NONE
+
+from celestine.window.page import Page
 
 from .function import function
 from .function import function_name
 from .function import function_value
 
 
-from celestine.typed import MT
-from celestine.typed import S
-
-
-def attempt(*path: str) -> bool:
+def attempt(*path: S) -> B:
     """Attempt to load a package and return the result."""
     try:
         module(*path)
@@ -34,7 +34,7 @@ def attempt(*path: str) -> bool:
     return False
 
 
-def module(*path: str) -> types.ModuleType:
+def module(*path: S) -> MT:
     """Load an internal module from anywhere in the application."""
     iterable = [CELESTINE, *path]
     name = FULL_STOP.join(iterable)
@@ -46,7 +46,7 @@ def module(*path: str) -> types.ModuleType:
     return file
 
 
-def module_fallback(*path: str) -> types.ModuleType:
+def module_fallback(*path: S) -> MT:
     """
     Load an internal module from anywhere in the application.
     If the last item is none then load the package instead.
@@ -57,7 +57,7 @@ def module_fallback(*path: str) -> types.ModuleType:
     return fallback
 
 
-def dictionary(*path: str) -> typing.Dict[str, str]:
+def dictionary(*path: S) -> D[S, S]:
     """
     Load from module all key value pairs and turn them into dictionary.
     """
@@ -72,17 +72,17 @@ def dictionary(*path: str) -> typing.Dict[str, str]:
     return mapping
 
 
-def pathway(*path: str) -> str:
+def pathway(*path: S) -> S:
     """"""
     return os.path.join(sys.path[0], CELESTINE, *path)
 
 
-def python(*path: str) -> str:
+def python(*path: S) -> S:
     """"""
     return NONE.join([pathway(*path), FILE_NAME_EXTENSION])
 
 
-def argument_default(path: str) -> str:
+def argument_default(path: S) -> S:
     """"""
     array = argument(path)
     result = None
@@ -98,7 +98,7 @@ def argument_default(path: str) -> str:
     return result
 
 
-def argument(*path: str) -> list[str]:
+def argument(*path: S) -> L[S]:
     """
     Build a path to the selected package. Scan all items in directory.
     Return a list of items that are not private, such as '.private' or
@@ -118,8 +118,9 @@ def argument(*path: str) -> list[str]:
     return result
 
 
-def module_to_name(module: MT) -> S:
-    string = repr(module)
+def module_to_name(_module: MT) -> S:
+    """"""
+    string = repr(_module)
     array = string.split("'")
     name = array[1]
     split = name.split(".")

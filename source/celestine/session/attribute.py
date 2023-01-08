@@ -4,6 +4,7 @@ from typing import TypeAlias as TA
 
 from celestine.text import VERSION_NUMBER
 
+from celestine.typed import A
 from celestine.typed import D
 from celestine.typed import L
 from celestine.typed import S
@@ -15,7 +16,7 @@ from .text import NARGS
 from .text import VERSION
 
 
-AT: TA = D[S, S | L[S]]
+AT: TA = D[S, A]
 
 
 class Attribute():

@@ -1,16 +1,21 @@
+""""""
+
 import os
 
 
 def join(path, *paths):
+    """"""
     return os.path.join(path, *paths)
 
 
 def file_extension(path):
-    (root, ext) = os.path.splitext(path)
+    """"""
+    (_, ext) = os.path.splitext(path)
     return ext
 
 
 def walk_directory(top='.'):
+    """"""
     path = []
     file = []
     for (dirpath, dirnames, filenames) in os.walk(top):
@@ -22,7 +27,8 @@ def walk_directory(top='.'):
 
 
 def _execute(session, directory):
-    (path, file) = walk_directory(directory)
+    """"""
+    (_, file) = walk_directory(directory)
     images = []
     for filenames in file:
         (dirpath, name) = filenames
@@ -34,7 +40,7 @@ def _execute(session, directory):
 
 
 def _setup(window):
+    """"""
     directory = window.session.attribute.directory
     image = _execute(window.session, directory)
     return image
-

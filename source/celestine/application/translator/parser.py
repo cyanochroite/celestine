@@ -10,7 +10,6 @@ from celestine.unicode import LINE_FEED
 from celestine.unicode import QUOTATION_MARK
 from celestine.unicode import SPACE
 
-
 from celestine.unicode import FULL_STOP
 from celestine.unicode import QUESTION_MARK
 from celestine.unicode import EXCLAMATION_MARK
@@ -18,12 +17,10 @@ from celestine.unicode import COMMA
 from celestine.unicode import SEMICOLON
 from celestine.unicode import COLON
 
-
 from celestine.unicode import CHARACTER_TABULATION
 from celestine.unicode import LINE_TABULATION
 from celestine.unicode import FORM_FEED
 from celestine.unicode import CARRIAGE_RETURN
-
 
 from celestine.unicode import INFORMATION_SEPARATOR_FOUR
 from celestine.unicode import INFORMATION_SEPARATOR_THREE
@@ -37,12 +34,10 @@ from celestine.unicode import NEXT_LINE
 from celestine.unicode import LINE_SEPARATOR
 from celestine.unicode import PARAGRAPH_SEPARATOR
 
-
 from celestine.unicode import APOSTROPHE
 
 
 MAXIMUM_LINE_LENGTH = 72
-
 
 unicode_punctuation = frozenset({
     COLON,
@@ -80,6 +75,7 @@ unicode_identifier = basic_multilingual_plane - not_identifier
 
 
 def buffer_readline(buffer):
+    """"""
     buffer.write(CARRIAGE_RETURN)
     buffer.seek(0, io.SEEK_SET)
     string = buffer.readline()
@@ -201,15 +197,18 @@ def assignment_expression(identifier, expression):
 
 
 def transverse_dictionary(dictionary):
+    """"""
     for (key, value) in sorted(dictionary.items()):
         yield from assignment_expression(key, value)
 
 
 def word_wrap_dictionary(dictionary):
+    """"""
     yield from word_wrap(transverse_dictionary(dictionary))
 
 
 def dictionary_to_file(dictionary):
+    """"""
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK

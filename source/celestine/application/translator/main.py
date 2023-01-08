@@ -30,12 +30,6 @@ LANGUAGE_TAG_AZURE = "LANGUAGE_TAG_AZURE"
 LANGUAGE_TAG_ISO = "LANGUAGE_TAG_ISO"
 
 
-class Translation():
-
-    def __init__():
-        pass
-
-
 def get_dictionary_ready(session):
     """Do all parser stuff here."""
     dictionary = {}
@@ -104,6 +98,7 @@ def reset():
 
 
 def read_to_save(dictionary):
+    """"""
     path = load.python(LANGUAGE, translation)
     string = dictionary_to_file(dictionary)
     save(path, string)

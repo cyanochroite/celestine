@@ -1,4 +1,6 @@
-from celestine.application.translator.file import save
+""""""
+
+from celestine.application.translator.file import save_string
 
 
 todo = [
@@ -38,4 +40,4 @@ for item in todo:
             data.append(line)
 
     path = F"../../hold/EUPL_1.2_{item}.txt"
-    save(path, "\n".join(data))
+    save_string(path, "\n".join(data))
