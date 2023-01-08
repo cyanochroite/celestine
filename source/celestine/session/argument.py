@@ -33,8 +33,9 @@ class Argument(HashClass, Attribute):
         self.attribute = attribute
         self.fallback = fallback
 
-    def key(self, _: str) -> list[str]:
-        ...
+    def key(self, _: S) -> L[S]:
+        """"""
+        return []
 
 
 class Flag(Argument):
@@ -59,6 +60,7 @@ class Name(Argument):
 class Application(Flag, Help):
     """"""
 
+    # pylint: disable-next=redefined-builtin
     def __init__(self, fallback: S, help: S) -> N:
         """"""
         super().__init__(
@@ -72,6 +74,7 @@ class Application(Flag, Help):
 class Customization(Flag, Help, Choices):
     """"""
 
+    # pylint: disable-next=redefined-builtin
     def __init__(self, help: S, choices: L[S]) -> N:
         """"""
         super().__init__(
@@ -86,6 +89,7 @@ class Customization(Flag, Help, Choices):
 class Positional(Name, Help, Choices, Nargs):
     """"""
 
+    # pylint: disable-next=redefined-builtin
     def __init__(self, fallback: S, help: S, choices: L[S]) -> N:
         """"""
         super().__init__(
@@ -98,9 +102,10 @@ class Positional(Name, Help, Choices, Nargs):
         )
 
 
-class Input(Flag, Help):
+class Optional(Flag, Help):
     """"""
 
+    # pylint: disable-next=redefined-builtin
     def __init__(self, fallback: S, help: S) -> N:
         """"""
         super().__init__(
@@ -114,6 +119,7 @@ class Input(Flag, Help):
 class Information (Flag, Action, Help):
     """"""
 
+    # pylint: disable-next=redefined-builtin
     def __init__(self, action: S, help: S) -> N:
         """"""
         super().__init__(
@@ -128,6 +134,7 @@ class Information (Flag, Action, Help):
 class InformationConfiguration(Information):
     """"""
 
+    # pylint: disable-next=redefined-builtin
     def __init__(self, help) -> N:
         """"""
         super().__init__(
@@ -139,6 +146,7 @@ class InformationConfiguration(Information):
 class InformationHelp(Information):
     """"""
 
+    # pylint: disable-next=redefined-builtin
     def __init__(self, help: S) -> N:
         """"""
         super().__init__(
@@ -150,6 +158,7 @@ class InformationHelp(Information):
 class InformationVersion(Information, Version):
     """"""
 
+    # pylint: disable-next=redefined-builtin
     def __init__(self, help: S) -> N:
         """"""
         super().__init__(

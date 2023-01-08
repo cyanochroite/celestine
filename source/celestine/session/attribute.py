@@ -7,6 +7,7 @@ from celestine.text import VERSION_NUMBER
 from celestine.typed import A
 from celestine.typed import D
 from celestine.typed import L
+from celestine.typed import N
 from celestine.typed import S
 
 from .text import ACTION
@@ -34,7 +35,7 @@ class Action(Attribute):
         """"""
         return super().dictionary() | {ACTION: self.action}
 
-    def __init__(self, action: S, **kwargs) -> None:
+    def __init__(self, action: S, **kwargs) -> N:
         """"""
         super().__init__(**kwargs)
         self.action = action
@@ -47,7 +48,7 @@ class Choices(Attribute):
         """"""
         return super().dictionary() | {CHOICES: self.choices}
 
-    def __init__(self, choices: L[S], **kwargs) -> None:
+    def __init__(self, choices: L[S], **kwargs) -> N:
         """"""
         super().__init__(**kwargs)
         self.choices = choices
@@ -60,7 +61,7 @@ class Help(Attribute):
         """"""
         return super().dictionary() | {HELP: self.help}
 
-    def __init__(self, help: S, **kwargs) -> None:
+    def __init__(self, help: S, **kwargs) -> N:  # pylint: disable=W0622
         """"""
         super().__init__(**kwargs)
         self.help = help
@@ -73,7 +74,7 @@ class Nargs(Attribute):
         """"""
         return super().dictionary() | {NARGS: self.nargs}
 
-    def __init__(self, nargs: S, **kwargs) -> None:
+    def __init__(self, nargs: S, **kwargs) -> N:
         """"""
         super().__init__(**kwargs)
         self.nargs = nargs
@@ -86,6 +87,6 @@ class Version(Attribute):
         """"""
         return super().dictionary() | {VERSION: VERSION_NUMBER}
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs) -> N:
         """"""
         super().__init__(**kwargs)

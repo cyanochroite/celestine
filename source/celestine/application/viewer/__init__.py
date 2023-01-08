@@ -3,7 +3,7 @@
 # from celestine.application.viewer.core import os
 import os
 
-from celestine.session.argument import Input
+from celestine.session.argument import Optional
 
 from celestine.session.session import SuperSession
 from celestine.session.session import AD
@@ -24,7 +24,7 @@ class Session(SuperSession):
         """"""
         # self.language
         return {
-            DIRECTORY: Input(
+            DIRECTORY: Optional(
                 os.getcwd(),
                 "pick your nose",
             ),

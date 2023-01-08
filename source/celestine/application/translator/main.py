@@ -30,23 +30,6 @@ LANGUAGE_TAG_AZURE = "LANGUAGE_TAG_AZURE"
 LANGUAGE_TAG_ISO = "LANGUAGE_TAG_ISO"
 
 
-def get_dictionary_ready(session):
-    """Do all parser stuff here."""
-    dictionary = {}
-
-    dir_translation = load.argument(TRANSLATION)
-    for translation in dir_translation:
-        wow = load.dictionary(TRANSLATION, translation)
-
-        key = wow[LANGUAGE_TAG_AZURE]
-        value = wow[LANGUAGE_TAG_ISO]
-        azure_to_iso[key] = value
-        code.append(key)
-
-        override[translation] = wow
-        dictionary[translation] = {}
-
-
 def parser_magic(session):
     """Do all parser stuff here."""
     dictionary = {}
@@ -75,8 +58,8 @@ def parser_magic(session):
             translations = item[TRANSLATIONS]
             for translation in translations:
                 text = translation[TEXT]
-                to = translation[TO]
-                key = azure_to_iso[to]
+                goto = translation[TO]
+                key = azure_to_iso[goto]
                 dictionary[key][name] = text
 
     for translation in dir_translation:
@@ -95,13 +78,6 @@ def reset():
         shutil.rmtree(path, ignore_errors=False, onerror=None)
 
     os.mkdir(path)
-
-
-def read_to_save(dictionary):
-    """"""
-    path = load.python(LANGUAGE, translation)
-    string = dictionary_to_file(dictionary)
-    save(path, string)
 
 
 def save_item(dictionarys):

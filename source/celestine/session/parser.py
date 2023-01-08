@@ -14,7 +14,7 @@ from celestine.session import word
 from celestine.session.argument import Application
 from celestine.session.argument import Argument
 from celestine.session.argument import Customization
-from celestine.session.argument import Input
+from celestine.session.argument import Optional
 from celestine.session.argument import InformationConfiguration
 from celestine.session.argument import InformationHelp
 from celestine.session.argument import InformationVersion
@@ -26,6 +26,7 @@ from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 
+from celestine.typed import A
 from celestine.typed import B
 from celestine.typed import D
 from celestine.typed import L
@@ -48,7 +49,8 @@ from .text import CONFIGURATION
 
 # ADI: typing.TypeAlias = typing.Iterable[typing.Tuple[str, Argument]]
 
-APD: TA = D[U[Argument, T[Argument]], U[AP, AG]]
+# APD: TA = D[U[Argument, T[Argument]], U[AP, AG]]
+APD: TA = D[A, A]
 
 
 def make_parser(language: MT, exit_on_error: B) -> AP:
@@ -146,7 +148,7 @@ def make_arguments(language: MT, parser: AP) -> APD:
     arguments[InformationVersion] = information
 
     arguments[Positional] = application
-    arguments[Input] = application
+    arguments[Optional] = application
 
     return arguments
 
@@ -213,7 +215,7 @@ def start_session(argv: L[S], exit_on_error: B) -> Session:
     configuration = Configuration()
     configuration.load()
 
-    def load_the_fish(name, value):
+    def load_the_fish(name, value) -> MT:
         session = session_loader(name.capitalize(), "session", "session")
         hippo = [
             session(application, interface, language),
