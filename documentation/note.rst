@@ -1,3 +1,22 @@
+Section Title 1
+###############
+
+Section Title 2
+***************
+
+Section Title 3
+^^^^^^^^^^^^^^^
+
+Section Title 4
+~~~~~~~~~~~~~~~
+
+Section Title 5
+"""""""""""""""
+
+Section Title 6
+'''''''''''''''
+
+
 Primary
 Secondary
 Tertiary
@@ -86,34 +105,6 @@ A & B & C & D
 +a -b +c -d
 A & !B & C & !D
 
-&&abc
-(a&(b&c))
-&&abc
-((a)&(b))&(c)
-&|abc
-((a)|(b))&(c)
-
-|&a|bcde
-abc|d&e|
-(((a & (b | c)) & d) | e)
-
-
-eye
-	brown
-	red
-
-
-t tag
-
-sbt
-
-&+fish
-
-reserved
-*:?
-
-+-
-|&
 
 does white space matter?
 no
@@ -121,7 +112,7 @@ no
 steps
 0 user input
 1 strip out all illegal characters. pass over each character and move to new buffer if valid
->2 convert invalid characters to valid character in new buffer
+2 convert invalid characters to valid character in new buffer
 3 remove all whitespace. separate items to token groups
 4 apply found symbols to new class. when hit tag, previously applied attributes are used. otherwise defaults used. state set each time new symbol seen, so in essence, last one seen used
 
@@ -242,164 +233,44 @@ ToDo Features:
 Add gamma to photos? Both TK and dearpygui support this
 
 
-
-
-
-
-	m n s g
-	M 	N 	S 	G
-M
-N
-
-m  true
-n false
-g both
-s neighr
-
-and	M	N	S	G
-M	M	N	S	G
-N	N	N	N	N
-S	S	N
-G	G	N
-
-
-not
-N	M
-S	G
-G	S
-M	N
-
-
-
-
-and	N	S	G	M
-N	N	N	N	N
-S	N			S
-G	N			G
-M	N	S	G	M
-
-
-OR	N	S	G	M
-N	N	S	G	N
-S	S	S	G?	M
-G	G	G?	G	M
-M	M	M	M	M
-
-
-
-
-and	N	S	G	M
-N	N	N	N	N
-S	N	S	N	S
-G	N	N	G	G
-M	N	S	G	M
-
-
-OR	N	S	G	M
-N	N	S	G	M
-S	S	S	M	M
-G	G	M	G	M
-M	M	M	M	M
-
-
-
-
-and	N	S	G	M
-N	N	N	N	N
-S	N	S	N	S
-G	N	N	G	G
-M	N	S	G	M
-
-
-OR	N	S	G	M
-N	N	N	M	M
-S	N	S	M	M
-G	M	M	G	M
-M	M	M	M	M
-
-
-
-
-
-++
--+
---
-+-
-
-true
-both
-anti
-zero
-
-
-
-1
-2
-dual	having two parts
-null	not important	value 0		meaningless
-4
-
-both	some
-
-
-
-not
-M	N
-N	M
-S	G
-G	S
-
-
-and		M	N	S	G
-
-M		M	N	S	G
-N		N	N	N	N
-S		S	N	S
-G		G	N		G
-
-
-or		M	N	S	G
-
-M		M	M	M	M
-N		M	N	S	G
-S		M	S	S
-G		M	G		G
-
-
-
-
-and		M	S	G	N
-
-M		M	S	G	N
-S		S	S	G	N
-G		G	G	G	N
-N		N	N	N	N
-
-
-or		M	S	G	N
-
-M		M	M	M	M
-S		M	S	S	S
-G		M	S	G	G
-N		M	S	G	N
-
-
-
-
-and		M	G	S	N
-
-M		M	G	S	N
-G		G	G	S	N
-S		S	S	S	N
-N		N	N	N	N
-
-
-or		M	G	S	N
-
-M		M	M	M	M
-G		M	G	G	G
-S		M	G	S	S
-N		M	G	S	N
-
-
-
+A	true	++
+B	anti	-+
+C	both	--
+D	zero	+-
+
++-----+------+------+------+------+
+| AND | same | not  | inv  | flip |
++=====+======+======+======+======+
+| A   | A    | B    | C    | D    |
++-----+------+------+------+------+
+| B   | B    | A    | D    | C    |
++-----+------+------+------+------+
+| C   | C    | D    | A    | B    |
++-----+------+------+------+------+
+| D   | D    | C    | B    | A    |
++-----+------+------+------+------+
+
+
++-----+---+---+---+---+
+| AND | A | B | C | D |
++=====+===+===+===+===+
+| A   | A | B | C | D |
++-----+---+---+---+---+
+| B   | B | B | C | D |
++-----+---+---+---+---+
+| C   | C | C | C | D |
++-----+---+---+---+---+
+| D   | D | D | D | D |
++-----+---+---+---+---+
+
++-----+---+---+---+---+
+| OR  | A | B | C | D |
++=====+===+===+===+===+
+| A   | A | A | A | A |
++-----+---+---+---+---+
+| B   | A | B | B | B |
++-----+---+---+---+---+
+| C   | A | B | C | C |
++-----+---+---+---+---+
+| D   | A | B | C | D |
++-----+---+---+---+---+

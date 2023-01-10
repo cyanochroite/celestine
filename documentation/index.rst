@@ -5,7 +5,7 @@ The Celestine Image Viewer
     :maxdepth: 2
     :caption: Contents:
 
-    test
+    note
     wing
 
 - About_
@@ -32,6 +32,7 @@ Most files in this project are dedicated to viewing and modifying local images.
 Will try to update the project to reflect that.
 
 Development settings at :doc:`wing`.
+Project notes at :doc:`note`.
 
 
 .. _Goals:
