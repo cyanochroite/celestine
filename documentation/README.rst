@@ -15,6 +15,12 @@ The Celestine Image Viewer
 
 .. _About:
 
+
+.. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
+   :target: https://celestine.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
+
+
 About
 *****
 View, tag, and organize your photos. Well, that was the origional goal.
@@ -104,58 +110,6 @@ The EU has 24 official languages:
 Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, French, German, Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian, Spanish and Swedish.
 
 
-+----+------------+-------------+--------------------+
-|    | Language   | Translation | ISO 3166-1 alpha-2 |
-+====+============+=============+====================+
-| bg | Bulgarian  | български   | celestine -l en    |
-+----+------------+-------------+--------------------+
-| cs | Czech      | čeština     | celestine -l cs    |
-+----+------------+-------------+--------------------+
-| da | Danish     | dansk       | celestine -l da    |
-+----+------------+-------------+--------------------+
-| de | German     | Deutsch     | celestine -l de    |
-+----+------------+-------------+--------------------+
-| el | Greek      | ελληνικά    | celestine -l el    |
-+----+------------+-------------+--------------------+
-| en | English    | English     | celestine -l en    |
-+----+------------+-------------+--------------------+
-| es | Spanish    | español     | celestine -l es    |
-+----+------------+-------------+--------------------+
-| et | Estonian   | eesti       | celestine -l et    |
-+----+------------+-------------+--------------------+
-| fi | Finnish    | suomi       | celestine -l fi    |
-+----+------------+-------------+--------------------+
-| fr | French     | français    | celestine -l fr    |
-+----+------------+-------------+--------------------+
-| ga | Irish      | Gaeilge     | celestine -l ga    |
-+----+------------+-------------+--------------------+
-| hr | Croatian   | hrvatski    | celestine -l hr    |
-+----+------------+-------------+--------------------+
-| hu | Hungarian  | magyar      | celestine -l hu    |
-+----+------------+-------------+--------------------+
-| it | Italian    | italiano    | celestine -l it    |
-+----+------------+-------------+--------------------+
-| lt | Lithuanian | lietuvių    | celestine -l lt    |
-+----+------------+-------------+--------------------+
-| lv | Latvian    | latviešu    | celestine -l lv    |
-+----+------------+-------------+--------------------+
-| mt | Maltese    | Malti       | celestine -l mt    |
-+----+------------+-------------+--------------------+
-| nl | Dutch      | Nederlands  | celestine -l nl    |
-+----+------------+-------------+--------------------+
-| pl | Polish     | polski      | celestine -l pl    |
-+----+------------+-------------+--------------------+
-| pt | Portuguese | português   | celestine -l pt    |
-+----+------------+-------------+--------------------+
-| ro | Romanian   | română      | celestine -l ro    |
-+----+------------+-------------+--------------------+
-| sk | Slovak     | slovenčina  | celestine -l sk    |
-+----+------------+-------------+--------------------+
-| sl | Slovenian  | slovenščina | celestine -l sl    |
-+----+------------+-------------+--------------------+
-| sv | Swedish    | svenska     | celestine -l sv    |
-+----+------------+-------------+--------------------+
-
 
 +------------+-------------+--------------------+
 | Language   | Translation | ISO 3166-1 alpha-2 |
@@ -209,58 +163,13 @@ Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, French, G
 | Swedish    | svenska     | celestine -l sv    |
 +------------+-------------+--------------------+
 
-+--------------------+------------+-------------+-----------------+
-| ISO 3166-1 alpha-2 | Language   | Translation |  command        |
-+====================+============+=============+=================+
-| bg                 | Bulgarian  | български   | celestine -l en |
-+--------------------+------------+-------------+-----------------+
-| cs                 | Czech      | čeština     | celestine -l cs |
-+--------------------+------------+-------------+-----------------+
-| da                 | Danish     | dansk       | celestine -l da |
-+--------------------+------------+-------------+-----------------+
-| de                 | German     | Deutsch     | celestine -l de |
-+--------------------+------------+-------------+-----------------+
-| el                 | Greek      | ελληνικά    | celestine -l el |
-+--------------------+------------+-------------+-----------------+
-| en                 | English    | English     | celestine -l en |
-+--------------------+------------+-------------+-----------------+
-| es                 | Spanish    | español     | celestine -l es |
-+--------------------+------------+-------------+-----------------+
-| et                 | Estonian   | eesti       | celestine -l et |
-+--------------------+------------+-------------+-----------------+
-| fi                 | Finnish    | suomi       | celestine -l fi |
-+--------------------+------------+-------------+-----------------+
-| fr                 | French     | français    | celestine -l fr |
-+--------------------+------------+-------------+-----------------+
-| ga                 | Irish      | Gaeilge     | celestine -l ga |
-+--------------------+------------+-------------+-----------------+
-| hr                 | Croatian   | hrvatski    | celestine -l hr |
-+--------------------+------------+-------------+-----------------+
-| hu                 | Hungarian  | magyar      | celestine -l hu |
-+--------------------+------------+-------------+-----------------+
-| it                 | Italian    | italiano    | celestine -l it |
-+--------------------+------------+-------------+-----------------+
-| lt                 | Lithuanian | lietuvių    | celestine -l lt |
-+--------------------+------------+-------------+-----------------+
-| lv                 | Latvian    | latviešu    | celestine -l lv |
-+--------------------+------------+-------------+-----------------+
-| mt                 | Maltese    | Malti       | celestine -l mt |
-+--------------------+------------+-------------+-----------------+
-| nl                 | Dutch      | Nederlands  | celestine -l nl |
-+--------------------+------------+-------------+-----------------+
-| pl                 | Polish     | polski      | celestine -l pl |
-+--------------------+------------+-------------+-----------------+
-| pt                 | Portuguese | português   | celestine -l pt |
-+--------------------+------------+-------------+-----------------+
-| ro                 | Romanian   | română      | celestine -l ro |
-+--------------------+------------+-------------+-----------------+
-| sk                 | Slovak     | slovenčina  | celestine -l sk |
-+--------------------+------------+-------------+-----------------+
-| sl                 | Slovenian  | slovenščina | celestine -l sl |
-+--------------------+------------+-------------+-----------------+
-| sv                 | Swedish    | svenska     | celestine -l sv |
-+--------------------+------------+-------------+-----------------+
 
+Installation
+************
+
+Install from pip::
+
+    pip install celestine
 
 Inspiration
 ***********
@@ -272,7 +181,9 @@ Info
 ****
 `Semantic Versioning 2.0.0`_
 
-`Write to me`_
+`Email`_
+
+`Discord`_
 
 
 .. _`Blender`: https://www.blender.org/
@@ -287,7 +198,12 @@ Info
 .. _`Semantic Versioning 2.0.0`: https://semver.org/
 .. _`Tkinter`: https://docs.python.org/3/library/tk.html
 .. _`Windows Curses`: https://github.com/zephyrproject-rtos/windows-curses/
-.. _`Write to me`: celestine@mem-dixy.ch
+
+.. _`Discord`: https://discord.gg/aNmDWPXd7B
+.. _`Email`: celestine@mem-dixy.ch
+
 .. _PyPi: https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-pypi
 .. _python: https://www.python.org/downloads/
 .. _unittest: https://docs.python.org/3/library/unittest.html
+
+
