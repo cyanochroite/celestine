@@ -1,20 +1,5 @@
-The Celestine Image Viewer
-##########################
-
-.. toctree::
-    :maxdepth: 2
-    :caption: Contents:
-
-    note
-    wing
-
-- About_
-- Requirements_
-- Inspiration_
-- Info_
-
-.. _About:
-
+Celestine
+#########
 
 .. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
    :target: https://celestine.readthedocs.io/en/latest/?badge=latest
@@ -45,8 +30,34 @@ What this is not:
 - This is not a photo downloader.
 - This is not a mobile application.
 
-Requirements
+Installation
 ************
+
+Required
+^^^^^^^^
+
+Install from pip::
+
+    pip install celestine
+
+Optional
+^^^^^^^^
+
+If you want celestine to be more then just a command line tool, you will likely want one of these installed:
+(Pygame has not yet been released for Python 3.11.) (Blender is hard so it has fallen behind in upkeep.)
+
++-------------------+----------------------+---------------------------------------+------------------------------------------------------------------------+
+| Interface         | Type                 | How                                   | Information                                                            |
++===================+======================+=======================================+========================================================================+
+| `Blender`_        | Application          | Install celestine as a Blender Add-on | Secondary scripts, called Add-ons, that extends Blender functionality. |
++-------------------+----------------------+---------------------------------------+------------------------------------------------------------------------+
+| `Dear PyGui`_     | Python Package Index | pip install dearpygui                 | DearPyGui: A simple Python GUI Toolkit.                                |
++-------------------+----------------------+---------------------------------------+------------------------------------------------------------------------+
+| `Pygame`_         | Python Package Index | pip install pygame                    | Python Game Development.                                               |
++-------------------+----------------------+---------------------------------------+------------------------------------------------------------------------+
+| `Windows Curses`_ | Python Package Index | pip install windows-curses            | Support for the standard curses module on Windows.                     |
++-------------------+----------------------+---------------------------------------+------------------------------------------------------------------------+
+
 
 The Python Programming Language
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -60,24 +71,17 @@ Don't feel like installing Python? Try running it in Blender insead!
 Application
 ^^^^^^^^^^^
 
-If you want celestine to be more then just a command line tool, you will need at least one of these installed:
-(Pygame has not yet been released for Python 3.11.) (Blender is hard so it has fallen behind in upkeep.)
+Some applications that come with it.
 
-+-------------------+-------------------------+--------------------------------------------------------+------------------------------------------------------------------------+
-| Interface         | Type                    | How                                                    | Information                                                            |
-+===================+=========================+========================================================+========================================================================+
-| `Blender`_        | Application             | Install celestine as a Blender Add-on                  | Secondary scripts, called Add-ons, that extends Blender functionality. |
-+-------------------+-------------------------+--------------------------------------------------------+------------------------------------------------------------------------+
-| `Curses`_         | Python Standard Library | Python Installer                                       | The Windows version of Python does not include the curses module.      |
-+-------------------+-------------------------+--------------------------------------------------------+------------------------------------------------------------------------+
-| `Dear PyGui`_     | Python Package Index    | pip install dearpygui                                  | DearPyGui: A simple Python GUI Toolkit.                                |
-+-------------------+-------------------------+--------------------------------------------------------+------------------------------------------------------------------------+
-| `Pygame`_         | Python Package Index    | pip install pygame                                     | Python Game Development.                                               |
-+-------------------+-------------------------+--------------------------------------------------------+------------------------------------------------------------------------+
-| `Tkinter`_        | Python Standard Library | Python Installer > Optional Features > tcl/tk and IDLE | The tkinter package is a thin object-oriented layer on top of Tcl/Tk.  |
-+-------------------+-------------------------+--------------------------------------------------------+------------------------------------------------------------------------+
-| `Windows Curses`_ | Python Package Index    | pip install windows-curses                             | Support for the standard curses module on Windows.                     |
-+-------------------+-------------------------+--------------------------------------------------------+------------------------------------------------------------------------+
++-------------+-------------------------+------------------------------------------------------------------+
+| Application | Command                 | Information                                                      |
++=============+=========================+==================================================================+
+| Demo        | celestine -a demo       | Change screens with two whole buttons.                           |
++-------------+-------------------------+------------------------------------------------------------------+
+| Translator  | celestine -a translator | Translate the default language file into the 24 other languages. |
++-------------+-------------------------+------------------------------------------------------------------+
+| Viewer      | celestine -a viewer     | View a very small amount of pictures at once.                    |
++-------------+-------------------------+------------------------------------------------------------------+
 
 Interface
 ^^^^^^^^^
@@ -101,15 +105,9 @@ If you want celestine to be more then just a command line tool, you will need at
 | `Windows Curses`_ | Python Package Index    | pip install windows-curses                             | Support for the standard curses module on Windows.                     |
 +-------------------+-------------------------+--------------------------------------------------------+------------------------------------------------------------------------+
 
-Languages
-^^^^^^^^^
+Language
+^^^^^^^^
 The EU is characterised by its cultural and linguistic diversity, and the languages spoken in EU countries are an essential part of its cultural heritage. This is why the EU supports multilingualism in its programmes and in the work of its institutions.
-
-The EU has 24 official languages:
-
-Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, French, German, Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian, Spanish and Swedish.
-
-
 
 +------------+-------------+--------------------+
 | Language   | Translation | ISO 3166-1 alpha-2 |
@@ -163,47 +161,22 @@ Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, French, G
 | Swedish    | svenska     | celestine -l sv    |
 +------------+-------------+--------------------+
 
+Resources
+*********
 
-Installation
-************
+Learn more at `Read the Docs`_.
 
-Install from pip::
+Join the `Discord`_.
 
-    pip install celestine
-
-Inspiration
-***********
-`Safebooru`_ - And the thousands of other booru sites.
-
-`Board Game Geek`_ - Epic advancned search.
-
-Info
-****
-`Semantic Versioning 2.0.0`_
-
-`Email`_
-
-`Discord`_
-
+`Email`_ the author.
 
 .. _`Blender`: https://www.blender.org/
-.. _`Board Game Geek`: https://boardgamegeek.com/advsearch/boardgame">
-.. _`Celestine`: https://test.pypi.org/project/celestine/
+.. _`Celestine`: https://pypi.org/project/celestine/
 .. _`Curses`: https://docs.python.org/3/howto/curses.html
 .. _`Dear PyGui`: https://github.com/hoffstadt/DearPyGui/
-.. _`More Itertools`: https://pypi.org/project/Pillow/
-.. _`Pillow`: https://pypi.org/project/Pillow/
-.. _`Pygame`: https://www.pygame.org/
-.. _`Safebooru`: https://safebooru.org
-.. _`Semantic Versioning 2.0.0`: https://semver.org/
-.. _`Tkinter`: https://docs.python.org/3/library/tk.html
-.. _`Windows Curses`: https://github.com/zephyrproject-rtos/windows-curses/
-
 .. _`Discord`: https://discord.gg/aNmDWPXd7B
 .. _`Email`: celestine@mem-dixy.ch
-
-.. _PyPi: https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-pypi
-.. _python: https://www.python.org/downloads/
-.. _unittest: https://docs.python.org/3/library/unittest.html
-
-
+.. _`Pygame`: https://www.pygame.org/
+.. _`Read the Docs`: https://celestine.readthedocs.io/en/latest/
+.. _`Tkinter`: https://docs.python.org/3/library/tk.html
+.. _`Windows Curses`: https://github.com/zephyrproject-rtos/windows-curses/
