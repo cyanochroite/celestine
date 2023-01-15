@@ -46,6 +46,8 @@ from .session import Session
 
 from .text import CONFIGURATION
 
+INIT = "__init__"
+
 
 # ADI: typing.TypeAlias = typing.Iterable[typing.Tuple[str, Argument]]
 
@@ -247,6 +249,8 @@ def start_session(argv: L[S], exit_on_error: B) -> Session:
     session1 = session_loader("Session", "session", "session")
 
     get_name = load.module_to_name(application)
+    if get_name == APPLICATION:
+        get_name = INIT
     session2 = session_loader("Session", APPLICATION, get_name)
     session3 = session_loader("Information", "session", "session")
 

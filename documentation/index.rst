@@ -8,6 +8,7 @@ The Celestine Image Viewer
     note
     wing
     README
+    application
 
 - About_
 - Goals_
@@ -32,7 +33,8 @@ Decided that the main reason behind this was an attempt to use HTML as my GUI.
 Most files in this project are dedicated to viewing and modifying local images.
 Will try to update the project to reflect that.
 
-The application :doc:`README`.
+The application :doc:`application`.
+The readme :doc:`README`.
 Development settings at :doc:`wing`.
 Project notes at :doc:`note`.
 
