@@ -50,7 +50,7 @@ def parser_magic(session):
         dictionary[translation] = {}
 
     thelist = load.dictionary("translation", "__init__")
-    thelist = {}
+    # thelist = {}
     for name, value in thelist.items():
 
         items = post(session, code, value)
@@ -105,13 +105,14 @@ def _translate(session):
 
     dictionary = parser_magic(session)
 
-    # directory stuff
     reset()
 
-    dictionary = load.dictionary(TRANSLATION, INIT)
-    save_dictionary(dictionary, LANGUAGE, INIT)
+    # have way to provide default language?
+    save_dictionary(dictionary["en"], LANGUAGE, INIT)
 
-    save_item(dictionary)
+    for (key, value) in dictionary.items():
+        save_dictionary(value, LANGUAGE, key)
 
     print(dictionary)
     print("done")
+
