@@ -104,8 +104,8 @@ def make_parser(language: MT, exit_on_error: B) -> AP:
 
     parser = Parser(
         add_help=False,
-        description="(cow)",
-        epilog="<moo>",
+        # description="(cow)",
+        # epilog="<moo>",
         formatter_class=Formatter,
         prog=CELESTINE,
         exit_on_error=exit_on_error,

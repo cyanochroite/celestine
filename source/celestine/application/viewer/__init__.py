@@ -22,11 +22,10 @@ class Session(SuperSession):
 
     def dictionary(self) -> AD:
         """"""
-        # self.language
         return {
             DIRECTORY: Optional(
                 os.getcwd(),
-                "pick your nose",
+                self._language.VIEWER_SESSION_DIRECTORY,
             ),
         }
 
@@ -34,8 +33,6 @@ class Session(SuperSession):
 def main(page):
     """"""
     image = _setup(page)
-    with page.line("head") as line:
-        line.label("Settings", "no puppy. File Explorer using Tkinter")
     index_y = 0
     limit_y = min(len(image) // 4, 4)
     while index_y < limit_y:

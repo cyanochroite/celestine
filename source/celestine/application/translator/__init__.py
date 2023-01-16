@@ -3,11 +3,14 @@
 
 from celestine.window.page import Page
 
+from celestine.session.argument import Optional
+
 from celestine.session.session import SuperSession
 from celestine.session.session import AD
 
 from celestine.unicode import NONE
 
+from celestine.typed import S
 
 from .text import KEY
 from .text import REGION
@@ -20,21 +23,22 @@ from .main import _translate
 class Session(SuperSession):
     """"""
 
-    @staticmethod
-    def dictionary() -> AD:
+    directory: S
+
+    def dictionary(self) -> AD:
         """"""
         return {
             KEY: Optional(
                 NONE,
-                "pick your nose",
+                self._language.TRANSLATOR_SESSION_KEY,
             ),
             REGION: Optional(
                 NONE,
-                "pick your toes",
+                self._language.TRANSLATOR_SESSION_REGION,
             ),
             URL: Optional(
                 NONE,
-                "pick your hoes",
+                self._language.TRANSLATOR_SESSION_URL,
             ),
         }
 

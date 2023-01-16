@@ -14,26 +14,29 @@ class Session(SuperSession):
 
 def one(page: Page) -> N:
     """"""
+    language = page.session.language
     with page.line("head") as line:
-        line.label("title", "Page one")
+        line.label("title", language.DEMO_ONE_TITLE)
     with page.line("body") as line:
-        line.button("past", "Page main", "main")
-        line.button("next", "Page two", "two")
+        line.button("past", language.DEMO_ONE_PAST, "main")
+        line.button("next", language.DEMO_ONE_NEXT, "two")
 
 
 def two(page: Page) -> N:
     """"""
+    language = page.session.language
     with page.line("head") as line:
-        line.label("title", "Page two")
+        line.label("title", language.DEMO_TWO_TITLE)
     with page.line("body") as line:
-        line.button("past", "Page one", "one")
-        line.button("next", "Page main", "main")
+        line.button("past", language.DEMO_TWO_PAST, "one")
+        line.button("next", language.DEMO_TWO_NEXT, "main")
 
 
 def main(page: Page) -> N:
     """"""
+    language = page.session.language
     with page.line("head") as line:
-        line.label("title", "Page main")
+        line.label("title", language.DEMO_MAIN_TITLE)
     with page.line("body") as line:
-        line.button("past", "Page one", "one")
-        line.button("next", "Page two", "two")
+        line.button("past", language.DEMO_MAIN_PAST, "one")
+        line.button("next", language.DEMO_MAIN_NEXT, "two")
