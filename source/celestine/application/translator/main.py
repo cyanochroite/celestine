@@ -1,5 +1,8 @@
 """Application for translating text to other languages."""
-from celestine.application.translator.file import save
+from celestine.application.translator.parser import word_wrap_dictionary
+from .text import UTF_8
+from .text import WRITE
+from celestine.application.translator.file import save_dictionary
 from celestine.application.translator.text import LANGUAGE
 from celestine.application.translator.parser import dictionary_to_file
 from .text import LANGUAGE
@@ -9,14 +12,10 @@ import os.path
 import shutil
 import requests
 
-from celestine.session import load
+from celestine import load
 from celestine.application.translator.translator import Translator
 
-
-from .text import WRITE
-from .text import UTF_8
-
-from celestine.application.translator.parser import word_wrap_dictionary
+INIT = "__init__"
 
 
 TRANSLATION = "translation"
@@ -26,6 +25,9 @@ SESSION = "session"
 TRANSLATIONS = "translations"
 TEXT = "text"
 TO = "to"
+
+LANGUAGE_TAG_AZURE = "LANGUAGE_TAG_AZURE"
+LANGUAGE_TAG_ISO = "LANGUAGE_TAG_ISO"
 
 
 def parser_magic(session):
@@ -39,15 +41,16 @@ def parser_magic(session):
     for translation in dir_translation:
         wow = load.dictionary(TRANSLATION, translation)
 
-        key = wow["LANGUAGE_TAG_AZURE"]
-        value = wow["LANGUAGE_TAG_ISO"]
+        key = wow[LANGUAGE_TAG_AZURE]
+        value = wow[LANGUAGE_TAG_ISO]
         azure_to_iso[key] = value
         code.append(key)
 
         override[translation] = wow
         dictionary[translation] = {}
 
-    thelist = load.dictionary("default", "language")
+    thelist = load.dictionary("translation", "__init__")
+    # thelist = {}
     for name, value in thelist.items():
 
         items = post(session, code, value)
@@ -55,7 +58,8 @@ def parser_magic(session):
             translations = item[TRANSLATIONS]
             for translation in translations:
                 text = translation[TEXT]
-                key = azure_to_iso[translation[TO]]
+                goto = translation[TO]
+                key = azure_to_iso[goto]
                 dictionary[key][name] = text
 
     for translation in dir_translation:
@@ -76,21 +80,12 @@ def reset():
     os.mkdir(path)
 
 
-def header():
-    """Write the header."""
-    path = load.python(LANGUAGE, "__init__")
-    with open(path, WRITE, encoding=UTF_8) as file:
-        file.write('"""Lookup table for languages."""\n')
-
-
 def save_item(dictionarys):
     """Save the items."""
     translations = load.argument(TRANSLATION)
     for translation in translations:
         dictionary = dictionarys[translation]
-        path = load.python(LANGUAGE, translation)
-        string = dictionary_to_file(dictionary)
-        save(path, string)
+        save_dictionary(dictionary, LANGUAGE, translation)
 
 
 def post(session, code, text):
@@ -110,11 +105,14 @@ def _translate(session):
 
     dictionary = parser_magic(session)
 
-    # directory stuff
     reset()
-    header()
 
-    save_item(dictionary)
+    # have way to provide default language?
+    save_dictionary(dictionary["en"], LANGUAGE, INIT)
+
+    for (key, value) in dictionary.items():
+        save_dictionary(value, LANGUAGE, key)
 
     print(dictionary)
     print("done")
+

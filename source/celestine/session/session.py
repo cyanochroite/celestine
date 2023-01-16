@@ -1,97 +1,103 @@
 """"""
 
-import types
-import typing
-
-from types import ModuleType as MT
-from typing import Dict as D
-from typing import Type as T
-from typing import Union as U
 from typing import TypeAlias as TA
 
-from argparse import _ArgumentGroup as AG
-from argparse import ArgumentParser as AP
+from celestine import load
 
-from celestine.session.argument import Information
-
-from celestine.session import load
-
-from celestine.session.argument import Argument
-from celestine.session.argument import Override
+from celestine.session.argument import Customization
+from celestine.session.argument import InformationConfiguration
+from celestine.session.argument import InformationHelp
+from celestine.session.argument import InformationVersion
 from celestine.session.argument import Positional
-
 
 from celestine.text.directory import APPLICATION
 from celestine.text.directory import INTERFACE
 from celestine.text.directory import LANGUAGE
 
-from celestine.text.unicode import NONE
+from celestine.typed import D
+from celestine.typed import IT
+from celestine.typed import MT
+from celestine.typed import N
+from celestine.typed import S
+from celestine.typed import T
 
-from .text import VERSION
-from .text import STORE_TRUE
-from .text import HELP
+from celestine.unicode import LOW_LINE
+
+from .argument import Argument
+
 from .text import CONFIGURATION
-from .text import EN
-from .text import INIT
+from .text import HELP
 from .text import MAIN
-
-Magic: TA = D[U[Argument, T[Argument]], U[AP, AG]]
-
-AD: TA = D[str, Argument]
+from .text import VERSION
 
 
-class Dull():
+AD: TA = D[S, Argument]
+AI: TA = IT[T[S, Argument]]
+
+
+class SuperState():
     """"""
 
-    @staticmethod
-    def dictionary(_: MT, language: MT) -> AD:
+    def __init__(self, application: MT, interface: MT, language: MT) -> N:
+        """"""
+        self._application = application
+        self._interface = interface
+        self._language = language
+
+
+class SuperSession(SuperState):
+    """"""
+
+    def dictionary(self) -> AD:
+        """"""
+        return {}
+
+    def items(self) -> AI:
+        """"""
+        dictionary = self.dictionary()
+        return dictionary.items()
+
+
+class Information(SuperSession):
+    """"""
+
+    def dictionary(self) -> AD:
         """"""
         return {
-            CONFIGURATION: Information(
-                "",
-                STORE_TRUE,
-                language.ARGUMENT_HELP_HELP,
-                False,
+            CONFIGURATION: InformationConfiguration(
+                self._language.ARGUMENT_HELP_HELP,
             ),
-            HELP: Information(
-                "",
-                HELP,
-                language.ARGUMENT_HELP_HELP,
-                False,
+            HELP: InformationHelp(
+                self._language.ARGUMENT_HELP_HELP,
             ),
-            VERSION: Information(
-                "",
-                VERSION,
-                language.ARGUMENT_VERSION_HELP,
-                True,
+            VERSION: InformationVersion(
+                self._language.ARGUMENT_VERSION_HELP,
             ),
         }
 
 
-class Dictionary():
+class Dictionary(SuperSession):
     """"""
 
-    @classmethod
-    def dictionary(cls, application: MT, language: MT) -> AD:
-        return {}
-
-    def __setattr__(self, name: str, value: str) -> None:
+    def __setattr__(self, key: S, value: S) -> N:
         """"""
-        self.__dict__[name] = load.module_fallback(name, value)
+        if key.startswith(LOW_LINE):
+            self.__dict__[key] = value
+        else:
+            module = load.module_fallback(key, value)
+            self.__dict__[key] = module
 
 
 class Application(Dictionary):
     """"""
 
-    application: types.ModuleType
+    application: MT
 
-    @classmethod
-    def dictionary(cls, application: MT, language: MT) -> AD:
+    def dictionary(self) -> AD:
         """"""
-        return super().dictionary(application, language) | {
-            APPLICATION: Override(
-                NONE,
-                "Choose an applicanion. They have more option.",
+        return super().dictionary() | {
+            APPLICATION: Customization(
+                self._language.ARGUMENT_INTERFACE_HELP,
                 load.argument(APPLICATION),
             ),
         }
@@ -100,15 +106,13 @@ class Application(Dictionary):
 class Interface(Dictionary):
     """"""
 
-    interface: types.ModuleType
+    interface: MT
 
-    @classmethod
-    def dictionary(cls, application: MT, language: MT) -> AD:
+    def dictionary(self) -> AD:
         """"""
-        return super().dictionary(application, language) | {
-            INTERFACE: Override(
-                load.argument_default(INTERFACE),  # TODO: change to NONE
-                language.ARGUMENT_INTERFACE_HELP,
+        return super().dictionary() | {
+            INTERFACE: Customization(
+                self._language.ARGUMENT_INTERFACE_HELP,
                 load.argument(INTERFACE),
             ),
         }
@@ -117,15 +121,13 @@ class Interface(Dictionary):
 class Language(Dictionary):
     """"""
 
-    language: types.ModuleType
+    language: MT
 
-    @classmethod
-    def dictionary(cls, application: MT, language: MT) -> AD:
+    def dictionary(self) -> AD:
         """"""
-        return super().dictionary(application, language) | {
-            LANGUAGE: Override(
-                NONE,
-                language.ARGUMENT_LANGUAGE_HELP,
+        return super().dictionary() | {
+            LANGUAGE: Customization(
+                self._language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),
             ),
         }
@@ -134,20 +136,19 @@ class Language(Dictionary):
 class Session(Application, Interface, Language):
     """"""
 
-    main: str
+    main: S
 
-    @classmethod
-    def dictionary(cls, application: MT, language: MT) -> AD:
+    def dictionary(self) -> AD:
         """"""
-        return super().dictionary(application, language) | {
+        return super().dictionary() | {
             MAIN: Positional(
                 MAIN,
-                language.ARGUMENT_LANGUAGE_HELP,
-                load.function_name(application),
+                self._language.ARGUMENT_LANGUAGE_HELP,
+                load.function_name(self._application),
             ),
         }
 
-    def __setattr__(self, name: str, value: str) -> None:
+    def __setattr__(self, name: S, value: S) -> N:
         """"""
         match name:
             case "main":

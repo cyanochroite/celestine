@@ -86,10 +86,10 @@ Project Properties
 ******************
 Python Path = A;B;C;D
 
-A = C:/Users/ADMIN/AppData/Local/Programs/Python/Python310/DLLs
+A = C:/Users/USER/AppData/Local/Programs/Python/Python310/DLLs
 
-B = C:/Users/ADMIN/AppData/Local/Programs/Python/Python310/Lib
+B = C:/Users/USER/AppData/Local/Programs/Python/Python310/Lib
 
-C = C:/Users/ADMIN/AppData/Local/Programs/Python/Python310/Lib/site-packages
+C = C:/Users/USER/AppData/Local/Programs/Python/Python310/Lib/site-packages
 
-D = C:/Users/ADMIN/celestine/source
+D = C:/Users/USER/celestine/source

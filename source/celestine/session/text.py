@@ -20,7 +20,4 @@ NARGS = "nargs"
 
 # value
 CONFIGURATION = "configuration"
-EN = "en"
 MAIN = "main"
-
-INIT = "__init__"

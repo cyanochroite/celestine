@@ -18,7 +18,6 @@ class Window(master):
 
     def __enter__(self):
         super().__enter__()
-        self.root = package.Tk()
         self.root.title(self.session.language.APPLICATION_TITLE)
         self.root.geometry("1920x1080")
         self.root.minsize(640, 480)
@@ -33,4 +32,4 @@ class Window(master):
 
     def __init__(self, session, **kwargs):
         super().__init__(session, **kwargs)
-        self.root = None
+        self.root = package.Tk()

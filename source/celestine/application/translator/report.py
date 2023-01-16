@@ -1,12 +1,6 @@
 """"""
 
-import types
-import typing
-
-from celestine.session.argument import Argument
-from celestine.window.page import Page
-
-from celestine.session import load
+from celestine import load
 
 LANGUAGE = "language"
 
@@ -24,5 +18,3 @@ def _train():
             maximum[key] = max(length, maximum.get(key, 0))
 
     return {"min": minimum, "max": maximum}
-
-

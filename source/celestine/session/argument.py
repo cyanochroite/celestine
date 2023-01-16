@@ -1,41 +1,47 @@
 """"""
 
-from celestine.text.unicode import QUESTION_MARK
-from celestine.text.unicode import NONE
-from celestine.text.unicode import HYPHEN_MINUS
-from celestine.text import VERSION_NUMBER
+from celestine.typed import B
+from celestine.typed import L
+from celestine.typed import N
+from celestine.typed import S
 
-from .text import VERSION
-from .hash import HashClass
-
-from .attribute import Attribute
-from .attribute import AttributeTable
+from celestine.unicode import HYPHEN_MINUS
+from celestine.unicode import NONE
+from celestine.unicode import QUESTION_MARK
 
 from .attribute import Action
+from .attribute import Attribute
 from .attribute import Choices
 from .attribute import Help
 from .attribute import Nargs
+from .attribute import Version
+
+from .hash import HashClass
+
+from .text import HELP
+from .text import STORE_TRUE
+from .text import VERSION
 
 
 class Argument(HashClass, Attribute):
     """abstract class"""
 
-    def __init__(self, argument: bool, attribute: bool, fallback: str,
-                 **kwargs) -> None:
+    def __init__(self, argument: B, attribute: B, fallback: S, **kwargs) -> N:
         """"""
         super().__init__(**kwargs)
         self.argument = argument
         self.attribute = attribute
         self.fallback = fallback
 
-    def key(self, _: str) -> list[str]:
-        ...
+    def key(self, _: S) -> L[S]:
+        """"""
+        return []
 
 
 class Flag(Argument):
     """"""
 
-    def key(self, name: str) -> list[str]:
+    def key(self, name: S) -> L[S]:
         """"""
         return [
             NONE.join((HYPHEN_MINUS, name[0])),
@@ -46,15 +52,16 @@ class Flag(Argument):
 class Name(Argument):
     """"""
 
-    def key(self, name: str) -> list[str]:
+    def key(self, name: S) -> L[S]:
         """"""
         return [name]
 
 
-class Optional(Flag, Help):
+class Application(Flag, Help):
     """"""
 
-    def __init__(self, fallback: str, help: str) -> None:
+    # pylint: disable-next=redefined-builtin
+    def __init__(self, fallback: S, help: S) -> N:
         """"""
         super().__init__(
             argument=True,
@@ -64,16 +71,16 @@ class Optional(Flag, Help):
         )
 
 
-class Override(Flag, Help, Choices):
+class Customization(Flag, Help, Choices):
     """"""
 
-    def __init__(self, fallback: str, help: str,
-                 choices: list[str]) -> None:
+    # pylint: disable-next=redefined-builtin
+    def __init__(self, help: S, choices: L[S]) -> N:
         """"""
         super().__init__(
             argument=bool(choices),
             attribute=True,
-            fallback=fallback,
+            fallback=NONE,
             help=help,
             choices=choices,
         )
@@ -82,8 +89,8 @@ class Override(Flag, Help, Choices):
 class Positional(Name, Help, Choices, Nargs):
     """"""
 
-    def __init__(self, fallback: str, help: str,
-                 choices: list[str]) -> None:
+    # pylint: disable-next=redefined-builtin
+    def __init__(self, fallback: S, help: S, choices: L[S]) -> N:
         """"""
         super().__init__(
             argument=True,
@@ -95,23 +102,66 @@ class Positional(Name, Help, Choices, Nargs):
         )
 
 
-class Information(Flag, Action, Help):
+class Optional(Flag, Help):
     """"""
 
-    def dictionary(self) -> AttributeTable:
+    # pylint: disable-next=redefined-builtin
+    def __init__(self, fallback: S, help: S) -> N:
         """"""
-        true = {VERSION: VERSION_NUMBER}
-        boolean = true if self.version is True else {}
-        return super().dictionary() | boolean
+        super().__init__(
+            argument=True,
+            attribute=True,
+            fallback=fallback,
+            help=help,
+        )
 
-    def __init__(self, fallback: str, action: str, help: str,
-                 version: bool) -> None:
+
+class Information (Flag, Action, Help):
+    """"""
+
+    # pylint: disable-next=redefined-builtin
+    def __init__(self, action: S, help: S) -> N:
         """"""
         super().__init__(
             argument=True,
             attribute=False,
-            fallback=fallback,
+            fallback=NONE,
             action=action,
             help=help,
         )
-        self.version = version
+
+
+class InformationConfiguration(Information):
+    """"""
+
+    # pylint: disable-next=redefined-builtin
+    def __init__(self, help) -> N:
+        """"""
+        super().__init__(
+            action=STORE_TRUE,
+            help=help,
+        )
+
+
+class InformationHelp(Information):
+    """"""
+
+    # pylint: disable-next=redefined-builtin
+    def __init__(self, help: S) -> N:
+        """"""
+        super().__init__(
+            action=HELP,
+            help=help,
+        )
+
+
+class InformationVersion(Information, Version):
+    """"""
+
+    # pylint: disable-next=redefined-builtin
+    def __init__(self, help: S) -> N:
+        """"""
+        super().__init__(
+            action=VERSION,
+            help=help,
+        )

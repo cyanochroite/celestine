@@ -1,6 +1,5 @@
 """keywordss used throughout the translator application."""
 
-
 LANGUAGE = "language"
 
 BULGARIAN = "bulgarian"
