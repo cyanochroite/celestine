@@ -72,9 +72,19 @@ def dictionary(*path: S) -> D[S, S]:
     return mapping
 
 
+def pathfinder() -> S:
+    """When running as a package, sys.path[0] is wrong."""
+    for path in sys.path:
+        package = os.path.join(path, CELESTINE)
+        if os.path.exists(package):
+            return package
+    return sys.path[0]
+
+
 def pathway(*path: S) -> S:
     """"""
-    return os.path.join(sys.path[0], CELESTINE, *path)
+    package = pathfinder()
+    return os.path.join(package, *path)
 
 
 def python(*path: S) -> S:

@@ -4,7 +4,7 @@ import configparser
 
 from celestine import load
 
-from celestine.text import CELESTINE
+from celestine.text.directory import APPLICATION
 from celestine.text.stream import UTF_8
 from celestine.text.stream import WRITE_TEXT
 
@@ -30,7 +30,7 @@ class Configuration():
             comment_prefixes=(POUND_SIGN),
             strict=True,
             empty_lines_in_values=False,
-            default_section=CELESTINE,
+            default_section=APPLICATION,
         )
 
     def load(self) -> N:
@@ -44,6 +44,10 @@ class Configuration():
 
     def get(self, section: S, option: S) -> S:
         """"""
+        if section == APPLICATION:
+            if self.configuration.has_option(section, option):
+                return self.configuration[section][option]
+
         if self.configuration.has_section(section):
             if self.configuration.has_option(section, option):
                 return self.configuration[section][option]
@@ -52,11 +56,8 @@ class Configuration():
 
     def set(self, section: S, option: S, value: S) -> N:
         """"""
-        if not value:
-            return
-
         if not self.configuration.has_section(section):
-            if section != CELESTINE:
+            if section != APPLICATION:
                 self.configuration.add_section(section)
 
         self.configuration[section][option] = value

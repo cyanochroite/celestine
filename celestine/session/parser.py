@@ -171,18 +171,19 @@ def add_attribute(sessions: list[Session],
                   configuration: Configuration,
                   args: argparse.Namespace) -> N:
     """"""
+    save = bool(getattr(args, CONFIGURATION, NONE))
     for session in sessions:
-        for (name, argument) in session.items():
+        for (option, argument) in session.items():
             if not argument.attribute:
                 continue
-            override = getattr(args, name, NONE)
+            override = getattr(args, option, NONE)
             section = load.module_to_name(session._application)
 
-            database = configuration.get(section, name)
+            database = configuration.get(section, option)
             value = override or database or argument.fallback
-            setattr(session, name, value)
-            if getattr(args, CONFIGURATION, NONE):
-                configuration.set(name, override)
+            setattr(session, option, value)
+            if save and override:
+                configuration.set(section, option, override)
 
 
 def get_parser(argv: L[S], exit_on_error: B, application: MT,
