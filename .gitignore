@@ -1,8 +1,5 @@
-*.egg-info/
-*.ini
 *.wpu
-.coverage
-.mypy_cache/
-.vscode
+*.ini
 __pycache__/
-source/*.py
+.mypy_cache/
+*.egg-info/
