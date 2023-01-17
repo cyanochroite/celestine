@@ -2,10 +2,5 @@
 *.ini
 *.wpr
 *.wpu
-.coverage
 .mypy_cache/
-.vscode
 __pycache__/
-dist/
-html/
-source/*.py
