@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>&lt;no title&gt; &#8212; celestine 0.4.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Section Title 1" href="test.html" />
+    <link rel="prev" title="The Celestine Image Viewer" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <p>Primary
+Secondary
+Tertiary
+Quaternary
+Quinary
+secondary, tertiary, and quaternary layers</p>
+<p>I believe that record is held by the codepoint U+FBF9 (ﯹ), “ARABIC LIGATURE UIGHUR KIRGHIZ YEH WITH HAMZA ABOVE WITH ALEF MAKSURA ISOLATED FORM,” which is 83 characters. There are a couple of other Arabic ligatures that are close to that count, as well.
+The next longest name for a different sort of character is U+1F502 (🔂), “CLOCKWISE RIGHTWARDS AND LEFTWARDS OPEN CIRCLE ARROWS WITH CIRCLED ONE OVERLAY” which is 78 characters.</p>
+<p>Add a “py.typed” file
+<a class="reference external" href="https://devblogs.microsoft.com/python/pylance-introduces-five-new-features-that-enable-type-magic-for-python-developers/">https://devblogs.microsoft.com/python/pylance-introduces-five-new-features-that-enable-type-magic-for-python-developers/</a></p>
+<p>LATIN CAPITAL LETTER A WITH RING ABOVE = 212B
+LATIN CAPITAL LETTER ETH = 0
+LATIN CAPITAL LETTER O WITH STROKE
+LATIN SMALL LETTER SHARP S
+LATIN SMALL LETTER AE</p>
+<p># Random notes</p>
+<p>Rexex parser: Adds support for wildcard searches using ‘*’.</p>
+<p>command core
+only the basics here
+use on web server or as external library</p>
+<p>b binary:
++ includes it
+- excludes it (NOT)</p>
+<p>WHERE pig AND dog
+WHERE NOT pig AND dog
+WHERE pig AND NOT dog
+WHERE NOT pig AND NOT dog
+WHERE pig OR dog
+WHERE NOT pig OR dog
+WHERE pig OR NOT dog
+WHERE NOT pig OR NOT dog</p>
+<p>s symbol:
+&amp; puts it into AND group
+| puts it into OR group</p>
+<p>if set empty, use true
+WHERE TRUE AND TRUE
+WHERE (pig AND dog) AND TRUE
+WHERE TRUE AND (cat OR frog)
+WHERE (pig AND dog) AND (cat OR frog)</p>
+<p>&amp; = ()&amp;()
+| = ()|()</p>
+<p>(a &amp; B) | (C | D)</p>
+<p>a b c d
+A &amp; B &amp; C &amp; D
+a -b c -d
+A &amp; !B &amp; C &amp; !D</p>
+<p>+a +b +c +d
+A &amp; B &amp; C &amp; D
++a -b +c -d
+A &amp; !B &amp; C &amp; !D</p>
+<p>does white space matter?
+no</p>
+<p>steps
+0 user input
+1 strip out all illegal characters. pass over each character and move to new buffer if valid
+2 convert invalid characters to valid character in new buffer
+3 remove all whitespace. separate items to token groups
+4 apply found symbols to new class. when hit tag, previously applied attributes are used. otherwise defaults used. state set each time new symbol seen, so in essence, last one seen used</p>
+<p>filename:
+sha3 512 base 16
+sha3_512__18446744073709551616</p>
+<p>development install
+unittest
+pytest</p>
+<p>The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in RFC 2119.</p>
+<p><a class="reference external" href="https://semver.org/">https://semver.org/</a></p>
+<p><a class="reference external" href="https://libraries.io/">https://libraries.io/</a></p>
+<p>celestine.readthedocs.io
+celestine.rtfd.io</p>
+<p>PACKAGE
+python -m pip install –upgrade pip
+python -m pip install –upgrade build
+python -m pip install –upgrade twine
+python -m build
+python -m twine check –strict dist/*</p>
+<p># test
+python -m twine upload –verbose –repository testpypi dist/*
+python -m pip install –index-url <a class="reference external" href="https://test.pypi.org/simple/">https://test.pypi.org/simple/</a> –no-deps celestine
+python -m pip install –index-url <a class="reference external" href="https://test.pypi.org/simple/">https://test.pypi.org/simple/</a> celestine</p>
+<p># real
+python -m twine upload –verbose dist/*
+python -m pip install celestine</p>
+<p>INSTALL
+pip install pytest
+pip install coverage</p>
+<p>SHELL COMMAND
+# quick test
+python -m pytest</p>
+<p># test code used
+python -m coverage run –source=celestine/application/unittest –module pytest –verbose</p>
+<p>python -m coverage run –source=tests –module pytest –verbose
+python -m coverage report –show-missing
+python -m coverage html</p>
+<p># source code used by test code
+python -m coverage run –module pytest –verbose celestine/application/unittest
+python -m coverage report –show-missing
+python -m coverage html</p>
+<p># source code used
+python -m coverage run –source=celestine –module pytest –verbose celestine/application/unittest
+python -m coverage report –show-missing
+python -m coverage html</p>
+<p>pip install more-itertools
+pip install pylint</p>
+<p>requests
+uuid</p>
+<p>AZURE API for translationts</p>
+<p>python -m pip install –requirement requirements.txt</p>
+<p>python -m pip install windows-curses</p>
+<p>UniCurses 1.2 ??</p>
+<p><a class="reference external" href="https://packaging.python.org/en/latest/tutorials/installing-packages/#requirements-for-installing-packages">https://packaging.python.org/en/latest/tutorials/installing-packages/#requirements-for-installing-packages</a></p>
+<p>GUI to try:
+pip install wxPython
+pip install pygame
+pip install Kivy</p>
+<p>PACKAGE
+where packages that change functionality, mostly guis
+no fallback support. either it works or not
+typically only one of these would be run ever, and only 1 at once</p>
+<p>EXTENSION
+is where extra packages can be installed for more functionality
+will try to provide fallback options so every feature “works”
+idea is all of them would be installed usually</p>
+<p>ToDo Features:
+Add gamma to photos? Both TK and dearpygui support this</p>
+<p>A       true    ++
+B       anti    -+
+C       both    –
+D       zero    +-</p>
+<p>Y NOT
+A       B
+B       A
+C       D
+D       C</p>
+<p>X NOT
+A       D
+B       C
+C       B
+D       A</p>
+<p>XY NOT
+A       C
+B       D
+C       A
+D       B</p>
+<p>AND             A       B       C       D</p>
+<p>A               A       B       C       D
+B               B       B       C       D
+C               C       C       C       D
+D               D       D       D       D</p>
+<p>OR              A       B       C       D</p>
+<p>A               A       A       A       A
+B               A       B       B       B
+C               A       B       C       C
+D               A       B       C       D</p>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">celestine</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="test.html">Section Title 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wing.html">Wing Pro Preferences</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">The Celestine Image Viewer</a></li>
+      <li>Next: <a href="test.html" title="next chapter">Section Title 1</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, mem_dixy.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/notes.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

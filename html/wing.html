@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Wing Pro Preferences &#8212; celestine 0.4.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Section Title 1" href="note.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="wing-pro-preferences">
+<h1>Wing Pro Preferences<a class="headerlink" href="#wing-pro-preferences" title="Permalink to this heading">¶</a></h1>
+<section id="code-warnings">
+<h2>Code Warnings<a class="headerlink" href="#code-warnings" title="Permalink to this heading">¶</a></h2>
+<section id="configuration-defaults">
+<h3>Configuration Defaults<a class="headerlink" href="#configuration-defaults" title="Permalink to this heading">¶</a></h3>
+<section id="unused-symbols">
+<h4>Unused Symbols<a class="headerlink" href="#unused-symbols" title="Permalink to this heading">¶</a></h4>
+<section id="variables-not-used-configuration">
+<h5>Variables Not Used Configuration<a class="headerlink" href="#variables-not-used-configuration" title="Permalink to this heading">¶</a></h5>
+<p>Always Show Globals Not Used in File = False
+Show Extra Unpacked Variables Not Used
+Use Regular Expressions to Identify Variables Intentionally Not Used = True
+Values = [“_”]</p>
+</section>
+</section>
+<section id="external-checkers">
+<h4>External Checkers<a class="headerlink" href="#external-checkers" title="Permalink to this heading">¶</a></h4>
+<section id="external-code-checkers-configuration">
+<h5>External Code Checkers Configuration<a class="headerlink" href="#external-code-checkers-configuration" title="Permalink to this heading">¶</a></h5>
+<section id="flake8">
+<h6>Flake8<a class="headerlink" href="#flake8" title="Permalink to this heading">¶</a></h6>
+<p>Enabled = True</p>
+<p>Run after save = True</p>
+<p>Run after opening file = True</p>
+<p>Maximum File Size (KB) = 1500</p>
+<p>Command Line = ${WING:PYTHON} -m flake8</p>
+<p>Use Detected Indent Size = True</p>
+<p>Use Configured Line Length = True</p>
+</section>
+<section id="mypy">
+<h6>Mypy<a class="headerlink" href="#mypy" title="Permalink to this heading">¶</a></h6>
+<p>Enabled = True</p>
+<p>Run after save = True</p>
+<p>Run after opening file = True</p>
+<p>Maximum File Size (KB) = 1500</p>
+<p>Command Line = ${WING:PYTHON} -m mypy –show-column-numbers</p>
+</section>
+<section id="pep8">
+<h6>Pep8<a class="headerlink" href="#pep8" title="Permalink to this heading">¶</a></h6>
+<p>Enabled = True</p>
+<p>Run after save = True</p>
+<p>Run after opening file = True</p>
+<p>Maximum File Size (KB) = 1500</p>
+<p>Command Line = ${WING:PYTHON} -m pycodestyle</p>
+</section>
+<section id="pylint">
+<h6>Pylint<a class="headerlink" href="#pylint" title="Permalink to this heading">¶</a></h6>
+<p>Enabled = True</p>
+<p>Run after save = True</p>
+<p>Run after opening file = True</p>
+<p>Maximum File Size (KB) = 1500</p>
+<p>Command Line = ${WING:PYTHON} -m pylint –msg-template=”{path}:{line}:{column}: {msg_id} {msg} ({symbol})”</p>
+<p>Include Pylint Errors = True</p>
+<p>Include Pylint Warnings = True</p>
+<p>Include Pylint Info = True</p>
+</section>
+</section>
+</section>
+</section>
+</section>
+<section id="project-properties">
+<h2>Project Properties<a class="headerlink" href="#project-properties" title="Permalink to this heading">¶</a></h2>
+<p>Python Path = A;B;C;D</p>
+<p>A = C:/Users/USER/AppData/Local/Programs/Python/Python310/DLLs</p>
+<p>B = C:/Users/USER/AppData/Local/Programs/Python/Python310/Lib</p>
+<p>C = C:/Users/USER/AppData/Local/Programs/Python/Python310/Lib/site-packages</p>
+<p>D = C:/Users/USER/celestine/source</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">celestine</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="note.html">Section Title 1</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Wing Pro Preferences</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#code-warnings">Code Warnings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#project-properties">Project Properties</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="note.html" title="previous chapter">Section Title 1</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, mem_dixy.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/wing.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

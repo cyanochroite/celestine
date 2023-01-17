@@ -1,0 +1,3 @@
+# Operating System :: Microsoft :: Windows
+-r package.txt
+windows-curses

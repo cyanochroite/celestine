@@ -1,0 +1,9 @@
+flake8
+mypy
+pycodestyle
+pylint
+
+pyright
+
+# unittest
+# sphinx
