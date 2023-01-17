@@ -1,0 +1,40 @@
+Application
+###########
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Contents:
+
+- Demo_
+- Translator_
+- Viewer_
+
+
+
+Some applications that come with it.
+
+
+Demo
+****
+
+Change screens with two whole buttons.
+
+``celestine -a demo``
+
+
+Translator
+**********
+
+``celestine -a translator``
+
+Translate the default language file into the 24 other languages.
+
+
+Viewer
+******
+
+View a very small amount of pictures at once. 
+``celestine -a viewer``
+
+``-d DIRECTORY, --directory DIRECTORY``
+A path to a directory.

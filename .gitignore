@@ -5,5 +5,4 @@
 .mypy_cache/
 .vscode
 __pycache__/
-dist/
-html/
+source/*.py
