@@ -2,7 +2,7 @@
 
 import celestine
 
-celestine.main(["demo", "-i", "curses", "-l", "en"], True)
-celestine.main(["demo", "-i", "tkinter", "-l", "en"], True)
-celestine.main(["demo", "-i", "dearpygui", "-l", "en"], True)
-celestine.main(["demo", "-i", "pygame", "-l", "en"], True)
+celestine.main(["-a", "demo", "-i", "curses", "-l", "en"], True)
+celestine.main(["-a", "demo", "-i", "tkinter", "-l", "en"], True)
+celestine.main(["-a", "demo", "-i", "dearpygui", "-l", "en"], True)
+celestine.main(["-a", "demo", "-i", "pygame", "-l", "en"], True)
