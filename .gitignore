@@ -1,7 +1,9 @@
-*.egg-info/
 *.ini
 *.wpr
 *.wpu
 .mypy_cache/
 __pycache__/
+<<<<<<< HEAD
 dist/*
+=======
+>>>>>>> development
