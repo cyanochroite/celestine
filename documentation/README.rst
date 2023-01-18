@@ -86,6 +86,8 @@ Application
 
 Sample application to try out.
 
+Caution: By default the viewer application will try to load every image it finds starting with the current working directory.
+
 +-------------+-------------------------+------------------------------------------------------------------+
 | Application | Command                 | Information                                                      |
 +=============+=========================+==================================================================+

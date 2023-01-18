@@ -44,11 +44,15 @@ class Configuration():
 
     def get(self, section: S, option: S) -> S:
         """"""
-        if section == APPLICATION:
-            if self.configuration.has_option(section, option):
-                return self.configuration[section][option]
+        has_section = self.configuration.has_section(section)
 
-        if self.configuration.has_section(section):
+        if option == APPLICATION:
+            section = APPLICATION
+
+        if section == APPLICATION:
+            has_section = True
+
+        if has_section:
             if self.configuration.has_option(section, option):
                 return self.configuration[section][option]
 
@@ -56,8 +60,15 @@ class Configuration():
 
     def set(self, section: S, option: S, value: S) -> N:
         """"""
-        if not self.configuration.has_section(section):
-            if section != APPLICATION:
-                self.configuration.add_section(section)
+        has_section = self.configuration.has_section(section)
+
+        if option == APPLICATION:
+            section = APPLICATION
+
+        if section == APPLICATION:
+            has_section = True
+
+        if not has_section:
+            self.configuration.add_section(section)
 
         self.configuration[section][option] = value
