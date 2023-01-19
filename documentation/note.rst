@@ -156,6 +156,7 @@ celestine.readthedocs.io
 celestine.rtfd.io
 
 
+python -m sphinx documentation doc
 
 
 PACKAGE
