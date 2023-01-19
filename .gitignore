@@ -1,6 +1,5 @@
 *.egg-info/
 *.ini
-*.wpr
 *.wpu
 .mypy_cache/
 __pycache__/
