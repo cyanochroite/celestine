@@ -1,14 +1,17 @@
 """Package unittest."""
 
-from .keyword import MODULE
-from .keyword import ERROR
-from .keyword import CELESTINE
 import unittest
+
+from .text import MODULE
+from .text import ERROR
+from .text import CELESTINE
+
 from celestine.application.verify.parser.test_operator import test_digit
 from celestine.application.verify.parser.test_operator import test_unary
 from celestine.application.verify.parser.test_operator import test_comparison
 
 from celestine.application.verify.parser.test_translator import test_translator
+
 
 from celestine.session.session import SuperSession
 
@@ -21,13 +24,12 @@ class Session(SuperSession):
     """"""
 
 
-"""Package unittest."""
-
-
 def main(_):
     """def main"""
+    module = "celestine.application.viewer.verify"
+#    module = MODULE
     unittest.main(
-        MODULE,
+        module,
         None,
         [CELESTINE],
         None,
