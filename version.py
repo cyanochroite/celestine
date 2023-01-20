@@ -1,46 +1,78 @@
 """"""
 
 import os
+import shutil
+import itertools
+import sys
+
+from celestine import load
+
+from celestine.typed import N
+from celestine.typed import S
+
+MYPY = ".mypy_cache"
 
 
-def join(path, *paths):
+def kill_cache(target: S) -> N:
+    """Cahed files infest the project. Remove them."""
+    path = load.pathfinder()
+    for (directory, _, _) in os.walk(path):
+        if directory.endswith(target):
+            shutil.rmtree(directory)
+
+
+def walk_file(top='.'):
     """"""
-    return os.path.join(path, *paths)
-
-
-def file_extension(path):
-    """"""
-    (_, ext) = os.path.splitext(path)
-    return ext
-
-
-def walk_directory(top='.'):
-    """"""
-    path = []
     file = []
+    itter = os.walk(top)
+
+    def loop(dirpath, dirnames, filenames):
+        zero = "zero"
+        if dirnames:
+            zero = dirnames[0]
+        if filenames:
+            zero = filenames[0]
+        return dirpath + zero
+
+    file = itertools.starmap(loop, itter)
+    cat = list(file)
+    for item in cat:
+        print(file)
+    return file
+
+
+def private(directory):
+    """"""
+    one = directory.startswith(".")
+    two = directory.startswith("_")
+    return one or two
+
+
+def public(directory):
+    """"""
+    return not private(directory)
+
+
+def walk_file(top='.'):
+    """"""
+    python = ["python_3_10.py", "python_3_11.py"]
     for (dirpath, dirnames, filenames) in os.walk(top):
-        for dirname in dirnames:
-            path.append((dirpath, dirname))
-        for filename in filenames:
-            file.append((dirpath, filename))
-    return (path, file)
+        if "." in dirpath:
+            continue
+        dirname = list(filter(public, dirnames))
+        if dirname:
+            continue
+        filename = [file for file in filenames if file in python]
+        if filename:
+            yield dirpath
 
 
-def _execute(session, directory):
+def walk(top):
     """"""
-    (_, file) = walk_directory(directory)
-    images = []
-    for filenames in file:
-        (dirpath, name) = filenames
-        ext = file_extension(name).lower()
-        if ext in session.interface.image_format():
-            merge = join(dirpath, name)
-            images.append(merge)
-    return images
+    for item in walk_file(top):
+        print(item)
 
 
-def _setup(window):
-    """"""
-    directory = window.session.attribute.directory
-    image = _execute(window.session, directory)
-    return image
+car = sys.path
+
+walk(load.pathfinder())
