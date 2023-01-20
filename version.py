@@ -1,42 +1,46 @@
 """"""
 
-
-from celestine.session.session import SuperSession
-
-from celestine.typed import N
-
-from celestine.window.page import Page
+import os
 
 
-class Session(SuperSession):
+def join(path, *paths):
     """"""
+    return os.path.join(path, *paths)
 
 
-def one(page: Page) -> N:
+def file_extension(path):
     """"""
-    language = page.session.language
-    with page.line("head") as line:
-        line.label("title", language.DEMO_ONE_TITLE)
-    with page.line("body") as line:
-        line.button("past", language.DEMO_ONE_PAST, "main")
-        line.button("next", language.DEMO_ONE_NEXT, "two")
+    (_, ext) = os.path.splitext(path)
+    return ext
 
 
-def two(page: Page) -> N:
+def walk_directory(top='.'):
     """"""
-    language = page.session.language
-    with page.line("head") as line:
-        line.label("title", language.DEMO_TWO_TITLE)
-    with page.line("body") as line:
-        line.button("past", language.DEMO_TWO_PAST, "one")
-        line.button("next", language.DEMO_TWO_NEXT, "main")
+    path = []
+    file = []
+    for (dirpath, dirnames, filenames) in os.walk(top):
+        for dirname in dirnames:
+            path.append((dirpath, dirname))
+        for filename in filenames:
+            file.append((dirpath, filename))
+    return (path, file)
 
 
-def main(page: Page) -> N:
+def _execute(session, directory):
     """"""
-    language = page.session.language
-    with page.line("head") as line:
-        line.label("title", language.DEMO_MAIN_TITLE)
-    with page.line("body") as line:
-        line.button("past", language.DEMO_MAIN_PAST, "one")
-        line.button("next", language.DEMO_MAIN_NEXT, "two")
+    (_, file) = walk_directory(directory)
+    images = []
+    for filenames in file:
+        (dirpath, name) = filenames
+        ext = file_extension(name).lower()
+        if ext in session.interface.image_format():
+            merge = join(dirpath, name)
+            images.append(merge)
+    return images
+
+
+def _setup(window):
+    """"""
+    directory = window.session.attribute.directory
+    image = _execute(window.session, directory)
+    return image

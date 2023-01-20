@@ -1,5 +1,6 @@
 """Define types here."""
 
+from typing import Generator as GE  # noqa: F401 pylint: disable=W0611
 from typing import TypeAlias as TA
 from types import ModuleType as MT  # noqa: F401 pylint: disable=W0611
 

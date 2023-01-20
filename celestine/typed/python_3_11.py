@@ -7,6 +7,7 @@ from typing import Iterable as IT  # noqa: F401 pylint: disable=W0611
 # <python_3_11>
 from typing import Self as SELF  # noqa: F401 pylint: disable=W0611
 # </python_3_11>
+from typing import Generator as GE  # noqa: F401 pylint: disable=W0611
 from typing import Type as TY  # noqa: F401 pylint: disable=W0611
 
 from typing import TypeAlias as TA
