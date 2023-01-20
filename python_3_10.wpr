@@ -12,7 +12,7 @@ proj.directory-list = [{'dirloc': loc('.'),
                         'watch_for_changes': True}]
 proj.file-type = 'shared'
 proj.launch-config = {loc('celestine/__main__.py'): ('project',
-        ('demo -i pygame -l sv',
+        ('-a demo -i tkinter -l sv',
          '')),
                       loc('view/__main__.py'): ('project',
         ('curses',
