@@ -1,12 +1,6 @@
 """Package unittest."""
 
-import os
 import unittest
-import pathlib
-
-from celestine import load
-from celestine.load.directory import find
-
 
 from .text import MODULE
 from .text import ERROR
@@ -32,15 +26,7 @@ class Session(SuperSession):
 
 def main(_):
     """def main"""
-    module = load.module("application", "verify", "hold")
-    cats = find("test")
-    for cat in cats:
-        dog = pathlib.PurePath(cat)
-        car = load.dictionary(*dog.parts)
-        for (item, value) in car.items():
-            setattr(module, item, value)
-
-#    module = "celestine.application.viewer.verify"
+    module = "celestine.application.viewer.verify"
 #    module = MODULE
     unittest.main(
         module,

@@ -156,6 +156,7 @@ celestine.readthedocs.io
 celestine.rtfd.io
 
 
+python -m unittest
 python -m sphinx documentation doc
 
 
