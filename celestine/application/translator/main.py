@@ -8,6 +8,7 @@ from celestine.application.translator.parser import dictionary_to_file
 from .text import LANGUAGE
 
 import uuid
+import os
 import os.path
 import shutil
 import requests

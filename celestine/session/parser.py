@@ -213,7 +213,7 @@ def session_loader(name: S, *path: S) -> TY[Session]:
     return session
 
 
-def start_session(argv: L[S], exit_on_error: B) -> Session:
+def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     """"""
     configuration = Configuration()
     configuration.load()

@@ -1,8 +1,9 @@
 """Keywords used throughout the translator application."""
 from celestine.text.directory import APPLICATION
 from celestine.text import CELESTINE
-from celestine.unicode import FULL_STOP
 
 ERROR = "error"
+MODULE = "module"
+TEST = "test"
 VERIFY = "verify"
-MODULE = F"{CELESTINE}{FULL_STOP}{APPLICATION}{FULL_STOP}{VERIFY}"
+PATH = (APPLICATION, VERIFY, MODULE)

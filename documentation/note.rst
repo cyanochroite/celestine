@@ -156,7 +156,6 @@ celestine.readthedocs.io
 celestine.rtfd.io
 
 
-python -m unittest
 python -m sphinx documentation doc
 
 
@@ -187,6 +186,8 @@ pip install coverage
 SHELL COMMAND
 # quick test
 python -m pytest
+python -m unittest
+python -m pyright
 
 # test code used
 python -m coverage run --source=celestine/application/unittest --module pytest --verbose
