@@ -25,11 +25,10 @@ class Session(SuperSession):
 def main(_: Page) -> N:
     """def main"""
     module = load.module(*PATH)
-    cats = directory.find(TEST)
-    for cat in cats:
-        dog = pathlib.PurePath(cat)
-        car = load.dictionary(*dog.parts)
-        for (item, value) in car.items():
+    paths = directory.find(TEST)
+    for path in paths:
+        dictionary = load.dictionary(*path)
+        for (item, value) in dictionary.items():
             setattr(module, item, value)
 
     unittest.main(

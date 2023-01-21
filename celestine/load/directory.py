@@ -1,21 +1,33 @@
 """Central place for loading and importing external files."""
 
 import os
+import pathlib
 
 from celestine.typed import GE
 from celestine.typed import N
 from celestine.typed import S
 from celestine.typed import L
+from celestine.typed import T
 
 from celestine import load
 
 
-def find(target: S) -> L[S]:
+def modularize(path: S, start: S) -> T[S, ...]:
+    """"""
+    relative = os.path.relpath(path, start)
+    (root, _) = os.path.splitext(relative)
+    pure = pathlib.PurePath(root)
+    parts = pure.parts
+    return parts
+
+
+def find(target: S) -> L[T[S, ...]]:
     """Find all project directories with this name."""
-    path = load.pathfinder()
+    start = load.pathfinder()
+
     array = [
-        os.path.relpath(directory, start=path)
-        for directory in walk_directory(path)
+        modularize(directory, start)
+        for directory in walk_file(start)
         if directory.endswith(target)
     ]
     return array
@@ -33,24 +45,19 @@ def walk(top):
     return (path, file)
 
 
-def module(top: S) -> GE[S, N, N]:
+def walk_module(top: S) -> GE[T[S, L[S], L[S]], N, N]:
     """"""
-    for (dirpath, dirnames, _) in os.walk(top):
+    for (dirpath, dirnames, filenames) in os.walk(top):
         if ".mypy_cache" in dirnames:
             dirnames.remove(".mypy_cache")
         if "__pycache__" in dirnames:
             dirnames.remove("__pycache__")
-        for dirname in dirnames:
-            yield os.path.join(dirpath, dirname)
+        yield (dirpath, dirnames, filenames)
 
 
 def walk_directory(top: S) -> GE[S, N, N]:
     """"""
-    for (dirpath, dirnames, _) in os.walk(top):
-        if ".mypy_cache" in dirnames:
-            dirnames.remove(".mypy_cache")
-        if "__pycache__" in dirnames:
-            dirnames.remove("__pycache__")
+    for (dirpath, dirnames, _) in walk_module(top):
         for dirname in dirnames:
             yield os.path.join(dirpath, dirname)
 

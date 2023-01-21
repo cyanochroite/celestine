@@ -4,6 +4,6 @@ from celestine.text import CELESTINE
 
 ERROR = "error"
 MODULE = "module"
-TEST = "test"
+TEST = "_test.py"
 VERIFY = "verify"
 PATH = (APPLICATION, VERIFY, MODULE)

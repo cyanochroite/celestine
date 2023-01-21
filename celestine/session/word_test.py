@@ -12,5 +12,5 @@ class word_test(unittest.TestCase):
         """"""
         first = "usage: "
         second = parser_formatter("usage")
-        self.assertEquals(first, second)
+        self.assertEqual(first, second)
 
