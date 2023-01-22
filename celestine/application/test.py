@@ -1,7 +1,9 @@
 """Package unittest."""
 
 import unittest
-import pathlib
+
+from celestine.text import CELESTINE
+from celestine.text.directory import APPLICATION
 
 from celestine import load
 from celestine.load import directory
@@ -12,10 +14,10 @@ from celestine.typed import N
 
 from celestine.window.page import Page
 
-from .text import CELESTINE
-from .text import ERROR
-from .text import PATH
-from .text import TEST
+ERROR = "error"
+MODULE = "module"
+TARGET = "_test.py"
+TEST = "test"
 
 
 class Session(SuperSession):
@@ -24,8 +26,8 @@ class Session(SuperSession):
 
 def main(_: Page) -> N:
     """def main"""
-    module = load.module(*PATH)
-    paths = directory.find(TEST)
+    module = load.module(APPLICATION, TEST)
+    paths = directory.find(TARGET)
     for path in paths:
         dictionary = load.dictionary(*path)
         for (item, value) in dictionary.items():

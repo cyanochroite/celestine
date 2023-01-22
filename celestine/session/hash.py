@@ -27,7 +27,6 @@ class HashMetaClass(type):
     """"""
 
     def __eq__(cls, other: SELF) -> B:
-        """This seems to always be called even on class instances."""
         return str(cls) == str(other)
 
     def __hash__(cls) -> I:
@@ -44,10 +43,6 @@ class HashMetaClass(type):
 
 class HashClass(metaclass=HashMetaClass):
     """"""
-
-    def __eq__(self, other: SELF) -> B:
-        """This might never be called but wont hurt to keep it."""
-        return str(self) == str(other)
 
     def __hash__(self) -> I:
         """"""

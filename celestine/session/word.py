@@ -39,6 +39,21 @@ def parser_formatter(usage: S) -> S:
     return value
 
 
+def parser_parser_error(program: S, error: S, message: S) -> S:
+    """"""
+    string = io.StringIO()
+    string.write(program)
+    string.write(COLON)
+    string.write(SPACE)
+    string.write(error)
+    string.write(COLON)
+    string.write(SPACE)
+    string.write(message)
+    string.write(LINE_FEED)
+    value = string.getvalue()
+    return value
+
+
 def parser_value(choice: S, value: S, choose: S, choices: L[S]) -> S:
     """"""
     string = io.StringIO()
@@ -55,20 +70,5 @@ def parser_value(choice: S, value: S, choose: S, choices: L[S]) -> S:
     join = NONE.join([COMMA, SPACE])
     string.write(join.join(map(repr, choices)))
     string.write(RIGHT_PARENTHESIS)
-    value = string.getvalue()
-    return value
-
-
-def parser_parser_error(program: S, error: S, message: S) -> S:
-    """"""
-    string = io.StringIO()
-    string.write(program)
-    string.write(COLON)
-    string.write(SPACE)
-    string.write(error)
-    string.write(COLON)
-    string.write(SPACE)
-    string.write(message)
-    string.write(LINE_FEED)
     value = string.getvalue()
     return value
