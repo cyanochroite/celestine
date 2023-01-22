@@ -5,7 +5,7 @@ from celestine.window.page import Page
 
 
 class Window(Collection):
-    def page(self, document):
+    def page(self, name, document):
         pass
 
     def turn(self, page):

@@ -1,5 +1,5 @@
 """ bpy.types.Camera"""
-from celestine.package.blender.package.data.spawn import _real
+from .spawn import _real
 
 
 class _camera(_real):

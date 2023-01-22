@@ -1,5 +1,5 @@
 """bpy.types.Texture"""
-from celestine.package.blender.package.data.spawn import _imaginary
+from .spawn import _imaginary
 
 
 class _texture(_imaginary):

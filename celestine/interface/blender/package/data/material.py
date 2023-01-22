@@ -1,5 +1,5 @@
 """ bpy.types.Material"""
-from celestine.package.blender.package.data.spawn import _imaginary
+from .spawn import _imaginary
 
 
 class _material(_imaginary):

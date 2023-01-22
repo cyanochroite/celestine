@@ -1,5 +1,5 @@
 # <pep8-80 compliant>
-from celestine.package.blender.package import data
+from . import data
 
 # shader
 

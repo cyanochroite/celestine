@@ -20,9 +20,8 @@ def context():
 
 
 class Window(master):
-    def page(self, document):
-        index = len(self.item)
-        self.item_set(index, document)
+    def page(self, name, document):
+        self.item_set(name, document)
         rectangle = Rectangle(0, 0, 20, 10, 0, 0)
         page = Page(self, rectangle)
         self.frame = page

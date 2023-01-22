@@ -2,7 +2,7 @@
 import bmesh as bmesh_
 import mathutils
 
-from celestine.package.blender.package import data
+from . import data
 
 
 def mesh(name, verts, edges, faces, layers):

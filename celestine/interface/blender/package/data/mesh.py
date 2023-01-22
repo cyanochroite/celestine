@@ -1,5 +1,5 @@
 """ bpy.types.Mesh"""
-from celestine.package.blender.package.data.spawn import _real
+from .spawn import _real
 
 
 class _mesh(_real):
