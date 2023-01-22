@@ -2,7 +2,7 @@ from celestine.window.window import Window as master
 
 from celestine.window.collection import Rectangle
 
-from celestine.session import load
+from celestine import load
 
 from .page import Page
 
@@ -10,9 +10,8 @@ from . import package
 
 
 class Window(master):
-    def page(self, document):
-        index = len(self.item)
-        self.item_set(index, document)
+    def page(self, name, document):
+        self.item_set(name, document)
         rectangle = Rectangle(0, 0, 1280, 960, 0, 0)
         page = Page(self, rectangle)
         self.frame = page
