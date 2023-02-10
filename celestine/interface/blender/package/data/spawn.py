@@ -1,9 +1,15 @@
 # <pep8-80 compliant>
-# <pep8-80 compliant>
 import bpy
+
+import math
+
+
+DEGREE_TO_RADIAN = math.pi / 180
 
 
 class _imaginary():
+    """Objects that only exist in spirit."""
+
     type_ = ""
     data = None
 
@@ -24,30 +30,68 @@ class _imaginary():
 
 
 class _real(_imaginary):
-    @classmethod
-    def make(cls, name, item=None):
-        fake = item or cls.new(name)
-        real = cls.object_(name, fake)
-        return _real(real, fake)
+    """Objects that exist in the real world."""
 
     @classmethod
-    def object_(cls, name, object_data):
-        object_ = bpy.data.objects.new(name, object_data)
-        bpy.context.scene.collection.objects.link(object_)
-        return object_
+    def bind(cls, collection, name, soul):
+        """Give an existing soul a body."""
+        body = bpy.data.objects.new(name, soul)
+        collection.objects.link(body)
+        return cls(body, soul)
 
-    def __init__(self, real, fake):
-        self.__dict__["real"] = real
-        self.__dict__["fake"] = fake
-        self.__dict__["data"] = ["location", "rotation_euler", "scale"]
+    @classmethod
+    def make(cls, collection, name):
+        """Create a new soul and give it a body."""
+        soul = cls.new(name)
+        return cls.bind(collection, name, soul)
+
+    def __init__(self, body, soul):
+        self.__dict__["body"] = body
+        self.__dict__["soul"] = soul
 
     def __getattr__(self, name):
-        if name in self.__dict__["data"]:
-            return getattr(self.__dict__["real"], name)
-        return getattr(self.__dict__["fake"], name)
+        match name:
+            case "location":
+                getattr(self.body, name)
+            case "parent":
+                getattr(self.body, name)
+            case "rotation_euler":
+                getattr(self.body, name)
+            case "scale":
+                getattr(self.body, name)
+            case _:
+                getattr(self.soul, name)
 
     def __setattr__(self, name, value):
-        if name in self.__dict__["data"]:
-            setattr(self.real, name, value)
-        else:
-            setattr(self.fake, name, value)
+        match name:
+            case "location":
+                setattr(self.body, name, value)
+            case "rotation":
+                (x_dot, y_dot, z_dot) = value
+                x_dot *= DEGREE_TO_RADIAN
+                y_dot *= DEGREE_TO_RADIAN
+                z_dot *= DEGREE_TO_RADIAN
+                value = (x_dot, y_dot, z_dot)
+                setattr(self.body, "rotation_euler", value)
+            case "parent":
+                setattr(self.body, name, value.body)
+            case "rotation_euler":
+                setattr(self.body, name, value)
+            case "scale":
+                setattr(self.body, name, value)
+            case _:
+                setattr(self.soul, name, value)
+
+
+class _text(_real):
+    @classmethod
+    def new(cls, name, text):
+        soul = super().new(name)
+        soul.body = text
+        return soul
+
+    @classmethod
+    def make(cls, collection, name, text):
+        """Create a new soul and give it a body."""
+        soul = cls.new(name, text)
+        return cls.bind(collection, name, soul)

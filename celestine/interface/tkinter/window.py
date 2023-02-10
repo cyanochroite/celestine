@@ -10,7 +10,6 @@ class Window(master):
         page.frame.grid(row=0, column=0, sticky="nsew")
         document(page)
         self.item_set(name, page)
-        return page
 
     def turn(self, page):
         frame = self.item_get(page)

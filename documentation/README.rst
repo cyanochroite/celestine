@@ -1,5 +1,5 @@
-Celestine Framework
-###################
+Célestine (Framework)
+#####################
 
 .. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
    :target: https://celestine.readthedocs.io/en/latest/?badge=latest
@@ -15,7 +15,7 @@ The only requirement is Python.
 However, you can install additional packages for extended functionality.
 
 It has three customizable directories. ``application``, ``interface``, ``language``.
-Any modules added to them should automatically be detected.
+Any modules added to them should be automatically detected.
 
 Comes with the application that started it all, a primitive image viewer.
 
@@ -40,13 +40,12 @@ https://github.com/mem-dixy/celestine
 Python
 ^^^^^^
 
-`Python`_ >= 3.11
+`Python`_ >= 3.10
 ~~~~~~~~~~~~~~~~~
 
 The recommended option. Or you can install Blender instead.
 
-Currently supports Python 3.11.
-(Python 3.10 used to work until Typing was added.)
+Currently supports Python 3.10 to Python 3.11.
 
 `Blender`_
 ~~~~~~~~~~
@@ -98,35 +97,25 @@ Caution: By default the viewer application will try to load every image it finds
 | Viewer      | celestine -a viewer     | View a very small amount of pictures at once.                    |
 +-------------+-------------------------+------------------------------------------------------------------+
 
-Interface
-^^^^^^^^^
-
-These interfaces are fully working.
-
-+---------------+-------------------------+------------------------+
-| Interface     | Type                    | Command                |
-+===============+=========================+========================+
-| `Curses`_     | Python Standard Library | celestine -i curses    |
-+---------------+-------------------------+------------------------+
-| `Dear PyGui`_ | Python Package Index    | celestine -i dearpygui |
-+---------------+-------------------------+------------------------+
-| `Tkinter`_    | Python Standard Library | celestine -i tkinter   |
-+---------------+-------------------------+------------------------+
-
-These interfaces are coming soon.
+Graphical User Interface
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 +---------------+-------------------------+------------------------+
 | Interface     | Type                    | Command                |
 +===============+=========================+========================+
 | `Blender`_    | Application             | celestine -i blender   |
 +---------------+-------------------------+------------------------+
-| `Pygame`_     | Python Package Index    | celestine -i pygame    | 
+| `Curses`_     | Python Standard Library | celestine -i curses    |
++---------------+-------------------------+------------------------+
+| `Dear PyGui`_ | Python Package Index    | celestine -i dearpygui |
++---------------+-------------------------+------------------------+
+| `Pygame`_     | Python Package Index    | celestine -i pygame    |
++---------------+-------------------------+------------------------+
+| `Tkinter`_    | Python Standard Library | celestine -i tkinter   |
 +---------------+-------------------------+------------------------+
 
-Language
-^^^^^^^^
-
-Currently supported languages.
+World Language
+^^^^^^^^^^^^^^
 
 +------------+-------------+-----------------+
 | Language   | Translation | Command         |
@@ -183,11 +172,9 @@ Currently supported languages.
 Resources
 *********
 
-Learn more at `Read the Docs`_.
-
-Join the `Discord`_.
-
-`Email`_ the author.
+* `Email`_
+* `Discord`_
+* `Read the Docs`_
 
 .. _`Blender`: https://www.blender.org/
 .. _`Celestine`: https://pypi.org/project/celestine/

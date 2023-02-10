@@ -50,16 +50,16 @@ def material(name, image):
     nodes = tree.nodes
     nodes.clear()
 
-    aa = shader_image(nodes, image)
-    aa.location = (000, 000)
+    aaa = shader_image(nodes, image)
+    aaa.location = (000, 000)
 
-    bb = shader_diffuse(nodes)
-    bb.location = (300, 000)
+    bbb = shader_diffuse(nodes)
+    bbb.location = (300, 000)
 
-    cc = shader_output(nodes)
-    cc.location = (500, 000)
+    ccc = shader_output(nodes)
+    ccc.location = (500, 000)
 
-    tree.links.new(aa.outputs["Color"], bb.inputs["Color"])
-    tree.links.new(bb.outputs["BSDF"], cc.inputs["Surface"])
+    tree.links.new(aaa.outputs["Color"], bbb.inputs["Color"])
+    tree.links.new(bbb.outputs["BSDF"], ccc.inputs["Surface"])
 
     return material

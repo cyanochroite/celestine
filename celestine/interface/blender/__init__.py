@@ -8,6 +8,8 @@ import bpy
 
 from .window import Window
 
+import celestine
+
 
 def image_format():
     return [
@@ -37,79 +39,107 @@ def window(session):
 
 # <pep8-80 compliant>
 
+def find_object(name):
+    return next(obj for obj in bpy.data.objects if obj.name == name)
+
+
+def find_collection(name):
+    for collection in bpy.data.collections:
+        if collection.name == name:
+            return collection
+    return None
+
+
+def find_in_collection(collection, name):
+    for item in collection.all_objects:
+        if item.name == name:
+            return item
+    return None
+
 
 class celestine_click(bpy.types.Operator):
     bl_label = "Mouse Click"
     bl_idname = "celestine.click"
 
     def execute(self, context):
-        print("start")
-        mouse = next(obj for obj in bpy.data.objects if obj.name == "mouse")
-        location = mouse.location
-        x = round(location.x / 2.5) * 2.5
-        y = round(location.y / 2.5) * 2.5
-        z = 1
-        mouse.location = (x, y, z)
-        print("done")
+        mouse = find_object("mouse")
+        x_dot = mouse.location.x
+        y_dot = mouse.location.y
+        celestine.blender2(task="poke", x_dot=x_dot, y_dot=y_dot)
         return {'FINISHED'}
 
 
 class celestine_main(bpy.types.Panel):
     bl_category = "celestine"
-    bl_context = ""
-    bl_idname = "CELESTINE_PT_main"
-    bl_label = "Main Panel"
+    bl_context = "object"
+    bl_description = "Celestine Tab"
+    bl_idname = "OBJECT_PT_celestine"
+    bl_label = "Célestine"
     bl_options = {"HEADER_LAYOUT_EXPAND"}
     bl_order = 0
     bl_owner_id = ""
     bl_parent_id = ""
-    bl_region_type = "UI"
-    bl_space_type = "VIEW_3D"
+    bl_region_type = "WINDOW"
+    bl_space_type = "PROPERTIES"
     bl_translation_context = "*"
     bl_ui_units_x = 0
 
-    def draw(self, _):
+    text = ""
+    use_pin = False
+
+    def draw(self, context):
         content = preferences.content()
+        self.layout.operator("celestine.click")
         if content.ready:
-            self.layout.operator("celestine.unregister")
-            self.layout.operator("celestine.click")
+            self.layout.operator("celestine.start")
         else:
-            self.layout.operator("celestine.register")
+            self.layout.operator("celestine.finish")
+
+    def draw_header(self, context):
+        pass
+
+    def draw_header_preset(self, context):
+        pass
 
 
-class celestine_register(bpy.types.Operator):
+class celestine_start(bpy.types.Operator):
+
+    bl_description = "whati ti do"
+
     bl_label = "Startup"
-    bl_idname = "celestine.register"
+    bl_idname = "celestine.start"
 
     def execute(self, _):
-        data.register()
-        content = preferences.content()
-        content.ready = True
+        print("start")
+        car = bpy.context.preferences.addons["celestine"].preferences
+        data.start()
+        preferences.start()
+        car.ready = True
         return {'FINISHED'}
 
 
-class celestine_unregister(bpy.types.Operator):
+class celestine_finish(bpy.types.Operator):
     bl_label = "Shutdown"
-    bl_idname = "celestine.unregister"
+    bl_idname = "celestine.finish"
 
     def execute(self, _):
-        content = preferences.content()
-        content.ready = False
-        data.unregister()
+        print("finish")
+        preferences.finish()
+        data.finish()
         return {'FINISHED'}
 
 
 def register():
-    bpy.utils.register_class(celestine_unregister)
     preferences.register()
-    bpy.utils.register_class(celestine_main)
+    bpy.utils.register_class(celestine_start)
+    bpy.utils.register_class(celestine_finish)
     bpy.utils.register_class(celestine_click)
-    bpy.utils.register_class(celestine_register)
+    bpy.utils.register_class(celestine_main)
 
 
 def unregister():
-    bpy.utils.unregister_class(celestine_register)
-    bpy.utils.unregister_class(celestine_click)
     bpy.utils.unregister_class(celestine_main)
+    bpy.utils.unregister_class(celestine_click)
+    bpy.utils.unregister_class(celestine_finish)
+    bpy.utils.unregister_class(celestine_start)
     preferences.unregister()
-    bpy.utils.unregister_class(celestine_unregister)

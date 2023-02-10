@@ -15,7 +15,6 @@ class Window(master):
         rectangle = Rectangle(0, 0, 1280, 960, 0, 0)
         page = Page(self, rectangle)
         self.frame = page
-        return page
 
     def turn(self, page):
         rectangle = Rectangle(0, 0, 1280, 960, 0, 0)

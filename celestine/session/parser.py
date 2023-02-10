@@ -99,8 +99,9 @@ def make_parser(language: MT, exit_on_error: B) -> AP:
                 language.ARGUMENT_PARSER_ERROR,
                 message,
             )
-            self.exit(2, value)  # TODO: check if this kills blender.
-            self._print_message(value)  # unreachable code
+            self.exit(2, value)
+            # TODO: Seems to not be called in blender.
+            # But do we even need this function?
 
     parser = Parser(
         add_help=False,

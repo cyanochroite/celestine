@@ -12,7 +12,6 @@ class Window(master):
         self.item_set(name, document)
         page = Page(self)
         self.frame = page
-        return page
 
     def turn(self, page):
         self.frame.frame.clear()

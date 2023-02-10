@@ -3,4 +3,4 @@ from .spawn import _real
 
 
 class _object(_real):
-    pass
+    """Object data-block defining an object in a scene."""

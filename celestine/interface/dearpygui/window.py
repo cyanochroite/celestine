@@ -14,7 +14,6 @@ class Window(master):
         with value.frame:
             package.configure_item(tag, show=False)
             document(value)
-        return value
 
     def turn(self, page, sent=None):
         if sent:
