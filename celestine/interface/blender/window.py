@@ -101,10 +101,15 @@ class Window(master):
 
         return self
 
+    def collection(self, name):
+        """"""
+        collection = data.collection.make(name)
+        collection.hide()
+        return collection
+
     def __exit__(self, exc_type, exc_value, traceback):
         for name, item in self.item.items():
-            collection = data.collection.make(name)
-            collection.hide()
+            collection = self.collection(name)
             item.draw(collection)
         # yes super must go after
         super().__exit__(exc_type, exc_value, traceback)

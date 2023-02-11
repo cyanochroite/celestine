@@ -40,3 +40,4 @@ def main(page: Page) -> N:
     with page.span("body") as line:
         line.button("past", language.DEMO_MAIN_PAST, "one")
         line.button("next", language.DEMO_MAIN_NEXT, "two")
+

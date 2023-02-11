@@ -4,7 +4,8 @@
 class Object:
     """"""
 
-    def __init__(self, **_):
+    def __init__(self, **star):
+
         super().__init__()
 
 
@@ -33,12 +34,12 @@ class Box(Object):
 
         return x_test and y_test
 
-    def __init__(self, x_min=0, y_min=0, x_max=0, y_max=0, **kwargs):
+    def __init__(self, x_min=0, y_min=0, x_max=0, y_max=0, **star):
         self.x_min = x_min
         self.y_min = y_min
         self.x_max = x_max
         self.y_max = y_max
-        super().__init__(**kwargs)
+        super().__init__(**star)
 
 
 class Collection(Object):
@@ -58,9 +59,9 @@ class Collection(Object):
         self.item[tag] = value
         return value
 
-    def __init__(self, **kwargs):
+    def __init__(self, **star):
         self.item = {}
-        super().__init__(**kwargs)
+        super().__init__(**star)
 
 
 class Rectangle(Box, Collection):
@@ -102,11 +103,11 @@ class Rectangle(Box, Collection):
             offset_y=self.offset_y,
         )
 
-    def __init__(self, offset_x=0, offset_y=0, **kwargs):
-        super().__init__(**kwargs)
-        if "row" in kwargs:
+    def __init__(self, offset_x=0, offset_y=0, **star):
+        super().__init__(**star)
+        if "row" in star:
             offset_x = 300
-        if "col" in kwargs:
+        if "col" in star:
             offset_y = 50
 
         self.start_x_min = self.x_min
