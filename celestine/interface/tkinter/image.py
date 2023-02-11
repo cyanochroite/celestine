@@ -1,21 +1,17 @@
-""""""
-
-from .element import Element
 from . import package
+from .widget import Widget
 
 
-class Image(Element):
-    """"""
-
-    def draw(self, collection, **star):
-        """"""
-        star.update(image=self.image)
-        package.Label(collection, **star)
-        super().draw(collection, **star)
-
-    def __init__(self, file):
-        self.image = package.PhotoImage(file=file)
-        self.height = self.image.height()
-        self.width = self.image.width()
+class Image(Widget):
+    def __init__(self, frame, file):
+        image = package.PhotoImage(file=file)
+        self.height = image.height()
+        self.image = image
+        self.width = image.width()
         self.name = file
-        super().__init__()
+        super().__init__(
+            package.Label(
+                frame,
+                image=image,
+            )
+        )

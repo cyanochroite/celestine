@@ -8,8 +8,9 @@ from . import package
 class Element(Object):
     """"""
 
-    def draw(self, collection, **star):
+    def draw(self, collection, make, **star):
         """"""
+        self.item = make(collection, **star)
         self.item.pack(side=package.LEFT)
 
     def poke(self, x_dot, y_dot):

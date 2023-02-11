@@ -1,20 +1,12 @@
-""""""
-
 from . import package
+from .widget import Widget
 
-from .element import Element
 
-
-class Label(Element):
-    """"""
-
-    def draw(self, collection, **star):
-        """"""
-        star.update(text=self.text)
-        self.item = package.Label(collection, **star)
-        super().draw(collection, **star)
-
-    def __init__(self, text, **star):
-        """"""
-        self.text = text
-        super().__init__(**star)
+class Label(Widget):
+    def __init__(self, frame, **kwargs):
+        super().__init__(
+            package.Label(
+                frame,
+                **kwargs,
+            )
+        )
