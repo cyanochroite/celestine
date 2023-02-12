@@ -1,12 +1,12 @@
-from .widget import Widget
+""""""
 
 import pygame
 
+from .element import Element
 
-class Image(Widget):
-    def __init__(self, window, image, rectangle):
-        super().__init__(
-            window,
-            pygame.image.load(image),
-            rectangle,
-        )
+
+class Image(Element):
+    """"""
+
+    def __init__(self, image, **star):
+        super().__init__(pygame.image.load(image), **star)

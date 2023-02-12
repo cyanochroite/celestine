@@ -1,9 +1,12 @@
-from .widget import Widget
+""""""
 
-class Label(Widget):
-    def __init__(self, window, font, text, rectangle):
-        super().__init__(
-            window,
-            font.render(text, True, (255, 255, 255)),
-            rectangle,
-        )
+from .element import Element
+
+
+class Label(Element):
+    """"""
+
+    def __init__(self, font, text, **star):
+        super().__init__(font.render(text, True, (255, 255, 255)), **star)
+
+
