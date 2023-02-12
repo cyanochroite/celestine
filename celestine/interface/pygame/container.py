@@ -25,7 +25,7 @@ class Container(Rectangle):
                 x_max=x_max,
                 y_max=y_max,
                 offset_x=0,
-                offset_y=2.5,
+                offset_y=50,
                 **kwargs,
             )
         )
@@ -45,8 +45,8 @@ class Container(Rectangle):
                 y_min=y_min,
                 x_max=x_max,
                 y_max=y_max,
-                offset_x=2.5,
-                offset_y=2.5,
+                offset_x=250,
+                offset_y=250,
                 **kwargs,
             )
         )
@@ -65,7 +65,7 @@ class Container(Rectangle):
                 y_min=y_min,
                 x_max=x_max,
                 y_max=y_max,
-                offset_x=10,
+                offset_x=500,
                 offset_y=0,
                 **kwargs,
             )
@@ -177,4 +177,3 @@ class Drop(Container):
 
 class Span(Container):
     """"""
-
