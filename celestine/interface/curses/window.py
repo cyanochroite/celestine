@@ -1,4 +1,7 @@
-from celestine.window.page import Page as null_page
+""""""
+
+from .container import Drop
+
 from celestine.window.window import Window as master
 
 from .package import package
@@ -15,11 +18,33 @@ class Window(master):
 
     def turn(self, page):
         self.frame.frame.clear()
-        self.frame = Page(self)
+        self.frame = Drop(
+            self.session,
+            page,
+            self.turn,
+            x_min=1,
+            y_min=1,
+            x_max=79,
+            y_max=23,
+            offset_x=0,
+            offset_y=1,
+        )
+
         self.item_get(page)(self.frame)
+
+        frame = package.window(
+            1,
+            1,
+            self.width - 1,
+            self.height - 2,
+        )
+
+        for (name, item) in self.frame.item.items():
+            item.draw(frame)
+
         self.stdscr.noutrefresh()
         self.background.noutrefresh()
-        self.frame.frame.noutrefresh()
+        frame.noutrefresh()
         package.doupdate()
 
     def __enter__(self):

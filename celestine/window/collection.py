@@ -22,7 +22,7 @@ class Box(Object):
         """"""
         x_dot = (self.x_min + self.x_max) // 2
         y_dot = (self.y_min + self.y_max) // 2
-        return (x_dot, y_dot)
+        return (int(x_dot), int(y_dot))
 
     def inside(self, x_dot, y_dot):
         """"""

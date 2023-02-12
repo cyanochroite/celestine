@@ -1,12 +1,15 @@
+""""""
+
 from celestine.window.window import Window as master
+
 
 from . import package
 from .page import Page
 
-from celestine.window.page import Page as null_page
-
 
 class Window(master):
+    """"""
+
     def page(self, name, document):
         tag = name
         value = Page(self, tag)
@@ -53,6 +56,3 @@ class Window(master):
         package.start_dearpygui()
         package.destroy_context()
         return False
-
-    def __init__(self, session, **kwargs):
-        super().__init__(session, **kwargs)

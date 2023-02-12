@@ -1,7 +1,7 @@
-from .widget import Widget
+from .element import Element
 
 
-class Label(Widget):
+class Label(Element):
     def __init__(self, frame, text):
         super().__init__(
             frame,

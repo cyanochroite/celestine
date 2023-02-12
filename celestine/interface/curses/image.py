@@ -1,10 +1,10 @@
-from .widget import Widget
+from .element import Element
 
 
-class Image(Widget):
-    def __init__(self, frame, text):
+class Image(Element):
+    def __init__(self, text, **star):
         super().__init__(
-            frame,
             F"image:{text}",
             "image",
+            **star,
         )

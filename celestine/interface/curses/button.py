@@ -1,7 +1,7 @@
-from .widget import Widget
+from .element import Element
 
 
-class Button(Widget):
+class Button(Element):
     def __init__(self, frame, text, action):
         super().__init__(
             frame,
