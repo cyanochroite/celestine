@@ -27,12 +27,22 @@ class Element(Box):
         """"""
         return not self.select(cord_x, cord_y)
 
+    def origin(self):
+        """"""
+        x_dot = int(self.x_min)
+        y_dot = int(self.y_min)
+        return (x_dot, y_dot)
+
+    def add_string(self, frame, x_dot, y_dot, text):
+        """curses swaps x and y"""
+        frame.addstr(y_dot, x_dot, text)
+
     def draw(self, frame):
         """"""
-        (x_dot, y_dot) = self.center_int()
+        (x_dot, y_dot) = self.origin()
         self.cord_x = x_dot
         self.cord_y = y_dot
         self.width = len(self.text)
         self.height = 1
-        frame.addstr(x_dot, y_dot, self.text)
+        self.add_string(frame, x_dot, y_dot, self.text)
         return self

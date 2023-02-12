@@ -22,10 +22,10 @@ class Window(master):
             self.session,
             page,
             self.turn,
-            x_min=1,
-            y_min=1,
-            x_max=79,
-            y_max=23,
+            x_min=0,  # uses internal cordinate
+            y_min=0,
+            x_max=self.width - 1,
+            y_max=self.height - 2,
             offset_x=0,
             offset_y=1,
         )

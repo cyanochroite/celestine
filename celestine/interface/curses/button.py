@@ -1,11 +1,16 @@
+""""""
+
+
 from .element import Element
 
 
 class Button(Element):
-    def __init__(self, frame, text, action):
+    """"""
+
+    def __init__(self, text, action, **star):
         super().__init__(
-            frame,
             F"button:{text}",
             "button",
+            **star,
         )
         self.action = action

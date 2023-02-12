@@ -1,10 +1,14 @@
+""""""
+
 from .element import Element
 
 
 class Label(Element):
-    def __init__(self, frame, text):
+    """"""
+
+    def __init__(self, text, **star):
         super().__init__(
-            frame,
             F"label:{text}",
             "label",
+            **star,
         )

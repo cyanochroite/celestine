@@ -18,12 +18,6 @@ class Box(Object):
         y_dot = (self.y_min + self.y_max) / 2
         return (x_dot, y_dot)
 
-    def center_int(self):
-        """"""
-        x_dot = (self.x_min + self.x_max) // 2
-        y_dot = (self.y_min + self.y_max) // 2
-        return (int(x_dot), int(y_dot))
-
     def inside(self, x_dot, y_dot):
         """"""
         x_test = self.x_min <= x_dot < self.x_max
