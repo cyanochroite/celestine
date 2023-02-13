@@ -61,10 +61,6 @@ class Collection(Object):
 class Rectangle(Box, Collection):
     """"""
 
-    def action(self):
-        """"""
-        raise NotImplementedError()
-
     def get_next(self):
         """"""
         x_min = self.move_x_min
@@ -77,13 +73,6 @@ class Rectangle(Box, Collection):
         y_max = self.move_y_min if self.offset_y else self.y_max
 
         return (x_min, y_min, x_max, y_max)
-
-    def select(self, x_dot, y_dot):
-        """"""
-        if self.inside(x_dot, y_dot):
-            self.action()
-            for child in self.children():
-                child.select(x_dot, y_dot)
 
     def spawn(self):
         """"""

@@ -1,5 +1,7 @@
-from .widget import Widget
+""""""
+
+from .element import Element
 
 
-class Label(Widget):
-    pass
+class Label(Element):
+    """"""

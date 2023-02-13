@@ -1,8 +1,6 @@
 from .collection import Collection
 from celestine import load
 
-from celestine.window.page import Page
-
 
 class Window(Collection):
     def page(self, name, document):

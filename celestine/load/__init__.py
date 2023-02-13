@@ -17,7 +17,6 @@ from celestine.unicode import FULL_STOP
 from celestine.unicode import LOW_LINE
 from celestine.unicode import NONE
 
-from celestine.window.page import Page
 
 from .function import function
 from .function import function_name

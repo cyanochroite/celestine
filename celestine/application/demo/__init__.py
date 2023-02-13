@@ -5,7 +5,7 @@ from celestine.session.session import SuperSession
 
 from celestine.typed import N
 
-from celestine.window.page import Page
+from celestine.window.container import Container as Page
 
 
 class Session(SuperSession):

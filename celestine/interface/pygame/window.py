@@ -51,7 +51,8 @@ class Window(master):
                 case package.QUIT:
                     break
                 case package.MOUSEBUTTONDOWN:
-                    self.frame.select(*package.mouse.get_pos())
+                    (x_dot, y_dot) = package.mouse.get_pos()
+                    self.frame.poke(x_dot, y_dot)
         return False
 
     def __init__(self, session, **kwargs):

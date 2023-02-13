@@ -19,13 +19,12 @@ class Container(Rectangle):
                 self.session,
                 tag,
                 self.turn,
-                self.font,
                 x_min=x_min,
                 y_min=y_min,
                 x_max=x_max,
                 y_max=y_max,
                 offset_x=0,
-                offset_y=50,
+                offset_y=2.5,
                 **kwargs,
             )
         )
@@ -39,14 +38,13 @@ class Container(Rectangle):
                 self.session,
                 tag,
                 self.turn,
-                self.font,
                 width,
                 x_min=x_min,
                 y_min=y_min,
                 x_max=x_max,
                 y_max=y_max,
-                offset_x=250,
-                offset_y=250,
+                offset_x=2.5,
+                offset_y=2.5,
                 **kwargs,
             )
         )
@@ -60,12 +58,11 @@ class Container(Rectangle):
                 self.session,
                 tag,
                 self.turn,
-                self.font,
                 x_min=x_min,
                 y_min=y_min,
                 x_max=x_max,
                 y_max=y_max,
-                offset_x=500,
+                offset_x=10,
                 offset_y=0,
                 **kwargs,
             )
@@ -87,9 +84,8 @@ class Container(Rectangle):
         return self.item_set(
             tag,
             Button(
-                self.font,
                 text,
-                action=lambda: self.turn(action),
+                lambda: self.turn(action),
                 x_min=x_min,
                 y_min=y_min,
                 x_max=x_max,
@@ -117,7 +113,6 @@ class Container(Rectangle):
         return self.item_set(
             tag,
             Label(
-                self.font,
                 text,
                 x_min=x_min,
                 y_min=y_min,
@@ -132,11 +127,10 @@ class Container(Rectangle):
     def __exit__(self, *_):
         return False
 
-    def __init__(self, session, name, turn, font, **kwargs):
+    def __init__(self, session, name, turn, **kwargs):
         self.session = session
         self.tag = name
         self.turn = turn
-        self.font = font
         super().__init__(**kwargs)
 
 
@@ -164,11 +158,11 @@ class Grid(Container):
         """"""
         return F"{name}_{self.index_x}-{self.index_y}"
 
-    def __init__(self, session, name, turn, font, width, **kwargs):
+    def __init__(self, session, name, turn, width, **kwargs):
         self.index_x = 0
         self.index_y = 0
         self.width = width
-        super().__init__(session, name, turn, font, **kwargs)
+        super().__init__(session, name, turn, **kwargs)
 
 
 class Drop(Container):
@@ -177,3 +171,4 @@ class Drop(Container):
 
 class Span(Container):
     """"""
+
