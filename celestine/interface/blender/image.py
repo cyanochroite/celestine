@@ -1,15 +1,14 @@
+""""""
+
+import pygame
+
+from celestine.window.image import Image as image
+
 from .element import Element
 
-from .package import data
-from .package import UV
-from .package.data import mesh as make_mesh
-from .package import mesh as _mesh
 
-
-class Image(Element):
-    def __init__(self, name, **kwargs):
-        self.name = name
-        super().__init__(**kwargs)
+class Image(Element, image):
+    """"""
 
     def draw(self, collection):
         image = data.image.load(self.name)
@@ -19,3 +18,7 @@ class Image(Element):
         mesh.body.data.materials.append(material)
         self.mesh = mesh
         super().draw(collection)
+
+    def __init__(self, name, **kwargs):
+        self.name = name
+        super().__init__(**kwargs)

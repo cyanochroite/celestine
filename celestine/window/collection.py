@@ -5,8 +5,42 @@ class Object:
     """"""
 
     def __init__(self, **star):
-
         super().__init__()
+
+
+class Axis(Object):
+    """"""
+
+    def __init__(self, **star):
+        self.minimum = 0
+        self.maximum = 0
+        self.advance = 0
+        super().__init__(**star)
+
+    def set(self, minimum, maximum, advance):
+        """"""
+        if minimum < 0:
+            raise ValueError("minimum < 0")
+        if maximum < 0:
+            raise ValueError("maximum < 0")
+        if advance < 0:
+            raise ValueError("advance < 0")
+
+        if minimum > maximum:
+            raise ValueError("minimum > maximum")
+        if advance > maximum:
+            raise ValueError("advance > maximum")
+
+        self.minimum = minimum
+        self.maximum = maximum
+        self.advance = advance
+
+    def get(self):
+        """"""
+        minimum = self.minimum
+        maximum = self.maximum
+        self.minimum += self.advance
+        return min(minimum, maximum)
 
 
 class Box(Object):
@@ -29,6 +63,8 @@ class Box(Object):
         return x_test and y_test
 
     def __init__(self, x_min=0, y_min=0, x_max=0, y_max=0, **star):
+        self.axis_x = Axis()
+        self.axis_y = Axis()
         self.x_min = x_min
         self.y_min = y_min
         self.x_max = x_max
@@ -60,6 +96,26 @@ class Collection(Object):
 
 class Rectangle(Box, Collection):
     """"""
+
+    def get(self):
+        """"""
+        x_min = self.move_x_min
+        self.move_x_min += self.offset_x
+
+        y_min = self.move_y_min
+        self.move_y_min += self.offset_y
+
+        x_max = self.move_x_min if self.offset_x else self.x_max
+        y_max = self.move_y_min if self.offset_y else self.y_max
+
+        return (x_min, y_min, x_max, y_max)
+
+    def set(self, x_min, y_min, x_max, y_max):
+        """"""
+        self.x_min = x_min
+        self.y_min = y_min
+        self.x_max = x_max
+        self.y_max = y_max
 
     def get_next(self):
         """"""

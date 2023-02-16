@@ -76,6 +76,12 @@ class Container(Rectangle):
         for (_, item) in self.item.items():
             item.draw(collection)
 
+    def spot(self, x_min, y_min, x_max, y_max):
+        """"""
+        super().spot(x_min, y_min, x_max, y_max)
+        for (_, item) in self.item.items():
+            item.spot(x_min, y_min, x_max, y_max)
+
     def poke(self, x_dot, y_dot):
         """"""
         for (_, item) in self.item.items():
@@ -139,6 +145,12 @@ class Container(Rectangle):
         self.font = font
         super().__init__(**kwargs)
 
+    def area(self, size):
+        length = len(self.item)
+        partition = length or 1
+        segment = size / partition
+        return segment
+
 
 class Grid(Container):
     """"""
@@ -174,6 +186,22 @@ class Grid(Container):
 class Drop(Container):
     """"""
 
+    def spot(self, x_min, y_min, x_max, y_max):
+        """"""
+        size = self.area(y_max)
+        self.axis_x.set(x_min, x_max, x_max)
+        self.axis_y.set(y_min, y_max, size)
+        for (_, item) in self.item.items():
+            item.spot(x_min, y_min, x_max, size)
+
 
 class Span(Container):
     """"""
+
+    def spot(self, x_min, y_min, x_max, y_max):
+        """"""
+        size = self.area(x_max)
+        self.axis_x.set(x_min, x_max, size)
+        self.axis_y.set(y_min, y_max, y_max)
+        for (_, item) in self.item.items():
+            item.spot(x_min, y_min, size, y_max)

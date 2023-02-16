@@ -17,8 +17,9 @@ class Window(master):
 
     def turn(self, page):
         self.frame = self.container.drop(page)
-        self.book.fill((0, 0, 0))
         self.item_get(page)(self.frame)
+        self.frame.spot(0, 0, self.width, self.height)
+        self.book.fill((0, 0, 0))
         self.frame.draw(self.book)
         package.display.flip()
 
