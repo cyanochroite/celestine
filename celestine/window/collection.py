@@ -1,5 +1,10 @@
 """"""
 
+from celestine.typed import GE
+from celestine.typed import N
+from celestine.typed import T
+from celestine.typed import Z
+
 
 class Object:
     """"""
@@ -11,40 +16,64 @@ class Object:
 class Axis(Object):
     """"""
 
-    def __init__(self, **star):
-        self.minimum = 0
-        self.maximum = 0
-        self.advance = 0
-        super().__init__(**star)
+    def get(self, partition: Z) -> GE[T[Z, Z], N, N]:
+        """"""
+        if partition <= 0:
+            raise ValueError("need: partition > 0")
 
-    def set(self, minimum, maximum, advance):
+        distance = self.maximum - self.minimum
+        step = int(distance // partition)
+
+        maximum = self.minimum  # <- yes, setting maximum to minimum
+
+        while True:
+            minimum = maximum
+            maximum += step
+            yield (minimum, maximum)
+
+    def get(self, partition: Z) -> GE[T[Z, Z], N, N]:
+        """"""
+        if partition <= 0:
+            raise ValueError("need: partition > 0")
+
+        distance = self.maximum - self.minimum
+        step = int(distance // partition)
+
+        maximum = self.minimum  # <- yes, setting maximum to minimum
+
+        while maximum < self.maximum:
+            minimum = maximum
+            maximum += step
+            yield (minimum, maximum)
+
+        while True:
+            yield (minimum, maximum)
+
+    def set(self, minimum: Z, maximum: Z) -> N:
         """"""
         if minimum < 0:
-            raise ValueError("minimum < 0")
+            raise ValueError("need: minimum >= 0")
         if maximum < 0:
-            raise ValueError("maximum < 0")
-        if advance < 0:
-            raise ValueError("advance < 0")
-
+            raise ValueError("need: maximum >= 0")
         if minimum > maximum:
-            raise ValueError("minimum > maximum")
-        if advance > maximum:
-            raise ValueError("advance > maximum")
+            raise ValueError("need: minimum <= maximum")
 
         self.minimum = minimum
         self.maximum = maximum
-        self.advance = advance
 
-    def get(self):
-        """"""
-        minimum = self.minimum
-        maximum = self.maximum
-        self.minimum += self.advance
-        return min(minimum, maximum)
+    def __init__(self, **star):
+        self.minimum = 0
+        self.maximum = 0
+        super().__init__(**star)
 
 
 class Box(Object):
     """"""
+
+    def partition(self, length):
+        partition = length or 1
+        segment = size / partition
+        return segment
 
     def center_float(self):
         """"""
@@ -99,6 +128,21 @@ class Rectangle(Box, Collection):
 
     def get(self):
         """"""
+        x_min = self.move_x_min
+        self.move_x_min += self.offset_x
+
+        y_min = self.move_y_min
+        self.move_y_min += self.offset_y
+
+        x_max = self.move_x_min if self.offset_x else self.x_max
+        y_max = self.move_y_min if self.offset_y else self.y_max
+
+        return (x_min, y_min, x_max, y_max)
+
+    def get(self):
+        """"""
+        x_min = self.axis_x.minimum
+
         x_min = self.move_x_min
         self.move_x_min += self.offset_x
 

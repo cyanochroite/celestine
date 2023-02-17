@@ -1,5 +1,6 @@
 """Define types here."""
 
+# Generator[YieldType, SendType, ReturnType]
 from typing import Generator as GE  # noqa: F401 pylint: disable=W0611
 from typing import TypeAlias as TA
 from types import ModuleType as MT  # noqa: F401 pylint: disable=W0611
@@ -20,6 +21,7 @@ from typing import Tuple as T  # noqa: F401 pylint: disable=W0611
 from typing import Union as U  # noqa: F401 pylint: disable=W0611
 
 B: TA = bool
-I: TA = int
+F: TA = float
 N: TA = None
 S: TA = str
+Z: TA = int

@@ -1,5 +1,7 @@
 """"""
 
+import math
+
 from celestine.window.collection import Rectangle
 
 from .button import Button
@@ -145,40 +147,46 @@ class Container(Rectangle):
         self.font = font
         super().__init__(**kwargs)
 
-    def area(self, size):
-        length = len(self.item)
-        partition = length or 1
-        segment = size / partition
-        return segment
-
 
 class Grid(Container):
     """"""
 
-    def get_next(self):
+    def spot(self, x_min, y_min, x_max, y_max):
         """"""
-        x_min = self.move_x_min + self.offset_x * (self.index_x + 0)
-        y_min = self.move_y_min + self.offset_y * (self.index_y + 0)
-        x_max = self.move_x_min + self.offset_x * (self.index_x + 1)
-        y_max = self.move_y_min + self.offset_y * (self.index_y + 1)
+        self.axis_x.set(x_min, x_max)
+        self.axis_y.set(y_min, y_max)
 
-        self.index_x += 1
-        if self.index_x >= self.width:
-            self.index_x = 0
-            self.index_y += 1
+        length = len(self.item)
+        width = self.width
+        height = math.ceil(length / width)
 
-        return (x_min, y_min, x_max, y_max)
+        items = [item for (_, item) in self.item.items()]
 
-    def get_x_min(self):
+        axis_y = self.axis_y.get(height)
+        for index_y in range(height):
+            (ymin, ymax) = next(axis_y)
+
+            axis_x = self.axis_x.get(width)
+            for index_x in range(self.width):
+                (xmin, xmax) = next(axis_x)
+
+                index = index_y * self.width + index_x
+                item = items[index]
+                item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()
         """"""
 
     def get_tag(self, name):
         """"""
-        return F"{name}_{self.index_x}-{self.index_y}"
+        length = len(self.item)
+        index_x = length % self.width
+        index_y = length // self.width
+
+        return F"{name}_{index_x}-{index_y}"
 
     def __init__(self, session, name, turn, font, width, **kwargs):
-        self.index_x = 0
-        self.index_y = 0
         self.width = width
         super().__init__(session, name, turn, font, **kwargs)
 
@@ -188,11 +196,22 @@ class Drop(Container):
 
     def spot(self, x_min, y_min, x_max, y_max):
         """"""
-        size = self.area(y_max)
-        self.axis_x.set(x_min, x_max, x_max)
-        self.axis_y.set(y_min, y_max, size)
+        self.axis_x.set(x_min, x_max)
+        self.axis_y.set(y_min, y_max)
+
+        partition = len(self.item)
+
+        axis_x = self.axis_x.get(1)
+        axis_y = self.axis_y.get(partition)
+
         for (_, item) in self.item.items():
-            item.spot(x_min, y_min, x_max, size)
+            (xmin, xmax) = next(axis_x)
+            (ymin, ymax) = next(axis_y)
+
+            item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()
 
 
 class Span(Container):
@@ -200,8 +219,20 @@ class Span(Container):
 
     def spot(self, x_min, y_min, x_max, y_max):
         """"""
-        size = self.area(x_max)
-        self.axis_x.set(x_min, x_max, size)
-        self.axis_y.set(y_min, y_max, y_max)
+        self.axis_x.set(x_min, x_max)
+        self.axis_y.set(y_min, y_max)
+
+        partition = len(self.item)
+
+        axis_x = self.axis_x.get(partition)
+        axis_y = self.axis_y.get(1)
+
         for (_, item) in self.item.items():
-            item.spot(x_min, y_min, size, y_max)
+            (xmin, xmax) = next(axis_x)
+            (ymin, ymax) = next(axis_y)
+
+            item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()
+
