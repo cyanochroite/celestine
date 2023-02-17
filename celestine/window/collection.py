@@ -3,7 +3,10 @@
 from celestine.typed import GE
 from celestine.typed import N
 from celestine.typed import T
+from celestine.typed import TA
 from celestine.typed import Z
+
+AXIS: TA = GE[T[Z, Z], N, N]
 
 
 class Object:
@@ -16,22 +19,7 @@ class Object:
 class Axis(Object):
     """"""
 
-    def get(self, partition: Z) -> GE[T[Z, Z], N, N]:
-        """"""
-        if partition <= 0:
-            raise ValueError("need: partition > 0")
-
-        distance = self.maximum - self.minimum
-        step = int(distance // partition)
-
-        maximum = self.minimum  # <- yes, setting maximum to minimum
-
-        while True:
-            minimum = maximum
-            maximum += step
-            yield (minimum, maximum)
-
-    def get(self, partition: Z) -> GE[T[Z, Z], N, N]:
+    def get(self, partition: Z) -> AXIS:
         """"""
         if partition <= 0:
             raise ValueError("need: partition > 0")
@@ -47,6 +35,23 @@ class Axis(Object):
             yield (minimum, maximum)
 
         while True:
+            yield (minimum, maximum)
+
+    def get(self, partition: Z) -> AXIS:
+        """"""
+        if partition <= 0:
+            raise ValueError("need: partition > 0")
+
+        distance = self.maximum - self.minimum
+        fragment = int(distance // partition)
+        position = self.minimum
+
+        indexer = 0
+        while True:
+            minimum = indexer * fragment + position
+            indexer += 1
+            maximum = indexer * fragment + position
+            indexer %= partition
             yield (minimum, maximum)
 
     def set(self, minimum: Z, maximum: Z) -> N:
@@ -70,16 +75,16 @@ class Axis(Object):
 class Box(Object):
     """"""
 
-    def partition(self, length):
-        partition = length or 1
-        segment = size / partition
-        return segment
-
-    def center_float(self):
+    def get(self, partition_x: Z, partition_y: Z) -> T[AXIS, AXIS]:
         """"""
-        x_dot = (self.x_min + self.x_max) / 2
-        y_dot = (self.y_min + self.y_max) / 2
-        return (x_dot, y_dot)
+        axis_x = self.axis_x.get(partition_x)
+        axis_y = self.axis_y.get(partition_y)
+        return (axis_x, axis_y)
+
+    def set(self, x_min: Z, y_min: Z, x_max: Z, y_max: Z) -> N:
+        """"""
+        self.axis_x.set(x_min, x_max)
+        self.axis_y.set(y_min, y_max)
 
     def inside(self, x_dot, y_dot):
         """"""
@@ -126,7 +131,7 @@ class Collection(Object):
 class Rectangle(Box, Collection):
     """"""
 
-    def get(self):
+    def get1(self):
         """"""
         x_min = self.move_x_min
         self.move_x_min += self.offset_x
@@ -139,7 +144,7 @@ class Rectangle(Box, Collection):
 
         return (x_min, y_min, x_max, y_max)
 
-    def get(self):
+    def get1(self):
         """"""
         x_min = self.axis_x.minimum
 
@@ -154,7 +159,7 @@ class Rectangle(Box, Collection):
 
         return (x_min, y_min, x_max, y_max)
 
-    def set(self, x_min, y_min, x_max, y_max):
+    def set1(self, x_min, y_min, x_max, y_max):
         """"""
         self.x_min = x_min
         self.y_min = y_min

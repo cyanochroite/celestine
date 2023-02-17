@@ -151,34 +151,48 @@ class Container(Rectangle):
 class Grid(Container):
     """"""
 
+    def button(self, tag, text, action):
+        """"""
+        name = self._get_tag(tag)
+        super().button(name, text, action)
+
+    def image(self, tag, image):
+        """"""
+        name = self._get_tag(tag)
+        super().image(name, image)
+
+    def label(self, tag, text):
+        """"""
+        name = self._get_tag(tag)
+        super().label(name, text)
+
+    def items(self):
+        """"""
+        yield from [item for (_, item) in self.item.items()]
+
     def spot(self, x_min, y_min, x_max, y_max):
         """"""
-        self.axis_x.set(x_min, x_max)
-        self.axis_y.set(y_min, y_max)
+        self.set(x_min, y_min, x_max, y_max)
 
-        length = len(self.item)
-        width = self.width
-        height = math.ceil(length / width)
+        partition_x = self.width
+        partition_y = math.ceil(len(self.item) / self.width)
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
 
-        items = [item for (_, item) in self.item.items()]
+        items = self.items()
 
-        axis_y = self.axis_y.get(height)
-        for index_y in range(height):
+        for _ in range(partition_y):
             (ymin, ymax) = next(axis_y)
 
-            axis_x = self.axis_x.get(width)
-            for index_x in range(self.width):
+            for _ in range(partition_x):
                 (xmin, xmax) = next(axis_x)
 
-                index = index_y * self.width + index_x
-                item = items[index]
+                item = next(items)
                 item.spot(xmin, ymin, xmax, ymax)
 
         axis_x.close()
         axis_y.close()
-        """"""
 
-    def get_tag(self, name):
+    def _get_tag(self, name):
         """"""
         length = len(self.item)
         index_x = length % self.width
@@ -196,13 +210,11 @@ class Drop(Container):
 
     def spot(self, x_min, y_min, x_max, y_max):
         """"""
-        self.axis_x.set(x_min, x_max)
-        self.axis_y.set(y_min, y_max)
+        self.set(x_min, y_min, x_max, y_max)
 
-        partition = len(self.item)
-
-        axis_x = self.axis_x.get(1)
-        axis_y = self.axis_y.get(partition)
+        partition_x = 1
+        partition_y = len(self.item)
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
 
         for (_, item) in self.item.items():
             (xmin, xmax) = next(axis_x)
@@ -219,13 +231,11 @@ class Span(Container):
 
     def spot(self, x_min, y_min, x_max, y_max):
         """"""
-        self.axis_x.set(x_min, x_max)
-        self.axis_y.set(y_min, y_max)
+        self.set(x_min, y_min, x_max, y_max)
 
-        partition = len(self.item)
-
-        axis_x = self.axis_x.get(partition)
-        axis_y = self.axis_y.get(1)
+        partition_x = len(self.item)
+        partition_y = 1
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
 
         for (_, item) in self.item.items():
             (xmin, xmax) = next(axis_x)
@@ -235,4 +245,3 @@ class Span(Container):
 
         axis_x.close()
         axis_y.close()
-

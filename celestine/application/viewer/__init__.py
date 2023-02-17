@@ -35,4 +35,4 @@ def main(page):
     images = _setup(page)
     with page.grid("grid", 4) as grid:
         for image in images:
-            grid.image(grid.get_tag("image"), image)
+            grid.image("image", image)
