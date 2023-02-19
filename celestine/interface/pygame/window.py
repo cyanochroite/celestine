@@ -48,7 +48,8 @@ class Window(master):
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
         while True:
-            match package.event.wait().type:
+            event = package.event.wait()
+            match event.type:
                 case package.QUIT:
                     break
                 case package.MOUSEBUTTONDOWN:

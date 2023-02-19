@@ -11,6 +11,6 @@ class Button(Element):
         if super().poke(x_dot, y_dot):
             self.action()
 
-    def __init__(self, action, **star):
+    def __init__(self, *, action, **star):
         self.action = action
         super().__init__(**star)

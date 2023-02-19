@@ -1,5 +1,7 @@
 """"""
 
+import math
+
 from celestine.window.collection import Rectangle
 
 from .button import Button
@@ -23,8 +25,6 @@ class Container(Rectangle):
                 y_min=y_min,
                 x_max=x_max,
                 y_max=y_max,
-                offset_x=0,
-                offset_y=2,
                 **kwargs,
             )
         )
@@ -43,8 +43,6 @@ class Container(Rectangle):
                 y_min=y_min,
                 x_max=x_max,
                 y_max=y_max,
-                offset_x=2.5,
-                offset_y=2.5,
                 **kwargs,
             )
         )
@@ -62,8 +60,6 @@ class Container(Rectangle):
                 y_min=y_min,
                 x_max=x_max,
                 y_max=y_max,
-                offset_x=0,
-                offset_y=1,
                 **kwargs,
             )
         )
@@ -80,45 +76,23 @@ class Container(Rectangle):
 
     def button(self, tag, text, action):
         """"""
-        (x_min, y_min, x_max, y_max) = self.get_next()
         return self.item_set(
             tag,
-            Button(
-                text,
-                lambda: self.turn(action),
-                x_min=x_min,
-                y_min=y_min,
-                x_max=x_max,
-                y_max=y_max,
-            ),
+            Button(text, action=lambda: self.turn(action)),
         )
 
     def image(self, tag, image):
         """"""
-        (x_min, y_min, x_max, y_max) = self.get_next()
         return self.item_set(
             tag,
-            Image(
-                image,
-                x_min=x_min,
-                y_min=y_min,
-                x_max=x_max,
-                y_max=y_max,
-            ),
+            Image(image),
         )
 
     def label(self, tag, text):
         """"""
-        (x_min, y_min, x_max, y_max) = self.get_next()
         return self.item_set(
             tag,
-            Label(
-                text,
-                x_min=x_min,
-                y_min=y_min,
-                x_max=x_max,
-                y_max=y_max,
-            ),
+            Label(text),
         )
 
     def __enter__(self):
@@ -137,30 +111,56 @@ class Container(Rectangle):
 class Grid(Container):
     """"""
 
-    def get_next(self):
+    def button(self, tag, text, action):
         """"""
-        x_min = self.move_x_min + self.offset_x * (self.index_x + 0)
-        y_min = self.move_y_min + self.offset_y * (self.index_y + 0)
-        x_max = self.move_x_min + self.offset_x * (self.index_x + 1)
-        y_max = self.move_y_min + self.offset_y * (self.index_y + 1)
+        name = self._get_tag(tag)
+        super().button(name, text, action)
 
-        self.index_x += 1
-        if self.index_x >= self.width:
-            self.index_x = 0
-            self.index_y += 1
-
-        return (x_min, y_min, x_max, y_max)
-
-    def get_x_min(self):
+    def image(self, tag, image):
         """"""
+        name = self._get_tag(tag)
+        super().image(name, image)
 
-    def get_tag(self, name):
+    def label(self, tag, text):
         """"""
-        return F"{name}_{self.index_x}-{self.index_y}"
+        name = self._get_tag(tag)
+        super().label(name, text)
+
+    def items(self):
+        """"""
+        yield from [item for (_, item) in self.item.items()]
+
+    def spot(self, x_min, y_min, x_max, y_max):
+        """"""
+        self.set(x_min, y_min, x_max, y_max)
+
+        partition_x = self.width
+        partition_y = math.ceil(len(self.item) / self.width)
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
+
+        items = self.items()
+
+        for _ in range(partition_y):
+            (ymin, ymax) = next(axis_y)
+
+            for _ in range(partition_x):
+                (xmin, xmax) = next(axis_x)
+
+                item = next(items)
+                item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()
+
+    def _get_tag(self, name):
+        """"""
+        length = len(self.item)
+        index_x = length % self.width
+        index_y = length // self.width
+
+        return F"{name}_{index_x}-{index_y}"
 
     def __init__(self, session, name, turn, width, **kwargs):
-        self.index_x = 0
-        self.index_y = 0
         self.width = width
         super().__init__(session, name, turn, **kwargs)
 
@@ -168,7 +168,40 @@ class Grid(Container):
 class Drop(Container):
     """"""
 
+    def spot(self, x_min, y_min, x_max, y_max):
+        """"""
+        self.set(x_min, y_min, x_max, y_max)
+
+        partition_x = 1
+        partition_y = len(self.item)
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
+
+        for (_, item) in self.item.items():
+            (xmin, xmax) = next(axis_x)
+            (ymin, ymax) = next(axis_y)
+
+            item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()
+
 
 class Span(Container):
     """"""
 
+    def spot(self, x_min, y_min, x_max, y_max):
+        """"""
+        self.set(x_min, y_min, x_max, y_max)
+
+        partition_x = len(self.item)
+        partition_y = 1
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
+
+        for (_, item) in self.item.items():
+            (xmin, xmax) = next(axis_x)
+            (ymin, ymax) = next(axis_y)
+
+            item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()

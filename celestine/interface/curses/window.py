@@ -1,11 +1,10 @@
 """"""
 
-from .container import Drop
-
 from celestine.window.window import Window as master
 
 from .package import package
-from .page import Page
+
+from .container import Container
 
 
 class Window(master):
@@ -13,24 +12,11 @@ class Window(master):
 
     def page(self, name, document):
         self.item_set(name, document)
-        page = Page(self)
-        self.frame = page
 
     def turn(self, page):
-        self.frame.frame.clear()
-        self.frame = Drop(
-            self.session,
-            page,
-            self.turn,
-            x_min=0,  # uses internal cordinate
-            y_min=0,
-            x_max=self.width - 1,
-            y_max=self.height - 2,
-            offset_x=0,
-            offset_y=1,
-        )
-
+        self.frame = self.container.drop(page)
         self.item_get(page)(self.frame)
+        self.frame.spot(0, 0, self.width - 2, self.height - 2)
 
         frame = package.window(
             1,
@@ -39,7 +25,7 @@ class Window(master):
             self.height - 2,
         )
 
-        for (name, item) in self.frame.item.items():
+        for (_, item) in self.frame.item.items():
             item.draw(frame)
 
         self.stdscr.noutrefresh()
@@ -49,6 +35,18 @@ class Window(master):
 
     def __enter__(self):
         super().__enter__()
+
+        self.container = Container(
+            self.session,
+            "window",
+            self.turn,
+            x_min=0,
+            y_min=0,
+            x_max=self.width,
+            y_max=self.height,
+            offset_x=0,
+            offset_y=0,
+        )
 
         self.background = package.window(0, 0, self.width, self.height)
         self.background.box()
@@ -67,8 +65,8 @@ class Window(master):
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
         while True:
-            key = self.stdscr.getch()
-            match key:
+            event = self.stdscr.getch()
+            match event:
                 case 258 | 259 | 260 | 261 as key:
                     match key:
                         case package.KEY_UP:
@@ -85,11 +83,9 @@ class Window(master):
                     self.stdscr.move(self.cord_y, self.cord_x)
                 case package.KEY_EXIT:
                     break
-                case package.KEY_CLICK as key:
-                    for key, thing in self.frame.item.items():
-                        if thing.select(self.cord_x - 1, self.cord_y - 1):
-                            if thing.type == "button":
-                                self.turn(thing.action)
+                case package.KEY_CLICK:
+                    (x_dot, y_dot) = (self.cord_x - 1, self.cord_y - 1)
+                    self.frame.poke(x_dot, y_dot)
 
         self.stdscr.keypad(0)
         package.echo()
@@ -107,10 +103,14 @@ class Window(master):
         self.window = 0
 
         #
+        self.container = None
+        self.background = None
+
+        #
         self.stdscr = package.initscr()
         package.noecho()
         package.cbreak()
         self.stdscr.keypad(1)
         package.start_color()
         #
-        self.frame = Page(self)
+        self.frame = None

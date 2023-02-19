@@ -1,9 +1,9 @@
 """"""
 
-from celestine.window.collection import Box
+from celestine.window.element import Element as element
 
 
-class Element(Box):
+class Element(element):
     """"""
 
     def __init__(self, text, kind, **star):
@@ -14,18 +14,6 @@ class Element(Box):
         self.width = 0
         self.height = 0
         super().__init__(**star)
-
-    def select(self, cord_x, cord_y):
-        """"""
-        temp_a = cord_x >= self.cord_x
-        temp_b = cord_x < self.cord_x + self.width
-        temp_c = cord_y >= self.cord_y
-        temp_d = cord_y < self.cord_y + self.height
-        return temp_a and temp_b and temp_c and temp_d
-
-    def unselect(self, cord_x, cord_y):
-        """"""
-        return not self.select(cord_x, cord_y)
 
     def origin(self):
         """"""
