@@ -2,36 +2,37 @@
 
 import math
 
-from celestine.window.collection import Rectangle
+from celestine.window.container import Container as container
 
 from .button import Button
 from .image import Image
 from .label import Label
 
 
-class Container(Rectangle):
+class Container(container):
     """"""
 
+    def button(self, tag, text, action):
+        """"""
+        return self.item_set(
+            tag,
+            Button(text, action=lambda: self.turn(action)),
+        )
+
     def drop(self, tag, **kwargs):
-        """Elements go down. Like a <div> tag."""
-        (x_min, y_min, x_max, y_max) = self.get_next()
+        """"""
         return self.item_set(
             tag,
             Drop(
                 self.session,
                 tag,
                 self.turn,
-                x_min=x_min,
-                y_min=y_min,
-                x_max=x_max,
-                y_max=y_max,
                 **kwargs,
             )
         )
 
     def grid(self, tag, width, **kwargs):
-        """Elements go in a grid. Like the <table> tag."""
-        (x_min, y_min, x_max, y_max) = self.get_next()
+        """"""
         return self.item_set(
             tag,
             Grid(
@@ -39,46 +40,8 @@ class Container(Rectangle):
                 tag,
                 self.turn,
                 width,
-                x_min=x_min,
-                y_min=y_min,
-                x_max=x_max,
-                y_max=y_max,
                 **kwargs,
             )
-        )
-
-    def span(self, tag, **kwargs):
-        """Elements go sideways. Like a <span> tag."""
-        (x_min, y_min, x_max, y_max) = self.get_next()
-        return self.item_set(
-            tag,
-            Span(
-                self.session,
-                tag,
-                self.turn,
-                x_min=x_min,
-                y_min=y_min,
-                x_max=x_max,
-                y_max=y_max,
-                **kwargs,
-            )
-        )
-
-    def draw(self, collection):
-        """"""
-        for (_, item) in self.item.items():
-            item.draw(collection)
-
-    def poke(self, x_dot, y_dot):
-        """"""
-        for (_, item) in self.item.items():
-            item.poke(x_dot, y_dot)
-
-    def button(self, tag, text, action):
-        """"""
-        return self.item_set(
-            tag,
-            Button(text, action=lambda: self.turn(action)),
         )
 
     def image(self, tag, image):
@@ -95,17 +58,17 @@ class Container(Rectangle):
             Label(text),
         )
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *_):
-        return False
-
-    def __init__(self, session, name, turn, **kwargs):
-        self.session = session
-        self.tag = name
-        self.turn = turn
-        super().__init__(**kwargs)
+    def span(self, tag, **kwargs):
+        """"""
+        return self.item_set(
+            tag,
+            Span(
+                self.session,
+                tag,
+                self.turn,
+                **kwargs,
+            )
+        )
 
 
 class Grid(Container):

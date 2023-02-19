@@ -1,39 +1,44 @@
 """"""
 
-from . import package
+import math
 
-from celestine.window.collection import Rectangle
+from celestine.window.container import Container as container
+
+from . import package
 
 from .button import Button
 from .image import Image
 from .label import Label
 
 
-class Container(Rectangle):
+class Container(container):
     """"""
 
+    def button(self, tag, text, action):
+        """"""
+        return self.item_set(
+            tag,
+            Button(
+                self.frame,
+                text,
+                lambda: self.turn(action),
+            ),
+        )
+
     def drop(self, tag, **kwargs):
-        """Elements go down. Like a <div> tag."""
-        (x_min, y_min, x_max, y_max) = self.get_next()
+        """"""
         return self.item_set(
             tag,
             Drop(
                 self.session,
                 tag,
                 self.turn,
-                x_min=x_min,
-                y_min=y_min,
-                x_max=x_max,
-                y_max=y_max,
-                offset_x=0,
-                offset_y=2.5,
                 **kwargs,
             )
         )
 
     def grid(self, tag, width, **kwargs):
-        """Elements go in a grid. Like the <table> tag."""
-        (x_min, y_min, x_max, y_max) = self.get_next()
+        """"""
         return self.item_set(
             tag,
             Grid(
@@ -41,106 +46,103 @@ class Container(Rectangle):
                 tag,
                 self.turn,
                 width,
-                x_min=x_min,
-                y_min=y_min,
-                x_max=x_max,
-                y_max=y_max,
-                offset_x=2.5,
-                offset_y=2.5,
                 **kwargs,
             )
-        )
-
-    def span(self, tag, **kwargs):
-        """Elements go sideways. Like a <span> tag."""
-        (x_min, y_min, x_max, y_max) = self.get_next()
-        return self.item_set(
-            tag,
-            Span(
-                self.session,
-                tag,
-                self.turn,
-                x_min=x_min,
-                y_min=y_min,
-                x_max=x_max,
-                y_max=y_max,
-                offset_x=10,
-                offset_y=0,
-                **kwargs,
-            )
-        )
-
-    def draw(self, collection):
-        """"""
-        for (_, item) in self.item.items():
-            item.draw(collection)
-
-    def poke(self, x_dot, y_dot):
-        """"""
-        for (_, item) in self.item.items():
-            item.poke(x_dot, y_dot)
-
-    def button(self, tag, text, action):
-        """"""
-        return self.item_set(
-            tag,
-            Button(text, lambda: self.turn(action)),
         )
 
     def image(self, tag, image):
         """"""
         return self.item_set(
             tag,
-            Image(image),
+            Image(
+                self.frame,
+                image,
+            ),
         )
 
     def label(self, tag, text):
         """"""
         return self.item_set(
             tag,
-            Label(text),
+            Label(
+                self.frame,
+                text=text,
+                width=100,
+                height=4,
+                fg="blue",
+            ),
         )
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *_):
-        return False
+    def span(self, tag, **kwargs):
+        """"""
+        return self.item_set(
+            tag,
+            Span(
+                self.session,
+                tag,
+                self.turn,
+                **kwargs,
+            )
+        )
 
     def __init__(self, session, name, turn, **kwargs):
-        self.session = session
-        self.tag = name
-        self.turn = turn
-        super().__init__(**kwargs)
+        self.frame = None
+        super().__init__(session, name, turn, **kwargs)
 
 
 class Grid(Container):
     """"""
 
-    def get_next(self):
+    def button(self, tag, text, action):
         """"""
-        x_min = self.move_x_min + self.offset_x * (self.index_x + 0)
-        y_min = self.move_y_min + self.offset_y * (self.index_y + 0)
-        x_max = self.move_x_min + self.offset_x * (self.index_x + 1)
-        y_max = self.move_y_min + self.offset_y * (self.index_y + 1)
+        name = self._get_tag(tag)
+        super().button(name, text, action)
 
-        self.index_x += 1
-        if self.index_x >= self.width:
-            self.index_x = 0
-            self.index_y += 1
-
-        return (x_min, y_min, x_max, y_max)
-
-    def get_x_min(self):
+    def image(self, tag, image):
         """"""
+        name = self._get_tag(tag)
+        super().image(name, image)
 
-    def get_tag(self, name):
+    def label(self, tag, text):
         """"""
-        return F"{name}_{self.index_x}-{self.index_y}"
+        name = self._get_tag(tag)
+        super().label(name, text)
+
+    def items(self):
+        """"""
+        yield from [item for (_, item) in self.item.items()]
+
+    def spot(self, x_min, y_min, x_max, y_max):
+        """"""
+        self.set(x_min, y_min, x_max, y_max)
+
+        partition_x = self.width
+        partition_y = math.ceil(len(self.item) / self.width)
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
+
+        items = self.items()
+
+        for _ in range(partition_y):
+            (ymin, ymax) = next(axis_y)
+
+            for _ in range(partition_x):
+                (xmin, xmax) = next(axis_x)
+
+                item = next(items)
+                item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()
+
+    def _get_tag(self, name):
+        """"""
+        length = len(self.item)
+        index_x = length % self.width
+        index_y = length // self.width
+
+        return F"{name}_{index_x}-{index_y}"
 
     def __init__(self, session, name, turn, width, **kwargs):
-        self.index_x = 0
-        self.index_y = 0
         self.width = width
         super().__init__(session, name, turn, **kwargs)
 
@@ -148,12 +150,44 @@ class Grid(Container):
 class Drop(Container):
     """"""
 
+    def spot(self, x_min, y_min, x_max, y_max):
+        """"""
+        self.set(x_min, y_min, x_max, y_max)
+
+        partition_x = 1
+        partition_y = len(self.item)
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
+
+        for (_, item) in self.item.items():
+            (xmin, xmax) = next(axis_x)
+            (ymin, ymax) = next(axis_y)
+
+            item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()
+
 
 class Span(Container):
     """"""
 
-    def draw(self, collection):
+    def spot(self, x_min, y_min, x_max, y_max):
         """"""
-        self.collection = package.Frame(collection)
-        self.collection.pack()
-        super().draw(self.collection)
+        self.set(x_min, y_min, x_max, y_max)
+
+        partition_x = len(self.item)
+        partition_y = 1
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
+
+        for (_, item) in self.item.items():
+            (xmin, xmax) = next(axis_x)
+            (ymin, ymax) = next(axis_y)
+
+            item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()
+
+    def __enter__(self):
+        self.frame = package.Frame(self.frame)
+        return super().__enter__()
