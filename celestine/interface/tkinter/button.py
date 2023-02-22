@@ -10,11 +10,14 @@ from .element import Element
 class Button(Element, button):
     """"""
 
-    def __init__(self, frame, text, command):
-        super().__init__(
-            package.Button(
-                frame,
-                text=text,
-                command=command,
-            )
-        )
+    def draw(self, collection, **star):
+        """"""
+        self.item = package.Button
+        star.update(text=F"button:{self.text}")
+        star.update(command=self.action)
+        super().draw(collection, **star)
+
+    def __init__(self, text, **star):
+        self.text = text
+        super().__init__(**star)
+

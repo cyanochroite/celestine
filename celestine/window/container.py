@@ -18,11 +18,7 @@ class Container(Rectangle):
         """"""
         return self.item_set(
             tag,
-            Button(
-                self.frame,
-                text,
-                lambda: self.turn(action),
-            ),
+            self._button(text, action=lambda: self.turn(action)),
         )
 
     def image(self, tag, image):
@@ -36,29 +32,23 @@ class Container(Rectangle):
         """"""
         return self.item_set(
             tag,
-            Label(
-                self.frame,
-                text=text,
-                width=100,
-                height=4,
-                fg="blue",
-            ),
+            self._label(text),
         )
 
-    def draw(self, collection):
+    def draw(self, collection, **star):
         """"""
         for (_, item) in self.item.items():
-            item.draw(collection)
+            item.draw(collection, **star)
 
-    def poke(self, x_dot, y_dot):
+    def poke(self, x_dot, y_dot, **star):
         """"""
         for (_, item) in self.item.items():
-            item.poke(x_dot, y_dot)
+            item.poke(x_dot, y_dot, **star)
 
-    def spot(self, x_min, y_min, x_max, y_max):
+    def spot(self, x_min, y_min, x_max, y_max, **star):
         """"""
         for (_, item) in self.item.items():
-            item.spot(x_min, y_min, x_max, y_max)
+            item.spot(x_min, y_min, x_max, y_max, **star)
 
     def __enter__(self):
         return self

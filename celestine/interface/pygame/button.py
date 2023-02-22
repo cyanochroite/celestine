@@ -8,6 +8,13 @@ from .element import Element
 class Button(Element, button):
     """"""
 
-    def __init__(self, font, text, **star):
-        item = font.render(F"Button{text}", True, (255, 255, 255))
-        super().__init__(item, **star)
+    def draw(self, collection, **star):
+        """"""
+        font = star.get("font")
+        self.item = font.render(F"Button{self.text}", True, (255, 255, 255))
+        super().draw(collection, **star)
+
+    def __init__(self, text, **star):
+        self.text = text
+        super().__init__(**star)
+

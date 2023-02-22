@@ -12,16 +12,10 @@ from .label import Label
 class Container(container):
     """"""
 
-    def button(self, tag, text, action):
+    def draw(self, collection, **star):
         """"""
-        return self.item_set(
-            tag,
-            Button(
-                self.font,
-                text,
-                action=lambda: self.turn(action),
-            ),
-        )
+        star.update(font=self.font)
+        super().draw(collection, **star)
 
     def drop(self, tag, **kwargs):
         """"""
@@ -48,16 +42,6 @@ class Container(container):
                 width,
                 **kwargs,
             )
-        )
-
-    def label(self, tag, text):
-        """"""
-        return self.item_set(
-            tag,
-            Label(
-                self.font,
-                text,
-            ),
         )
 
     def span(self, tag, **kwargs):

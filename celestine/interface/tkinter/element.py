@@ -18,8 +18,8 @@ class Element(Object):
         """"""
         return False
 
-    def __init__(self):
+    def __init__(self, **star):
         """"""
         self.item = None
-        super().__init__()
+        super().__init__(**star)
 

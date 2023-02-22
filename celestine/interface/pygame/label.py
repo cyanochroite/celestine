@@ -8,7 +8,14 @@ from .element import Element
 class Label(Element, label):
     """"""
 
-    def __init__(self, font, text, **star):
-        super().__init__(font.render(text, True, (255, 255, 255)), **star)
+    def draw(self, collection, **star):
+        """"""
+        font = star.get("font")
+        self.item = font.render(self.text, True, (255, 255, 255))
+        super().draw(collection, **star)
+
+    def __init__(self, text, **star):
+        self.text = text
+        super().__init__(**star)
 
 
