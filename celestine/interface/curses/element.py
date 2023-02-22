@@ -6,13 +6,13 @@ from celestine.window.element import Element as element
 class Element(element):
     """"""
 
-    def __init__(self, text, **star):
+    def __init__(self, tag, text, **star):
         self.text = text
         self.cord_x = 0
         self.cord_y = 0
         self.width = 0
         self.height = 0
-        super().__init__(text, **star)
+        super().__init__(tag, text, **star)
 
     def origin(self):
         """"""

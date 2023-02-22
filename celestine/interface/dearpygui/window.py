@@ -4,18 +4,19 @@ from celestine.window.window import Window as master
 
 
 from . import package
-from .page import Page
+
+from .container import Container
 
 
 class Window(master):
     """"""
 
     def page(self, name, document):
-        tag = name
-        value = Page(self, tag)
+        value = self.container.drop(name)
+        value.frame = package.window(tag=value.tag)
         self.item_set(name, value)
         with value.frame:
-            package.configure_item(tag, show=False)
+            package.configure_item(value.tag, show=False)
             document(value)
 
     def turn(self, page, sent=None):
@@ -47,6 +48,19 @@ class Window(master):
             decorated=True,
             clear_color=(0, 0, 0)
         )
+
+        self.container = Container(
+            self.session,
+            "window",
+            self.turn,
+            x_min=0,
+            y_min=0,
+            x_max=1920,
+            y_max=1080,
+            offset_x=0,
+            offset_y=0,
+        )
+
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -55,4 +69,5 @@ class Window(master):
         package.show_viewport(minimized=False, maximized=False)
         package.start_dearpygui()
         package.destroy_context()
+        self.container = None
         return False

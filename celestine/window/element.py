@@ -16,3 +16,7 @@ class Element(Box):
         self.y_min = y_min
         self.x_max = x_max
         self.y_max = y_max
+
+    def __init__(self, tag, **star):
+        self.tag = tag
+        super().__init__(**star)

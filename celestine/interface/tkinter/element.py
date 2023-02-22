@@ -1,12 +1,12 @@
 """"""
 
 
-from celestine.window.collection import Object
+from celestine.window.element import Element as element
 
 from . import package
 
 
-class Element(Object):
+class Element(element):
     """"""
 
     def draw(self, collection, **star):

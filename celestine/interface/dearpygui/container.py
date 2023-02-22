@@ -15,13 +15,44 @@ from .label import Label
 class Container(container):
     """"""
 
+    def button(self, tag, label, action):
+        return self.item_set(
+            tag,
+            Button(
+                package.item_key(self.tag, tag),
+                label,
+                package.item_key(self.tag, tag),
+                action,
+                lambda sender, app_data, user_data: self.turn(*user_data),
+            ),
+        )
+
+    def image(self, tag, image):
+        return self.item_set(
+            tag,
+            Image(
+                package.item_key(self.tag, tag),
+                image,
+            ),
+        )
+
+    def label(self, tag, text):
+        return self.item_set(
+            tag,
+            Label(
+                package.item_key(self.tag, tag),
+                text,
+                "Label",
+            ),
+        )
+
     def drop(self, tag, **kwargs):
         """"""
         return self.item_set(
             tag,
             Drop(
                 self.session,
-                tag,
+                package.item_key(self.tag, tag),
                 self.turn,
                 **kwargs,
             )
@@ -33,7 +64,7 @@ class Container(container):
             tag,
             Grid(
                 self.session,
-                tag,
+                package.item_key(self.tag, tag),
                 self.turn,
                 width=width,
                 **kwargs,
@@ -46,7 +77,7 @@ class Container(container):
             tag,
             Span(
                 self.session,
-                tag,
+                package.item_key(self.tag, tag),
                 self.turn,
                 **kwargs,
             )
