@@ -1,8 +1,8 @@
 """"""
 
-from . import package
-
 from celestine.window.button import Button as button
+
+from . import package
 
 from .element import Element
 
@@ -16,8 +16,4 @@ class Button(Element, button):
         star.update(text=F"button:{self.text}")
         star.update(command=self.action)
         super().draw(collection, **star)
-
-    def __init__(self, text, **star):
-        self.text = text
-        super().__init__(**star)
 

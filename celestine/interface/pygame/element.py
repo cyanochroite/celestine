@@ -10,7 +10,3 @@ class Element(element):
         """"""
         position = (self.x_min, self.y_min)
         collection.blit(self.item, position)
-
-    def __init__(self, **star):
-        self.item = None
-        super().__init__(**star)

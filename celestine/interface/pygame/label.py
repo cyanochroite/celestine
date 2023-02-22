@@ -13,9 +13,3 @@ class Label(Element, label):
         font = star.get("font")
         self.item = font.render(self.text, True, (255, 255, 255))
         super().draw(collection, **star)
-
-    def __init__(self, text, **star):
-        self.text = text
-        super().__init__(**star)
-
-

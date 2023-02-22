@@ -19,7 +19,3 @@ class Label(Element, label):
         star.update(fg="blue")
         super().draw(collection, **star)
 
-    def __init__(self, text, **star):
-        self.text = text
-        super().__init__(**star)
-

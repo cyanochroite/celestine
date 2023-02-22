@@ -8,9 +8,7 @@ from .element import Element
 class Button(Element, button):
     """"""
 
-    def __init__(self, text, **star):
-        super().__init__(
-            F"button:{text}",
-            "button",
-            **star,
-        )
+    def draw(self, frame, **star):
+        """"""
+        star.update(text=F"button:{self.text}")
+        super().draw(frame, **star)
