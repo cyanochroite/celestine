@@ -44,13 +44,6 @@ class Container(container):
             )
         )
 
-    def image(self, tag, image):
-        """"""
-        return self.item_set(
-            tag,
-            Image(image),
-        )
-
     def label(self, tag, text):
         """"""
         return self.item_set(
@@ -69,6 +62,10 @@ class Container(container):
                 **kwargs,
             )
         )
+
+    def __init__(self, session, name, turn, **star):
+        super().__init__(session, name, turn, **star)
+        super().ready(Button, Image, Label)
 
 
 class Grid(Container):

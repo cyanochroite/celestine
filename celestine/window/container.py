@@ -3,12 +3,47 @@
 from celestine.window.collection import Rectangle
 
 from .button import Button
-from .image import Image
 from .label import Label
 
 
 class Container(Rectangle):
     """"""
+
+    def ready(self, button, image, label):
+        self._button = button
+        self._image = image
+        self._label = label
+
+    def button(self, tag, text, action):
+        """"""
+        return self.item_set(
+            tag,
+            Button(
+                self.frame,
+                text,
+                lambda: self.turn(action),
+            ),
+        )
+
+    def image(self, tag, image):
+        """"""
+        return self.item_set(
+            tag,
+            self._image(image),
+        )
+
+    def label(self, tag, text):
+        """"""
+        return self.item_set(
+            tag,
+            Label(
+                self.frame,
+                text=text,
+                width=100,
+                height=4,
+                fg="blue",
+            ),
+        )
 
     def draw(self, collection):
         """"""

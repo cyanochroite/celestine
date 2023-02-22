@@ -1,12 +1,19 @@
+""""""
+
+from celestine.window.label import Label as label
+
+from .element import Element
+
 from . import package
-from .widget import Widget
 
 
-class Label(Widget):
-    def __init__(self, frame, **kwargs):
+class Label(Element, label):
+    """"""
+
+    def __init__(self, text, **star):
         super().__init__(
-            package.Label(
-                frame,
-                **kwargs,
-            )
+            F"label:{text}",
+            "label",
+            **star,
         )
+

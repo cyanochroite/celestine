@@ -18,6 +18,7 @@ class Window(master):
         )
         page.frame.grid(row=0, column=0, sticky="nsew")
         document(page)
+        page.draw(page.frame)
         self.item_set(name, page)
 
     def turn(self, page):
