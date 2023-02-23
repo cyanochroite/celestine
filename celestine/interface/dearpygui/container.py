@@ -12,6 +12,10 @@ from .image import Image
 from .label import Label
 
 
+def callback(sender, app_data, user_data):
+    pass
+
+
 class Container(container):
     """"""
 
@@ -24,25 +28,6 @@ class Container(container):
                 package.tag_root(self.tag),
                 action,
                 lambda sender, app_data, user_data: self.turn(*user_data),
-            ),
-        )
-
-    def image(self, tag, image):
-        return self.item_set(
-            tag,
-            Image(
-                tag,
-                image,
-            ),
-        )
-
-    def label(self, tag, text):
-        return self.item_set(
-            tag,
-            Label(
-                tag,
-                text,
-                "Label",
             ),
         )
 
@@ -92,20 +77,6 @@ class Container(container):
 class Grid(grid, Container):
     """"""
 
-    def draw(self, collection, **star):
-        """"""
-        partition_x = self.width
-        partition_y = math.ceil(len(self.item) / self.width)
-
-        items = self.items()
-
-        for _ in range(partition_y):
-            frame = package.Frame(collection)
-            for _ in range(partition_x):
-                item = next(items)
-                item.draw(frame, **star)
-            frame.pack()
-
 
 class Drop(Container):
     """"""
@@ -113,9 +84,3 @@ class Drop(Container):
 
 class Span(Container):
     """"""
-
-    def draw(self, collection, **star):
-        """"""
-        frame = package.Frame(collection)
-        frame.pack()
-        super().draw(frame, **star)

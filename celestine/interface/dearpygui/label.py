@@ -10,10 +10,13 @@ from . import package
 class Label(label, Element):
     """"""
 
-    def __init__(self, tag, text, label):
+    def draw(self, collection, **star):
+        """"""
+        label = "Label"
         package.add_text(
-            text,
-            tag=tag,
-            label=F"{tag}{label}",
+            self.text,
+            tag=self.tag,
+            label=F"{self.tag}{label}",
             show_label=True,
         )
+        super().draw(collection, **star)

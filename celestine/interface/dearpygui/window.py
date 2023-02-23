@@ -18,11 +18,13 @@ class Window(master):
         with value.frame:
             package.configure_item(value.tag, show=False)
             document(value)
+            value.draw(None)
 
     def turn(self, page, sent=None):
         if sent:
             package.hide_item(sent)
-        tag = self.item_get(page).tag
+        book = self.item_get(page)
+        tag = book.tag
         package.show_item(tag)
         package.set_primary_window(tag, True)
 
