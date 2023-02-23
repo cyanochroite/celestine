@@ -5,7 +5,7 @@ from celestine.window.label import Label as label
 from .element import Element
 
 
-class Label(Element, label):
+class Label(label, Element):
     """"""
 
     def draw(self, frame, **star):

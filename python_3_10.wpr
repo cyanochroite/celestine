@@ -12,7 +12,7 @@ proj.directory-list = [{'dirloc': loc('.'),
                         'watch_for_changes': True}]
 proj.file-type = 'shared'
 proj.launch-config = {loc('celestine/__main__.py'): ('project',
-        ('-a viewer -i dearpygui -l en',
+        ('-a demo -i dearpygui -l en',
          '')),
                       loc('view/__main__.py'): ('project',
         ('curses',

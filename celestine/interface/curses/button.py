@@ -5,7 +5,7 @@ from celestine.window.button import Button as button
 from .element import Element
 
 
-class Button(Element, button):
+class Button(button, Element):
     """"""
 
     def draw(self, frame, **star):

@@ -1,8 +1,15 @@
+""""""
+
+from celestine.window.image import Image as image
+
+from .element import Element
+
 from . import package
-from .widget import Widget
 
 
-class Image(Widget):
+class Image(image, Element):
+    """"""
+
     def __init__(self, tag, file):
         image = package.load_image(file) or (0, 0, 0, [])
         self.width = image[0]

@@ -1,6 +1,5 @@
 """"""
 
-
 from celestine.window.image import Image as image
 
 from .element import Element
@@ -8,7 +7,7 @@ from .element import Element
 from . import package
 
 
-class Image(Element, image):
+class Image(image, Element):
     """"""
 
     def draw(self, collection, **star):
@@ -17,4 +16,3 @@ class Image(Element, image):
         self.item = package.Label
         star.update(image=self.hold)
         super().draw(collection, **star)
-

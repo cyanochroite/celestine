@@ -1,8 +1,15 @@
+""""""
+
+from celestine.window.button import Button as button
+
+from .element import Element
+
 from . import package
-from .widget import Widget
 
 
-class Button(Widget):
+class Button(button, Element):
+    """"""
+
     def __init__(self, tag, label, sender, action, function):
         package.add_button(
             tag=tag,

@@ -7,7 +7,7 @@ from .element import Element
 from . import package
 
 
-class Label(Element, label):
+class Label(label, Element):
     """"""
 
     def draw(self, collection, **star):
@@ -18,4 +18,3 @@ class Label(Element, label):
         star.update(height=4)
         star.update(fg="blue")
         super().draw(collection, **star)
-

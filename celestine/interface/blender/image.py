@@ -1,13 +1,11 @@
 """"""
 
-import pygame
-
 from celestine.window.image import Image as image
 
 from .element import Element
 
 
-class Image(Element, image):
+class Image(image, Element):
     """"""
 
     def draw(self, collection):

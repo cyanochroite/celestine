@@ -1,8 +1,15 @@
+""""""
+
+from celestine.window.label import Label as label
+
+from .element import Element
+
 from . import package
-from .widget import Widget
 
 
-class Label(Widget):
+class Label(label, Element):
+    """"""
+
     def __init__(self, tag, text, label):
         package.add_text(
             text,

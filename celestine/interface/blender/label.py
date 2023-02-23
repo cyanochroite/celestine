@@ -4,14 +4,10 @@ from celestine.window.label import Label as label
 
 from .element import Element
 
-
 from .package import mesh as _mesh
 
 
-class Label(Element, label):
-
-
-class Label(Element):
+class Label(label, Element):
     """"""
 
     def draw(self, collection):

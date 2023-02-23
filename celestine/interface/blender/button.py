@@ -2,13 +2,13 @@
 
 from celestine.window.button import Button as button
 
+from .element import Element
+
 from .package.data import mesh as make_mesh
 from .package import mesh as _mesh
 
-from .element import Element
 
-
-class Button(Element, button):
+class Button(button, Element):
     """"""
 
     def draw(self, collection):
