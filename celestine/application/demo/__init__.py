@@ -15,28 +15,28 @@ class Session(SuperSession):
 def one(page: Page) -> N:
     """"""
     language = page.session.language
-    with page.span("head") as line:
-        line.label("title", language.DEMO_ONE_TITLE)
-    with page.span("body") as line:
-        line.button("past", language.DEMO_ONE_PAST, "main")
-        line.button("next", language.DEMO_ONE_NEXT, "two")
+    with page.span("one_head") as line:
+        line.label("one_title", language.DEMO_ONE_TITLE)
+    with page.span("one_body") as line:
+        line.button("one_past", language.DEMO_ONE_PAST, "main")
+        line.button("one_next", language.DEMO_ONE_NEXT, "two")
 
 
 def two(page: Page) -> N:
     """"""
     language = page.session.language
-    with page.span("head") as line:
-        line.label("title", language.DEMO_TWO_TITLE)
-    with page.span("body") as line:
-        line.button("past", language.DEMO_TWO_PAST, "one")
-        line.button("next", language.DEMO_TWO_NEXT, "main")
+    with page.span("two_head") as line:
+        line.label("two_title", language.DEMO_TWO_TITLE)
+    with page.span("two_body") as line:
+        line.button("two_past", language.DEMO_TWO_PAST, "one")
+        line.button("two_next", language.DEMO_TWO_NEXT, "main")
 
 
 def main(page: Page) -> N:
     """"""
     language = page.session.language
-    with page.span("head") as line:
-        line.label("title", language.DEMO_MAIN_TITLE)
-    with page.span("body") as line:
-        line.button("past", language.DEMO_MAIN_PAST, "one")
-        line.button("next", language.DEMO_MAIN_NEXT, "two")
+    with page.span("main_head") as line:
+        line.label("main_title", language.DEMO_MAIN_TITLE)
+    with page.span("main_body") as line:
+        line.button("main_past", language.DEMO_MAIN_PAST, "one")
+        line.button("main_next", language.DEMO_MAIN_NEXT, "two")

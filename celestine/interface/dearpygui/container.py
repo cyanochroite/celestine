@@ -19,9 +19,9 @@ class Container(container):
         return self.item_set(
             tag,
             Button(
-                package.item_key(self.tag, tag),
+                tag,
                 label,
-                package.item_key(self.tag, tag),
+                package.tag_root(self.tag),
                 action,
                 lambda sender, app_data, user_data: self.turn(*user_data),
             ),
@@ -31,7 +31,7 @@ class Container(container):
         return self.item_set(
             tag,
             Image(
-                package.item_key(self.tag, tag),
+                tag,
                 image,
             ),
         )
@@ -40,7 +40,7 @@ class Container(container):
         return self.item_set(
             tag,
             Label(
-                package.item_key(self.tag, tag),
+                tag,
                 text,
                 "Label",
             ),
@@ -52,7 +52,7 @@ class Container(container):
             tag,
             Drop(
                 self.session,
-                package.item_key(self.tag, tag),
+                tag,
                 self.turn,
                 **kwargs,
             )
@@ -64,7 +64,7 @@ class Container(container):
             tag,
             Grid(
                 self.session,
-                package.item_key(self.tag, tag),
+                tag,
                 self.turn,
                 width=width,
                 **kwargs,
@@ -77,7 +77,7 @@ class Container(container):
             tag,
             Span(
                 self.session,
-                package.item_key(self.tag, tag),
+                tag,
                 self.turn,
                 **kwargs,
             )
@@ -89,7 +89,7 @@ class Container(container):
         super().ready(Button, Image, Label)
 
 
-class Grid(Container, grid):
+class Grid(grid, Container):
     """"""
 
     def draw(self, collection, **star):

@@ -61,6 +61,8 @@ class Window(master):
             offset_y=0,
         )
 
+        self.tag = "window"
+
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -71,3 +73,4 @@ class Window(master):
         package.destroy_context()
         self.container = None
         return False
+

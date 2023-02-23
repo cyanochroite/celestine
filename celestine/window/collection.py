@@ -111,8 +111,8 @@ class Collection(Object):
 
     def children(self):
         """"""
-        for _, thing in self.item.items():
-            yield thing
+        for _, item in self.item.items():
+            yield item
 
     def item_get(self, tag):
         """"""
@@ -122,6 +122,16 @@ class Collection(Object):
         """"""
         self.item[tag] = value
         return value
+
+    def load(self, tag):
+        """"""
+        return self.item[tag]
+
+    def save(self, item):
+        """"""
+        tag = item.tag
+        self.item[tag] = item
+        return item
 
     def __init__(self, **star):
         self.item = {}

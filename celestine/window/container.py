@@ -2,9 +2,6 @@
 
 from celestine.window.collection import Rectangle
 
-from .button import Button
-from .label import Label
-
 
 class Container(Rectangle):
     """"""
@@ -16,24 +13,18 @@ class Container(Rectangle):
 
     def button(self, tag, text, action):
         """"""
-        return self.item_set(
-            tag,
-            self._button(tag, text, action=lambda: self.turn(action)),
-        )
+        item = self._button(tag, text, action=lambda: self.turn(action))
+        return self.save(item)
 
     def image(self, tag, image):
         """"""
-        return self.item_set(
-            tag,
-            self._image(tag, image),
-        )
+        item = self._image(tag, image)
+        return self.save(item)
 
     def label(self, tag, text):
         """"""
-        return self.item_set(
-            tag,
-            self._label(tag, text),
-        )
+        item = self._label(tag, text)
+        return self.save(item)
 
     def draw(self, collection, **star):
         """"""

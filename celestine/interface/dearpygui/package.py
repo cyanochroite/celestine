@@ -34,10 +34,6 @@ window = dearpygui.dearpygui.window
 group = dearpygui.dearpygui.group
 
 
-def item_key(frame, tag):
-    return F"_{frame}__{tag}"
-
-
-def item_key(one, two):
-    return F"{one}_{two}"
+def tag_root(tag):
+    return tag.split("_")[0]
 
