@@ -35,7 +35,7 @@ AD: TA = D[S, Argument]
 AI: TA = IT[T[S, Argument]]
 
 
-class SuperState():
+class SuperState:
     """"""
 
     def __init__(self, application: MT, interface: MT, language: MT) -> N:

@@ -15,7 +15,7 @@ from celestine.unicode import ESCAPE
 from celestine.unicode import SPACE
 
 
-class Package():
+class Package:
     """"""
 
     def window(self, column, row, width, height):

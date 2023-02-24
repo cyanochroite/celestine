@@ -159,7 +159,7 @@ def make_arguments(language: MT, parser: AP) -> APD:
 def add_argument(sessions: list[Session], arguments: APD) -> N:
     """"""
     for session in sessions:
-        for (name, argument) in session.items():
+        for name, argument in session.items():
             if not argument.argument:
                 continue
             parser = arguments[argument]
@@ -168,13 +168,13 @@ def add_argument(sessions: list[Session], arguments: APD) -> N:
             parser.add_argument(*args, **kwargs)
 
 
-def add_attribute(sessions: list[Session],
-                  configuration: Configuration,
-                  args: argparse.Namespace) -> N:
+def add_attribute(
+    sessions: list[Session], configuration: Configuration, args: argparse.Namespace
+) -> N:
     """"""
     save = bool(getattr(args, CONFIGURATION, NONE))
     for session in sessions:
-        for (option, argument) in session.items():
+        for option, argument in session.items():
             if not argument.attribute:
                 continue
             override = getattr(args, option, NONE)
@@ -187,10 +187,15 @@ def add_attribute(sessions: list[Session],
                 configuration.set(section, option, override)
 
 
-def get_parser(argv: L[S], exit_on_error: B, application: MT,
-               language: MT,
-               attributes: L[Session], fast: B,
-               configuration: Configuration) -> L[Dictionary]:
+def get_parser(
+    argv: L[S],
+    exit_on_error: B,
+    application: MT,
+    language: MT,
+    attributes: L[Session],
+    fast: B,
+    configuration: Configuration,
+) -> L[Dictionary]:
     """"""
     parser = make_parser(language, exit_on_error)
 

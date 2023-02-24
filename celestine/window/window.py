@@ -22,7 +22,7 @@ class Window(Collection):
             raise RuntimeError(message) from error
         except KeyError as error:
             page = self.turn_page
-            message = F"Missing function called {page}."
+            message = f"Missing function called {page}."
             raise RuntimeError(message) from error
         return False
 

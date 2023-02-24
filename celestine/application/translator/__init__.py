@@ -56,6 +56,6 @@ def _report(page: Page):
     with page.line("head") as line:
         line.label("title", "Page main")
     train = _train()
-    for (tag, text) in train.items():
+    for tag, text in train.items():
         with page.line("body") as line:
             line.label(tag, text)

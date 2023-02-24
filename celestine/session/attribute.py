@@ -20,7 +20,7 @@ from .text import VERSION
 AT: TA = D[S, A]
 
 
-class Attribute():
+class Attribute:
     """"""
 
     def dictionary(self) -> AT:

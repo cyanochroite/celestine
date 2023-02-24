@@ -18,7 +18,7 @@ from celestine.unicode import POUND_SIGN
 from .text import FILE
 
 
-class Configuration():
+class Configuration:
     """parse configuration stuff."""
 
     def __init__(self) -> N:

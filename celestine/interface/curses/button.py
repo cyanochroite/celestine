@@ -10,5 +10,5 @@ class Button(button, Element):
 
     def draw(self, frame, **star):
         """"""
-        star.update(text=F"button:{self.text}")
+        star.update(text=f"button:{self.text}")
         super().draw(frame, **star)

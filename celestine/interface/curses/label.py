@@ -10,5 +10,5 @@ class Label(label, Element):
 
     def draw(self, frame, **star):
         """"""
-        star.update(text=F"label:{self.text}")
+        star.update(text=f"label:{self.text}")
         super().draw(frame, **star)

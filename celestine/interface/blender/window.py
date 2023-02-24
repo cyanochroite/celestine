@@ -12,9 +12,9 @@ from .mouse import Mouse
 
 def context():
     for area in bpy.context.screen.areas:
-        if area.type == 'VIEW_3D':
+        if area.type == "VIEW_3D":
             override = bpy.context.copy()
-            override['area'] = area
+            override["area"] = area
             return override
     return None
 
@@ -44,7 +44,7 @@ class Window(master):
 
     def item_find(self, page):
         """"""
-        for (name, item) in bpy.data.collections.items():
+        for name, item in bpy.data.collections.items():
             if page == name:
                 return item
 
@@ -85,7 +85,7 @@ class Window(master):
         camera.location = (+17.5, +10.0, -60.0)
         camera.rotation = (180, 0, 0)
         camera.ortho_scale = +35.0
-        camera.type = 'ORTHO'
+        camera.type = "ORTHO"
 
         light = data.light.sun.make(collection, "light")
         light.location = (00.0, 00.0, -60.0)
@@ -96,7 +96,7 @@ class Window(master):
         self.mouse.draw(collection)
 
         override = context()
-        bpy.ops.view3d.toggle_shading(override, type='RENDERED')
+        bpy.ops.view3d.toggle_shading(override, type="RENDERED")
         bpy.ops.view3d.view_camera(override)
 
         return self

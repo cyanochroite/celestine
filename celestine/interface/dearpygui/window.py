@@ -48,7 +48,7 @@ class Window(master):
             vsync=True,
             always_on_top=False,
             decorated=True,
-            clear_color=(0, 0, 0)
+            clear_color=(0, 0, 0),
         )
 
         self.container = Container(
@@ -75,4 +75,3 @@ class Window(master):
         package.destroy_context()
         self.container = None
         return False
-

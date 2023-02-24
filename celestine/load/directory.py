@@ -37,7 +37,7 @@ def walk(top):
     """"""
     path = []
     file = []
-    for (dirpath, dirnames, filenames) in os.walk(top):
+    for dirpath, dirnames, filenames in os.walk(top):
         for dirname in dirnames:
             path.append((dirpath, dirname))
         for filename in filenames:
@@ -47,7 +47,7 @@ def walk(top):
 
 def walk_module(top: S) -> GE[T[S, L[S], L[S]], N, N]:
     """"""
-    for (dirpath, dirnames, filenames) in os.walk(top):
+    for dirpath, dirnames, filenames in os.walk(top):
         if ".mypy_cache" in dirnames:
             dirnames.remove(".mypy_cache")
         if "__pycache__" in dirnames:
@@ -57,13 +57,13 @@ def walk_module(top: S) -> GE[T[S, L[S], L[S]], N, N]:
 
 def walk_directory(top: S) -> GE[S, N, N]:
     """"""
-    for (dirpath, dirnames, _) in walk_module(top):
+    for dirpath, dirnames, _ in walk_module(top):
         for dirname in dirnames:
             yield os.path.join(dirpath, dirname)
 
 
 def walk_file(top: S) -> GE[S, N, N]:
     """"""
-    for (dirpath, _, filenames) in os.walk(top):
+    for dirpath, _, filenames in os.walk(top):
         for filename in filenames:
             yield os.path.join(dirpath, filename)

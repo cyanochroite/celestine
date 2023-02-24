@@ -24,10 +24,8 @@ def function(module: MT) -> D[S, F]:
     dictionary = vars(module)
     iterable = {
         key: value
-        for key, value
-        in dictionary.items()
-        if repr(value).startswith(FUNCTION)
-        and not key.startswith(LOW_LINE)
+        for key, value in dictionary.items()
+        if repr(value).startswith(FUNCTION) and not key.startswith(LOW_LINE)
     }
     return iterable
 
@@ -38,11 +36,7 @@ def function_name(module: MT) -> L[S]:
     """
 
     dictionary = function(module)
-    iterable = [
-        key
-        for key, value
-        in dictionary.items()
-    ]
+    iterable = [key for key, value in dictionary.items()]
     return iterable
 
 
@@ -51,9 +45,5 @@ def function_value(module: MT) -> L[F]:
     Load from module all functions and turn them into dictionary.
     """
     dictionary = function(module)
-    iterable = [
-        value
-        for key, value
-        in dictionary.items()
-    ]
+    iterable = [value for key, value in dictionary.items()]
     return iterable

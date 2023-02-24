@@ -30,7 +30,7 @@ def main(_: Page) -> N:
     paths = directory.find(TARGET)
     for path in paths:
         dictionary = load.dictionary(*path)
-        for (item, value) in dictionary.items():
+        for item, value in dictionary.items():
             setattr(module, item, value)
 
     unittest.main(

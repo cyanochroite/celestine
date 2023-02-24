@@ -39,29 +39,33 @@ from celestine.unicode import APOSTROPHE
 
 MAXIMUM_LINE_LENGTH = 72
 
-unicode_punctuation = frozenset({
-    COLON,
-    COMMA,
-    EXCLAMATION_MARK,
-    FULL_STOP,
-    QUESTION_MARK,
-    SEMICOLON,
-})
+unicode_punctuation = frozenset(
+    {
+        COLON,
+        COMMA,
+        EXCLAMATION_MARK,
+        FULL_STOP,
+        QUESTION_MARK,
+        SEMICOLON,
+    }
+)
 
-unicode_whitespace = frozenset({
-    CARRIAGE_RETURN,
-    CHARACTER_TABULATION,
-    FORM_FEED,
-    INFORMATION_SEPARATOR_FOUR,
-    INFORMATION_SEPARATOR_THREE,
-    INFORMATION_SEPARATOR_TWO,
-    LINE_FEED,
-    LINE_SEPARATOR,
-    LINE_TABULATION,
-    NEXT_LINE,
-    PARAGRAPH_SEPARATOR,
-    SPACE,
-})
+unicode_whitespace = frozenset(
+    {
+        CARRIAGE_RETURN,
+        CHARACTER_TABULATION,
+        FORM_FEED,
+        INFORMATION_SEPARATOR_FOUR,
+        INFORMATION_SEPARATOR_THREE,
+        INFORMATION_SEPARATOR_TWO,
+        LINE_FEED,
+        LINE_SEPARATOR,
+        LINE_TABULATION,
+        NEXT_LINE,
+        PARAGRAPH_SEPARATOR,
+        SPACE,
+    }
+)
 
 plane_0 = set({})
 for index in range(0x10000):
@@ -102,7 +106,6 @@ def word_wrap(string):
     size = 0
 
     for character in string:
-
         if character == LINE_SEPARATOR:
             if column + size > MAXIMUM_LINE_LENGTH:
                 yield from REVERSE_SOLIDUS
@@ -115,7 +118,6 @@ def word_wrap(string):
             size = 0
 
         elif character == BREAK_PERMITTED_HERE:
-
             if column + size + 1 > MAXIMUM_LINE_LENGTH:
                 yield from REVERSE_SOLIDUS
                 yield from LINE_FEED
@@ -163,8 +165,7 @@ def normalize_whitespace(string):
 
 
 def normalize_quotation(string):
-    """
-    """
+    """ """
 
     for character in string:
         if character == QUOTATION_MARK:
@@ -198,7 +199,7 @@ def assignment_expression(identifier, expression):
 
 def transverse_dictionary(dictionary):
     """"""
-    for (key, value) in sorted(dictionary.items()):
+    for key, value in sorted(dictionary.items()):
         yield from assignment_expression(key, value)
 
 

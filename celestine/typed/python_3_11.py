@@ -2,10 +2,12 @@
 
 from types import ModuleType as MT  # noqa: F401 pylint: disable=W0611
 
-from typing import Callable as CA   # noqa: F401 pylint: disable=W0611
+from typing import Callable as CA  # noqa: F401 pylint: disable=W0611
 from typing import Iterable as IT  # noqa: F401 pylint: disable=W0611
+
 # <python_3_11>
 from typing import Self as SELF  # noqa: F401 pylint: disable=W0611
+
 # </python_3_11>
 
 # Generator[YieldType, SendType, ReturnType]

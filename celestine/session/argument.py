@@ -116,7 +116,7 @@ class Optional(Flag, Help):
         )
 
 
-class Information (Flag, Action, Help):
+class Information(Flag, Action, Help):
     """"""
 
     # pylint: disable-next=redefined-builtin

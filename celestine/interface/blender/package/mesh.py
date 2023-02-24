@@ -12,7 +12,7 @@ def mesh(name, verts, edges, faces, layers):
         bmesh.verts.new(vert)
     bmesh.verts.ensure_lookup_table()
 
-    for (one, two) in edges:
+    for one, two in edges:
         bmesh.edges.new((bmesh.verts[one], bmesh.verts[two]))
     bmesh.edges.ensure_lookup_table()
 
@@ -21,7 +21,7 @@ def mesh(name, verts, edges, faces, layers):
     bmesh.faces.ensure_lookup_table()
 
     layer = bmesh.loops.layers.uv.verify()
-    for (face, loop, one, two) in layers:
+    for face, loop, one, two in layers:
         bmesh.faces[face].loops[loop][layer].uv = (one, two)
 
     mesh_ = data.mesh.new(name)
@@ -45,7 +45,7 @@ def quadrilateral(name, verts, layers):
     return mesh(name, verts, edges, faces, layers)
 
 
-class Planar():
+class Planar:
     def __init__(self):
         super().__init__()
         self.normal = mathutils.Vector((+0, +0, +1))

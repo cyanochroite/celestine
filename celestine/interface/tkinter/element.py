@@ -17,4 +17,3 @@ class Element(element):
     def poke(self, x_dot, y_dot):
         """"""
         return False
-

@@ -21,7 +21,7 @@ class Button(button, Element):
 
         word = _mesh.text(collection, self.text, self.text)
         word.scale = (1 / width, 1 / height, 1)
-        word.location = (- width / 4, - height, 0.1)
+        word.location = (-width / 4, -height, 0.1)
 
         word.parent = mesh
 

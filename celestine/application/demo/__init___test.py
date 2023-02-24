@@ -31,6 +31,3 @@ class test_init(unittest.TestCase):
         session = start_session(argv)
         page = Page(session)
         main(page)
-
-
-

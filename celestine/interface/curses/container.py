@@ -21,7 +21,7 @@ class Container(container):
                 tag,
                 self.turn,
                 **kwargs,
-            )
+            ),
         )
 
     def grid(self, tag, width, **kwargs):
@@ -34,7 +34,7 @@ class Container(container):
                 self.turn,
                 width,
                 **kwargs,
-            )
+            ),
         )
 
     def span(self, tag, **kwargs):
@@ -46,7 +46,7 @@ class Container(container):
                 tag,
                 self.turn,
                 **kwargs,
-            )
+            ),
         )
 
     def __init__(self, session, name, turn, **star):
@@ -104,7 +104,7 @@ class Grid(Container):
         index_x = length % self.width
         index_y = length // self.width
 
-        return F"{name}_{index_x}-{index_y}"
+        return f"{name}_{index_x}-{index_y}"
 
     def __init__(self, session, name, turn, width, **kwargs):
         self.width = width
@@ -122,7 +122,7 @@ class Drop(Container):
         partition_y = len(self.item)
         (axis_x, axis_y) = self.get(partition_x, partition_y)
 
-        for (_, item) in self.item.items():
+        for _, item in self.item.items():
             (xmin, xmax) = next(axis_x)
             (ymin, ymax) = next(axis_y)
 
@@ -143,7 +143,7 @@ class Span(Container):
         partition_y = 1
         (axis_x, axis_y) = self.get(partition_x, partition_y)
 
-        for (_, item) in self.item.items():
+        for _, item in self.item.items():
             (xmin, xmax) = next(axis_x)
             (ymin, ymax) = next(axis_y)
 

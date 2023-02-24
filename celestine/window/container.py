@@ -28,17 +28,17 @@ class Container(Rectangle):
 
     def draw(self, collection, **star):
         """"""
-        for (_, item) in self.item.items():
+        for _, item in self.item.items():
             item.draw(collection, **star)
 
     def poke(self, x_dot, y_dot, **star):
         """"""
-        for (_, item) in self.item.items():
+        for _, item in self.item.items():
             item.poke(x_dot, y_dot, **star)
 
     def spot(self, x_min, y_min, x_max, y_max, **star):
         """"""
-        for (_, item) in self.item.items():
+        for _, item in self.item.items():
             item.spot(x_min, y_min, x_max, y_max, **star)
 
     def __enter__(self):
@@ -82,7 +82,7 @@ class Grid(Container):
         index_x = length % self.width
         index_y = length // self.width
 
-        return F"{name}_{index_x}-{index_y}"
+        return f"{name}_{index_x}-{index_y}"
 
     def __init__(self, session, name, turn, *, width, **kwargs):
         self.width = width

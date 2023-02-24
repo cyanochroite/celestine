@@ -25,7 +25,7 @@ class Window(master):
             self.height - 2,
         )
 
-        for (_, item) in self.frame.item.items():
+        for _, item in self.frame.item.items():
             item.draw(frame)
 
         self.stdscr.noutrefresh()
@@ -54,8 +54,7 @@ class Window(master):
         header1 = package.subwindow(self.background, 0, 0, self.width, 1)
         header1.addstr(self.session.language.APPLICATION_TITLE)
 
-        header2 = package.subwindow(
-            self.background, 0, self.height - 1, self.width, 1)
+        header2 = package.subwindow(self.background, 0, self.height - 1, self.width, 1)
         header2.addstr(self.session.language.CURSES_EXIT)
 
         self.stdscr.noutrefresh()

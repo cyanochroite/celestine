@@ -16,7 +16,7 @@ class Label(label, Element):
         package.add_text(
             self.text,
             tag=self.tag,
-            label=F"{self.tag}{label}",
+            label=f"{self.tag}{label}",
             show_label=True,
         )
         super().draw(collection, **star)

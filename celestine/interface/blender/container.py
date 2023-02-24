@@ -26,7 +26,7 @@ class Container(Rectangle):
                 offset_x=0,
                 offset_y=2.5,
                 **kwargs,
-            )
+            ),
         )
 
     def grid(self, tag, width, **kwargs):
@@ -46,7 +46,7 @@ class Container(Rectangle):
                 offset_x=2.5,
                 offset_y=2.5,
                 **kwargs,
-            )
+            ),
         )
 
     def span(self, tag, **kwargs):
@@ -65,17 +65,17 @@ class Container(Rectangle):
                 offset_x=10,
                 offset_y=0,
                 **kwargs,
-            )
+            ),
         )
 
     def draw(self, collection):
         """"""
-        for (_, item) in self.item.items():
+        for _, item in self.item.items():
             item.draw(collection)
 
     def poke(self, x_dot, y_dot):
         """"""
-        for (_, item) in self.item.items():
+        for _, item in self.item.items():
             item.poke(x_dot, y_dot)
 
     def button(self, tag, text, action):
@@ -156,7 +156,7 @@ class Grid(Container):
 
     def get_tag(self, name):
         """"""
-        return F"{name}_{self.index_x}-{self.index_y}"
+        return f"{name}_{self.index_x}-{self.index_y}"
 
     def __init__(self, session, name, turn, width, **kwargs):
         self.index_x = 0
@@ -171,4 +171,3 @@ class Drop(Container):
 
 class Span(Container):
     """"""
-

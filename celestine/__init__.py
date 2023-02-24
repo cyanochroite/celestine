@@ -46,7 +46,6 @@ def main(argv: list[str], exit_on_error: bool) -> None:
     session = start_session(argv, exit_on_error)
     with session.interface.window(session) as window:
         function = load.function(session.application)
-        for (name, document) in function.items():
             test = document
             print(name)
             print(document)
@@ -62,6 +61,7 @@ def main(argv: list[str], exit_on_error: bool) -> None:
             print(test.__qualname__)
             print(test.__subclasshook__)
             print("*")
+        for name, document in function.items():
             window.page(name, document)
 
 
@@ -69,14 +69,14 @@ def blender1():
     """Run the main program."""
     preferences = load.module(INTERFACE, BLENDER, PACKAGE, PREFERENCES)
     content = preferences.content()
-    argument = F"-i blender {content.argument}"
+    argument = f"-i blender {content.argument}"
     argv = argument.split()
     exit_on_error = False
 
     session = start_session(argv, exit_on_error)
     with session.interface.window(session) as window:
         function = load.function(session.application)
-        for (name, document) in function.items():
+        for name, document in function.items():
             window.page(name, document)
 
 
@@ -84,7 +84,7 @@ def blender2(task="draw", **kwargs):
     """Run the main program."""
     preferences = load.module(INTERFACE, BLENDER, PACKAGE, PREFERENCES)
     content = preferences.content()
-    argument = F"-i blender {content.argument}"
+    argument = f"-i blender {content.argument}"
     argv = argument.split()
     exit_on_error = False
 
@@ -92,7 +92,7 @@ def blender2(task="draw", **kwargs):
     window = session.interface.window(session)
 
     function = load.function(session.application)
-    for (name, document) in function.items():
+    for name, document in function.items():
         window.page(name, document)
 
     call = getattr(window, task)

@@ -5,7 +5,7 @@ See https://semver.org/ for more details.
 """
 
 
-class Version():
+class Version:
     """
     Class to help represent and _compare different version numbers.
 
@@ -44,10 +44,10 @@ class Version():
         return self._compare() != other._compare()
 
     def __repr__(self):
-        return F"Version({self.major}, {self.minor}, {self.patch})"
+        return f"Version({self.major}, {self.minor}, {self.patch})"
 
     def __str__(self):
-        return F"{self.major}.{self.minor}.{self.patch}"
+        return f"{self.major}.{self.minor}.{self.patch}"
 
     def _compare(self):
         number = 0

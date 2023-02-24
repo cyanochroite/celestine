@@ -39,6 +39,7 @@ def window(session):
 
 # <pep8-80 compliant>
 
+
 def find_object(name):
     return next(obj for obj in bpy.data.objects if obj.name == name)
 
@@ -66,7 +67,7 @@ class celestine_click(bpy.types.Operator):
         x_dot = mouse.location.x
         y_dot = mouse.location.y
         celestine.blender2(task="poke", x_dot=x_dot, y_dot=y_dot)
-        return {'FINISHED'}
+        return {"FINISHED"}
 
 
 class celestine_main(bpy.types.Panel):
@@ -103,7 +104,6 @@ class celestine_main(bpy.types.Panel):
 
 
 class celestine_start(bpy.types.Operator):
-
     bl_description = "whati ti do"
 
     bl_label = "Startup"
@@ -115,7 +115,7 @@ class celestine_start(bpy.types.Operator):
         data.start()
         preferences.start()
         car.ready = True
-        return {'FINISHED'}
+        return {"FINISHED"}
 
 
 class celestine_finish(bpy.types.Operator):
@@ -126,7 +126,7 @@ class celestine_finish(bpy.types.Operator):
         print("finish")
         preferences.finish()
         data.finish()
-        return {'FINISHED'}
+        return {"FINISHED"}
 
 
 def register():

@@ -21,26 +21,23 @@ class CelestineAddonPreferences(bpy.types.AddonPreferences):
     root: bpy.props.StringProperty(
         name="Root Image Folder",
         description="Location of your image collection.",
-        subtype='DIR_PATH'
+        subtype="DIR_PATH",
     )
 
     filepath: bpy.props.StringProperty(
         name="Example File Path",
         description="Location of your image collection.",
-        subtype='FILE_PATH',
+        subtype="FILE_PATH",
     )
 
     ready: bpy.props.BoolProperty(
         name="Application Ready",
         description="Tells the program everything is set up and go to go.",
-        default=False
+        default=False,
     )
 
     password: bpy.props.StringProperty(
-        name='Password',
-        default='',
-        options={'HIDDEN', 'SKIP_SAVE'},
-        subtype='PASSWORD'
+        name="Password", default="", options={"HIDDEN", "SKIP_SAVE"}, subtype="PASSWORD"
     )
 
     def draw(self, context):
@@ -65,9 +62,7 @@ class CelestinePropertyGroup(bpy.types.PropertyGroup):
 def register():
     bpy.utils.register_class(CelestineAddonPreferences)
     bpy.utils.register_class(CelestinePropertyGroup)
-    bpy.types.Scene.celestine = bpy.props.PointerProperty(
-        type=CelestinePropertyGroup
-    )
+    bpy.types.Scene.celestine = bpy.props.PointerProperty(type=CelestinePropertyGroup)
 
 
 def unregister():

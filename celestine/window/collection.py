@@ -90,8 +90,8 @@ class Box(Object):
         """"""
         x_test = self.x_min <= x_dot < self.x_max
         y_test = self.y_min <= y_dot < self.y_max
-        x = F"{self.x_min}<={x_dot}<{self.x_max}={x_test}"
-        y = F"{self.y_min}<={y_dot}<{self.y_max}={y_test}"
+        x = f"{self.x_min}<={x_dot}<{self.x_max}={x_test}"
+        y = f"{self.y_min}<={y_dot}<{self.y_max}={y_test}"
         # print(F"{x} & {y}")
 
         return x_test and y_test

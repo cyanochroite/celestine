@@ -44,26 +44,26 @@ def maps(iterable):
         Digit: number_parse,
         Divider: tab_parse,
         Letter: word_parse,
-        Unary: unary_parse
+        Unary: unary_parse,
     }
     matt = mapping.get(type(item))
     cats = matt(iterable)
     return cats
 
 
-class translator():  # translate
+class translator:  # translate
     @staticmethod
     def translate(string):
         return filter_true(map(decode, string))
 
 
-class tokenizer():
+class tokenizer:
     @staticmethod
     def tokenize(iterable):
         return list(split_when(iterable, lambda x, y: type(x) is not type(y)))
 
 
-class parser():
+class parser:
     @staticmethod
     def parse(iterable):
         return list(map(maps, iterable))

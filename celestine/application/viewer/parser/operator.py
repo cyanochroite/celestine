@@ -3,12 +3,11 @@ from celestine.application.viewer.data.alphabet import Unary
 from celestine.application.viewer.data.alphabet import Comparison
 
 
-class Operator():
+class Operator:
     def __init__(self, name, primary, secondary):
         self.name = name
         self.value = primary
-        self.value = str().join(
-            [getattr(item, "value", str(item)) for item in primary])
+        self.value = str().join([getattr(item, "value", str(item)) for item in primary])
 
     def __str__(self):
         return self.value
@@ -23,90 +22,42 @@ class Operator():
 class _eq(Operator):
     def __init__(self):
         super().__init__(
-            "EQ",
-            [
-                Comparison.SAME
-            ],
-            [
-                Comparison.MARK,
-                Comparison.LESS,
-                Comparison.MORE
-            ]
+            "EQ", [Comparison.SAME], [Comparison.MARK, Comparison.LESS, Comparison.MORE]
         )
 
 
 class _ge(Operator):
     def __init__(self):
         super().__init__(
-            "GE",
-            [
-                Comparison.MORE,
-                Comparison.SAME
-            ],
-            [
-                Comparison.MARK,
-                Comparison.LESS
-            ]
+            "GE", [Comparison.MORE, Comparison.SAME], [Comparison.MARK, Comparison.LESS]
         )
 
 
 class _gt(Operator):
     def __init__(self):
         super().__init__(
-            "GT",
-            [
-                Comparison.MORE
-            ],
-            [
-                Comparison.MARK,
-                Comparison.LESS,
-                Comparison.SAME
-            ]
+            "GT", [Comparison.MORE], [Comparison.MARK, Comparison.LESS, Comparison.SAME]
         )
 
 
 class _le(Operator):
     def __init__(self):
         super().__init__(
-            "LE",
-            [
-                Comparison.LESS,
-                Comparison.SAME
-            ],
-            [
-                Comparison.MARK,
-                Comparison.MORE
-            ]
+            "LE", [Comparison.LESS, Comparison.SAME], [Comparison.MARK, Comparison.MORE]
         )
 
 
 class _lt(Operator):
     def __init__(self):
         super().__init__(
-            "LT",
-            [
-                Comparison.LESS
-            ],
-            [
-                Comparison.MARK,
-                Comparison.MORE,
-                Comparison.SAME
-            ]
+            "LT", [Comparison.LESS], [Comparison.MARK, Comparison.MORE, Comparison.SAME]
         )
 
 
 class _ne(Operator):
     def __init__(self):
         super().__init__(
-            "NE",
-            [
-                Comparison.MARK,
-                Comparison.SAME
-            ],
-            [
-                Comparison.LESS,
-                Comparison.MORE
-            ]
+            "NE", [Comparison.MARK, Comparison.SAME], [Comparison.LESS, Comparison.MORE]
         )
 
 
@@ -114,30 +65,14 @@ class _nn(Operator):
     def __init__(self):
         super().__init__(
             "NN",
-            [
-                Comparison.MARK
-            ],
-            [
-                Comparison.MARK,
-                Comparison.LESS,
-                Comparison.SAME,
-                Comparison.MORE
-            ]
+            [Comparison.MARK],
+            [Comparison.MARK, Comparison.LESS, Comparison.SAME, Comparison.MORE],
         )
 
 
 class _nu(Operator):
     def __init__(self):
-        super().__init__(
-            "NU",
-            [
-            ],
-            [
-                Comparison.LESS,
-                Comparison.SAME,
-                Comparison.MORE
-            ]
-        )
+        super().__init__("NU", [], [Comparison.LESS, Comparison.SAME, Comparison.MORE])
 
 
 eq = _eq()  # EQUALITY_OPERATOR
@@ -152,58 +87,24 @@ nu = _nu()  # IS_NULL_OPERATOR
 
 class _add(Operator):
     def __init__(self):
-        super().__init__(
-            "ADD",
-            [
-                Unary.PLUS
-            ],
-            [
-            ]
-        )
+        super().__init__("ADD", [Unary.PLUS], [])
 
 
 class _div(Operator):
     def __init__(self):
         super().__init__(
-            "DIV",
-            [
-                Unary.DASH,
-                Unary.STAR
-            ],
-            [
-                Unary.PLUS,
-                Unary.DASH,
-                Unary.STAR
-            ]
+            "DIV", [Unary.DASH, Unary.STAR], [Unary.PLUS, Unary.DASH, Unary.STAR]
         )
 
 
 class _mul(Operator):
     def __init__(self):
-        super().__init__(
-            "MUL",
-            [
-                Unary.STAR
-            ],
-            [
-                Unary.PLUS,
-                Unary.STAR
-            ]
-        )
+        super().__init__("MUL", [Unary.STAR], [Unary.PLUS, Unary.STAR])
 
 
 class _sub(Operator):
     def __init__(self):
-        super().__init__(
-            "SUB",
-            [
-                Unary.DASH
-            ],
-            [
-                Unary.PLUS,
-                Unary.DASH
-            ]
-        )
+        super().__init__("SUB", [Unary.DASH], [Unary.PLUS, Unary.DASH])
 
 
 add = _add()  # UNARY_PLUS_OPERATOR
@@ -225,32 +126,17 @@ _table = {
 
 class tab(Operator):
     def __init__(self, iterable):
-        super().__init__(
-            "TAB",
-            [
-                Divider.WHITESPACE
-            ],
-            [
-            ]
-        )
+        super().__init__("TAB", [Divider.WHITESPACE], [])
 
 
 class word(Operator):
     def __init__(self, iterable):
-        super().__init__(
-            "WORD",
-            [item for item in iterable],
-            []
-        )
+        super().__init__("WORD", [item for item in iterable], [])
 
 
 class number(Operator):
     def __init__(self, iterable):
-        super().__init__(
-            "NUMBER",
-            [item for item in iterable],
-            []
-        )
+        super().__init__("NUMBER", [item for item in iterable], [])
 
 
 _comparison = {
@@ -269,7 +155,7 @@ _comparison = {
     0xC: _ge(),  # !<__
     0xD: _gt(),  # !<_=
     0xE: _eq(),  # !<>_
-    0xF: _nn()   # !<>=
+    0xF: _nn(),  # !<>=
 }
 _unary = {
     0x0: _add(),  # ___
@@ -319,5 +205,3 @@ def comparison_parse(iterable):
     index <<= 1
     index |= Comparison.SAME in iterable
     return _comparison.get(index)
-
-
