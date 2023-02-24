@@ -92,7 +92,7 @@ class Box(Object):
         y_test = self.y_min <= y_dot < self.y_max
         x = F"{self.x_min}<={x_dot}<{self.x_max}={x_test}"
         y = F"{self.y_min}<={y_dot}<{self.y_max}={y_test}"
-        print(F"{x} & {y}")
+        # print(F"{x} & {y}")
 
         return x_test and y_test
 

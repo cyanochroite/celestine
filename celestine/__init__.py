@@ -47,6 +47,21 @@ def main(argv: list[str], exit_on_error: bool) -> None:
     with session.interface.window(session) as window:
         function = load.function(session.application)
         for (name, document) in function.items():
+            test = document
+            print(name)
+            print(document)
+            print(test.__annotations__)
+            print(test.__class__)
+            print(test.__code__)
+            print(test.__defaults__)
+            print(test.__dict__)
+            print(test.__doc__)
+            print(test.__init_subclass__)
+            print(test.__kwdefaults__)
+            print(test.__name__)
+            print(test.__qualname__)
+            print(test.__subclasshook__)
+            print("*")
             window.page(name, document)
 
 
