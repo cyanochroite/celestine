@@ -1,1 +1,0 @@
-"""Lookup table for languages."""
