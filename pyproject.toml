@@ -4,3 +4,10 @@ requires = [
   "wheel",
 ]
 build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 72
+
+[tool.pylint.format]
+expected-line-ending-format = "CRLF"
+max-line-length = 72

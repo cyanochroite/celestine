@@ -23,17 +23,17 @@ External Checkers
 External Code Checkers Configuration
 """"""""""""""""""""""""""""""""""""
 
-Flake8 black
+black
 ''''''
-python -m black celestine --line-length 72
+python -m black celestine
 
 
-Flake8
+flake8
 ''''''
 python -m flake8 celestine
 
 
-Mypy
+mypy
 ''''
 python -m mypy celestine
 redo
@@ -43,8 +43,11 @@ pycodestyle
 python -m pycodestyle celestine
 
 
-Pylint
+pylint
 ''''''
+python -m pylint celestine
+
+
 Enabled = True
 
 Run after save = True
