@@ -4,23 +4,25 @@ import os
 import sys
 
 from celestine.text import CELESTINE
-
 from celestine.text.stream import FILE_NAME_EXTENSION
+from celestine.typed import (
+    MT,
+    B,
+    D,
+    L,
+    S,
+)
+from celestine.unicode import (
+    FULL_STOP,
+    LOW_LINE,
+    NONE,
+)
 
-from celestine.typed import B
-from celestine.typed import D
-from celestine.typed import L
-from celestine.typed import MT
-from celestine.typed import S
-
-from celestine.unicode import FULL_STOP
-from celestine.unicode import LOW_LINE
-from celestine.unicode import NONE
-
-
-from .function import function
-from .function import function_name
-from .function import function_value
+from .function import (
+    function,
+    function_name,
+    function_value,
+)
 
 
 def attempt(*path: S) -> B:

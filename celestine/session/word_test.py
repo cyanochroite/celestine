@@ -2,10 +2,12 @@
 
 import unittest
 
-from celestine.session.word import parser_error
-from celestine.session.word import parser_formatter
-from celestine.session.word import parser_parser_error
-from celestine.session.word import parser_value
+from celestine.session.word import (
+    parser_error,
+    parser_formatter,
+    parser_parser_error,
+    parser_value,
+)
 
 
 class Word(unittest.TestCase):

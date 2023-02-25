@@ -1,9 +1,7 @@
 """Central place for loading and importing external files."""
 
 from celestine import load
-
 from celestine.application.translator.parser import dictionary_to_file
-
 from celestine.text import stream
 
 

@@ -2,40 +2,32 @@
 import io
 import keyword
 
-
-from celestine.unicode import NONE
-
-from celestine.unicode import EQUALS_SIGN
-from celestine.unicode import LINE_FEED
-from celestine.unicode import QUOTATION_MARK
-from celestine.unicode import SPACE
-
-from celestine.unicode import FULL_STOP
-from celestine.unicode import QUESTION_MARK
-from celestine.unicode import EXCLAMATION_MARK
-from celestine.unicode import COMMA
-from celestine.unicode import SEMICOLON
-from celestine.unicode import COLON
-
-from celestine.unicode import CHARACTER_TABULATION
-from celestine.unicode import LINE_TABULATION
-from celestine.unicode import FORM_FEED
-from celestine.unicode import CARRIAGE_RETURN
-
-from celestine.unicode import INFORMATION_SEPARATOR_FOUR
-from celestine.unicode import INFORMATION_SEPARATOR_THREE
-from celestine.unicode import INFORMATION_SEPARATOR_TWO
-
-from celestine.unicode import BREAK_PERMITTED_HERE
-from celestine.unicode import REVERSE_SOLIDUS
-
-from celestine.unicode import NEXT_LINE
-
-from celestine.unicode import LINE_SEPARATOR
-from celestine.unicode import PARAGRAPH_SEPARATOR
-
-from celestine.unicode import APOSTROPHE
-
+from celestine.unicode import (
+    APOSTROPHE,
+    BREAK_PERMITTED_HERE,
+    CARRIAGE_RETURN,
+    CHARACTER_TABULATION,
+    COLON,
+    COMMA,
+    EQUALS_SIGN,
+    EXCLAMATION_MARK,
+    FORM_FEED,
+    FULL_STOP,
+    INFORMATION_SEPARATOR_FOUR,
+    INFORMATION_SEPARATOR_THREE,
+    INFORMATION_SEPARATOR_TWO,
+    LINE_FEED,
+    LINE_SEPARATOR,
+    LINE_TABULATION,
+    NEXT_LINE,
+    NONE,
+    PARAGRAPH_SEPARATOR,
+    QUESTION_MARK,
+    QUOTATION_MARK,
+    REVERSE_SOLIDUS,
+    SEMICOLON,
+    SPACE,
+)
 
 MAXIMUM_LINE_LENGTH = 72
 

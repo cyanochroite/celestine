@@ -1,8 +1,9 @@
 """Application for translating text to other languages."""
-import uuid
 import os
 import os.path
 import shutil
+import uuid
+
 import requests
 
 from celestine import load

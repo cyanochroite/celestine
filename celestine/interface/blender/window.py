@@ -1,13 +1,12 @@
-from celestine.window.window import Window as master
+import bpy
 
 from celestine.window.collection import Rectangle
-from .package import data
-
-import bpy
+from celestine.window.window import Window as master
 
 from . import package
 from .container import Drop
 from .mouse import Mouse
+from .package import data
 
 
 def context():

@@ -3,7 +3,6 @@
 from celestine.window.label import Label as label
 
 from .element import Element
-
 from .package import mesh as _mesh
 
 

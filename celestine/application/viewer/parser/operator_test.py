@@ -1,7 +1,6 @@
 import unittest
 
 from celestine.application.viewer.data.alphabet import *
-
 from celestine.application.viewer.parser.operator import *
 from celestine.application.viewer.parser.translator import *
 

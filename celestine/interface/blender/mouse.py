@@ -1,11 +1,9 @@
-from .package.data import mesh as make_mesh
-from .package import mesh as _mesh
+from math import radians
 
 from .element import Element
-
 from .package import data
-
-from math import radians
+from .package import mesh as _mesh
+from .package.data import mesh as make_mesh
 
 
 class Mouse(Element):

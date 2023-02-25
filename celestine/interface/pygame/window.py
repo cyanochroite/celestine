@@ -1,11 +1,9 @@
 """"""
 
+from celestine import load
 from celestine.window.window import Window as master
 
-from celestine import load
-
 from . import package
-
 from .container import Container
 
 

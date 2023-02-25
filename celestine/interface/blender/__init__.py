@@ -1,14 +1,14 @@
-from .package import preferences
-from .package import UV
-from .package import mesh
-from .package import data
-
 import bpy  # pylint: disable=import-error
-import bpy
-
-from .window import Window
 
 import celestine
+
+from .package import (
+    UV,
+    data,
+    mesh,
+    preferences,
+)
+from .window import Window
 
 
 def image_format():

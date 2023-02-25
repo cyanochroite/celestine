@@ -1,8 +1,8 @@
 """"""
 
 # import pygame
-import sys
 import os
+import sys
 
 pygame = None
 

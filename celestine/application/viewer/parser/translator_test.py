@@ -1,7 +1,7 @@
 import unittest
 
-from celestine.application.viewer.parser.translator import *
 from celestine.application.viewer.parser.operator import *
+from celestine.application.viewer.parser.translator import *
 
 
 class test_translator(unittest.TestCase):

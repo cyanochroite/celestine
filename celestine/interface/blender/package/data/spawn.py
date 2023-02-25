@@ -1,8 +1,7 @@
 # <pep8-80 compliant>
-import bpy
-
 import math
 
+import bpy
 
 DEGREE_TO_RADIAN = math.pi / 180
 

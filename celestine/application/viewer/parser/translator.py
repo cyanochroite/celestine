@@ -1,27 +1,23 @@
-from celestine.application.viewer.data.encoding import encoding
-
-from celestine.application.viewer.extension.more_itertools import (
-    split_when,
+from celestine.application.viewer.data.alphabet import (
+    Comparison,
+    Digit,
+    Divider,
+    Letter,
+    Unary,
 )
+from celestine.application.viewer.data.encoding import encoding
 from celestine.application.viewer.extension.more_itertools import (
     filter_true,
+    split_when,
 )
-
-
-from celestine.application.viewer.data.alphabet import Comparison
-from celestine.application.viewer.data.alphabet import Digit
-from celestine.application.viewer.data.alphabet import Divider
-from celestine.application.viewer.data.alphabet import Letter
-from celestine.application.viewer.data.alphabet import Unary
-
-
 from celestine.application.viewer.parser.operator import (
-    comparison_parse,
+    number_parse,
+    tab_parse,
+    unary_parse,
+    word_parse,
 )
-from celestine.application.viewer.parser.operator import number_parse
-from celestine.application.viewer.parser.operator import tab_parse
-from celestine.application.viewer.parser.operator import word_parse
-from celestine.application.viewer.parser.operator import unary_parse
+
+from .operator import comparison_parse
 
 
 def log_unicode(character, info):

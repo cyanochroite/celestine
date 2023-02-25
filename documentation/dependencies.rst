@@ -69,6 +69,12 @@ setup.cfg
 https://flake8.pycqa.org/en/latest/user/configuration.html#configuring-flake8
 
 
+isort
+^^^^^
+python -m isort celestine
+pyproject.toml
+https://pycqa.github.io/isort/docs/configuration/options.html
+
 mypy
 ^^^^
 python -m mypy celestine

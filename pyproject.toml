@@ -6,7 +6,14 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [tool.black]
-line-length = 72
+line_length = 72
+
+[tool.isort]
+force_grid_wrap = 2
+line_ending="\r\n"
+line_length = 72
+profile = "black"
+remove_redundant_aliases = true
 
 [tool.pylint.format]
 expected-line-ending-format = "CRLF"

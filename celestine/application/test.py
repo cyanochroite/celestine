@@ -2,16 +2,12 @@
 
 import unittest
 
-from celestine.text import CELESTINE
-from celestine.text.directory import APPLICATION
-
 from celestine import load
 from celestine.load import directory
-
 from celestine.session.session import SuperSession
-
+from celestine.text import CELESTINE
+from celestine.text.directory import APPLICATION
 from celestine.typed import N
-
 from celestine.window.page import Page
 
 ERROR = "error"

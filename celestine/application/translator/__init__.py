@@ -1,23 +1,22 @@
 """Application for translating text to other languages."""
 
 
+from celestine.session.argument import Optional
+from celestine.session.session import (
+    AD,
+    SuperSession,
+)
+from celestine.typed import S
+from celestine.unicode import NONE
 from celestine.window.page import Page
 
-from celestine.session.argument import Optional
-
-from celestine.session.session import SuperSession
-from celestine.session.session import AD
-
-from celestine.unicode import NONE
-
-from celestine.typed import S
-
-from .text import KEY
-from .text import REGION
-from .text import URL
-
-from .report import _train
 from .main import _translate
+from .report import _train
+from .text import (
+    KEY,
+    REGION,
+    URL,
+)
 
 
 class Session(SuperSession):

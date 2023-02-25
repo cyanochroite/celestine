@@ -2,17 +2,20 @@
 
 import io
 
-from celestine.typed import L
-from celestine.typed import S
-
-from celestine.unicode import APOSTROPHE
-from celestine.unicode import COLON
-from celestine.unicode import COMMA
-from celestine.unicode import LEFT_PARENTHESIS
-from celestine.unicode import LINE_FEED
-from celestine.unicode import NONE
-from celestine.unicode import RIGHT_PARENTHESIS
-from celestine.unicode import SPACE
+from celestine.typed import (
+    L,
+    S,
+)
+from celestine.unicode import (
+    APOSTROPHE,
+    COLON,
+    COMMA,
+    LEFT_PARENTHESIS,
+    LINE_FEED,
+    NONE,
+    RIGHT_PARENTHESIS,
+    SPACE,
+)
 
 
 def parser_error(argument: S, name: S, message: S) -> S:

@@ -1,6 +1,8 @@
-from celestine.application.viewer.data.alphabet import Divider
-from celestine.application.viewer.data.alphabet import Unary
-from celestine.application.viewer.data.alphabet import Comparison
+from celestine.application.viewer.data.alphabet import (
+    Comparison,
+    Divider,
+    Unary,
+)
 
 
 class Operator:

@@ -2,9 +2,8 @@
 
 from celestine.window.button import Button as button
 
-from .element import Element
-
 from . import package
+from .element import Element
 
 
 class Button(button, Element):

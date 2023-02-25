@@ -3,19 +3,21 @@
 from typing import TypeAlias as TA
 
 from celestine.text import VERSION_NUMBER
+from celestine.typed import (
+    A,
+    D,
+    L,
+    N,
+    S,
+)
 
-from celestine.typed import A
-from celestine.typed import D
-from celestine.typed import L
-from celestine.typed import N
-from celestine.typed import S
-
-from .text import ACTION
-from .text import CHOICES
-from .text import HELP
-from .text import NARGS
-from .text import VERSION
-
+from .text import (
+    ACTION,
+    CHOICES,
+    HELP,
+    NARGS,
+    VERSION,
+)
 
 AT: TA = D[S, A]
 

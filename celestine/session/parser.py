@@ -1,49 +1,47 @@
 """"""
 
 import argparse
-
-from argparse import _ArgumentGroup as AG
 from argparse import ArgumentParser as AP
-
+from argparse import _ArgumentGroup as AG
 from typing import TypeAlias as TA
 
 from celestine import load
-
 from celestine.session import word
-
-from celestine.session.argument import Application
-from celestine.session.argument import Argument
-from celestine.session.argument import Customization
-from celestine.session.argument import Optional
-from celestine.session.argument import InformationConfiguration
-from celestine.session.argument import InformationHelp
-from celestine.session.argument import InformationVersion
-from celestine.session.argument import Positional
-
+from celestine.session.argument import (
+    Application,
+    Argument,
+    Customization,
+    InformationConfiguration,
+    InformationHelp,
+    InformationVersion,
+    Optional,
+    Positional,
+)
 from celestine.text import CELESTINE
-
-from celestine.text.directory import APPLICATION
-from celestine.text.directory import INTERFACE
-from celestine.text.directory import LANGUAGE
-
-from celestine.typed import A
-from celestine.typed import B
-from celestine.typed import D
-from celestine.typed import L
-from celestine.typed import MT
-from celestine.typed import N
-from celestine.typed import S
-from celestine.typed import T
-from celestine.typed import TY
-from celestine.typed import U
-
+from celestine.text.directory import (
+    APPLICATION,
+    INTERFACE,
+    LANGUAGE,
+)
+from celestine.typed import (
+    MT,
+    TY,
+    A,
+    B,
+    D,
+    L,
+    N,
+    S,
+    T,
+    U,
+)
 from celestine.unicode import NONE
 
 from .configuration import Configuration
-
-from .session import Dictionary
-from .session import Session
-
+from .session import (
+    Dictionary,
+    Session,
+)
 from .text import CONFIGURATION
 
 INIT = "__init__"

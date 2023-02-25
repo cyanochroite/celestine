@@ -2,9 +2,8 @@
 
 from celestine.window.window import Window as master
 
-from .package import package
-
 from .container import Container
+from .package import package
 
 
 class Window(master):

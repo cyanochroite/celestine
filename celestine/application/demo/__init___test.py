@@ -2,13 +2,13 @@
 
 import unittest
 
-from celestine.window.page import Page
-
-from celestine.application.demo.__init__ import one
-from celestine.application.demo.__init__ import two
-from celestine.application.demo.__init__ import main
-
+from celestine.application.demo.__init__ import (
+    main,
+    one,
+    two,
+)
 from celestine.session.parser import start_session
+from celestine.window.page import Page
 
 argv = ["-a", "demo"]
 

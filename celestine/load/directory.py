@@ -3,13 +3,14 @@
 import os
 import pathlib
 
-from celestine.typed import GE
-from celestine.typed import N
-from celestine.typed import S
-from celestine.typed import L
-from celestine.typed import T
-
 from celestine import load
+from celestine.typed import (
+    GE,
+    L,
+    N,
+    S,
+    T,
+)
 
 
 def modularize(path: S, start: S) -> T[S, ...]:

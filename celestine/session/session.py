@@ -3,33 +3,35 @@
 from typing import TypeAlias as TA
 
 from celestine import load
-
-from celestine.session.argument import Customization
-from celestine.session.argument import InformationConfiguration
-from celestine.session.argument import InformationHelp
-from celestine.session.argument import InformationVersion
-from celestine.session.argument import Positional
-
-from celestine.text.directory import APPLICATION
-from celestine.text.directory import INTERFACE
-from celestine.text.directory import LANGUAGE
-
-from celestine.typed import D
-from celestine.typed import IT
-from celestine.typed import MT
-from celestine.typed import N
-from celestine.typed import S
-from celestine.typed import T
-
+from celestine.session.argument import (
+    Customization,
+    InformationConfiguration,
+    InformationHelp,
+    InformationVersion,
+    Positional,
+)
+from celestine.text.directory import (
+    APPLICATION,
+    INTERFACE,
+    LANGUAGE,
+)
+from celestine.typed import (
+    IT,
+    MT,
+    D,
+    N,
+    S,
+    T,
+)
 from celestine.unicode import LOW_LINE
 
 from .argument import Argument
-
-from .text import CONFIGURATION
-from .text import HELP
-from .text import MAIN
-from .text import VERSION
-
+from .text import (
+    CONFIGURATION,
+    HELP,
+    MAIN,
+    VERSION,
+)
 
 AD: TA = D[S, Argument]
 AI: TA = IT[T[S, Argument]]

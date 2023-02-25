@@ -1,10 +1,12 @@
 """"""
 
-from celestine.typed import GE
-from celestine.typed import N
-from celestine.typed import T
-from celestine.typed import TA
-from celestine.typed import Z
+from celestine.typed import (
+    GE,
+    TA,
+    N,
+    T,
+    Z,
+)
 
 AXIS: TA = GE[T[Z, Z], N, N]
 

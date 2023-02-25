@@ -1,5 +1,6 @@
-from .collection import Collection
 from celestine import load
+
+from .collection import Collection
 
 
 class Window(Collection):
