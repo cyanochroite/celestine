@@ -38,7 +38,9 @@ AI: TA = IT[T[S, Argument]]
 class SuperState:
     """"""
 
-    def __init__(self, application: MT, interface: MT, language: MT) -> N:
+    def __init__(
+        self, application: MT, interface: MT, language: MT
+    ) -> N:
         """"""
         self._application = application
         self._interface = interface

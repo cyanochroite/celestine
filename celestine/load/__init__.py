@@ -63,7 +63,9 @@ def dictionary(*path: S) -> D[S, S]:
     _module = module(*path)
     _dictionary = vars(_module)
     mapping = {
-        key: value for key, value in _dictionary.items() if not key.startswith(LOW_LINE)
+        key: value
+        for key, value in _dictionary.items()
+        if not key.startswith(LOW_LINE)
     }
     return mapping
 

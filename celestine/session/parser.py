@@ -169,7 +169,9 @@ def add_argument(sessions: list[Session], arguments: APD) -> N:
 
 
 def add_attribute(
-    sessions: list[Session], configuration: Configuration, args: argparse.Namespace
+    sessions: list[Session],
+    configuration: Configuration,
+    args: argparse.Namespace,
 ) -> N:
     """"""
     save = bool(getattr(args, CONFIGURATION, NONE))
@@ -225,7 +227,9 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     configuration.load()
 
     def load_the_fish(name, value) -> MT:
-        session = session_loader(name.capitalize(), "session", "session")
+        session = session_loader(
+            name.capitalize(), "session", "session"
+        )
         hippo = [
             session(application, interface, language),
         ]

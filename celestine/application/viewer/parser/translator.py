@@ -1,7 +1,11 @@
 from celestine.application.viewer.data.encoding import encoding
 
-from celestine.application.viewer.extension.more_itertools import split_when
-from celestine.application.viewer.extension.more_itertools import filter_true
+from celestine.application.viewer.extension.more_itertools import (
+    split_when,
+)
+from celestine.application.viewer.extension.more_itertools import (
+    filter_true,
+)
 
 
 from celestine.application.viewer.data.alphabet import Comparison
@@ -11,7 +15,9 @@ from celestine.application.viewer.data.alphabet import Letter
 from celestine.application.viewer.data.alphabet import Unary
 
 
-from celestine.application.viewer.parser.operator import comparison_parse
+from celestine.application.viewer.parser.operator import (
+    comparison_parse,
+)
 from celestine.application.viewer.parser.operator import number_parse
 from celestine.application.viewer.parser.operator import tab_parse
 from celestine.application.viewer.parser.operator import word_parse
@@ -60,7 +66,9 @@ class translator:  # translate
 class tokenizer:
     @staticmethod
     def tokenize(iterable):
-        return list(split_when(iterable, lambda x, y: type(x) is not type(y)))
+        return list(
+            split_when(iterable, lambda x, y: type(x) is not type(y))
+        )
 
 
 class parser:

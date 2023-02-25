@@ -27,7 +27,9 @@ class Container(container):
                 label,
                 package.tag_root(self.tag),
                 action,
-                lambda sender, app_data, user_data: self.turn(*user_data),
+                lambda sender, app_data, user_data: self.turn(
+                    *user_data
+                ),
             ),
         )
 

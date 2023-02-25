@@ -26,7 +26,9 @@ from .text import VERSION
 class Argument(HashClass, Attribute):
     """abstract class"""
 
-    def __init__(self, argument: B, attribute: B, fallback: S, **kwargs) -> N:
+    def __init__(
+        self, argument: B, attribute: B, fallback: S, **kwargs
+    ) -> N:
         """"""
         super().__init__(**kwargs)
         self.argument = argument

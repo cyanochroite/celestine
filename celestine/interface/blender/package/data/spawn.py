@@ -21,7 +21,9 @@ class _imaginary:
 
     @classmethod
     def remove(cls, item):
-        cls.data.remove(item, do_unlink=True, do_id_user=True, do_ui_user=True)
+        cls.data.remove(
+            item, do_unlink=True, do_id_user=True, do_ui_user=True
+        )
 
 
 class _real(_imaginary):

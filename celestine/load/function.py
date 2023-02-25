@@ -25,7 +25,8 @@ def function(module: MT) -> D[S, F]:
     iterable = {
         key: value
         for key, value in dictionary.items()
-        if repr(value).startswith(FUNCTION) and not key.startswith(LOW_LINE)
+        if repr(value).startswith(FUNCTION)
+        and not key.startswith(LOW_LINE)
     }
     return iterable
 

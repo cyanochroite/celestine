@@ -7,7 +7,9 @@ class Operator:
     def __init__(self, name, primary, secondary):
         self.name = name
         self.value = primary
-        self.value = str().join([getattr(item, "value", str(item)) for item in primary])
+        self.value = str().join(
+            [getattr(item, "value", str(item)) for item in primary]
+        )
 
     def __str__(self):
         return self.value
@@ -22,42 +24,54 @@ class Operator:
 class _eq(Operator):
     def __init__(self):
         super().__init__(
-            "EQ", [Comparison.SAME], [Comparison.MARK, Comparison.LESS, Comparison.MORE]
+            "EQ",
+            [Comparison.SAME],
+            [Comparison.MARK, Comparison.LESS, Comparison.MORE],
         )
 
 
 class _ge(Operator):
     def __init__(self):
         super().__init__(
-            "GE", [Comparison.MORE, Comparison.SAME], [Comparison.MARK, Comparison.LESS]
+            "GE",
+            [Comparison.MORE, Comparison.SAME],
+            [Comparison.MARK, Comparison.LESS],
         )
 
 
 class _gt(Operator):
     def __init__(self):
         super().__init__(
-            "GT", [Comparison.MORE], [Comparison.MARK, Comparison.LESS, Comparison.SAME]
+            "GT",
+            [Comparison.MORE],
+            [Comparison.MARK, Comparison.LESS, Comparison.SAME],
         )
 
 
 class _le(Operator):
     def __init__(self):
         super().__init__(
-            "LE", [Comparison.LESS, Comparison.SAME], [Comparison.MARK, Comparison.MORE]
+            "LE",
+            [Comparison.LESS, Comparison.SAME],
+            [Comparison.MARK, Comparison.MORE],
         )
 
 
 class _lt(Operator):
     def __init__(self):
         super().__init__(
-            "LT", [Comparison.LESS], [Comparison.MARK, Comparison.MORE, Comparison.SAME]
+            "LT",
+            [Comparison.LESS],
+            [Comparison.MARK, Comparison.MORE, Comparison.SAME],
         )
 
 
 class _ne(Operator):
     def __init__(self):
         super().__init__(
-            "NE", [Comparison.MARK, Comparison.SAME], [Comparison.LESS, Comparison.MORE]
+            "NE",
+            [Comparison.MARK, Comparison.SAME],
+            [Comparison.LESS, Comparison.MORE],
         )
 
 
@@ -66,13 +80,22 @@ class _nn(Operator):
         super().__init__(
             "NN",
             [Comparison.MARK],
-            [Comparison.MARK, Comparison.LESS, Comparison.SAME, Comparison.MORE],
+            [
+                Comparison.MARK,
+                Comparison.LESS,
+                Comparison.SAME,
+                Comparison.MORE,
+            ],
         )
 
 
 class _nu(Operator):
     def __init__(self):
-        super().__init__("NU", [], [Comparison.LESS, Comparison.SAME, Comparison.MORE])
+        super().__init__(
+            "NU",
+            [],
+            [Comparison.LESS, Comparison.SAME, Comparison.MORE],
+        )
 
 
 eq = _eq()  # EQUALITY_OPERATOR
@@ -93,7 +116,9 @@ class _add(Operator):
 class _div(Operator):
     def __init__(self):
         super().__init__(
-            "DIV", [Unary.DASH, Unary.STAR], [Unary.PLUS, Unary.DASH, Unary.STAR]
+            "DIV",
+            [Unary.DASH, Unary.STAR],
+            [Unary.PLUS, Unary.DASH, Unary.STAR],
         )
 
 

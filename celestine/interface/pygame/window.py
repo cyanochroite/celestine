@@ -26,7 +26,9 @@ class Window(master):
     def __enter__(self):
         super().__enter__()
         package.init()
-        self.book = package.display.set_mode((self.width, self.height), 8, 0)
+        self.book = package.display.set_mode(
+            (self.width, self.height), 8, 0
+        )
         path = load.pathway("asset", "CascadiaCode.ttf")
         self.font = package.font.Font(path, 40)
 
