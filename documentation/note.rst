@@ -156,8 +156,6 @@ celestine.readthedocs.io
 celestine.rtfd.io
 
 
-python -m sphinx documentation doc
-
 
 PACKAGE
 python -m pip install --upgrade pip
@@ -179,7 +177,6 @@ python -m pip install celestine
 
 INSTALL
 pip install pytest
-pip install coverage
 
 
 
@@ -188,24 +185,6 @@ SHELL COMMAND
 python -m pytest
 python -m unittest
 python -m pyright
-
-# test code used
-python -m coverage run --source=celestine/application/unittest --module pytest --verbose
-
-python -m coverage run --source=tests --module pytest --verbose
-python -m coverage report --show-missing
-python -m coverage html
-
-# source code used by test code
-python -m coverage run --module pytest --verbose celestine/application/unittest
-python -m coverage report --show-missing
-python -m coverage html
-
-# source code used
-python -m coverage run --source=celestine --module pytest --verbose celestine/application/unittest
-python -m coverage report --show-missing
-python -m coverage html
-
 
 
 
