@@ -2,14 +2,12 @@
 
 import argparse
 from argparse import ArgumentParser as AP
-from argparse import _ArgumentGroup as AG
 from typing import TypeAlias as TA
 
 from celestine import load
 from celestine.session import word
 from celestine.session.argument import (
     Application,
-    Argument,
     Customization,
     InformationConfiguration,
     InformationHelp,
@@ -32,8 +30,6 @@ from celestine.typed import (
     L,
     N,
     S,
-    T,
-    U,
 )
 from celestine.unicode import NONE
 

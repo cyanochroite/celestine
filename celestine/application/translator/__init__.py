@@ -8,7 +8,7 @@ from celestine.session.session import (
 )
 from celestine.typed import S
 from celestine.unicode import NONE
-from celestine.window.page import Page
+from celestine.window.container import Container as Page
 
 from .main import _translate
 from .report import _train
@@ -44,7 +44,7 @@ class Session(SuperSession):
 
 def main(page: Page):
     """"""
-    with page.line("head") as line:
+    with page.span("head") as line:
         line.label("title", "fish eat friends for food")
     _translate(page.session)
 

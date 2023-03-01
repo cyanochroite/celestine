@@ -585,24 +585,15 @@ def b_buffer(string):
             buffer.seek(0, io.SEEK_SET)
             count = buffer.write(string)
 
-        if character == INFORMATION_SEPARATOR_ONE:
-            count += buffer.write(SPACE)
-
+        if character == SPACE:
+            count += size
             count_b = count
+            buffer.write(SPACE)
 
-        elif character == INFORMATION_SEPARATOR_TWO:
+        elif character == BREAK_PERMITTED_HERE:
             count_c = count
 
-        elif character == INFORMATION_SEPARATOR_THREE:
-            buffer.seek(0, io.SEEK_SET)
-            print_line(buffer.readline())
-            size = 0
-            count = 0
-            count_a = 80
-            count_b = 80
-            count_c = 80
-            count_d = 80
-        elif character == INFORMATION_SEPARATOR_FOUR:
+        elif character == LINE_SEPARATOR:
             buffer.seek(0, io.SEEK_SET)
             print_line(buffer.readline())
             size = 0
@@ -626,11 +617,5 @@ string = "Επιλέξτε ποια έκδοση της Python χρησιμοπ�
 string = 'ARGUMENT_INFORMATION_DESCRIPTION = "\
 Η συμπερίληψη, αών θα τερματίσει το πρόγραμμα για την εμφάνιση πληροφοριών."'
 
-
-string = '''"Theregionwhereyourresourcewascreated"TRANSLATOR_SESSION_URL
-=
-"Thelocationofthetranslationservice"VIEWER_SESSION_DIRECTORY
-=
-"Apathtoadirectorycontainingimages"'''
-
 b_buffer(string)
+

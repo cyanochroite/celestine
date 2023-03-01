@@ -1,0 +1,87 @@
+"""en
+English
+English"""APPLICATION_TITLE
+=
+"CelestineImageViewer"ARGUMENT_APPLICATION_DESCRIPTION
+=
+"YourprogramvaluesgoehereYay"ARGUMENT_APPLICATION_HELP
+=
+"Chooseanapplicationtorun"ARGUMENT_APPLICATION_TITLE
+=
+"Application"ARGUMENT_CUSTOMIZATION_DESCRIPTION
+=
+\
+"CelestinewilltrytoguessthebestsettingstouseYoucanrequesttousethesevaluesinstead"ARGUMENT_CUSTOMIZATION_TITLE
+=
+"Customization"ARGUMENT_HELP_HELP
+=
+"Showsthishelpscreen"ARGUMENT_INFORMATION_DESCRIPTION
+=
+\
+"Includingthesewillendtheprogramtodisplayinformation"ARGUMENT_INFORMATION_TITLE
+=
+"Information"ARGUMENT_INTERFACE_HELP
+=
+"WhichGUIdoyouwanttouse"ARGUMENT_LANGUAGE_HELP
+=
+\
+"TheEUhas24officiallanguagesBulgarianCroatianCzechDanishDutchEnglishEstonianFinnishFrenchGermanGreekHungarianIrishItalianLatvianLithuanianMaltesePolishPortugueseRomanianSlovakSlovenianSpanishandSwedish"ARGUMENT_MODIFICATION_DESCRIPTION
+=
+"configureflags"ARGUMENT_MODIFICATION_TITLE
+=
+"Modification"ARGUMENT_PARSER_ARGUMENT
+=
+"argument"ARGUMENT_PARSER_CHOICE
+=
+"invalidchoice"ARGUMENT_PARSER_CHOOSE
+=
+"choosefrom"ARGUMENT_PARSER_ERROR
+=
+"error"ARGUMENT_PARSER_USAGE
+=
+"usage"ARGUMENT_PYTHON_HELP
+=
+"SelectwhichversionofPythonyouareusing"ARGUMENT_VERSION_HELP
+=
+"Showsthecurrentversion"CURSES_EXIT
+=
+"PresstheESCkeytoexit"DEMO_MAIN_NEXT
+=
+"Gotopagetwo"DEMO_MAIN_PAST
+=
+"Gotopageone"DEMO_MAIN_TITLE
+=
+"Pagemain"DEMO_ONE_NEXT
+=
+"Gotopagetwo"DEMO_ONE_PAST
+=
+"Gotopagemain"DEMO_ONE_TITLE
+=
+"Pageone"DEMO_TWO_NEXT
+=
+"Gotopagemain"DEMO_TWO_PAST
+=
+"Gotopageone"DEMO_TWO_TITLE
+=
+"Pagetwo"LANGUAGE
+=
+\
+"TheEUhas24officiallanguagesBulgarianCroatianCzechDanishDutchEnglishEstonianFinnishFrenchGermanGreekHungarianIrishItalianLatvianLithuanianMaltesePolishPortugueseRomanianSlovakSlovenianSpanishandSwedish"LANGUAGE_NAME_ENGLISH
+=
+"English"LANGUAGE_NAME_NATIVE
+=
+"English"LANGUAGE_TAG_AZURE
+=
+"en"LANGUAGE_TAG_ISO
+=
+"en"TRANSLATOR_FILE_ERROR_OVERFLOW
+=
+"Wedidoverflow"TRANSLATOR_SESSION_KEY
+=
+"YourTranslatorservicekeyfromtheAzureportal"TRANSLATOR_SESSION_REGION
+=
+"Theregionwhereyourresourcewascreated"TRANSLATOR_SESSION_URL
+=
+"Thelocationofthetranslationservice"VIEWER_SESSION_DIRECTORY
+=
+"Apathtoadirectorycontainingimages"

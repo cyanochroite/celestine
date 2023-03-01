@@ -53,3 +53,12 @@ TRANSLATOR_SESSION_REGION = "Η περιοχή όπου δημιουργήθηκ
 TRANSLATOR_SESSION_URL = "Η τοποθεσία της μεταφραστικής υπηρεσίας."
 VIEWER_SESSION_DIRECTORY = "\
 Μια διαδρομή προς έναν κατάλογο που περιέχει εικόνες."
+
+VIEWER_SESSION_DIRECTORY = "Μια διαδρομή προς, \
+έναν κατάλογο που περιέχει εικόνες."
+
+ARGUMENT_INFORMATION_DESCRIPTION = "Η συμπερίληψη αυτών θα τερματίσει \
+το πρόγραμμα για την εμφάνιση πληροφοριών."
+
+ARGUMENT_INFORMATION_DESCRIPTION = "Η συμπερίληψη αυών θα τερματίσει το \
+ πρόγραμμα για την εμφάνιση πληροφοριών."

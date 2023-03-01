@@ -13,9 +13,6 @@ from celestine.unicode import (
     EXCLAMATION_MARK,
     FORM_FEED,
     FULL_STOP,
-    INFORMATION_SEPARATOR_FOUR,
-    INFORMATION_SEPARATOR_THREE,
-    INFORMATION_SEPARATOR_TWO,
     LINE_FEED,
     LINE_SEPARATOR,
     LINE_TABULATION,
@@ -27,6 +24,10 @@ from celestine.unicode import (
     REVERSE_SOLIDUS,
     SEMICOLON,
     SPACE,
+    INFORMATION_SEPARATOR_FOUR,
+    INFORMATION_SEPARATOR_THREE,
+    INFORMATION_SEPARATOR_TWO,
+    INFORMATION_SEPARATOR_ONE,
 )
 
 MAXIMUM_LINE_LENGTH = 72
@@ -50,6 +51,7 @@ unicode_whitespace = frozenset(
         INFORMATION_SEPARATOR_FOUR,
         INFORMATION_SEPARATOR_THREE,
         INFORMATION_SEPARATOR_TWO,
+        INFORMATION_SEPARATOR_ONE,
         LINE_FEED,
         LINE_SEPARATOR,
         LINE_TABULATION,
@@ -94,10 +96,38 @@ def word_wrap(string):
     """
     buffer = io.StringIO(NONE, CARRIAGE_RETURN)
 
+    #f.seek(0, io.SEEK_END)
+    #  getvalue()
+    #  flush
+    #  readline(size=- 1, /)¶
+    #  seek(offset, whence=SEEK_SET, /)¶
+    # tell
+    # read
+
     column = 0
     size = 0
 
+    INFORMATION_SEPARATOR_FOUR,
+    INFORMATION_SEPARATOR_THREE,
+    INFORMATION_SEPARATOR_TWO,
+    INFORMATION_SEPARATOR_ONE,
+
     for character in string:
+
+        # start edit
+        if character == INFORMATION_SEPARATOR_ONE:
+            # somehow cache this
+            if column + size > MAXIMUM_LINE_LENGTH:
+                yield from REVERSE_SOLIDUS
+                yield from LINE_FEED
+
+            yield from buffer_readline(buffer)
+            yield from LINE_FEED
+
+            column = 0
+            size = 0
+        # end edit
+
         if character == LINE_SEPARATOR:
             if column + size > MAXIMUM_LINE_LENGTH:
                 yield from REVERSE_SOLIDUS
@@ -141,13 +171,11 @@ def normalize_whitespace(string):
     whitespace = None
 
     for character in string:
-        if character in unicode_identifier:
-            if previous in unicode_punctuation:
-                yield from SPACE
-                yield from BREAK_PERMITTED_HERE
-            elif previous in unicode_identifier:
-                if whitespace:
-                    yield from SPACE
+        if previous in unicode_punctuation:
+            yield from INFORMATION_SEPARATOR_TWO
+        elif previous in unicode_identifier:
+            if whitespace:
+                yield from INFORMATION_SEPARATOR_ONE
 
         whitespace = character in unicode_whitespace
 
@@ -156,14 +184,31 @@ def normalize_whitespace(string):
             previous = character
 
 
+def normalize_character(string):
+    """
+    Remove all invalid characters.
+    """
+    for character in string:
+        if character in unicode_identifier:
+            yield from character
+
+
 def normalize_quotation(string):
-    """ """
+    """"""
 
     for character in string:
         if character == QUOTATION_MARK:
             yield from APOSTROPHE
         else:
             yield from character
+
+
+def normalize(string):
+    """"""
+    character = normalize_character(string)
+    whitespace = normalize_whitespace(character)
+    quotation = normalize_quotation(whitespace)
+    yield from quotation
 
 
 def assignment_expression(identifier, expression):
@@ -179,39 +224,44 @@ def assignment_expression(identifier, expression):
         raise ValueError("This word is a soft keyword.")
 
     yield from identifier
-    yield from SPACE
+    yield from INFORMATION_SEPARATOR_ONE
     yield from EQUALS_SIGN
-    yield from SPACE
+    yield from INFORMATION_SEPARATOR_ONE
     yield from QUOTATION_MARK
-    yield from BREAK_PERMITTED_HERE
-    yield from normalize_quotation(normalize_whitespace(expression))
+    yield from INFORMATION_SEPARATOR_TWO
+    yield from normalize(expression)
     yield from QUOTATION_MARK
-    yield from LINE_SEPARATOR
+    yield from INFORMATION_SEPARATOR_THREE
 
 
 def transverse_dictionary(dictionary):
     """"""
-    for key, value in sorted(dictionary.items()):
+    items = dictionary.items()
+    sorted_items = sorted(items)
+    for key, value in sorted_items:
         yield from assignment_expression(key, value)
 
 
-def word_wrap_dictionary(dictionary):
-    """"""
-    yield from word_wrap(transverse_dictionary(dictionary))
-
-
-def dictionary_to_file(dictionary):
+def dictionary_file(dictionary):
     """"""
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
     yield from dictionary["LANGUAGE_TAG_ISO"]
-    yield from SPACE
+    yield from INFORMATION_SEPARATOR_ONE
     yield from dictionary["LANGUAGE_NAME_ENGLISH"]
-    yield from SPACE
+    yield from INFORMATION_SEPARATOR_ONE
     yield from dictionary["LANGUAGE_NAME_NATIVE"]
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
-    yield from LINE_FEED
-    yield from word_wrap(transverse_dictionary(dictionary))
+    yield from INFORMATION_SEPARATOR_THREE
+    yield from transverse_dictionary(dictionary)
+    yield from INFORMATION_SEPARATOR_FOUR
+
+
+def dictionary_to_file(dictionary):
+    """"""
+    file = dictionary_file(dictionary)
+    yield from word_wrap(file)
+
