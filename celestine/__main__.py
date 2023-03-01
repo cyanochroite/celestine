@@ -456,129 +456,82 @@ OPEN_OUTLINED_RIGHTWARDS_ARROW = chr(0x27BE)
 DOUBLE_CURLY_LOOP = chr(0x27BF)
 
 
-NONE = str()
-CARRIAGE_RETURN = chr(0x000D)
-
-
-buffer = io.StringIO(NONE, CARRIAGE_RETURN)  # *
-buffer = io.StringIO(NONE, CARRIAGE_RETURN)  # SPACE
-buffer = io.StringIO(NONE, CARRIAGE_RETURN)  # BREAK_PERMITTED_HERE
-buffer = io.StringIO(NONE, CARRIAGE_RETURN)  # LINE_SEPARATOR
-
 MAXIMUM_LINE_LENGTH = 25
-MAXIMUM_LINE_LENGTH = 72
+# MAXIMUM_LINE_LENGTH = 72
 
-
-string = "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"
-
-
-def a_buffer_readline(buffer):
-    """"""
-    buffer.write(CARRIAGE_RETURN)
-
-    buffer.seek(0, io.SEEK_SET)
-    string = buffer.readline()
-    buffer.seek(0, io.SEEK_SET)
-
-    print(string)
-
-
-def a_buffer(string):
-    """"""
-    buffer = io.StringIO(NONE, CARRIAGE_RETURN)  # *
-    column = 0
-    size = 0
-
-    for character in string:
-        size += len(character)
-
-        if column + size >= MAXIMUM_LINE_LENGTH:
-            buffer.write(REVERSE_SOLIDUS)
-            a_buffer_readline(buffer)
-            column = 0
-
-        buffer.write(character)
-        column += size
-        size = 0
-
-    a_buffer_readline(buffer)
+WORD_WRAP_LINE_LENGTH = MAXIMUM_LINE_LENGTH - 1
 
 
 def b_buffer_readline(buffer):
     """"""
-    buffer.write(CARRIAGE_RETURN)
+    buffer.write(LINE_FEED)
 
     buffer.seek(0, io.SEEK_SET)
     string = buffer.readline()
     buffer.seek(0, io.SEEK_SET)
 
-    print(string)
+    yield from string
 
 
 def count_reset(count, compare):
+    """"""
     if count < MAXIMUM_LINE_LENGTH:
         count -= compare
         count = max(count, 0)
     return count
 
 
-def _print_line(string):
+def print_line(string):
+    """"""
     for character in string:
         yield from character
     yield from REVERSE_SOLIDUS
     yield from LINE_FEED
 
 
-def print_line(string):
-    for character in _print_line(string):
-        print(character, end="")
-
-
 def b_buffer(string):
     """"""
-    buffer = io.StringIO(NONE, CARRIAGE_RETURN)  # *
+    buffer = io.StringIO()
     size = 0
 
     count = 0
 
     count_a = 0
     count_b = 0
-    count_c = 0
-    count_d = 0
 
     for character in string:
-        size = len(character)  # what if break_here_char?
-        if count + size >= MAXIMUM_LINE_LENGTH:
-            data = ""
+        if character == INFORMATION_SEPARATOR_FOUR:
+            break
 
+        if character == INFORMATION_SEPARATOR_THREE:
+            count += buffer.write("@")
+
+            count = 0
+            count_a = 0
+            count_b = 0
+
+            yield from b_buffer_readline(buffer)
+
+            continue
+
+        size = len(character)
+        if count + size >= MAXIMUM_LINE_LENGTH:
             buffer.seek(0, io.SEEK_SET)
 
-            if 0 < count_d < MAXIMUM_LINE_LENGTH:
-                data = buffer.read(count_d)
-                count_a = count_reset(count_a, count_d)
-                count_b = count_reset(count_b, count_d)
-                count_c = count_reset(count_c, count_d)
-                count_d = 0
-            elif 0 < count_c < MAXIMUM_LINE_LENGTH:
-                data = buffer.read(count_c)
-                count_a = count_reset(count_a, count_c)
-                count_b = count_reset(count_b, count_c)
-                count_c = 0
-                count_d = 0
-            elif 0 < count_b < MAXIMUM_LINE_LENGTH:
+            if 0 < count_b < MAXIMUM_LINE_LENGTH:
                 data = buffer.read(count_b)
                 count_a = count_reset(count_a, count_b)
                 count_b = 0
-                count_c = 0
-                count_d = 0
             elif 0 < count_a < MAXIMUM_LINE_LENGTH:
                 data = buffer.read(count_a)
                 count_a = 0
                 count_b = 0
-                count_c = 0
-                count_d = 0
+            else:
+                data = buffer.read(WORD_WRAP_LINE_LENGTH)
+                count_a = 0
+                count_b = 0
 
-            print_line(data)
+            yield from print_line(data)
 
             string = buffer.readline()
 
@@ -587,50 +540,31 @@ def b_buffer(string):
 
         if character == INFORMATION_SEPARATOR_ONE:
             count += buffer.write(SPACE)
-
-            count_b = count
+            count_a = count
 
         elif character == INFORMATION_SEPARATOR_TWO:
-            count_c = count
-
-        elif character == INFORMATION_SEPARATOR_THREE:
-            buffer.seek(0, io.SEEK_SET)
-            print_line(buffer.readline())
-            size = 0
-            count = 0
-            count_a = 80
-            count_b = 80
-            count_c = 80
-            count_d = 80
-        elif character == INFORMATION_SEPARATOR_FOUR:
-            buffer.seek(0, io.SEEK_SET)
-            print_line(buffer.readline())
-            size = 0
-            count = 0
-            count_a = 80
-            count_b = 80
-            count_c = 80
-            count_d = 80
+            count += buffer.write(SPACE)
+            count_b = count
 
         else:
-            count += size
-            count_a = count
-            buffer.write(character)
+            count += buffer.write(character)
 
-    b_buffer_readline(buffer)
+    yield from b_buffer_readline(buffer)
 
 
 # a_buffer(string)
 
-string = "Επιλέξτε ποια έκδοση της Python χρησιμοποιείτε. Επιλέξτε ποια έκδοση της Python χρησιμοποιείτε."
-string = 'ARGUMENT_INFORMATION_DESCRIPTION = "\
+stringy = "Επιλέξτε ποια έκδοση της Python χρησιμοποιείτε. Επιλέξτε ποια έκδοση της Python χρησιμοποιείτε."
+stringy = 'ARGUMENT_INFORMATION_DESCRIPTION = "\
 Η συμπερίληψη, αών θα τερματίσει το πρόγραμμα για την εμφάνιση πληροφοριών."'
 
 
-string = '''"Theregionwhereyourresourcewascreated"TRANSLATOR_SESSION_URL
-=
-"Thelocationofthetranslationservice"VIEWER_SESSION_DIRECTORY
-=
-"Apathtoadirectorycontainingimages"'''
+stringy = '''<thecowsays="YourTranslatorservicekeyfromtheAzureportalYourTranslatorservicekeyfromtheAzureportal"TRANSLATOR_SESSION_URL="Thealocationofthetranslationservice"VIEWER_SESSION_DIRECTORY="Apathtoadirectorycontainingimages">'''
 
-b_buffer(string)
+print(">")
+for character2 in b_buffer(stringy):
+    print(character2, end="")
+
+print("<")
+
+
