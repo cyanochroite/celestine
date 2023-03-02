@@ -462,40 +462,21 @@ MAXIMUM_LINE_LENGTH = 25
 WORD_WRAP_LINE_LENGTH = MAXIMUM_LINE_LENGTH - 1
 
 
-def b_buffer_readline(buffer):
-    """"""
-    buffer.write(LINE_FEED)
-
-    buffer.seek(0, io.SEEK_SET)
-    string = buffer.readline()
-    buffer.seek(0, io.SEEK_SET)
-
-    yield from string
-
-
-def count_reset(count, compare):
-    """"""
-    if count < MAXIMUM_LINE_LENGTH:
-        count -= compare
-        count = max(count, 0)
-    return count
-
-
-def print_line(string):
-    """"""
-    for character in string:
-        yield from character
-    yield from REVERSE_SOLIDUS
-    yield from LINE_FEED
-
-
 def b_buffer(string):
-    """"""
+    """
+    INFORMATION_SEPARATOR_FOUR indicates end of file. Stop immediately.
+    INFORMATION_SEPARATOR_THREE indicates end of line. Reset column.
+    INFORMATION_SEPARATOR_TWO indicates punctuation. Break on long line.
+    INFORMATION_SEPARATOR_ONE indicates whitespace. Break on long line.
+
+    A long line will always break on a punctuation if one can be found.
+    If not the line will break on a whitespace if one can be found.
+    Otherwise hard break on the last character and hope for the best.
+    """
     buffer = io.StringIO()
     size = 0
 
     count = 0
-
     count_a = 0
     count_b = 0
 
@@ -504,13 +485,15 @@ def b_buffer(string):
             break
 
         if character == INFORMATION_SEPARATOR_THREE:
-            count += buffer.write("@")
-
             count = 0
             count_a = 0
             count_b = 0
 
-            yield from b_buffer_readline(buffer)
+            buffer.write(LINE_FEED)
+
+            buffer.seek(0, io.SEEK_SET)
+            yield from buffer.readline()
+            buffer.seek(0, io.SEEK_SET)
 
             continue
 
@@ -518,25 +501,27 @@ def b_buffer(string):
         if count + size >= MAXIMUM_LINE_LENGTH:
             buffer.seek(0, io.SEEK_SET)
 
+            pull = 0
             if 0 < count_b < MAXIMUM_LINE_LENGTH:
-                data = buffer.read(count_b)
-                count_a = count_reset(count_a, count_b)
-                count_b = 0
+                pull = count_b
             elif 0 < count_a < MAXIMUM_LINE_LENGTH:
-                data = buffer.read(count_a)
-                count_a = 0
-                count_b = 0
+                pull = count_a
             else:
-                data = buffer.read(WORD_WRAP_LINE_LENGTH)
-                count_a = 0
-                count_b = 0
+                pull = MAXIMUM_LINE_LENGTH
 
-            yield from print_line(data)
+            data = buffer.read(pull)
+
+            yield from data
+            yield from REVERSE_SOLIDUS
+            yield from LINE_FEED
 
             string = buffer.readline()
 
             buffer.seek(0, io.SEEK_SET)
+
             count = buffer.write(string)
+            count_a = max(0, count_a - pull)
+            count_b = max(0, count_b - pull)
 
         if character == INFORMATION_SEPARATOR_ONE:
             count += buffer.write(SPACE)
@@ -549,17 +534,20 @@ def b_buffer(string):
         else:
             count += buffer.write(character)
 
-    yield from b_buffer_readline(buffer)
+    buffer.seek(0, io.SEEK_SET)
+    yield from buffer.read(count)
 
 
 # a_buffer(string)
-
 stringy = "Επιλέξτε ποια έκδοση της Python χρησιμοποιείτε. Επιλέξτε ποια έκδοση της Python χρησιμοποιείτε."
 stringy = 'ARGUMENT_INFORMATION_DESCRIPTION = "\
 Η συμπερίληψη, αών θα τερματίσει το πρόγραμμα για την εμφάνιση πληροφοριών."'
 
 
 stringy = '''<thecowsays="YourTranslatorservicekeyfromtheAzureportalYourTranslatorservicekeyfromtheAzureportal"TRANSLATOR_SESSION_URL="Thealocationofthetranslationservice"VIEWER_SESSION_DIRECTORY="Apathtoadirectorycontainingimages">'''
+
+stringy = '''<thecowsays="YourTranslatorservicekeyfromtheAzureportalYourTranslatorservicekeyfromtheAzureportal"TRANSLATOR_SESSION_URL="Thealocationofthetranslationservice"VIEWER_SESSION_DIRECTORY="Apathtoadirectorycontainingimages">'''
+
 
 print(">")
 for character2 in b_buffer(stringy):
