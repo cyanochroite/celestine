@@ -1,161 +1,97 @@
 """en English English"""
 
-"APPLICATION_TITLE = "CelestineImageViewer"
+APPLICATION_TITLE = "Celestine Image Viewer"
 
-PARGUMENT_APPLICATION_DESCRIPTION = "YourprogramvaluesgoehereYay"
+ARGUMENT_APPLICATION_DESCRIPTION = "\
+Your program values goes here. Yay."
 
-RARGUMENT_APPLICATION_HELP = "Chooseanapplicationtorun"
-ehereYay"
+ARGUMENT_APPLICATION_HELP = "Choose an application to run."
 
-RARGUMENT_APPLICATION_TITLE = "Application"
-ationtorun"
-ehereYay"
+ARGUMENT_APPLICATION_TITLE = "Application"
 
-RARGUMENT_CUSTOMIZATION_DESCRIPTION = "\
-CelestinewilltrytoguessthebestsettingstouseYoucanrequesttousethesevalue\
-sinstead"
-illtrytogu
-iARGUMENT_CUSTOMIZATION_TITLE = "Customization"
-anrequesttousethesevalue
-RARGUMENT_HELP_HELP = "Showsthishelpscreen"
-on"
-anrequesttousethesevalue
-RARGUMENT_INFORMATION_DESCRIPTION = "\
-Includingthesewillendtheprogramtodisplayinformation"
-lendtheprogramtodi
-nARGUMENT_INFORMATION_TITLE = "Information"
-ormation"
-lendtheprogramtodi
-RARGUMENT_INTERFACE_HELP = "WhichGUIdoyouwanttouse"
-"
-lendtheprogramtodi
-RARGUMENT_LANGUAGE_HELP = "\
-TheEUhas24officiallanguagesBulgarianCroatianCzechDanishDutchEnglishEsto\
-nianFinnishFrenchGermanGreekHungarianIrishItalianLatvianLithuanianMalte\
-sePolishPortugueseRomanianSlovakSlovenianSpanishandSwedish"
-uanianMalte
-eARGUMENT_MODIFICATION_DESCRIPTION = "configureflags"
-edish"
-uanianMalte
-RARGUMENT_MODIFICATION_TITLE = "Modification"
-eflags"
-edish"
-uanianMalte
-RARGUMENT_PARSER_ARGUMENT = "argument"
-ation"
-eflags"
-edish"
-uanianMalte
-RARGUMENT_PARSER_CHOICE = "invalidchoice"
-on"
-eflags"
-edish"
-uanianMalte
-RARGUMENT_PARSER_CHOOSE = "choosefrom"
-e"
-on"
-eflags"
-edish"
-uanianMalte
-RARGUMENT_PARSER_ERROR = "error"
-from"
-e"
-on"
-eflags"
-edish"
-uani
-RARGUMENT_PARSER_USAGE = "usage"
-from"
-e"
-on"
-eflags"
-edish"
-uani
-RARGUMENT_PYTHON_HELP = "SelectwhichversionofPythonyouareusing"
-ianMalte
-RARGUMENT_VERSION_HELP = "Showsthecurrentversion"
-nyouareusing"
-ianMalte
-RCURSES_EXIT = "PresstheESCkeytoexit"
-entversion"
-nyouareusing"
-ianMalte
-UDEMO_MAIN_NEXT = "Gotopagetwo"
-exit"
-entversion"
-nyouareusing"
-EDEMO_MAIN_PAST = "Gotopageone"
-exit"
-entversion"
-nyouareusing"
-EDEMO_MAIN_TITLE = "Pagemain"
-"
-exit"
-entversion"
-nyouareus
-EDEMO_ONE_NEXT = "Gotopagetwo"
+ARGUMENT_CUSTOMIZATION_DESCRIPTION = "\
+Celestine will try to guess the best settings to use. \
+You can request to use these values instead."
 
-exit"
-entversion"
-nyouareusin
-EDEMO_ONE_PAST = "Gotopagemain"
-exit"
-entversion"
-nyouareusing"
-EDEMO_ONE_TITLE = "Pageone"
-in"
-exit"
-entversion"
-nyoua
-EDEMO_TWO_NEXT = "Gotopagemain"
-exit"
-entversion"
-nyouareusing"
-EDEMO_TWO_PAST = "Gotopageone"
+ARGUMENT_CUSTOMIZATION_TITLE = "Customization"
 
-exit"
-entversion"
-nyouareusin
-EDEMO_TWO_TITLE = "Pagetwo"
-e"
+ARGUMENT_HELP_HELP = "Shows this help screen."
 
-exit"
-entversion"
-nyoua
-ELANGUAGE = "\
-TheEUhas24officiallanguagesBulgarianCroatianCzechDanishDutchEnglishEsto\
-nianFinnishFrenchGermanGreekHungarianIrishItalianLatvianLithuanianMalte\
-sePolishPortugueseRomanianSlovakSlovenianSpanishandSwedish"
-uanianMalte
-eLANGUAGE_NAME_ENGLISH = "English"
-ovenianSpanishandSwedish"
-uanianMa
-ALANGUAGE_NAME_NATIVE = "English"
+ARGUMENT_INFORMATION_DESCRIPTION = "\
+Including these will end the program to display information."
 
-ovenianSpanishandSwedish"
-uanian
-ALANGUAGE_TAG_AZURE = "en"
-glish"
+ARGUMENT_INFORMATION_TITLE = "Information"
 
-ovenianSpanishandS
-ALANGUAGE_TAG_ISO = "en"
-"
-glish"
+ARGUMENT_INTERFACE_HELP = "Which GUI do you want to use?"
 
-ovenianSpanish
-ATRANSLATOR_FILE_ERROR_OVERFLOW = "Wedidoverflow"
-ndSwedish"
-uanianMalte
-RTRANSLATOR_SESSION_KEY = "YourTranslatorservicekeyfromtheAzureportal"
-e
-RTRANSLATOR_SESSION_REGION = "Theregionwhereyourresourcewascreated"
-l"
-e
-RTRANSLATOR_SESSION_URL = "Thelocationofthetranslationservice"
-ted"
-l"
-e
-RVIEWER_SESSION_DIRECTORY = "Apathtoadirectorycontainingimages"
-ed"
-l"
-e
+ARGUMENT_LANGUAGE_HELP = "\
+The EU has 24 official languages: \
+Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, \
+French, German, Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, \
+Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian, \
+Spanish and Swedish."
+
+ARGUMENT_MODIFICATION_DESCRIPTION = "configure flags"
+
+ARGUMENT_MODIFICATION_TITLE = "Modification"
+
+ARGUMENT_PARSER_ARGUMENT = "argument"
+
+ARGUMENT_PARSER_CHOICE = "invalid choice"
+
+ARGUMENT_PARSER_CHOOSE = "choose from"
+
+ARGUMENT_PARSER_ERROR = "error"
+
+ARGUMENT_PARSER_USAGE = "usage"
+
+ARGUMENT_PYTHON_HELP = "Select which version of Python you are using."
+
+ARGUMENT_VERSION_HELP = "Shows the current version."
+
+CURSES_EXIT = "Press the ESC key to exit."
+
+DEMO_MAIN_NEXT = "Go to page two."
+
+DEMO_MAIN_PAST = "Go to page one."
+
+DEMO_MAIN_TITLE = "Page main."
+
+DEMO_ONE_NEXT = "Go to page two."
+
+DEMO_ONE_PAST = "Go to page main."
+
+DEMO_ONE_TITLE = "Page one."
+
+DEMO_TWO_NEXT = "Go to page main."
+
+DEMO_TWO_PAST = "Go to page one."
+
+DEMO_TWO_TITLE = "Page two."
+
+LANGUAGE = "\
+The EU has 24 official languages: \
+Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, \
+French, German, Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, \
+Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian, \
+Spanish and Swedish."
+
+LANGUAGE_NAME_ENGLISH = "English"
+
+LANGUAGE_NAME_NATIVE = "English"
+
+LANGUAGE_TAG_AZURE = "en"
+
+LANGUAGE_TAG_ISO = "en"
+
+TRANSLATOR_FILE_ERROR_OVERFLOW = "We did overflow."
+
+TRANSLATOR_SESSION_KEY = "\
+Your Translator service key from the Azure portal."
+
+TRANSLATOR_SESSION_REGION = "\
+The region where your resource was created."
+
+TRANSLATOR_SESSION_URL = "The location of the translation service."
+
+VIEWER_SESSION_DIRECTORY = "A path to a directory containing images."

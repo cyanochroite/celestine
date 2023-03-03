@@ -70,6 +70,7 @@ unicode_whitespace = frozenset(
 )
 
 plane_0 = set({})
+
 for index in range(0x10000):
     plane_0.add(chr(index))
 
@@ -154,7 +155,7 @@ def word_wrap(string):
 
         if character == LINE_FEED:
             buffer.seek(0, io.SEEK_SET)
-            yield from buffer.read(count)
+            # yield from buffer.read(count)
 
             candy = buffer.read(count)
             yield from candy
@@ -170,42 +171,47 @@ def word_wrap(string):
     yield from buffer.read(count)
 
 
+def normalize_character(string):
+    """
+    Remove all invalid characters.
+    """
+    for character in string:
+        if character in basic_multilingual_plane:
+            yield from character
+
+
 def normalize_whitespace(string):
     """
-    Trim whitespace from ends.
+    Remove (ignore) all whitespace from the start and end of the string.
     Convert all whitespace to spaces.
     Remove all duplicate spaces.
     Preserve space between words.
-    Ensure space after every punctuation.
     Remove space before punctuation.
+    Ensure space after every punctuation.
     Allow line breaks after punctuation.
     """
     previous = None
     whitespace = None
 
     for character in string:
-        if previous in unicode_break_soft:
-            yield from INFORMATION_SEPARATOR_TWO
-        elif previous in unicode_break_hard:
-            yield from INFORMATION_SEPARATOR_THREE
-        elif previous in unicode_identifier:
-            if whitespace:
-                yield from INFORMATION_SEPARATOR_ONE
+        if character in unicode_identifier:
+            if previous in unicode_break_soft:
+                yield from SPACE
+                yield from INFORMATION_SEPARATOR_TWO
+            elif previous in unicode_break_hard:
+                yield from SPACE
+                yield from INFORMATION_SEPARATOR_THREE
+            elif previous in unicode_identifier:
+                # Preserve space between words.
+                if whitespace:
+                    yield from SPACE
+                    yield from INFORMATION_SEPARATOR_ONE
 
         whitespace = character in unicode_whitespace
 
         if not whitespace:
             yield from character
             previous = character
-
-
-def normalize_character(string):
-    """
-    Remove all invalid characters.
-    """
-    for character in string:
-        if character in unicode_identifier:
-            yield from character
 
 
 def normalize_quotation(string):
@@ -218,12 +224,25 @@ def normalize_quotation(string):
             yield from character
 
 
+def normalize_punctuation(string):
+    """"""
+
+    previous = None
+    for character in string:
+        if character in unicode_punctuation:
+            if character == previous:
+                continue
+        yield character
+        previous = character
+
+
 def normalize(string):
     """"""
     character = normalize_character(string)
     whitespace = normalize_whitespace(character)
     quotation = normalize_quotation(whitespace)
-    yield from quotation
+    punctuation = normalize_punctuation(quotation)
+    yield from punctuation
 
 
 def assignment_expression(identifier, expression):
