@@ -105,6 +105,7 @@ def _translate(session):
     save_dictionary(do, "")
     #
 
+    return
     dictionary = parser_magic(session)
 
     reset()

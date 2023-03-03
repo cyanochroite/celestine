@@ -32,16 +32,24 @@ from celestine.unicode import (
 
 MAXIMUM_LINE_LENGTH = 72
 
-unicode_punctuation = frozenset(
+unicode_break_hard = frozenset(
     {
         COLON,
-        COMMA,
         EXCLAMATION_MARK,
         FULL_STOP,
         QUESTION_MARK,
+    }
+)
+
+unicode_break_soft = frozenset(
+    {
+        COMMA,
         SEMICOLON,
     }
 )
+
+unicode_punctuation = unicode_break_hard | unicode_break_soft
+
 
 unicode_whitespace = frozenset(
     {
@@ -72,89 +80,94 @@ not_identifier = unicode_punctuation | unicode_whitespace
 unicode_identifier = basic_multilingual_plane - not_identifier
 
 
-def buffer_readline(buffer):
-    """"""
-    buffer.write(CARRIAGE_RETURN)
-    buffer.seek(0, io.SEEK_SET)
-    string = buffer.readline()
-    for character in string:
-        if character == LINE_SEPARATOR:
-            yield from LINE_FEED
-        elif character != CARRIAGE_RETURN:
-            yield from character
-    buffer.seek(0, io.SEEK_SET)
-
-
 def word_wrap(string):
     """
-    Lines will be MAXIMUM_LINE_LENGTH unless no breaks detected.
-    Use BREAK_PERMITTED_HERE to signal a soft line break.
-    Use LINE_SEPARATOR to signal a hard line break.
-    Do not use LINE_FEED or CARRIAGE_RETURN as weird things may happen.
-    BREAK_PERMITTED_HERE will be removed from the string.
-    LINE_SEPARATOR will be replaced with LINE_FEED.
+    INFORMATION_SEPARATOR_FOUR indicates end of file. Stop immediately.
+    INFORMATION_SEPARATOR_THREE indicates end of line. Reset column.
+    INFORMATION_SEPARATOR_TWO indicates punctuation. Break on long line.
+    INFORMATION_SEPARATOR_ONE indicates whitespace. Break on long line.
+
+    A long line will always break on a punctuation if one can be found.
+    If not the line will break on a whitespace if one can be found.
+    Otherwise hard break on the last character and hope for the best.
     """
-    buffer = io.StringIO(NONE, CARRIAGE_RETURN)
-
-    #f.seek(0, io.SEEK_END)
-    #  getvalue()
-    #  flush
-    #  readline(size=- 1, /)¶
-    #  seek(offset, whence=SEEK_SET, /)¶
-    # tell
-    # read
-
-    column = 0
+    buffer = io.StringIO()
     size = 0
 
-    INFORMATION_SEPARATOR_FOUR,
-    INFORMATION_SEPARATOR_THREE,
-    INFORMATION_SEPARATOR_TWO,
-    INFORMATION_SEPARATOR_ONE,
+    count = 0
+    count_a = 0
+    count_b = 0
+    count_c = 0
+    count_d = 0
 
     for character in string:
 
-        # start edit
+        if character == INFORMATION_SEPARATOR_FOUR:
+            count_d = count
+            continue
+
+        if character == INFORMATION_SEPARATOR_THREE:
+            count_c = count
+            continue
+
+        if character == INFORMATION_SEPARATOR_TWO:
+            count_b = count
+            continue
+
         if character == INFORMATION_SEPARATOR_ONE:
-            # somehow cache this
-            if column + size > MAXIMUM_LINE_LENGTH:
-                yield from REVERSE_SOLIDUS
-                yield from LINE_FEED
+            count_a = count
+            continue
 
-            yield from buffer_readline(buffer)
+        size = len(character)
+        if count + size >= MAXIMUM_LINE_LENGTH:
+            buffer.seek(0, io.SEEK_SET)
+
+            pull = 0
+            if 0 < count_d < MAXIMUM_LINE_LENGTH:
+                pull = count_d
+            elif 0 < count_c < MAXIMUM_LINE_LENGTH:
+                pull = count_c
+            elif 0 < count_b < MAXIMUM_LINE_LENGTH:
+                pull = count_b
+            elif 0 < count_a < MAXIMUM_LINE_LENGTH:
+                pull = count_a
+            else:
+                pull = MAXIMUM_LINE_LENGTH
+
+            data = buffer.read(pull)
+
+            yield from data
+            yield from REVERSE_SOLIDUS
             yield from LINE_FEED
 
-            column = 0
-            size = 0
-        # end edit
+            string = buffer.read(count - pull)
 
-        if character == LINE_SEPARATOR:
-            if column + size > MAXIMUM_LINE_LENGTH:
-                yield from REVERSE_SOLIDUS
-                yield from LINE_FEED
+            buffer.seek(0, io.SEEK_SET)
 
-            yield from buffer_readline(buffer)
-            yield from LINE_FEED
+            count = buffer.write(string)
+            count_a = max(0, count_a - pull)
+            count_b = max(0, count_b - pull)
+            count_c = max(0, count_c - pull)
+            count_d = max(0, count_d - pull)
 
-            column = 0
-            size = 0
+        count += buffer.write(character)
 
-        elif character == BREAK_PERMITTED_HERE:
-            if column + size + 1 > MAXIMUM_LINE_LENGTH:
-                yield from REVERSE_SOLIDUS
-                yield from LINE_FEED
-                column = 0
+        if character == LINE_FEED:
+            buffer.seek(0, io.SEEK_SET)
+            yield from buffer.read(count)
 
-            yield from buffer_readline(buffer)
+            candy = buffer.read(count)
+            yield from candy
+            buffer.seek(0, io.SEEK_SET)
 
-            column += size
-            size = 0
+            count = 0
+            count_a = 0
+            count_b = 0
+            count_c = 0
+            count_d = 0
 
-        else:
-            buffer.write(character)
-            size += 1
-
-    yield from buffer_readline(buffer)
+    buffer.seek(0, io.SEEK_SET)
+    yield from buffer.read(count)
 
 
 def normalize_whitespace(string):
@@ -171,8 +184,10 @@ def normalize_whitespace(string):
     whitespace = None
 
     for character in string:
-        if previous in unicode_punctuation:
+        if previous in unicode_break_soft:
             yield from INFORMATION_SEPARATOR_TWO
+        elif previous in unicode_break_hard:
+            yield from INFORMATION_SEPARATOR_THREE
         elif previous in unicode_identifier:
             if whitespace:
                 yield from INFORMATION_SEPARATOR_ONE
@@ -223,15 +238,16 @@ def assignment_expression(identifier, expression):
     if keyword.issoftkeyword(identifier):
         raise ValueError("This word is a soft keyword.")
 
+    yield from LINE_FEED
     yield from identifier
-    yield from INFORMATION_SEPARATOR_ONE
+    yield from SPACE
     yield from EQUALS_SIGN
-    yield from INFORMATION_SEPARATOR_ONE
+    yield from SPACE
     yield from QUOTATION_MARK
-    yield from INFORMATION_SEPARATOR_TWO
+    yield from INFORMATION_SEPARATOR_FOUR
     yield from normalize(expression)
     yield from QUOTATION_MARK
-    yield from INFORMATION_SEPARATOR_THREE
+    yield from LINE_FEED
 
 
 def transverse_dictionary(dictionary):
@@ -248,16 +264,15 @@ def dictionary_file(dictionary):
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
     yield from dictionary["LANGUAGE_TAG_ISO"]
-    yield from INFORMATION_SEPARATOR_ONE
+    yield from SPACE
     yield from dictionary["LANGUAGE_NAME_ENGLISH"]
-    yield from INFORMATION_SEPARATOR_ONE
+    yield from SPACE
     yield from dictionary["LANGUAGE_NAME_NATIVE"]
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
-    yield from INFORMATION_SEPARATOR_THREE
+    yield from LINE_FEED
     yield from transverse_dictionary(dictionary)
-    yield from INFORMATION_SEPARATOR_FOUR
 
 
 def dictionary_to_file(dictionary):
@@ -265,3 +280,8 @@ def dictionary_to_file(dictionary):
     file = dictionary_file(dictionary)
     yield from word_wrap(file)
 
+
+# 4 :
+# 3 .
+# 2 ,
+# 1 _
