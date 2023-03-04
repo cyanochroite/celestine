@@ -102,7 +102,6 @@ class test_translator(unittest.TestCase):
             tab(""),
             word("dog"),
         ]
-        #        [<OPERATOR.NE: '!='>, <OPERATOR.NUMBER: '0'>, <OPERATOR.WORD: 'h'>, <OPERATOR.TAB: ' '>, <OPERATOR.WORD: 'i'>, <OPERATOR.NUMBER: '35'>, <OPERATOR.TAB: ' '>, <OPERATOR.LT: '<'>, <OPERATOR.WORD: 'm'>, <OPERATOR.TAB: ' '>, <OPERATOR.WORD: 'o'>, <OPERATOR.NUMBER: '5'>, <OPERATOR.WORD: 'cat'>, <OPERATOR.TAB: ' '>, <OPERATOR.WORD: 'dog'>]
         one = translator.translate(string)
         two = tokenizer.tokenize(one)
         three = parser.parse(two)

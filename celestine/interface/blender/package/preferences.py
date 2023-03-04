@@ -32,7 +32,7 @@ class CelestineAddonPreferences(bpy.types.AddonPreferences):
 
     ready: bpy.props.BoolProperty(
         name="Application Ready",
-        description="Tells the program everything is set up and go to go.",
+        description="Tells the program everything is set up and ready.",
         default=False,
     )
 

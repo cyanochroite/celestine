@@ -3,7 +3,7 @@
 APPLICATION_TITLE = "Celestine Image Viewer"
 
 ARGUMENT_APPLICATION_DESCRIPTION = "\
-Your program values goes here. Yay."
+Your program values goe here. Yay."
 
 ARGUMENT_APPLICATION_HELP = "Choose an application to run."
 

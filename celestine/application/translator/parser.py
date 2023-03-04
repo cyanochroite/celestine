@@ -298,9 +298,3 @@ def dictionary_to_file(dictionary):
     """"""
     file = dictionary_file(dictionary)
     yield from word_wrap(file)
-
-
-# 4 :
-# 3 .
-# 2 ,
-# 1 _

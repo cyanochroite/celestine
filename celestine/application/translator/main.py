@@ -101,11 +101,6 @@ def post(session, code, text):
 def _translate(session):
     """def main"""
 
-    do = load.dictionary("language", "en")
-    save_dictionary(do, "")
-    #
-
-    return
     dictionary = parser_magic(session)
 
     reset()
