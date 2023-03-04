@@ -15,8 +15,8 @@ print(dictionary[Test]) -> "test"
 
 
 from celestine.typed import (
-    O,
     B,
+    O,
     S,
     Z,
 )

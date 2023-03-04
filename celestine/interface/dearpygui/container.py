@@ -1,7 +1,5 @@
 """"""
 
-import math
-
 from celestine.window.container import Container as container
 from celestine.window.container import Grid as grid
 
@@ -12,7 +10,7 @@ from .label import Label
 
 
 def callback(sender, app_data, user_data):
-    pass
+    """"""
 
 
 class Container(container):

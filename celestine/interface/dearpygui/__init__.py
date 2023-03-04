@@ -1,7 +1,9 @@
+""""""
 from .window import Window
 
 
 def image_format():
+    """"""
     return [
         ".jpg",
         ".jpeg",
@@ -18,4 +20,5 @@ def image_format():
 
 
 def window(session):
+    """"""
     return Window(session)

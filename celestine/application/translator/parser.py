@@ -4,7 +4,6 @@ import keyword
 
 from celestine.unicode import (
     APOSTROPHE,
-    BREAK_PERMITTED_HERE,
     CARRIAGE_RETURN,
     CHARACTER_TABULATION,
     COLON,
@@ -21,7 +20,6 @@ from celestine.unicode import (
     LINE_SEPARATOR,
     LINE_TABULATION,
     NEXT_LINE,
-    NONE,
     PARAGRAPH_SEPARATOR,
     QUESTION_MARK,
     QUOTATION_MARK,

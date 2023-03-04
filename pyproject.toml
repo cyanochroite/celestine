@@ -15,6 +15,9 @@ line_length = 72
 profile = "black"
 remove_redundant_aliases = true
 
+[tool.pylint.main]
+disable = "empty-docstring, too-few-public-methods"
+
 [tool.pylint.format]
 expected-line-ending-format = "CRLF"
 max-line-length = 72

@@ -9,9 +9,9 @@ __import__("celestine").main(sys.argv[1:], True)
 
 
 # coverage
-# flake8
 
 # pylint
 # pyright
 
+# flake8
 # mypy

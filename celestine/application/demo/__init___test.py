@@ -2,18 +2,20 @@
 
 import unittest
 
-from celestine.application.demo.__init__ import (
+from celestine.application.demo import (
     main,
     one,
     two,
 )
+from celestine.interface.tkinter.container import Container
 from celestine.session.parser import start_session
-from celestine.window.container import Container
 
 argv = ["-a", "demo"]
 
 
-class test_init(unittest.TestCase):
+class InitTest(unittest.TestCase):
+    """"""
+
     def test_one(self):
         """"""
         name = "one"

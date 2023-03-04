@@ -4,13 +4,19 @@
 import os
 import sys
 
-pygame = None
+from celestine.text.stream import UTF_8
+
+PYGAME = None
 
 
 class HiddenPrints:
-    def __enter__(self):
+    """"""
+
+    def __init__(self):
         self._original_stdout = sys.stdout
-        sys.stdout = open(os.devnull, "w")
+
+    def __enter__(self):
+        sys.stdout = open(os.devnull, "w", encoding=UTF_8)
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         sys.stdout.close()
@@ -18,15 +24,15 @@ class HiddenPrints:
 
 
 with HiddenPrints():
-    pygame = __import__("pygame")
+    PYGAME = __import__("pygame")
 
 
-draw = pygame.draw
-display = pygame.display
-init = pygame.init
-display = pygame.display
-font = pygame.font
-event = pygame.event
-QUIT = pygame.QUIT
-mouse = pygame.mouse
-MOUSEBUTTONDOWN = pygame.MOUSEBUTTONDOWN
+draw = PYGAME.draw
+display = PYGAME.display
+init = PYGAME.init
+display = PYGAME.display
+font = PYGAME.font
+event = PYGAME.event
+QUIT = PYGAME.QUIT
+mouse = PYGAME.mouse
+MOUSEBUTTONDOWN = PYGAME.MOUSEBUTTONDOWN

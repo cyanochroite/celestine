@@ -19,6 +19,7 @@ class Container(Rectangle):
         raise NotImplementedError()
 
     def ready(self, button, image, label):
+        """"""
         self._button = button
         self._image = image
         self._label = label

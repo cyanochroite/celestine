@@ -1,14 +1,16 @@
-from celestine import load
+""""""
 
 from .collection import Collection
 
 
 class Window(Collection):
+    """"""
+
     def page(self, name, document):
-        pass
+        """"""
 
     def turn(self, page):
-        pass
+        """"""
 
     def __enter__(self):
         return self

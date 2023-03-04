@@ -34,4 +34,5 @@ group = dearpygui.dearpygui.group
 
 
 def tag_root(tag):
+    """"""
     return tag.split("_")[0]
