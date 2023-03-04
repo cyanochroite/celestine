@@ -6,7 +6,6 @@ from celestine.window.container import Container as container
 from celestine.window.container import Grid as grid
 
 from . import package
-
 from .button import Button
 from .image import Image
 from .label import Label
@@ -27,7 +26,9 @@ class Container(container):
                 label,
                 package.tag_root(self.tag),
                 action,
-                lambda sender, app_data, user_data: self.turn(*user_data),
+                lambda sender, app_data, user_data: self.turn(
+                    *user_data
+                ),
             ),
         )
 

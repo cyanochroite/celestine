@@ -2,9 +2,8 @@
 
 from celestine.window.label import Label as label
 
-from .element import Element
-
 from . import package
+from .element import Element
 
 
 class Label(label, Element):

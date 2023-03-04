@@ -32,12 +32,15 @@ class CelestineAddonPreferences(bpy.types.AddonPreferences):
 
     ready: bpy.props.BoolProperty(
         name="Application Ready",
-        description="Tells the program everything is set up and go to go.",
+        description="Tells the program everything is set up and ready.",
         default=False,
     )
 
     password: bpy.props.StringProperty(
-        name="Password", default="", options={"HIDDEN", "SKIP_SAVE"}, subtype="PASSWORD"
+        name="Password",
+        default="",
+        options={"HIDDEN", "SKIP_SAVE"},
+        subtype="PASSWORD",
     )
 
     def draw(self, context):
@@ -62,7 +65,9 @@ class CelestinePropertyGroup(bpy.types.PropertyGroup):
 def register():
     bpy.utils.register_class(CelestineAddonPreferences)
     bpy.utils.register_class(CelestinePropertyGroup)
-    bpy.types.Scene.celestine = bpy.props.PointerProperty(type=CelestinePropertyGroup)
+    bpy.types.Scene.celestine = bpy.props.PointerProperty(
+        type=CelestinePropertyGroup
+    )
 
 
 def unregister():

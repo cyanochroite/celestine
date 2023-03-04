@@ -1,7 +1,6 @@
 """"""
 
 from celestine import load
-
 from celestine.session.parser import start_session
 
 INTERFACE = "interface"

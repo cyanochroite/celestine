@@ -7,7 +7,6 @@ Putting alias here to contain errors to this file only.
 import tkinter
 import tkinter.filedialog
 
-
 Button = tkinter.Button
 Frame = tkinter.Frame
 Label = tkinter.Label

@@ -1,459 +1,461 @@
 """Map character code points to an internal reprensentation."""
-from celestine.unicode import NULL
-from celestine.unicode import START_OF_HEADING
-from celestine.unicode import START_OF_TEXT
-from celestine.unicode import END_OF_TEXT
-from celestine.unicode import END_OF_TRANSMISSION
-from celestine.unicode import ENQUIRY
-from celestine.unicode import ACKNOWLEDGE
-from celestine.unicode import BELL
-from celestine.unicode import BACKSPACE
-from celestine.unicode import CHARACTER_TABULATION
-from celestine.unicode import LINE_FEED
-from celestine.unicode import LINE_TABULATION
-from celestine.unicode import FORM_FEED
-from celestine.unicode import CARRIAGE_RETURN
-from celestine.unicode import SHIFT_OUT
-from celestine.unicode import SHIFT_IN
-from celestine.unicode import DATA_LINK_ESCAPE
-from celestine.unicode import DEVICE_CONTROL_ONE
-from celestine.unicode import DEVICE_CONTROL_TWO
-from celestine.unicode import DEVICE_CONTROL_THREE
-from celestine.unicode import DEVICE_CONTROL_FOUR
-from celestine.unicode import NEGATIVE_ACKNOWLEDGE
-from celestine.unicode import SYNCHRONOUS_IDLE
-from celestine.unicode import END_OF_TRANSMISSION_BLOCK
-from celestine.unicode import CANCEL
-from celestine.unicode import END_OF_MEDIUM
-from celestine.unicode import SUBSTITUTE
-from celestine.unicode import ESCAPE
-from celestine.unicode import INFORMATION_SEPARATOR_FOUR
-from celestine.unicode import INFORMATION_SEPARATOR_THREE
-from celestine.unicode import INFORMATION_SEPARATOR_TWO
-from celestine.unicode import INFORMATION_SEPARATOR_ONE
-from celestine.unicode import SPACE
-from celestine.unicode import EXCLAMATION_MARK
-from celestine.unicode import QUOTATION_MARK
-from celestine.unicode import NUMBER_SIGN
-from celestine.unicode import DOLLAR_SIGN
-from celestine.unicode import PERCENT_SIGN
-from celestine.unicode import AMPERSAND
-from celestine.unicode import APOSTROPHE
-from celestine.unicode import LEFT_PARENTHESIS
-from celestine.unicode import RIGHT_PARENTHESIS
-from celestine.unicode import ASTERISK
-from celestine.unicode import PLUS_SIGN
-from celestine.unicode import COMMA
-from celestine.unicode import HYPHEN_MINUS
-from celestine.unicode import FULL_STOP
-from celestine.unicode import SOLIDUS
-from celestine.unicode import DIGIT_ZERO
-from celestine.unicode import DIGIT_ONE
-from celestine.unicode import DIGIT_TWO
-from celestine.unicode import DIGIT_THREE
-from celestine.unicode import DIGIT_FOUR
-from celestine.unicode import DIGIT_FIVE
-from celestine.unicode import DIGIT_SIX
-from celestine.unicode import DIGIT_SEVEN
-from celestine.unicode import DIGIT_EIGHT
-from celestine.unicode import DIGIT_NINE
-from celestine.unicode import COLON
-from celestine.unicode import SEMICOLON
-from celestine.unicode import LESS_THAN_SIGN
-from celestine.unicode import EQUALS_SIGN
-from celestine.unicode import GREATER_THAN_SIGN
-from celestine.unicode import QUESTION_MARK
-from celestine.unicode import COMMERCIA_AT
-from celestine.unicode import LATIN_CAPITAL_LETTER_A
-from celestine.unicode import LATIN_CAPITAL_LETTER_B
-from celestine.unicode import LATIN_CAPITAL_LETTER_C
-from celestine.unicode import LATIN_CAPITAL_LETTER_D
-from celestine.unicode import LATIN_CAPITAL_LETTER_E
-from celestine.unicode import LATIN_CAPITAL_LETTER_F
-from celestine.unicode import LATIN_CAPITAL_LETTER_G
-from celestine.unicode import LATIN_CAPITAL_LETTER_H
-from celestine.unicode import LATIN_CAPITAL_LETTER_I
-from celestine.unicode import LATIN_CAPITAL_LETTER_J
-from celestine.unicode import LATIN_CAPITAL_LETTER_K
-from celestine.unicode import LATIN_CAPITAL_LETTER_L
-from celestine.unicode import LATIN_CAPITAL_LETTER_M
-from celestine.unicode import LATIN_CAPITAL_LETTER_N
-from celestine.unicode import LATIN_CAPITAL_LETTER_O
-from celestine.unicode import LATIN_CAPITAL_LETTER_P
-from celestine.unicode import LATIN_CAPITAL_LETTER_Q
-from celestine.unicode import LATIN_CAPITAL_LETTER_R
-from celestine.unicode import LATIN_CAPITAL_LETTER_S
-from celestine.unicode import LATIN_CAPITAL_LETTER_T
-from celestine.unicode import LATIN_CAPITAL_LETTER_U
-from celestine.unicode import LATIN_CAPITAL_LETTER_V
-from celestine.unicode import LATIN_CAPITAL_LETTER_W
-from celestine.unicode import LATIN_CAPITAL_LETTER_X
-from celestine.unicode import LATIN_CAPITAL_LETTER_Y
-from celestine.unicode import LATIN_CAPITAL_LETTER_Z
-from celestine.unicode import LEFT_SQUARE_BRACKET
-from celestine.unicode import REVERSE_SOLIDUS
-from celestine.unicode import RIGHT_SQUARE_BRACKET
-from celestine.unicode import CIRCUMFLEX_ACCENT
-from celestine.unicode import LOW_LINE
-from celestine.unicode import GRAVE_ACCENT
-from celestine.unicode import LATIN_SMALL_LETTER_A
-from celestine.unicode import LATIN_SMALL_LETTER_B
-from celestine.unicode import LATIN_SMALL_LETTER_C
-from celestine.unicode import LATIN_SMALL_LETTER_D
-from celestine.unicode import LATIN_SMALL_LETTER_E
-from celestine.unicode import LATIN_SMALL_LETTER_F
-from celestine.unicode import LATIN_SMALL_LETTER_G
-from celestine.unicode import LATIN_SMALL_LETTER_H
-from celestine.unicode import LATIN_SMALL_LETTER_I
-from celestine.unicode import LATIN_SMALL_LETTER_J
-from celestine.unicode import LATIN_SMALL_LETTER_K
-from celestine.unicode import LATIN_SMALL_LETTER_L
-from celestine.unicode import LATIN_SMALL_LETTER_M
-from celestine.unicode import LATIN_SMALL_LETTER_N
-from celestine.unicode import LATIN_SMALL_LETTER_O
-from celestine.unicode import LATIN_SMALL_LETTER_P
-from celestine.unicode import LATIN_SMALL_LETTER_Q
-from celestine.unicode import LATIN_SMALL_LETTER_R
-from celestine.unicode import LATIN_SMALL_LETTER_S
-from celestine.unicode import LATIN_SMALL_LETTER_T
-from celestine.unicode import LATIN_SMALL_LETTER_U
-from celestine.unicode import LATIN_SMALL_LETTER_V
-from celestine.unicode import LATIN_SMALL_LETTER_W
-from celestine.unicode import LATIN_SMALL_LETTER_X
-from celestine.unicode import LATIN_SMALL_LETTER_Y
-from celestine.unicode import LATIN_SMALL_LETTER_Z
-from celestine.unicode import LEFT_CURLY_BRACKET
-from celestine.unicode import VERTICAL_LINE
-from celestine.unicode import RIGHT_CURLY_BRACKET
-from celestine.unicode import TILDE
-from celestine.unicode import DELETE
-from celestine.unicode import U0080
-from celestine.unicode import U0081
-from celestine.unicode import BREAK_PERMITTED_HERE
-from celestine.unicode import NO_BREAK_HERE
-from celestine.unicode import INDEX
-from celestine.unicode import NEXT_LINE
-from celestine.unicode import START_OF_SELECTED_AREA
-from celestine.unicode import END_OF_SELECTED_AREA
-from celestine.unicode import CHARACTER_TABULATION_SET
-from celestine.unicode import CHARACTER_TABULATION_WITHJUSTIFICATION
-from celestine.unicode import LINE_TABULATION_SET
-from celestine.unicode import PARTIAL_LINE_FORWARD
-from celestine.unicode import PARTIAL_LINE_BACKWARD
-from celestine.unicode import REVERSE_LINE_FEED
-from celestine.unicode import SINGLE_SHIFT_TWO
-from celestine.unicode import SINGLE_SHIFT_THREE
-from celestine.unicode import DEVICE_CONTROL_STRING
-from celestine.unicode import PRIVATE_USE_ONE
-from celestine.unicode import PRIVATE_USE_TWO
-from celestine.unicode import SET_TRANSMIT_STATE
-from celestine.unicode import CANCEL_CHARACTER
-from celestine.unicode import MESSAGE_WAITING
-from celestine.unicode import START_OF_GUARDED_AREA
-from celestine.unicode import END_OF_GUARDED_AREA
-from celestine.unicode import START_OF_STRING
-from celestine.unicode import U0099
-from celestine.unicode import SINGLE_CHARACTER_INTRODUCER
-from celestine.unicode import CONTROL_SEQUENCE_INTRODUCER
-from celestine.unicode import STRING_TERMINATOR
-from celestine.unicode import OPERATING_SYSTEM_COMMAND
-from celestine.unicode import PRIVACY_MESSAGE
-from celestine.unicode import APPLICATION_PROGRAM_COMMAND
-from celestine.unicode import NO_BREAK_SPACE
-from celestine.unicode import INVERTED_EXCLAMATION_MARK
-from celestine.unicode import CENT_SIGN
-from celestine.unicode import POUND_SIGN
-from celestine.unicode import CURRENCY_SIGN
-from celestine.unicode import YEN_SIGN
-from celestine.unicode import BROKEN_BAR
-from celestine.unicode import SECTION_SIGN
-from celestine.unicode import DIAERESIS
-from celestine.unicode import COPYRIGHT_SIGN
-from celestine.unicode import FEMININE_ORDINAL_INDICATOR
-from celestine.unicode import LEFT_POINTING_DOUBLE_ANGLE_QUOTATIONMARK
-from celestine.unicode import NOT_SIGN
-from celestine.unicode import SOFT_HYPHEN
-from celestine.unicode import REGISTERED_SIGN
-from celestine.unicode import MACRON
-from celestine.unicode import DEGREE_SIGN
-from celestine.unicode import PLUS_MINUS_SIGN
-from celestine.unicode import SUPERSCRIPT_TWO
-from celestine.unicode import SUPERSCRIPT_THREE
-from celestine.unicode import ACUTE_ACCENT
-from celestine.unicode import MICRO_SIGN
-from celestine.unicode import PILCROW_SIGN
-from celestine.unicode import MIDDLE_DOT
-from celestine.unicode import CEDILLA
-from celestine.unicode import SUPERSCRIPT_ONE
-from celestine.unicode import MASCULINE_ORDINAL_INDICATOR
-from celestine.unicode import RIGHT_POINTING_DOUBLE_ANGLE_QUOTATIONMARK
-from celestine.unicode import VULGAR_FRACTION_ONE_QUARTER
-from celestine.unicode import VULGAR_FRACTION_ONE_HALF
-from celestine.unicode import VULGAR_FRACTION_THREE_QUARTERS
-from celestine.unicode import INVERTED_QUESTION_MARK
-from celestine.unicode import LATIN_CAPITAL_LETTER_A_WITH_GRAVE
-from celestine.unicode import LATIN_CAPITAL_LETTER_A_WITH_ACUTE
-from celestine.unicode import LATIN_CAPITAL_LETTER_A_WITH_CIRCUMFLEX
-from celestine.unicode import LATIN_CAPITAL_LETTER_A_WITH_TILDE
-from celestine.unicode import LATIN_CAPITAL_LETTER_A_WITH_DIAERESIS
-from celestine.unicode import LATIN_CAPITAL_LETTER_A_WITH_RING_ABOVE
-from celestine.unicode import LATIN_CAPITAL_LETTER_AE
-from celestine.unicode import LATIN_CAPITAL_LETTER_C_WITH_CEDILLA
-from celestine.unicode import LATIN_CAPITAL_LETTER_E_WITH_GRAVE
-from celestine.unicode import LATIN_CAPITAL_LETTER_E_WITH_ACUTE
-from celestine.unicode import LATIN_CAPITAL_LETTER_E_WITH_CIRCUMFLEX
-from celestine.unicode import LATIN_CAPITAL_LETTER_E_WITH_DIAERESIS
-from celestine.unicode import LATIN_CAPITAL_LETTER_I_WITH_GRAVE
-from celestine.unicode import LATIN_CAPITAL_LETTER_I_WITH_ACUTE
-from celestine.unicode import LATIN_CAPITAL_LETTER_I_WITH_CIRCUMFLEX
-from celestine.unicode import LATIN_CAPITAL_LETTER_I_WITH_DIAERESIS
-from celestine.unicode import LATIN_CAPITAL_LETTER_ETH
-from celestine.unicode import LATIN_CAPITAL_LETTER_N_WITH_TILDE
-from celestine.unicode import LATIN_CAPITAL_LETTER_O_WITH_GRAVE
-from celestine.unicode import LATIN_CAPITAL_LETTER_O_WITH_ACUTE
-from celestine.unicode import LATIN_CAPITAL_LETTER_O_WITH_CIRCUMFLEX
-from celestine.unicode import LATIN_CAPITAL_LETTER_O_WITH_TILDE
-from celestine.unicode import LATIN_CAPITAL_LETTER_O_WITH_DIAERESIS
-from celestine.unicode import MULTIPLICATION_SIGN
-from celestine.unicode import LATIN_CAPITAL_LETTER_O_WITH_STROKE
-from celestine.unicode import LATIN_CAPITAL_LETTER_U_WITH_GRAVE
-from celestine.unicode import LATIN_CAPITAL_LETTER_U_WITH_ACUTE
-from celestine.unicode import LATIN_CAPITAL_LETTER_U_WITH_CIRCUMFLEX
-from celestine.unicode import LATIN_CAPITAL_LETTER_U_WITH_DIAERESIS
-from celestine.unicode import LATIN_CAPITAL_LETTER_Y_WITH_ACUTE
-from celestine.unicode import LATIN_CAPITAL_LETTER_THORN
-from celestine.unicode import LATIN_SMALL_LETTER_SHARP_S
-from celestine.unicode import LATIN_SMALL_LETTER_A_WITH_GRAVE
-from celestine.unicode import LATIN_SMALL_LETTER_A_WITH_ACUTE
-from celestine.unicode import LATIN_SMALL_LETTER_A_WITH_CIRCUMFLEX
-from celestine.unicode import LATIN_SMALL_LETTER_A_WITH_TILDE
-from celestine.unicode import LATIN_SMALL_LETTER_A_WITH_DIAERESIS
-from celestine.unicode import LATIN_SMALL_LETTER_A_WITH_RING_ABOVE
-from celestine.unicode import LATIN_SMALL_LETTER_AE
-from celestine.unicode import LATIN_SMALL_LETTER_C_WITH_CEDILLA
-from celestine.unicode import LATIN_SMALL_LETTER_E_WITH_GRAVE
-from celestine.unicode import LATIN_SMALL_LETTER_E_WITH_ACUTE
-from celestine.unicode import LATIN_SMALL_LETTER_E_WITH_CIRCUMFLEX
-from celestine.unicode import LATIN_SMALL_LETTER_E_WITH_DIAERESIS
-from celestine.unicode import LATIN_SMALL_LETTER_I_WITH_GRAVE
-from celestine.unicode import LATIN_SMALL_LETTER_I_WITH_ACUTE
-from celestine.unicode import LATIN_SMALL_LETTER_I_WITH_CIRCUMFLEX
-from celestine.unicode import LATIN_SMALL_LETTER_I_WITH_DIAERESIS
-from celestine.unicode import LATIN_SMALL_LETTER_ETH
-from celestine.unicode import LATIN_SMALL_LETTER_N_WITH_TILDE
-from celestine.unicode import LATIN_SMALL_LETTER_O_WITH_GRAVE
-from celestine.unicode import LATIN_SMALL_LETTER_O_WITH_ACUTE
-from celestine.unicode import LATIN_SMALL_LETTER_O_WITH_CIRCUMFLEX
-from celestine.unicode import LATIN_SMALL_LETTER_O_WITH_TILDE
-from celestine.unicode import LATIN_SMALL_LETTER_O_WITH_DIAERESIS
-from celestine.unicode import DIVISION_SIGN
-from celestine.unicode import LATIN_SMALL_LETTER_O_WITH_STROKE
-from celestine.unicode import LATIN_SMALL_LETTER_U_WITH_GRAVE
-from celestine.unicode import LATIN_SMALL_LETTER_U_WITH_ACUTE
-from celestine.unicode import LATIN_SMALL_LETTER_U_WITH_CIRCUMFLEX
-from celestine.unicode import LATIN_SMALL_LETTER_U_WITH_DIAERESIS
-from celestine.unicode import LATIN_SMALL_LETTER_Y_WITH_ACUTE
-from celestine.unicode import LATIN_SMALL_LETTER_THORN
-from celestine.unicode import LATIN_SMALL_LETTER_Y_WITH_DIAERESIS
-from celestine.unicode import BLACK_SAFETY_SCISSORS
-from celestine.unicode import UPPER_BLADE_SCISSORS
-from celestine.unicode import BLACK_SCISSORS
-from celestine.unicode import LOWER_BLADE_SCISSORS
-from celestine.unicode import WHITE_SCISSORS
-from celestine.unicode import WHITE_HEAVY_CHECK_MARK
-from celestine.unicode import TELEPHONE_LOCATION_SIGN
-from celestine.unicode import TAPE_DRIVE
-from celestine.unicode import AIRPLANE
-from celestine.unicode import ENVELOPE
-from celestine.unicode import RAISED_FIST
-from celestine.unicode import RAISED_HAND
-from celestine.unicode import VICTORY_HAND
-from celestine.unicode import WRITING_HAND
-from celestine.unicode import LOWER_RIGHT_PENCIL
-from celestine.unicode import PENCIL
-from celestine.unicode import UPPER_RIGHT_PENCIL
-from celestine.unicode import WHITE_NIB
-from celestine.unicode import BLACK_NIB
-from celestine.unicode import CHECK_MARK
-from celestine.unicode import HEAVY_CHECK_MARK
-from celestine.unicode import MULTIPLICATION_X
-from celestine.unicode import HEAVY_MULTIPLICATION_X
-from celestine.unicode import BALLOT_X
-from celestine.unicode import HEAVY_BALLOT_X
-from celestine.unicode import OUTLINED_GREEK_CROSS
-from celestine.unicode import HEAVY_GREEK_CROSS
-from celestine.unicode import OPEN_CENTRE_CROSS
-from celestine.unicode import HEAVY_OPEN_CENTRE_CROSS
-from celestine.unicode import LATIN_CROSS
-from celestine.unicode import SHADOWED_WHITE_LATIN_CROSS
-from celestine.unicode import OUTLINED_LATIN_CROSS
-from celestine.unicode import MALTESE_CROSS
-from celestine.unicode import STAR_OF_DAVID
-from celestine.unicode import FOUR_TEARDROP_SPOKED_ASTERISK
-from celestine.unicode import FOUR_BALLOON_SPOKED_ASTERISK
-from celestine.unicode import HEAVY_FOUR_BALLOON_SPOKED_ASTERISK
-from celestine.unicode import FOUR_CLUB_SPOKED_ASTERISK
-from celestine.unicode import BLACK_FOUR_POINTED_STAR
-from celestine.unicode import WHITE_FOUR_POINTED_STAR
-from celestine.unicode import SPARKLES
-from celestine.unicode import STRESS_OUTLINED_WHITE_STAR
-from celestine.unicode import CIRCLED_WHITE_STAR
-from celestine.unicode import OPEN_CENTRE_BLACK_STAR
-from celestine.unicode import BLACK_CENTRE_WHITE_STAR
-from celestine.unicode import OUTLINED_BLACK_STAR
-from celestine.unicode import HEAVY_OUTLINED_BLACK_STAR
-from celestine.unicode import PINWHEEL_STAR
-from celestine.unicode import SHADOWED_WHITE_STAR
-from celestine.unicode import HEAVY_ASTERISK
-from celestine.unicode import OPEN_CENTRE_ASTERISK
-from celestine.unicode import EIGHT_SPOKED_ASTERISK
-from celestine.unicode import EIGHT_POINTED_BLACK_STAR
-from celestine.unicode import EIGHT_POINTED_PINWHEEL_STAR
-from celestine.unicode import SIX_POINTED_BLACK_STAR
-from celestine.unicode import EIGHT_POINTED_RECTILINEAR_BLACK_STAR
-from celestine.unicode import HEAVY_EIGHT_POINTED_RECTILINEAR_BLACK_STAR
-from celestine.unicode import TWELVE_POINTED_BLACK_STAR
-from celestine.unicode import SIXTEEN_POINTED_ASTERISK
-from celestine.unicode import TEARDROP_SPOKED_ASTERISK
-from celestine.unicode import OPEN_CENTRE_TEARDROP_SPOKED_ASTERISK
-from celestine.unicode import HEAVY_TEARDROP_SPOKED_ASTERISK
-from celestine.unicode import SIX_PETALLED_BLACK_AND_WHITE_FLORETTE
-from celestine.unicode import BLACK_FLORETTE
-from celestine.unicode import WHITE_FLORETTE
-from celestine.unicode import EIGHT_PETALLED_OUTLINED_BLACK_FLORETTE
-from celestine.unicode import CIRCLED_OPEN_CENTRE_EIGHT_POINTED_STAR
-from celestine.unicode import HEAVY_TEARDROP_SPOKED_PINWHEEL_ASTERISK
-from celestine.unicode import SNOWFLAKE
-from celestine.unicode import TIGHT_TRIFOLIATE_SNOWFLAKE
-from celestine.unicode import HEAVY_CHEVRON_SNOWFLAKE
-from celestine.unicode import SPARKLE
-from celestine.unicode import HEAVY_SPARKLE
-from celestine.unicode import BALLOON_SPOKED_ASTERISK
-from celestine.unicode import EIGHT_TEARDROP_SPOKED_PROPELLER_ASTERISK
-from celestine.unicode import HEAVY_EIGHT_TEARDROP_SPOKED_PROPELLER_ASTERISK
-from celestine.unicode import CROSS_MARK
-from celestine.unicode import SHADOWED_WHITE_CIRCLE
-from celestine.unicode import NEGATIVE_SQUARED_CROSS_MARK
-from celestine.unicode import LOWER_RIGHT_DROP_SHADOWED_WHITE_SQUARE
-from celestine.unicode import UPPER_RIGHT_DROP_SHADOWED_WHITE_SQUARE
-from celestine.unicode import LOWER_RIGHT_SHADOWED_WHITE_SQUARE
-from celestine.unicode import UPPER_RIGHT_SHADOWED_WHITE_SQUARE
-from celestine.unicode import BLACK_QUESTION_MARK_ORNAMENT
-from celestine.unicode import WHITE_QUESTION_MARK_ORNAMENT
-from celestine.unicode import WHITE_EXCLAMATION_MARK_ORNAMENT
-from celestine.unicode import BLACK_DIAMOND_MINUS_WHITE_X
-from celestine.unicode import HEAVY_EXCLAMATION_MARK_SYMBOL
-from celestine.unicode import LIGHT_VERTICAL_BAR
-from celestine.unicode import MEDIUM_VERTICAL_BAR
-from celestine.unicode import HEAVY_VERTICAL_BAR
-from celestine.unicode import HEAVY_SINGLE_TURNED_COMMA_QUOTATION_MARK_ORNAMENT
-from celestine.unicode import HEAVY_SINGLE_COMMA_QUOTATION_MARK_ORNAMENT
-from celestine.unicode import HEAVY_DOUBLE_TURNED_COMMA_QUOTATION_MARK_ORNAMENT
-from celestine.unicode import HEAVY_DOUBLE_COMMA_QUOTATION_MARK_ORNAMENT
-from celestine.unicode import HEAVY_LOW_SINGLE_COMMA_QUOTATION_MARK_ORNAMENT
-from celestine.unicode import HEAVY_LOW_DOUBLE_COMMA_QUOTATION_MARK_ORNAMENT
-from celestine.unicode import CURVED_STEM_PARAGRAPH_SIGN_ORNAMENT
-from celestine.unicode import HEAVY_EXCLAMATION_MARK_ORNAMENT
-from celestine.unicode import HEAVY_HEART_EXCLAMATION_MARK_ORNAMENT
-from celestine.unicode import HEAVY_BLACK_HEART
-from celestine.unicode import ROTATED_HEAVY_BLACK_HEART_BULLET
-from celestine.unicode import FLORAL_HEART
-from celestine.unicode import ROTATED_FLORAL_HEART_BULLET
-from celestine.unicode import MEDIUM_LEFT_PARENTHESIS_ORNAMENT
-from celestine.unicode import MEDIUM_RIGHT_PARENTHESIS_ORNAMENT
-from celestine.unicode import MEDIUM_FLATTENED_LEFT_PARENTHESIS_ORNAMENT
-from celestine.unicode import MEDIUM_FLATTENED_RIGHT_PARENTHESIS_ORNAMENT
-from celestine.unicode import MEDIUM_LEFT_POINTING_ANGLE_BRACKET_ORNAMENT
-from celestine.unicode import MEDIUM_RIGHT_POINTING_ANGLE_BRACKET_ORNAMENT
-from celestine.unicode import HEAVY_LEFT_POINTING_ANGLE_QUOTATION_MARK_ORNAMENT
-from celestine.unicode import HEAVY_RIGHT_POINTING_ANGLE_QUOTATION_MARK_ORNAMENT
-from celestine.unicode import HEAVY_LEFT_POINTING_ANGLE_BRACKET_ORNAMENT
-from celestine.unicode import HEAVY_RIGHT_POINTING_ANGLE_BRACKET_ORNAMENT
-from celestine.unicode import LIGHT_LEFT_TORTOISE_SHELL_BRACKET_ORNAMENT
-from celestine.unicode import LIGHT_RIGHT_TORTOISE_SHELL_BRACKET_ORNAMENT
-from celestine.unicode import MEDIUM_LEFT_CURLY_BRACKET_ORNAMENT
-from celestine.unicode import MEDIUM_RIGHT_CURLY_BRACKET_ORNAMENT
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_DIGIT_ONE
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_DIGIT_TWO
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_DIGIT_THREE
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_DIGIT_FOUR
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_DIGIT_FIVE
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_DIGIT_SIX
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_DIGIT_SEVEN
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_DIGIT_EIGHT
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_DIGIT_NINE
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_NUMBER_TEN
-from celestine.unicode import DINGBAT_CIRCLED_SANS_SERIF_DIGIT_ONE
-from celestine.unicode import DINGBAT_CIRCLED_SANS_SERIF_DIGIT_TWO
-from celestine.unicode import DINGBAT_CIRCLED_SANS_SERIF_DIGIT_THREE
-from celestine.unicode import DINGBAT_CIRCLED_SANS_SERIF_DIGIT_FOUR
-from celestine.unicode import DINGBAT_CIRCLED_SANS_SERIF_DIGIT_FIVE
-from celestine.unicode import DINGBAT_CIRCLED_SANS_SERIF_DIGIT_SIX
-from celestine.unicode import DINGBAT_CIRCLED_SANS_SERIF_DIGIT_SEVEN
-from celestine.unicode import DINGBAT_CIRCLED_SANS_SERIF_DIGIT_EIGHT
-from celestine.unicode import DINGBAT_CIRCLED_SANS_SERIF_DIGIT_NINE
-from celestine.unicode import DINGBAT_CIRCLED_SANS_SERIF_NUMBER_TEN
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_ONE
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_TWO
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_THREE
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_FOUR
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_FIVE
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_SIX
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_SEVEN
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_EIGHT
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_NINE
-from celestine.unicode import DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_NUMBER_TEN
-from celestine.unicode import HEAVY_WIDE_HEADED_RIGHTWARDS_ARROW
-from celestine.unicode import HEAVY_PLUS_SIGN
-from celestine.unicode import HEAVY_MINUS_SIGN
-from celestine.unicode import HEAVY_DIVISION_SIGN
-from celestine.unicode import HEAVY_SOUTH_EAST_ARROW
-from celestine.unicode import HEAVY_RIGHTWARDS_ARROW
-from celestine.unicode import HEAVY_NORTH_EAST_ARROW
-from celestine.unicode import DRAFTING_POINT_RIGHTWARDS_ARROW
-from celestine.unicode import HEAVY_ROUND_TIPPED_RIGHTWARDS_ARROW
-from celestine.unicode import TRIANGLE_HEADED_RIGHTWARDS_ARROW
-from celestine.unicode import HEAVY_TRIANGLE_HEADED_RIGHTWARDS_ARROW
-from celestine.unicode import DASHED_TRIANGLE_HEADED_RIGHTWARDS_ARROW
-from celestine.unicode import HEAVY_DASHED_TRIANGLE_HEADED_RIGHTWARDS_ARROW
-from celestine.unicode import BLACK_RIGHTWARDS_ARROW
-from celestine.unicode import THREE_D_TOP_LIGHTED_RIGHTWARDS_ARROWHEAD
-from celestine.unicode import THREE_D_BOTTOM_LIGHTED_RIGHTWARDS_ARROWHEAD
-from celestine.unicode import BLACK_RIGHTWARDS_ARROWHEAD
-from celestine.unicode import HEAVY_BLACK_CURVED_DOWNWARDS_AND_RIGHTWARDS_ARROW
-from celestine.unicode import HEAVY_BLACK_CURVED_UPWARDS_AND_RIGHTWARDS_ARROW
-from celestine.unicode import SQUAT_BLACK_RIGHTWARDS_ARROW
-from celestine.unicode import HEAVY_CONCAVE_POINTED_BLACK_RIGHTWARDS_ARROW
-from celestine.unicode import RIGHT_SHADED_WHITE_RIGHTWARDS_ARROW
-from celestine.unicode import LEFT_SHADED_WHITE_RIGHTWARDS_ARROW
-from celestine.unicode import BACK_TILTED_SHADOWED_WHITE_RIGHTWARDS_ARROW
-from celestine.unicode import FRONT_TILTED_SHADOWED_WHITE_RIGHTWARDS_ARROW
-from celestine.unicode import HEAVY_LOWER_RIGHT_SHADOWED_WHITE_RIGHTWARDS_ARROW
-from celestine.unicode import HEAVY_UPPER_RIGHT_SHADOWED_WHITE_RIGHTWARDS_ARROW
-from celestine.unicode import NOTCHED_LOWER_RIGHT_SHADOWED_WHITE_RIGHTWARDS_ARROW
-from celestine.unicode import CURLY_LOOP
-from celestine.unicode import NOTCHED_UPPER_RIGHT_SHADOWED_WHITE_RIGHTWARDS_ARROW
-from celestine.unicode import CIRCLED_HEAVY_WHITE_RIGHTWARDS_ARROW
-from celestine.unicode import WHITE_FEATHERED_RIGHTWARDS_ARROW
-from celestine.unicode import BLACK_FEATHERED_SOUTH_EAST_ARROW
-from celestine.unicode import BLACK_FEATHERED_RIGHTWARDS_ARROW
-from celestine.unicode import BLACK_FEATHERED_NORTH_EAST_ARROW
-from celestine.unicode import HEAVY_BLACK_FEATHERED_SOUTH_EAST_ARROW
-from celestine.unicode import HEAVY_BLACK_FEATHERED_RIGHTWARDS_ARROW
-from celestine.unicode import HEAVY_BLACK_FEATHERED_NORTH_EAST_ARROW
-from celestine.unicode import TEARDROP_BARBED_RIGHTWARDS_ARROW
-from celestine.unicode import HEAVY_TEARDROP_SHANKED_RIGHTWARDS_ARROW
-from celestine.unicode import WEDGE_TAILED_RIGHTWARDS_ARROW
-from celestine.unicode import HEAVY_WEDGE_TAILED_RIGHTWARDS_ARROW
-from celestine.unicode import OPEN_OUTLINED_RIGHTWARDS_ARROW
-from celestine.unicode import DOUBLE_CURLY_LOOP
-
-from celestine.application.viewer.data.alphabet import Comparison
-from celestine.application.viewer.data.alphabet import Digit
-from celestine.application.viewer.data.alphabet import Divider
-from celestine.application.viewer.data.alphabet import Letter
-from celestine.application.viewer.data.alphabet import Unary
-
+from celestine.application.viewer.data.alphabet import (
+    Comparison,
+    Digit,
+    Divider,
+    Letter,
+    Unary,
+)
+from celestine.unicode import (
+    ACKNOWLEDGE,
+    ACUTE_ACCENT,
+    AIRPLANE,
+    AMPERSAND,
+    APOSTROPHE,
+    APPLICATION_PROGRAM_COMMAND,
+    ASTERISK,
+    BACK_TILTED_SHADOWED_WHITE_RIGHTWARDS_ARROW,
+    BACKSPACE,
+    BALLOON_SPOKED_ASTERISK,
+    BALLOT_X,
+    BELL,
+    BLACK_CENTRE_WHITE_STAR,
+    BLACK_DIAMOND_MINUS_WHITE_X,
+    BLACK_FEATHERED_NORTH_EAST_ARROW,
+    BLACK_FEATHERED_RIGHTWARDS_ARROW,
+    BLACK_FEATHERED_SOUTH_EAST_ARROW,
+    BLACK_FLORETTE,
+    BLACK_FOUR_POINTED_STAR,
+    BLACK_NIB,
+    BLACK_QUESTION_MARK_ORNAMENT,
+    BLACK_RIGHTWARDS_ARROW,
+    BLACK_RIGHTWARDS_ARROWHEAD,
+    BLACK_SAFETY_SCISSORS,
+    BLACK_SCISSORS,
+    BREAK_PERMITTED_HERE,
+    BROKEN_BAR,
+    CANCEL,
+    CANCEL_CHARACTER,
+    CARRIAGE_RETURN,
+    CEDILLA,
+    CENT_SIGN,
+    CHARACTER_TABULATION,
+    CHARACTER_TABULATION_SET,
+    CHARACTER_TABULATION_WITHJUSTIFICATION,
+    CHECK_MARK,
+    CIRCLED_HEAVY_WHITE_RIGHTWARDS_ARROW,
+    CIRCLED_OPEN_CENTRE_EIGHT_POINTED_STAR,
+    CIRCLED_WHITE_STAR,
+    CIRCUMFLEX_ACCENT,
+    COLON,
+    COMMA,
+    COMMERCIA_AT,
+    CONTROL_SEQUENCE_INTRODUCER,
+    COPYRIGHT_SIGN,
+    CROSS_MARK,
+    CURLY_LOOP,
+    CURRENCY_SIGN,
+    CURVED_STEM_PARAGRAPH_SIGN_ORNAMENT,
+    DASHED_TRIANGLE_HEADED_RIGHTWARDS_ARROW,
+    DATA_LINK_ESCAPE,
+    DEGREE_SIGN,
+    DELETE,
+    DEVICE_CONTROL_FOUR,
+    DEVICE_CONTROL_ONE,
+    DEVICE_CONTROL_STRING,
+    DEVICE_CONTROL_THREE,
+    DEVICE_CONTROL_TWO,
+    DIAERESIS,
+    DIGIT_EIGHT,
+    DIGIT_FIVE,
+    DIGIT_FOUR,
+    DIGIT_NINE,
+    DIGIT_ONE,
+    DIGIT_SEVEN,
+    DIGIT_SIX,
+    DIGIT_THREE,
+    DIGIT_TWO,
+    DIGIT_ZERO,
+    DINGBAT_CIRCLED_SANS_SERIF_DIGIT_EIGHT,
+    DINGBAT_CIRCLED_SANS_SERIF_DIGIT_FIVE,
+    DINGBAT_CIRCLED_SANS_SERIF_DIGIT_FOUR,
+    DINGBAT_CIRCLED_SANS_SERIF_DIGIT_NINE,
+    DINGBAT_CIRCLED_SANS_SERIF_DIGIT_ONE,
+    DINGBAT_CIRCLED_SANS_SERIF_DIGIT_SEVEN,
+    DINGBAT_CIRCLED_SANS_SERIF_DIGIT_SIX,
+    DINGBAT_CIRCLED_SANS_SERIF_DIGIT_THREE,
+    DINGBAT_CIRCLED_SANS_SERIF_DIGIT_TWO,
+    DINGBAT_CIRCLED_SANS_SERIF_NUMBER_TEN,
+    DINGBAT_NEGATIVE_CIRCLED_DIGIT_EIGHT,
+    DINGBAT_NEGATIVE_CIRCLED_DIGIT_FIVE,
+    DINGBAT_NEGATIVE_CIRCLED_DIGIT_FOUR,
+    DINGBAT_NEGATIVE_CIRCLED_DIGIT_NINE,
+    DINGBAT_NEGATIVE_CIRCLED_DIGIT_ONE,
+    DINGBAT_NEGATIVE_CIRCLED_DIGIT_SEVEN,
+    DINGBAT_NEGATIVE_CIRCLED_DIGIT_SIX,
+    DINGBAT_NEGATIVE_CIRCLED_DIGIT_THREE,
+    DINGBAT_NEGATIVE_CIRCLED_DIGIT_TWO,
+    DINGBAT_NEGATIVE_CIRCLED_NUMBER_TEN,
+    DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_EIGHT,
+    DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_FIVE,
+    DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_FOUR,
+    DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_NINE,
+    DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_ONE,
+    DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_SEVEN,
+    DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_SIX,
+    DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_THREE,
+    DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_DIGIT_TWO,
+    DINGBAT_NEGATIVE_CIRCLED_SANS_SERIF_NUMBER_TEN,
+    DIVISION_SIGN,
+    DOLLAR_SIGN,
+    DOUBLE_CURLY_LOOP,
+    DRAFTING_POINT_RIGHTWARDS_ARROW,
+    EIGHT_PETALLED_OUTLINED_BLACK_FLORETTE,
+    EIGHT_POINTED_BLACK_STAR,
+    EIGHT_POINTED_PINWHEEL_STAR,
+    EIGHT_POINTED_RECTILINEAR_BLACK_STAR,
+    EIGHT_SPOKED_ASTERISK,
+    EIGHT_TEARDROP_SPOKED_PROPELLER_ASTERISK,
+    END_OF_GUARDED_AREA,
+    END_OF_MEDIUM,
+    END_OF_SELECTED_AREA,
+    END_OF_TEXT,
+    END_OF_TRANSMISSION,
+    END_OF_TRANSMISSION_BLOCK,
+    ENQUIRY,
+    ENVELOPE,
+    EQUALS_SIGN,
+    ESCAPE,
+    EXCLAMATION_MARK,
+    FEMININE_ORDINAL_INDICATOR,
+    FLORAL_HEART,
+    FORM_FEED,
+    FOUR_BALLOON_SPOKED_ASTERISK,
+    FOUR_CLUB_SPOKED_ASTERISK,
+    FOUR_TEARDROP_SPOKED_ASTERISK,
+    FRONT_TILTED_SHADOWED_WHITE_RIGHTWARDS_ARROW,
+    FULL_STOP,
+    GRAVE_ACCENT,
+    GREATER_THAN_SIGN,
+    HEAVY_ASTERISK,
+    HEAVY_BALLOT_X,
+    HEAVY_BLACK_CURVED_DOWNWARDS_AND_RIGHTWARDS_ARROW,
+    HEAVY_BLACK_CURVED_UPWARDS_AND_RIGHTWARDS_ARROW,
+    HEAVY_BLACK_FEATHERED_NORTH_EAST_ARROW,
+    HEAVY_BLACK_FEATHERED_RIGHTWARDS_ARROW,
+    HEAVY_BLACK_FEATHERED_SOUTH_EAST_ARROW,
+    HEAVY_BLACK_HEART,
+    HEAVY_CHECK_MARK,
+    HEAVY_CHEVRON_SNOWFLAKE,
+    HEAVY_CONCAVE_POINTED_BLACK_RIGHTWARDS_ARROW,
+    HEAVY_DASHED_TRIANGLE_HEADED_RIGHTWARDS_ARROW,
+    HEAVY_DIVISION_SIGN,
+    HEAVY_DOUBLE_COMMA_QUOTATION_MARK_ORNAMENT,
+    HEAVY_DOUBLE_TURNED_COMMA_QUOTATION_MARK_ORNAMENT,
+    HEAVY_EIGHT_POINTED_RECTILINEAR_BLACK_STAR,
+    HEAVY_EIGHT_TEARDROP_SPOKED_PROPELLER_ASTERISK,
+    HEAVY_EXCLAMATION_MARK_ORNAMENT,
+    HEAVY_EXCLAMATION_MARK_SYMBOL,
+    HEAVY_FOUR_BALLOON_SPOKED_ASTERISK,
+    HEAVY_GREEK_CROSS,
+    HEAVY_HEART_EXCLAMATION_MARK_ORNAMENT,
+    HEAVY_LEFT_POINTING_ANGLE_BRACKET_ORNAMENT,
+    HEAVY_LEFT_POINTING_ANGLE_QUOTATION_MARK_ORNAMENT,
+    HEAVY_LOW_DOUBLE_COMMA_QUOTATION_MARK_ORNAMENT,
+    HEAVY_LOW_SINGLE_COMMA_QUOTATION_MARK_ORNAMENT,
+    HEAVY_LOWER_RIGHT_SHADOWED_WHITE_RIGHTWARDS_ARROW,
+    HEAVY_MINUS_SIGN,
+    HEAVY_MULTIPLICATION_X,
+    HEAVY_NORTH_EAST_ARROW,
+    HEAVY_OPEN_CENTRE_CROSS,
+    HEAVY_OUTLINED_BLACK_STAR,
+    HEAVY_PLUS_SIGN,
+    HEAVY_RIGHT_POINTING_ANGLE_BRACKET_ORNAMENT,
+    HEAVY_RIGHT_POINTING_ANGLE_QUOTATION_MARK_ORNAMENT,
+    HEAVY_RIGHTWARDS_ARROW,
+    HEAVY_ROUND_TIPPED_RIGHTWARDS_ARROW,
+    HEAVY_SINGLE_COMMA_QUOTATION_MARK_ORNAMENT,
+    HEAVY_SINGLE_TURNED_COMMA_QUOTATION_MARK_ORNAMENT,
+    HEAVY_SOUTH_EAST_ARROW,
+    HEAVY_SPARKLE,
+    HEAVY_TEARDROP_SHANKED_RIGHTWARDS_ARROW,
+    HEAVY_TEARDROP_SPOKED_ASTERISK,
+    HEAVY_TEARDROP_SPOKED_PINWHEEL_ASTERISK,
+    HEAVY_TRIANGLE_HEADED_RIGHTWARDS_ARROW,
+    HEAVY_UPPER_RIGHT_SHADOWED_WHITE_RIGHTWARDS_ARROW,
+    HEAVY_VERTICAL_BAR,
+    HEAVY_WEDGE_TAILED_RIGHTWARDS_ARROW,
+    HEAVY_WIDE_HEADED_RIGHTWARDS_ARROW,
+    HYPHEN_MINUS,
+    INDEX,
+    INFORMATION_SEPARATOR_FOUR,
+    INFORMATION_SEPARATOR_ONE,
+    INFORMATION_SEPARATOR_THREE,
+    INFORMATION_SEPARATOR_TWO,
+    INVERTED_EXCLAMATION_MARK,
+    INVERTED_QUESTION_MARK,
+    LATIN_CAPITAL_LETTER_A,
+    LATIN_CAPITAL_LETTER_A_WITH_ACUTE,
+    LATIN_CAPITAL_LETTER_A_WITH_CIRCUMFLEX,
+    LATIN_CAPITAL_LETTER_A_WITH_DIAERESIS,
+    LATIN_CAPITAL_LETTER_A_WITH_GRAVE,
+    LATIN_CAPITAL_LETTER_A_WITH_RING_ABOVE,
+    LATIN_CAPITAL_LETTER_A_WITH_TILDE,
+    LATIN_CAPITAL_LETTER_AE,
+    LATIN_CAPITAL_LETTER_B,
+    LATIN_CAPITAL_LETTER_C,
+    LATIN_CAPITAL_LETTER_C_WITH_CEDILLA,
+    LATIN_CAPITAL_LETTER_D,
+    LATIN_CAPITAL_LETTER_E,
+    LATIN_CAPITAL_LETTER_E_WITH_ACUTE,
+    LATIN_CAPITAL_LETTER_E_WITH_CIRCUMFLEX,
+    LATIN_CAPITAL_LETTER_E_WITH_DIAERESIS,
+    LATIN_CAPITAL_LETTER_E_WITH_GRAVE,
+    LATIN_CAPITAL_LETTER_ETH,
+    LATIN_CAPITAL_LETTER_F,
+    LATIN_CAPITAL_LETTER_G,
+    LATIN_CAPITAL_LETTER_H,
+    LATIN_CAPITAL_LETTER_I,
+    LATIN_CAPITAL_LETTER_I_WITH_ACUTE,
+    LATIN_CAPITAL_LETTER_I_WITH_CIRCUMFLEX,
+    LATIN_CAPITAL_LETTER_I_WITH_DIAERESIS,
+    LATIN_CAPITAL_LETTER_I_WITH_GRAVE,
+    LATIN_CAPITAL_LETTER_J,
+    LATIN_CAPITAL_LETTER_K,
+    LATIN_CAPITAL_LETTER_L,
+    LATIN_CAPITAL_LETTER_M,
+    LATIN_CAPITAL_LETTER_N,
+    LATIN_CAPITAL_LETTER_N_WITH_TILDE,
+    LATIN_CAPITAL_LETTER_O,
+    LATIN_CAPITAL_LETTER_O_WITH_ACUTE,
+    LATIN_CAPITAL_LETTER_O_WITH_CIRCUMFLEX,
+    LATIN_CAPITAL_LETTER_O_WITH_DIAERESIS,
+    LATIN_CAPITAL_LETTER_O_WITH_GRAVE,
+    LATIN_CAPITAL_LETTER_O_WITH_STROKE,
+    LATIN_CAPITAL_LETTER_O_WITH_TILDE,
+    LATIN_CAPITAL_LETTER_P,
+    LATIN_CAPITAL_LETTER_Q,
+    LATIN_CAPITAL_LETTER_R,
+    LATIN_CAPITAL_LETTER_S,
+    LATIN_CAPITAL_LETTER_T,
+    LATIN_CAPITAL_LETTER_THORN,
+    LATIN_CAPITAL_LETTER_U,
+    LATIN_CAPITAL_LETTER_U_WITH_ACUTE,
+    LATIN_CAPITAL_LETTER_U_WITH_CIRCUMFLEX,
+    LATIN_CAPITAL_LETTER_U_WITH_DIAERESIS,
+    LATIN_CAPITAL_LETTER_U_WITH_GRAVE,
+    LATIN_CAPITAL_LETTER_V,
+    LATIN_CAPITAL_LETTER_W,
+    LATIN_CAPITAL_LETTER_X,
+    LATIN_CAPITAL_LETTER_Y,
+    LATIN_CAPITAL_LETTER_Y_WITH_ACUTE,
+    LATIN_CAPITAL_LETTER_Z,
+    LATIN_CROSS,
+    LATIN_SMALL_LETTER_A,
+    LATIN_SMALL_LETTER_A_WITH_ACUTE,
+    LATIN_SMALL_LETTER_A_WITH_CIRCUMFLEX,
+    LATIN_SMALL_LETTER_A_WITH_DIAERESIS,
+    LATIN_SMALL_LETTER_A_WITH_GRAVE,
+    LATIN_SMALL_LETTER_A_WITH_RING_ABOVE,
+    LATIN_SMALL_LETTER_A_WITH_TILDE,
+    LATIN_SMALL_LETTER_AE,
+    LATIN_SMALL_LETTER_B,
+    LATIN_SMALL_LETTER_C,
+    LATIN_SMALL_LETTER_C_WITH_CEDILLA,
+    LATIN_SMALL_LETTER_D,
+    LATIN_SMALL_LETTER_E,
+    LATIN_SMALL_LETTER_E_WITH_ACUTE,
+    LATIN_SMALL_LETTER_E_WITH_CIRCUMFLEX,
+    LATIN_SMALL_LETTER_E_WITH_DIAERESIS,
+    LATIN_SMALL_LETTER_E_WITH_GRAVE,
+    LATIN_SMALL_LETTER_ETH,
+    LATIN_SMALL_LETTER_F,
+    LATIN_SMALL_LETTER_G,
+    LATIN_SMALL_LETTER_H,
+    LATIN_SMALL_LETTER_I,
+    LATIN_SMALL_LETTER_I_WITH_ACUTE,
+    LATIN_SMALL_LETTER_I_WITH_CIRCUMFLEX,
+    LATIN_SMALL_LETTER_I_WITH_DIAERESIS,
+    LATIN_SMALL_LETTER_I_WITH_GRAVE,
+    LATIN_SMALL_LETTER_J,
+    LATIN_SMALL_LETTER_K,
+    LATIN_SMALL_LETTER_L,
+    LATIN_SMALL_LETTER_M,
+    LATIN_SMALL_LETTER_N,
+    LATIN_SMALL_LETTER_N_WITH_TILDE,
+    LATIN_SMALL_LETTER_O,
+    LATIN_SMALL_LETTER_O_WITH_ACUTE,
+    LATIN_SMALL_LETTER_O_WITH_CIRCUMFLEX,
+    LATIN_SMALL_LETTER_O_WITH_DIAERESIS,
+    LATIN_SMALL_LETTER_O_WITH_GRAVE,
+    LATIN_SMALL_LETTER_O_WITH_STROKE,
+    LATIN_SMALL_LETTER_O_WITH_TILDE,
+    LATIN_SMALL_LETTER_P,
+    LATIN_SMALL_LETTER_Q,
+    LATIN_SMALL_LETTER_R,
+    LATIN_SMALL_LETTER_S,
+    LATIN_SMALL_LETTER_SHARP_S,
+    LATIN_SMALL_LETTER_T,
+    LATIN_SMALL_LETTER_THORN,
+    LATIN_SMALL_LETTER_U,
+    LATIN_SMALL_LETTER_U_WITH_ACUTE,
+    LATIN_SMALL_LETTER_U_WITH_CIRCUMFLEX,
+    LATIN_SMALL_LETTER_U_WITH_DIAERESIS,
+    LATIN_SMALL_LETTER_U_WITH_GRAVE,
+    LATIN_SMALL_LETTER_V,
+    LATIN_SMALL_LETTER_W,
+    LATIN_SMALL_LETTER_X,
+    LATIN_SMALL_LETTER_Y,
+    LATIN_SMALL_LETTER_Y_WITH_ACUTE,
+    LATIN_SMALL_LETTER_Y_WITH_DIAERESIS,
+    LATIN_SMALL_LETTER_Z,
+    LEFT_CURLY_BRACKET,
+    LEFT_PARENTHESIS,
+    LEFT_POINTING_DOUBLE_ANGLE_QUOTATIONMARK,
+    LEFT_SHADED_WHITE_RIGHTWARDS_ARROW,
+    LEFT_SQUARE_BRACKET,
+    LESS_THAN_SIGN,
+    LIGHT_LEFT_TORTOISE_SHELL_BRACKET_ORNAMENT,
+    LIGHT_RIGHT_TORTOISE_SHELL_BRACKET_ORNAMENT,
+    LIGHT_VERTICAL_BAR,
+    LINE_FEED,
+    LINE_TABULATION,
+    LINE_TABULATION_SET,
+    LOW_LINE,
+    LOWER_BLADE_SCISSORS,
+    LOWER_RIGHT_DROP_SHADOWED_WHITE_SQUARE,
+    LOWER_RIGHT_PENCIL,
+    LOWER_RIGHT_SHADOWED_WHITE_SQUARE,
+    MACRON,
+    MALTESE_CROSS,
+    MASCULINE_ORDINAL_INDICATOR,
+    MEDIUM_FLATTENED_LEFT_PARENTHESIS_ORNAMENT,
+    MEDIUM_FLATTENED_RIGHT_PARENTHESIS_ORNAMENT,
+    MEDIUM_LEFT_CURLY_BRACKET_ORNAMENT,
+    MEDIUM_LEFT_PARENTHESIS_ORNAMENT,
+    MEDIUM_LEFT_POINTING_ANGLE_BRACKET_ORNAMENT,
+    MEDIUM_RIGHT_CURLY_BRACKET_ORNAMENT,
+    MEDIUM_RIGHT_PARENTHESIS_ORNAMENT,
+    MEDIUM_RIGHT_POINTING_ANGLE_BRACKET_ORNAMENT,
+    MEDIUM_VERTICAL_BAR,
+    MESSAGE_WAITING,
+    MICRO_SIGN,
+    MIDDLE_DOT,
+    MULTIPLICATION_SIGN,
+    MULTIPLICATION_X,
+    NEGATIVE_ACKNOWLEDGE,
+    NEGATIVE_SQUARED_CROSS_MARK,
+    NEXT_LINE,
+    NO_BREAK_HERE,
+    NO_BREAK_SPACE,
+    NOT_SIGN,
+    NOTCHED_LOWER_RIGHT_SHADOWED_WHITE_RIGHTWARDS_ARROW,
+    NOTCHED_UPPER_RIGHT_SHADOWED_WHITE_RIGHTWARDS_ARROW,
+    NULL,
+    NUMBER_SIGN,
+    OPEN_CENTRE_ASTERISK,
+    OPEN_CENTRE_BLACK_STAR,
+    OPEN_CENTRE_CROSS,
+    OPEN_CENTRE_TEARDROP_SPOKED_ASTERISK,
+    OPEN_OUTLINED_RIGHTWARDS_ARROW,
+    OPERATING_SYSTEM_COMMAND,
+    OUTLINED_BLACK_STAR,
+    OUTLINED_GREEK_CROSS,
+    OUTLINED_LATIN_CROSS,
+    PARTIAL_LINE_BACKWARD,
+    PARTIAL_LINE_FORWARD,
+    PENCIL,
+    PERCENT_SIGN,
+    PILCROW_SIGN,
+    PINWHEEL_STAR,
+    PLUS_MINUS_SIGN,
+    PLUS_SIGN,
+    POUND_SIGN,
+    PRIVACY_MESSAGE,
+    PRIVATE_USE_ONE,
+    PRIVATE_USE_TWO,
+    QUESTION_MARK,
+    QUOTATION_MARK,
+    RAISED_FIST,
+    RAISED_HAND,
+    REGISTERED_SIGN,
+    REVERSE_LINE_FEED,
+    REVERSE_SOLIDUS,
+    RIGHT_CURLY_BRACKET,
+    RIGHT_PARENTHESIS,
+    RIGHT_POINTING_DOUBLE_ANGLE_QUOTATIONMARK,
+    RIGHT_SHADED_WHITE_RIGHTWARDS_ARROW,
+    RIGHT_SQUARE_BRACKET,
+    ROTATED_FLORAL_HEART_BULLET,
+    ROTATED_HEAVY_BLACK_HEART_BULLET,
+    SECTION_SIGN,
+    SEMICOLON,
+    SET_TRANSMIT_STATE,
+    SHADOWED_WHITE_CIRCLE,
+    SHADOWED_WHITE_LATIN_CROSS,
+    SHADOWED_WHITE_STAR,
+    SHIFT_IN,
+    SHIFT_OUT,
+    SINGLE_CHARACTER_INTRODUCER,
+    SINGLE_SHIFT_THREE,
+    SINGLE_SHIFT_TWO,
+    SIX_PETALLED_BLACK_AND_WHITE_FLORETTE,
+    SIX_POINTED_BLACK_STAR,
+    SIXTEEN_POINTED_ASTERISK,
+    SNOWFLAKE,
+    SOFT_HYPHEN,
+    SOLIDUS,
+    SPACE,
+    SPARKLE,
+    SPARKLES,
+    SQUAT_BLACK_RIGHTWARDS_ARROW,
+    STAR_OF_DAVID,
+    START_OF_GUARDED_AREA,
+    START_OF_HEADING,
+    START_OF_SELECTED_AREA,
+    START_OF_STRING,
+    START_OF_TEXT,
+    STRESS_OUTLINED_WHITE_STAR,
+    STRING_TERMINATOR,
+    SUBSTITUTE,
+    SUPERSCRIPT_ONE,
+    SUPERSCRIPT_THREE,
+    SUPERSCRIPT_TWO,
+    SYNCHRONOUS_IDLE,
+    TAPE_DRIVE,
+    TEARDROP_BARBED_RIGHTWARDS_ARROW,
+    TEARDROP_SPOKED_ASTERISK,
+    TELEPHONE_LOCATION_SIGN,
+    THREE_D_BOTTOM_LIGHTED_RIGHTWARDS_ARROWHEAD,
+    THREE_D_TOP_LIGHTED_RIGHTWARDS_ARROWHEAD,
+    TIGHT_TRIFOLIATE_SNOWFLAKE,
+    TILDE,
+    TRIANGLE_HEADED_RIGHTWARDS_ARROW,
+    TWELVE_POINTED_BLACK_STAR,
+    U0080,
+    U0081,
+    U0099,
+    UPPER_BLADE_SCISSORS,
+    UPPER_RIGHT_DROP_SHADOWED_WHITE_SQUARE,
+    UPPER_RIGHT_PENCIL,
+    UPPER_RIGHT_SHADOWED_WHITE_SQUARE,
+    VERTICAL_LINE,
+    VICTORY_HAND,
+    VULGAR_FRACTION_ONE_HALF,
+    VULGAR_FRACTION_ONE_QUARTER,
+    VULGAR_FRACTION_THREE_QUARTERS,
+    WEDGE_TAILED_RIGHTWARDS_ARROW,
+    WHITE_EXCLAMATION_MARK_ORNAMENT,
+    WHITE_FEATHERED_RIGHTWARDS_ARROW,
+    WHITE_FLORETTE,
+    WHITE_FOUR_POINTED_STAR,
+    WHITE_HEAVY_CHECK_MARK,
+    WHITE_NIB,
+    WHITE_QUESTION_MARK_ORNAMENT,
+    WHITE_SCISSORS,
+    WRITING_HAND,
+    YEN_SIGN,
+)
 
 encoding = {
     NULL: True,

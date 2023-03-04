@@ -1,11 +1,9 @@
 """"""
 
+from celestine import load
 from celestine.window.window import Window as master
 
-from celestine import load
-
 from . import package
-
 from .container import Container
 
 
@@ -26,7 +24,9 @@ class Window(master):
     def __enter__(self):
         super().__enter__()
         package.init()
-        self.book = package.display.set_mode((self.width, self.height), 8, 0)
+        self.book = package.display.set_mode(
+            (self.width, self.height), 8, 0
+        )
         path = load.pathway("asset", "CascadiaCode.ttf")
         self.font = package.font.Font(path, 40)
 

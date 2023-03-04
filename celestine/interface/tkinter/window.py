@@ -3,7 +3,6 @@
 from celestine.window.window import Window as master
 
 from . import package
-
 from .container import Container
 
 

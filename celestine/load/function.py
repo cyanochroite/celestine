@@ -2,17 +2,17 @@
 
 from typing import TypeAlias as TA
 
-from celestine.typed import CA
-from celestine.typed import D
-from celestine.typed import L
-from celestine.typed import MT
-from celestine.typed import N
-from celestine.typed import S
-
+from celestine.typed import (
+    CA,
+    MT,
+    D,
+    L,
+    N,
+    S,
+)
 from celestine.unicode import LOW_LINE
 
 from .text import FUNCTION
-
 
 F: TA = CA[[N], N]
 
@@ -25,7 +25,8 @@ def function(module: MT) -> D[S, F]:
     iterable = {
         key: value
         for key, value in dictionary.items()
-        if repr(value).startswith(FUNCTION) and not key.startswith(LOW_LINE)
+        if repr(value).startswith(FUNCTION)
+        and not key.startswith(LOW_LINE)
     }
     return iterable
 

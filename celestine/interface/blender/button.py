@@ -3,9 +3,8 @@
 from celestine.window.button import Button as button
 
 from .element import Element
-
-from .package.data import mesh as make_mesh
 from .package import mesh as _mesh
+from .package.data import mesh as make_mesh
 
 
 class Button(button, Element):

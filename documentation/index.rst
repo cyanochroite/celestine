@@ -9,6 +9,7 @@ The Celestine Image Viewer
     wing
     README
     application
+    dependencies
 
 - About_
 - Goals_
@@ -37,7 +38,7 @@ The application :doc:`application`.
 The readme :doc:`README`.
 Development settings at :doc:`wing`.
 Project notes at :doc:`note`.
-
+Dependent in :doc:`dependencies`.
 
 .. _Goals:
 

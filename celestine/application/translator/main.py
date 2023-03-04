@@ -1,20 +1,16 @@
 """Application for translating text to other languages."""
-from celestine.application.translator.parser import word_wrap_dictionary
-from .text import UTF_8
-from .text import WRITE
-from celestine.application.translator.file import save_dictionary
-from celestine.application.translator.text import LANGUAGE
-from celestine.application.translator.parser import dictionary_to_file
-from .text import LANGUAGE
-
-import uuid
 import os
 import os.path
 import shutil
+import uuid
+
 import requests
 
 from celestine import load
-from celestine.application.translator.translator import Translator
+
+from .file import save_dictionary
+from .text import LANGUAGE
+from .translator import Translator
 
 INIT = "__init__"
 
@@ -96,7 +92,9 @@ def post(session, code, text):
     json = [{TEXT: text}]
     headers = translator.header(str(uuid.uuid4()))
     params = translator.parameter(code)
-    request = requests.post(url, data, json, headers=headers, params=params)
+    request = requests.post(
+        url, data, json, headers=headers, params=params
+    )
     return request.json()
 
 

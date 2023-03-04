@@ -1,7 +1,6 @@
 import unittest
 
 from celestine.application.viewer.data.alphabet import *
-
 from celestine.application.viewer.parser.operator import *
 from celestine.application.viewer.parser.translator import *
 
@@ -104,7 +103,12 @@ class test_comparison(unittest.TestCase):
         self.assertEqual(parse(token), nn)
 
     def test_nn_secondary(self):
-        token = [Comparison.SAME, Comparison.MARK, Comparison.MORE, Comparison.LESS]
+        token = [
+            Comparison.SAME,
+            Comparison.MARK,
+            Comparison.MORE,
+            Comparison.LESS,
+        ]
         self.assertEqual(parse(token), nn)
 
     def test_nu_secondary(self):

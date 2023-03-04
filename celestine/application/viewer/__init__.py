@@ -4,15 +4,14 @@
 import os
 
 from celestine.session.argument import Optional
-
-from celestine.session.session import SuperSession
-from celestine.session.session import AD
-
+from celestine.session.session import (
+    AD,
+    SuperSession,
+)
 from celestine.typed import S
 
-from .text import DIRECTORY
-
 from .main import _setup
+from .text import DIRECTORY
 
 
 class Session(SuperSession):

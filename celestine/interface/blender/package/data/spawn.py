@@ -1,8 +1,7 @@
 # <pep8-80 compliant>
-import bpy
-
 import math
 
+import bpy
 
 DEGREE_TO_RADIAN = math.pi / 180
 
@@ -21,7 +20,9 @@ class _imaginary:
 
     @classmethod
     def remove(cls, item):
-        cls.data.remove(item, do_unlink=True, do_id_user=True, do_ui_user=True)
+        cls.data.remove(
+            item, do_unlink=True, do_id_user=True, do_ui_user=True
+        )
 
 
 class _real(_imaginary):

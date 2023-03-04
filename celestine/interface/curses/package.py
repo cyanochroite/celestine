@@ -5,14 +5,16 @@ Putting alias here to contain errors to this file only.
 Hidding everything in the __getattribute__ function.
 """
 
-import typing
-
 # https://dearpygui.readthedocs.io/en/latest/
 import curses
+import typing
+
 import _curses
 
-from celestine.unicode import ESCAPE
-from celestine.unicode import SPACE
+from celestine.unicode import (
+    ESCAPE,
+    SPACE,
+)
 
 
 class Package:

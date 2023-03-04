@@ -58,6 +58,12 @@ DEMO_MAIN_NEXT = "Go to page two."
 
 VIEWER_SESSION_DIRECTORY = "A path to a directory containing images."
 
-TRANSLATOR_SESSION_KEY = "Your Translator service key from the Azure portal."
-TRANSLATOR_SESSION_REGION = "The region where your resource was created."
+TRANSLATOR_SESSION_KEY = "Your Translator service key from the Azure \
+portal."
+
+TRANSLATOR_SESSION_KEY = "Your Translator service key from the Azure \
+portal."
+TRANSLATOR_SESSION_REGION = "The region where your resource was \
+created."
+
 TRANSLATOR_SESSION_URL = "The location of the translation service."

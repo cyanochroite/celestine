@@ -2,9 +2,8 @@
 
 from celestine.window.window import Window as master
 
-from .package import package
-
 from .container import Container
+from .package import package
 
 
 class Window(master):
@@ -51,10 +50,14 @@ class Window(master):
         self.background = package.window(0, 0, self.width, self.height)
         self.background.box()
 
-        header1 = package.subwindow(self.background, 0, 0, self.width, 1)
+        header1 = package.subwindow(
+            self.background, 0, 0, self.width, 1
+        )
         header1.addstr(self.session.language.APPLICATION_TITLE)
 
-        header2 = package.subwindow(self.background, 0, self.height - 1, self.width, 1)
+        header2 = package.subwindow(
+            self.background, 0, self.height - 1, self.width, 1
+        )
         header2.addstr(self.session.language.CURSES_EXIT)
 
         self.stdscr.noutrefresh()
@@ -83,7 +86,10 @@ class Window(master):
                 case package.KEY_EXIT:
                     break
                 case package.KEY_CLICK:
-                    (x_dot, y_dot) = (self.cord_x - 1, self.cord_y - 1)
+                    (x_dot, y_dot) = (
+                        self.cord_x - 1,
+                        self.cord_y - 1,
+                    )
                     self.frame.poke(x_dot, y_dot)
 
         self.stdscr.keypad(0)

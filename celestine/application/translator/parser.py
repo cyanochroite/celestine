@@ -2,53 +2,54 @@
 import io
 import keyword
 
-
-from celestine.unicode import NONE
-
-from celestine.unicode import EQUALS_SIGN
-from celestine.unicode import LINE_FEED
-from celestine.unicode import QUOTATION_MARK
-from celestine.unicode import SPACE
-
-from celestine.unicode import FULL_STOP
-from celestine.unicode import QUESTION_MARK
-from celestine.unicode import EXCLAMATION_MARK
-from celestine.unicode import COMMA
-from celestine.unicode import SEMICOLON
-from celestine.unicode import COLON
-
-from celestine.unicode import CHARACTER_TABULATION
-from celestine.unicode import LINE_TABULATION
-from celestine.unicode import FORM_FEED
-from celestine.unicode import CARRIAGE_RETURN
-
-from celestine.unicode import INFORMATION_SEPARATOR_FOUR
-from celestine.unicode import INFORMATION_SEPARATOR_THREE
-from celestine.unicode import INFORMATION_SEPARATOR_TWO
-
-from celestine.unicode import BREAK_PERMITTED_HERE
-from celestine.unicode import REVERSE_SOLIDUS
-
-from celestine.unicode import NEXT_LINE
-
-from celestine.unicode import LINE_SEPARATOR
-from celestine.unicode import PARAGRAPH_SEPARATOR
-
-from celestine.unicode import APOSTROPHE
-
+from celestine.unicode import (
+    APOSTROPHE,
+    BREAK_PERMITTED_HERE,
+    CARRIAGE_RETURN,
+    CHARACTER_TABULATION,
+    COLON,
+    COMMA,
+    EQUALS_SIGN,
+    EXCLAMATION_MARK,
+    FORM_FEED,
+    FULL_STOP,
+    LINE_FEED,
+    LINE_SEPARATOR,
+    LINE_TABULATION,
+    NEXT_LINE,
+    NONE,
+    PARAGRAPH_SEPARATOR,
+    QUESTION_MARK,
+    QUOTATION_MARK,
+    REVERSE_SOLIDUS,
+    SEMICOLON,
+    SPACE,
+    INFORMATION_SEPARATOR_FOUR,
+    INFORMATION_SEPARATOR_THREE,
+    INFORMATION_SEPARATOR_TWO,
+    INFORMATION_SEPARATOR_ONE,
+)
 
 MAXIMUM_LINE_LENGTH = 72
 
-unicode_punctuation = frozenset(
+unicode_break_hard = frozenset(
     {
         COLON,
-        COMMA,
         EXCLAMATION_MARK,
         FULL_STOP,
         QUESTION_MARK,
+    }
+)
+
+unicode_break_soft = frozenset(
+    {
+        COMMA,
         SEMICOLON,
     }
 )
+
+unicode_punctuation = unicode_break_hard | unicode_break_soft
+
 
 unicode_whitespace = frozenset(
     {
@@ -58,6 +59,7 @@ unicode_whitespace = frozenset(
         INFORMATION_SEPARATOR_FOUR,
         INFORMATION_SEPARATOR_THREE,
         INFORMATION_SEPARATOR_TWO,
+        INFORMATION_SEPARATOR_ONE,
         LINE_FEED,
         LINE_SEPARATOR,
         LINE_TABULATION,
@@ -68,6 +70,7 @@ unicode_whitespace = frozenset(
 )
 
 plane_0 = set({})
+
 for index in range(0x10000):
     plane_0.add(chr(index))
 
@@ -78,71 +81,113 @@ not_identifier = unicode_punctuation | unicode_whitespace
 unicode_identifier = basic_multilingual_plane - not_identifier
 
 
-def buffer_readline(buffer):
-    """"""
-    buffer.write(CARRIAGE_RETURN)
-    buffer.seek(0, io.SEEK_SET)
-    string = buffer.readline()
-    for character in string:
-        if character == LINE_SEPARATOR:
-            yield from LINE_FEED
-        elif character != CARRIAGE_RETURN:
-            yield from character
-    buffer.seek(0, io.SEEK_SET)
-
-
 def word_wrap(string):
     """
-    Lines will be MAXIMUM_LINE_LENGTH unless no breaks detected.
-    Use BREAK_PERMITTED_HERE to signal a soft line break.
-    Use LINE_SEPARATOR to signal a hard line break.
-    Do not use LINE_FEED or CARRIAGE_RETURN as weird things may happen.
-    BREAK_PERMITTED_HERE will be removed from the string.
-    LINE_SEPARATOR will be replaced with LINE_FEED.
-    """
-    buffer = io.StringIO(NONE, CARRIAGE_RETURN)
+    INFORMATION_SEPARATOR_FOUR indicates end of file. Stop immediately.
+    INFORMATION_SEPARATOR_THREE indicates end of line. Reset column.
+    INFORMATION_SEPARATOR_TWO indicates punctuation. Break on long line.
+    INFORMATION_SEPARATOR_ONE indicates whitespace. Break on long line.
 
-    column = 0
+    A long line will always break on a punctuation if one can be found.
+    If not the line will break on a whitespace if one can be found.
+    Otherwise hard break on the last character and hope for the best.
+    """
+    buffer = io.StringIO()
     size = 0
 
-    for character in string:
-        if character == LINE_SEPARATOR:
-            if column + size > MAXIMUM_LINE_LENGTH:
-                yield from REVERSE_SOLIDUS
-                yield from LINE_FEED
+    count = 0
+    count_a = 0
+    count_b = 0
+    count_c = 0
+    count_d = 0
 
-            yield from buffer_readline(buffer)
+    for character in string:
+
+        if character == INFORMATION_SEPARATOR_FOUR:
+            count_d = count
+            continue
+
+        if character == INFORMATION_SEPARATOR_THREE:
+            count_c = count
+            continue
+
+        if character == INFORMATION_SEPARATOR_TWO:
+            count_b = count
+            continue
+
+        if character == INFORMATION_SEPARATOR_ONE:
+            count_a = count
+            continue
+
+        size = len(character)
+        if count + size >= MAXIMUM_LINE_LENGTH:
+            buffer.seek(0, io.SEEK_SET)
+
+            pull = 0
+            if 0 < count_d < MAXIMUM_LINE_LENGTH:
+                pull = count_d
+            elif 0 < count_c < MAXIMUM_LINE_LENGTH:
+                pull = count_c
+            elif 0 < count_b < MAXIMUM_LINE_LENGTH:
+                pull = count_b
+            elif 0 < count_a < MAXIMUM_LINE_LENGTH:
+                pull = count_a
+            else:
+                pull = MAXIMUM_LINE_LENGTH
+
+            data = buffer.read(pull)
+
+            yield from data
+            yield from REVERSE_SOLIDUS
             yield from LINE_FEED
 
-            column = 0
-            size = 0
+            string = buffer.read(count - pull)
 
-        elif character == BREAK_PERMITTED_HERE:
-            if column + size + 1 > MAXIMUM_LINE_LENGTH:
-                yield from REVERSE_SOLIDUS
-                yield from LINE_FEED
-                column = 0
+            buffer.seek(0, io.SEEK_SET)
 
-            yield from buffer_readline(buffer)
+            count = buffer.write(string)
+            count_a = max(0, count_a - pull)
+            count_b = max(0, count_b - pull)
+            count_c = max(0, count_c - pull)
+            count_d = max(0, count_d - pull)
 
-            column += size
-            size = 0
+        count += buffer.write(character)
 
-        else:
-            buffer.write(character)
-            size += 1
+        if character == LINE_FEED:
+            buffer.seek(0, io.SEEK_SET)
+            # yield from buffer.read(count)
 
-    yield from buffer_readline(buffer)
+            candy = buffer.read(count)
+            yield from candy
+            buffer.seek(0, io.SEEK_SET)
+
+            count = 0
+            count_a = 0
+            count_b = 0
+            count_c = 0
+            count_d = 0
+
+    buffer.seek(0, io.SEEK_SET)
+    yield from buffer.read(count)
+
+
+def normalize_character(string):
+    """
+    Remove all invalid characters.
+    """
+    for character in string:
+        if character in basic_multilingual_plane:
+            yield from character
 
 
 def normalize_whitespace(string):
     """
-    Trim whitespace from ends.
+    Remove (ignore) all whitespace from the start and end of the string.
     Convert all whitespace to spaces.
     Remove all duplicate spaces.
     Preserve space between words.
-    Ensure space after every punctuation.
     Remove space before punctuation.
+    Ensure space after every punctuation.
     Allow line breaks after punctuation.
     """
     previous = None
@@ -150,12 +195,17 @@ def normalize_whitespace(string):
 
     for character in string:
         if character in unicode_identifier:
-            if previous in unicode_punctuation:
+            if previous in unicode_break_soft:
                 yield from SPACE
-                yield from BREAK_PERMITTED_HERE
+                yield from INFORMATION_SEPARATOR_TWO
+            elif previous in unicode_break_hard:
+                yield from SPACE
+                yield from INFORMATION_SEPARATOR_THREE
             elif previous in unicode_identifier:
+                # Preserve space between words.
                 if whitespace:
                     yield from SPACE
+                    yield from INFORMATION_SEPARATOR_ONE
 
         whitespace = character in unicode_whitespace
 
@@ -165,13 +215,34 @@ def normalize_whitespace(string):
 
 
 def normalize_quotation(string):
-    """ """
+    """"""
 
     for character in string:
         if character == QUOTATION_MARK:
             yield from APOSTROPHE
         else:
             yield from character
+
+
+def normalize_punctuation(string):
+    """"""
+
+    previous = None
+    for character in string:
+        if character in unicode_punctuation:
+            if character == previous:
+                continue
+        yield character
+        previous = character
+
+
+def normalize(string):
+    """"""
+    character = normalize_character(string)
+    whitespace = normalize_whitespace(character)
+    quotation = normalize_quotation(whitespace)
+    punctuation = normalize_punctuation(quotation)
+    yield from punctuation
 
 
 def assignment_expression(identifier, expression):
@@ -186,29 +257,27 @@ def assignment_expression(identifier, expression):
     if keyword.issoftkeyword(identifier):
         raise ValueError("This word is a soft keyword.")
 
+    yield from LINE_FEED
     yield from identifier
     yield from SPACE
     yield from EQUALS_SIGN
     yield from SPACE
     yield from QUOTATION_MARK
-    yield from BREAK_PERMITTED_HERE
-    yield from normalize_quotation(normalize_whitespace(expression))
+    yield from INFORMATION_SEPARATOR_FOUR
+    yield from normalize(expression)
     yield from QUOTATION_MARK
-    yield from LINE_SEPARATOR
+    yield from LINE_FEED
 
 
 def transverse_dictionary(dictionary):
     """"""
-    for key, value in sorted(dictionary.items()):
+    items = dictionary.items()
+    sorted_items = sorted(items)
+    for key, value in sorted_items:
         yield from assignment_expression(key, value)
 
 
-def word_wrap_dictionary(dictionary):
-    """"""
-    yield from word_wrap(transverse_dictionary(dictionary))
-
-
-def dictionary_to_file(dictionary):
+def dictionary_file(dictionary):
     """"""
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
@@ -222,4 +291,10 @@ def dictionary_to_file(dictionary):
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
     yield from LINE_FEED
-    yield from word_wrap(transverse_dictionary(dictionary))
+    yield from transverse_dictionary(dictionary)
+
+
+def dictionary_to_file(dictionary):
+    """"""
+    file = dictionary_file(dictionary)
+    yield from word_wrap(file)

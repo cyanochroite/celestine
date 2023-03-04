@@ -2,9 +2,8 @@
 
 from celestine.window.image import Image as image
 
-from .element import Element
-
 from . import package
+from .element import Element
 
 
 class Image(image, Element):

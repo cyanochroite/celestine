@@ -1,32 +1,39 @@
 """"""
 
-from celestine.typed import B
-from celestine.typed import L
-from celestine.typed import N
-from celestine.typed import S
+from celestine.typed import (
+    B,
+    L,
+    N,
+    S,
+)
+from celestine.unicode import (
+    HYPHEN_MINUS,
+    NONE,
+    QUESTION_MARK,
+)
 
-from celestine.unicode import HYPHEN_MINUS
-from celestine.unicode import NONE
-from celestine.unicode import QUESTION_MARK
-
-from .attribute import Action
-from .attribute import Attribute
-from .attribute import Choices
-from .attribute import Help
-from .attribute import Nargs
-from .attribute import Version
-
+from .attribute import (
+    Action,
+    Attribute,
+    Choices,
+    Help,
+    Nargs,
+    Version,
+)
 from .hash import HashClass
-
-from .text import HELP
-from .text import STORE_TRUE
-from .text import VERSION
+from .text import (
+    HELP,
+    STORE_TRUE,
+    VERSION,
+)
 
 
 class Argument(HashClass, Attribute):
     """abstract class"""
 
-    def __init__(self, argument: B, attribute: B, fallback: S, **kwargs) -> N:
+    def __init__(
+        self, argument: B, attribute: B, fallback: S, **kwargs
+    ) -> N:
         """"""
         super().__init__(**kwargs)
         self.argument = argument
