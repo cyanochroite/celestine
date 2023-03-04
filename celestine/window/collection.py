@@ -27,24 +27,6 @@ class Axis(Object):
             raise ValueError("need: partition > 0")
 
         distance = self.maximum - self.minimum
-        step = int(distance // partition)
-
-        maximum = self.minimum  # <- yes, setting maximum to minimum
-
-        while maximum < self.maximum:
-            minimum = maximum
-            maximum += step
-            yield (minimum, maximum)
-
-        while True:
-            yield (minimum, maximum)
-
-    def get(self, partition: Z) -> AXIS:
-        """"""
-        if partition <= 0:
-            raise ValueError("need: partition > 0")
-
-        distance = self.maximum - self.minimum
         fragment = int(distance // partition)
         position = self.minimum
 
@@ -142,41 +124,6 @@ class Collection(Object):
 
 class Rectangle(Box, Collection):
     """"""
-
-    def get1(self):
-        """"""
-        x_min = self.move_x_min
-        self.move_x_min += self.offset_x
-
-        y_min = self.move_y_min
-        self.move_y_min += self.offset_y
-
-        x_max = self.move_x_min if self.offset_x else self.x_max
-        y_max = self.move_y_min if self.offset_y else self.y_max
-
-        return (x_min, y_min, x_max, y_max)
-
-    def get1(self):
-        """"""
-        x_min = self.axis_x.minimum
-
-        x_min = self.move_x_min
-        self.move_x_min += self.offset_x
-
-        y_min = self.move_y_min
-        self.move_y_min += self.offset_y
-
-        x_max = self.move_x_min if self.offset_x else self.x_max
-        y_max = self.move_y_min if self.offset_y else self.y_max
-
-        return (x_min, y_min, x_max, y_max)
-
-    def set1(self, x_min, y_min, x_max, y_max):
-        """"""
-        self.x_min = x_min
-        self.y_min = y_min
-        self.x_max = x_max
-        self.y_max = y_max
 
     def get_next(self):
         """"""

@@ -13,8 +13,9 @@ dictionary[instance] = "test"
 print(dictionary[Test]) -> "test"
 """
 
+
 from celestine.typed import (
-    SELF,
+    O,
     B,
     S,
     Z,
@@ -29,7 +30,7 @@ from celestine.unicode import (
 class HashMetaClass(type):
     """"""
 
-    def __eq__(cls, other: SELF) -> B:
+    def __eq__(cls, other: O) -> B:
         return str(cls) == str(other)
 
     def __hash__(cls) -> Z:

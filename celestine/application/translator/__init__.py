@@ -52,9 +52,9 @@ def main(page: Page):
 # TODO:figure out how to make actions not trigger on function load
 def _report(page: Page):
     """"""
-    with page.line("head") as line:
+    with page.span("head") as line:
         line.label("title", "Page main")
     train = _train()
     for tag, text in train.items():
-        with page.line("body") as line:
+        with page.span("body") as line:
             line.label(tag, text)

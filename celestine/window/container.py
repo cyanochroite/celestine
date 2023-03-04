@@ -6,6 +6,18 @@ from celestine.window.collection import Rectangle
 class Container(Rectangle):
     """"""
 
+    def drop(self, tag, **kwargs):
+        """"""
+        raise NotImplementedError()
+
+    def grid(self, tag, width, **kwargs):
+        """"""
+        raise NotImplementedError()
+
+    def span(self, tag, **kwargs):
+        """"""
+        raise NotImplementedError()
+
     def ready(self, button, image, label):
         self._button = button
         self._image = image
