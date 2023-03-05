@@ -30,46 +30,60 @@ class Container(container):
             ),
         )
 
-    def drop(self, tag, **kwargs):
+    def task(self, tag, text, action):
+        """"""
+        call = self.window.work
+        return self.item_set(
+            tag,
+            Button(
+                tag,
+                text,
+                package.tag_root(self.tag),
+                action,
+                lambda sender, app_data, user_data: call(action),
+            ),
+        )
+
+    def drop(self, tag, **star):
         """"""
         return self.item_set(
             tag,
             Drop(
                 self.session,
                 tag,
-                self.turn,
-                **kwargs,
+                self.window,
+                **star,
             ),
         )
 
-    def grid(self, tag, width, **kwargs):
+    def grid(self, tag, width, **star):
         """"""
         return self.item_set(
             tag,
             Grid(
                 self.session,
                 tag,
-                self.turn,
+                self.window,
                 width=width,
-                **kwargs,
+                **star,
             ),
         )
 
-    def span(self, tag, **kwargs):
+    def span(self, tag, **star):
         """"""
         return self.item_set(
             tag,
             Span(
                 self.session,
                 tag,
-                self.turn,
-                **kwargs,
+                self.window,
+                **star,
             ),
         )
 
-    def __init__(self, session, name, turn, **kwargs):
+    def __init__(self, session, name, window, **star):
         self.frame = None
-        super().__init__(session, name, turn, **kwargs)
+        super().__init__(session, name, window, **star)
         super().ready(Button, Image, Label)
 
 

@@ -3,6 +3,8 @@
 from typing import TypeAlias as TA
 
 from celestine import load
+from celestine.load import function
+
 from celestine.session.argument import (
     Customization,
     InformationConfiguration,
@@ -146,9 +148,9 @@ class Session(Application, Interface, Language):
         """"""
         return super().dictionary() | {
             MAIN: Positional(
-                MAIN,
+                "page_main",
                 self._language.ARGUMENT_LANGUAGE_HELP,
-                load.function_name(self._application),
+                function.function_page(self._application),
             ),
         }
 

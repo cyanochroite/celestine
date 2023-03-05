@@ -29,7 +29,7 @@ class Session(SuperSession):
         }
 
 
-def main(page):
+def page_main(page):
     """"""
     images = _setup(page)
     with page.grid("grid", 4) as grid:

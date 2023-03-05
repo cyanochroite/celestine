@@ -1,6 +1,7 @@
 """"""
 
 from .collection import Collection
+from .collection import Collection2
 
 
 class Window(Collection):
@@ -11,6 +12,11 @@ class Window(Collection):
 
     def turn(self, page):
         """"""
+
+    def work(self, task):
+        """"""
+        call = self.task.get(task)
+        call()
 
     def __enter__(self):
         return self
@@ -29,7 +35,8 @@ class Window(Collection):
             raise RuntimeError(message) from error
         return False
 
-    def __init__(self, session, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, session, **star):
         self.session = session
         self.turn_page = session.main
+        self.task = Collection2()
+        super().__init__(**star)

@@ -12,45 +12,45 @@ from .label import Label
 class Container(container):
     """"""
 
-    def drop(self, tag, **kwargs):
+    def drop(self, tag, **star):
         """"""
         return self.item_set(
             tag,
             Drop(
                 self.session,
                 tag,
-                self.turn,
-                **kwargs,
+                self.window,
+                **star,
             ),
         )
 
-    def grid(self, tag, width, **kwargs):
+    def grid(self, tag, width, **star):
         """"""
         return self.item_set(
             tag,
             Grid(
                 self.session,
                 tag,
-                self.turn,
+                self.window,
                 width,
-                **kwargs,
+                **star,
             ),
         )
 
-    def span(self, tag, **kwargs):
+    def span(self, tag, **star):
         """"""
         return self.item_set(
             tag,
             Span(
                 self.session,
                 tag,
-                self.turn,
-                **kwargs,
+                self.window,
+                **star,
             ),
         )
 
-    def __init__(self, session, name, turn, **star):
-        super().__init__(session, name, turn, **star)
+    def __init__(self, session, name, window, **star):
+        super().__init__(session, name, window, **star)
         super().ready(Button, Image, Label)
 
 

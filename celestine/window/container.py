@@ -54,17 +54,25 @@ class Container(Rectangle):
         for _, item in self.item.items():
             item.spot(x_min, y_min, x_max, y_max, **star)
 
+    def task(self, tag, text, action):
+        """"""
+        call = self.window.work
+        item = self._button(tag, text, action=lambda: call(action))
+        return self.save(item)
+
     def __enter__(self):
         return self
 
     def __exit__(self, *_):
         return False
 
-    def __init__(self, session, name, turn, **kwargs):
+    def __init__(self, session, name, window, **star):
         self.session = session
         self.tag = name
-        self.turn = turn
-        super().__init__(**kwargs)
+        self.window = window
+        #
+        self.turn = window.turn
+        super().__init__(**star)
 
 
 class Grid(Container):

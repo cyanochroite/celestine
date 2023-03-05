@@ -38,7 +38,7 @@ class Window(master):
         self.container = Container(
             self.session,
             "window",
-            self.turn,
+            self,
             x_min=0,
             y_min=0,
             x_max=self.width,
@@ -47,7 +47,6 @@ class Window(master):
             offset_y=0,
         )
 
-        self.background = package.window(0, 0, self.width, self.height)
         self.background.box()
 
         header1 = package.subwindow(
@@ -108,14 +107,13 @@ class Window(master):
         self.window = 0
 
         #
-        self.container = None
-        self.background = None
-
-        #
         self.stdscr = package.initscr()
         package.noecho()
         package.cbreak()
         self.stdscr.keypad(1)
         package.start_color()
+        #
+        self.container = None
+        self.background = package.window(0, 0, self.width, self.height)
         #
         self.frame = None

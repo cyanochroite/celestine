@@ -10,14 +10,13 @@ from celestine.typed import (
     N,
     S,
 )
-from celestine.unicode import LOW_LINE
 
 from .text import FUNCTION
 
-F: TA = CA[[N], N]
+FN: TA = CA[[N], N]
 
 
-def function(module: MT) -> D[S, F]:
+def load(module: MT) -> D[S, FN]:
     """
     Load from module all functions and turn them into dictionary.
     """
@@ -26,25 +25,27 @@ def function(module: MT) -> D[S, F]:
         key: value
         for key, value in dictionary.items()
         if repr(value).startswith(FUNCTION)
-        and not key.startswith(LOW_LINE)
     }
     return iterable
 
 
-def function_name(module: MT) -> L[S]:
+def find(dictionary: D[S, FN], prefix: S) -> D[S, FN]:
+    """Filter the dictionary based on a name."""
+    iterable = {
+        key: value
+        for key, value in dictionary.items()
+        if key.startswith(prefix)
+    }
+    return iterable
+
+
+def function_page(module: MT) -> L[S]:
     """
     Load from module all functions and turn them into dictionary.
     """
 
-    dictionary = function(module)
+    dictionary = load(module)
     iterable = [key for key, value in dictionary.items()]
     return iterable
 
 
-def function_value(module: MT) -> L[F]:
-    """
-    Load from module all functions and turn them into dictionary.
-    """
-    dictionary = function(module)
-    iterable = [value for key, value in dictionary.items()]
-    return iterable

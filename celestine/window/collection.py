@@ -119,6 +119,27 @@ class Collection(Object):
         super().__init__(**star)
 
 
+class Collection2:
+    """"""
+
+    def children(self):
+        """"""
+        for _, item in self.item.items():
+            yield item
+
+    def get(self, name):
+        """"""
+        return self.item[name]
+
+    def set(self, name, item):
+        """"""
+        self.item[name] = item
+        return item
+
+    def __init__(self):
+        self.item = {}
+
+
 class Rectangle(Box, Collection):
     """"""
 

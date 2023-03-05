@@ -21,7 +21,7 @@ class Container(container):
             Drop(
                 self.session,
                 tag,
-                self.turn,
+                self.window,
                 **kwargs,
             ),
         )
@@ -33,7 +33,7 @@ class Container(container):
             Grid(
                 self.session,
                 tag,
-                self.turn,
+                self.window,
                 width=width,
                 **kwargs,
             ),
@@ -46,14 +46,14 @@ class Container(container):
             Span(
                 self.session,
                 tag,
-                self.turn,
+                self.window,
                 **kwargs,
             ),
         )
 
-    def __init__(self, session, name, turn, **kwargs):
+    def __init__(self, session, name, window, **star):
         self.frame = None
-        super().__init__(session, name, turn, **kwargs)
+        super().__init__(session, name, window, **star)
         super().ready(Button, Image, Label)
 
 

@@ -1,12 +1,12 @@
 """"""
 
-from celestine.window.window import Window as master
+from celestine.window.window import Window as window
 
 from . import package
 from .container import Container
 
 
-class Window(master):
+class Window(window):
     def page(self, name, document):
         page = self.container.drop(name)
         page.frame = package.Frame(
@@ -35,7 +35,7 @@ class Window(master):
         self.container = Container(
             self.session,
             "window",
-            self.turn,
+            self,
             x_min=0,
             y_min=0,
             x_max=640,

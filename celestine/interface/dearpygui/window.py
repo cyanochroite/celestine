@@ -52,7 +52,7 @@ class Window(master):
         self.container = Container(
             self.session,
             "window",
-            self.turn,
+            self,
             x_min=0,
             y_min=0,
             x_max=1920,

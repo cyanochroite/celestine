@@ -33,7 +33,7 @@ class Window(master):
         self.container = Container(
             self.session,
             "window",
-            self.turn,
+            self,
             self.font,
             x_min=0,
             y_min=0,

@@ -17,49 +17,49 @@ class Container(container):
         star.update(font=self.font)
         super().draw(collection, **star)
 
-    def drop(self, tag, **kwargs):
+    def drop(self, tag, **star):
         """"""
         return self.item_set(
             tag,
             Drop(
                 self.session,
                 tag,
-                self.turn,
+                self.window,
                 self.font,
-                **kwargs,
+                **star,
             ),
         )
 
-    def grid(self, tag, width, **kwargs):
+    def grid(self, tag, width, **star):
         """"""
         return self.item_set(
             tag,
             Grid(
                 self.session,
                 tag,
-                self.turn,
+                self.window,
                 self.font,
                 width,
-                **kwargs,
+                **star,
             ),
         )
 
-    def span(self, tag, **kwargs):
+    def span(self, tag, **star):
         """"""
         return self.item_set(
             tag,
             Span(
                 self.session,
                 tag,
-                self.turn,
+                self.window,
                 self.font,
-                **kwargs,
+                **star,
             ),
         )
 
-    def __init__(self, session, name, turn, font, **kwargs):
+    def __init__(self, session, name, window, font, **star):
         self.font = font
-        super().__init__(session, name, turn, **kwargs)
+        super().__init__(session, name, window, **star)
         super().ready(Button, Image, Label)
 
 
