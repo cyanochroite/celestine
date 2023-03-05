@@ -21,11 +21,13 @@ from .operator import comparison_parse
 
 
 def log_unicode(character, info):
+    """"""
     message = "Unicode Character Code U+{0:04X}:'{1}' {2}"
     print(message.format(ord(character), character, info))
 
 
 def decode(character):
+    """"""
     item = encoding.get(character, False)
 
     if item is True:
@@ -40,6 +42,7 @@ def decode(character):
 
 
 def maps(iterable):
+    """"""
     item = iterable[0]
     mapping = {
         Comparison: comparison_parse,
@@ -54,12 +57,14 @@ def maps(iterable):
 
 
 class translator:  # translate
+    """"""
     @staticmethod
     def translate(string):
         return filter_true(map(decode, string))
 
 
 class tokenizer:
+    """"""
     @staticmethod
     def tokenize(iterable):
         return list(
@@ -68,6 +73,7 @@ class tokenizer:
 
 
 class parser:
+    """"""
     @staticmethod
     def parse(iterable):
         return list(map(maps, iterable))

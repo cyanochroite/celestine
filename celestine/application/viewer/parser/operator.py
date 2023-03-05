@@ -1,3 +1,4 @@
+""""""
 from celestine.application.viewer.data.alphabet import (
     Comparison,
     Divider,
@@ -6,6 +7,8 @@ from celestine.application.viewer.data.alphabet import (
 
 
 class Operator:
+    """"""
+
     def __init__(self, name, primary, secondary):
         self.name = name
         self.value = primary
@@ -24,6 +27,8 @@ class Operator:
 
 
 class _eq(Operator):
+    """"""
+
     def __init__(self):
         super().__init__(
             "EQ",
@@ -33,6 +38,8 @@ class _eq(Operator):
 
 
 class _ge(Operator):
+    """"""
+
     def __init__(self):
         super().__init__(
             "GE",
@@ -42,6 +49,8 @@ class _ge(Operator):
 
 
 class _gt(Operator):
+    """"""
+
     def __init__(self):
         super().__init__(
             "GT",
@@ -51,6 +60,8 @@ class _gt(Operator):
 
 
 class _le(Operator):
+    """"""
+
     def __init__(self):
         super().__init__(
             "LE",
@@ -60,6 +71,8 @@ class _le(Operator):
 
 
 class _lt(Operator):
+    """"""
+
     def __init__(self):
         super().__init__(
             "LT",
@@ -69,6 +82,8 @@ class _lt(Operator):
 
 
 class _ne(Operator):
+    """"""
+
     def __init__(self):
         super().__init__(
             "NE",
@@ -78,6 +93,8 @@ class _ne(Operator):
 
 
 class _nn(Operator):
+    """"""
+
     def __init__(self):
         super().__init__(
             "NN",
@@ -92,6 +109,8 @@ class _nn(Operator):
 
 
 class _nu(Operator):
+    """"""
+
     def __init__(self):
         super().__init__(
             "NU",
@@ -111,11 +130,15 @@ nu = _nu()  # IS_NULL_OPERATOR
 
 
 class _add(Operator):
+    """"""
+
     def __init__(self):
         super().__init__("ADD", [Unary.PLUS], [])
 
 
 class _div(Operator):
+    """"""
+
     def __init__(self):
         super().__init__(
             "DIV",
@@ -125,11 +148,15 @@ class _div(Operator):
 
 
 class _mul(Operator):
+    """"""
+
     def __init__(self):
         super().__init__("MUL", [Unary.STAR], [Unary.PLUS, Unary.STAR])
 
 
 class _sub(Operator):
+    """"""
+
     def __init__(self):
         super().__init__("SUB", [Unary.DASH], [Unary.PLUS, Unary.DASH])
 
@@ -152,16 +179,22 @@ _table = {
 
 
 class tab(Operator):
+    """"""
+
     def __init__(self, iterable):
         super().__init__("TAB", [Divider.WHITESPACE], [])
 
 
 class word(Operator):
+    """"""
+
     def __init__(self, iterable):
         super().__init__("WORD", [item for item in iterable], [])
 
 
 class number(Operator):
+    """"""
+
     def __init__(self, iterable):
         super().__init__("NUMBER", [item for item in iterable], [])
 
@@ -197,22 +230,27 @@ _unary = {
 
 
 def join(iterable):
+    """"""
     return str().join([item.value for item in iterable])
 
 
 def tab_parse(iterable):
+    """"""
     return tab(join(iterable))
 
 
 def word_parse(iterable):
+    """"""
     return word(join(iterable))
 
 
 def number_parse(iterable):
+    """"""
     return number(join(iterable))
 
 
 def unary_parse(iterable):
+    """"""
     index = 0
     index |= Unary.PLUS in iterable
     index <<= 1
@@ -223,6 +261,7 @@ def unary_parse(iterable):
 
 
 def comparison_parse(iterable):
+    """"""
     index = 0
     index |= Comparison.MARK in iterable
     index <<= 1
