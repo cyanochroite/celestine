@@ -6,6 +6,17 @@ from celestine.window.collection import Rectangle
 class Container(Rectangle):
     """"""
 
+    def call(self, tag, text, action, **star):
+        """"""
+        item = self._button(
+            tag,
+            text,
+            call=self.window.work,
+            action=action,
+            argument=star
+        )
+        return self.save(item)
+
     def drop(self, tag, **kwargs):
         """"""
         raise NotImplementedError()
@@ -23,12 +34,6 @@ class Container(Rectangle):
         self._button = button
         self._image = image
         self._label = label
-
-    def button(self, tag, text, action):
-        """"""
-        item = self._button(
-            tag, text, call=None, action=lambda: self.turn(action), argument=None)
-        return self.save(item)
 
     def image(self, tag, image):
         """"""
@@ -55,16 +60,15 @@ class Container(Rectangle):
         for _, item in self.item.items():
             item.spot(x_min, y_min, x_max, y_max, **star)
 
-    def task(self, tag, text, action, **star):
+    def view(self, tag, text, action):
         """"""
         item = self._button(
             tag,
             text,
-            call=self.window.work,
+            call=self.turn,
             action=action,
-            argument=star
+            argument={}
         )
-        # item = self._button(tag, text, action=lambda: self.turn(action))
         return self.save(item)
 
     def __enter__(self):

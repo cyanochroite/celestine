@@ -12,7 +12,7 @@ class Window(master):
     def page(self, name, document):
         self.item_set(name, document)
 
-    def turn(self, page):
+    def turn(self, page, **star):
         self.frame = self.container.drop(page)
         self.item_get(page)(self.frame)
         self.frame.spot(0, 0, self.width - 2, self.height - 2)

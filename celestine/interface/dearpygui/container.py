@@ -9,40 +9,8 @@ from .image import Image
 from .label import Label
 
 
-def callback(sender, app_data, user_data):
-    """"""
-
-
 class Container(container):
     """"""
-
-    def button(self, tag, label, action):
-        return self.item_set(
-            tag,
-            Button(
-                tag,
-                label,
-                package.tag_root(self.tag),
-                action,
-                lambda sender, app_data, user_data: self.turn(
-                    *user_data
-                ),
-            ),
-        )
-
-    def task(self, tag, text, action):
-        """"""
-        call = self.window.work
-        return self.item_set(
-            tag,
-            Button(
-                tag,
-                text,
-                package.tag_root(self.tag),
-                action,
-                lambda sender, app_data, user_data: call(action),
-            ),
-        )
 
     def drop(self, tag, **star):
         """"""

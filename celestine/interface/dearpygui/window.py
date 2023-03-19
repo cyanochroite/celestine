@@ -18,15 +18,20 @@ class Window(master):
             document(value)
             value.draw(None)
 
-    def turn(self, page, sent=None):
-        if sent:
-            package.hide_item(sent)
+    def turn(self, page, **star):
+        if self.last:
+            package.hide_item(self.last)
+
         book = self.item_get(page)
         tag = book.tag
         package.show_item(tag)
         package.set_primary_window(tag, True)
 
+        self.last = page
+
     def __enter__(self):
+        self.last = None
+        #
         super().__enter__()
         title = self.session.language.APPLICATION_TITLE
         package.create_context()

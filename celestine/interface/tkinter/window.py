@@ -7,6 +7,8 @@ from .container import Container
 
 
 class Window(window):
+    """"""
+
     def page(self, name, document):
         page = self.container.drop(name)
         page.frame = package.Frame(
@@ -20,7 +22,7 @@ class Window(window):
         page.draw(page.frame)
         self.item_set(name, page)
 
-    def turn(self, page):
+    def turn(self, page, **star):
         frame = self.item_get(page)
         frame.frame.tkraise()
 

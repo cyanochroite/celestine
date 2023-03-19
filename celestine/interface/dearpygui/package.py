@@ -36,6 +36,6 @@ group = dearpygui.dearpygui.group
 def tag_root(tag):
     """"""
     root = tag.split("_")[0]
-    combine = f"page_{root}"
+    combine = f"{root}"
     return combine
 

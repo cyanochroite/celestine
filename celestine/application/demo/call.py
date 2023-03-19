@@ -1,6 +1,6 @@
 """"""
 
 
-def cow(eat, **star):
+def cow(*, say, **star):
     """"""
-    print("I am a talking cow.")
+    print("I am a talking cow.", say)

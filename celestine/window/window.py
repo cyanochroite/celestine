@@ -10,7 +10,7 @@ class Window(Collection):
     def page(self, name, document):
         """"""
 
-    def turn(self, page):
+    def turn(self, page, **star):
         """"""
 
     def work(self, task, **star):
