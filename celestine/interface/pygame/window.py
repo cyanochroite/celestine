@@ -6,6 +6,13 @@ from celestine.window.window import Window as master
 from . import package
 from .container import Container
 
+from .button import Button
+from .image import Image
+from .label import Label
+from .container import Drop
+from .container import Grid
+from .container import Span
+
 
 class Window(master):
     """"""
@@ -35,6 +42,12 @@ class Window(master):
             "window",
             self,
             self.font,
+            Button,
+            Image,
+            Label,
+            Drop,
+            Grid,
+            Span,
             x_min=0,
             y_min=0,
             x_max=self.width,

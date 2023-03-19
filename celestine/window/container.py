@@ -17,23 +17,63 @@ class Container(Rectangle):
         )
         return self.save(item)
 
-    def drop(self, tag, **kwargs):
+    def drop(self, tag, **star):
         """"""
-        raise NotImplementedError()
+        return self.item_set(
+            tag,
+            self._drop(
+                self.session,
+                tag,
+                self.window,
+                self.data,
+                self._button,
+                self._image,
+                self._label,
+                self._drop,
+                self._grid,
+                self._span,
+                **star,
+            ),
+        )
 
-    def grid(self, tag, width, **kwargs):
+    def grid(self, tag, width, **star):
         """"""
-        raise NotImplementedError()
+        return self.item_set(
+            tag,
+            self._grid(
+                self.session,
+                tag,
+                self.window,
+                self.data,
+                self._button,
+                self._image,
+                self._label,
+                self._drop,
+                self._grid,
+                self._span,
+                width=width,
+                **star,
+            ),
+        )
 
-    def span(self, tag, **kwargs):
+    def span(self, tag, **star):
         """"""
-        raise NotImplementedError()
-
-    def ready(self, button, image, label):
-        """"""
-        self._button = button
-        self._image = image
-        self._label = label
+        return self.item_set(
+            tag,
+            self._span(
+                self.session,
+                tag,
+                self.window,
+                self.data,
+                self._button,
+                self._image,
+                self._label,
+                self._drop,
+                self._grid,
+                self._span,
+                **star,
+            ),
+        )
 
     def image(self, tag, image):
         """"""
@@ -77,11 +117,34 @@ class Container(Rectangle):
     def __exit__(self, *_):
         return False
 
-    def __init__(self, session, name, window, **star):
+    def __init__(
+            self,
+            session,
+            name,
+            window,
+            data,
+            _button,
+            _image,
+            _label,
+            _drop,
+            _grid,
+            _span,
+            **star,
+    ):
         self.session = session
         self.tag = name
         self.window = window
+
+        self.data = data
         #
+        self._button = _button
+        self._image = _image
+        self._label = _label
+
+        self._drop = _drop
+        self._grid = _grid
+        self._span = _span
+
         self.turn = window.turn
         super().__init__(**star)
 
@@ -119,3 +182,11 @@ class Grid(Container):
     def __init__(self, session, name, turn, *, width, **kwargs):
         self.width = width
         super().__init__(session, name, turn, **kwargs)
+
+
+class Drop(Container):
+    """"""
+
+
+class Span(Container):
+    """"""

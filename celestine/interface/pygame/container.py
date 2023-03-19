@@ -4,63 +4,35 @@ import math
 
 from celestine.window.container import Container as container
 
-from .button import Button
-from .image import Image
-from .label import Label
-
 
 class Container(container):
     """"""
 
     def draw(self, collection, **star):
         """"""
-        star.update(font=self.font)
+        star.update(font=self.data)
         super().draw(collection, **star)
 
-    def drop(self, tag, **star):
-        """"""
-        return self.item_set(
-            tag,
-            Drop(
-                self.session,
-                tag,
-                self.window,
-                self.font,
-                **star,
-            ),
-        )
 
-    def grid(self, tag, width, **star):
-        """"""
-        return self.item_set(
-            tag,
-            Grid(
-                self.session,
-                tag,
-                self.window,
-                self.font,
-                width,
-                **star,
-            ),
-        )
+class Drop(Container):
+    """"""
 
-    def span(self, tag, **star):
+    def spot(self, x_min, y_min, x_max, y_max):
         """"""
-        return self.item_set(
-            tag,
-            Span(
-                self.session,
-                tag,
-                self.window,
-                self.font,
-                **star,
-            ),
-        )
+        self.set(x_min, y_min, x_max, y_max)
 
-    def __init__(self, session, name, window, font, **star):
-        self.font = font
-        super().__init__(session, name, window, **star)
-        super().ready(Button, Image, Label)
+        partition_x = 1
+        partition_y = len(self.item)
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
+
+        for _, item in self.item.items():
+            (xmin, xmax) = next(axis_x)
+            (ymin, ymax) = next(axis_y)
+
+            item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()
 
 
 class Grid(Container):
@@ -118,27 +90,6 @@ class Grid(Container):
     def __init__(self, session, name, turn, font, width, **kwargs):
         self.width = width
         super().__init__(session, name, turn, font, **kwargs)
-
-
-class Drop(Container):
-    """"""
-
-    def spot(self, x_min, y_min, x_max, y_max):
-        """"""
-        self.set(x_min, y_min, x_max, y_max)
-
-        partition_x = 1
-        partition_y = len(self.item)
-        (axis_x, axis_y) = self.get(partition_x, partition_y)
-
-        for _, item in self.item.items():
-            (xmin, xmax) = next(axis_x)
-            (ymin, ymax) = next(axis_y)
-
-            item.spot(xmin, ymin, xmax, ymax)
-
-        axis_x.close()
-        axis_y.close()
 
 
 class Span(Container):

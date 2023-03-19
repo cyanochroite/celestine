@@ -5,26 +5,33 @@ from celestine.window.window import Window as window
 from . import package
 from .container import Container
 
+from .button import Button
+from .image import Image
+from .label import Label
+from .container import Drop
+from .container import Grid
+from .container import Span
+
 
 class Window(window):
     """"""
 
     def page(self, name, document):
         page = self.container.drop(name)
-        page.frame = package.Frame(
+        page.data = package.Frame(
             self.root,
             padx=5,
             pady=5,
             bg="skyblue",
         )
-        page.frame.grid(row=0, column=0, sticky="nsew")
+        page.data.grid(row=0, column=0, sticky="nsew")
         document(page)
-        page.draw(page.frame)
+        page.draw(page.data)
         self.item_set(name, page)
 
     def turn(self, page, **star):
         frame = self.item_get(page)
-        frame.frame.tkraise()
+        frame.data.tkraise()
 
     def __enter__(self):
         super().__enter__()
@@ -38,6 +45,13 @@ class Window(window):
             self.session,
             "window",
             self,
+            None,
+            Button,
+            Image,
+            Label,
+            Drop,
+            Grid,
+            Span,
             x_min=0,
             y_min=0,
             x_max=640,

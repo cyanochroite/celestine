@@ -14,48 +14,6 @@ from .label import Label
 class Container(container):
     """"""
 
-    def drop(self, tag, **kwargs):
-        """"""
-        return self.item_set(
-            tag,
-            Drop(
-                self.session,
-                tag,
-                self.window,
-                **kwargs,
-            ),
-        )
-
-    def grid(self, tag, width, **kwargs):
-        """"""
-        return self.item_set(
-            tag,
-            Grid(
-                self.session,
-                tag,
-                self.window,
-                width=width,
-                **kwargs,
-            ),
-        )
-
-    def span(self, tag, **kwargs):
-        """"""
-        return self.item_set(
-            tag,
-            Span(
-                self.session,
-                tag,
-                self.window,
-                **kwargs,
-            ),
-        )
-
-    def __init__(self, session, name, window, **star):
-        self.frame = None
-        super().__init__(session, name, window, **star)
-        super().ready(Button, Image, Label)
-
 
 class Grid(Container, grid):
     """"""
