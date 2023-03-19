@@ -179,9 +179,36 @@ class Grid(Container):
 
         return f"{name}_{index_x}-{index_y}"
 
-    def __init__(self, session, name, turn, *, width, **kwargs):
+    def __init__(
+        self,
+        session,
+        name,
+        window,
+        data,
+        _button,
+        _image,
+        _label,
+        _drop,
+        _grid,
+        _span,
+        *,
+        width,
+        **star,
+    ):
         self.width = width
-        super().__init__(session, name, turn, **kwargs)
+        super().__init__(
+            session,
+            name,
+            window,
+            data,
+            _button,
+            _image,
+            _label,
+            _drop,
+            _grid,
+            _span,
+            **star,
+        )
 
 
 class Drop(Container):

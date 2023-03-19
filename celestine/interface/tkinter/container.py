@@ -3,15 +3,18 @@
 import math
 
 from celestine.window.container import Container as container
+from celestine.window.container import Drop as drop
 from celestine.window.container import Grid as grid
+from celestine.window.container import Span as span
 
 from . import package
-from .button import Button
-from .image import Image
-from .label import Label
 
 
 class Container(container):
+    """"""
+
+
+class Drop(Container, drop):
     """"""
 
 
@@ -33,11 +36,7 @@ class Grid(Container, grid):
             frame.pack()
 
 
-class Drop(Container):
-    """"""
-
-
-class Span(Container):
+class Span(Container, span):
     """"""
 
     def draw(self, collection, **star):

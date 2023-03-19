@@ -3,6 +3,9 @@
 import math
 
 from celestine.window.container import Container as container
+from celestine.window.container import Drop as drop
+from celestine.window.container import Grid as grid
+from celestine.window.container import Span as span
 
 
 class Container(container):
@@ -14,7 +17,7 @@ class Container(container):
         super().draw(collection, **star)
 
 
-class Drop(Container):
+class Drop(Container, drop):
     """"""
 
     def spot(self, x_min, y_min, x_max, y_max):
@@ -35,7 +38,7 @@ class Drop(Container):
         axis_y.close()
 
 
-class Grid(Container):
+class Grid(Container, grid):
     """"""
 
     def button(self, tag, text, action):
@@ -87,12 +90,8 @@ class Grid(Container):
 
         return f"{name}_{index_x}-{index_y}"
 
-    def __init__(self, session, name, turn, font, width, **kwargs):
-        self.width = width
-        super().__init__(session, name, turn, font, **kwargs)
 
-
-class Span(Container):
+class Span(Container, span):
     """"""
 
     def spot(self, x_min, y_min, x_max, y_max):
