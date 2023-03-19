@@ -21,4 +21,3 @@ class Button(button, Element):
             callback=self.callback,
         )
         super().draw(collection, **star)
-

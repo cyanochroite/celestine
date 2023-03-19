@@ -137,6 +137,7 @@ class celestine_start(bpy.types.Operator):
 
 class celestine_finish(bpy.types.Operator):
     """"""
+
     bl_label = "Shutdown"
     bl_idname = "celestine.finish"
 

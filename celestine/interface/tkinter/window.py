@@ -3,14 +3,15 @@
 from celestine.window.window import Window as window
 
 from . import package
-from .container import Container
-
 from .button import Button
+from .container import (
+    Container,
+    Drop,
+    Grid,
+    Span,
+)
 from .image import Image
 from .label import Label
-from .container import Drop
-from .container import Grid
-from .container import Span
 
 
 class Window(window):

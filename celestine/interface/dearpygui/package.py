@@ -38,4 +38,3 @@ def tag_root(tag):
     root = tag.split("_")[0]
     combine = f"{root}"
     return combine
-

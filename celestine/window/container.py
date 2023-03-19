@@ -13,7 +13,7 @@ class Container(Rectangle):
             text,
             call=self.window.work,
             action=action,
-            argument=star
+            argument=star,
         )
         return self.save(item)
 
@@ -103,11 +103,7 @@ class Container(Rectangle):
     def view(self, tag, text, action):
         """"""
         item = self._button(
-            tag,
-            text,
-            call=self.turn,
-            action=action,
-            argument={}
+            tag, text, call=self.turn, action=action, argument={}
         )
         return self.save(item)
 
@@ -118,18 +114,18 @@ class Container(Rectangle):
         return False
 
     def __init__(
-            self,
-            session,
-            name,
-            window,
-            data,
-            _button,
-            _image,
-            _label,
-            _drop,
-            _grid,
-            _span,
-            **star,
+        self,
+        session,
+        name,
+        window,
+        data,
+        _button,
+        _image,
+        _label,
+        _drop,
+        _grid,
+        _span,
+        **star,
     ):
         self.session = session
         self.tag = name

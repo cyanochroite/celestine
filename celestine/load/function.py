@@ -47,5 +47,3 @@ def function_page(module: MT) -> L[S]:
     dictionary = load(module)
     iterable = [key for key, value in dictionary.items()]
     return iterable
-
-

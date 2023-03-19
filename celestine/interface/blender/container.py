@@ -1,16 +1,14 @@
 """"""
 
 from celestine.window.collection import Rectangle
-
-from .button import Button
-from .image import Image
-from .label import Label
-
-
 from celestine.window.container import Container as container
 from celestine.window.container import Drop as drop
 from celestine.window.container import Grid as grid
 from celestine.window.container import Span as span
+
+from .button import Button
+from .image import Image
+from .label import Label
 
 
 class Container(container):

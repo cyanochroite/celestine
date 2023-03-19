@@ -1,8 +1,7 @@
 """"""
 
-from celestine.load import function
-
 from celestine import load
+from celestine.load import function
 from celestine.session.parser import start_session
 
 INTERFACE = "interface"
@@ -46,7 +45,6 @@ def main(argv: list[str], exit_on_error: bool) -> None:
     """Run the main program."""
     session = start_session(argv, exit_on_error)
     with session.interface.window(session) as window:
-
         call = function.load(session.call)
         for name, document in call.items():
             window.task.set(name, document)

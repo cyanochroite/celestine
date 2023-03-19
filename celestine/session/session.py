@@ -4,7 +4,6 @@ from typing import TypeAlias as TA
 
 from celestine import load
 from celestine.load import function
-
 from celestine.session.argument import (
     Customization,
     InformationConfiguration,

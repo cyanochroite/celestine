@@ -1,7 +1,9 @@
 """"""
 
-from .collection import Collection
-from .collection import Collection2
+from .collection import (
+    Collection,
+    Collection2,
+)
 
 
 class Window(Collection):

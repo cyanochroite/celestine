@@ -2,7 +2,6 @@
 
 from celestine.application.translator.file import save_string
 
-
 todo = [
     "BG",
     "CS",
@@ -31,7 +30,7 @@ todo = [
 
 for item in todo:
     data = []
-    path = F"../../hold/EUPL v1_2 {item}.txt"
+    path = f"../../hold/EUPL v1_2 {item}.txt"
     with open(path, "rt", encoding="utf-8") as file:
         lines = file.readlines()
         for line in lines:
@@ -39,5 +38,5 @@ for item in todo:
             line = line.replace("  ", " ")
             data.append(line)
 
-    path = F"../../hold/EUPL_1.2_{item}.txt"
+    path = f"../../hold/EUPL_1.2_{item}.txt"
     save_string(path, "\n".join(data))
