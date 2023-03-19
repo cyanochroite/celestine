@@ -1,3 +1,4 @@
+""""""
 # <pep8-80 compliant>
 import math
 
@@ -14,12 +15,14 @@ class _imaginary:
 
     @classmethod
     def new(cls, name):
+        """"""
         if cls.type_:
             return cls.data.new(name, cls.type_)
         return cls.data.new(name)
 
     @classmethod
     def remove(cls, item):
+        """"""
         cls.data.remove(
             item, do_unlink=True, do_id_user=True, do_ui_user=True
         )

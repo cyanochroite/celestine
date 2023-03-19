@@ -5,6 +5,13 @@ from celestine.window.window import Window as master
 from .container import Container
 from .package import package
 
+from .button import Button
+from .image import Image
+from .label import Label
+from .container import Drop
+from .container import Grid
+from .container import Span
+
 
 class Window(master):
     """"""
@@ -12,7 +19,7 @@ class Window(master):
     def page(self, name, document):
         self.item_set(name, document)
 
-    def turn(self, page):
+    def turn(self, page, **star):
         self.frame = self.container.drop(page)
         self.item_get(page)(self.frame)
         self.frame.spot(0, 0, self.width - 2, self.height - 2)
@@ -38,7 +45,14 @@ class Window(master):
         self.container = Container(
             self.session,
             "window",
-            self.turn,
+            self,
+            None,
+            Button,
+            Image,
+            Label,
+            Drop,
+            Grid,
+            Span,
             x_min=0,
             y_min=0,
             x_max=self.width,
@@ -47,7 +61,6 @@ class Window(master):
             offset_y=0,
         )
 
-        self.background = package.window(0, 0, self.width, self.height)
         self.background.box()
 
         header1 = package.subwindow(
@@ -108,14 +121,13 @@ class Window(master):
         self.window = 0
 
         #
-        self.container = None
-        self.background = None
-
-        #
         self.stdscr = package.initscr()
         package.noecho()
         package.cbreak()
         self.stdscr.keypad(1)
         package.start_color()
+        #
+        self.container = None
+        self.background = package.window(0, 0, self.width, self.height)
         #
         self.frame = None

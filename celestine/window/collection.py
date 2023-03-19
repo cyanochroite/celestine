@@ -27,24 +27,6 @@ class Axis(Object):
             raise ValueError("need: partition > 0")
 
         distance = self.maximum - self.minimum
-        step = int(distance // partition)
-
-        maximum = self.minimum  # <- yes, setting maximum to minimum
-
-        while maximum < self.maximum:
-            minimum = maximum
-            maximum += step
-            yield (minimum, maximum)
-
-        while True:
-            yield (minimum, maximum)
-
-    def get(self, partition: Z) -> AXIS:
-        """"""
-        if partition <= 0:
-            raise ValueError("need: partition > 0")
-
-        distance = self.maximum - self.minimum
         fragment = int(distance // partition)
         position = self.minimum
 
@@ -92,9 +74,6 @@ class Box(Object):
         """"""
         x_test = self.x_min <= x_dot < self.x_max
         y_test = self.y_min <= y_dot < self.y_max
-        x = f"{self.x_min}<={x_dot}<{self.x_max}={x_test}"
-        y = f"{self.y_min}<={y_dot}<{self.y_max}={y_test}"
-        # print(F"{x} & {y}")
 
         return x_test and y_test
 
@@ -140,43 +119,29 @@ class Collection(Object):
         super().__init__(**star)
 
 
-class Rectangle(Box, Collection):
+class Collection2:
     """"""
 
-    def get1(self):
+    def children(self):
         """"""
-        x_min = self.move_x_min
-        self.move_x_min += self.offset_x
+        for _, item in self.item.items():
+            yield item
 
-        y_min = self.move_y_min
-        self.move_y_min += self.offset_y
-
-        x_max = self.move_x_min if self.offset_x else self.x_max
-        y_max = self.move_y_min if self.offset_y else self.y_max
-
-        return (x_min, y_min, x_max, y_max)
-
-    def get1(self):
+    def get(self, name):
         """"""
-        x_min = self.axis_x.minimum
+        return self.item[name]
 
-        x_min = self.move_x_min
-        self.move_x_min += self.offset_x
-
-        y_min = self.move_y_min
-        self.move_y_min += self.offset_y
-
-        x_max = self.move_x_min if self.offset_x else self.x_max
-        y_max = self.move_y_min if self.offset_y else self.y_max
-
-        return (x_min, y_min, x_max, y_max)
-
-    def set1(self, x_min, y_min, x_max, y_max):
+    def set(self, name, item):
         """"""
-        self.x_min = x_min
-        self.y_min = y_min
-        self.x_max = x_max
-        self.y_max = y_max
+        self.item[name] = item
+        return item
+
+    def __init__(self):
+        self.item = {}
+
+
+class Rectangle(Box, Collection):
+    """"""
 
     def get_next(self):
         """"""

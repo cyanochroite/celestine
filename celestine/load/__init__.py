@@ -18,12 +18,6 @@ from celestine.unicode import (
     NONE,
 )
 
-from .function import (
-    function,
-    function_name,
-    function_value,
-)
-
 
 def attempt(*path: S) -> B:
     """Attempt to load a package and return the result."""

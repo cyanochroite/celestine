@@ -1,11 +1,29 @@
+""""""
 import unittest
 
-from celestine.application.viewer.parser.operator import *
-from celestine.application.viewer.parser.translator import *
+from celestine.application.viewer.parser.operator import (
+    lt,
+    ne,
+    number,
+    tab,
+    word,
+)
+from celestine.application.viewer.parser.translator import (
+    Comparison,
+    Digit,
+    Divider,
+    Letter,
+    parser,
+    tokenizer,
+    translator,
+)
 
 
-class test_translator(unittest.TestCase):
+class TestTranslator(unittest.TestCase):
+    """"""
+
     def test_translate(self):
+        """"""
         string = "cat hat"
         expect = [
             Letter.LETTER_C,
@@ -20,18 +38,21 @@ class test_translator(unittest.TestCase):
         self.assertEqual(expect, result)
 
     def test_translate_not_defined(self):
+        """"""
         string = "(x)"
         expect = [Letter.LETTER_X]
         result = translator.translate(string)
         self.assertEqual(expect, result)
 
     def test_translate_not_implemented(self):
+        """"""
         string = "xⶀx"
         expect = [Letter.LETTER_X, Letter.LETTER_X]
         result = translator.translate(string)
         self.assertEqual(expect, result)
 
     def test_one(self):
+        """"""
         string = "ⶀ<>0#h i35 <m o7cat  $&dog"
         expect = [
             Comparison.LESS,
@@ -61,6 +82,7 @@ class test_translator(unittest.TestCase):
         self.assertEqual(expect, one)
 
     def test_two(self):
+        """"""
         string = "ⶀ<>0#h i35 <m o7cat  $&dog"
         expect = [
             [Comparison.LESS, Comparison.MORE],
@@ -84,6 +106,7 @@ class test_translator(unittest.TestCase):
         self.assertEqual(expect, two)
 
     def test_three(self):
+        """"""
         string = "ⶀ<>0#h i35 <m o7cat  $&dog"
         expect = [
             ne,

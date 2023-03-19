@@ -1,14 +1,22 @@
-from celestine import load
+""""""
 
 from .collection import Collection
+from .collection import Collection2
 
 
 class Window(Collection):
-    def page(self, name, document):
-        pass
+    """"""
 
-    def turn(self, page):
-        pass
+    def page(self, name, document):
+        """"""
+
+    def turn(self, page, **star):
+        """"""
+
+    def work(self, task, **star):
+        """"""
+        call = self.task.get(task)
+        call(**star)
 
     def __enter__(self):
         return self
@@ -27,7 +35,8 @@ class Window(Collection):
             raise RuntimeError(message) from error
         return False
 
-    def __init__(self, session, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, session, **star):
         self.session = session
         self.turn_page = session.main
+        self.task = Collection2()
+        super().__init__(**star)

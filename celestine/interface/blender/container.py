@@ -7,7 +7,13 @@ from .image import Image
 from .label import Label
 
 
-class Container(Rectangle):
+from celestine.window.container import Container as container
+from celestine.window.container import Drop as drop
+from celestine.window.container import Grid as grid
+from celestine.window.container import Span as span
+
+
+class Container(container):
     """"""
 
     def drop(self, tag, **kwargs):
@@ -134,7 +140,11 @@ class Container(Rectangle):
         super().__init__(**kwargs)
 
 
-class Grid(Container):
+class Drop(Container, drop):
+    """"""
+
+
+class Grid(Container, grid):
     """"""
 
     def get_next(self):
@@ -165,9 +175,5 @@ class Grid(Container):
         super().__init__(session, name, turn, **kwargs)
 
 
-class Drop(Container):
-    """"""
-
-
-class Span(Container):
+class Span(Container, span):
     """"""

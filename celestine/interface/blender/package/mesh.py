@@ -1,3 +1,4 @@
+""""""
 # <pep8-80 compliant>
 import bmesh as bmesh_
 import mathutils
@@ -6,6 +7,7 @@ from . import data
 
 
 def mesh(name, verts, edges, faces, layers):
+    """"""
     bmesh = bmesh_.new(use_operators=False)
 
     for vert in verts:
@@ -31,6 +33,7 @@ def mesh(name, verts, edges, faces, layers):
 
 
 def quadrilateral(name, verts, layers):
+    """"""
     edges = [
         (0, 1),
         (1, 2),
@@ -46,11 +49,14 @@ def quadrilateral(name, verts, layers):
 
 
 class Planar:
+    """"""
+
     def __init__(self):
         super().__init__()
         self.normal = mathutils.Vector((+0, +0, +1))
 
     def vertex_new(self, vector, normal):
+        """"""
         vector = mathutils.Vector(vector)
         vector.resize_3d()
         rotation = self.normal.rotation_difference(normal)
@@ -59,7 +65,10 @@ class Planar:
 
 
 class Plane(Planar):
+    """"""
+
     def make(self, name, normal=(+0, +0, +1), uv_x=0, uv_y=0):
+        """"""
         normal = mathutils.Vector(normal)
 
         verts = [
@@ -80,16 +89,19 @@ class Plane(Planar):
 
 
 def plane(name, uv_x=0, uv_y=0):
+    """"""
     box = Plane()
     return box.make(name, (+0, +0, +1), uv_x, uv_y)
 
 
 def text(collection, name, text):
+    """"""
     font_curve = data.curve.font.make(collection, name, text)
     return font_curve
 
 
 def _offset(numerator, denominator):
+    """"""
     ratio = numerator / denominator
     unit = 1
     maximum = max(ratio, unit)
@@ -101,6 +113,7 @@ def _offset(numerator, denominator):
 
 
 def image(image):
+    """"""
     size = image.size
     x = size[0]
     y = size[1]

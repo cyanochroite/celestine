@@ -3,6 +3,8 @@
 from typing import TypeAlias as TA
 
 from celestine import load
+from celestine.load import function
+
 from celestine.session.argument import (
     Customization,
     InformationConfiguration,
@@ -146,15 +148,19 @@ class Session(Application, Interface, Language):
         """"""
         return super().dictionary() | {
             MAIN: Positional(
-                MAIN,
+                "main",
                 self._language.ARGUMENT_LANGUAGE_HELP,
-                load.function_name(self._application),
+                function.function_page(self._application),
             ),
         }
 
     def __setattr__(self, name: S, value: S) -> N:
         """"""
         match name:
+            case "call":
+                self.__dict__[name] = value
+            case "view":
+                self.__dict__[name] = value
             case "main":
                 self.__dict__[name] = value
             case "attribute":

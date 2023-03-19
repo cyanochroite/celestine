@@ -1,3 +1,4 @@
+""""""
 # <pep8-80 compliant>
 from . import data
 
@@ -5,6 +6,7 @@ from . import data
 
 
 def shader_image(nodes, image):
+    """"""
     # inputs
     # "Vector"
     # outputs
@@ -19,6 +21,7 @@ def shader_image(nodes, image):
 
 
 def shader_diffuse(nodes):
+    """"""
     # inputs
     # "Color"
     # "Roughness"
@@ -30,6 +33,7 @@ def shader_diffuse(nodes):
 
 
 def shader_output(nodes):
+    """"""
     # inputs
     # "Surface"
     # "Volume"
@@ -44,6 +48,7 @@ def shader_output(nodes):
 
 
 def material(name, image):
+    """"""
     material = data.material.new(name)
     material.use_nodes = True
 

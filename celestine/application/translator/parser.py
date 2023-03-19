@@ -4,7 +4,6 @@ import keyword
 
 from celestine.unicode import (
     APOSTROPHE,
-    BREAK_PERMITTED_HERE,
     CARRIAGE_RETURN,
     CHARACTER_TABULATION,
     COLON,
@@ -13,21 +12,20 @@ from celestine.unicode import (
     EXCLAMATION_MARK,
     FORM_FEED,
     FULL_STOP,
+    INFORMATION_SEPARATOR_FOUR,
+    INFORMATION_SEPARATOR_ONE,
+    INFORMATION_SEPARATOR_THREE,
+    INFORMATION_SEPARATOR_TWO,
     LINE_FEED,
     LINE_SEPARATOR,
     LINE_TABULATION,
     NEXT_LINE,
-    NONE,
     PARAGRAPH_SEPARATOR,
     QUESTION_MARK,
     QUOTATION_MARK,
     REVERSE_SOLIDUS,
     SEMICOLON,
     SPACE,
-    INFORMATION_SEPARATOR_FOUR,
-    INFORMATION_SEPARATOR_THREE,
-    INFORMATION_SEPARATOR_TWO,
-    INFORMATION_SEPARATOR_ONE,
 )
 
 MAXIMUM_LINE_LENGTH = 72
@@ -102,7 +100,6 @@ def word_wrap(string):
     count_d = 0
 
     for character in string:
-
         if character == INFORMATION_SEPARATOR_FOUR:
             count_d = count
             continue

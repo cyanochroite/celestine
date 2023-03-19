@@ -6,15 +6,74 @@ from celestine.window.collection import Rectangle
 class Container(Rectangle):
     """"""
 
-    def ready(self, button, image, label):
-        self._button = button
-        self._image = image
-        self._label = label
-
-    def button(self, tag, text, action):
+    def call(self, tag, text, action, **star):
         """"""
-        item = self._button(tag, text, action=lambda: self.turn(action))
+        item = self._button(
+            tag,
+            text,
+            call=self.window.work,
+            action=action,
+            argument=star
+        )
         return self.save(item)
+
+    def drop(self, tag, **star):
+        """"""
+        return self.item_set(
+            tag,
+            self._drop(
+                self.session,
+                tag,
+                self.window,
+                self.data,
+                self._button,
+                self._image,
+                self._label,
+                self._drop,
+                self._grid,
+                self._span,
+                **star,
+            ),
+        )
+
+    def grid(self, tag, width, **star):
+        """"""
+        return self.item_set(
+            tag,
+            self._grid(
+                self.session,
+                tag,
+                self.window,
+                self.data,
+                self._button,
+                self._image,
+                self._label,
+                self._drop,
+                self._grid,
+                self._span,
+                width=width,
+                **star,
+            ),
+        )
+
+    def span(self, tag, **star):
+        """"""
+        return self.item_set(
+            tag,
+            self._span(
+                self.session,
+                tag,
+                self.window,
+                self.data,
+                self._button,
+                self._image,
+                self._label,
+                self._drop,
+                self._grid,
+                self._span,
+                **star,
+            ),
+        )
 
     def image(self, tag, image):
         """"""
@@ -41,17 +100,53 @@ class Container(Rectangle):
         for _, item in self.item.items():
             item.spot(x_min, y_min, x_max, y_max, **star)
 
+    def view(self, tag, text, action):
+        """"""
+        item = self._button(
+            tag,
+            text,
+            call=self.turn,
+            action=action,
+            argument={}
+        )
+        return self.save(item)
+
     def __enter__(self):
         return self
 
     def __exit__(self, *_):
         return False
 
-    def __init__(self, session, name, turn, **kwargs):
+    def __init__(
+            self,
+            session,
+            name,
+            window,
+            data,
+            _button,
+            _image,
+            _label,
+            _drop,
+            _grid,
+            _span,
+            **star,
+    ):
         self.session = session
         self.tag = name
-        self.turn = turn
-        super().__init__(**kwargs)
+        self.window = window
+
+        self.data = data
+        #
+        self._button = _button
+        self._image = _image
+        self._label = _label
+
+        self._drop = _drop
+        self._grid = _grid
+        self._span = _span
+
+        self.turn = window.turn
+        super().__init__(**star)
 
 
 class Grid(Container):
@@ -84,6 +179,41 @@ class Grid(Container):
 
         return f"{name}_{index_x}-{index_y}"
 
-    def __init__(self, session, name, turn, *, width, **kwargs):
+    def __init__(
+        self,
+        session,
+        name,
+        window,
+        data,
+        _button,
+        _image,
+        _label,
+        _drop,
+        _grid,
+        _span,
+        *,
+        width,
+        **star,
+    ):
         self.width = width
-        super().__init__(session, name, turn, **kwargs)
+        super().__init__(
+            session,
+            name,
+            window,
+            data,
+            _button,
+            _image,
+            _label,
+            _drop,
+            _grid,
+            _span,
+            **star,
+        )
+
+
+class Drop(Container):
+    """"""
+
+
+class Span(Container):
+    """"""

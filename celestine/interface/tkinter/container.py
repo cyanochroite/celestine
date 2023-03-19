@@ -3,58 +3,19 @@
 import math
 
 from celestine.window.container import Container as container
+from celestine.window.container import Drop as drop
 from celestine.window.container import Grid as grid
+from celestine.window.container import Span as span
 
 from . import package
-from .button import Button
-from .image import Image
-from .label import Label
 
 
 class Container(container):
     """"""
 
-    def drop(self, tag, **kwargs):
-        """"""
-        return self.item_set(
-            tag,
-            Drop(
-                self.session,
-                tag,
-                self.turn,
-                **kwargs,
-            ),
-        )
 
-    def grid(self, tag, width, **kwargs):
-        """"""
-        return self.item_set(
-            tag,
-            Grid(
-                self.session,
-                tag,
-                self.turn,
-                width=width,
-                **kwargs,
-            ),
-        )
-
-    def span(self, tag, **kwargs):
-        """"""
-        return self.item_set(
-            tag,
-            Span(
-                self.session,
-                tag,
-                self.turn,
-                **kwargs,
-            ),
-        )
-
-    def __init__(self, session, name, turn, **kwargs):
-        self.frame = None
-        super().__init__(session, name, turn, **kwargs)
-        super().ready(Button, Image, Label)
+class Drop(Container, drop):
+    """"""
 
 
 class Grid(Container, grid):
@@ -75,11 +36,7 @@ class Grid(Container, grid):
             frame.pack()
 
 
-class Drop(Container):
-    """"""
-
-
-class Span(Container):
+class Span(Container, span):
     """"""
 
     def draw(self, collection, **star):

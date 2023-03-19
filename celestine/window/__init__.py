@@ -1,19 +1,25 @@
+""""""
+
 from .window import Window
 
 
 def argument(arguments):
+    """"""
     return arguments
 
 
 def attribute():
+    """"""
     return ()
 
 
 def default():
+    """"""
     return ()
 
 
 def image_format():
+    """"""
     return [
         ".bmp",
         ".sgi",
@@ -42,4 +48,5 @@ def image_format():
 
 
 def window(session):
+    """"""
     return Window(session)

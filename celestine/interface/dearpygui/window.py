@@ -5,28 +5,40 @@ from celestine.window.window import Window as master
 from . import package
 from .container import Container
 
+from .button import Button
+from .image import Image
+from .label import Label
+from .container import Drop
+from .container import Grid
+from .container import Span
+
 
 class Window(master):
     """"""
 
     def page(self, name, document):
         value = self.container.drop(name)
-        value.frame = package.window(tag=value.tag)
+        value.data = package.window(tag=value.tag)
         self.item_set(name, value)
-        with value.frame:
+        with value.data:
             package.configure_item(value.tag, show=False)
             document(value)
             value.draw(None)
 
-    def turn(self, page, sent=None):
-        if sent:
-            package.hide_item(sent)
+    def turn(self, page, **star):
+        if self.last:
+            package.hide_item(self.last)
+
         book = self.item_get(page)
         tag = book.tag
         package.show_item(tag)
         package.set_primary_window(tag, True)
 
+        self.last = page
+
     def __enter__(self):
+        self.last = None
+        #
         super().__enter__()
         title = self.session.language.APPLICATION_TITLE
         package.create_context()
@@ -52,7 +64,14 @@ class Window(master):
         self.container = Container(
             self.session,
             "window",
-            self.turn,
+            self,
+            None,
+            Button,
+            Image,
+            Label,
+            Drop,
+            Grid,
+            Span,
             x_min=0,
             y_min=0,
             x_max=1920,
