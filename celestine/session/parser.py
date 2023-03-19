@@ -277,6 +277,10 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     session = attribute[0]
     session.attribute = attribute[1]
 
+    # hacky addon of new data
+    session.call = load.module(APPLICATION, get_name, "call")
+    session.view = load.module(APPLICATION, get_name, "view")
+
     configuration.save()
 
     return session

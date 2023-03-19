@@ -13,10 +13,10 @@ class Window(Collection):
     def turn(self, page):
         """"""
 
-    def work(self, task):
+    def work(self, task, **star):
         """"""
         call = self.task.get(task)
-        call()
+        call(**star)
 
     def __enter__(self):
         return self

@@ -46,15 +46,14 @@ def main(argv: list[str], exit_on_error: bool) -> None:
     """Run the main program."""
     session = start_session(argv, exit_on_error)
     with session.interface.window(session) as window:
-        dictionary = function.load(session.application)
 
-        page = function.find(dictionary, "page")
-        for name, document in page.items():
-            window.page(name, document)
-
-        task = function.find(dictionary, "task")
-        for name, document in task.items():
+        call = function.load(session.call)
+        for name, document in call.items():
             window.task.set(name, document)
+
+        view = function.load(session.view)
+        for name, document in view.items():
+            window.page(name, document)
 
 
 def blender1():
