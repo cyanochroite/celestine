@@ -11,6 +11,20 @@ from .package import (
 )
 from .window import Window
 
+from celestine import load
+from celestine.load import function
+from celestine.session.parser import start_session
+
+from celestine.typed import N
+from celestine.typed import B
+from celestine.typed import S
+from celestine.typed import L
+
+INTERFACE = "interface"
+BLENDER = "blender"
+PACKAGE = "package"
+PREFERENCES = "preferences"
+
 
 def image_format():
     """"""
@@ -35,9 +49,9 @@ def image_format():
     ]
 
 
-def window(session):
+def window(session, **star):
     """"""
-    return Window(session)
+    return Window(session, **star)
 
 
 # <pep8-80 compliant>
@@ -64,6 +78,17 @@ def find_in_collection(collection, name):
     return None
 
 
+def main(call: B, **star) -> N:
+    """Run the main program."""
+    content = preferences.content()
+    argument = f"-i blender {content.argument}"
+
+    argv = argument.split()
+    exit_on_error = False
+
+    celestine.main(argv, exit_on_error, call=call, **star)
+
+
 class celestine_click(bpy.types.Operator):
     """"""
 
@@ -75,7 +100,8 @@ class celestine_click(bpy.types.Operator):
         mouse = find_object("mouse")
         x_dot = mouse.location.x
         y_dot = mouse.location.y
-        celestine.blender2(task="poke", x_dot=x_dot, y_dot=y_dot)
+        main("poke", x_dot=x_dot, y_dot=y_dot)
+
         return {"FINISHED"}
 
 
@@ -132,6 +158,9 @@ class celestine_start(bpy.types.Operator):
         data.start()
         preferences.start()
         car.ready = True
+
+        main(None)
+
         return {"FINISHED"}
 
 

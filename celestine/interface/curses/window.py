@@ -112,8 +112,8 @@ class Window(master):
         package.endwin()
         return False
 
-    def __init__(self, session, **kwargs):
-        super().__init__(session, **kwargs)
+    def __init__(self, session, **star):
+        super().__init__(session, **star)
         self.cord_x = 0
         self.cord_y = 0
         self.height = 24

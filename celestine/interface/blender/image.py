@@ -3,20 +3,20 @@
 from celestine.window.image import Image as image
 
 from .element import Element
+from .package import data
+from .package import UV
+from .package import mesh as _mesh
+from .package.data import mesh as make_mesh
 
 
 class Image(image, Element):
     """"""
 
     def draw(self, collection):
-        image = data.image.load(self.name)
-        material = UV.material("pretty", image)
-        plane = _mesh.image(image)
-        mesh = make_mesh.bind(collection, self.name, plane)
+        _image = data.image.load(self.image)
+        material = UV.material("pretty", _image)
+        plane = _mesh.image(_image)
+        mesh = make_mesh.bind(collection, self.image, plane)
         mesh.body.data.materials.append(material)
-        self.mesh = mesh
+        self.item = mesh
         super().draw(collection)
-
-    def __init__(self, name, **kwargs):
-        self.name = name
-        super().__init__(**kwargs)

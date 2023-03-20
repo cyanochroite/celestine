@@ -24,9 +24,6 @@ class Button(button, Element):
 
         word.parent = mesh
 
-        self.mesh = mesh
+        self.item = mesh
         super().draw(collection)
 
-    def __init__(self, text, action, **kwargs):
-        self.text = text
-        super().__init__(action=action, **kwargs)

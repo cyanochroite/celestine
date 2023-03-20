@@ -71,8 +71,8 @@ class Window(master):
                     self.frame.poke(x_dot, y_dot)
         return False
 
-    def __init__(self, session, **kwargs):
-        super().__init__(session, **kwargs)
+    def __init__(self, session, **star):
+        super().__init__(session, **star)
         self.book = None
         self.container = None
         self.font = None

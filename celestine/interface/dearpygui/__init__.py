@@ -19,6 +19,6 @@ def image_format():
     ]
 
 
-def window(session):
+def window(session, **star):
     """"""
-    return Window(session)
+    return Window(session, **star)

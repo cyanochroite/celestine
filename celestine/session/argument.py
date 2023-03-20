@@ -32,10 +32,10 @@ class Argument(HashClass, Attribute):
     """abstract class"""
 
     def __init__(
-        self, argument: B, attribute: B, fallback: S, **kwargs
+        self, argument: B, attribute: B, fallback: S, **star
     ) -> N:
         """"""
-        super().__init__(**kwargs)
+        super().__init__(**star)
         self.argument = argument
         self.attribute = attribute
         self.fallback = fallback

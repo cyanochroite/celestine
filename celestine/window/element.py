@@ -18,5 +18,6 @@ class Element(Box):
         self.y_max = y_max
 
     def __init__(self, tag, **star):
+        self.item = None
         self.tag = tag
         super().__init__(**star)

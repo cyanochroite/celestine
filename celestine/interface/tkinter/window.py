@@ -68,7 +68,7 @@ class Window(window):
         self.root.mainloop()
         return False
 
-    def __init__(self, session, **kwargs):
+    def __init__(self, session, **star):
         self.container = None
-        super().__init__(session, **kwargs)
+        super().__init__(session, **star)
         self.root = package.Tk()
