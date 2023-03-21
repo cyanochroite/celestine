@@ -26,4 +26,3 @@ class Button(button, Element):
 
         self.item = mesh
         super().draw(collection)
-

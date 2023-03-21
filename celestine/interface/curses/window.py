@@ -2,15 +2,17 @@
 
 from celestine.window.window import Window as master
 
-from .button import Button
 from .container import (
     Container,
     Drop,
     Grid,
     Span,
 )
-from .image import Image
-from .label import Label
+from .element import (
+    Button,
+    Image,
+    Label,
+)
 from .package import package
 
 

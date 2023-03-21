@@ -4,15 +4,17 @@ from celestine import load
 from celestine.window.window import Window as master
 
 from . import package
-from .button import Button
 from .container import (
     Container,
     Drop,
     Grid,
     Span,
 )
-from .image import Image
-from .label import Label
+from .element import (
+    Button,
+    Image,
+    Label,
+)
 
 
 class Window(master):

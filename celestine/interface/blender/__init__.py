@@ -2,6 +2,15 @@
 import bpy  # pylint: disable=import-error
 
 import celestine
+from celestine import load
+from celestine.load import function
+from celestine.session.parser import start_session
+from celestine.typed import (
+    B,
+    L,
+    N,
+    S,
+)
 
 from .package import (
     UV,
@@ -10,15 +19,6 @@ from .package import (
     preferences,
 )
 from .window import Window
-
-from celestine import load
-from celestine.load import function
-from celestine.session.parser import start_session
-
-from celestine.typed import N
-from celestine.typed import B
-from celestine.typed import S
-from celestine.typed import L
 
 INTERFACE = "interface"
 BLENDER = "blender"

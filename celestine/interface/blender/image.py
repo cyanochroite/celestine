@@ -3,8 +3,10 @@
 from celestine.window.image import Image as image
 
 from .element import Element
-from .package import data
-from .package import UV
+from .package import (
+    UV,
+    data,
+)
 from .package import mesh as _mesh
 from .package.data import mesh as make_mesh
 
