@@ -26,6 +26,7 @@ class Window(master):
         with value.data:
             package.configure_item(value.tag, show=False)
             document(value)
+            value.spot(0, 0, 1920, 1080)
             value.draw(None)
 
     def turn(self, page, **star):

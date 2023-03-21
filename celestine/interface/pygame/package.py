@@ -10,7 +10,7 @@ PYGAME = None
 
 
 class HiddenPrints:
-    """"""
+    """Pygame will spam the console if we load it directly."""
 
     def __init__(self):
         self._original_stdout = sys.stdout
@@ -30,6 +30,7 @@ with HiddenPrints():
 draw = PYGAME.draw
 display = PYGAME.display
 init = PYGAME.init
+image = PYGAME.image
 display = PYGAME.display
 font = PYGAME.font
 event = PYGAME.event

@@ -15,7 +15,14 @@ class Abstract(abstract):
     def render(self, collection, item, **star):
         """"""
         pack = item(collection, **star)
-        pack.pack(side=package.LEFT)
+        width = self.x_max - self.x_min
+        height = self.y_max - self.y_min
+        pack.place(
+            x=self.x_min,
+            y=self.y_min,
+            width=width,
+            height=height,
+        )
 
 
 class Button(Abstract, button):

@@ -1,11 +1,11 @@
 """"""
 
-import pygame
-
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
 from celestine.window.element import Image as image
 from celestine.window.element import Label as label
+
+from . import package
 
 
 class Abstract(abstract):
@@ -33,7 +33,7 @@ class Image(Abstract, image):
 
     def draw(self, collection, **star):
         """"""
-        item = pygame.image.load(self.image)
+        item = package.image.load(self.image)
         self.render(collection, item, **star)
 
 

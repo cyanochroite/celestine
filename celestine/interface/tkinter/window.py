@@ -26,9 +26,13 @@ class Window(window):
             padx=5,
             pady=5,
             bg="skyblue",
+            width=1920,
+            height=1080,
         )
-        page.data.grid(row=0, column=0, sticky="nsew")
+        page.data.place(x=0, y=0)
         document(page)
+        page.spot(0, 0, 1920, 1080)
+
         page.draw(page.data)
         self.item_set(name, page)
 

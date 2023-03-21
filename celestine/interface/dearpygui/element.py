@@ -26,6 +26,7 @@ class Button(Abstract, button):
             callback=self.callback,
             label=self.text,
             tag=self.tag,
+            pos=(self.x_min, self.y_min)
         )
 
 
@@ -58,6 +59,7 @@ class Image(Abstract, image):
         package.add_image(
             name,
             tag=self.tag,
+            pos=(self.x_min, self.y_min)
         )
 
 
@@ -67,8 +69,7 @@ class Label(Abstract, label):
     def draw(self, _, **star):
         """"""
         package.add_text(
-            self.text,
-            label=f"{self.tag}{label}",
-            show_label=True,
+            f" {self.text}",  # hack to fix margin error
             tag=self.tag,
+            pos=(self.x_min, self.y_min)
         )

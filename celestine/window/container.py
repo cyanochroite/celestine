@@ -1,5 +1,7 @@
 """"""
 
+import math
+
 from celestine.window.collection import Rectangle
 
 
@@ -175,6 +177,28 @@ class Grid(Container):
 
         return f"{name}_{index_x}-{index_y}"
 
+    def spot(self, x_min, y_min, x_max, y_max):
+        """"""
+        self.set(x_min, y_min, x_max, y_max)
+
+        partition_x = self.width
+        partition_y = math.ceil(len(self.item) / self.width)
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
+
+        items = self.items()
+
+        for _ in range(partition_y):
+            (ymin, ymax) = next(axis_y)
+
+            for _ in range(partition_x):
+                (xmin, xmax) = next(axis_x)
+
+                item = next(items)
+                item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()
+
     def __init__(
         self,
         session,
@@ -210,6 +234,40 @@ class Grid(Container):
 class Drop(Container):
     """"""
 
+    def spot(self, x_min, y_min, x_max, y_max):
+        """"""
+        self.set(x_min, y_min, x_max, y_max)
+
+        partition_x = 1
+        partition_y = len(self.item)
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
+
+        for _, item in self.item.items():
+            (xmin, xmax) = next(axis_x)
+            (ymin, ymax) = next(axis_y)
+
+            item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()
+
 
 class Span(Container):
     """"""
+
+    def spot(self, x_min, y_min, x_max, y_max):
+        """"""
+        self.set(x_min, y_min, x_max, y_max)
+
+        partition_x = len(self.item)
+        partition_y = 1
+        (axis_x, axis_y) = self.get(partition_x, partition_y)
+
+        for _, item in self.item.items():
+            (xmin, xmax) = next(axis_x)
+            (ymin, ymax) = next(axis_y)
+
+            item.spot(xmin, ymin, xmax, ymax)
+
+        axis_x.close()
+        axis_y.close()
