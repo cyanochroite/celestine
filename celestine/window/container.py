@@ -23,17 +23,13 @@ class Container(Rectangle):
         """"""
         return self.item_set(
             tag,
-            self._drop(
+            Drop(
                 self.session,
                 tag,
                 self.window,
-                self.data,
                 self._button,
                 self._image,
                 self._label,
-                self._drop,
-                self._grid,
-                self._span,
                 **star,
             ),
         )
@@ -42,17 +38,13 @@ class Container(Rectangle):
         """"""
         return self.item_set(
             tag,
-            self._grid(
+            Grid(
                 self.session,
                 tag,
                 self.window,
-                self.data,
                 self._button,
                 self._image,
                 self._label,
-                self._drop,
-                self._grid,
-                self._span,
                 width=width,
                 **star,
             ),
@@ -62,17 +54,13 @@ class Container(Rectangle):
         """"""
         return self.item_set(
             tag,
-            self._span(
+            Span(
                 self.session,
                 tag,
                 self.window,
-                self.data,
                 self._button,
                 self._image,
                 self._label,
-                self._drop,
-                self._grid,
-                self._span,
                 **star,
             ),
         )
@@ -120,28 +108,20 @@ class Container(Rectangle):
         session,
         name,
         window,
-        data,
         _button,
         _image,
         _label,
-        _drop,
-        _grid,
-        _span,
         **star,
     ):
         self.session = session
         self.tag = name
         self.window = window
 
-        self.data = data
+        self.data = None
         #
         self._button = _button
         self._image = _image
         self._label = _label
-
-        self._drop = _drop
-        self._grid = _grid
-        self._span = _span
 
         self.turn = window.turn
         super().__init__(**star)
@@ -204,13 +184,9 @@ class Grid(Container):
         session,
         name,
         window,
-        data,
         _button,
         _image,
         _label,
-        _drop,
-        _grid,
-        _span,
         *,
         width,
         **star,
@@ -220,13 +196,9 @@ class Grid(Container):
             session,
             name,
             window,
-            data,
             _button,
             _image,
             _label,
-            _drop,
-            _grid,
-            _span,
             **star,
         )
 

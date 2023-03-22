@@ -1,15 +1,8 @@
 import bpy
 
-from celestine.window.collection import Rectangle
-from celestine.window.window import Window as master
+from celestine.window.container import Container
+from celestine.window.window import Window as window
 
-from . import package
-from .container import (
-    Container,
-    Drop,
-    Grid,
-    Span,
-)
 from .element import (
     Button,
     Image,
@@ -20,6 +13,7 @@ from .package import data
 
 
 def context():
+    """"""
     for area in bpy.context.screen.areas:
         if area.type == "VIEW_3D":
             override = bpy.context.copy()
@@ -28,13 +22,17 @@ def context():
     return None
 
 
-class Window(master):
+class Window(window):
+    """"""
+
     def poke(self, **star):
+        """"""
         page = bpy.context.scene.celestine.page
         item = self.item_get(page)
         item.poke(**star)
 
     def page(self, name, document):
+        """"""
         page = self.container.drop(name)
         document(page)
         page.spot(0, 0, self.width, self.height)
@@ -136,13 +134,9 @@ class Window(master):
             self.session,
             "window",
             self,
-            None,
             Button,
             Image,
             Label,
-            Drop,
-            Grid,
-            Span,
             x_min=0,
             y_min=0,
             x_max=self.width,

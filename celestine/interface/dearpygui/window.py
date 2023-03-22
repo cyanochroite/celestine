@@ -1,14 +1,9 @@
 """"""
 
-from celestine.window.window import Window as master
+from celestine.window.container import Container
+from celestine.window.window import Window as window
 
 from . import package
-from .container import (
-    Container,
-    Drop,
-    Grid,
-    Span,
-)
 from .element import (
     Button,
     Image,
@@ -16,7 +11,7 @@ from .element import (
 )
 
 
-class Window(master):
+class Window(window):
     """"""
 
     def page(self, name, document):
@@ -69,13 +64,9 @@ class Window(master):
             self.session,
             "window",
             self,
-            None,
             Button,
             Image,
             Label,
-            Drop,
-            Grid,
-            Span,
             x_min=0,
             y_min=0,
             x_max=1920,
