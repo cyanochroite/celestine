@@ -1,12 +1,12 @@
 """"""
 from math import radians
 
-from .element import Element
+from .element import Abstract
 from .package import mesh as _mesh
 from .package.data import mesh as make_mesh
 
 
-class Mouse(Element):
+class Mouse(Abstract):
     """"""
 
     def __init__(self):

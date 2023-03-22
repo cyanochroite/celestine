@@ -12,8 +12,6 @@ from .package import (
 from .package import mesh as _mesh
 from .package.data import mesh as make_mesh
 
-# TODO: finish this
-
 
 class Abstract(abstract):
     """"""
