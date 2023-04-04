@@ -1,29 +1,37 @@
 """"""
 
-from .collection import (
-    Collection,
-    Collection2,
-)
+from .collection import Collection2
 
 
-class Window(Collection):
+class Window():
     """"""
 
-    def refresh(self):
+    def data(self, container):
         """"""
 
-    def page(self, name, document):
+    def draw(self, **star):
         """"""
+        self.page.draw(self.page.data, **star)
+
+    def view(self, name, document):
+        """"""
+        container = self.container.drop(name)
+        self.data(container)
+        document(container)
+        container.spot(0, 0, self.width, self.height)
+        self._view.set(name, container)
 
     def turn(self, page, **star):
         """"""
+        self.page = self._view.get(page)
         self.turn_page = page
+        self.draw()
 
     def work(self, task, **star):
         """"""
         call = self.task.get(task)
         call(**star)
-        self.refresh()
+        self.draw()
 
     def __enter__(self):
         return self
@@ -45,5 +53,10 @@ class Window(Collection):
     def __init__(self, session, **star):
         self.session = session
         self.turn_page = session.main
+        self.page = None
         self.task = Collection2()
+        self._view = Collection2()
+        self.container = None
+        self.width = 0
+        self.height = 0
         super().__init__(**star)

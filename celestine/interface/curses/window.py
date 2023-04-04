@@ -14,34 +14,25 @@ from .package import package
 class Window(window):
     """"""
 
-    def refresh(self):
+    def data(self, container):
         """"""
-        self.stdscr.noutrefresh()
-        self.background.noutrefresh()
-        self.frame1.noutrefresh()
-        package.doupdate()
-
-    def page(self, name, document):
-        """"""
-        self.item_set(name, document)
-
-    def turn(self, page, **star):
-        """"""
-        self.frame = self.container.drop(page)
-        self.item_get(page)(self.frame)
-        self.frame.spot(0, 0, self.width - 2, self.height - 2)
-
-        self.frame1 = package.window(
+        container.data = package.window(
             1,
             1,
             self.width - 1,
             self.height - 2,
         )
 
-        for _, item in self.frame.item.items():
-            item.draw(self.frame1)
+    def draw(self, **star):
+        """"""
+        self.data(self.page)
 
-        self.refresh()
+        super().draw(**star)
+
+        self.stdscr.noutrefresh()
+        self.background.noutrefresh()
+        self.page.data.noutrefresh()
+        package.doupdate()
 
     def __enter__(self):
         super().__enter__()
@@ -103,7 +94,7 @@ class Window(window):
                         self.cord_x - 1,
                         self.cord_y - 1,
                     )
-                    self.frame.poke(x_dot, y_dot)
+                    self.page.poke(x_dot, y_dot)
 
         self.stdscr.keypad(0)
         package.echo()

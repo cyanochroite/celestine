@@ -15,21 +15,14 @@ from .element import (
 class Window(window):
     """"""
 
-    def refresh(self):
+    def refresh(self, **star):
         """"""
-        self.frame.draw(self.book, font=self.font)
-        package.display.flip()
-
-    def page(self, name, document):
-        self.item_set(name, document)
-
-    def turn(self, page, **star):
-        self.frame = self.container.drop(page)
-        self.item_get(page)(self.frame)
-        self.frame.spot(0, 0, self.width, self.height)
+        super().refresh(**star)
         self.book.fill((0, 0, 0))
-        self.refresh()
-        super().turn(page, **star)
+        self.page.draw(self.book, font=self.font)
+
+        super().refresh()
+        package.display.flip()
 
     def __enter__(self):
         super().__enter__()
@@ -66,7 +59,7 @@ class Window(window):
                     break
                 case package.MOUSEBUTTONDOWN:
                     (x_dot, y_dot) = package.mouse.get_pos()
-                    self.frame.poke(x_dot, y_dot)
+                    self.page.poke(x_dot, y_dot)
         return False
 
     def __init__(self, session, **star):
@@ -74,6 +67,5 @@ class Window(window):
         self.book = None
         self.container = None
         self.font = None
-        self.frame = None
         self.width = 1280
         self.height = 960

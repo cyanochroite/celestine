@@ -30,5 +30,3 @@ def setup(window):
 
     for (item, image) in items:
         item.image = image
-
-    grid.refresh()

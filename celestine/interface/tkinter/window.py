@@ -14,9 +14,9 @@ from .element import (
 class Window(window):
     """"""
 
-    def page(self, name, document):
-        page = self.container.drop(name)
-        page.data = package.Frame(
+    def data(self, container):
+        """"""
+        container.data = package.Frame(
             self.root,
             padx=5,
             pady=5,
@@ -24,16 +24,11 @@ class Window(window):
             width=1920,
             height=1080,
         )
-        page.data.place(x=0, y=0)
-        document(page)
-        page.spot(0, 0, 1920, 1080)
-
-        page.draw(page.data)
-        self.item_set(name, page)
+        container.data.place(x=0, y=0)
 
     def turn(self, page, **star):
-        frame = self.item_get(page)
-        frame.data.tkraise()
+        super().turn(page, **star)
+        self.page.data.tkraise()
 
     def __enter__(self):
         super().__enter__()
@@ -66,6 +61,7 @@ class Window(window):
         return False
 
     def __init__(self, session, **star):
-        self.container = None
         super().__init__(session, **star)
         self.root = package.Tk()
+        self.width = 1920
+        self.height = 1080

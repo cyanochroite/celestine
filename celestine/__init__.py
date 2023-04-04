@@ -39,7 +39,7 @@ def main(argument_list: L[S], exit_on_error: B, **star) -> N:
 
         view = function.load(session.view)
         for name, document in view.items():
-            window.page(name, document)
+            window.view(name, document)
 
 
 def register() -> N:
