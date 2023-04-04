@@ -14,6 +14,13 @@ from .package import package
 class Window(window):
     """"""
 
+    def refresh(self):
+        """"""
+        self.stdscr.noutrefresh()
+        self.background.noutrefresh()
+        self.frame1.noutrefresh()
+        package.doupdate()
+
     def page(self, name, document):
         """"""
         self.item_set(name, document)
@@ -24,7 +31,7 @@ class Window(window):
         self.item_get(page)(self.frame)
         self.frame.spot(0, 0, self.width - 2, self.height - 2)
 
-        frame = package.window(
+        self.frame1 = package.window(
             1,
             1,
             self.width - 1,
@@ -32,12 +39,9 @@ class Window(window):
         )
 
         for _, item in self.frame.item.items():
-            item.draw(frame)
+            item.draw(self.frame1)
 
-        self.stdscr.noutrefresh()
-        self.background.noutrefresh()
-        frame.noutrefresh()
-        package.doupdate()
+        self.refresh()
 
     def __enter__(self):
         super().__enter__()

@@ -15,6 +15,11 @@ from .element import (
 class Window(window):
     """"""
 
+    def refresh(self):
+        """"""
+        self.frame.draw(self.book, font=self.font)
+        package.display.flip()
+
     def page(self, name, document):
         self.item_set(name, document)
 
@@ -23,8 +28,8 @@ class Window(window):
         self.item_get(page)(self.frame)
         self.frame.spot(0, 0, self.width, self.height)
         self.book.fill((0, 0, 0))
-        self.frame.draw(self.book, font=self.font)
-        package.display.flip()
+        self.refresh()
+        super().turn(page, **star)
 
     def __enter__(self):
         super().__enter__()

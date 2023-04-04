@@ -2,20 +2,13 @@
 import bpy  # pylint: disable=import-error
 
 import celestine
-from celestine import load
-from celestine.load import function
-from celestine.session.parser import start_session
 from celestine.typed import (
     B,
-    L,
     N,
-    S,
 )
 
 from .package import (
-    UV,
     data,
-    mesh,
     preferences,
 )
 from .window import Window
@@ -54,30 +47,6 @@ def window(session, **star):
     return Window(session, **star)
 
 
-# <pep8-80 compliant>
-
-
-def find_object(name):
-    """"""
-    return next(obj for obj in bpy.data.objects if obj.name == name)
-
-
-def find_collection(name):
-    """"""
-    for collection in bpy.data.collections:
-        if collection.name == name:
-            return collection
-    return None
-
-
-def find_in_collection(collection, name):
-    """"""
-    for item in collection.all_objects:
-        if item.name == name:
-            return item
-    return None
-
-
 def main(call: B, **star) -> N:
     """Run the main program."""
     content = preferences.content()
@@ -97,7 +66,9 @@ class celestine_click(bpy.types.Operator):
 
     def execute(self, context):
         """"""
-        mouse = find_object("mouse")
+        mouse = (obj for obj in bpy.data.objects if obj.name == "mouse")
+        mouse = next(mouse)
+
         x_dot = mouse.location.x
         y_dot = mouse.location.y
         main("poke", x_dot=x_dot, y_dot=y_dot)

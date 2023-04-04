@@ -1,9 +1,9 @@
 """"""
 
-# import pygame
 import os
 import sys
 
+from celestine.text.stream import WRITE_TEXT
 from celestine.text.stream import UTF_8
 
 PYGAME = None
@@ -16,7 +16,7 @@ class HiddenPrints:
         self._original_stdout = sys.stdout
 
     def __enter__(self):
-        sys.stdout = open(os.devnull, "w", encoding=UTF_8)
+        sys.stdout = open(os.devnull, WRITE_TEXT, encoding=UTF_8)
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         sys.stdout.close()

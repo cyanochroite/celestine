@@ -9,16 +9,21 @@ from .collection import (
 class Window(Collection):
     """"""
 
+    def refresh(self):
+        """"""
+
     def page(self, name, document):
         """"""
 
     def turn(self, page, **star):
         """"""
+        self.turn_page = page
 
     def work(self, task, **star):
         """"""
         call = self.task.get(task)
         call(**star)
+        self.refresh()
 
     def __enter__(self):
         return self

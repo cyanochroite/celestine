@@ -75,12 +75,6 @@ def pathfinder() -> S:
     return sys.path[0]
 
 
-def pathway(*path: S) -> S:
-    """"""
-    package = pathfinder()
-    return os.path.join(package, *path)
-
-
 def python(*path: S) -> S:
     """"""
     return NONE.join([pathway(*path), FILE_NAME_EXTENSION])
@@ -130,3 +124,16 @@ def module_to_name(_module: MT) -> S:
     split = name.split(".")
     section = split[-1]
     return section
+
+
+####
+def pathway(*path: S) -> S:
+    """"""
+    package = pathfinder()
+    return os.path.join(package, *path)
+
+
+def asset(item: S) -> S:
+    """"""
+    return pathway("asset", item)
+

@@ -1,5 +1,6 @@
 """"""
 
+from celestine import load
 
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
@@ -45,7 +46,8 @@ class Image(Abstract, image):
 
     def draw(self, collection, **star):
         """"""
-        self.item = package.PhotoImage(file=self.image)
+        path = self.image or load.asset("null.png")
+        self.item = package.PhotoImage(file=path)
 
         item = package.Label
         star.update(image=self.item)
