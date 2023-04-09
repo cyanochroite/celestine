@@ -1,7 +1,6 @@
 """"""
 
 from celestine import load
-
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
 from celestine.window.element import Image as image

@@ -1,9 +1,10 @@
 """"""
 
 from .collection import Collection2
+from .container import Container
 
 
-class Window():
+class Window:
     """"""
 
     def data(self, container):
@@ -50,13 +51,25 @@ class Window():
             raise RuntimeError(message) from error
         return False
 
-    def __init__(self, session, **star):
+    def __init__(self, session, element, size, **star):
         self.session = session
         self.turn_page = session.main
         self.page = None
         self.task = Collection2()
         self._view = Collection2()
-        self.container = None
-        self.width = 1920
-        self.height = 1080
+
+        (self.width, self.height) = size
+
+        self.container = Container(
+            self.session,
+            "window",
+            self,
+            element,
+            x_min=0,
+            y_min=0,
+            x_max=self.width,
+            y_max=self.height,
+            offset_x=0,
+            offset_y=0,
+        )
         super().__init__(**star)

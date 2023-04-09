@@ -1,7 +1,6 @@
 """"""
 
 from celestine import load
-
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
 from celestine.window.element import Image as image
@@ -27,7 +26,7 @@ class Button(Abstract, button):
             callback=self.callback,
             label=self.text,
             tag=self.tag,
-            pos=(self.x_min, self.y_min)
+            pos=(self.x_min, self.y_min),
         )
 
 
@@ -65,9 +64,7 @@ class Image(Abstract, image):
                 return
 
         package.add_image(
-            name,
-            tag=self.tag,
-            pos=(self.x_min, self.y_min)
+            name, tag=self.tag, pos=(self.x_min, self.y_min)
         )
 
 
@@ -79,5 +76,5 @@ class Label(Abstract, label):
         package.add_text(
             f" {self.text}",  # hack to fix margin error
             tag=self.tag,
-            pos=(self.x_min, self.y_min)
+            pos=(self.x_min, self.y_min),
         )

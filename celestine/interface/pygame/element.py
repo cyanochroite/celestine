@@ -1,7 +1,6 @@
 """"""
 
 from celestine import load
-
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
 from celestine.window.element import Image as image
@@ -37,6 +36,7 @@ class Image(Abstract, image):
         """"""
         path = self.image or load.asset("null.png")
         item = package.image.load(path)
+        item = item.convert_alpha()
         self.render(collection, item, **star)
 
 

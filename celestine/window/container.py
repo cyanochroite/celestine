@@ -27,9 +27,7 @@ class Container(Rectangle):
                 self.session,
                 tag,
                 self.window,
-                self._button,
-                self._image,
-                self._label,
+                self.element,
                 **star,
             ),
         )
@@ -42,9 +40,7 @@ class Container(Rectangle):
                 self.session,
                 tag,
                 self.window,
-                self._button,
-                self._image,
-                self._label,
+                self.element,
                 width=width,
                 **star,
             ),
@@ -58,9 +54,7 @@ class Container(Rectangle):
                 self.session,
                 tag,
                 self.window,
-                self._button,
-                self._image,
-                self._label,
+                self.element,
                 **star,
             ),
         )
@@ -108,20 +102,20 @@ class Container(Rectangle):
         session,
         name,
         window,
-        _button,
-        _image,
-        _label,
+        element,
         **star,
     ):
         self.session = session
+
         self.tag = name
         self.window = window
 
         self.data = None
         #
-        self._button = _button
-        self._image = _image
-        self._label = _label
+        self.element = element
+        self._button = element["button"]
+        self._image = element["image"]
+        self._label = element["label"]
 
         self.turn = window.turn
         super().__init__(**star)
@@ -184,9 +178,7 @@ class Grid(Container):
         session,
         name,
         window,
-        _button,
-        _image,
-        _label,
+        element,
         *,
         width,
         **star,
@@ -196,9 +188,7 @@ class Grid(Container):
             session,
             name,
             window,
-            _button,
-            _image,
-            _label,
+            element,
             **star,
         )
 

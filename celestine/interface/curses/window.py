@@ -1,13 +1,7 @@
 """"""
 
-from celestine.window.container import Container
 from celestine.window.window import Window as window
 
-from .element import (
-    Button,
-    Image,
-    Label,
-)
 from .package import package
 
 
@@ -37,35 +31,23 @@ class Window(window):
     def __enter__(self):
         super().__enter__()
 
-        self.container = Container(
-            self.session,
-            "window",
-            self,
-            Button,
-            Image,
-            Label,
-            x_min=0,
-            y_min=0,
-            x_max=self.width,
-            y_max=self.height,
-            offset_x=0,
-            offset_y=0,
-        )
+        self.stdscr = package.initscr()
+        package.cbreak()
+        package.noecho()
+        self.stdscr.keypad(1)
+        package.start_color()
 
+        self.background = package.window(0, 0, self.width, self.height)
         self.background.box()
 
-        header1 = package.subwindow(
-            self.background, 0, 0, self.width, 1
-        )
-        header1.addstr(self.session.language.APPLICATION_TITLE)
+        header = package.subwindow(self.background, 0, 0, self.width, 1)
+        header.addstr(self.session.language.APPLICATION_TITLE)
 
-        header2 = package.subwindow(
+        footer = package.subwindow(
             self.background, 0, self.height - 1, self.width, 1
         )
-        header2.addstr(self.session.language.CURSES_EXIT)
+        footer.addstr(self.session.language.CURSES_EXIT)
 
-        self.stdscr.noutrefresh()
-        self.background.noutrefresh()
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -102,23 +84,10 @@ class Window(window):
         package.endwin()
         return False
 
-    def __init__(self, session, **star):
-        super().__init__(session, **star)
+    def __init__(self, session, element, size, **star):
+        super().__init__(session, element, size, **star)
+        self.background = None
         self.cord_x = 0
         self.cord_y = 0
-        self.height = 24
-        self.width = 80
-
-        self.window = 0
-
-        #
-        self.stdscr = package.initscr()
-        package.noecho()
-        package.cbreak()
-        self.stdscr.keypad(1)
-        package.start_color()
-        #
-        self.container = None
-        self.background = package.window(0, 0, self.width, self.height)
-        #
         self.frame = None
+        self.stdscr = None

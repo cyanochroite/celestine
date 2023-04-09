@@ -1,14 +1,8 @@
 """"""
 
-from celestine.window.container import Container
 from celestine.window.window import Window as window
 
 from . import package
-from .element import (
-    Button,
-    Image,
-    Label,
-)
 
 
 class Window(window):
@@ -59,24 +53,6 @@ class Window(window):
             decorated=True,
             clear_color=(0, 0, 0),
         )
-
-        self.container = Container(
-            self.session,
-            "window",
-            self,
-            Button,
-            Image,
-            Label,
-            x_min=0,
-            y_min=0,
-            x_max=1920,
-            y_max=1080,
-            offset_x=0,
-            offset_y=0,
-        )
-
-        self.tag = "window"
-
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -87,3 +63,7 @@ class Window(window):
         package.destroy_context()
         self.container = None
         return False
+
+    def __init__(self, session, element, size, **star):
+        super().__init__(session, element, size, **star)
+        self.tag = "window"

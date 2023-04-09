@@ -3,8 +3,10 @@
 import os
 import sys
 
-from celestine.text.stream import WRITE_TEXT
-from celestine.text.stream import UTF_8
+from celestine.text.stream import (
+    UTF_8,
+    WRITE_TEXT,
+)
 
 PYGAME = None
 
@@ -29,11 +31,11 @@ with HiddenPrints():
 
 draw = PYGAME.draw
 display = PYGAME.display
-init = PYGAME.init
 image = PYGAME.image
 display = PYGAME.display
 font = PYGAME.font
 event = PYGAME.event
+quit = PYGAME.quit
 QUIT = PYGAME.QUIT
 mouse = PYGAME.mouse
 MOUSEBUTTONDOWN = PYGAME.MOUSEBUTTONDOWN
