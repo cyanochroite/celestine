@@ -15,13 +15,16 @@ from .element import (
 class Window(window):
     """"""
 
-    def refresh(self, **star):
+    def data(self, container):
         """"""
-        super().refresh(**star)
-        self.book.fill((0, 0, 0))
-        self.page.draw(self.book, font=self.font)
+        container.data = self.book
 
-        super().refresh()
+    def draw(self, **star):
+        """"""
+        self.book.fill((0, 0, 0))
+
+        super().draw(font=self.font, **star)
+
         package.display.flip()
 
     def __enter__(self):

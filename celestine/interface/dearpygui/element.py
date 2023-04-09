@@ -1,5 +1,6 @@
 """"""
 
+from celestine import load
 
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
@@ -42,7 +43,9 @@ class Image(Abstract, image):
         photo = image[3]
         """
         empty = (0, 0, 0, [])
-        _image = package.load_image(self.image) or empty
+        path = self.image or load.asset("null.png")
+
+        _image = package.load_image(path) or empty
         width = _image[0]
         height = _image[1]
         # channels = _image[2]
@@ -50,12 +53,17 @@ class Image(Abstract, image):
         name = self.image
 
         with package.texture_registry(show=False):
-            package.add_static_texture(
-                default_value=photo,
-                height=height,
-                tag=name,
-                width=width,
-            )
+            try:
+                package.add_static_texture(
+                    default_value=photo,
+                    height=height,
+                    tag=name,
+                    width=width,
+                )
+            except SystemError:
+                """image already exists"""
+                return
+
         package.add_image(
             name,
             tag=self.tag,

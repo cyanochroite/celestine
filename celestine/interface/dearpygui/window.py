@@ -14,30 +14,30 @@ from .element import (
 class Window(window):
     """"""
 
-    def page(self, name, document):
+    def view(self, name, document):
         value = self.container.drop(name)
         value.data = package.window(tag=value.tag)
-        self.item_set(name, value)
+        self._view.set(name, value)
         with value.data:
             package.configure_item(value.tag, show=False)
             document(value)
             value.spot(0, 0, 1920, 1080)
             value.draw(None)
 
-    def turn(self, page, **star):
-        if self.last:
-            package.hide_item(self.last)
+    def draw(self, **star):
+        """"""
 
-        book = self.item_get(page)
-        tag = book.tag
+    def turn(self, page, **star):
+        if self.page:
+            package.hide_item(self.page.tag)
+
+        super().turn(page, **star)
+
+        tag = self.page.tag
         package.show_item(tag)
         package.set_primary_window(tag, True)
 
-        self.last = page
-
     def __enter__(self):
-        self.last = None
-        #
         super().__enter__()
         title = self.session.language.APPLICATION_TITLE
         package.create_context()

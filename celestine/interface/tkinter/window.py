@@ -26,9 +26,23 @@ class Window(window):
         )
         container.data.place(x=0, y=0)
 
+    def draw(self, **star):
+        """"""
+        if self.once:
+            return
+
+        self.once = True
+
+        super().draw(**star)
+
     def turn(self, page, **star):
         super().turn(page, **star)
         self.page.data.tkraise()
+
+    def view(self, name, document):
+        super().view(name, document)
+        self.page = self._view.get(name)
+        super().draw()
 
     def __enter__(self):
         super().__enter__()
@@ -65,3 +79,4 @@ class Window(window):
         self.root = package.Tk()
         self.width = 1920
         self.height = 1080
+        self.once = False

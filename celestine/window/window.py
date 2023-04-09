@@ -57,6 +57,6 @@ class Window():
         self.task = Collection2()
         self._view = Collection2()
         self.container = None
-        self.width = 0
-        self.height = 0
+        self.width = 1920
+        self.height = 1080
         super().__init__(**star)
