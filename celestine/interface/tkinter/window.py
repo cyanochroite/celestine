@@ -20,23 +20,9 @@ class Window(window):
         )
         container.data.place(x=0, y=0)
 
-    def draw(self, **star):
-        """"""
-        if self.once:
-            return
-
-        self.once = True
-
-        super().draw(**star)
-
     def turn(self, page, **star):
         super().turn(page, **star)
         self.page.data.tkraise()
-
-    def view(self, name, document):
-        super().view(name, document)
-        self.page = self._view.get(name)
-        super().draw()
 
     def __enter__(self):
         super().__enter__()
@@ -56,4 +42,3 @@ class Window(window):
     def __init__(self, session, element, size, **star):
         super().__init__(session, element, size, **star)
         self.root = None
-        self.once = None

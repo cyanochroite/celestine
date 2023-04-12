@@ -21,29 +21,29 @@ class Abstract(abstract):
 class Button(Abstract, button):
     """"""
 
-    def draw(self, collection, *, font, **star):
+    def draw(self, view, *, font, **star):
         """"""
         text = f"Button{self.text}"
 
         item = font.render(text, True, (255, 255, 255))
-        self.render(collection, item, **star)
+        self.render(view, item, **star)
 
 
 class Image(Abstract, image):
     """"""
 
-    def draw(self, collection, **star):
+    def draw(self, view, **star):
         """"""
         path = self.image or load.asset("null.png")
         item = package.image.load(path)
         item = item.convert_alpha()
-        self.render(collection, item, **star)
+        self.render(view, item, **star)
 
 
 class Label(Abstract, label):
     """"""
 
-    def draw(self, collection, *, font, **star):
+    def draw(self, view, *, font, **star):
         """"""
         item = font.render(self.text, True, (255, 255, 255))
-        self.render(collection, item, **star)
+        self.render(view, item, **star)

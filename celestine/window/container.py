@@ -10,14 +10,15 @@ class Container(Rectangle):
 
     def call(self, tag, text, action, **star):
         """"""
-        item = self._button(
-            tag,
-            text,
-            call=self.window.work,
-            action=action,
-            argument=star,
+        self.save(
+            self._button(
+                tag,
+                text,
+                call=self.window.work,
+                action=action,
+                argument=star,
+            )
         )
-        return self.save(item)
 
     def drop(self, tag, **star):
         """"""
@@ -61,18 +62,26 @@ class Container(Rectangle):
 
     def image(self, tag, image):
         """"""
-        item = self._image(tag, image)
-        return self.save(item)
+        self.save(
+            self._image(
+                tag,
+                image,
+            )
+        )
 
     def label(self, tag, text):
         """"""
-        item = self._label(tag, text)
-        return self.save(item)
+        self.save(
+            self._label(
+                tag,
+                text,
+            )
+        )
 
-    def draw(self, collection, **star):
+    def draw(self, view, **star):
         """"""
         for _, item in self.item.items():
-            item.draw(collection, **star)
+            item.draw(view, **star)
 
     def poke(self, x_dot, y_dot, **star):
         """"""

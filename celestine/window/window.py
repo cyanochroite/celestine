@@ -26,13 +26,13 @@ class Window:
         """"""
         self.page = self._view.get(page)
         self.turn_page = page
-        self.draw()
+        self.draw(make=True)
 
     def work(self, task, **star):
         """"""
         call = self.task.get(task)
         call(**star)
-        self.draw()
+        self.draw(make=False)
 
     def __enter__(self):
         return self
