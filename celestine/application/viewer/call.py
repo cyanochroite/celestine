@@ -29,4 +29,4 @@ def setup(window):
     items = zip(grid.items(), images)
 
     for item, image in items:
-        item.image = image
+        item.update(image=image)

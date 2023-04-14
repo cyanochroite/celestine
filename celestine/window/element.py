@@ -43,7 +43,16 @@ class Button(Abstract):
 class Image(Abstract):
     """"""
 
+    def update(self, *, image, **star):
+        """"""
+        if not image:
+            return False
+
+        self.image = image
+        return True
+
     def __init__(self, tag, image, **star):
+        self.cache = None
         self.image = image
         super().__init__(tag, **star)
 
