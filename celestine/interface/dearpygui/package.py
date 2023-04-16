@@ -6,6 +6,7 @@ Putting alias here to contain errors to this file only.
 import dearpygui.dearpygui
 
 add_button = dearpygui.dearpygui.add_button
+add_dynamic_texture = dearpygui.dearpygui.add_dynamic_texture
 add_file_extension = dearpygui.dearpygui.add_file_extension
 add_image = dearpygui.dearpygui.add_image
 add_static_texture = dearpygui.dearpygui.add_static_texture

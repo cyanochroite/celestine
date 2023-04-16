@@ -16,7 +16,7 @@ class Window(window):
             package.configure_item(value.tag, show=False)
             document(value)
             value.spot(0, 0, 1920, 1080)
-            value.draw(None)
+            value.draw(None, make=True)
 
     def draw(self, **star):
         """"""

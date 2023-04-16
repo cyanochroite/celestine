@@ -20,8 +20,11 @@ class Button(Abstract, button):
         """callback(self, sender, app_data, user_data)"""
         self.call(self.action, **self.argument)
 
-    def draw(self, _, **star):
+    def draw(self, _, *, make, **star):
         """"""
+        if not make:
+            return
+
         package.add_button(
             callback=self.callback,
             label=self.text,
@@ -31,16 +34,11 @@ class Button(Abstract, button):
 
 
 class Image(Abstract, image):
-    """"""
+    """ "delete_item(...)"."""
 
-    def draw(self, _, **star):
-        """
-        image = (0, 0, 0, [])
-        width = image[0]
-        height = image[1]
-        channels = image[2]
-        photo = image[3]
-        """
+    def add(self):
+        """"""
+
         empty = (0, 0, 0, [])
         path = self.image or load.asset("null.png")
 
@@ -49,11 +47,11 @@ class Image(Abstract, image):
         height = _image[1]
         # channels = _image[2]
         photo = _image[3]
-        name = self.image
+        name = path
 
         with package.texture_registry(show=False):
             try:
-                package.add_static_texture(
+                package.add_dynamic_texture(
                     default_value=photo,
                     height=height,
                     tag=name,
@@ -61,20 +59,48 @@ class Image(Abstract, image):
                 )
             except SystemError:
                 """image already exists"""
-                return
+
+        return name
+
+    def draw(self, _, *, make, **star):
+        """
+        image = (0, 0, 0, [])
+        width = image[0]
+        height = image[1]
+        channels = image[2]
+        photo = image[3]
+        """
+
+        if not make:
+            return
+
+        name = self.add()
 
         package.add_image(
-            name, tag=self.tag, pos=(self.x_min, self.y_min)
+            name,
+            tag=self.tag,
+            pos=(self.x_min, self.y_min),
         )
+
+    def update(self, *, image, **star):
+        """"""
+        if not super().update(image=image, **star):
+            return False
+
+        package.set_value(self.tag, self.image)
+        return True
 
 
 class Label(Abstract, label):
     """"""
 
-    def draw(self, _, **star):
+    def draw(self, _, *, make, **star):
         """"""
+        if not make:
+            return
+
         package.add_text(
-            f" {self.text}",  # hack to fix margin error
+            f" {self.text}",  # extra space hack to fix margin error
             tag=self.tag,
             pos=(self.x_min, self.y_min),
         )

@@ -35,11 +35,14 @@ class Button(Abstract, Button_):
 
     def draw(self, view, *, make, **star):
         """"""
-        if make:
-            item = package.Button
-            star.update(command=self.callback)
-            star.update(text=f"button:{self.text}")
-            self.render(view, item, **star)
+
+        if not make:
+            return
+
+        item = package.Button
+        star.update(command=self.callback)
+        star.update(text=f"button:{self.text}")
+        self.render(view, item, **star)
 
 
 class Image(Abstract, Image_):
@@ -49,11 +52,13 @@ class Image(Abstract, Image_):
         """"""
         file = self.image or load.asset("null.png")
 
-        if make:
-            item = package.Label
-            self.cache = package.PhotoImage(file=file)
-            star.update(image=self.cache)
-            self.render(view, item, **star)
+        if not make:
+            return
+
+        item = package.Label
+        self.cache = package.PhotoImage(file=file)
+        star.update(image=self.cache)
+        self.render(view, item, **star)
 
     def update(self, *, image, **star):
         """"""
