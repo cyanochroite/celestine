@@ -62,6 +62,7 @@ class CelestineAddonPreferences(bpy.types.AddonPreferences):
 
 class CelestinePropertyGroup(bpy.types.PropertyGroup):
     """"""
+
     page: bpy.props.StringProperty(
         name="Page",
         description="Which page of the book to show.",

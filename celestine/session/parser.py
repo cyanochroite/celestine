@@ -158,8 +158,8 @@ def add_argument(sessions: list[Session], arguments: APD) -> N:
                 continue
             parser = arguments[argument]
             args = argument.key(name)
-            kwargs = argument.dictionary()
-            parser.add_argument(*args, **kwargs)
+            star = argument.dictionary()
+            parser.add_argument(*args, **star)
 
 
 def add_attribute(

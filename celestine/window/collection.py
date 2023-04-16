@@ -110,9 +110,7 @@ class Collection(Object):
 
     def save(self, item):
         """"""
-        tag = item.tag
-        self.item[tag] = item
-        return item
+        self.item[item.tag] = item
 
     def __init__(self, **star):
         self.item = {}

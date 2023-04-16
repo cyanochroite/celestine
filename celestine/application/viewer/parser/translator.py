@@ -58,6 +58,7 @@ def maps(iterable):
 
 class translator:  # translate
     """"""
+
     @staticmethod
     def translate(string):
         return filter_true(map(decode, string))
@@ -65,6 +66,7 @@ class translator:  # translate
 
 class tokenizer:
     """"""
+
     @staticmethod
     def tokenize(iterable):
         return list(
@@ -74,6 +76,7 @@ class tokenizer:
 
 class parser:
     """"""
+
     @staticmethod
     def parse(iterable):
         return list(map(maps, iterable))

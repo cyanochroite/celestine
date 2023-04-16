@@ -1,61 +1,53 @@
 """"""
 
 from celestine import load
-from celestine.window.window import Window as master
+from celestine.window.window import Window as window
 
 from . import package
-from .container import Container
-
-from .button import Button
-from .image import Image
-from .label import Label
-from .container import Drop
-from .container import Grid
-from .container import Span
 
 
-class Window(master):
+class Window(window):
     """"""
 
-    def page(self, name, document):
-        self.item_set(name, document)
+    def data(self, container):
+        """"""
+        container.data = self.book
 
-    def turn(self, page, **star):
-        self.frame = self.container.drop(page)
-        self.item_get(page)(self.frame)
-        self.frame.spot(0, 0, self.width, self.height)
+    def draw(self, **star):
+        """"""
         self.book.fill((0, 0, 0))
-        self.frame.draw(self.book)
+
+        super().draw(font=self.font, **star)
+
         package.display.flip()
 
     def __enter__(self):
+        def set_caption():
+            caption = self.session.language.APPLICATION_TITLE
+            package.display.set_caption(caption)
+
+        def set_font():
+            package.font.init()
+            file_path = load.asset("CascadiaCode.ttf")
+            size = 40
+            self.font = package.font.Font(file_path, size)
+
+        def set_icon():
+            path = "icon.png"
+            asset = load.asset(path)
+            image = package.image.load(asset)
+            icon = image.convert_alpha()
+            package.display.set_icon(icon)
+
+        def set_mode():
+            size = (self.width, self.height)
+            self.book = package.display.set_mode(size)
+
         super().__enter__()
-        package.init()
-        self.book = package.display.set_mode(
-            (self.width, self.height), 8, 0
-        )
-        path = load.pathway("asset", "CascadiaCode.ttf")
-        self.font = package.font.Font(path, 40)
-
-        self.container = Container(
-            self.session,
-            "window",
-            self,
-            self.font,
-            Button,
-            Image,
-            Label,
-            Drop,
-            Grid,
-            Span,
-            x_min=0,
-            y_min=0,
-            x_max=self.width,
-            y_max=self.height,
-            offset_x=0,
-            offset_y=0,
-        )
-
+        set_mode()
+        set_icon()
+        set_caption()
+        set_font()
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -67,14 +59,12 @@ class Window(master):
                     break
                 case package.MOUSEBUTTONDOWN:
                     (x_dot, y_dot) = package.mouse.get_pos()
-                    self.frame.poke(x_dot, y_dot)
+                    self.page.poke(x_dot, y_dot)
+
+        package.quit()
         return False
 
-    def __init__(self, session, **kwargs):
-        super().__init__(session, **kwargs)
+    def __init__(self, session, element, size, **star):
+        super().__init__(session, element, size, **star)
         self.book = None
-        self.container = None
         self.font = None
-        self.frame = None
-        self.width = 1280
-        self.height = 960

@@ -1,44 +1,37 @@
 """"""
 
-from celestine.window.window import Window as master
+from celestine.window.window import Window as window
 
 from . import package
-from .container import Container
-
-from .button import Button
-from .image import Image
-from .label import Label
-from .container import Drop
-from .container import Grid
-from .container import Span
 
 
-class Window(master):
+class Window(window):
     """"""
 
-    def page(self, name, document):
+    def view(self, name, document):
         value = self.container.drop(name)
         value.data = package.window(tag=value.tag)
-        self.item_set(name, value)
+        self._view.set(name, value)
         with value.data:
             package.configure_item(value.tag, show=False)
             document(value)
-            value.draw(None)
+            value.spot(0, 0, 1920, 1080)
+            value.draw(None, make=True)
+
+    def draw(self, **star):
+        """"""
 
     def turn(self, page, **star):
-        if self.last:
-            package.hide_item(self.last)
+        if self.page:
+            package.hide_item(self.page.tag)
 
-        book = self.item_get(page)
-        tag = book.tag
+        super().turn(page, **star)
+
+        tag = self.page.tag
         package.show_item(tag)
         package.set_primary_window(tag, True)
 
-        self.last = page
-
     def __enter__(self):
-        self.last = None
-        #
         super().__enter__()
         title = self.session.language.APPLICATION_TITLE
         package.create_context()
@@ -60,28 +53,6 @@ class Window(master):
             decorated=True,
             clear_color=(0, 0, 0),
         )
-
-        self.container = Container(
-            self.session,
-            "window",
-            self,
-            None,
-            Button,
-            Image,
-            Label,
-            Drop,
-            Grid,
-            Span,
-            x_min=0,
-            y_min=0,
-            x_max=1920,
-            y_max=1080,
-            offset_x=0,
-            offset_y=0,
-        )
-
-        self.tag = "window"
-
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -92,3 +63,7 @@ class Window(master):
         package.destroy_context()
         self.container = None
         return False
+
+    def __init__(self, session, element, size, **star):
+        super().__init__(session, element, size, **star)
+        self.tag = "window"

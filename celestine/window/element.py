@@ -1,9 +1,10 @@
 """"""
 
+
 from celestine.window.collection import Box
 
 
-class Element(Box):
+class Abstract(Box):
     """"""
 
     def poke(self, x_dot, y_dot):
@@ -18,5 +19,47 @@ class Element(Box):
         self.y_max = y_max
 
     def __init__(self, tag, **star):
+        self.item = None
         self.tag = tag
         super().__init__(**star)
+
+
+class Button(Abstract):
+    """"""
+
+    def poke(self, x_dot, y_dot):
+        """"""
+        if super().poke(x_dot, y_dot):
+            self.call(self.action, **self.argument)
+
+    def __init__(self, tag, text, *, call, action, argument, **star):
+        self.action = action
+        self.argument = argument
+        self.call = call
+        self.text = text
+        super().__init__(tag, **star)
+
+
+class Image(Abstract):
+    """"""
+
+    def update(self, *, image, **star):
+        """"""
+        if not image:
+            return False
+
+        self.image = image
+        return True
+
+    def __init__(self, tag, image, **star):
+        self.cache = None
+        self.image = image
+        super().__init__(tag, **star)
+
+
+class Label(Abstract):
+    """"""
+
+    def __init__(self, tag, text, **star):
+        self.text = text
+        super().__init__(tag, **star)

@@ -1,4 +1,10 @@
 """"""
+
+from .element import (
+    Button,
+    Image,
+    Label,
+)
 from .window import Window
 
 
@@ -19,6 +25,12 @@ def image_format():
     ]
 
 
-def window(session):
+def window(session, **star):
     """"""
-    return Window(session)
+    element = {
+        "button": Button,
+        "image": Image,
+        "label": Label,
+    }
+    size = (1280, 1080)
+    return Window(session, element, size, **star)

@@ -37,9 +37,9 @@ class Action(Attribute):
         """"""
         return super().dictionary() | {ACTION: self.action}
 
-    def __init__(self, action: S, **kwargs) -> N:
+    def __init__(self, action: S, **star) -> N:
         """"""
-        super().__init__(**kwargs)
+        super().__init__(**star)
         self.action = action
 
 
@@ -50,9 +50,9 @@ class Choices(Attribute):
         """"""
         return super().dictionary() | {CHOICES: self.choices}
 
-    def __init__(self, choices: L[S], **kwargs) -> N:
+    def __init__(self, choices: L[S], **star) -> N:
         """"""
-        super().__init__(**kwargs)
+        super().__init__(**star)
         self.choices = choices
 
 
@@ -63,9 +63,9 @@ class Help(Attribute):
         """"""
         return super().dictionary() | {HELP: self.help}
 
-    def __init__(self, help: S, **kwargs) -> N:  # pylint: disable=W0622
+    def __init__(self, help: S, **star) -> N:  # pylint: disable=W0622
         """"""
-        super().__init__(**kwargs)
+        super().__init__(**star)
         self.help = help
 
 
@@ -76,9 +76,9 @@ class Nargs(Attribute):
         """"""
         return super().dictionary() | {NARGS: self.nargs}
 
-    def __init__(self, nargs: S, **kwargs) -> N:
+    def __init__(self, nargs: S, **star) -> N:
         """"""
-        super().__init__(**kwargs)
+        super().__init__(**star)
         self.nargs = nargs
 
 
@@ -89,6 +89,6 @@ class Version(Attribute):
         """"""
         return super().dictionary() | {VERSION: VERSION_NUMBER}
 
-    def __init__(self, **kwargs) -> N:
+    def __init__(self, **star) -> N:
         """"""
-        super().__init__(**kwargs)
+        super().__init__(**star)

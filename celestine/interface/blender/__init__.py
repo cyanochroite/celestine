@@ -2,14 +2,21 @@
 import bpy  # pylint: disable=import-error
 
 import celestine
+from celestine.typed import (
+    B,
+    N,
+)
 
 from .package import (
-    UV,
     data,
-    mesh,
     preferences,
 )
 from .window import Window
+
+INTERFACE = "interface"
+BLENDER = "blender"
+PACKAGE = "package"
+PREFERENCES = "preferences"
 
 
 def image_format():
@@ -35,33 +42,20 @@ def image_format():
     ]
 
 
-def window(session):
+def window(session, **star):
     """"""
-    return Window(session)
+    return Window(session, **star)
 
 
-# <pep8-80 compliant>
+def main(call: B, **star) -> N:
+    """Run the main program."""
+    content = preferences.content()
+    argument = f"-i blender {content.argument}"
 
+    argv = argument.split()
+    exit_on_error = False
 
-def find_object(name):
-    """"""
-    return next(obj for obj in bpy.data.objects if obj.name == name)
-
-
-def find_collection(name):
-    """"""
-    for collection in bpy.data.collections:
-        if collection.name == name:
-            return collection
-    return None
-
-
-def find_in_collection(collection, name):
-    """"""
-    for item in collection.all_objects:
-        if item.name == name:
-            return item
-    return None
+    celestine.main(argv, exit_on_error, call=call, **star)
 
 
 class celestine_click(bpy.types.Operator):
@@ -72,10 +66,13 @@ class celestine_click(bpy.types.Operator):
 
     def execute(self, context):
         """"""
-        mouse = find_object("mouse")
+        mouse = (obj for obj in bpy.data.objects if obj.name == "mouse")
+        mouse = next(mouse)
+
         x_dot = mouse.location.x
         y_dot = mouse.location.y
-        celestine.blender2(task="poke", x_dot=x_dot, y_dot=y_dot)
+        main("poke", x_dot=x_dot, y_dot=y_dot)
+
         return {"FINISHED"}
 
 
@@ -132,11 +129,15 @@ class celestine_start(bpy.types.Operator):
         data.start()
         preferences.start()
         car.ready = True
+
+        main(None)
+
         return {"FINISHED"}
 
 
 class celestine_finish(bpy.types.Operator):
     """"""
+
     bl_label = "Shutdown"
     bl_idname = "celestine.finish"
 
