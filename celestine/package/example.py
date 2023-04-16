@@ -1,13 +1,10 @@
 """"""
 
 import glob
-import traceback
 from typing import List
 
 import dearpygui.dearpygui as dpg
-import DearPyGui_ImageController as dpg_img
-
-# import celestine.package.DearPyGui_ImageController as dpg_img
+import celestine.package.DearPyGui_ImageController as dpg_img
 
 images_path = glob.glob("D:/file/*.*")
 
@@ -30,7 +27,7 @@ def add_all_images():
             group = dpg.add_group(horizontal=True, parent="image_group")
         _image_viewer = dpg_img.add_image(
             file, height=100, parent=group
-        )  # noqa
+        )
         all_image_viewers.append(_image_viewer)
 
 

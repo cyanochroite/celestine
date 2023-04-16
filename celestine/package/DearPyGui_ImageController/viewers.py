@@ -1,5 +1,3 @@
-""""""
-
 from __future__ import annotations
 
 import traceback
@@ -8,17 +6,20 @@ from abc import (
     abstractmethod,
 )
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from PIL.Image import Image
 
 from . import tools
 
-from .controller import (
-    SubscriptionTag,
-    ImageControllerType,
-    ControllerType,
-)
-from .tools import TextureTag
+if TYPE_CHECKING:
+    from _typeshed import SupportsRead
+    from .controller import (
+        SubscriptionTag,
+        ImageControllerType,
+        ControllerType,
+    )
+    from .tools import TextureTag
 
 import dearpygui.dearpygui as dpg
 
@@ -48,7 +49,7 @@ class ImageViewerCreator(ABC):
 
     def load(
         self,
-        image: str | bytes | Path | Image = None,
+        image: str | bytes | Path | SupportsRead[bytes] | Image = None,
         show_loading=False,
     ):
         self.image = None
@@ -228,7 +229,7 @@ class ImageViewer(ImageViewerCreator):
 
     def __init__(
         self,
-        image: str | bytes | Path | Image = None,
+        image: str | bytes | Path | SupportsRead[bytes] | Image = None,
         controller: ControllerType = None,
         unload_width: int = 100,
         unload_height: int = 100,

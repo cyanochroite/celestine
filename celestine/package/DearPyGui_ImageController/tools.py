@@ -10,52 +10,40 @@ from PIL.Image import Image
 
 TextureTag = TypeVar("TextureTag", bound=int)
 
-try:
-    import numpy as np
-
-    def _image_to_1d_array(image: Image) -> np.array:
-        return np.array(image, dtype=np.float32).ravel() / 255  # noqa
-
-except ModuleNotFoundError:
-    import logging
-
-    logger = logging.getLogger("DearPyGui_ImageController")
-    logger.warning(
-        "numpy not installed. In DPG images will take longer to load (about 8 times slower)."
-    )
-
-    def _image_to_1d_array(image: Image) -> list:
-        img_1D_array = []
-        image_data = image.getdata()
-        if image_data.bands == 3:
-            for pixel in image_data:
-                img_1D_array.extend(
-                    (pixel[0] / 255, pixel[1] / 255, pixel[2] / 255, 1)
-                )
-        else:
-            for pixel in image_data:
-                img_1D_array.extend(
-                    (
-                        pixel[0] / 255,
-                        pixel[1] / 255,
-                        pixel[2] / 255,
-                        pixel[3] / 255,
-                    )
-                )
-        del image_data
-        return img_1D_array
-
-
 texture_registry: int | str = 0
-texture_plug: TextureTag = None  # noqa
+texture_plug: TextureTag = None
+
+
+def _image_to_1d_array(image: Image) -> list:
+    img_1D_array = []
+    image_data = image.getdata()
+    if image_data.bands == 3:
+        for pixel in image_data:
+            img_1D_array.extend(
+                (pixel[0] / 255, pixel[1] / 255, pixel[2] / 255, 1)
+            )
+    else:
+        for pixel in image_data:
+            img_1D_array.extend(
+                (
+                    pixel[0] / 255,
+                    pixel[1] / 255,
+                    pixel[2] / 255,
+                    pixel[3] / 255,
+                )
+            )
+    del image_data
+    return img_1D_array
 
 
 def set_texture_registry(texture_registry_tag: int | str):
+    """"""
     global texture_registry
     texture_registry = texture_registry_tag
 
 
 def get_texture_plug() -> TextureTag:
+    """"""
     global texture_plug
     if texture_plug is None:
         texture_plug = dpg.add_static_texture(
@@ -68,6 +56,7 @@ def get_texture_plug() -> TextureTag:
 
 
 def image_to_dpg_texture(image: Image) -> TextureTag:
+    """"""
     rgba_image = image.convert("RGBA")
     img_1d_array = _image_to_1d_array(rgba_image)
     dpg_texture_tag = dpg.add_static_texture(
@@ -119,9 +108,6 @@ class HandlerDeleter:
                 dpg.split_frame()
 
             for handler in deletion_queue:
-                try:
-                    dpg.delete_item(handler)
-                except Exception:
-                    pass
+                dpg.delete_item(handler)
             del deletion_queue
         cls.__thread = False

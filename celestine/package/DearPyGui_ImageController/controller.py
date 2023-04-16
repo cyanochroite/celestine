@@ -289,8 +289,9 @@ class Controller(Dict[ImageControllerTag, ImageController]):
             image_tag = hashlib.md5(image.encode()).hexdigest()
             image = img.open(image)
         elif isinstance(image, Image):
-            # TODO: Better hash function
-            image_tag = hashlib.md5(image.tobytes()).hexdigest()
+            image_tag = hashlib.md5(
+                image.tobytes()
+            ).hexdigest()  # TODO: Better hash function
         else:
             raise ValueError(
                 f"href must be an Image or str, not {type(image)}"
