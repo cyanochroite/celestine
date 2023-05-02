@@ -1,6 +1,6 @@
 """A list of character code points from the Unicode Standard."""
 
-NONE = str()
+NONE = ""
 NULL = chr(0x0000)
 START_OF_HEADING = chr(0x0001)
 START_OF_TEXT = chr(0x0002)

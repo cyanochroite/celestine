@@ -31,7 +31,7 @@ todo = [
 for item in todo:
     data = []
     path = f"../../hold/EUPL v1_2 {item}.txt"
-    with open(path, "rt", encoding="utf-8") as file:
+    with open(path, encoding="utf-8") as file:
         lines = file.readlines()
         for line in lines:
             line = line.strip()

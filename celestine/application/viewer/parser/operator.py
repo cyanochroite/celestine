@@ -12,7 +12,7 @@ class Operator:
     def __init__(self, name, primary, secondary):
         self.name = name
         self.value = primary
-        self.value = str().join(
+        self.value = "".join(
             [getattr(item, "value", str(item)) for item in primary]
         )
 
@@ -20,7 +20,7 @@ class Operator:
         return self.value
 
     def __repr__(self):
-        return "<Operator.{0}: '{1}'>".format(self.name, self.value)
+        return f"<Operator.{self.name}: '{self.value}'>"
 
     def __eq__(self, other):
         return self.name == other.name and self.value == other.value
@@ -231,7 +231,7 @@ _unary = {
 
 def join(iterable):
     """"""
-    return str().join([item.value for item in iterable])
+    return "".join([item.value for item in iterable])
 
 
 def tab_parse(iterable):
