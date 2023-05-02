@@ -1,4 +1,4 @@
-"""ro Romanian română"""
+"""Romanian română ro"""
 
 APPLICATION_TITLE = "Celestin Image Viewer"
 

@@ -1,4 +1,4 @@
-"""nl Dutch Nederlands"""
+"""Dutch Nederlands nl"""
 
 APPLICATION_TITLE = "Celestine Image Viewer"
 

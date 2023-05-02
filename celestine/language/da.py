@@ -1,4 +1,4 @@
-"""da Danish dansk"""
+"""Danish dansk da"""
 
 APPLICATION_TITLE = "Celestine Billedfremviser"
 

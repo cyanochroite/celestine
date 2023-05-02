@@ -1,4 +1,4 @@
-"""lt Lithuanian lietuvių"""
+"""Lithuanian lietuvių lt"""
 
 APPLICATION_TITLE = "'Celestine' vaizdų peržiūros programa"
 

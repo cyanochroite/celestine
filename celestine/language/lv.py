@@ -1,4 +1,4 @@
-"""lv Latvian latviešu"""
+"""Latvian latviešu lv"""
 
 APPLICATION_TITLE = "Celestine attēlu skatītājs"
 

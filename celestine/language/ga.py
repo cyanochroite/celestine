@@ -1,4 +1,4 @@
-"""ga Irish Gaeilge"""
+"""Irish Gaeilge ga"""
 
 APPLICATION_TITLE = "Breathnóir Íomhá Celestine"
 

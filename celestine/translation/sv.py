@@ -1,4 +1,4 @@
-"""sv Swedish svenska"""
+"""Swedish svenska sv"""
 LANGUAGE = "EU har 24 officiella språk: Bulgariska, danska, engelska, \
 estniska, finska, franska, grekiska, iriska, italienska, kroatiska, \
 lettiska, litauiska, maltesiska, nederländska, polska, portugisiska, \

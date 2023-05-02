@@ -1,4 +1,4 @@
-"""pt Portuguese português"""
+"""Portuguese português pt"""
 
 APPLICATION_TITLE = "Visualizador de imagens celestino"
 

@@ -1,4 +1,4 @@
-"""en English English"""
+"""English English en"""
 APPLICATION_TITLE = "Celestine Image Viewer"
 ARGUMENT_APPLICATION_HELP = "Choose an application to run."
 ARGUMENT_HELP_HELP = "Shows this help screen."

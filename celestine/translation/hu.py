@@ -1,4 +1,4 @@
-"""hu Hungarian magyar"""
+"""Hungarian magyar hu"""
 LANGUAGE = "Az Európai Uniónak 24 hivatalos nyelve van, \
 melyek a következők: angol, bolgár, cseh, dán, észt, finn, francia, \
 görög, holland, horvát, ír, lengyel, lett, litván, magyar, máltai, \

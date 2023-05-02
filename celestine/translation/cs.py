@@ -1,4 +1,4 @@
-"""cs Czech čeština"""
+"""Czech čeština cs"""
 LANGUAGE = "EU má 24 úředních jazyků. Jsou jimi: angličtina, \
 bulharština, čeština, dánština, estonština, finština, francouzština, \
 chorvatština, irština, italština, litevština, lotyština, maďarština, \

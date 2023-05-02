@@ -1,4 +1,4 @@
-"""fi Finnish suomi"""
+"""Finnish suomi fi"""
 
 APPLICATION_TITLE = "Celestine-kuvankatseluohjelma"
 

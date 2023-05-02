@@ -1,4 +1,4 @@
-"""it Italian italiano"""
+"""Italian italiano it"""
 LANGUAGE = "L'UE ha 24 lingue ufficiali: bulgaro, ceco, croato, \
 danese, estone, finlandese, francese, greco, inglese, irlandese, \
 italiano, lettone, lituano, maltese, neerlandese, polacco, portoghese, \

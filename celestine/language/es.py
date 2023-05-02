@@ -1,4 +1,4 @@
-"""es Spanish español"""
+"""Spanish español es"""
 
 APPLICATION_TITLE = "Visor de imágenes Celestine"
 
