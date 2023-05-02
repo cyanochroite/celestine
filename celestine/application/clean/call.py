@@ -1,16 +1,15 @@
-""""""
+"""Run a bunch of auto formaters."""
 
 import os
 import pathlib
 import sys
 
-from autoflake import main as autoflake
-from black import patched_main as black
-from isort.main import main as isort
-from pyupgrade._main import (
-    main as pyupgrade,  # Note: Not direct package.
-)
-from pyupgrade_directories import iter_py_files as pyupgrade_directories
+import autoflake
+import black
+import isort.main
+import pydocstringformatter
+import pyupgrade._main
+import pyupgrade_directories
 
 
 def root():
@@ -19,6 +18,12 @@ def root():
 
 def path():
     return os.path.join(root(), "celestine")
+
+
+def _pydocstringformatter():
+    sys.argv = [root(), path(), "-w"]
+
+    pydocstringformatter.run_docstring_formatter()
 
 
 def _autoflake():
@@ -31,33 +36,35 @@ def _autoflake():
         "--remove-duplicate-keys",
         "--remove-unused-variables",
     ]
-    autoflake()
+    autoflake.main()
 
 
 def _black():
     try:
         sys.argv = [root(), path()]
-        black()
+        black.patched_main()
     except SystemExit:
         pass
 
 
 def _isort():
     sys.argv = [root(), path()]
-    isort()
+    isort.main.main()
 
 
 def _pyupgrade_directories():
-    sys.argv = ["cow", "moo", "dog"]
+    sys.argv = [root(), path()]
 
     files_and_dirs = [pathlib.Path(path())]
     recursive = True
-    directories = pyupgrade_directories(files_and_dirs, recursive)
+    directories = pyupgrade_directories.iter_py_files(
+        files_and_dirs, recursive
+    )
 
     atlas = map(str, directories)
 
     argv = [*atlas, "--py311-plus"]
-    pyupgrade(argv)
+    pyupgrade._main.main(argv)
 
 
 def run(package, argv=None):
@@ -78,6 +85,8 @@ def clean(**star):
     _pyupgrade_directories()
 
     _autoflake()
+
+    _pydocstringformatter()
 
     _isort()
 
