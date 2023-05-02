@@ -1,4 +1,4 @@
-"""Hungarian magyar hu"""
+"""Hungarian magyar hu."""
 
 APPLICATION_TITLE = "Celesztin képnézegető"
 

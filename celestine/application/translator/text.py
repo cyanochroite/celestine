@@ -1,4 +1,4 @@
-"""keywordss used throughout the translator application."""
+"""Keywords used throughout the translator application."""
 
 LANGUAGE = "language"
 

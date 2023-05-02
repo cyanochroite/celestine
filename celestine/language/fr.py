@@ -1,4 +1,4 @@
-"""French français fr"""
+"""French français fr."""
 
 APPLICATION_TITLE = "Visionneuse d’images Célestine"
 

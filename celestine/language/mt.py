@@ -1,4 +1,4 @@
-"""Maltese Malti mt"""
+"""Maltese Malti mt."""
 
 APPLICATION_TITLE = "Werrej tal-Immaġni Celestine"
 

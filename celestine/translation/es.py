@@ -1,4 +1,4 @@
-"""Spanish español es"""
+"""Spanish español es."""
 LANGUAGE = "La UE tiene 24 lenguas oficiales: el alemán, el búlgaro, \
 el checo, el croata, el danés, el eslovaco, el esloveno, el español, \
 el estonio, el finés, el francés, el griego, el húngaro, el inglés, \

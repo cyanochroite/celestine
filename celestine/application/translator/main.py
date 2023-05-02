@@ -99,7 +99,7 @@ def post(session, code, text):
 
 
 def _translate(session):
-    """def main"""
+    """Translate the language files."""
 
     dictionary = parser_magic(session)
 

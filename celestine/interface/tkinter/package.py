@@ -1,5 +1,6 @@
 """
 Pylint can't seem to find tkinter and so gives a few errors.
+
 Putting alias here to contain errors to this file only.
 """
 # https://docs.python.org/3/library/tk.html

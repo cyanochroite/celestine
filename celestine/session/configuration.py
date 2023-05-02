@@ -22,7 +22,7 @@ from .text import FILE
 
 
 class Configuration:
-    """parse configuration stuff."""
+    """Parse configuration stuff."""
 
     def __init__(self) -> N:
         """"""

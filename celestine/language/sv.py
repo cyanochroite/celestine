@@ -1,4 +1,4 @@
-"""Swedish svenska sv"""
+"""Swedish svenska sv."""
 
 APPLICATION_TITLE = "Celestine bildvisare"
 

@@ -1,4 +1,4 @@
-"""Polish polski pl"""
+"""Polish polski pl."""
 
 APPLICATION_TITLE = "Przeglądarka obrazów Celestine"
 

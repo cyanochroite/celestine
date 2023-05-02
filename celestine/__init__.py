@@ -44,6 +44,8 @@ def main(argument_list: L[S], exit_on_error: B, **star) -> N:
 
 def register() -> N:
     """
+    Blender register function.
+
     This is a function which only runs when enabling the add-on,
     this means the module can be loaded without activating the add-on.
     """
@@ -53,6 +55,8 @@ def register() -> N:
 
 def unregister() -> N:
     """
+    Blender unregister function.
+
     This is a function to unload anything setup by register,
     this is called when the add-on is disabled.
     """

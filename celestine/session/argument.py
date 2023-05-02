@@ -29,7 +29,7 @@ from .text import (
 
 
 class Argument(HashClass, Attribute):
-    """abstract class"""
+    """Abstract class."""
 
     def __init__(
         self, argument: B, attribute: B, fallback: S, **star

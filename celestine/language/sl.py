@@ -1,4 +1,4 @@
-"""Slovenian slovenščina sl"""
+"""Slovenian slovenščina sl."""
 
 APPLICATION_TITLE = "Pregledovalnik slik v celestinu"
 

@@ -1,4 +1,4 @@
-"""Polish polski pl"""
+"""Polish polski pl."""
 LANGUAGE = "W UE obowiązują 24 języki urzędowe: angielski, bułgarski, \
 chorwacki, czeski, duński, estoński, fiński, francuski, grecki, \
 hiszpański, irlandzki, litewski, łotewski, maltański, niderlandzki, \

@@ -1,4 +1,4 @@
-"""Greek ελληνικά el"""
+"""Greek ελληνικά el."""
 
 APPLICATION_TITLE = "Πρόγραμμα προβολής εικόνων Celestine"
 

@@ -1,4 +1,4 @@
-"""German Deutsch de"""
+"""German Deutsch de."""
 
 APPLICATION_TITLE = "Celestine Bildbetrachter"
 

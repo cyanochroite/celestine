@@ -1,4 +1,4 @@
-"""Croatian hrvatski hr"""
+"""Croatian hrvatski hr."""
 
 APPLICATION_TITLE = "Celestine preglednik slika"
 

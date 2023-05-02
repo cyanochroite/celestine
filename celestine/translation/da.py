@@ -1,4 +1,4 @@
-"""Danish dansk da"""
+"""Danish dansk da."""
 LANGUAGE = "EU har 24 officielle sprog: bulgarsk, dansk, engelsk, \
 estisk, finsk, fransk, græsk, irsk, italiensk, kroatisk, lettisk, \
 litauisk, maltesisk, nederlandsk, polsk, portugisisk, rumænsk, \

@@ -17,9 +17,7 @@ FN: TA = CA[[N], N]
 
 
 def load(module: MT) -> D[S, FN]:
-    """
-    Load from module all functions and turn them into dictionary.
-    """
+    """Load from module all functions and turn them into dictionary."""
     dictionary = vars(module)
     iterable = {
         key: value
@@ -40,9 +38,7 @@ def find(dictionary: D[S, FN], prefix: S) -> D[S, FN]:
 
 
 def function_page(module: MT) -> L[S]:
-    """
-    Load from module all functions and turn them into dictionary.
-    """
+    """Load from module all functions and turn them into dictionary."""
 
     dictionary = load(module)
     iterable = [key for key, value in dictionary.items()]

@@ -81,6 +81,8 @@ unicode_identifier = basic_multilingual_plane - not_identifier
 
 def word_wrap(string):
     """
+    Wrap long lines by breaking on punctiation or spaces.
+
     INFORMATION_SEPARATOR_FOUR indicates end of file. Stop immediately.
     INFORMATION_SEPARATOR_THREE indicates end of line. Reset column.
     INFORMATION_SEPARATOR_TWO indicates punctuation. Break on long line.
@@ -169,9 +171,7 @@ def word_wrap(string):
 
 
 def normalize_character(string):
-    """
-    Remove all invalid characters.
-    """
+    """Remove all invalid characters."""
     for character in string:
         if character in basic_multilingual_plane:
             yield from character
@@ -180,6 +180,7 @@ def normalize_character(string):
 def normalize_whitespace(string):
     """
     Remove (ignore) all whitespace from the start and end of the string.
+
     Convert all whitespace to spaces.
     Remove all duplicate spaces.
     Preserve space between words.
@@ -245,6 +246,7 @@ def normalize(string):
 def assignment_expression(identifier, expression):
     """
     Make a line for the file from a key value pair.
+
     return F'{identifier} = "{expression}"\n'
     """
     if not identifier.isidentifier():

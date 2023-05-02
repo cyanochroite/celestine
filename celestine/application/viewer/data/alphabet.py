@@ -11,7 +11,11 @@ class Divider(enum.Enum):
 
 @enum.unique
 class Comparison(enum.Enum):
-    """< > ! ="""
+    """
+    Use the following symbols.
+
+    < > ! =
+    """
 
     MARK = chr(0x0021)
     MORE = chr(0x003E)
@@ -21,7 +25,11 @@ class Comparison(enum.Enum):
 
 @enum.unique
 class Unary(enum.Enum):
-    """* + -"""
+    """
+    Use the following symbols.
+
+    * + -
+    """
 
     STAR = chr(0x002A)
     PLUS = chr(0x002B)

@@ -1,4 +1,4 @@
-"""English English en"""
+"""English English en."""
 
 APPLICATION_TITLE = "Celestine Image Viewer"
 

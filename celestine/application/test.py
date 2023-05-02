@@ -21,7 +21,7 @@ class Session(SuperSession):
 
 
 def main(_: Page) -> N:
-    """def main"""
+    """Run the unittest library."""
     module = load.module(APPLICATION, TEST)
     paths = directory.find(TARGET)
     for path in paths:

@@ -1,4 +1,4 @@
-"""Croatian hrvatski hr"""
+"""Croatian hrvatski hr."""
 LANGUAGE = "EU ima 24 službena jezika: bugarski, češki, danski, \
 engleski, estonski, finski, francuski, grčki, hrvatski, irski, \
 latvijski, litavski, mađarski, malteški, nizozemski, njemački, \

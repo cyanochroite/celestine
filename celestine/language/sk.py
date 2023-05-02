@@ -1,4 +1,4 @@
-"""Slovak slovenčina sk"""
+"""Slovak slovenčina sk."""
 
 APPLICATION_TITLE = "Prehliadač obrazu Celestine"
 

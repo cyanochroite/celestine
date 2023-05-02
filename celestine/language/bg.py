@@ -1,4 +1,4 @@
-"""Bulgarian български bg"""
+"""Bulgarian български bg."""
 
 APPLICATION_TITLE = "Селестин Изображение Viewer"
 

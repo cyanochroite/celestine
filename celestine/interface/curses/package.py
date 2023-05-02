@@ -1,5 +1,6 @@
 """
 Pylint can't seem to find curses and so gives a bnuch of errors.
+
 Putting alias here to contain errors to this file only.
 
 Hidding everything in the __getattribute__ function.

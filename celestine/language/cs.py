@@ -1,4 +1,4 @@
-"""Czech čeština cs"""
+"""Czech čeština cs."""
 
 APPLICATION_TITLE = "Prohlížeč obrázků Celestine"
 

@@ -11,7 +11,7 @@ class Abstract(abstract):
     """"""
 
     def add_string(self, frame, x_dot, y_dot, text):
-        """curses swaps x and y"""
+        """Curses swaps x and y."""
         frame.addstr(y_dot, x_dot, text)
 
     def origin(self):

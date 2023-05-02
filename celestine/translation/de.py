@@ -1,4 +1,4 @@
-"""German Deutsch de"""
+"""German Deutsch de."""
 LANGUAGE = "Die EU hat 24 Amtssprachen: Bulgarisch, Dänisch, Deutsch, \
 Englisch, Estnisch, Finnisch, Französisch, Griechisch, Irisch, \
 Italienisch, Kroatisch, Lettisch, Litauisch, Maltesisch, \

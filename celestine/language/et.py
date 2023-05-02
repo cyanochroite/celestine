@@ -1,4 +1,4 @@
-"""Estonian eesti et"""
+"""Estonian eesti et."""
 
 APPLICATION_TITLE = "Celestine'i pildivaatur"
 

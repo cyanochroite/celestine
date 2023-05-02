@@ -1,4 +1,4 @@
-"""Maltese Malti mt"""
+"""Maltese Malti mt."""
 LANGUAGE = "L-UE għandha 24 lingwa uffiċjali: Il-Bulgaru, iċ-Ċek, \
 id-Daniż, l-Estonjan, il-Finlandiż, il-Franċiż, il-Ġermaniż, il-Grieg, \
 l-Ingliż, l-Irlandiż, il-Kroat, il-Latvjan, il-Litwan, il-Malti, \
