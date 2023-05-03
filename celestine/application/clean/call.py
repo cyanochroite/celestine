@@ -48,8 +48,11 @@ def _black():
 
 
 def _isort():
-    sys.argv = [root(), path()]
-    isort.main.main()
+    try:
+        sys.argv = [root(), path()]
+        isort.main.main()
+    except SystemExit:
+        pass
 
 
 def _pyupgrade_directories():
