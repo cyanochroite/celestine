@@ -29,14 +29,9 @@ def attempt(*path: S) -> B:
     return False
 
 
-def package(name: S) -> MT:
+def package(base: S, *path: S) -> MT:
     """Load an external package from anywhere in the application."""
-    return __import__(name)
-
-
-def module(*path: S) -> MT:
-    """Load an internal module from anywhere in the application."""
-    iterable = [CELESTINE, *path]
+    iterable = [base, *path]
     name = FULL_STOP.join(iterable)
     file = __import__(name)
     for _path in path:
@@ -44,6 +39,11 @@ def module(*path: S) -> MT:
     if "from" not in repr(file):
         raise ModuleNotFoundError(f"Module failed to load: {name}")
     return file
+
+
+def module(*path: S) -> MT:
+    """Load an internal module from anywhere in the application."""
+    return package(CELESTINE, *path)
 
 
 def module_fallback(*path: S) -> MT:

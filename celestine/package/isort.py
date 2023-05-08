@@ -2,16 +2,15 @@
 
 
 from celestine.package import Package as Package_
-from celestine.typed import MT
 
 
 class Package(Package_):
     """"""
 
-    def main(self, package: MT) -> None:
+    def module(self) -> list[str]:
         """"""
-        package.main.main()
+        return ["main"]
 
-    def module(self) -> str:
+    def name(self) -> str:
         """"""
-        return "isort.main"
+        return "isort"

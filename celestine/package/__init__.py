@@ -19,17 +19,21 @@ class Package:
         """"""
         return []
 
-    def main(module: MT) -> None:
+    def main(self, package: MT) -> None:
         """"""
-        raise NotImplementedError
+        package.main()
 
-    def module(self) -> str:
+    def module(self) -> list[str]:
         """The 'import PACKAGE.MODULE' name."""
-        return self.name
+        return []
+
+    def name(self) -> str:
+        """The 'import PACKAGE' name."""
+        raise NotImplementedError
 
     def pip(self) -> str:
         """"""
-        return f"pip install {self.name}"
+        return f"pip install {self.name()}"
 
     def run(self) -> None:
         """"""
@@ -41,7 +45,7 @@ class Package:
         sys.argv = [root, path, *argument]
 
         try:
-            module = load.package(self.module())
+            module = load.package(self.name(), *self.module())
             self.main(module)
         except ModuleNotFoundError:
             print("Module failed to load. To install, run:")
@@ -51,13 +55,9 @@ class Package:
 
         sys.argv = argv
 
-    def __init__(self, name: str) -> None:
-        """"""
-        self.name = name
-
 
 def run(name: str) -> None:
     """"""
     module = load.module(PACKAGE, name)
-    package = module.Package(name)
+    package = module.Package()
     package.run()
