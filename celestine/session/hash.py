@@ -1,4 +1,6 @@
 """
+A custom hash function for special classes.
+
 Make it so class objects and class instances map to the same slot in a
 dictionary. Essentially this is just a weird fancy Enum.
 
@@ -38,7 +40,11 @@ class HashMetaClass(type):
         return hash(str(cls))
 
     def __str__(cls) -> S:
-        """<class 'celestine.session.argument.Argument'>"""
+        """
+        Build the string representation.
+
+        <class 'celestine.session.argument.Argument'>
+        """
         string = super().__str__()
         (_, _, after) = string.rpartition(FULL_STOP)
         (before, _, _) = after.partition(APOSTROPHE)
@@ -53,7 +59,11 @@ class HashClass(metaclass=HashMetaClass):
         return hash(str(self))
 
     def __str__(self) -> S:
-        """<celestine.session.argument.Argument object at 0x00000000>"""
+        """
+        Build the string representation.
+
+        <celestine.session.argument.Argument object at 0x00000000>
+        """
         string = super().__str__()
         (_, _, after) = string.rpartition(FULL_STOP)
         (before, _, _) = after.partition(SPACE)

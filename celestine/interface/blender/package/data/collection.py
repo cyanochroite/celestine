@@ -1,4 +1,4 @@
-""" bpy.types.Collection"""
+"""Blender type is bpy.types.Collection."""
 import bpy
 
 from .spawn import _imaginary

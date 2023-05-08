@@ -1,4 +1,4 @@
-""" bpy.types.Camera"""
+"""Blender type is bpy.types.Camera."""
 from .spawn import _real
 
 

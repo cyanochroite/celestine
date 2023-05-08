@@ -44,6 +44,7 @@ def module(*path: S) -> MT:
 def module_fallback(*path: S) -> MT:
     """
     Load an internal module from anywhere in the application.
+
     If the last item is none then load the package instead.
     """
     iterable = [*path]
@@ -53,9 +54,7 @@ def module_fallback(*path: S) -> MT:
 
 
 def dictionary(*path: S) -> D[S, S]:
-    """
-    Load from module all key value pairs and turn them into dictionary.
-    """
+    """Load from module all key value pairs and turn them into dictionary."""
     _module = module(*path)
     _dictionary = vars(_module)
     mapping = {
@@ -98,7 +97,9 @@ def argument_default(path: S) -> S:
 
 def argument(*path: S) -> L[S]:
     """
-    Build a path to the selected package. Scan all items in directory.
+    Build a path to the selected package.
+
+    Scan all items in directory.
     Return a list of items that are not private, such as '.private' or
     '_private'. (First letter is not a symbol.)
     Strip off all file extensions, if any.

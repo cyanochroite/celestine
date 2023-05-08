@@ -17,7 +17,11 @@ class Button(Abstract, button):
     """"""
 
     def callback(self, *_):
-        """callback(self, sender, app_data, user_data)"""
+        """
+        The object callback.
+
+        callback(self, sender, app_data, user_data)
+        """
         self.call(self.action, **self.argument)
 
     def draw(self, _, *, make, **star):
@@ -34,7 +38,11 @@ class Button(Abstract, button):
 
 
 class Image(Abstract, image):
-    """ "delete_item(...)"."""
+    """
+    Manages image objects.
+
+    delete_item(...)
+    """
 
     def add(self):
         """"""
@@ -58,12 +66,14 @@ class Image(Abstract, image):
                     width=width,
                 )
             except SystemError:
-                """image already exists"""
+                """Image already exists."""
 
         return name
 
     def draw(self, _, *, make, **star):
         """
+        Draw the image to screen.
+
         image = (0, 0, 0, [])
         width = image[0]
         height = image[1]

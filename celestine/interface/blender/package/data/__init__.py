@@ -13,6 +13,8 @@ from .texture import _texture as texture
 
 def start():
     """
+    Blender register function.
+
     This is a function which only runs when enabling the add-on,
     this means the module can be loaded without activating the add-on.
     """
@@ -29,6 +31,8 @@ def start():
 
 def finish():
     """
+    Blender unregister function.
+
     This is a function to unload anything setup by register,
     this is called when the add-on is disabled.
     """
