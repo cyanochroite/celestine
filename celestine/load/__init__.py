@@ -29,6 +29,11 @@ def attempt(*path: S) -> B:
     return False
 
 
+def package(name: S) -> MT:
+    """Load an external package from anywhere in the application."""
+    return __import__(name)
+
+
 def module(*path: S) -> MT:
     """Load an internal module from anywhere in the application."""
     iterable = [CELESTINE, *path]

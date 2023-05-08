@@ -1,19 +1,17 @@
 """Run a bunch of auto formaters."""
 
 
-import pyupgrade._main
-
-from celestine.package.autoflake import main as autoflake
-from celestine.package.black import main as black
-from celestine.package.isort import main as isort
-from celestine.package.pydocstringformatter import (
-    main as pydocstringformatter,
-)
-from celestine.package.pyupgrade import main as pyupgrade
+from celestine.package import run
 
 
 def clean(**star):
     """"""
+
+    run("isort")
+    run("black")
+    return
+
+    black()
 
     pyupgrade()
 
