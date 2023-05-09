@@ -2,8 +2,9 @@
 
 import sys
 
-from celestine.package import Package as Package_
 from celestine.typed import MT
+
+from . import Package as Package_
 
 
 class Package(Package_):
@@ -28,7 +29,6 @@ class Package(Package_):
         pyupgrade._main.main(argv)
         #
         package.main()
-
 
     def argument(self) -> list[str]:
         """"""

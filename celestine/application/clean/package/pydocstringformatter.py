@@ -3,8 +3,9 @@
 It tries to follow. recommendations from PEP 8 and PEP 257.
 """
 
-from celestine.package import Package as Package_
 from celestine.typed import MT
+
+from . import Package as Package_
 
 
 class Package(Package_):

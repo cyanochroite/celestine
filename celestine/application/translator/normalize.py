@@ -1,14 +1,10 @@
 """Central place for loading and importing external files."""
-import io
-import keyword
 
 from celestine.unicode import (
-    APOSTROPHE,
     CARRIAGE_RETURN,
     CHARACTER_TABULATION,
     COLON,
     COMMA,
-    EQUALS_SIGN,
     EXCLAMATION_MARK,
     FORM_FEED,
     FULL_STOP,
@@ -22,8 +18,6 @@ from celestine.unicode import (
     NEXT_LINE,
     PARAGRAPH_SEPARATOR,
     QUESTION_MARK,
-    QUOTATION_MARK,
-    REVERSE_SOLIDUS,
     SEMICOLON,
     SPACE,
 )
@@ -81,8 +75,8 @@ unicode_identifier = basic_multilingual_plane - not_identifier
 
 def normalize(string):
     """"""
-    character = _character(string)
-    whitespace = _whitespace(_character)
+    _character(string)
+    _whitespace(_character)
     yield from punctuation
 
 

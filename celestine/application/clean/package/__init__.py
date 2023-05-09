@@ -10,8 +10,6 @@ CELESTINE = "celestine"
 PACKAGE = "package"
 
 
-
-
 class Package:
     """"""
 
@@ -58,6 +56,6 @@ class Package:
 
 def run(name: str) -> None:
     """"""
-    module = load.module(PACKAGE, name)
+    module = load.module("application", "clean", "package", name)
     package = module.Package()
     package.run()

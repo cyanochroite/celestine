@@ -1,8 +1,9 @@
 """The uncompromising code formatter."""
 
 
-from celestine.package import Package as Package_
 from celestine.typed import MT
+
+from . import Package as Package_
 
 
 class Package(Package_):

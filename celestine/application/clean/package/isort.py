@@ -1,7 +1,7 @@
 """A Python utility / library to sort Python imports."""
 
 
-from celestine.package import Package as Package_
+from . import Package as Package_
 
 
 class Package(Package_):

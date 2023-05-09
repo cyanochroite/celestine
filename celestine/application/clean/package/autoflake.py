@@ -1,6 +1,6 @@
 """Removes unused imports and unused variables."""
 
-from celestine.package import Package as Package_
+from . import Package as Package_
 
 
 class Package(Package_):
