@@ -56,6 +56,6 @@ class Package:
 
 def run(name: str) -> None:
     """"""
-    module = load.module("application", "clean", "package", name)
+    module = load.module(PACKAGE, name)
     package = module.Package()
     package.run()

@@ -1,7 +1,7 @@
 """Run a bunch of auto formaters."""
 
 
-from celestine.application.clean.package import run
+from celestine.package import run
 
 
 def clean(**star):

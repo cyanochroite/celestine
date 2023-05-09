@@ -1,12 +1,11 @@
 """"""
 
 from celestine import load
+from celestine.package import tkinter
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
-
-from . import package
 
 
 class Abstract(Abstract_):
@@ -39,7 +38,7 @@ class Button(Abstract, Button_):
         if not make:
             return
 
-        item = package.Button
+        item = tkinter.Button
         star.update(command=self.callback)
         star.update(text=f"button:{self.text}")
         self.render(view, item, **star)
@@ -55,8 +54,8 @@ class Image(Abstract, Image_):
         if not make:
             return
 
-        item = package.Label
-        self.cache = package.PhotoImage(file=file)
+        item = tkinter.Label
+        self.cache = tkinter.PhotoImage(file=file)
         star.update(image=self.cache)
         self.render(view, item, **star)
 
@@ -65,7 +64,7 @@ class Image(Abstract, Image_):
         if not super().update(image=image, **star):
             return False
 
-        self.cache = package.PhotoImage(file=self.image)
+        self.cache = tkinter.PhotoImage(file=self.image)
         self.item.configure(image=self.cache)
         self.item.image = self.cache
         return True
@@ -79,7 +78,7 @@ class Label(Abstract, Label_):
         if not make:
             return
 
-        item = package.Label
+        item = tkinter.Label
         star.update(fg="blue")
         star.update(height=4)
         star.update(text=f"label:{self.text}")

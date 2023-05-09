@@ -1,12 +1,11 @@
 """"""
 
 from celestine import load
+from celestine.package import dearpygui
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
 from celestine.window.element import Image as image
 from celestine.window.element import Label as label
-
-from . import package
 
 
 class Abstract(abstract):
@@ -29,7 +28,7 @@ class Button(Abstract, button):
         if not make:
             return
 
-        package.add_button(
+        dearpygui.add_button(
             callback=self.callback,
             label=self.text,
             tag=self.tag,
@@ -50,16 +49,16 @@ class Image(Abstract, image):
         empty = (0, 0, 0, [])
         path = self.image or load.asset("null.png")
 
-        _image = package.load_image(path) or empty
+        _image = dearpygui.load_image(path) or empty
         width = _image[0]
         height = _image[1]
         # channels = _image[2]
         photo = _image[3]
         name = path
 
-        with package.texture_registry(show=False):
+        with dearpygui.texture_registry(show=False):
             try:
-                package.add_dynamic_texture(
+                dearpygui.add_dynamic_texture(
                     default_value=photo,
                     height=height,
                     tag=name,
@@ -86,7 +85,7 @@ class Image(Abstract, image):
 
         name = self.add()
 
-        package.add_image(
+        dearpygui.add_image(
             name,
             tag=self.tag,
             pos=(self.x_min, self.y_min),
@@ -97,7 +96,7 @@ class Image(Abstract, image):
         if not super().update(image=image, **star):
             return False
 
-        package.set_value(self.tag, self.image)
+        dearpygui.set_value(self.tag, self.image)
         return True
 
 
@@ -109,7 +108,7 @@ class Label(Abstract, label):
         if not make:
             return
 
-        package.add_text(
+        dearpygui.add_text(
             f" {self.text}",  # extra space hack to fix margin error
             tag=self.tag,
             pos=(self.x_min, self.y_min),

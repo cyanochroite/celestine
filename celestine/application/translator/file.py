@@ -1,5 +1,4 @@
 """Central place for loading and importing external files."""
-
 from celestine import load
 from celestine.application.translator.parser import dictionary_to_file
 from celestine.text import stream
@@ -7,6 +6,7 @@ from celestine.text import stream
 
 def save_string(string, *path):
     """Save a string to a file."""
+
     file = load.python(*path)
     mode = stream.WRITE_TEXT
     buffering = 1  # use line buffering

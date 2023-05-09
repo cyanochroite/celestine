@@ -1,8 +1,7 @@
 """"""
 
+from celestine.package import tkinter
 from celestine.window.window import Window as window
-
-from . import package
 
 
 class Window(window):
@@ -10,7 +9,7 @@ class Window(window):
 
     def data(self, container):
         """"""
-        container.data = package.Frame(
+        container.data = tkinter.Frame(
             self.root,
             padx=5,
             pady=5,
@@ -26,7 +25,7 @@ class Window(window):
 
     def __enter__(self):
         super().__enter__()
-        self.root = package.Tk()
+        self.root = tkinter.Tk()
         self.root.title(self.session.language.APPLICATION_TITLE)
         self.root.geometry("1920x1080")
         self.root.minsize(640, 480)

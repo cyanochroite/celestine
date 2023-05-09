@@ -1,8 +1,7 @@
 """"""
 
+from celestine.package import dearpygui
 from celestine.window.window import Window as window
-
-from . import package
 
 
 class Window(window):
@@ -10,10 +9,10 @@ class Window(window):
 
     def view(self, name, document):
         value = self.container.drop(name)
-        value.data = package.window(tag=value.tag)
+        value.data = dearpygui.window(tag=value.tag)
         self._view.set(name, value)
         with value.data:
-            package.configure_item(value.tag, show=False)
+            dearpygui.configure_item(value.tag, show=False)
             document(value)
             value.spot(0, 0, 1920, 1080)
             value.draw(None, make=True)
@@ -23,19 +22,19 @@ class Window(window):
 
     def turn(self, page, **star):
         if self.page:
-            package.hide_item(self.page.tag)
+            dearpygui.hide_item(self.page.tag)
 
         super().turn(page, **star)
 
         tag = self.page.tag
-        package.show_item(tag)
-        package.set_primary_window(tag, True)
+        dearpygui.show_item(tag)
+        dearpygui.set_primary_window(tag, True)
 
     def __enter__(self):
         super().__enter__()
         title = self.session.language.APPLICATION_TITLE
-        package.create_context()
-        package.create_viewport(
+        dearpygui.create_context()
+        dearpygui.create_viewport(
             title=title,
             small_icon="celestine_small.ico",
             large_icon="celestine_large.ico",
@@ -57,10 +56,10 @@ class Window(window):
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-        package.setup_dearpygui()
-        package.show_viewport(minimized=False, maximized=False)
-        package.start_dearpygui()
-        package.destroy_context()
+        dearpygui.setup_dearpygui()
+        dearpygui.show_viewport(minimized=False, maximized=False)
+        dearpygui.start_dearpygui()
+        dearpygui.destroy_context()
         self.container = None
         return False
 
