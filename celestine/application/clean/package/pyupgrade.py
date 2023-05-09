@@ -2,6 +2,7 @@
 
 import sys
 
+from celestine.load import directory
 from celestine.typed import MT
 
 from . import Package as Package_
@@ -40,9 +41,10 @@ class Package(Package_):
 
     def main(self, package: MT) -> None:
         """"""
-        print("MAKE RECURSIVE")
-        sys.argv[1] += "\\__init__.py"
-        package.main()
+        files = directory.python(sys.argv[1])
+        atlas = map(str, files)
+        argv = [*atlas, "--py311-plus"]
+        package.main(argv)
 
     def module(self) -> list[str]:
         """"""

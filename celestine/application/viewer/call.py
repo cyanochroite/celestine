@@ -2,7 +2,7 @@
 
 import os
 
-from celestine.load.directory import walk_file
+from celestine.load.directory import walk_file_old
 
 
 def _execute(session, directory):
@@ -14,7 +14,7 @@ def _execute(session, directory):
         extension = ext.lower()
         return extension in image_format
 
-    file = walk_file(directory)
+    file = walk_file_old(directory)
     image = filter(file_extension, file)
     return list(image)
 
