@@ -6,6 +6,7 @@ from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
+from celestine.window.window import Window as window
 
 
 class Abstract(Abstract_):
@@ -84,3 +85,65 @@ class Label(Abstract, Label_):
         star.update(text=f"label:{self.text}")
         star.update(width=100)
         self.render(view, item, **star)
+
+
+class Window(window):
+    """"""
+
+    def data(self, container):
+        """"""
+        container.data = tkinter.Frame(
+            self.root,
+            padx=5,
+            pady=5,
+            bg="skyblue",
+            width=1920,
+            height=1080,
+        )
+        container.data.place(x=0, y=0)
+
+    def turn(self, page, **star):
+        super().turn(page, **star)
+        self.page.data.tkraise()
+
+    def __enter__(self):
+        super().__enter__()
+        self.root = tkinter.Tk()
+        self.root.title(self.session.language.APPLICATION_TITLE)
+        self.root.geometry("1920x1080")
+        self.root.minsize(640, 480)
+        self.root.maxsize(3840, 2160)
+        self.root.config(bg="blue")
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        super().__exit__(exc_type, exc_value, traceback)
+        self.root.mainloop()
+        return False
+
+    def __init__(self, session, element, size, **star):
+        super().__init__(session, element, size, **star)
+        self.root = None
+
+
+def image_format():
+    """"""
+    return [
+        ".pbm",
+        ".pgm",
+        ".ppm",
+        ".pnm",
+        ".gif",
+        ".png",
+    ]
+
+
+def window(session, **star):
+    """"""
+    element = {
+        "button": Button,
+        "image": Image,
+        "label": Label,
+    }
+    size = (1280, 1080)
+    return Window(session, element, size, **star)
