@@ -223,7 +223,7 @@ def normalize_quotation(string):
 
 
 def normalize_punctuation(string):
-    """"""
+    """Remove excess punctiation."""
 
     previous = None
     for character in string:

@@ -29,6 +29,15 @@ class Package(Package_):
         #
         package.main()
 
+
+    def argument(self) -> list[str]:
+        """"""
+        filenames = []
+        return [
+            "--py311-plus",
+            *filenames,
+        ]
+
     def main(self, package: MT) -> None:
         """"""
         print("MAKE RECURSIVE")

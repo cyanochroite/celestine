@@ -1,6 +1,7 @@
 *.bat
 *.egg-info/
 *.ini
+*.wpr
 *.wpu
 .coverage
 .mypy_cache/

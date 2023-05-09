@@ -4,12 +4,12 @@ import os
 import sys
 
 from celestine import load
+from celestine.typed import MT
 
 CELESTINE = "celestine"
 PACKAGE = "package"
 
 
-from celestine.typed import MT
 
 
 class Package:
