@@ -1,5 +1,5 @@
-Célestine (Framework)
-#####################
+celestine
+#########
 
 .. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
    :target: https://celestine.readthedocs.io/en/latest/?badge=latest
@@ -70,12 +70,42 @@ Note: Pygame has not yet been released for Python 3.11. Which is too bad because
 +-------------------+----------------+------------------------------------------------------------------------+
 | Package           | pip install    | Information                                                            |
 +===================+================+========================================================================+
-| `Dear PyGui`_     | dearpygui      | DearPyGui: A simple Python GUI Toolkit.                                |
+| `dearpygui`_      | dearpygui      | DearPyGui: A simple Python GUI Toolkit.                                |
 +-------------------+----------------+------------------------------------------------------------------------+
-| `Pygame`_         | pygame         | Python Game Development.                                               |
+| `pygame`_         | pygame         | Python Game Development.                                               |
 +-------------------+----------------+------------------------------------------------------------------------+
 | `Windows Curses`_ | windows-curses | Support for the standard curses module on Windows.                     |
 +-------------------+----------------+------------------------------------------------------------------------+
+
+
+Package Dependency
+^^^^^^^^^^^^^^^^^^
+
++--------------------------+-------------------------+-----------------------------------+
+| Package                  | Source                  | Install                           |
++==========================+=========================+===================================+
+| `autoflake`_             | Python Package Index    | pip install autoflake             |
++--------------------------+-------------------------+-----------------------------------+
+| `black`_                 | Python Package Index    | pip install black                 |
++--------------------------+-------------------------+-----------------------------------+
+| `curses`_                | Python Standard Library | Python Installer :superscript:`1` |
++--------------------------+-------------------------+-----------------------------------+
+| `dearpygui`_             | Python Package Index    | pip install dearpygui             |
++--------------------------+-------------------------+-----------------------------------+
+| `isort`_                 | Python Package Index    | pip install isort                 |
++--------------------------+-------------------------+-----------------------------------+
+| `pydocstringformatter`_  | Python Package Index    | pip install pydocstringformatter  |
++--------------------------+-------------------------+-----------------------------------+
+| `pygame`_                | Python Package Index    | pip install pygame                |
++--------------------------+-------------------------+-----------------------------------+
+| `pyupgrade`_             | Python Package Index    | pip install pyupgrade             |
++--------------------------+-------------------------+-----------------------------------+
+| `tkinter`_               | Python Standard Library | Python Installer                  |
++--------------------------+-------------------------+-----------------------------------+
+
+
+Notes:
+1. On Windows, use 'pip install windows-curses'.
 
 Commands
 ********
@@ -100,19 +130,19 @@ Caution: By default the viewer application will try to load every image it finds
 Graphical User Interface
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-+---------------+-------------------------+------------------------+
-| Interface     | Type                    | Command                |
-+===============+=========================+========================+
-| `Blender`_    | Application             | celestine -i blender   |
-+---------------+-------------------------+------------------------+
-| `Curses`_     | Python Standard Library | celestine -i curses    |
-+---------------+-------------------------+------------------------+
-| `Dear PyGui`_ | Python Package Index    | celestine -i dearpygui |
-+---------------+-------------------------+------------------------+
-| `Pygame`_     | Python Package Index    | celestine -i pygame    |
-+---------------+-------------------------+------------------------+
-| `Tkinter`_    | Python Standard Library | celestine -i tkinter   |
-+---------------+-------------------------+------------------------+
++--------------+-------------------------+------------------------+
+| Interface    | Type                    | Command                |
++==============+=========================+========================+
+| `Blender`_   | Application             | celestine -i blender   |
++--------------+-------------------------+------------------------+
+| `curses`_    | Python Standard Library | celestine -i curses    |
++--------------+-------------------------+------------------------+
+| `dearpygui`_ | Python Package Index    | celestine -i dearpygui |
++--------------+-------------------------+------------------------+
+| `pygame`_    | Python Package Index    | celestine -i pygame    |
++--------------+-------------------------+------------------------+
+| `tkinter`_   | Python Standard Library | celestine -i tkinter   |
++--------------+-------------------------+------------------------+
 
 World Language
 ^^^^^^^^^^^^^^
@@ -178,15 +208,21 @@ Resources
 
 .. _`Blender`: https://www.blender.org/
 .. _`Celestine`: https://pypi.org/project/celestine/
-.. _`Curses`: https://docs.python.org/3/howto/curses.html
-.. _`Dear PyGui`: https://github.com/hoffstadt/DearPyGui/
 .. _`Discord`: https://discord.gg/aNmDWPXd7B
 .. _`Email`: celestine@mem-dixy.ch
 .. _`Python`: https://www.python.org/
-.. _`Pygame`: https://www.pygame.org/
 .. _`Read the Docs`: https://celestine.readthedocs.io/en/latest/
-.. _`Tkinter`: https://docs.python.org/3/library/tk.html
 .. _`Windows Curses`: https://github.com/zephyrproject-rtos/windows-curses/
 
 
 
+
+.. _`autoflake`: https://www.python.org/
+.. _`black`: https://www.python.org/
+.. _`curses`: https://docs.python.org/3/howto/curses.html
+.. _`dearpygui`: https://github.com/hoffstadt/DearPyGui/
+.. _`isort`: https://www.python.org/
+.. _`pydocstringformatter`: https://www.python.org/
+.. _`pygame`: https://www.pygame.org/
+.. _`pyupgrade`: https://www.python.org/
+.. _`tkinter`: https://docs.python.org/3/library/tk.html
