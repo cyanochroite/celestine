@@ -59,7 +59,7 @@ def module_fallback(*path: S) -> MT:
 
 
 def dictionary(*path: S) -> D[S, S]:
-    """Load from module all key value pairs and turn them into dictionary."""
+    """Load from module all key value pairs and make it a dictionary."""
     _module = module(*path)
     _dictionary = vars(_module)
     mapping = {

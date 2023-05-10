@@ -1,19 +1,66 @@
 [build-system]
 requires = [
-  "setuptools >= 40.9.0",
-  "wheel",
+    "setuptools >= 40.9.0",
+    "wheel",
 ]
 build-backend = "setuptools.build_meta"
 
+
+[tool.autoflake]
+exclude = [
+    "unicode.py",
+]
+in-place = true
+recursive = true
+remove-all-unused-imports = true
+remove-duplicate-keys = true
+remove-unused-variables = true
+
+
 [tool.black]
+extend-exclude = "unicode.py"
 line_length = 72
+safe = true
+target-version = [
+    "py311",
+]
+
 
 [tool.isort]
+extend_skip = [
+    "unicode.py",
+]
 force_grid_wrap = 2
 line_ending="\r\n"
 line_length = 72
 profile = "black"
+py_version = 311
 remove_redundant_aliases = true
+
+
+[tool.pydocstringformatter]
+beginning-quotes = true
+capitalize-first-letter = true
+closing-quotes = true
+exclude = [
+    "unicode.py",
+]
+final-period = true
+linewrap-full-docstring = true
+max-summary-lines = 1
+max-line-length = 72
+numpydoc-name-type-spacing = false
+numpydoc-section-hyphen-length = false
+numpydoc-section-order = false
+numpydoc-section-spacing = false
+quotes-type = true
+split-summary-body = true
+strip-whitespaces = true
+style = [
+    "pep257",
+]
+write = true
+
 
 [tool.pylint.main]
 disable = "empty-docstring, too-few-public-methods"

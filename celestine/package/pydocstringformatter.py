@@ -14,22 +14,23 @@ class Package(Package_):
     def argument(self) -> list[str]:
         """"""
         return [
-            "-w",
+            "--beginning-quotes",
+            "--capitalize-first-letter",
+            "--closing-quotes",
+            "--exclude = unicode.py",
+            "--final-period",
+            "--linewrap-full-docstring",
             "--max-summary-lines 1",
             "--max-line-length 72",
-            "--style pep257",
-            "--strip-whitespaces",
-            "--split-summary-body",
-            "--no-numpydoc-section-order",
             "--no-numpydoc-name-type-spacing",
-            "--no-numpydoc-section-spacing",
             "--no-numpydoc-section-hyphen-length",
-            "--beginning-quotes",
-            "--closing-quotes",
-            "--capitalize-first-letter",
-            "--final-period",
+            "--no-numpydoc-section-order",
+            "--no-numpydoc-section-spacing",
             "--quotes-type",
-            "--linewrap-full-docstring",
+            "--split-summary-body",
+            "--strip-whitespaces",
+            "--style pep257",
+            "--write",
         ]
 
     def main(self, package: MT) -> None:

@@ -7,10 +7,10 @@ from celestine.package import run
 def clean(**star):
     """"""
 
-    run("pyupgrade")
+    # run("pyupgrade")
     run("pydocstringformatter")
-    run("autoflake")
-    run("isort")
-    run("black")
+    # run("autoflake")
+    # run("isort")
+    #run("black")
 
     print("I am a talking cow.")
