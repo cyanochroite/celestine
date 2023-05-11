@@ -42,13 +42,13 @@ remove_redundant_aliases = true
 beginning-quotes = true
 capitalize-first-letter = true
 closing-quotes = true
-exclude = [
+exclude = [  # Does not actually work.
     "unicode.py",
 ]
 final-period = true
 linewrap-full-docstring = true
 max-summary-lines = 1
-max-line-length = 72
+max-line-length = 75  # Should be 72 but gets clipped too soon.
 numpydoc-name-type-spacing = false
 numpydoc-section-hyphen-length = false
 numpydoc-section-order = false
