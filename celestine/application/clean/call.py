@@ -6,11 +6,10 @@ from celestine.package import run
 
 def clean(**star):
     """"""
-
-    # run("pyupgrade")
+    print("clean start")
+    run("pyupgrade")
     run("pydocstringformatter")
-    # run("autoflake")
-    # run("isort")
-    # run("black")
-
-    print("I am a talking cow.")
+    run("autoflake")
+    run("isort")
+    run("black")
+    print("clean finish")

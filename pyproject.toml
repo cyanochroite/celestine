@@ -31,7 +31,7 @@ extend_skip = [
     "unicode.py",
 ]
 force_grid_wrap = 2
-line_ending="\r\n"
+line_ending = "\r\n"
 line_length = 72
 profile = "black"
 py_version = 311
@@ -65,7 +65,7 @@ write = true
 [tool.pylint.main]
 disable = "empty-docstring, too-few-public-methods"
 # I think this goes here and is right \/
-ignored-argument-names="_|cls|star|self"
+ignored-argument-names = "_|cls|star|self"
 
 [tool.pylint.format]
 expected-line-ending-format = "CRLF"
