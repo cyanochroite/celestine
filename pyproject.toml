@@ -1,9 +1,136 @@
 [build-system]
+build-backend = "setuptools.build_meta"
 requires = [
     "setuptools >= 40.9.0",
     "wheel",
 ]
-build-backend = "setuptools.build_meta"
+
+
+[project]
+authors = [
+    {name = "mem_dixy", email = "celestine@mem-dixy.ch"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)",
+    "Natural Language :: Bulgarian",
+    "Natural Language :: Croatian",
+    "Natural Language :: Czech",
+    "Natural Language :: Danish",
+    "Natural Language :: Dutch",
+    "Natural Language :: English",
+    "Natural Language :: Finnish",
+    "Natural Language :: French",
+    "Natural Language :: German",
+    "Natural Language :: Greek",
+    "Natural Language :: Hungarian",
+    "Natural Language :: Irish",
+    "Natural Language :: Italian",
+    "Natural Language :: Latvian",
+    "Natural Language :: Lithuanian",
+    "Natural Language :: Polish",
+    "Natural Language :: Portuguese",
+    "Natural Language :: Romanian",
+    "Natural Language :: Slovak",
+    "Natural Language :: Slovenian",
+    "Natural Language :: Spanish",
+    "Natural Language :: Swedish",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Multimedia :: Graphics :: Viewers",
+    "Typing :: Typed",
+]
+dependencies = []
+description = "A simple image viewer."
+dynamic = []
+license = {file = "LICENCE.txt"}
+maintainers = [
+    {name = "mem_dixy", email = "celestine@mem-dixy.ch"},
+]
+name = "celestine"
+keywords = [
+    "python",
+    "application",
+    "wrapper",
+    "framework",
+    "localization",
+    "cross-platform",
+    "offline",
+    "desktop",
+    "celestine",
+    "image-viewer",
+]
+readme = "README.rst"
+requires-python = ">=3.10"
+version = "0.4.1"
+
+
+# [project.entry-points."spam.magical"]
+# tomatoes = "spam:main_tomatoes"
+
+
+# [project.gui-scripts]
+# spam-gui = "spam:main_gui"
+
+
+[project.optional-dependencies]
+application = [
+    "requests",
+]
+distribution = [
+    "build",
+    "pip",
+    "twine",
+]
+documentation = [
+    "Sphinx",
+]
+extension = [
+    "more-itertools >= 8.13.0",
+    "Pillow >= 9.0.0",
+]
+macOS = [
+    "dearpygui",
+    "pygame",
+]
+stubs = [
+    "blender-stubs",
+    "types-requests",
+]
+validation = [
+    "black",
+    "coverage",
+    "flake8",
+    "isort",
+    "mypy",
+    "pycodestyle",
+    "pylint",
+    "pyright",
+]
+Windows = [
+    "dearpygui",
+    "pygame",
+    "windows-curses",
+]
+
+
+# [project.scripts]
+# spam-cli = "spam:main_cli"
+
+
+[project.urls]
+Discord = "https://discord.gg/aNmDWPXd7B"
+Documentation = "https://celestine.readthedocs.io/"
+Homepage = "https://mem-dixy.ch"
+Source = "https://github.com/mem-dixy/celestine"
+Tracker = "https://github.com/mem-dixy/celestine/issues"
 
 
 [tool.autoflake]
@@ -38,6 +165,11 @@ py_version = 311
 remove_redundant_aliases = true
 
 
+[tool.mypy]
+no_namespace_packages = true
+show_column_numbers = true
+
+
 [tool.pydocstringformatter]
 beginning-quotes = true
 capitalize-first-letter = true
@@ -47,8 +179,8 @@ exclude = [  # Does not actually work.
 ]
 final-period = true
 linewrap-full-docstring = true
-max-summary-lines = 1
 max-line-length = 75  # Should be 72 but gets clipped too soon.
+max-summary-lines = 1
 numpydoc-name-type-spacing = false
 numpydoc-section-hyphen-length = false
 numpydoc-section-order = false
@@ -67,9 +199,11 @@ disable = "empty-docstring, too-few-public-methods"
 # I think this goes here and is right \/
 ignored-argument-names = "_|cls|star|self"
 
+
 [tool.pylint.format]
 expected-line-ending-format = "CRLF"
 max-line-length = 72
+
 
 [tool.pyright]
 # typeCheckingMode = "strict"
