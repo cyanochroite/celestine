@@ -128,7 +128,7 @@ Windows = [
 [project.urls]
 Discord = "https://discord.gg/aNmDWPXd7B"
 Documentation = "https://celestine.readthedocs.io/"
-Homepage = "https://mem-dixy.ch"
+# Homepage = "https://mem-dixy.ch"
 Source = "https://github.com/mem-dixy/celestine"
 Tracker = "https://github.com/mem-dixy/celestine/issues"
 

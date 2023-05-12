@@ -101,3 +101,48 @@ pyright
 python -m pyright celestine
 pyproject.toml
 https://github.com/microsoft/pyright/blob/main/docs/configuration.md#pyright-configuration
+
+
+
+
+
+
+
+
+Package Dependency
+^^^^^^^^^^^^^^^^^^
+
+
+* `autoflake`_ :command:`pip install autoflake`
+* `black`_ :command:`pip install black`
+* `isort`_ :command:`pip install isort`
+* `pydocstringformatter`_ :command:`pip install pydocstringformatter`
+* `pygame`_ :command:`pip install pygame`
+* `pyupgrade`_ :command:`pip install pyupgrade`
+
+
+.. _`autoflake`: https://pypi.org/project/autoflake/
+.. _`black`: https://pypi.org/project/black/
+.. _`isort`: https://pypi.org/project/isort/
+.. _`pydocstringformatter`: https://www.python.org/
+.. _`pygame`: https://pypi.org/project/pygame/
+.. _`pyupgrade`: https://pypi.org/project/pyupgrade/
+
+
+Package Dependency
+^^^^^^^^^^^^^^^^^^
+
+
+Notes:
+1. On Windows, use 'pip install windows-curses'.
+
+
+.. _`autoflake`: https://pypi.org/project/autoflake/
+.. _`black`: https://pypi.org/project/black/
+.. _`curses`: https://docs.python.org/3/howto/curses.html
+.. _`dearpygui`: https://pypi.org/project/dearpygui/
+.. _`isort`: https://pypi.org/project/isort/
+.. _`pydocstringformatter`: https://www.python.org/
+.. _`pygame`: https://pypi.org/project/pygame/
+.. _`pyupgrade`: https://pypi.org/project/pyupgrade/
+.. _`tkinter`: https://docs.python.org/3/library/tk.html
