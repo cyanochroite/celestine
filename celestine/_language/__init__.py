@@ -1,22 +1,5 @@
 """English English en."""
 
-LANGUAGE = "\
-The EU has 24 official languages: \
-Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, \
-French, German, Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, \
-Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian, \
-Spanish and Swedish."
-
-LANGUAGE_NAME_ENGLISH = "English"
-
-LANGUAGE_NAME_NATIVE = "English"
-
-LANGUAGE_TAG_AZURE = "en"
-
-LANGUAGE_TAG_ISO = "en"
-
-########################################################################
-
 APPLICATION_TITLE = "Celestine Image Viewer"
 
 ARGUMENT_APPLICATION_DESCRIPTION = "\
@@ -85,6 +68,21 @@ DEMO_TWO_NEXT = "Go to page main."
 DEMO_TWO_PAST = "Go to page one."
 
 DEMO_TWO_TITLE = "Page two."
+
+LANGUAGE = "\
+The EU has 24 official languages: \
+Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, \
+French, German, Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, \
+Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian, \
+Spanish and Swedish."
+
+LANGUAGE_NAME_ENGLISH = "English"
+
+LANGUAGE_NAME_NATIVE = "English"
+
+LANGUAGE_TAG_AZURE = "en"
+
+LANGUAGE_TAG_ISO = "en"
 
 TRANSLATOR_FILE_ERROR_OVERFLOW = "We did overflow."
 
