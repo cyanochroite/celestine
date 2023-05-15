@@ -6,10 +6,13 @@ import sys
 from celestine.text import CELESTINE
 from celestine.text.stream import FILE_NAME_EXTENSION
 from celestine.typed import (
+    CA,
     MT,
+    TA,
     B,
     D,
     L,
+    N,
     S,
 )
 from celestine.unicode import (
@@ -17,6 +20,23 @@ from celestine.unicode import (
     LOW_LINE,
     NONE,
 )
+
+FN: TA = CA[[N], N]
+
+FUNCTION = "<function"
+
+
+def functions(*path: S) -> D[S, FN]:
+    """Load from module all functions and turn them into dictionary."""
+    _module = module(*path)
+    dictionary = vars(_module)
+    items = dictionary.items()
+    iterable = {
+        key: value
+        for key, value in items
+        if repr(value).startswith(FUNCTION)
+    }
+    return iterable
 
 
 def attempt(*path: S) -> B:

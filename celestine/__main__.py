@@ -17,21 +17,3 @@ celestine.main(sys.argv[1:], True)
 # Probably just find and copy how the others do it, with the best one.
 
 # pydoccodestyle broken
-
-
-""""""
-
-import locale
-
-
-def default():
-    locale.getdefaultlocale()
-    (language_code, encoding) = local.getdefaultlocale()
-    language = language_code.split("_")[0]
-    return language
-
-
-# get prefs
-# get default
-# get english
-# get last

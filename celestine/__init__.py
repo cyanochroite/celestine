@@ -1,7 +1,6 @@
 """"""
 
 from celestine import load
-from celestine.load import function
 from celestine.session.parser import start_session
 from celestine.typed import (
     B,
@@ -12,7 +11,7 @@ from celestine.typed import (
 
 INTERFACE = "interface"
 BLENDER = "blender"
-
+APPLICATION = "application"
 
 bl_info = {
     "name": "Célestine (Framework)",
@@ -31,13 +30,16 @@ bl_info = {
 
 def main(argument_list: L[S], exit_on_error: B, **star) -> N:
     """Run the main program."""
+
     session = start_session(argument_list, exit_on_error)
+    application = load.module_to_name(session.application)
     with session.interface.window(session, **star) as window:
-        call = function.load(session.call)
+
+        call = load.functions(APPLICATION, application, "call")
         for name, document in call.items():
             window.task.set(name, document)
 
-        view = function.load(session.view)
+        view = load.functions(APPLICATION, application, "view")
         for name, document in view.items():
             window.view(name, document)
 

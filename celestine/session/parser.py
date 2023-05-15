@@ -1,6 +1,7 @@
 """"""
 
 import argparse
+import locale
 from argparse import ArgumentParser as AP
 from typing import TypeAlias as TA
 
@@ -215,6 +216,93 @@ def session_loader(name: S, *path: S) -> TY[Session]:
     return session
 
 
+def default_language():
+    """
+    Return a default language pack.
+
+    Tries to detect the local language of the user.
+    If that fails, try each of the core language packs.
+    """
+
+    (language_code, encoding) = locale.getdefaultlocale()
+    code = language_code.split("_")
+    default = code[0]
+
+    # Sorted list of languages by number of native speakers in Europe.
+    # English and French were manually placed at the top of the list.
+    languages = [
+        default,
+        "en",  # English English en.
+        "fr",  # French français fr.
+        "de",  # German Deutsch de.
+        "it",  # Italian italiano it.
+        "es",  # Spanish español es.
+        "pl",  # Polish polski pl.
+        "ro",  # Romanian română ro.
+        "nl",  # Dutch Nederlands nl.
+        "el",  # Greek ελληνικά el.
+        "hu",  # Hungarian magyar hu.
+        "sv",  # Swedish svenska sv.
+        "cs",  # Czech čeština cs.
+        "pt",  # Portuguese português pt.
+        "bg",  # Bulgarian български bg.
+        "hr",  # Croatian hrvatski hr
+        "da",  # Danish dansk da.
+        "fi",  # Finnish suomi fi.
+        "sk",  # Slovak slovenčina sk.
+        "lt",  # Lithuanian lietuvių lt.
+        "sl",  # Slovenian slovenščina sl.
+        "lv",  # Latvian latviešu lv.
+        "et",  # Estonian eesti et.
+        "mt",  # Maltese Malti mt.
+        "ga",  # Irish Gaeilge ga.
+    ]
+
+    for language in languages:
+        try:
+            return load.module(LANGUAGE, language)
+        except ModuleNotFoundError:
+            pass
+
+    raise RuntimeError("Failed to load any core language pack.")
+
+
+def default_interface():
+    """Return a default interface."""
+
+    interfaces = [
+        "tkinter",
+        "curses",
+        "pygame",
+        "dearpygui",
+        "blender",
+    ]
+
+    for interface in interfaces:
+        try:
+            return load.module(INTERFACE, interface)
+        except ModuleNotFoundError:
+            pass
+
+    raise RuntimeError("Failed to load any core interface pack.")
+
+
+def default_application():
+    """Return a default application."""
+
+    applications = [
+        "demo",
+    ]
+
+    for application in applications:
+        try:
+            return load.module(APPLICATION, application)
+        except ModuleNotFoundError:
+            pass
+
+    raise RuntimeError("Failed to load any core application pack.")
+
+
 def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     """"""
     configuration = Configuration()
@@ -239,17 +327,13 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
         thing = getattr(parser, name, value)
         return thing
 
-    try:
-        language = load.module(LANGUAGE)
-        interface = load.module(INTERFACE)
-        application = load.module(APPLICATION)
+    language = default_language()
+    interface = default_interface()
+    application = default_application()
 
-        language = load_the_fish(LANGUAGE, language)
-        interface = load_the_fish(INTERFACE, interface)
-        application = load_the_fish(APPLICATION, application)
-
-    except ModuleNotFoundError as error:
-        raise RuntimeError("Missing __init__ file.") from error
+    language = load_the_fish(LANGUAGE, language)
+    interface = load_the_fish(INTERFACE, interface)
+    application = load_the_fish(APPLICATION, application)
 
     session1 = session_loader("Session", "session", "session")
 
@@ -276,10 +360,6 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
 
     session = attribute[0]
     session.attribute = attribute[1]
-
-    # hacky addon of new data
-    session.call = load.module(APPLICATION, get_name, "call")
-    session.view = load.module(APPLICATION, get_name, "view")
 
     configuration.save()
 
