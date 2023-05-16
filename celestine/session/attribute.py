@@ -1,9 +1,7 @@
 """"""
 
-from typing import TypeAlias as TA
-
-from celestine.text import VERSION_NUMBER
 from celestine.typed import (
+    TA,
     A,
     D,
     L,
@@ -17,6 +15,7 @@ from .text import (
     HELP,
     NARGS,
     VERSION,
+    VERSION_NUMBER,
 )
 
 AT: TA = D[S, A]
@@ -37,7 +36,7 @@ class Action(Attribute):
         """"""
         return super().dictionary() | {ACTION: self.action}
 
-    def __init__(self, action: S, **star) -> N:
+    def __init__(self, *, action: S, **star) -> N:
         """"""
         super().__init__(**star)
         self.action = action
@@ -50,7 +49,7 @@ class Choices(Attribute):
         """"""
         return super().dictionary() | {CHOICES: self.choices}
 
-    def __init__(self, choices: L[S], **star) -> N:
+    def __init__(self, *, choices: L[S], **star) -> N:
         """"""
         super().__init__(**star)
         self.choices = choices
@@ -63,7 +62,8 @@ class Help(Attribute):
         """"""
         return super().dictionary() | {HELP: self.help}
 
-    def __init__(self, help: S, **star) -> N:  # pylint: disable=W0622
+    # pylint: disable-next=redefined-builtin
+    def __init__(self, *, help: S, **star) -> N:
         """"""
         super().__init__(**star)
         self.help = help
@@ -76,7 +76,7 @@ class Nargs(Attribute):
         """"""
         return super().dictionary() | {NARGS: self.nargs}
 
-    def __init__(self, nargs: S, **star) -> N:
+    def __init__(self, *, nargs: S, **star) -> N:
         """"""
         super().__init__(**star)
         self.nargs = nargs

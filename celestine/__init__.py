@@ -34,7 +34,6 @@ def main(argument_list: L[S], exit_on_error: B, **star) -> N:
     session = start_session(argument_list, exit_on_error)
     application = load.module_to_name(session.application)
     with session.interface.window(session, **star) as window:
-
         call = load.functions(APPLICATION, application, "call")
         for name, document in call.items():
             window.task.set(name, document)

@@ -1,5 +1,27 @@
 """"""
 
+
+from celestine.session.thing import new as make_parser
+import io
+
+import io
+
+from celestine.typed import (
+    L,
+    S,
+)
+from celestine.unicode import (
+    APOSTROPHE,
+    COLON,
+    COMMA,
+    LEFT_PARENTHESIS,
+    LINE_FEED,
+    NONE,
+    RIGHT_PARENTHESIS,
+    SPACE,
+)
+
+
 import argparse
 import locale
 from argparse import ArgumentParser as AP
@@ -50,67 +72,8 @@ INIT = "__init__"
 APD: TA = D[A, A]
 
 
-def make_parser(language: MT, exit_on_error: B) -> AP:
-    """"""
 
-    class Error(argparse.ArgumentError):
-        """Intercept help formating so translation can happen."""
-
-        def __str__(self):
-            value = word.parser_error(
-                language.ARGUMENT_PARSER_ARGUMENT,
-                self.argument_name,
-                self.message,
-            )
-            return value
-
-    class Formatter(argparse.HelpFormatter):
-        """Intercept help formating so translation can happen."""
-
-        def add_usage(self, usage, actions, groups, prefix=None):
-            prefix = word.parser_formatter(
-                language.ARGUMENT_PARSER_USAGE,
-            )
-            super().add_usage(usage, actions, groups, prefix)
-
-    class Parser(argparse.ArgumentParser):
-        """Intercept help formating so translation can happen."""
-
-        def _check_value(self, action, value):
-            try:
-                super()._check_value(action, value)
-            except argparse.ArgumentError as error:
-                value = word.parser_value(
-                    language.ARGUMENT_PARSER_CHOICE,
-                    value,
-                    language.ARGUMENT_PARSER_CHOOSE,
-                    action.choices,
-                )
-                raise Error(action, value) from error
-
-        def error(self, message):
-            value = word.parser_parser_error(
-                self.prog,
-                language.ARGUMENT_PARSER_ERROR,
-                message,
-            )
-            self.exit(2, value)
-            # TODO: Seems to not be called in blender.
-            # But do we even need this function?
-
-    parser = Parser(
-        add_help=False,
-        # description="(cow)",
-        # epilog="<moo>",
-        formatter_class=Formatter,
-        prog=CELESTINE,
-        exit_on_error=exit_on_error,
-    )
-
-    return parser
-
-
-def make_arguments(language: MT, parser: AP) -> APD:
+def make_argument_group(language: MT, parser: AP) -> APD:
     """"""
 
     application = parser.add_argument_group(
@@ -196,7 +159,7 @@ def get_parser(
     """"""
     parser = make_parser(language, exit_on_error)
 
-    arguments = make_arguments(language, parser)
+    arguments = make_argument_group(language, parser)
 
     add_argument(attributes, arguments)
 
@@ -308,10 +271,11 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     configuration = Configuration()
     configuration.load()
 
-    def load_the_fish(name, value) -> MT:
-        session = session_loader(
-            name.capitalize(), "session", "session"
-        )
+    def quick_parse(name, value) -> MT:
+        """Quickly parse important attributes."""
+
+        session = session_loader(name.capitalize(), "session", "session")
+
         hippo = [
             session(application, interface, language),
         ]
@@ -331,15 +295,20 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     interface = default_interface()
     application = default_application()
 
-    language = load_the_fish(LANGUAGE, language)
-    interface = load_the_fish(INTERFACE, interface)
-    application = load_the_fish(APPLICATION, application)
+
+    language = quick_parse(LANGUAGE, language)
+    interface = quick_parse(INTERFACE, interface)
+    application = quick_parse(APPLICATION, application)
 
     session1 = session_loader("Session", "session", "session")
 
     get_name = load.module_to_name(application)
     if get_name == APPLICATION:
         get_name = INIT
+
+    #override for demo
+    get_name = "demo"
+
     session2 = session_loader("Session", APPLICATION, get_name)
     session3 = session_loader("Information", "session", "session")
 
@@ -362,6 +331,12 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     session.attribute = attribute[1]
 
     configuration.save()
+
+
+    # override for demo
+    session.language = "fr"
+    session.interface = "tkinter"
+    session.application = "demo"
 
     return session
 

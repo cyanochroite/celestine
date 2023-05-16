@@ -1,5 +1,7 @@
 """Keywords used throughout the application."""
 
+from celestine.text import VERSION_NUMBER
+
 FILE = "celestine.ini"
 
 # action
