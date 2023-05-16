@@ -1,14 +1,14 @@
-""""""
-
-
-from celestine.session.thing import new as make_parser
+import argparse
 import io
+from argparse import ArgumentParser as AP
+from typing import TypeAlias as TA
 
-import io
-
+from celestine.text import CELESTINE
 from celestine.typed import (
-    L,
-    S,
+    MT,
+    A,
+    B,
+    D,
 )
 from celestine.unicode import (
     APOSTROPHE,
@@ -21,48 +21,6 @@ from celestine.unicode import (
     SPACE,
 )
 
-
-import argparse
-import locale
-from argparse import ArgumentParser as AP
-from typing import TypeAlias as TA
-
-from celestine import load
-from celestine.session import word
-from celestine.session.argument import (
-    Application,
-    Customization,
-    InformationConfiguration,
-    InformationHelp,
-    InformationVersion,
-    Optional,
-    Positional,
-)
-from celestine.text import CELESTINE
-from celestine.text.directory import (
-    APPLICATION,
-    INTERFACE,
-    LANGUAGE,
-)
-from celestine.typed import (
-    MT,
-    TY,
-    A,
-    B,
-    D,
-    L,
-    N,
-    S,
-)
-from celestine.unicode import NONE
-
-from .configuration import Configuration
-from .session import (
-    Dictionary,
-    Session,
-)
-from .text import CONFIGURATION
-
 INIT = "__init__"
 
 
@@ -72,290 +30,109 @@ INIT = "__init__"
 APD: TA = D[A, A]
 
 
+def new(language: MT, exit_on_error: B) -> AP:
+    """A basic parser with overloaded functions for text translation."""
 
-def make_argument_group(language: MT, parser: AP) -> APD:
-    """"""
+    class ArgumentError(argparse.ArgumentError):
+        """
+        An error from creating or using an argument.
 
-    application = parser.add_argument_group(
-        title=language.ARGUMENT_APPLICATION_TITLE,
-        description=language.ARGUMENT_APPLICATION_DESCRIPTION,
-    )
-    """Your program stuff goes here: usefull, noone."""
+        The string value of this exception is the message,
+        augmented with information about the argument that caused it.
+        """
 
-    customization = parser.add_argument_group(
-        title=language.ARGUMENT_CUSTOMIZATION_TITLE,
-        description=language.ARGUMENT_CUSTOMIZATION_DESCRIPTION,
-    )
-    """All applications use these: usefull, everone."""
+        def __str__(self):
+            string = io.StringIO()
+            if self.argument_name is not None:
+                string.write(self.argument_name)
+                string.write(SPACE)
+                string.write(self.argument_name)
+                string.write(COLON)
+                string.write(SPACE)
+            string.write(self.message)
+            value = string.getvalue()
+            return value
 
-    information = parser.add_argument_group(
-        title=language.ARGUMENT_INFORMATION_TITLE,
-        description=language.ARGUMENT_INFORMATION_DESCRIPTION,
-    )
-    """Displays information then exits: useless, noone."""
+    class HelpFormatter(argparse.HelpFormatter):
+        """
+        Formatter for generating usage message and argument help.
 
-    modification = parser.add_argument_group(
-        title=language.ARGUMENT_MODIFICATION_TITLE,
-        description=language.ARGUMENT_MODIFICATION_DESCRIPTION,
-    )
-    """All applications use these: useless, everyone."""
+        strings.
 
-    arguments: APD = {}
-    arguments[Application] = application
-    arguments[Customization] = customization
+        Only the name of this class is considered a public API.
+        All the methods provided by the class are considered an
+        implementation detail.
+        """
 
-    arguments[InformationConfiguration] = modification
-    arguments[InformationHelp] = information
-    arguments[InformationVersion] = information
+        def add_usage(self, usage, actions, groups):
+            string = io.StringIO()
+            string.write(language.ARGUMENT_PARSER_USAGE)
+            string.write(COLON)
+            string.write(SPACE)
 
-    arguments[Positional] = application
-    arguments[Optional] = application
+            prefix = string.getvalue()
+            super().add_usage(usage, actions, groups, prefix)
 
-    return arguments
+    class Parser(argparse.ArgumentParser):
+        """Object for parsing command line strings into objects."""
 
+        def error(self, message):
+            """
+            Prints a usage message and exits.
 
-def add_argument(sessions: list[Session], arguments: APD) -> N:
-    """"""
-    for session in sessions:
-        for name, argument in session.items():
-            if not argument.argument:
-                continue
-            parser = arguments[argument]
-            args = argument.key(name)
-            star = argument.dictionary()
-            parser.add_argument(*args, **star)
+            If you override this in a subclass, it should not return.
+            It should either exit or raise an exception.
+            """
 
+            string = io.StringIO()
+            string.write(self.prog)
+            string.write(COLON)
+            string.write(SPACE)
+            string.write(language.ARGUMENT_PARSER_ERROR)
+            string.write(COLON)
+            string.write(SPACE)
+            string.write(message)
+            string.write(LINE_FEED)
 
-def add_attribute(
-    sessions: list[Session],
-    configuration: Configuration,
-    args: argparse.Namespace,
-) -> N:
-    """"""
-    save = bool(getattr(args, CONFIGURATION, NONE))
-    for session in sessions:
-        for option, argument in session.items():
-            if not argument.attribute:
-                continue
-            override = getattr(args, option, NONE)
-            section = load.module_to_name(session._application)
+            value = string.getvalue()
+            self.exit(2, value)
 
-            database = configuration.get(section, option)
-            value = override or database or argument.fallback
-            setattr(session, option, value)
-            if save and override:
-                configuration.set(section, option, override)
+        def _check_value(self, action, value):
+            # converted value must be one of the choices (if specified)
+            exists = action.choices is not None
+            valid = len(action.choices) > 0
+            missing = value not in action.choices
+            if exists and valid and missing:
+                string = io.StringIO()
+                string.write(language.ARGUMENT_PARSER_CHOICE)
+                string.write(COLON)
+                string.write(SPACE)
+                string.write(APOSTROPHE)
+                string.write(value)
+                string.write(APOSTROPHE)
+                string.write(SPACE)
+                string.write(LEFT_PARENTHESIS)
+                string.write(language.ARGUMENT_PARSER_CHOOSE)
+                string.write(SPACE)
 
+                comma_separated = [COMMA, SPACE]
+                comma_separated_list = NONE.join(comma_separated)
+                choice_map = map(repr, action.choices)
+                choices = comma_separated_list.join(choice_map)
+                string.write(choices)
 
-def get_parser(
-    argv: L[S],
-    exit_on_error: B,
-    application: MT,
-    language: MT,
-    attributes: L[Session],
-    fast: B,
-    configuration: Configuration,
-) -> L[Dictionary]:
-    """"""
-    parser = make_parser(language, exit_on_error)
+                string.write(RIGHT_PARENTHESIS)
 
-    arguments = make_argument_group(language, parser)
+                message = string.getvalue()
+                raise ArgumentError(action, message)
 
-    add_argument(attributes, arguments)
-
-    parse_known_args = parser.parse_known_args
-    parse_args = parser.parse_args
-    args = parse_known_args(argv)[0] if fast else parse_args(argv)
-
-    add_attribute(attributes, configuration, args)
-
-    return attributes
-
-
-def session_loader(name: S, *path: S) -> TY[Session]:
-    """"""
-    module = load.module(*path)
-    session = getattr(module, name)
-    return session
-
-
-def default_language():
-    """
-    Return a default language pack.
-
-    Tries to detect the local language of the user.
-    If that fails, try each of the core language packs.
-    """
-
-    (language_code, encoding) = locale.getdefaultlocale()
-    code = language_code.split("_")
-    default = code[0]
-
-    # Sorted list of languages by number of native speakers in Europe.
-    # English and French were manually placed at the top of the list.
-    languages = [
-        default,
-        "en",  # English English en.
-        "fr",  # French français fr.
-        "de",  # German Deutsch de.
-        "it",  # Italian italiano it.
-        "es",  # Spanish español es.
-        "pl",  # Polish polski pl.
-        "ro",  # Romanian română ro.
-        "nl",  # Dutch Nederlands nl.
-        "el",  # Greek ελληνικά el.
-        "hu",  # Hungarian magyar hu.
-        "sv",  # Swedish svenska sv.
-        "cs",  # Czech čeština cs.
-        "pt",  # Portuguese português pt.
-        "bg",  # Bulgarian български bg.
-        "hr",  # Croatian hrvatski hr
-        "da",  # Danish dansk da.
-        "fi",  # Finnish suomi fi.
-        "sk",  # Slovak slovenčina sk.
-        "lt",  # Lithuanian lietuvių lt.
-        "sl",  # Slovenian slovenščina sl.
-        "lv",  # Latvian latviešu lv.
-        "et",  # Estonian eesti et.
-        "mt",  # Maltese Malti mt.
-        "ga",  # Irish Gaeilge ga.
-    ]
-
-    for language in languages:
-        try:
-            return load.module(LANGUAGE, language)
-        except ModuleNotFoundError:
-            pass
-
-    raise RuntimeError("Failed to load any core language pack.")
-
-
-def default_interface():
-    """Return a default interface."""
-
-    interfaces = [
-        "tkinter",
-        "curses",
-        "pygame",
-        "dearpygui",
-        "blender",
-    ]
-
-    for interface in interfaces:
-        try:
-            return load.module(INTERFACE, interface)
-        except ModuleNotFoundError:
-            pass
-
-    raise RuntimeError("Failed to load any core interface pack.")
-
-
-def default_application():
-    """Return a default application."""
-
-    applications = [
-        "demo",
-    ]
-
-    for application in applications:
-        try:
-            return load.module(APPLICATION, application)
-        except ModuleNotFoundError:
-            pass
-
-    raise RuntimeError("Failed to load any core application pack.")
-
-
-def start_session(argv: L[S], exit_on_error: B = True) -> Session:
-    """"""
-    configuration = Configuration()
-    configuration.load()
-
-    def quick_parse(name, value) -> MT:
-        """Quickly parse important attributes."""
-
-        session = session_loader(name.capitalize(), "session", "session")
-
-        hippo = [
-            session(application, interface, language),
-        ]
-        parser = get_parser(
-            argv,
-            exit_on_error,
-            application,
-            language,
-            hippo,
-            True,
-            configuration,
-        )[0]
-        thing = getattr(parser, name, value)
-        return thing
-
-    language = default_language()
-    interface = default_interface()
-    application = default_application()
-
-
-    language = quick_parse(LANGUAGE, language)
-    interface = quick_parse(INTERFACE, interface)
-    application = quick_parse(APPLICATION, application)
-
-    session1 = session_loader("Session", "session", "session")
-
-    get_name = load.module_to_name(application)
-    if get_name == APPLICATION:
-        get_name = INIT
-
-    #override for demo
-    get_name = "demo"
-
-    session2 = session_loader("Session", APPLICATION, get_name)
-    session3 = session_loader("Information", "session", "session")
-
-    hippos = [
-        session1(application, interface, language),
-        session2(application, interface, language),
-        session3(application, interface, language),
-    ]
-    attribute = get_parser(
-        argv,
-        exit_on_error,
-        application,
-        language,
-        hippos,
-        True,
-        configuration,
+    parser = Parser(
+        add_help=False,
+        # description="(cow)",
+        # epilog="<moo>",
+        formatter_class=HelpFormatter,
+        prog=CELESTINE,
+        exit_on_error=exit_on_error,
     )
 
-    session = attribute[0]
-    session.attribute = attribute[1]
-
-    configuration.save()
-
-
-    # override for demo
-    session.language = "fr"
-    session.interface = "tkinter"
-    session.application = "demo"
-
-    return session
-
-
-"""
-importer notes.
-
-language.py is all you need for 1 language.
-language/__init__.py can be used instead.
-
-Not recomended to use both. However, note that
-language/__init__.py takes priority over language.py
-
-Must have at least one of these.
-Recomend using directory version so you can add more languages.
-Error messages will assume this version.
-
-if you have more then 1 language you must use language/__init__.py
-"""
-
-
-"""Configuration information will show your saved stuff."""
+    return parser
