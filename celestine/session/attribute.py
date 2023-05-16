@@ -1,5 +1,13 @@
 """"""
 
+from celestine.session.text import (
+    ACTION,
+    CHOICES,
+    HELP,
+    NARGS,
+    VERSION,
+)
+from celestine.text import VERSION_NUMBER
 from celestine.typed import (
     TA,
     A,
@@ -7,15 +15,6 @@ from celestine.typed import (
     L,
     N,
     S,
-)
-
-from .text import (
-    ACTION,
-    CHOICES,
-    HELP,
-    NARGS,
-    VERSION,
-    VERSION_NUMBER,
 )
 
 AT: TA = D[S, A]

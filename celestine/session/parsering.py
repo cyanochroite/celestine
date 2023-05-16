@@ -7,6 +7,8 @@ from argparse import ArgumentParser as AP
 from typing import TypeAlias as TA
 
 from celestine import load
+from celestine.parser.main import get_parser
+from celestine.parser.parser import make_parser
 from celestine.session.argument import (
     Application,
     Customization,
@@ -16,7 +18,6 @@ from celestine.session.argument import (
     Optional,
     Positional,
 )
-from celestine.session.parser import new as make_parser
 from celestine.text.directory import (
     APPLICATION,
     INTERFACE,
@@ -243,12 +244,13 @@ def default_application():
     raise RuntimeError("Failed to load any core application pack.")
 
 
+from celestine.parser.default import quick
+
+
 def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     """"""
-    configuration = Configuration()
-    configuration.load()
 
-    def quick_parse(name, value) -> MT:
+    def parse(holder, name, value) -> MT:
         """Quickly parse important attributes."""
 
         session = session_loader(
@@ -256,7 +258,11 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
         )
 
         hippo = [
-            session(application, interface, language),
+            session(
+                holder._application,
+                holder._interface,
+                holder._language,
+            ),
         ]
         parser = get_parser(
             argv,
@@ -270,13 +276,18 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
         thing = getattr(parser, name, value)
         return thing
 
-    language = default_language()
-    interface = default_interface()
-    application = default_application()
+    configuration = Configuration()
+    configuration.load()
 
-    language = quick_parse(LANGUAGE, language)
-    interface = quick_parse(INTERFACE, interface)
-    application = quick_parse(APPLICATION, application)
+    state = quick()
+
+    language = state._language
+    interface = state._interface
+    application = state._application
+
+    language = parse(state, LANGUAGE, language)
+    interface = parse(state, INTERFACE, interface)
+    application = parse(state, APPLICATION, application)
 
     session1 = session_loader("Session", "session", "session")
 
@@ -313,7 +324,7 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     # override for demo
     session.language = "fr"
     session.interface = "tkinter"
-    # session.application = "demo"
+    session.application = "demo"
 
     return session
 

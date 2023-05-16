@@ -1,14 +1,13 @@
+""""""
+
 import argparse
 import io
-from argparse import ArgumentParser as AP
-from typing import TypeAlias as TA
 
 from celestine.text import CELESTINE
 from celestine.typed import (
     MT,
-    A,
+    TA,
     B,
-    D,
 )
 from celestine.unicode import (
     APOSTROPHE,
@@ -21,16 +20,10 @@ from celestine.unicode import (
     SPACE,
 )
 
-INIT = "__init__"
+AP: TA = argparse.ArgumentParser
 
 
-# ADI: typing.TypeAlias = typing.Iterable[typing.Tuple[str, Argument]]
-
-# APD: TA = D[U[Argument, T[Argument]], U[AP, AG]]
-APD: TA = D[A, A]
-
-
-def new(language: MT, exit_on_error: B) -> AP:
+def make_parser(language: MT, exit_on_error: B) -> AP:
     """A basic parser with overloaded functions for text translation."""
 
     class ArgumentError(argparse.ArgumentError):
