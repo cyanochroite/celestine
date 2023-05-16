@@ -12,6 +12,7 @@ from celestine.typed import (
     MT,
     L,
     S,
+    N,
 )
 
 
@@ -26,6 +27,21 @@ def module(language: MT, items: L[S], *path: S) -> MT:
 
     raise RuntimeError("Failed to load any module from list.")
     # raise RuntimeError(language.message)
+
+
+
+class Holder:
+    """"""
+    def __init__(
+        self,
+        application: MT,
+        interface: MT,
+        language: MT,
+    ) -> N:
+        """"""
+        self.application = application
+        self.interface = interface
+        self.language = language
 
 
 def quick():

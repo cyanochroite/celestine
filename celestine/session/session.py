@@ -40,6 +40,14 @@ AI: TA = IT[T[S, Argument]]
 
 class SuperState:
     """"""
+    @classmethod
+    def clone(cls, state):
+        """"""
+        return cls(
+            state._application,
+            state._interface,
+            state._language,
+        )
 
     def __init__(
         self, application: MT, interface: MT, language: MT

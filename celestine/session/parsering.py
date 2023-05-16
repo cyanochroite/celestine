@@ -125,7 +125,7 @@ def add_attribute(
                 configuration.set(section, option, override)
 
 
-def get_parser(
+def get_parser_batch(
     argv: L[S],
     exit_on_error: B,
     application: MT,
@@ -150,146 +150,69 @@ def get_parser(
     return attributes
 
 
-def session_loader(name: S, *path: S) -> TY[Session]:
+
+def get_parser(
+    argv: L[S],
+    exit_on_error: B,
+    application: MT,
+    language: MT,
+    attribute: Session,
+    fast: B,
+    configuration: Configuration,
+) -> L[Dictionary]:
     """"""
-    module = load.module(*path)
-    session = getattr(module, name)
-    return session
+
+    return get_parser_batch(
+        argv,
+        exit_on_error,
+        application,
+        language,
+        [attribute],
+        fast,
+        configuration,
+    )[0]
 
 
-def default_language():
-    """
-    Return a default language pack.
-
-    Tries to detect the local language of the user.
-    If that fails, try each of the core language packs.
-    """
-
-    (language_code, encoding) = locale.getdefaultlocale()
-    code = language_code.split("_")
-    default = code[0]
-
-    # Sorted list of languages by number of native speakers in Europe.
-    # English and French were manually placed at the top of the list.
-    languages = [
-        default,
-        "en",  # English English en.
-        "fr",  # French français fr.
-        "de",  # German Deutsch de.
-        "it",  # Italian italiano it.
-        "es",  # Spanish español es.
-        "pl",  # Polish polski pl.
-        "ro",  # Romanian română ro.
-        "nl",  # Dutch Nederlands nl.
-        "el",  # Greek ελληνικά el.
-        "hu",  # Hungarian magyar hu.
-        "sv",  # Swedish svenska sv.
-        "cs",  # Czech čeština cs.
-        "pt",  # Portuguese português pt.
-        "bg",  # Bulgarian български bg.
-        "hr",  # Croatian hrvatski hr
-        "da",  # Danish dansk da.
-        "fi",  # Finnish suomi fi.
-        "sk",  # Slovak slovenčina sk.
-        "lt",  # Lithuanian lietuvių lt.
-        "sl",  # Slovenian slovenščina sl.
-        "lv",  # Latvian latviešu lv.
-        "et",  # Estonian eesti et.
-        "mt",  # Maltese Malti mt.
-        "ga",  # Irish Gaeilge ga.
-    ]
-
-    for language in languages:
-        try:
-            return load.module(LANGUAGE, language)
-        except ModuleNotFoundError:
-            pass
-
-    raise RuntimeError("Failed to load any core language pack.")
-
-
-def default_interface():
-    """Return a default interface."""
-
-    interfaces = [
-        "tkinter",
-        "curses",
-        "pygame",
-        "dearpygui",
-        "blender",
-    ]
-
-    for interface in interfaces:
-        try:
-            return load.module(INTERFACE, interface)
-        except ModuleNotFoundError:
-            pass
-
-    raise RuntimeError("Failed to load any core interface pack.")
-
-
-def default_application():
-    """Return a default application."""
-
-    applications = [
-        "demo",
-    ]
-
-    for application in applications:
-        try:
-            return load.module(APPLICATION, application)
-        except ModuleNotFoundError:
-            pass
-
-    raise RuntimeError("Failed to load any core application pack.")
 
 
 from celestine.parser.default import quick
+SESSION = "session"
+
 
 
 def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     """"""
 
-    def parse(holder, name, value) -> MT:
+
+    def parse(holder, name, default) -> MT:
         """Quickly parse important attributes."""
 
-        session = session_loader(
-            name.capitalize(), "session", "session"
-        )
+        class_name = name.capitalize()
+        session = load.method(class_name, SESSION, SESSION)
 
-        hippo = [
-            session(
-                holder._application,
-                holder._interface,
-                holder._language,
-            ),
-        ]
+        hippo = session.clone(holder)
+
         parser = get_parser(
             argv,
             exit_on_error,
-            application,
-            language,
+            holder._application,
+            holder._language,
             hippo,
             True,
             configuration,
-        )[0]
-        thing = getattr(parser, name, value)
-        return thing
+        )
+
+        return parser
 
     configuration = Configuration()
     configuration.load()
 
     state = quick()
+    state = parse(state, LANGUAGE, state._language)
+    state = parse(state, INTERFACE, state._interface)
+    state = parse(state, APPLICATION, state._application)
 
-    language = state._language
-    interface = state._interface
-    application = state._application
-
-    language = parse(state, LANGUAGE, language)
-    interface = parse(state, INTERFACE, interface)
-    application = parse(state, APPLICATION, application)
-
-    session1 = session_loader("Session", "session", "session")
+    session1 = load.method("Session", "session", "session")
 
     get_name = load.module_to_name(application)
     if get_name == APPLICATION:
@@ -298,15 +221,15 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     # override for demo
     get_name = "demo"
 
-    session2 = session_loader("Session", APPLICATION, get_name)
-    session3 = session_loader("Information", "session", "session")
+    session2 = load.method("Session", APPLICATION, get_name)
+    session3 = load.method("Information", "session", "session")
 
     hippos = [
         session1(application, interface, language),
         session2(application, interface, language),
         session3(application, interface, language),
     ]
-    attribute = get_parser(
+    attribute = get_parser_batch(
         argv,
         exit_on_error,
         application,

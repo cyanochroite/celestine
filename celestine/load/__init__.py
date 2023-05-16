@@ -162,3 +162,9 @@ def pathway(*path: S) -> S:
 def asset(item: S) -> S:
     """"""
     return pathway("asset", item)
+
+
+def method(name: S, *path: S):
+    """"""
+    return getattr(module(*path), name)
+
