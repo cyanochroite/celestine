@@ -2,7 +2,6 @@
 
 
 import argparse
-import locale
 from argparse import ArgumentParser as AP
 from typing import TypeAlias as TA
 
@@ -25,7 +24,6 @@ from celestine.text.directory import (
 )
 from celestine.typed import (
     MT,
-    TY,
     A,
     B,
     D,
@@ -115,11 +113,16 @@ def add_attribute(
         for option, argument in session.items():
             if not argument.attribute:
                 continue
-            override = getattr(args, option, NONE)
-            section = load.module_to_name(session._application)
 
+            section = load.module_to_name(session.application)
+
+            override = getattr(args, option, NONE)
             database = configuration.get(section, option)
-            value = override or database or argument.fallback
+            fallback = argument.fallback
+            default = getattr(session, option, None)
+            # default is a module and that is cheating
+
+            value = override or database or fallback or default
             setattr(session, option, value)
             if save and override:
                 configuration.set(section, option, override)
@@ -150,7 +153,6 @@ def get_parser_batch(
     return attributes
 
 
-
 def get_parser(
     argv: L[S],
     exit_on_error: B,
@@ -173,16 +175,29 @@ def get_parser(
     )[0]
 
 
-
-
 from celestine.parser.default import quick
+
 SESSION = "session"
 
+
+class Holder:
+    application: MT
+    attribute: L[S]
+    interface: MT
+    language: MT
+    call: MT
+    view: MT
+
+    def __init__(self):
+        self.attribute = None
+        self.interface = None
+        self.language = None
+        self.call = None
+        self.view = None
 
 
 def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     """"""
-
 
     def parse(holder, name, default) -> MT:
         """Quickly parse important attributes."""
@@ -195,8 +210,8 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
         parser = get_parser(
             argv,
             exit_on_error,
-            holder._application,
-            holder._language,
+            holder.application,
+            holder.language,
             hippo,
             True,
             configuration,
@@ -208,32 +223,24 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
     configuration.load()
 
     state = quick()
-    state = parse(state, LANGUAGE, state._language)
-    state = parse(state, INTERFACE, state._interface)
-    state = parse(state, APPLICATION, state._application)
+    state = parse(state, LANGUAGE, state.language)
+    state = parse(state, INTERFACE, state.interface)
+    state = parse(state, APPLICATION, state.application)
 
     session1 = load.method("Session", "session", "session")
-
-    get_name = load.module_to_name(application)
-    if get_name == APPLICATION:
-        get_name = INIT
-
-    # override for demo
-    get_name = "demo"
-
-    session2 = load.method("Session", APPLICATION, get_name)
+    session2 = getattr(state.application, "Session")
     session3 = load.method("Information", "session", "session")
 
     hippos = [
-        session1(application, interface, language),
-        session2(application, interface, language),
-        session3(application, interface, language),
+        session1.clone(state),
+        session3.clone(state),
+        session2.clone(state),
     ]
     attribute = get_parser_batch(
         argv,
         exit_on_error,
-        application,
-        language,
+        state.application,
+        state.language,
         hippos,
         True,
         configuration,
@@ -244,12 +251,24 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
 
     configuration.save()
 
-    # override for demo
-    session.language = "fr"
-    session.interface = "tkinter"
-    session.application = "demo"
+    new_session = Holder()
 
-    return session
+    the_name = load.module_to_name(session.application)
+
+    call = load.functions(load.module(APPLICATION, the_name, "call"))
+    view = load.functions(load.module(APPLICATION, the_name, "view"))
+
+    new_session.application = session.application
+    new_session.attribute: attribute[1]
+    new_session.interface = session.interface
+    new_session.language = session.language
+    new_session.call = call
+    new_session.view = view
+    new_session.main = "main"
+    return new_session
+
+    # override for demo
+    # return session
 
 
 """

@@ -26,9 +26,8 @@ FN: TA = CA[[N], N]
 FUNCTION = "<function"
 
 
-def functions(*path: S) -> D[S, FN]:
+def functions(_module: MT) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
-    _module = module(*path)
     dictionary = vars(_module)
     items = dictionary.items()
     iterable = {
@@ -167,4 +166,3 @@ def asset(item: S) -> S:
 def method(name: S, *path: S):
     """"""
     return getattr(module(*path), name)
-

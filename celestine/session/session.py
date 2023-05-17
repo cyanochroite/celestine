@@ -24,7 +24,6 @@ from celestine.typed import (
     S,
     T,
 )
-from celestine.unicode import LOW_LINE
 
 from .argument import Argument
 from .text import (
@@ -40,22 +39,23 @@ AI: TA = IT[T[S, Argument]]
 
 class SuperState:
     """"""
+
     @classmethod
     def clone(cls, state):
         """"""
         return cls(
-            state._application,
-            state._interface,
-            state._language,
+            state.application,
+            state.interface,
+            state.language,
         )
 
     def __init__(
         self, application: MT, interface: MT, language: MT
     ) -> N:
         """"""
-        self._application = application
-        self._interface = interface
-        self._language = language
+        self.application = application
+        self.interface = interface
+        self.language = language
 
 
 class SuperSession(SuperState):
@@ -78,13 +78,13 @@ class Information(SuperSession):
         """"""
         return {
             CONFIGURATION: InformationConfiguration(
-                self._language.ARGUMENT_HELP_HELP,
+                self.language.ARGUMENT_HELP_HELP,
             ),
             HELP: InformationHelp(
-                self._language.ARGUMENT_HELP_HELP,
+                self.language.ARGUMENT_HELP_HELP,
             ),
             VERSION: InformationVersion(
-                self._language.ARGUMENT_VERSION_HELP,
+                self.language.ARGUMENT_VERSION_HELP,
             ),
         }
 
@@ -94,11 +94,11 @@ class Dictionary(SuperSession):
 
     def __setattr__(self, key: S, value: S) -> N:
         """"""
-        if key.startswith(LOW_LINE):
-            self.__dict__[key] = value
-        else:
+        try:
             module = load.module_fallback(key, value)
             self.__dict__[key] = module
+        except TypeError:
+            self.__dict__[key] = value
 
 
 class Application(Dictionary):
@@ -110,7 +110,7 @@ class Application(Dictionary):
         """"""
         return super().dictionary() | {
             APPLICATION: Customization(
-                self._language.ARGUMENT_INTERFACE_HELP,
+                self.language.ARGUMENT_INTERFACE_HELP,
                 load.argument(APPLICATION),
             ),
         }
@@ -125,7 +125,7 @@ class Interface(Dictionary):
         """"""
         return super().dictionary() | {
             INTERFACE: Customization(
-                self._language.ARGUMENT_INTERFACE_HELP,
+                self.language.ARGUMENT_INTERFACE_HELP,
                 load.argument(INTERFACE),
             ),
         }
@@ -140,7 +140,7 @@ class Language(Dictionary):
         """"""
         return super().dictionary() | {
             LANGUAGE: Customization(
-                self._language.ARGUMENT_LANGUAGE_HELP,
+                self.language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),
             ),
         }
@@ -156,8 +156,8 @@ class Session(Application, Interface, Language):
         return super().dictionary() | {
             MAIN: Positional(
                 "main",
-                self._language.ARGUMENT_LANGUAGE_HELP,
-                function.function_page(self._application),
+                self.language.ARGUMENT_LANGUAGE_HELP,
+                function.function_page(self.application),
             ),
         }
 

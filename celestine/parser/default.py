@@ -11,8 +11,8 @@ from celestine.text.directory import (
 from celestine.typed import (
     MT,
     L,
-    S,
     N,
+    S,
 )
 
 
@@ -29,9 +29,9 @@ def module(language: MT, items: L[S], *path: S) -> MT:
     # raise RuntimeError(language.message)
 
 
-
 class Holder:
     """"""
+
     def __init__(
         self,
         application: MT,

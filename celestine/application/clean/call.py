@@ -1,6 +1,5 @@
 """Run a bunch of auto formaters."""
 
-
 from celestine.package import run
 
 
