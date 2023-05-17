@@ -11,7 +11,6 @@ from celestine.typed import (
 
 INTERFACE = "interface"
 BLENDER = "blender"
-APPLICATION = "application"
 
 bl_info = {
     "name": "Célestine (Framework)",
@@ -26,16 +25,6 @@ bl_info = {
     "tracker_url": "https://github.com/mem-dixy/celestine/",
     "category": "3D View",
 }
-
-
-def main(argument_list: L[S], exit_on_error: B, **star) -> N:
-    """Run the main program."""
-    session = start_session(argument_list, exit_on_error)
-    with session.interface.window(session, **star) as window:
-        for name, document in session.call.items():
-            window.task.set(name, document)
-        for name, document in session.view.items():
-            window.view(name, document)
 
 
 def main(argument_list: L[S], exit_on_error: B, **star) -> N:

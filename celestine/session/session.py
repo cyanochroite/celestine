@@ -40,15 +40,6 @@ AI: TA = IT[T[S, Argument]]
 class SuperState:
     """"""
 
-    @classmethod
-    def clone(cls, state):
-        """"""
-        return cls(
-            state.application,
-            state.interface,
-            state.language,
-        )
-
     def __init__(
         self, application: MT, interface: MT, language: MT
     ) -> N:
@@ -69,6 +60,13 @@ class SuperSession(SuperState):
         """"""
         dictionary = self.dictionary()
         return dictionary.items()
+
+    def __init__(self, other):
+        super().__init__(
+            other.application,
+            other.interface,
+            other.language,
+        )
 
 
 class Information(SuperSession):
