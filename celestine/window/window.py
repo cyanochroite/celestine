@@ -14,11 +14,15 @@ class Window:
         """"""
         self.page.draw(self.page.data, **star)
 
-    def view(self, name, document):
+    def code(self, name, function):
+        """"""
+        self.task.set(name, function)
+
+    def view(self, name, function):
         """"""
         container = self.container.drop(name)
         self.data(container)
-        document(container)
+        function(container)
         container.spot(0, 0, self.width, self.height)
         self._view.set(name, container)
 
@@ -30,8 +34,8 @@ class Window:
 
     def work(self, task, **star):
         """"""
-        call = self.task.get(task)
-        call(**star)
+        caller = self.task.get(task)
+        caller(**star)
         self.draw(make=False)
 
     def __enter__(self):

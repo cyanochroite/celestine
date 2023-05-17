@@ -30,14 +30,26 @@ bl_info = {
 
 def main(argument_list: L[S], exit_on_error: B, **star) -> N:
     """Run the main program."""
-
     session = start_session(argument_list, exit_on_error)
     with session.interface.window(session, **star) as window:
         for name, document in session.call.items():
             window.task.set(name, document)
-
         for name, document in session.view.items():
             window.view(name, document)
+
+
+def main(argument_list: L[S], exit_on_error: B, **star) -> N:
+    """Run the main program."""
+
+    session = start_session(argument_list, exit_on_error)
+    window = session.interface.window(session, **star)
+
+    with window:
+        for name, function in session.code.items():
+            window.code(name, function)
+
+        for name, function in session.view.items():
+            window.view(name, function)
 
 
 def register() -> N:

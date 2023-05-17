@@ -255,14 +255,14 @@ def start_session(argv: L[S], exit_on_error: B = True) -> Session:
 
     the_name = load.module_to_name(session.application)
 
-    call = load.functions(load.module(APPLICATION, the_name, "call"))
+    code = load.functions(load.module(APPLICATION, the_name, "code"))
     view = load.functions(load.module(APPLICATION, the_name, "view"))
 
     new_session.application = session.application
     new_session.attribute: attribute[1]
     new_session.interface = session.interface
     new_session.language = session.language
-    new_session.call = call
+    new_session.code = code
     new_session.view = view
     new_session.main = "main"
     return new_session
