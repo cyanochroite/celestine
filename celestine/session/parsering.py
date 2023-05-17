@@ -86,10 +86,10 @@ class Magic:
         )
 
         value = getattr(hippo, name)
-        setattr(self.session, name, value)
 
-        self.state = hippo
-        return hippo
+        setattr(self, f"{name}_name", value)
+        setattr(self, f"{name}_module", load.module(name, value))
+        setattr(self.session, name, value)
 
     def spawn(self, name, *path):
         method = load.method(name, *path)
@@ -152,10 +152,10 @@ def start_session(
         magic.parse(INTERFACE)
         magic.parse(APPLICATION)
 
-        the_named = load.module_to_name(magic.state.application)
-
         session1 = magic.spawn("Session", "session", "session")
-        session2 = magic.spawn("Session", APPLICATION, the_named)
+        session2 = magic.spawn(
+            "Session", APPLICATION, magic.application_name
+        )
         session3 = magic.spawn("Information", "session", "session")
 
         magic.get_parser(
@@ -174,7 +174,7 @@ def start_session(
         APPLICATION, session1.application
     )
 
-    magic.session.attribute: session2
+    magic.session.attribute = session2
     magic.session.interface = load.module(INTERFACE, session1.interface)
     magic.session.language = load.module(LANGUAGE, session1.language)
 

@@ -107,25 +107,12 @@ def application():
 class SuperState:
     """"""
 
-    _application_name: S
-    _application_module: MT
-
-    _interface_name: S
-    _interface_module: MT
-
-    _language_name: S
-    _language_module: MT
+    _application: MT
+    _interface: MT
+    _language: MT
 
     def __init__(self, application: S, interface: S, language: S) -> N:
         """"""
-        # self._application_name = application
-        # self._application_module = load.module(APPLICATION, application)
-
-        # self._interface_name = interface
-        # self._interface_module =   load.module(INTERFACE, interface)
-
-        # self._language_name = language
-        # self._language_module =  load.module(LANGUAGE, language)
 
         self._application = application
         self._interface = interface

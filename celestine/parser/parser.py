@@ -90,6 +90,20 @@ def make_parser(language: MT, exit_on_error: B) -> AP:
             value = string.getvalue()
             self.exit(2, value)
 
+        def parse_args(self, args=None, namespace=None):
+            args, argv = self.parse_known_args(args, namespace)
+            if argv:
+                string = io.StringIO()
+                string.write("unrecognized arguments")
+                string.write(COLON)
+                string.write(SPACE)
+                string.write(SPACE.join(argv))
+                string.write(LINE_FEED)
+
+                value = string.getvalue()
+                self.error(value)
+            return args
+
         def _check_value(self, action, value):
             # converted value must be one of the choices (if specified)
             exists = action.choices is not None
