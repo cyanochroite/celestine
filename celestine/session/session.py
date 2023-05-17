@@ -35,10 +35,27 @@ from .text import (
 
 AD: TA = D[S, Argument]
 AI: TA = IT[T[S, Argument]]
+SESSION = "session"
 
 
 class SuperState:
     """"""
+
+    def parse(self, name) -> MT:
+        """Quickly parse important attributes."""
+
+        capitalize = name.capitalize()
+        method = load.method(capitalize, SESSION, SESSION)
+        hippo = method(self)
+
+        self.get_parser(
+            self.application,
+            self.language,
+            [hippo],
+            True,
+        )
+
+        return hippo
 
     def __init__(
         self, application: MT, interface: MT, language: MT

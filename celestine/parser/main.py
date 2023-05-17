@@ -67,17 +67,6 @@ def add_attribute(
                 configuration.set(section, option, override)
 
 
-def get_parser_batch(
-    argv: L[S],
-    fast: B,
-):
-    """Attributes is modified in place."""
-
-    parse_known_args = parser.parse_known_args
-    parse_args = parser.parse_args
-    parse_known_args(argv)[0] if fast else parse_args(argv)
-
-
 def get_parser(
     argv: L[S],
     exit_on_error: B,
