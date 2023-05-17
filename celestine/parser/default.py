@@ -21,7 +21,9 @@ def module(language: MT, items: L[S], *path: S) -> MT:
 
     for item in items:
         try:
-            return load.module(*path, item)
+            load.module(*path, item)
+            # Break if not found.
+            return item
         except ModuleNotFoundError:
             pass
 

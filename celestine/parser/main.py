@@ -4,7 +4,6 @@
 import argparse
 from typing import TypeAlias as TA
 
-from celestine import load
 from celestine.parser.parser import make_parser
 from celestine.session.configuration import Configuration
 from celestine.session.session import Session as SessionParse
@@ -45,6 +44,7 @@ def add_attribute(
     sessions: list[SessionParse],
     configuration: Configuration,
     args: argparse.Namespace,
+    section: S,
 ) -> N:
     """"""
     save = bool(getattr(args, CONFIGURATION, NONE))
@@ -53,15 +53,11 @@ def add_attribute(
             if not argument.attribute:
                 continue
 
-            section = load.module_to_name(session.application)
-
             override = getattr(args, option, NONE)
             database = configuration.get(section, option)
             fallback = argument.fallback
-            default = getattr(session, option, None)
-            # default is a module and that is cheating
 
-            value = override or database or fallback or default
+            value = override or database or fallback
             setattr(session, option, value)
             if save and override:
                 configuration.set(section, option, override)

@@ -19,6 +19,7 @@ from celestine.text.directory import (
 from celestine.typed import (
     IT,
     MT,
+    A,
     D,
     N,
     S,
@@ -38,32 +39,97 @@ AI: TA = IT[T[S, Argument]]
 SESSION = "session"
 
 
+def module(path: S, *items: S) -> MT:
+    """Return a default application."""
+
+    for item in items:
+        try:
+            load.module(path, item)
+            # Break if not found.
+            return item
+        except ModuleNotFoundError:
+            pass
+
+    raise RuntimeError("Failed to load any module from list.")
+    # raise RuntimeError(language.message)
+
+
+def language():
+    # Sorted list of languages by number of native speakers in Europe.
+    # English and French were manually placed at the top of the list.
+    return module(
+        LANGUAGE,
+        "en",  # English English en.
+        "fr",  # French français fr.
+        "de",  # German Deutsch de.
+        "it",  # Italian italiano it.
+        "es",  # Spanish español es.
+        "pl",  # Polish polski pl.
+        "ro",  # Romanian română ro.
+        "nl",  # Dutch Nederlands nl.
+        "el",  # Greek ελληνικά el.
+        "hu",  # Hungarian magyar hu.
+        "sv",  # Swedish svenska sv.
+        "cs",  # Czech čeština cs.
+        "pt",  # Portuguese português pt.
+        "bg",  # Bulgarian български bg.
+        "hr",  # Croatian hrvatski hr
+        "da",  # Danish dansk da.
+        "fi",  # Finnish suomi fi.
+        "sk",  # Slovak slovenčina sk.
+        "lt",  # Lithuanian lietuvių lt.
+        "sl",  # Slovenian slovenščina sl.
+        "lv",  # Latvian latviešu lv.
+        "et",  # Estonian eesti et.
+        "mt",  # Maltese Malti mt.
+        "ga",  # Irish Gaeilge ga.
+    )
+
+
+def interface():
+    return module(
+        INTERFACE,
+        "tkinter",
+        "curses",
+        "pygame",
+        "dearpygui",
+        "blender",
+    )
+
+
+def application():
+    return module(
+        APPLICATION,
+        "demo",
+    )
+
+
 class SuperState:
     """"""
 
-    def parse(self, name) -> MT:
-        """Quickly parse important attributes."""
+    _application_name: S
+    _application_module: MT
 
-        capitalize = name.capitalize()
-        method = load.method(capitalize, SESSION, SESSION)
-        hippo = method(self)
+    _interface_name: S
+    _interface_module: MT
 
-        self.get_parser(
-            self.application,
-            self.language,
-            [hippo],
-            True,
-        )
+    _language_name: S
+    _language_module: MT
 
-        return hippo
-
-    def __init__(
-        self, application: MT, interface: MT, language: MT
-    ) -> N:
+    def __init__(self, application: S, interface: S, language: S) -> N:
         """"""
-        self.application = application
-        self.interface = interface
-        self.language = language
+        # self._application_name = application
+        # self._application_module = load.module(APPLICATION, application)
+
+        # self._interface_name = interface
+        # self._interface_module =   load.module(INTERFACE, interface)
+
+        # self._language_name = language
+        # self._language_module =  load.module(LANGUAGE, language)
+
+        self._application = application
+        self._interface = interface
+        self._language = language
 
 
 class SuperSession(SuperState):
@@ -78,7 +144,16 @@ class SuperSession(SuperState):
         dictionary = self.dictionary()
         return dictionary.items()
 
-    def __init__(self, other):
+    def __getattribute1__(self, name: S) -> A:
+        match name:
+            case "application":
+                return self._application_module
+            case "language":
+                return self._language_module
+            case _:
+                return object.__getattribute__(self, name)
+
+    def __init1__(self, other):
         super().__init__(
             other.application,
             other.interface,
@@ -93,27 +168,19 @@ class Information(SuperSession):
         """"""
         return {
             CONFIGURATION: InformationConfiguration(
-                self.language.ARGUMENT_HELP_HELP,
+                self._language.ARGUMENT_HELP_HELP,
             ),
             HELP: InformationHelp(
-                self.language.ARGUMENT_HELP_HELP,
+                self._language.ARGUMENT_HELP_HELP,
             ),
             VERSION: InformationVersion(
-                self.language.ARGUMENT_VERSION_HELP,
+                self._language.ARGUMENT_VERSION_HELP,
             ),
         }
 
 
 class Dictionary(SuperSession):
     """"""
-
-    def __setattr__(self, key: S, value: S) -> N:
-        """"""
-        try:
-            module = load.module_fallback(key, value)
-            self.__dict__[key] = module
-        except TypeError:
-            self.__dict__[key] = value
 
 
 class Application(Dictionary):
@@ -125,7 +192,8 @@ class Application(Dictionary):
         """"""
         return super().dictionary() | {
             APPLICATION: Customization(
-                self.language.ARGUMENT_INTERFACE_HELP,
+                application(),
+                self._language.ARGUMENT_INTERFACE_HELP,
                 load.argument(APPLICATION),
             ),
         }
@@ -140,7 +208,8 @@ class Interface(Dictionary):
         """"""
         return super().dictionary() | {
             INTERFACE: Customization(
-                self.language.ARGUMENT_INTERFACE_HELP,
+                interface(),
+                self._language.ARGUMENT_INTERFACE_HELP,
                 load.argument(INTERFACE),
             ),
         }
@@ -155,7 +224,8 @@ class Language(Dictionary):
         """"""
         return super().dictionary() | {
             LANGUAGE: Customization(
-                self.language.ARGUMENT_LANGUAGE_HELP,
+                language(),
+                self._language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),
             ),
         }
@@ -171,17 +241,7 @@ class Session(Application, Interface, Language):
         return super().dictionary() | {
             MAIN: Positional(
                 "main",
-                self.language.ARGUMENT_LANGUAGE_HELP,
-                function.function_page(self.application),
+                self._language.ARGUMENT_LANGUAGE_HELP,
+                function.function_page(self._application),
             ),
         }
-
-    def __setattr__(self, name: S, value: S) -> N:
-        """"""
-        match name:
-            case "main":
-                self.__dict__[name] = value
-            case "attribute":
-                self.__dict__[name] = value
-            case _:
-                super().__setattr__(name, value)

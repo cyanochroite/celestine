@@ -82,12 +82,12 @@ class Customization(Flag, Help, Choices):
     """"""
 
     # pylint: disable-next=redefined-builtin
-    def __init__(self, help: S, choices: L[S]) -> N:
+    def __init__(self, fallback: S, help: S, choices: L[S]) -> N:
         """"""
         super().__init__(
             argument=bool(choices),
             attribute=True,
-            fallback=NONE,
+            fallback=fallback,
             help=help,
             choices=choices,
         )
