@@ -9,7 +9,6 @@ from celestine.text.directory import (
 from celestine.typed import (
     MT,
     L,
-    N,
     S,
 )
 

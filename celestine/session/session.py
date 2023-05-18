@@ -21,7 +21,6 @@ from celestine.text.directory import (
 from celestine.typed import (
     IT,
     MT,
-    A,
     D,
     N,
     S,

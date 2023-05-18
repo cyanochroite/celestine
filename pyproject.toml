@@ -161,7 +161,7 @@ force_grid_wrap = 2
 line_ending = "\r\n"
 line_length = 72
 profile = "black"
-py_version = 311
+py_version = 310
 remove_redundant_aliases = true
 
 
