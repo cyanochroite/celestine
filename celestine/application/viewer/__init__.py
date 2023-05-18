@@ -18,11 +18,12 @@ class Session(SuperSession):
 
     directory: S
 
-    def dictionary(self) -> AD:
+    @classmethod
+    def dictionary(cls, core) -> AD:
         """"""
-        return {
+        return super().dictionary(core) | {
             DIRECTORY: Optional(
                 os.getcwd(),
-                self._language.VIEWER_SESSION_DIRECTORY,
+                core.language.VIEWER_SESSION_DIRECTORY,
             ),
         }

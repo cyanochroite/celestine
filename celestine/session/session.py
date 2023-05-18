@@ -2,10 +2,9 @@
 
 from typing import TypeAlias as TA
 
-from celestine.parser import default
-
 from celestine import load
 from celestine.load import function
+from celestine.parser import default
 from celestine.session.argument import (
     Customization,
     InformationConfiguration,
@@ -22,7 +21,6 @@ from celestine.typed import (
     IT,
     MT,
     D,
-    N,
     S,
     T,
 )
@@ -32,7 +30,6 @@ from .text import (
     CONFIGURATION,
     HELP,
     MAIN,
-    SESSION,
     VERSION,
 )
 
@@ -40,26 +37,28 @@ AD: TA = D[S, Argument]
 AI: TA = IT[T[S, Argument]]
 
 
-
-class SuperSession():
+class SuperSession:
     """"""
 
-    def dictionary(self, core) -> AD:
+    @classmethod
+    def dictionary(cls, core) -> AD:
         """"""
         return {}
 
-    def items(self, core) -> AI:
+    @classmethod
+    def items(cls, core) -> AI:
         """"""
-        dictionary = self.dictionary(core)
+        dictionary = cls.dictionary(core)
         return dictionary.items()
 
 
 class Information(SuperSession):
     """"""
 
-    def dictionary(self, core) -> AD:
+    @classmethod
+    def dictionary(cls, core) -> AD:
         """"""
-        return {
+        return super().dictionary(core) | {
             CONFIGURATION: InformationConfiguration(
                 core.language.ARGUMENT_HELP_HELP,
             ),
@@ -81,7 +80,8 @@ class Application(Dictionary):
 
     application: MT
 
-    def dictionary(self, core) -> AD:
+    @classmethod
+    def dictionary(cls, core) -> AD:
         """"""
         return super().dictionary(core) | {
             APPLICATION: Customization(
@@ -97,7 +97,8 @@ class Interface(Dictionary):
 
     interface: MT
 
-    def dictionary(self, core) -> AD:
+    @classmethod
+    def dictionary(cls, core) -> AD:
         """"""
         return super().dictionary(core) | {
             INTERFACE: Customization(
@@ -113,7 +114,8 @@ class Language(Dictionary):
 
     language: MT
 
-    def dictionary(self, core) -> AD:
+    @classmethod
+    def dictionary(cls, core) -> AD:
         """"""
         return super().dictionary(core) | {
             LANGUAGE: Customization(
@@ -129,7 +131,8 @@ class Session(Application, Interface, Language):
 
     main: S
 
-    def dictionary(self, core) -> AD:
+    @classmethod
+    def dictionary(cls, core) -> AD:
         """"""
         return super().dictionary(core) | {
             MAIN: Positional(

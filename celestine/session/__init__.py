@@ -1,15 +1,13 @@
 """"""
 
 
-
-
 from celestine import load
+from celestine.parser import default
 from celestine.text.directory import (
     APPLICATION,
     INTERFACE,
     LANGUAGE,
 )
-from celestine.parser import default
 from celestine.typed import (
     MT,
     B,
@@ -20,8 +18,6 @@ from celestine.typed import (
 
 from .configuration import Configuration
 from .session import Session as SessionParse
-
-from .text import INIT
 from .text import SESSION
 
 
@@ -39,22 +35,28 @@ class Core:
         self.interface = interface
         self.language = language
 
+    def __setattr__(self, name, value):
+        module = load.module(name, value)
+        module.name = value
+        super().__setattr__(name, module)
+
 
 class Session:
     application: MT
     attribute: L[S]
+    code: MT
     interface: MT
     language: MT
-    code: MT
+    main: S
     view: MT
 
 
 from celestine.parser import (
     add_argument,
     add_attribute,
-    make_argument_group,
-    make_parser,
 )
+from celestine.parser.argument import make_argument_group
+from celestine.parser.parser import make_parser
 
 
 class Magic:
@@ -83,33 +85,19 @@ class Magic:
             attributes,
             self.configuration,
             args,
-            self.core.application_name,
+            self.core.application.name,
             core,
         )
 
     def parse(self, name) -> MT:
         """Quickly parse important attributes."""
-
-        capitalize = name.capitalize()
-        method = load.method(capitalize, SESSION, SESSION)
-        # hippo = method(self.session)
-        hippo = method()
-
+        method = load.method(name.capitalize(), SESSION, SESSION)
         self.get_parser(
-            [hippo],
+            [method],
             True,
             self.core,
         )
-
-        value = getattr(hippo, name)
-
-        setattr(self.core, f"{name}_name", value)
-        setattr(self.core, name, load.module(name, value))
-
-    def spawn(self, name, *path):
-        method = load.method(name, *path)
-        item = method()
-        return item
+        setattr(self.core, name, getattr(method, name))
 
     def __enter__(self):
         self.configuration.load()
@@ -117,6 +105,7 @@ class Magic:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.configuration.save()
+        return False
 
     def __init__(self, argument_list: L[S], exit_on_error: B) -> N:
         self.argument_list = argument_list
@@ -124,11 +113,10 @@ class Magic:
         self.exit_on_error = exit_on_error
 
         self.core = Core(
-            load.module(APPLICATION, default.application()),
-            load.module(INTERFACE, default.interface()),
-            load.module(LANGUAGE, default.language()),
+            default.application(),
+            default.interface(),
+            default.language(),
         )
-
 
 
 def start_session(
@@ -143,11 +131,11 @@ def start_session(
         magic.parse(INTERFACE)
         magic.parse(APPLICATION)
 
-        session1 = magic.spawn("Session", "session", "session")
-        session2 = magic.spawn(
-            "Session", APPLICATION, magic.core.application_name
+        session1 = load.method("Session", "session", "session")
+        session2 = load.method(
+            "Session", APPLICATION, magic.core.application.name
         )
-        session3 = magic.spawn("Information", "session", "session")
+        session3 = load.method("Information", "session", "session")
 
         magic.get_parser(
             [session1, session2, session3],
@@ -155,29 +143,24 @@ def start_session(
             magic.core,
         )
 
-    # convert to usable
-
-    the_name = magic.core.application_name
-
-    code = load.functions(load.module(APPLICATION, the_name, "code"))
-    view = load.functions(load.module(APPLICATION, the_name, "view"))
-
-
-    #
-
+    application = magic.core.application.name
     session = Session()
 
-    session.application = load.module(
-        APPLICATION, session1.application
-    )
+    session.application = load.module(APPLICATION, session1.application)
 
     session.attribute = session2
+
+    code = load.module(APPLICATION, application, "code")
+    session.code = load.functions(code)
+
     session.interface = load.module(INTERFACE, session1.interface)
+
     session.language = load.module(LANGUAGE, session1.language)
 
-    session.code = code
-    session.view = view
     session.main = session1.main
+
+    view = load.module(APPLICATION, application, "view")
+    session.view = load.functions(view)
 
     return session
 

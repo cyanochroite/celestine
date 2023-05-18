@@ -8,9 +8,9 @@ from celestine.text.directory import (
 )
 from celestine.typed import (
     MT,
-    L,
     S,
 )
+
 
 def module(path: S, *items: S) -> MT:
     """Return a default application."""
@@ -32,6 +32,7 @@ def application():
         APPLICATION,
         "demo",
     )
+
 
 def interface():
     return module(
@@ -74,5 +75,3 @@ def language():
         "mt",  # Maltese Malti mt.
         "ga",  # Irish Gaeilge ga.
     )
-
-
