@@ -28,10 +28,10 @@ from .parser import make_parser
 APD: TA = D[A, A]
 
 
-def add_argument(sessions: list[SessionParse], arguments: APD) -> N:
+def add_argument(sessions: list[SessionParse], arguments: APD, core) -> N:
     """"""
     for session in sessions:
-        for name, argument in session.items():
+        for name, argument in session.items(core):
             if not argument.argument:
                 continue
             parser = arguments[argument]
@@ -45,11 +45,12 @@ def add_attribute(
     configuration: Configuration,
     args: argparse.Namespace,
     section: S,
+    core,
 ) -> N:
     """"""
     save = bool(getattr(args, CONFIGURATION, NONE))
     for session in sessions:
-        for option, argument in session.items():
+        for option, argument in session.items(core):
             if not argument.attribute:
                 continue
 

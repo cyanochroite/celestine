@@ -1,7 +1,7 @@
 """"""
 
 from celestine import load
-from celestine.session.parsering import start_session
+from celestine.session import start_session
 from celestine.typed import (
     B,
     L,

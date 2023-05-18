@@ -22,3 +22,9 @@ NARGS = "nargs"
 # value
 CONFIGURATION = "configuration"
 MAIN = "main"
+
+
+# other
+SESSION = "session"
+INIT = "__init__"
+SESSION = "session"

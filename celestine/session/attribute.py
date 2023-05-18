@@ -27,6 +27,10 @@ class Attribute:
         """"""
         return {}
 
+    def __init__(self, **star) -> N:
+        """"""
+        super().__init__(**star)
+
 
 class Action(Attribute):
     """"""
@@ -37,8 +41,8 @@ class Action(Attribute):
 
     def __init__(self, *, action: S, **star) -> N:
         """"""
-        super().__init__(**star)
         self.action = action
+        super().__init__(**star)
 
 
 class Choices(Attribute):
@@ -50,8 +54,8 @@ class Choices(Attribute):
 
     def __init__(self, *, choices: L[S], **star) -> N:
         """"""
-        super().__init__(**star)
         self.choices = choices
+        super().__init__(**star)
 
 
 class Help(Attribute):
@@ -64,8 +68,8 @@ class Help(Attribute):
     # pylint: disable-next=redefined-builtin
     def __init__(self, *, help: S, **star) -> N:
         """"""
-        super().__init__(**star)
         self.help = help
+        super().__init__(**star)
 
 
 class Nargs(Attribute):
@@ -77,8 +81,8 @@ class Nargs(Attribute):
 
     def __init__(self, *, nargs: S, **star) -> N:
         """"""
-        super().__init__(**star)
         self.nargs = nargs
+        super().__init__(**star)
 
 
 class Version(Attribute):
@@ -87,7 +91,3 @@ class Version(Attribute):
     def dictionary(self) -> AT:
         """"""
         return super().dictionary() | {VERSION: VERSION_NUMBER}
-
-    def __init__(self, **star) -> N:
-        """"""
-        super().__init__(**star)
