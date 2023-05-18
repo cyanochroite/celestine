@@ -49,7 +49,7 @@ class Session:
     view: MT
 
 
-from celestine.parser.main import (
+from celestine.parser import (
     add_argument,
     add_attribute,
     make_argument_group,
@@ -66,7 +66,7 @@ class Magic:
     ):
         """Attributes is modified in place."""
 
-        language = self.language_module
+        language = self.core.language
 
         parser = make_parser(language, self.exit_on_error)
 
@@ -83,7 +83,7 @@ class Magic:
             attributes,
             self.configuration,
             args,
-            self.application_name,
+            self.core.application_name,
             core,
         )
 
@@ -93,11 +93,7 @@ class Magic:
         capitalize = name.capitalize()
         method = load.method(capitalize, SESSION, SESSION)
         # hippo = method(self.session)
-        hippo = method(
-            self.application_module,
-            self.interface_module,
-            self.language_module,
-        )
+        hippo = method()
 
         self.get_parser(
             [hippo],
@@ -107,17 +103,12 @@ class Magic:
 
         value = getattr(hippo, name)
 
-        setattr(self, f"{name}_name", value)
-        setattr(self, f"{name}_module", load.module(name, value))
-        setattr(self.session, name, value)
+        setattr(self.core, f"{name}_name", value)
+        setattr(self.core, name, load.module(name, value))
 
     def spawn(self, name, *path):
         method = load.method(name, *path)
-        item = method(
-            self.application_module,
-            self.interface_module,
-            self.language_module,
-        )
+        item = method()
         return item
 
     def __enter__(self):
@@ -131,7 +122,6 @@ class Magic:
         self.argument_list = argument_list
         self.configuration = Configuration()
         self.exit_on_error = exit_on_error
-        self.session = Session()
 
         self.core = Core(
             load.module(APPLICATION, default.application()),
@@ -139,14 +129,6 @@ class Magic:
             load.module(LANGUAGE, default.language()),
         )
 
-        self.application_name = None
-        self.application_module = None
-
-        self.interface_name = None
-        self.interface_module = None
-
-        self.language_name = None
-        self.language_module = None
 
 
 def start_session(
@@ -157,29 +139,13 @@ def start_session(
     magic = Magic(argument_list, exit_on_error)
 
     with magic:
-        magic.application_name = default.application()
-        magic.application_module = load.module(
-            APPLICATION, magic.application_name
-        )
-
-        magic.interface_name = default.interface()
-        magic.interface_module = load.module(
-            INTERFACE, magic.interface_name
-        )
-
-        magic.language_name = default.language()
-        magic.language_module = load.module(
-            LANGUAGE, magic.language_name
-        )
-        # load.module(LANGUAGE, language)
-
         magic.parse(LANGUAGE)
         magic.parse(INTERFACE)
         magic.parse(APPLICATION)
 
         session1 = magic.spawn("Session", "session", "session")
         session2 = magic.spawn(
-            "Session", APPLICATION, magic.application_name
+            "Session", APPLICATION, magic.core.application_name
         )
         session3 = magic.spawn("Information", "session", "session")
 
@@ -191,24 +157,29 @@ def start_session(
 
     # convert to usable
 
-    the_name = load.module_to_name(session1.application)
+    the_name = magic.core.application_name
 
     code = load.functions(load.module(APPLICATION, the_name, "code"))
     view = load.functions(load.module(APPLICATION, the_name, "view"))
 
-    magic.session.application = load.module(
+
+    #
+
+    session = Session()
+
+    session.application = load.module(
         APPLICATION, session1.application
     )
 
-    magic.session.attribute = session2
-    magic.session.interface = load.module(INTERFACE, session1.interface)
-    magic.session.language = load.module(LANGUAGE, session1.language)
+    session.attribute = session2
+    session.interface = load.module(INTERFACE, session1.interface)
+    session.language = load.module(LANGUAGE, session1.language)
 
-    magic.session.code = code
-    magic.session.view = view
-    magic.session.main = session1.main
+    session.code = code
+    session.view = view
+    session.main = session1.main
 
-    return magic.session
+    return session
 
 
 """

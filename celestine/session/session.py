@@ -42,23 +42,7 @@ AI: TA = IT[T[S, Argument]]
 
 
 
-
-class SuperState:
-    """"""
-
-    _application: MT
-    _interface: MT
-    _language: MT
-
-    def __init__(self, application: S, interface: S, language: S) -> N:
-        """"""
-
-        self._application = application
-        self._interface = interface
-        self._language = language
-
-
-class SuperSession(SuperState):
+class SuperSession():
     """"""
 
     def dictionary(self, core) -> AD:
@@ -152,6 +136,6 @@ class Session(Application, Interface, Language):
             MAIN: Positional(
                 "main",
                 core.language.ARGUMENT_LANGUAGE_HELP,
-                function.function_page(self._application),
+                function.function_page(core.application),
             ),
         }

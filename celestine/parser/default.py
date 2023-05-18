@@ -13,9 +13,6 @@ from celestine.typed import (
     S,
 )
 
-
-
-
 def module(path: S, *items: S) -> MT:
     """Return a default application."""
 
@@ -29,6 +26,23 @@ def module(path: S, *items: S) -> MT:
 
     raise RuntimeError("Failed to load any module from list.")
     # raise RuntimeError(language.message)
+
+
+def application():
+    return module(
+        APPLICATION,
+        "demo",
+    )
+
+def interface():
+    return module(
+        INTERFACE,
+        "tkinter",
+        "curses",
+        "pygame",
+        "dearpygui",
+        "blender",
+    )
 
 
 def language():
@@ -63,19 +77,3 @@ def language():
     )
 
 
-def interface():
-    return module(
-        INTERFACE,
-        "tkinter",
-        "curses",
-        "pygame",
-        "dearpygui",
-        "blender",
-    )
-
-
-def application():
-    return module(
-        APPLICATION,
-        "demo",
-    )
