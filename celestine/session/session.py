@@ -19,7 +19,6 @@ from celestine.text.directory import (
 from celestine.typed import (
     IT,
     MT,
-    A,
     D,
     N,
     S,
@@ -39,7 +38,7 @@ AI: TA = IT[T[S, Argument]]
 SESSION = "session"
 
 
-def module(path: S, *items: S) -> MT:
+def module(path: S, *items: S) -> S:
     """Return a default application."""
 
     for item in items:
@@ -55,6 +54,7 @@ def module(path: S, *items: S) -> MT:
 
 
 def language():
+    """"""
     # Sorted list of languages by number of native speakers in Europe.
     # English and French were manually placed at the top of the list.
     return module(
@@ -87,6 +87,7 @@ def language():
 
 
 def interface():
+    """"""
     return module(
         INTERFACE,
         "tkinter",
@@ -98,6 +99,7 @@ def interface():
 
 
 def application():
+    """"""
     return module(
         APPLICATION,
         "demo",
@@ -111,12 +113,14 @@ class SuperState:
     _interface: MT
     _language: MT
 
-    def __init__(self, application: S, interface: S, language: S) -> N:
+    def __init__(
+        self, _application: MT, _interface: MT, _language: MT
+    ) -> N:
         """"""
 
-        self._application = application
-        self._interface = interface
-        self._language = language
+        self._application = _application
+        self._interface = _interface
+        self._language = _language
 
 
 class SuperSession(SuperState):
@@ -130,22 +134,6 @@ class SuperSession(SuperState):
         """"""
         dictionary = self.dictionary()
         return dictionary.items()
-
-    def __getattribute1__(self, name: S) -> A:
-        match name:
-            case "application":
-                return self._application_module
-            case "language":
-                return self._language_module
-            case _:
-                return object.__getattribute__(self, name)
-
-    def __init1__(self, other):
-        super().__init__(
-            other.application,
-            other.interface,
-            other.language,
-        )
 
 
 class Information(SuperSession):

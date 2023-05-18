@@ -28,8 +28,8 @@ FUNCTION = "<function"
 
 def functions(_module: MT) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
-    dictionary = vars(_module)
-    items = dictionary.items()
+    _dictionary = vars(_module)
+    items = _dictionary.items()
     iterable = {
         key: value
         for key, value in items
@@ -92,9 +92,9 @@ def dictionary(*path: S) -> D[S, S]:
 def pathfinder() -> S:
     """When running as a package, sys.path[0] is wrong."""
     for path in sys.path:
-        package = os.path.join(path, CELESTINE)
-        if os.path.exists(package):
-            return package
+        _package = os.path.join(path, CELESTINE)
+        if os.path.exists(_package):
+            return _package
     return sys.path[0]
 
 
@@ -154,8 +154,8 @@ def module_to_name(_module: MT) -> S:
 ####
 def pathway(*path: S) -> S:
     """"""
-    package = pathfinder()
-    return os.path.join(package, *path)
+    _package = pathfinder()
+    return os.path.join(_package, *path)
 
 
 def asset(item: S) -> S:

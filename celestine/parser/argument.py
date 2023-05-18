@@ -33,25 +33,25 @@ def make_argument_group(language: MT, parser: AP) -> APD:
         title=language.ARGUMENT_APPLICATION_TITLE,
         description=language.ARGUMENT_APPLICATION_DESCRIPTION,
     )
-    """Your program stuff goes here: usefull, noone."""
+    # Your program stuff goes here: usefull, noone.
 
     customization = parser.add_argument_group(
         title=language.ARGUMENT_CUSTOMIZATION_TITLE,
         description=language.ARGUMENT_CUSTOMIZATION_DESCRIPTION,
     )
-    """All applications use these: usefull, everone."""
+    # All applications use these: usefull, everone.
 
     information = parser.add_argument_group(
         title=language.ARGUMENT_INFORMATION_TITLE,
         description=language.ARGUMENT_INFORMATION_DESCRIPTION,
     )
-    """Displays information then exits: useless, noone."""
+    # Displays information then exits: useless, noone.
 
     modification = parser.add_argument_group(
         title=language.ARGUMENT_MODIFICATION_TITLE,
         description=language.ARGUMENT_MODIFICATION_DESCRIPTION,
     )
-    """All applications use these: useless, everyone."""
+    # All applications use these: useless, everyone.
 
     arguments: APD = {}
     arguments[Application] = application
