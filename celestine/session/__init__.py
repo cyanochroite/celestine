@@ -64,15 +64,12 @@ class Magic:
         self,
         attributes: L[SessionParse],
         fast: B,
-        core,
     ):
         """Attributes is modified in place."""
 
-        language = self.core.language
+        parser = make_parser(self.core.language, self.exit_on_error)
 
-        parser = make_parser(language, self.exit_on_error)
-
-        arguments = make_argument_group(language, parser)
+        arguments = make_argument_group(self.core.language, parser)
 
         add_argument(attributes, arguments, core)
 
@@ -86,17 +83,13 @@ class Magic:
             self.configuration,
             args,
             self.core.application.name,
-            core,
+            self.core,
         )
 
     def parse(self, name) -> MT:
         """Quickly parse important attributes."""
         method = load.method(name.capitalize(), SESSION, SESSION)
-        self.get_parser(
-            [method],
-            True,
-            self.core,
-        )
+        self.get_parser([method], True)
         setattr(self.core, name, getattr(method, name))
 
     def __enter__(self):
@@ -137,11 +130,7 @@ def start_session(
         )
         session3 = load.method("Information", "session", "session")
 
-        magic.get_parser(
-            [session1, session2, session3],
-            False,
-            magic.core,
-        )
+        magic.get_parser([session1, session2, session3], False)
 
     application = magic.core.application.name
     session = Session()
