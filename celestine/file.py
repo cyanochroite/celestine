@@ -8,10 +8,12 @@ from celestine.typed import (
     N,
     P,
     S,
+    N,
 )
+import io
 
-
-def open_object(file: P, mode: S) -> None:
+def context(file: P, mode: S) -> N:
+    """Does all file opperations."""
     file = file
     mode = mode
     buffering = 1  # Use line buffering.
@@ -32,10 +34,11 @@ def open_object(file: P, mode: S) -> None:
     )
 
 
+
 def open_file(file: P) -> GE[S, N, N]:
     """"""
     mode = stream.READ_TEXT
-    with open_object(file, mode) as document:
+    with context(file, mode) as document:
         yield from document
 
 
@@ -48,7 +51,7 @@ def open_module(*path: S) -> GE[S, N, N]:
 def save_file(string: S, file: P) -> N:
     """"""
     mode = stream.WRITE_TEXT
-    with open_object(file, mode) as document:
+    with context(file, mode) as document:
         for line in string:
             document.write(line)
 

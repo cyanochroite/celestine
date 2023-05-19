@@ -8,9 +8,11 @@ import requests
 
 from celestine import load
 
-from .file import save_dictionary
+from celestine.file import save_dictionary
 from .text import LANGUAGE
 from .translator import Translator
+
+from celestine.file import open_module
 
 INIT = "__init__"
 
@@ -27,8 +29,33 @@ LANGUAGE_TAG_AZURE = "LANGUAGE_TAG_AZURE"
 LANGUAGE_TAG_ISO = "LANGUAGE_TAG_ISO"
 
 
-def parser_magic(session):
+
+
+def open_language(*path):
+    """Convert a dictionary to a string and save it to a file."""
+
+    string = io.StringIO()
+    dictionary = {}
+    half = "####################################"
+    whole = f"{half}{half}"
+
+    for line in open_module(*path):
+        string.write(line)
+
+    value = string.getvalue()
+    split = value.split(whole)
+
+    head = split[0]
+    body = split[1]
+
+
+    return (head, body)
+
+##########
+
+def parser_magic(session, source):
     """Do all parser stuff here."""
+
     dictionary = {}
     azure_to_iso = {}
     override = {}
@@ -64,8 +91,80 @@ def parser_magic(session):
     return dictionary
 
 
+
+def parser_magic(session):
+    """Do all parser stuff here."""
+
+    skip = {}
+    translate = {}
+
+    dictionary = {}
+    azure_to_iso = {}
+    override = {}
+    code = []
+
+
+    language_list = load.argument(LANGUAGE)
+    for language in language_list:
+        work = open_language(LANGUAGE, language)
+
+        wow = load.dictionary(LANGUAGE, language)
+
+        key = wow[LANGUAGE_TAG_AZURE]
+        value = wow[LANGUAGE_TAG_ISO]
+        azure_to_iso[key] = value
+        code.append(key)
+
+        override[language] = wow
+        dictionary[language] = {}
+
+
+    return dictionary
+
+##############
+
+
+def parser_magic(session, source):
+    """Do all parser stuff here."""
+
+    dictionary = {}
+    azure_to_iso = {}
+    dest_code = []
+
+    override = {}
+
+    dir_translation = load.argument(LANGUAGE)
+    for translation in dir_translation:
+        wow = load.dictionary(LANGUAGE, translation)
+
+        key = wow[LANGUAGE_TAG_AZURE]
+        value = wow[LANGUAGE_TAG_ISO]
+        azure_to_iso[key] = value
+        dest_code.append(key)
+
+        override[translation] = wow
+        dictionary[translation] = {}
+
+    the_list = load.dictionary(LANGUAGE, source)
+    for name, value in the_list.items():
+        continue # disable post
+        items = post(session, dest_code, value)
+        for item in items:
+            translations = item[TRANSLATIONS]
+            for translation in translations:
+                text = translation[TEXT]
+                goto = translation[TO]
+                key = azure_to_iso[goto]
+                dictionary[key][name] = text
+
+    for translation in dir_translation:
+        dictionary[translation] |= override[translation]
+
+    return dictionary
+
 def reset():
     """Remove the directory and rebuild it."""
+
     path = load.pathway(LANGUAGE)
     if os.path.islink(path):
         raise RuntimeError

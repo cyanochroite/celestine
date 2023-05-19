@@ -9,9 +9,7 @@ from celestine.window.container import Container as Page
 
 def main(page: Page) -> N:
     """"""
-    with page.span("head") as line:
-        line.label("title", "fish eat friends for food")
-    with page.span("body") as line:
+    with page.span("main") as line:
         line.call(
             "main_action",
             "Translate Files",
