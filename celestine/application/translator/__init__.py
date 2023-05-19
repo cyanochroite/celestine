@@ -8,8 +8,6 @@ from celestine.session.session import (
 )
 from celestine.typed import S
 from celestine.unicode import NONE
-from celestine.window.container import Container as Page
-
 
 from .text import (
     KEY,
@@ -39,4 +37,3 @@ class Session(SuperSession):
                 self.language.TRANSLATOR_SESSION_URL,
             ),
         }
-

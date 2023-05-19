@@ -281,11 +281,12 @@ def dictionary_file(dictionary):
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
-    yield from dictionary["LANGUAGE_TAG_ISO"]
-    yield from SPACE
     yield from dictionary["LANGUAGE_NAME_ENGLISH"]
     yield from SPACE
     yield from dictionary["LANGUAGE_NAME_NATIVE"]
+    yield from SPACE
+    yield from dictionary["LANGUAGE_TAG_ISO"]
+    yield from FULL_STOP
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK

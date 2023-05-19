@@ -1,16 +1,14 @@
 """Central place for loading and importing external files."""
 
 from celestine import load
-from celestine.application.translator.parser import dictionary_to_file
 from celestine.text import stream
 from celestine.typed import (
     GE,
     N,
     P,
     S,
-    N,
 )
-import io
+
 
 def context(file: P, mode: S) -> N:
     """Does all file opperations."""
@@ -32,7 +30,6 @@ def context(file: P, mode: S) -> N:
         closefd,
         opener,
     )
-
 
 
 def open_file(file: P) -> GE[S, N, N]:
@@ -60,9 +57,3 @@ def save_module(string: S, *path: S) -> N:
     """"""
     file = load.python(*path)
     save_file(string, file)
-
-
-def save_dictionary(dictionary, *path):
-    """Convert a dictionary to a string and save it to a file."""
-    string = dictionary_to_file(dictionary)
-    save_module(string, *path)

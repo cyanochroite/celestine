@@ -2,51 +2,13 @@
 
 from celestine import load
 
-from celestine.unicode import QUOTATION_MARK
-from celestine.unicode import LINE_FEED
-from celestine.file import save_module
-
-from .main import parser_magic
-from .main import reset
-from .main import save_dictionary
-import io
-
-LANGUAGE = "language"
-INIT = "__init__"
-
-def make_init_file():
-    """"""
-    string = io.StringIO()
-    string.write(QUOTATION_MARK)
-    string.write(QUOTATION_MARK)
-    string.write(QUOTATION_MARK)
-    string.write(QUOTATION_MARK)
-    string.write(QUOTATION_MARK)
-    string.write(QUOTATION_MARK)
-    string.write(LINE_FEED)
-
-    value = string.getvalue()
-    save_module(value, LANGUAGE, INIT)
+from .main import do_translate
 
 
 def translate(*, session, **star):
     """Translate the language files."""
 
-    # Add ability to choose master language file.
-    source = "en"
-
-
-    dictionary = parser_magic(session, source)
-
-    reset()
-
-    make_init_file()
-
-    for key, value in dictionary.items():
-        save_dictionary(value, LANGUAGE, key)
-
-    print(dictionary)
-    print("done")
+    do_translate(session)
 
 
 def train():

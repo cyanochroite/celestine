@@ -7,12 +7,10 @@ import uuid
 import requests
 
 from celestine import load
+from celestine.file import open_module
 
-from celestine.file import save_dictionary
 from .text import LANGUAGE
 from .translator import Translator
-
-from celestine.file import open_module
 
 INIT = "__init__"
 
@@ -29,13 +27,69 @@ LANGUAGE_TAG_AZURE = "LANGUAGE_TAG_AZURE"
 LANGUAGE_TAG_ISO = "LANGUAGE_TAG_ISO"
 
 
+import io
+
+from celestine import load
+from celestine.application.translator.parser import dictionary_to_file
+from celestine.file import save_module
+from celestine.unicode import (
+    LINE_FEED,
+    QUOTATION_MARK,
+)
+
+LANGUAGE = "language"
+INIT = "__init__"
+
+##########################
+
+
+def save_dictionary(dictionary, *path):
+    """Convert a dictionary to a string and save it to a file."""
+    string = dictionary_to_file(dictionary)
+    save_module(string, *path)
+
+
+###########################
+
+
+def make_init_file():
+    """"""
+    string = io.StringIO()
+    string.write(QUOTATION_MARK)
+    string.write(QUOTATION_MARK)
+    string.write(QUOTATION_MARK)
+    string.write(QUOTATION_MARK)
+    string.write(QUOTATION_MARK)
+    string.write(QUOTATION_MARK)
+    string.write(LINE_FEED)
+
+    value = string.getvalue()
+    save_module(value, LANGUAGE, INIT)
+
+
+def translate(*, session, **star):
+    """Translate the language files."""
+
+    # Add ability to choose master language file.
+    source = "en"
+
+    dictionary = parser_magic(session, source)
+
+    # reset()
+
+    # make_init_file()
+
+    for key, value in dictionary.items():
+        save_dictionary(value, LANGUAGE, key)
+
+    print(dictionary)
+    print("done")
 
 
 def open_language(*path):
     """Convert a dictionary to a string and save it to a file."""
 
     string = io.StringIO()
-    dictionary = {}
     half = "####################################"
     whole = f"{half}{half}"
 
@@ -48,10 +102,11 @@ def open_language(*path):
     head = split[0]
     body = split[1]
 
-
     return (head, body)
 
+
 ##########
+
 
 def parser_magic(session, source):
     """Do all parser stuff here."""
@@ -91,22 +146,17 @@ def parser_magic(session, source):
     return dictionary
 
 
-
 def parser_magic(session):
     """Do all parser stuff here."""
-
-    skip = {}
-    translate = {}
 
     dictionary = {}
     azure_to_iso = {}
     override = {}
     code = []
 
-
     language_list = load.argument(LANGUAGE)
     for language in language_list:
-        work = open_language(LANGUAGE, language)
+        open_language(LANGUAGE, language)
 
         wow = load.dictionary(LANGUAGE, language)
 
@@ -118,8 +168,8 @@ def parser_magic(session):
         override[language] = wow
         dictionary[language] = {}
 
-
     return dictionary
+
 
 ##############
 
@@ -147,7 +197,7 @@ def parser_magic(session, source):
 
     the_list = load.dictionary(LANGUAGE, source)
     for name, value in the_list.items():
-        continue # disable post
+        continue  # disable post
         items = post(session, dest_code, value)
         for item in items:
             translations = item[TRANSLATIONS]
@@ -161,6 +211,7 @@ def parser_magic(session, source):
         dictionary[translation] |= override[translation]
 
     return dictionary
+
 
 def reset():
     """Remove the directory and rebuild it."""
@@ -197,3 +248,20 @@ def post(session, code, text):
     return request.json()
 
 
+def do_translate(session):
+    """Translate the language files."""
+
+    # Add ability to choose master language file.
+    source = "en"
+
+    dictionary = parser_magic(session, source)
+
+    # reset()
+
+    # make_init_file()
+
+    for key, value in dictionary.items():
+        save_dictionary(value, LANGUAGE, key)
+
+    print(dictionary)
+    print("done")

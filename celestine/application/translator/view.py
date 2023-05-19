@@ -5,8 +5,6 @@ from celestine.typed import N
 from celestine.window.container import Container as Page
 
 
-
-
 def main(page: Page) -> N:
     """"""
     with page.span("main") as line:
