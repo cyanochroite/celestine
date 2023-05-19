@@ -2,6 +2,9 @@
 import io
 import keyword
 
+from celestine import load
+from celestine.alphabet import UNICODE
+
 from celestine.unicode import (
     APOSTROPHE,
     CARRIAGE_RETURN,
@@ -67,16 +70,9 @@ unicode_whitespace = frozenset(
     }
 )
 
-plane_0 = set({})
-
-for index in range(0x10000):
-    plane_0.add(chr(index))
-
-basic_multilingual_plane = frozenset(plane_0)
-
 not_identifier = unicode_punctuation | unicode_whitespace
 
-unicode_identifier = basic_multilingual_plane - not_identifier
+unicode_identifier = UNICODE - not_identifier
 
 
 def word_wrap(string):
@@ -173,7 +169,7 @@ def word_wrap(string):
 def normalize_character(string):
     """Remove all invalid characters."""
     for character in string:
-        if character in basic_multilingual_plane:
+        if character in unicode_standard:
             yield from character
 
 
@@ -274,27 +270,3 @@ def transverse_dictionary(dictionary):
     sorted_items = sorted(items)
     for key, value in sorted_items:
         yield from assignment_expression(key, value)
-
-
-def dictionary_file(dictionary):
-    """"""
-    yield from QUOTATION_MARK
-    yield from QUOTATION_MARK
-    yield from QUOTATION_MARK
-    yield from dictionary["LANGUAGE_NAME_ENGLISH"]
-    yield from SPACE
-    yield from dictionary["LANGUAGE_NAME_NATIVE"]
-    yield from SPACE
-    yield from dictionary["LANGUAGE_TAG_ISO"]
-    yield from FULL_STOP
-    yield from QUOTATION_MARK
-    yield from QUOTATION_MARK
-    yield from QUOTATION_MARK
-    yield from LINE_FEED
-    yield from transverse_dictionary(dictionary)
-
-
-def dictionary_to_file(dictionary):
-    """"""
-    file = dictionary_file(dictionary)
-    yield from word_wrap(file)
