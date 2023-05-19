@@ -169,7 +169,7 @@ def word_wrap(string):
 def normalize_character(string):
     """Remove all invalid characters."""
     for character in string:
-        if character in unicode_standard:
+        if character in UNICODE:
             yield from character
 
 

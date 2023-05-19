@@ -1,13 +1,4 @@
 """Portuguese português pt."""
-LANGUAGE = "A UE tem 24 línguas oficiais: alemão, búlgaro, checo, \
-croata, dinamarquês, eslovaco, esloveno, espanhol, estónio, finlandês, \
-francês, grego, húngaro, inglês, irlandês, italiano, letão, lituano, \
-maltês, neerlandês, polaco, português, romeno e sueco."
-LANGUAGE_NAME_ENGLISH = "Portuguese"
-LANGUAGE_NAME_NATIVE = "português"
-LANGUAGE_TAG_AZURE = "pt-PT"
-LANGUAGE_TAG_ISO = "pt"
-########################################################################
 
 APPLICATION_TITLE = "Visualizador de imagens celestino"
 
@@ -105,3 +96,18 @@ TRANSLATOR_SESSION_URL = "A localização do serviço de tradução."
 
 VIEWER_SESSION_DIRECTORY = "\
 Um caminho para um diretório contendo imagens."
+########################################################################
+LANGUAGE = "\
+A UE tem 24 línguas oficiais: \
+alemão, búlgaro, checo, croata, dinamarquês, eslovaco, esloveno, \
+espanhol, estónio, finlandês, francês, grego, húngaro, inglês, \
+irlandês, italiano, letão, lituano, maltês, neerlandês, polaco, \
+português, romeno e sueco."
+
+LANGUAGE_NAME_ENGLISH = "Portuguese"
+
+LANGUAGE_NAME_NATIVE = "português"
+
+LANGUAGE_TAG_AZURE = "pt-PT"
+
+LANGUAGE_TAG_ISO = "pt"

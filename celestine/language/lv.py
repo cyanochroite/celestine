@@ -1,13 +1,4 @@
 """Latvian latviešu lv."""
-LANGUAGE = "ES ir 24 oficiālās valodas: angļu, bulgāru, čehu, dāņu, \
-franču, grieķu, horvātu, igauņu, itāļu, īru, latviešu, lietuviešu, \
-maltiešu, nīderlandiešu, poļu, portugāļu, rumāņu, slovāku, slovēņu, \
-somu, spāņu, ungāru, vācu un zviedru."
-LANGUAGE_NAME_ENGLISH = "Latvian"
-LANGUAGE_NAME_NATIVE = "latviešu"
-LANGUAGE_TAG_AZURE = "lv"
-LANGUAGE_TAG_ISO = "lv"
-########################################################################
 
 APPLICATION_TITLE = "Celestine attēlu skatītājs"
 
@@ -102,3 +93,17 @@ Reģions, kurā tika izveidots jūsu resurss."
 TRANSLATOR_SESSION_URL = "Tulkošanas dienesta atrašanās vieta."
 
 VIEWER_SESSION_DIRECTORY = "Ceļš uz direktoriju, kurā ir attēli."
+########################################################################
+LANGUAGE = "\
+ES ir 24 oficiālās valodas: \
+angļu, bulgāru, čehu, dāņu, franču, grieķu, horvātu, igauņu, itāļu, \
+īru, latviešu, lietuviešu, maltiešu, nīderlandiešu, poļu, portugāļu, \
+rumāņu, slovāku, slovēņu, somu, spāņu, ungāru, vācu un zviedru."
+
+LANGUAGE_NAME_ENGLISH = "Latvian"
+
+LANGUAGE_NAME_NATIVE = "latviešu"
+
+LANGUAGE_TAG_AZURE = "lv"
+
+LANGUAGE_TAG_ISO = "lv"

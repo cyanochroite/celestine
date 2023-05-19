@@ -1,13 +1,4 @@
 """Finnish suomi fi."""
-LANGUAGE = "EU: ssa on 24 virallista kieltä: bulgaria, englanti, \
-espanja, hollanti, iiri, italia, kreikka, kroaatti, latvia, liettua, \
-malta, portugali, puola, ranska, romania, ruotsi, saksa, slovakki, \
-sloveeni, suomi, tanska, tšekki, unkari ja viro."
-LANGUAGE_NAME_ENGLISH = "Finnish"
-LANGUAGE_NAME_NATIVE = "suomi"
-LANGUAGE_TAG_AZURE = "fi"
-LANGUAGE_TAG_ISO = "fi"
-########################################################################
 
 APPLICATION_TITLE = "Celestine-kuvankatseluohjelma"
 
@@ -103,3 +94,18 @@ TRANSLATOR_SESSION_REGION = "Alue, jossa resurssi luotiin."
 TRANSLATOR_SESSION_URL = "Käännöspalvelun sijainti."
 
 VIEWER_SESSION_DIRECTORY = "Polku kuvia sisältävään hakemistoon."
+########################################################################
+LANGUAGE = "\
+EU: ssa on 24 virallista kieltä: \
+bulgaria, englanti, espanja, hollanti, iiri, italia, kreikka, \
+kroaatti, latvia, liettua, malta, portugali, puola, ranska, romania, \
+ruotsi, saksa, slovakki, sloveeni, suomi, tanska, tšekki, \
+unkari ja viro."
+
+LANGUAGE_NAME_ENGLISH = "Finnish"
+
+LANGUAGE_NAME_NATIVE = "suomi"
+
+LANGUAGE_TAG_AZURE = "fi"
+
+LANGUAGE_TAG_ISO = "fi"

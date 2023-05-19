@@ -1,13 +1,4 @@
 """Dutch Nederlands nl."""
-LANGUAGE = "De EU heeft 24 officiële talen: Bulgaars, Deens, Duits, \
-Engels, Ests, Fins, Frans, Grieks, Hongaars, Iers, Italiaans, \
-Kroatisch, Lets, Litouws, Maltees, Nederlands, Pools, Portugees, \
-Roemeens, Sloveens, Slowaaks, Spaans, Tsjechisch en Zweeds."
-LANGUAGE_NAME_ENGLISH = "Dutch"
-LANGUAGE_NAME_NATIVE = "Nederlands"
-LANGUAGE_TAG_AZURE = "nl"
-LANGUAGE_TAG_ISO = "nl"
-########################################################################
 
 APPLICATION_TITLE = "Celestine Image Viewer"
 
@@ -106,3 +97,18 @@ TRANSLATOR_SESSION_REGION = "De regio waar uw resource is gemaakt."
 TRANSLATOR_SESSION_URL = "De locatie van de vertaaldienst."
 
 VIEWER_SESSION_DIRECTORY = "Een pad naar een map met afbeeldingen."
+########################################################################
+LANGUAGE = "\
+De EU heeft 24 officiële talen: \
+Bulgaars, Deens, Duits, Engels, Ests, Fins, Frans, Grieks, Hongaars, \
+Iers, Italiaans, Kroatisch, Lets, Litouws, Maltees, Nederlands, Pools, \
+Portugees, Roemeens, Sloveens, Slowaaks, Spaans, \
+Tsjechisch en Zweeds."
+
+LANGUAGE_NAME_ENGLISH = "Dutch"
+
+LANGUAGE_NAME_NATIVE = "Nederlands"
+
+LANGUAGE_TAG_AZURE = "nl"
+
+LANGUAGE_TAG_ISO = "nl"

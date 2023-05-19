@@ -1,14 +1,4 @@
 """Polish polski pl."""
-LANGUAGE = "W UE obowiązują 24 języki urzędowe: angielski, bułgarski, \
-chorwacki, czeski, duński, estoński, fiński, francuski, grecki, \
-hiszpański, irlandzki, litewski, łotewski, maltański, niderlandzki, \
-niemiecki, polski, portugalski, rumuński, słowacki, słoweński, \
-szwedzki, węgierski i włoski."
-LANGUAGE_NAME_ENGLISH = "Polish"
-LANGUAGE_NAME_NATIVE = "polski"
-LANGUAGE_TAG_AZURE = "pl"
-LANGUAGE_TAG_ISO = "pl"
-########################################################################
 
 APPLICATION_TITLE = "Przeglądarka obrazów Celestine"
 
@@ -106,3 +96,18 @@ TRANSLATOR_SESSION_REGION = "Region, w którym utworzono zasób."
 TRANSLATOR_SESSION_URL = "Lokalizacja usługi tłumaczeniowej."
 
 VIEWER_SESSION_DIRECTORY = "Ścieżka do katalogu zawierającego obrazy."
+########################################################################
+LANGUAGE = "\
+W UE obowiązują 24 języki urzędowe: \
+angielski, bułgarski, chorwacki, czeski, duński, estoński, fiński, \
+francuski, grecki, hiszpański, irlandzki, litewski, łotewski, \
+maltański, niderlandzki, niemiecki, polski, portugalski, rumuński, \
+słowacki, słoweński, szwedzki, węgierski i włoski."
+
+LANGUAGE_NAME_ENGLISH = "Polish"
+
+LANGUAGE_NAME_NATIVE = "polski"
+
+LANGUAGE_TAG_AZURE = "pl"
+
+LANGUAGE_TAG_ISO = "pl"

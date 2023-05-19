@@ -1,14 +1,4 @@
 """Croatian hrvatski hr."""
-LANGUAGE = "EU ima 24 službena jezika: bugarski, češki, danski, \
-engleski, estonski, finski, francuski, grčki, hrvatski, irski, \
-latvijski, litavski, mađarski, malteški, nizozemski, njemački, \
-poljski, portugalski, rumunjski, slovački, slovenski, španjolski, \
-švedski i talijanski."
-LANGUAGE_NAME_ENGLISH = "Croatian"
-LANGUAGE_NAME_NATIVE = "hrvatski"
-LANGUAGE_TAG_AZURE = "hr"
-LANGUAGE_TAG_ISO = "hr"
-########################################################################
 
 APPLICATION_TITLE = "Celestine preglednik slika"
 
@@ -104,3 +94,18 @@ TRANSLATOR_SESSION_REGION = "Regija u kojoj je vaš resurs stvoren."
 TRANSLATOR_SESSION_URL = "Mjesto usluge prevođenja."
 
 VIEWER_SESSION_DIRECTORY = "Put do direktorija koji sadrži slike."
+########################################################################
+LANGUAGE = "\
+EU ima 24 službena jezika: \
+bugarski, češki, danski, engleski, estonski, finski, francuski, grčki, \
+hrvatski, irski, latvijski, litavski, mađarski, malteški, nizozemski, \
+njemački, poljski, portugalski, rumunjski, slovački, slovenski, \
+španjolski, švedski i talijanski."
+
+LANGUAGE_NAME_ENGLISH = "Croatian"
+
+LANGUAGE_NAME_NATIVE = "hrvatski"
+
+LANGUAGE_TAG_AZURE = "hr"
+
+LANGUAGE_TAG_ISO = "hr"

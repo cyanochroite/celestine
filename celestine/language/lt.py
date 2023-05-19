@@ -1,13 +1,4 @@
 """Lithuanian lietuvių lt."""
-LANGUAGE = "ES yra 24 oficialiosios kalbos: airių, anglų, bulgarų, \
-čekų, danų, estų, graikų, ispanų, italų, kroatų, latvių, lenkų, \
-lietuvių, maltiečių, nyderlandų, portugalų, prancūzų, rumunų, slovakų, \
-slovėnų, suomių, švedų, vengrų, vokiečių."
-LANGUAGE_NAME_ENGLISH = "Lithuanian"
-LANGUAGE_NAME_NATIVE = "lietuvių"
-LANGUAGE_TAG_AZURE = "lt"
-LANGUAGE_TAG_ISO = "lt"
-########################################################################
 
 APPLICATION_TITLE = "'Celestine' vaizdų peržiūros programa"
 
@@ -102,3 +93,17 @@ Regionas, kuriame buvo sukurtas jūsų išteklius."
 TRANSLATOR_SESSION_URL = "Vertimo paslaugos vieta."
 
 VIEWER_SESSION_DIRECTORY = "Kelias į katalogą, kuriame yra vaizdų."
+########################################################################
+LANGUAGE = "\
+ES yra 24 oficialiosios kalbos: \
+airių, anglų, bulgarų, čekų, danų, estų, graikų, ispanų, italų, \
+kroatų, latvių, lenkų, lietuvių, maltiečių, nyderlandų, portugalų, \
+prancūzų, rumunų, slovakų, slovėnų, suomių, švedų, vengrų, vokiečių."
+
+LANGUAGE_NAME_ENGLISH = "Lithuanian"
+
+LANGUAGE_NAME_NATIVE = "lietuvių"
+
+LANGUAGE_TAG_AZURE = "lt"
+
+LANGUAGE_TAG_ISO = "lt"

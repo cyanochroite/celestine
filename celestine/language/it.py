@@ -1,13 +1,4 @@
 """Italian italiano it."""
-LANGUAGE = "L'UE ha 24 lingue ufficiali: bulgaro, ceco, croato, \
-danese, estone, finlandese, francese, greco, inglese, irlandese, \
-italiano, lettone, lituano, maltese, neerlandese, polacco, portoghese, \
-rumeno, slovacco, sloveno, spagnolo, tedesco, svedese e ungherese."
-LANGUAGE_NAME_ENGLISH = "Italian"
-LANGUAGE_NAME_NATIVE = "italiano"
-LANGUAGE_TAG_AZURE = "it"
-LANGUAGE_TAG_ISO = "it"
-########################################################################
 
 APPLICATION_TITLE = "Visualizzatore di immagini Celestine"
 
@@ -105,3 +96,18 @@ TRANSLATOR_SESSION_URL = "Posizione del servizio di traduzione."
 
 VIEWER_SESSION_DIRECTORY = "\
 Percorso di una directory contenente immagini."
+########################################################################
+LANGUAGE = "\
+L'UE ha 24 lingue ufficiali: \
+bulgaro, ceco, croato, danese, estone, finlandese, francese, greco, \
+inglese, irlandese, italiano, lettone, lituano, maltese, neerlandese, \
+polacco, portoghese, rumeno, slovacco, sloveno, spagnolo, tedesco, \
+svedese e ungherese."
+
+LANGUAGE_NAME_ENGLISH = "Italian"
+
+LANGUAGE_NAME_NATIVE = "italiano"
+
+LANGUAGE_TAG_AZURE = "it"
+
+LANGUAGE_TAG_ISO = "it"

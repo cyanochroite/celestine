@@ -1,13 +1,4 @@
 """French français fr."""
-LANGUAGE = "L’UE compte 24 langues officielles: allemand, anglais, \
-bulgare, croate, danois, espagnol, estonien, finnois, français, grec, \
-hongrois, irlandais, italien, letton, lituanien, maltais, néerlandais, \
-polonais, portugais, roumain, slovaque, slovène, suédois et tchèque."
-LANGUAGE_NAME_ENGLISH = "French"
-LANGUAGE_NAME_NATIVE = "français"
-LANGUAGE_TAG_AZURE = "fr"
-LANGUAGE_TAG_ISO = "fr"
-########################################################################
 
 APPLICATION_TITLE = "Visionneuse d’images Célestine"
 
@@ -108,3 +99,18 @@ TRANSLATOR_SESSION_URL = "L’emplacement du service de traduction."
 
 VIEWER_SESSION_DIRECTORY = "\
 Chemin d’accès à un répertoire contenant des images."
+########################################################################
+LANGUAGE = "\
+L’UE compte 24 langues officielles: \
+allemand, anglais, bulgare, croate, danois, espagnol, estonien, \
+finnois, français, grec, hongrois, irlandais, italien, letton, \
+lituanien, maltais, néerlandais, polonais, portugais, roumain, \
+slovaque, slovène, suédois et tchèque."
+
+LANGUAGE_NAME_ENGLISH = "French"
+
+LANGUAGE_NAME_NATIVE = "français"
+
+LANGUAGE_TAG_AZURE = "fr"
+
+LANGUAGE_TAG_ISO = "fr"

@@ -6,6 +6,8 @@ import uuid
 
 import requests
 
+from .parser import normalize
+
 from celestine.alphabet import UNICODE
 
 from celestine import load
@@ -58,14 +60,15 @@ INIT = "__init__"
 
 def language_file(translation, overridden):
     """Print translations first then print overridden values."""
+    lookup = translation | overridden
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
-    yield from overridden["LANGUAGE_NAME_ENGLISH"]
+    yield from lookup["LANGUAGE_NAME_ENGLISH"]
     yield from SPACE
-    yield from overridden["LANGUAGE_NAME_NATIVE"]
+    yield from lookup["LANGUAGE_NAME_NATIVE"]
     yield from SPACE
-    yield from overridden["LANGUAGE_TAG_ISO"]
+    yield from lookup["LANGUAGE_TAG_ISO"]
     yield from FULL_STOP
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
@@ -103,9 +106,42 @@ def fix_line_split(*path):
 
             yield from character
 
+def read_new_lines(string):
+    """"""
+
+    buffer = io.StringIO()
+    count = 0
+
+    for character in string:
+        count += buffer.write(character)
+
+        if character == LINE_FEED:
+            buffer.seek(0, io.SEEK_SET)
+            line = buffer.read(count)
+            buffer.seek(0, io.SEEK_SET)
+            count = 0
+            yield from line
+
 
 ###########################
 
+
+def make_dictionary(document):
+
+    dictionary = {}
+
+    lines = document.split(LINE_FEED)
+    for line in lines:
+        if line[0:3] == '"""':
+            continue
+
+        if not line:
+            continue
+        split = line.split("=")
+        key = split[0].strip()
+        value = split[-1].strip()[1:-1]
+        dictionary[key] = value
+    return dictionary
 
 def make_init_file():
     """"""
@@ -141,95 +177,30 @@ def translate(*, session, **star):
     print("done")
 
 
-
-
-
 def open_language(*path):
     """Convert a dictionary to a string and save it to a file."""
 
     text = fix_line_split(*path)
+    lines = read_new_lines(text)
+    #normal = normalize(lines)
+    normal = lines
 
     string = io.StringIO()
-    half = "####################################"
-    whole = f"{half}{half}"
-
-    for line in text:
+    for line in normal:
         string.write(line)
 
     value = string.getvalue()
+
+
+    half = "####################################"
+    whole = f"{half}{half}"
+
     split = value.split(whole)
 
     head = split[0]
-    body = split[1]
+    body = split[-1]
 
-    # return (head, body)
-    return (body, head)  # swap until we put in right place
-
-
-##########
-
-
-def parser_magic(session, source):
-    """Do all parser stuff here."""
-
-    dictionary = {}
-    azure_to_iso = {}
-    override = {}
-    code = []
-
-    dir_translation = load.argument(TRANSLATION)
-    for translation in dir_translation:
-        wow = load.dictionary(TRANSLATION, translation)
-
-        key = wow[LANGUAGE_TAG_AZURE]
-        value = wow[LANGUAGE_TAG_ISO]
-        azure_to_iso[key] = value
-        code.append(key)
-
-        override[translation] = wow
-        dictionary[translation] = {}
-
-    thelist = load.dictionary("translation", "__init__")
-    # thelist = {}
-    for name, value in thelist.items():
-        items = post(session, code, value)
-        for item in items:
-            translations = item[TRANSLATIONS]
-            for translation in translations:
-                text = translation[TEXT]
-                goto = translation[TO]
-                key = azure_to_iso[goto]
-                dictionary[key][name] = text
-
-    for translation in dir_translation:
-        dictionary[translation] |= override[translation]
-
-    return dictionary
-
-
-def parser_magic(session):
-    """Do all parser stuff here."""
-
-    dictionary = {}
-    azure_to_iso = {}
-    override = {}
-    code = []
-
-    language_list = load.argument(LANGUAGE)
-    for language in language_list:
-        open_language(LANGUAGE, language)
-
-        wow = load.dictionary(LANGUAGE, language)
-
-        key = wow[LANGUAGE_TAG_AZURE]
-        value = wow[LANGUAGE_TAG_ISO]
-        azure_to_iso[key] = value
-        code.append(key)
-
-        override[language] = wow
-        dictionary[language] = {}
-
-    return dictionary
+    return (head, body)
 
 
 ##############
@@ -238,8 +209,8 @@ def parser_magic(session):
 def parser_magic(session, source):
     """Do all parser stuff here."""
 
-    skip = {}
-    work = {}
+
+    all_languages = {}
 
     dictionary = {}
 
@@ -248,15 +219,22 @@ def parser_magic(session, source):
 
     language_list = load.argument(LANGUAGE)
     for language in language_list:
-        adictionary = open_language(LANGUAGE, language)
+        head, body = open_language(LANGUAGE, language)
+        head = make_dictionary(head)
+        body = make_dictionary(body)
 
-        key = adictionary[LANGUAGE_TAG_AZURE]
-        value = adictionary[LANGUAGE_TAG_ISO]
+        key = body[LANGUAGE_TAG_AZURE]
+        value = body[LANGUAGE_TAG_ISO]
         azure_to_iso[key] = value
         dest_code.append(key)
 
-        skip[language] = dictionary
-        work[language] = {}
+        all_languages[language] = {}
+        all_languages[language]["name"] = language
+        all_languages[language]["skip"] = body
+        # all_languages[language]["work"] = {}
+
+        # this because we skipped translator
+        all_languages[language]["work"] = head
 
     source_list = load.dictionary(LANGUAGE, source)
     for name, value in source_list.items():
@@ -268,9 +246,9 @@ def parser_magic(session, source):
                 text = translation[TEXT]
                 goto = translation[TO]
                 language = azure_to_iso[goto]
-                work[language][name] = text
+                all_languages[language]["work"][name] = text
 
-    return work, skip
+    return all_languages
 
 
 def reset():
@@ -321,8 +299,8 @@ def do_translate(session):
     # make_init_file()
 
     for key, value in dictionary.items():
-        translation = value
-        overridden = value
+        translation = value["work"]
+        overridden = value["skip"]
         save_language(translation, overridden, LANGUAGE, key)
 
     print(dictionary)
