@@ -5,7 +5,24 @@ from celestine import load
 LANGUAGE = "language"
 
 
-def _train():
+def translate(*, session, **star):
+    """Translate the language files."""
+
+    dictionary = parser_magic(session)
+
+    reset()
+
+    # have way to provide default language?
+    save_dictionary(dictionary["en"], LANGUAGE, INIT)
+
+    for key, value in dictionary.items():
+        save_dictionary(value, LANGUAGE, key)
+
+    print(dictionary)
+    print("done")
+
+
+def train():
     """The main function."""
     minimum = {}
     maximum = {}

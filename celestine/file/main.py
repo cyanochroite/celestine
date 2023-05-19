@@ -98,3 +98,18 @@ def post(session, code, text):
     return request.json()
 
 
+def _translate(session):
+    """Translate the language files."""
+
+    dictionary = parser_magic(session)
+
+    reset()
+
+    # have way to provide default language?
+    save_dictionary(dictionary["en"], LANGUAGE, INIT)
+
+    for key, value in dictionary.items():
+        save_dictionary(value, LANGUAGE, key)
+
+    print(dictionary)
+    print("done")

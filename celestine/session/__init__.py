@@ -71,7 +71,7 @@ class Magic:
 
         arguments = make_argument_group(self.core.language, parser)
 
-        add_argument(attributes, arguments, core)
+        add_argument(attributes, arguments, self.core)
 
         if fast:
             args = parser.parse_known_args(self.argument_list)[0]
