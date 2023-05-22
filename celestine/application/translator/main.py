@@ -1,5 +1,6 @@
 """Application for translating text to other languages."""
 import io
+import keyword
 import os
 import os.path
 import shutil
@@ -9,16 +10,15 @@ import requests
 
 from celestine import load
 from celestine.alphabet import UNICODE
-from celestine.application.translator.parser import (
-    transverse_dictionary,
-    word_wrap,
-)
 from celestine.file import (
+    normalize,
     open_module,
     save_module,
 )
 from celestine.unicode import (
+    EQUALS_SIGN,
     FULL_STOP,
+    INFORMATION_SEPARATOR_FOUR,
     LINE_FEED,
     QUOTATION_MARK,
     REVERSE_SOLIDUS,
@@ -52,6 +52,49 @@ SECTION_BREAK = whole
 LANGUAGE = "language"
 INIT = "__init__"
 
+
+def do_normalize(string):
+    """"""
+    character = normalize.character(string)
+    whitespace = normalize.whitespace(character)
+    quotation = normalize.quotation(whitespace)
+    punctuation = normalize.punctuation(quotation)
+    yield from punctuation
+
+
+def assignment_expression(identifier, expression):
+    """
+    Make a line for the file from a key value pair.
+
+    return F'{identifier} = "{expression}"\n'
+    """
+    if not identifier.isidentifier():
+        raise ValueError("Not a valid identifier.")
+    if keyword.iskeyword(identifier):
+        raise ValueError("This word is a keyword.")
+    if keyword.issoftkeyword(identifier):
+        raise ValueError("This word is a soft keyword.")
+
+    yield from LINE_FEED
+    yield from identifier
+    yield from SPACE
+    yield from EQUALS_SIGN
+    yield from SPACE
+    yield from QUOTATION_MARK
+    yield from INFORMATION_SEPARATOR_FOUR
+    yield from do_normalize(expression)
+    yield from QUOTATION_MARK
+    yield from LINE_FEED
+
+
+def transverse_dictionary(dictionary):
+    """"""
+    items = dictionary.items()
+    sorted_items = sorted(items)
+    for key, value in sorted_items:
+        yield from assignment_expression(key, value)
+
+
 ##########################
 
 
@@ -79,7 +122,7 @@ def language_file(translation, overridden):
 def save_language(translation, overridden, *path):
     """"""
     file = language_file(translation, overridden)
-    string = word_wrap(file)
+    string = normalize.width(file)
     save_module(string, *path)
 
 
