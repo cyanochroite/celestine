@@ -1,4 +1,4 @@
-""""""
+"""The Code page."""
 
 from celestine import load
 

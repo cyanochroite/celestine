@@ -1,4 +1,4 @@
-"""Application for translating text to other languages."""
+"""The View page."""
 
 
 from celestine.typed import N

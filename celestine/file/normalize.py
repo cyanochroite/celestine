@@ -1,8 +1,6 @@
 """Central place for loading and importing external files."""
 
-
 import io
-
 
 from celestine.alphabet import (
     DIRECTIONAL_FORMATTING,
@@ -19,17 +17,18 @@ from celestine.unicode import (
     INFORMATION_SEPARATOR_ONE,
     INFORMATION_SEPARATOR_THREE,
     INFORMATION_SEPARATOR_TWO,
+    LINE_FEED,
     LINE_SEPARATOR,
     PARAGRAPH_SEPARATOR,
-    LINE_FEED,
     QUOTATION_MARK,
     REVERSE_SOLIDUS,
     SPACE,
 )
 
-MAXIMUM_LINE_LENGTH = 72
-SECTION_BREAK = "######################################################\
-##################"
+from .data import (
+    MAXIMUM_LINE_LENGTH,
+    SECTION_BREAK,
+)
 
 
 def width(string):
@@ -60,8 +59,6 @@ def width(string):
     count_d = 0
 
     for character in string:
-
-
         if character == PARAGRAPH_SEPARATOR:
             yield from LINE_FEED
             yield from SECTION_BREAK
