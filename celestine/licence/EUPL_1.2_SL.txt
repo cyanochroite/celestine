@@ -1,6 +1,6 @@
 ﻿JAVNA LICENCA EVROPSKE UNIJE v. 1.2
 EUPL © Evropska unija 2007, 2016
-Ta javna licenca Evropske unije (v nadaljnjem besedilu: EUPL) se uporablja za delo (kakor je opredeljeno spodaj), zagotovljeno pod pogoji iz te licence. Vsaka uporaba dela, ki ni dovoljena s to licenco, je prepovedana (kolikor je ta uporaba zajeta v pravici imetnika avtorske pravice tega dela). Delo je zagotovljeno pod pogoji iz te licence, če je dajalec licence (kakor je opredeljeno spodaj) dodal naslednje obvestilo takoj za obvestilom o avtorski pravici za delo:                     Licencirano po EUPL
+Ta javna licenca Evropske unije (v nadaljnjem besedilu: EUPL) se uporablja za delo (kakor je opredeljeno spodaj), zagotovljeno pod pogoji iz te licence. Vsaka uporaba dela, ki ni dovoljena s to licenco, je prepovedana (kolikor je ta uporaba zajeta v pravici imetnika avtorske pravice tega dela). Delo je zagotovljeno pod pogoji iz te licence, če je dajalec licence (kakor je opredeljeno spodaj) dodal naslednje obvestilo takoj za obvestilom o avtorski pravici za delo:   Licencirano po EUPL
 ali je na kateri koli drugi način izrazil svojo pripravljenost, da delo licencira na podlagi EUPL.
 
 1.Opredelitve pojmov

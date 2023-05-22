@@ -10,3 +10,5 @@ def main(page: Page) -> N:
     with page.span("main_head") as line:
         line.label("main_title", language.DEMO_MAIN_TITLE)
         line.call("main_action", "Greet Cow", "clean")
+    with page.span("main_body") as line:
+        line.call("main_licence", "Clean licence files.", "licence")
