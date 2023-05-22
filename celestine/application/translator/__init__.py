@@ -9,7 +9,7 @@ from celestine.session.session import (
 from celestine.typed import S
 from celestine.unicode import NONE
 
-from .text import (
+from .data import (
     KEY,
     REGION,
     URL,

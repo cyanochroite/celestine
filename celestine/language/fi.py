@@ -94,7 +94,9 @@ TRANSLATOR_SESSION_REGION = "Alue, jossa resurssi luotiin."
 TRANSLATOR_SESSION_URL = "Käännöspalvelun sijainti."
 
 VIEWER_SESSION_DIRECTORY = "Polku kuvia sisältävään hakemistoon."
+
 ########################################################################
+
 LANGUAGE = "\
 EU: ssa on 24 virallista kieltä: \
 bulgaria, englanti, espanja, hollanti, iiri, italia, kreikka, \

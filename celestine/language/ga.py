@@ -97,7 +97,9 @@ TRANSLATOR_SESSION_REGION = "An réigiún inar cruthaíodh d'acmhainn."
 TRANSLATOR_SESSION_URL = "Suíomh na seirbhíse aistriúcháin."
 
 VIEWER_SESSION_DIRECTORY = "Cosán chuig eolaire ina bhfuil íomhánna."
+
 ########################################################################
+
 LANGUAGE = "\
 Tá 24 theanga oifigiúla san Aontas: \
 Béarla, Bulgáiris, Cróitis, Danmhairgis, Eastóinis, Fionlainnis, \

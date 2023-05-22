@@ -96,7 +96,9 @@ Ir-reġjun fejn inħolqot ir-riżorsa tiegħek."
 TRANSLATOR_SESSION_URL = "Il-post tas-servizz tat-traduzzjoni."
 
 VIEWER_SESSION_DIRECTORY = "Mogħdija għal direttorju li fih immaġini."
+
 ########################################################################
+
 LANGUAGE = "\
 L-UE għandha 24 lingwa uffiċjali: \
 Il-Bulgaru, iċ-Ċek, id-Daniż, l-Estonjan, il-Finlandiż, il-Franċiż, \

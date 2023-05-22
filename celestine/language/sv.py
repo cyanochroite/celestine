@@ -95,7 +95,9 @@ TRANSLATOR_SESSION_URL = "Platsen för översättningstjänsten."
 
 VIEWER_SESSION_DIRECTORY = "\
 En sökväg till en katalog som innehåller bilder."
+
 ########################################################################
+
 LANGUAGE = "\
 EU har 24 officiella språk: \
 Bulgariska, danska, engelska, estniska, finska, franska, grekiska, \

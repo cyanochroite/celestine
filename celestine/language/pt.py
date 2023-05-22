@@ -96,7 +96,9 @@ TRANSLATOR_SESSION_URL = "A localização do serviço de tradução."
 
 VIEWER_SESSION_DIRECTORY = "\
 Um caminho para um diretório contendo imagens."
+
 ########################################################################
+
 LANGUAGE = "\
 A UE tem 24 línguas oficiais: \
 alemão, búlgaro, checo, croata, dinamarquês, eslovaco, esloveno, \

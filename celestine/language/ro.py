@@ -96,7 +96,9 @@ TRANSLATOR_SESSION_URL = "Locația serviciului de traducere."
 
 VIEWER_SESSION_DIRECTORY = "\
 O cale către un director care conține imagini."
+
 ########################################################################
+
 LANGUAGE = "\
 UE numără 24 de limbi oficiale: \
 bulgară, cehă, croată, daneză, engleză, estonă, finlandeză, franceză, \

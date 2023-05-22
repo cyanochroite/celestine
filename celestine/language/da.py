@@ -95,7 +95,9 @@ TRANSLATOR_SESSION_URL = "Placeringen af oversættelsestjenesten."
 
 VIEWER_SESSION_DIRECTORY = "\
 En sti til en mappe, der indeholder billeder."
+
 ########################################################################
+
 LANGUAGE = "\
 EU har 24 officielle sprog: \
 bulgarsk, dansk, engelsk, estisk, finsk, fransk, græsk, irsk, \

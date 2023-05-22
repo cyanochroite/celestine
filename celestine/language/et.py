@@ -95,7 +95,9 @@ TRANSLATOR_SESSION_REGION = "Piirkond, kus teie ressurss loodi."
 TRANSLATOR_SESSION_URL = "Tõlketeenuse asukoht."
 
 VIEWER_SESSION_DIRECTORY = "Tee pilte sisaldava kataloogini."
+
 ########################################################################
+
 LANGUAGE = "\
 ELil on 24 ametlikku keelt: \
 bulgaaria, eesti, hispaania, hollandi, horvaadi, iiri, inglise, \

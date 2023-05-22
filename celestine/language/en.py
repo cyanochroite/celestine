@@ -80,7 +80,9 @@ The region where your resource was created."
 TRANSLATOR_SESSION_URL = "The location of the translation service."
 
 VIEWER_SESSION_DIRECTORY = "A path to a directory containing images."
+
 ########################################################################
+
 LANGUAGE = "\
 The EU has 24 official languages: \
 Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, \

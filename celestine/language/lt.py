@@ -93,7 +93,9 @@ Regionas, kuriame buvo sukurtas jūsų išteklius."
 TRANSLATOR_SESSION_URL = "Vertimo paslaugos vieta."
 
 VIEWER_SESSION_DIRECTORY = "Kelias į katalogą, kuriame yra vaizdų."
+
 ########################################################################
+
 LANGUAGE = "\
 ES yra 24 oficialiosios kalbos: \
 airių, anglų, bulgarų, čekų, danų, estų, graikų, ispanų, italų, \

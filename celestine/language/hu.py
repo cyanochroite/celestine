@@ -97,7 +97,9 @@ Az a régió, ahol az erőforrást létrehozták."
 TRANSLATOR_SESSION_URL = "A fordítási szolgáltatás helye."
 
 VIEWER_SESSION_DIRECTORY = "Képeket tartalmazó könyvtár elérési útja."
+
 ########################################################################
+
 LANGUAGE = "\
 Az Európai Uniónak 24 hivatalos nyelve van, melyek a következők: \
 angol, bolgár, cseh, dán, észt, finn, francia, görög, holland, horvát, \

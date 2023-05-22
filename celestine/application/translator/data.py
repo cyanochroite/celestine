@@ -1,0 +1,13 @@
+"""Keywords used throughout the translator application."""
+
+INIT = "__init__"
+KEY = "key"
+LANGUAGE = "language"
+LANGUAGE_TAG_AZURE = "LANGUAGE_TAG_AZURE"
+LANGUAGE_TAG_ISO = "LANGUAGE_TAG_ISO"
+REGION = "region"
+SESSION = "session"
+TEXT = "text"
+TO = "to"
+TRANSLATIONS = "translations"
+URL = "url"

@@ -94,7 +94,9 @@ TRANSLATOR_SESSION_REGION = "Regija u kojoj je vaš resurs stvoren."
 TRANSLATOR_SESSION_URL = "Mjesto usluge prevođenja."
 
 VIEWER_SESSION_DIRECTORY = "Put do direktorija koji sadrži slike."
+
 ########################################################################
+
 LANGUAGE = "\
 EU ima 24 službena jezika: \
 bugarski, češki, danski, engleski, estonski, finski, francuski, grčki, \

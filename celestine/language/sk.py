@@ -98,7 +98,9 @@ Oblasť, v ktorej bol váš zdroj vytvorený."
 TRANSLATOR_SESSION_URL = "Umiestnenie prekladateľskej služby."
 
 VIEWER_SESSION_DIRECTORY = "Cesta k adresáru obsahujúcemu obrázky."
+
 ########################################################################
+
 LANGUAGE = "\
 EÚ má 24 úradných jazykov, ktorými sú: \
 angličtina, bulharčina, čeština, dánčina, estónčina, fínčina, \

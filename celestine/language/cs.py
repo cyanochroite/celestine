@@ -96,7 +96,9 @@ Oblast, ve které byl prostředek vytvořen."
 TRANSLATOR_SESSION_URL = "Umístění překladatelské služby."
 
 VIEWER_SESSION_DIRECTORY = "Cesta k adresáři obsahujícímu obrázky."
+
 ########################################################################
+
 LANGUAGE = "\
 EU má 24 úředních jazyků. Jsou jimi: \
 angličtina, bulharština, čeština, dánština, estonština, finština, \

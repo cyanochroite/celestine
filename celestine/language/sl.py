@@ -99,7 +99,9 @@ Regija, v kateri je bil ustvarjen vaš vir."
 TRANSLATOR_SESSION_URL = "Lokacija prevajalske službe."
 
 VIEWER_SESSION_DIRECTORY = "Pot do imenika, ki vsebuje slike."
+
 ########################################################################
+
 LANGUAGE = "\
 V EU je 24 uradnih jezikov: \
 angleščina, bolgarščina, češčina, danščina, estonščina, finščina, \

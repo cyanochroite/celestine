@@ -101,7 +101,9 @@ TRANSLATOR_SESSION_URL = "Der Standort des Übersetzungsdienstes."
 
 VIEWER_SESSION_DIRECTORY = "\
 Ein Pfad zu einem Verzeichnis, das Bilder enthält."
+
 ########################################################################
+
 LANGUAGE = "\
 Die EU hat 24 Amtssprachen: \
 Bulgarisch, Dänisch, Deutsch, Englisch, Estnisch, Finnisch, \

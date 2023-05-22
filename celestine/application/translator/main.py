@@ -8,6 +8,22 @@ import uuid
 
 import requests
 
+from celestine.unicode import (
+    APOSTROPHE,
+    INFORMATION_SEPARATOR_FOUR,
+    INFORMATION_SEPARATOR_ONE,
+    INFORMATION_SEPARATOR_THREE,
+    INFORMATION_SEPARATOR_TWO,
+    LINE_SEPARATOR,
+    PARAGRAPH_SEPARATOR,
+
+    LINE_FEED,
+    QUOTATION_MARK,
+    REVERSE_SOLIDUS,
+    SPACE,
+)
+
+
 from celestine import load
 from celestine.alphabet import UNICODE
 from celestine.file import (
@@ -25,32 +41,20 @@ from celestine.unicode import (
     SPACE,
 )
 
-from .text import LANGUAGE
+from .data import LANGUAGE
+
+from .data import (
+    SESSION,
+    TRANSLATIONS,
+    TEXT,
+    TO,
+    LANGUAGE_TAG_AZURE,
+    LANGUAGE_TAG_ISO,
+    INIT,
+    )
+
+
 from .translator import Translator
-
-INIT = "__init__"
-
-
-TRANSLATION = "translation"
-
-
-SESSION = "session"
-TRANSLATIONS = "translations"
-TEXT = "text"
-TO = "to"
-
-LANGUAGE_TAG_AZURE = "LANGUAGE_TAG_AZURE"
-LANGUAGE_TAG_ISO = "LANGUAGE_TAG_ISO"
-
-half = "####################################"
-whole = f"{half}{half}"
-
-
-SECTION_BREAK = whole
-
-
-LANGUAGE = "language"
-INIT = "__init__"
 
 
 def do_normalize(string):
@@ -76,6 +80,7 @@ def assignment_expression(identifier, expression):
         raise ValueError("This word is a soft keyword.")
 
     yield from LINE_FEED
+    yield from LINE_SEPARATOR
     yield from identifier
     yield from SPACE
     yield from EQUALS_SIGN
@@ -85,6 +90,8 @@ def assignment_expression(identifier, expression):
     yield from do_normalize(expression)
     yield from QUOTATION_MARK
     yield from LINE_FEED
+    yield from LINE_SEPARATOR
+
 
 
 def transverse_dictionary(dictionary):
@@ -114,9 +121,14 @@ def language_file(translation, overridden):
     yield from QUOTATION_MARK
     yield from QUOTATION_MARK
     yield from LINE_FEED
+    yield from LINE_SEPARATOR
+
     yield from transverse_dictionary(translation)
-    yield from SECTION_BREAK
+
+    yield from PARAGRAPH_SEPARATOR
+
     yield from transverse_dictionary(overridden)
+
 
 
 def save_language(translation, overridden, *path):
@@ -194,6 +206,7 @@ def make_init_file():
     string.write(QUOTATION_MARK)
     string.write(QUOTATION_MARK)
     string.write(LINE_FEED)
+    string.write(LINE_SEPARATOR)
 
     value = string.getvalue()
     save_module(value, LANGUAGE, INIT)
@@ -303,7 +316,7 @@ def reset():
 
 def save_item(dictionarys):
     """Save the items."""
-    translations = load.argument(TRANSLATION)
+    translations = load.argument(LANGUAGE)
     for translation in translations:
         dictionary = dictionarys[translation]
         save_dictionary(dictionary, LANGUAGE, translation)

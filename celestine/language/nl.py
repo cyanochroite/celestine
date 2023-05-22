@@ -97,7 +97,9 @@ TRANSLATOR_SESSION_REGION = "De regio waar uw resource is gemaakt."
 TRANSLATOR_SESSION_URL = "De locatie van de vertaaldienst."
 
 VIEWER_SESSION_DIRECTORY = "Een pad naar een map met afbeeldingen."
+
 ########################################################################
+
 LANGUAGE = "\
 De EU heeft 24 officiële talen: \
 Bulgaars, Deens, Duits, Engels, Ests, Fins, Frans, Grieks, Hongaars, \

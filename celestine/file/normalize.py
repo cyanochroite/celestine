@@ -3,6 +3,7 @@
 
 import io
 
+
 from celestine.alphabet import (
     DIRECTIONAL_FORMATTING,
     UNICODE,
@@ -18,6 +19,8 @@ from celestine.unicode import (
     INFORMATION_SEPARATOR_ONE,
     INFORMATION_SEPARATOR_THREE,
     INFORMATION_SEPARATOR_TWO,
+    LINE_SEPARATOR,
+    PARAGRAPH_SEPARATOR,
     LINE_FEED,
     QUOTATION_MARK,
     REVERSE_SOLIDUS,
@@ -25,16 +28,23 @@ from celestine.unicode import (
 )
 
 MAXIMUM_LINE_LENGTH = 72
+SECTION_BREAK = "######################################################\
+##################"
 
 
 def width(string):
     """
     Wrap long lines by breaking on punctiation or spaces.
 
-    INFORMATION_SEPARATOR_FOUR indicates end of file. Stop immediately.
-    INFORMATION_SEPARATOR_THREE indicates end of line. Reset column.
-    INFORMATION_SEPARATOR_TWO indicates punctuation. Break on long line.
-    INFORMATION_SEPARATOR_ONE indicates whitespace. Break on long line.
+    PARAGRAPH_SEPARATOR indicates a seperator should be printed.
+    LINE_SEPARATOR indicates end of line. Reset column.
+
+    The following breaks on long lines.
+    Higher number has higher priority.
+    INFORMATION_SEPARATOR_FOUR indicates start of string.
+    INFORMATION_SEPARATOR_THREE indicates hard punctuation.
+    INFORMATION_SEPARATOR_TWO indicates soft punctuation.
+    INFORMATION_SEPARATOR_ONE indicates whitespace.
 
     A long line will always break on a punctuation if one can be found.
     If not the line will break on a whitespace if one can be found.
@@ -50,6 +60,28 @@ def width(string):
     count_d = 0
 
     for character in string:
+
+
+        if character == PARAGRAPH_SEPARATOR:
+            yield from LINE_FEED
+            yield from SECTION_BREAK
+            yield from LINE_FEED
+            continue
+
+        if character == LINE_SEPARATOR:
+            buffer.seek(0, io.SEEK_SET)
+            line = buffer.read(count)
+            buffer.seek(0, io.SEEK_SET)
+
+            count = 0
+            count_a = 0
+            count_b = 0
+            count_c = 0
+            count_d = 0
+
+            yield from line
+            continue
+
         if character == INFORMATION_SEPARATOR_FOUR:
             count_d = count
             continue
