@@ -4,8 +4,98 @@ The Unicode Standard - Version 15.0.0.
 https://www.unicode.org/Public/zipped/15.0.0/UCD.zip/UnicodeData.txt
 """
 
+
+from celestine.unicode import (
+    CARRIAGE_RETURN,
+    CHARACTER_TABULATION,
+    COLON,
+    COMMA,
+    EXCLAMATION_MARK,
+    FORM_FEED,
+    FULL_STOP,
+    INFORMATION_SEPARATOR_FOUR,
+    INFORMATION_SEPARATOR_ONE,
+    INFORMATION_SEPARATOR_THREE,
+    INFORMATION_SEPARATOR_TWO,
+    LEFT_TO_RIGHT_EMBEDDING,
+    LEFT_TO_RIGHT_ISOLATE,
+    LEFT_TO_RIGHT_MARK,
+    LEFT_TO_RIGHT_OVERRIDE,
+    LINE_FEED,
+    LINE_SEPARATOR,
+    LINE_TABULATION,
+    NEXT_LINE,
+    NONE,
+    PARAGRAPH_SEPARATOR,
+    POP_DIRECTIONAL_FORMATTING,
+    QUESTION_MARK,
+    RIGHT_TO_LEFT_EMBEDDING,
+    RIGHT_TO_LEFT_ISOLATE,
+    RIGHT_TO_LEFT_MARK,
+    RIGHT_TO_LEFT_OVERRIDE,
+    SEMICOLON,
+    SPACE,
+)
+
+unicode_break_hard = frozenset(
+    {
+        COLON,
+        EXCLAMATION_MARK,
+        FULL_STOP,
+        QUESTION_MARK,
+    }
+)
+
+unicode_break_soft = frozenset(
+    {
+        COMMA,
+        SEMICOLON,
+    }
+)
+
+unicode_punctuation = unicode_break_hard | unicode_break_soft
+
+
+unicode_whitespace = frozenset(
+    {
+        CARRIAGE_RETURN,
+        CHARACTER_TABULATION,
+        FORM_FEED,
+        INFORMATION_SEPARATOR_FOUR,
+        INFORMATION_SEPARATOR_THREE,
+        INFORMATION_SEPARATOR_TWO,
+        INFORMATION_SEPARATOR_ONE,
+        LINE_FEED,
+        LINE_SEPARATOR,
+        LINE_TABULATION,
+        NEXT_LINE,
+        PARAGRAPH_SEPARATOR,
+        SPACE,
+    }
+)
+
+not_identifier = unicode_punctuation | unicode_whitespace
+
+
+DIRECTIONAL_FORMATTING = frozenset(
+    (
+        LEFT_TO_RIGHT_MARK,
+        RIGHT_TO_LEFT_MARK,
+        LEFT_TO_RIGHT_EMBEDDING,
+        RIGHT_TO_LEFT_EMBEDDING,
+        POP_DIRECTIONAL_FORMATTING,
+        LEFT_TO_RIGHT_OVERRIDE,
+        RIGHT_TO_LEFT_OVERRIDE,
+        LEFT_TO_RIGHT_ISOLATE,
+        RIGHT_TO_LEFT_ISOLATE,
+    )
+)
+
+
+
+
 UNICODE = frozenset((
-"",
+NONE,
 chr(0),
 chr(1),
 chr(2),
@@ -34895,3 +34985,6 @@ chr(917997),
 chr(917998),
 chr(917999),
 ))
+
+
+unicode_identifier = UNICODE - not_identifier

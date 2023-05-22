@@ -2,77 +2,22 @@
 import io
 import keyword
 
-from celestine import load
-from celestine.alphabet import UNICODE
-
 from celestine.unicode import (
-    APOSTROPHE,
-    CARRIAGE_RETURN,
-    CHARACTER_TABULATION,
-    COLON,
-    COMMA,
     EQUALS_SIGN,
-    EXCLAMATION_MARK,
-    FORM_FEED,
-    FULL_STOP,
     INFORMATION_SEPARATOR_FOUR,
     INFORMATION_SEPARATOR_ONE,
     INFORMATION_SEPARATOR_THREE,
     INFORMATION_SEPARATOR_TWO,
     LINE_FEED,
-    LINE_SEPARATOR,
-    LINE_TABULATION,
-    NEXT_LINE,
-    PARAGRAPH_SEPARATOR,
-    QUESTION_MARK,
     QUOTATION_MARK,
     REVERSE_SOLIDUS,
-    SEMICOLON,
     SPACE,
 )
 
 MAXIMUM_LINE_LENGTH = 72
 
-unicode_break_hard = frozenset(
-    {
-        COLON,
-        EXCLAMATION_MARK,
-        FULL_STOP,
-        QUESTION_MARK,
-    }
-)
 
-unicode_break_soft = frozenset(
-    {
-        COMMA,
-        SEMICOLON,
-    }
-)
-
-unicode_punctuation = unicode_break_hard | unicode_break_soft
-
-
-unicode_whitespace = frozenset(
-    {
-        CARRIAGE_RETURN,
-        CHARACTER_TABULATION,
-        FORM_FEED,
-        INFORMATION_SEPARATOR_FOUR,
-        INFORMATION_SEPARATOR_THREE,
-        INFORMATION_SEPARATOR_TWO,
-        INFORMATION_SEPARATOR_ONE,
-        LINE_FEED,
-        LINE_SEPARATOR,
-        LINE_TABULATION,
-        NEXT_LINE,
-        PARAGRAPH_SEPARATOR,
-        SPACE,
-    }
-)
-
-not_identifier = unicode_punctuation | unicode_whitespace
-
-unicode_identifier = UNICODE - not_identifier
+from celestine.file import normalize
 
 
 def word_wrap(string):
@@ -166,79 +111,6 @@ def word_wrap(string):
     yield from buffer.read(count)
 
 
-def normalize_character(string):
-    """Remove all invalid characters."""
-    for character in string:
-        if character in UNICODE:
-            yield from character
-
-
-def normalize_whitespace(string):
-    """
-    Remove (ignore) all whitespace from the start and end of the string.
-
-    Convert all whitespace to spaces.
-    Remove all duplicate spaces.
-    Preserve space between words.
-    Remove space before punctuation.
-    Ensure space after every punctuation.
-    Allow line breaks after punctuation.
-    """
-    previous = None
-    whitespace = None
-
-    for character in string:
-        if character in unicode_identifier:
-            if previous in unicode_break_soft:
-                yield from SPACE
-                yield from INFORMATION_SEPARATOR_TWO
-            elif previous in unicode_break_hard:
-                yield from SPACE
-                yield from INFORMATION_SEPARATOR_THREE
-            elif previous in unicode_identifier:
-                # Preserve space between words.
-                if whitespace:
-                    yield from SPACE
-                    yield from INFORMATION_SEPARATOR_ONE
-
-        whitespace = character in unicode_whitespace
-
-        if not whitespace:
-            yield from character
-            previous = character
-
-
-def normalize_quotation(string):
-    """"""
-
-    for character in string:
-        if character == QUOTATION_MARK:
-            yield from APOSTROPHE
-        else:
-            yield from character
-
-
-def normalize_punctuation(string):
-    """Remove excess punctiation."""
-
-    previous = None
-    for character in string:
-        if character in unicode_punctuation:
-            if character == previous:
-                continue
-        yield character
-        previous = character
-
-
-def normalize(string):
-    """"""
-    character = normalize_character(string)
-    whitespace = normalize_whitespace(character)
-    quotation = normalize_quotation(whitespace)
-    punctuation = normalize_punctuation(quotation)
-    yield from punctuation
-
-
 def assignment_expression(identifier, expression):
     """
     Make a line for the file from a key value pair.
@@ -259,7 +131,7 @@ def assignment_expression(identifier, expression):
     yield from SPACE
     yield from QUOTATION_MARK
     yield from INFORMATION_SEPARATOR_FOUR
-    yield from normalize(expression)
+    yield from normalize.normalize(expression)
     yield from QUOTATION_MARK
     yield from LINE_FEED
 

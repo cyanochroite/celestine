@@ -1,4 +1,5 @@
 """Application for translating text to other languages."""
+import io
 import os
 import os.path
 import shutil
@@ -6,12 +7,23 @@ import uuid
 
 import requests
 
-from .parser import normalize
-
-from celestine.alphabet import UNICODE
-
 from celestine import load
-from celestine.file import open_module
+from celestine.alphabet import UNICODE
+from celestine.application.translator.parser import (
+    transverse_dictionary,
+    word_wrap,
+)
+from celestine.file import (
+    open_module,
+    save_module,
+)
+from celestine.unicode import (
+    FULL_STOP,
+    LINE_FEED,
+    QUOTATION_MARK,
+    REVERSE_SOLIDUS,
+    SPACE,
+)
 
 from .text import LANGUAGE
 from .translator import Translator
@@ -36,21 +48,6 @@ whole = f"{half}{half}"
 
 SECTION_BREAK = whole
 
-import io
-
-from celestine import load
-from celestine.application.translator.parser import (
-    transverse_dictionary,
-    word_wrap,
-)
-from celestine.file import save_module
-from celestine.unicode import (
-    FULL_STOP,
-    LINE_FEED,
-    QUOTATION_MARK,
-    REVERSE_SOLIDUS,
-    SPACE,
-)
 
 LANGUAGE = "language"
 INIT = "__init__"
@@ -106,6 +103,7 @@ def fix_line_split(*path):
 
             yield from character
 
+
 def read_new_lines(string):
     """"""
 
@@ -127,7 +125,6 @@ def read_new_lines(string):
 
 
 def make_dictionary(document):
-
     dictionary = {}
 
     lines = document.split(LINE_FEED)
@@ -142,6 +139,7 @@ def make_dictionary(document):
         value = split[-1].strip()[1:-1]
         dictionary[key] = value
     return dictionary
+
 
 def make_init_file():
     """"""
@@ -182,7 +180,7 @@ def open_language(*path):
 
     text = fix_line_split(*path)
     lines = read_new_lines(text)
-    #normal = normalize(lines)
+    # normal = normalize(lines)
     normal = lines
 
     string = io.StringIO()
@@ -190,7 +188,6 @@ def open_language(*path):
         string.write(line)
 
     value = string.getvalue()
-
 
     half = "####################################"
     whole = f"{half}{half}"
@@ -209,10 +206,7 @@ def open_language(*path):
 def parser_magic(session, source):
     """Do all parser stuff here."""
 
-
     all_languages = {}
-
-    dictionary = {}
 
     azure_to_iso = {}
     dest_code = []
