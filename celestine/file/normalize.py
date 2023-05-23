@@ -11,6 +11,8 @@ from celestine.alphabet import (
     unicode_punctuation,
     unicode_whitespace,
 )
+from celestine.alphabet import unicode_newline
+
 from celestine.unicode import (
     APOSTROPHE,
     INFORMATION_SEPARATOR_FOUR,
@@ -31,7 +33,7 @@ from .data import (
 )
 
 
-def width(string):
+def wrap(string):
     """
     Wrap long lines by breaking on punctiation or spaces.
 
@@ -147,6 +149,90 @@ def width(string):
     yield from buffer.read(count)
 
 
+
+
+def wrap_text(string):
+    """"""
+    buffer = io.StringIO()
+    size = 0
+
+    count = 0
+    count_a = 0
+
+    for character in string:
+        if character == PARAGRAPH_SEPARATOR:
+            yield from LINE_FEED
+            yield from SECTION_BREAK
+            yield from LINE_FEED
+            continue
+
+        if character == LINE_SEPARATOR:
+            buffer.seek(0, io.SEEK_SET)
+            line = buffer.read(count)
+            buffer.seek(0, io.SEEK_SET)
+
+            count = 0
+            count_a = 0
+
+
+            yield from line
+            continue
+
+        if character == INFORMATION_SEPARATOR_FOUR:
+            count_a = count
+            continue
+
+        if character == INFORMATION_SEPARATOR_THREE:
+            count_a = count
+            continue
+
+        if character == INFORMATION_SEPARATOR_TWO:
+            count_a = count
+            continue
+
+        if character == INFORMATION_SEPARATOR_ONE:
+            count_a = count
+            continue
+
+        size = len(character)
+        if count + size > MAXIMUM_LINE_LENGTH:
+            buffer.seek(0, io.SEEK_SET)
+
+            pull = 0
+            if 0 < count_a < MAXIMUM_LINE_LENGTH:
+                pull = count_a
+            else:
+                pull = MAXIMUM_LINE_LENGTH
+
+            data = buffer.read(pull)
+
+            yield from data
+            yield from LINE_FEED
+
+            string = buffer.read(count - pull)
+
+            buffer.seek(0, io.SEEK_SET)
+
+            count = buffer.write(string)
+            count_a = max(0, count_a - pull)
+
+        count += buffer.write(character)
+
+        if character == LINE_FEED:
+            buffer.seek(0, io.SEEK_SET)
+            # yield from buffer.read(count)
+
+            candy = buffer.read(count)
+            yield from candy
+            buffer.seek(0, io.SEEK_SET)
+
+            count = 0
+            count_a = 0
+
+    buffer.seek(0, io.SEEK_SET)
+    yield from buffer.read(count)
+
+
 def character(string):
     """Remove all invalid characters."""
     for character in string:
@@ -157,6 +243,14 @@ def character(string):
             continue
 
         yield from character
+
+def newline(string):
+    """Remove all newline characters."""
+    for character in string:
+        if character in unicode_newline:
+            yield from SPACE
+        else:
+            yield from character
 
 
 def whitespace(string):

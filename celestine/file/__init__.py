@@ -1,5 +1,8 @@
 """Central place for loading and importing external files."""
 
+import io
+
+
 from celestine import load
 from celestine.text import stream
 from celestine.typed import (
@@ -8,6 +11,13 @@ from celestine.typed import (
     P,
     S,
 )
+
+def read_stream(lines:GE[S, N, N])->S:
+    string = io.StringIO()
+    for line in lines:
+        string.write(line)
+    value = string.getvalue()
+    return value
 
 
 def context(file: P, mode: S) -> N:
@@ -32,17 +42,35 @@ def context(file: P, mode: S) -> N:
     )
 
 
-def open_file(file: P) -> GE[S, N, N]:
+
+def open_file(file: P) -> S:
+    """"""
+    stream = open_file_stream(file)
+    return read_stream(stream)
+
+
+def open_file_stream(file: P) -> GE[S, N, N]:
     """"""
     mode = stream.READ_TEXT
     with context(file, mode) as document:
         yield from document
 
 
-def open_module(*path: S) -> GE[S, N, N]:
+
+
+def open_module(*path: S) -> S:
     """"""
-    file = load.python(*path)
-    yield from open_file(file)
+    stream = open_module_stream(file)
+    return read_stream(stream)
+
+
+
+
+def open_module_stream(file: P) -> GE[S, N, N]:
+    """"""
+    mode = stream.READ_TEXT
+    with context(file, mode) as document:
+        yield from document
 
 
 def save_file(string: S, file: P) -> N:

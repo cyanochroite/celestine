@@ -53,6 +53,18 @@ unicode_break_soft = frozenset(
     }
 )
 
+
+unicode_newline = frozenset(
+    {
+        CARRIAGE_RETURN,
+        LINE_FEED,
+        LINE_SEPARATOR,
+        NEXT_LINE,
+        PARAGRAPH_SEPARATOR,
+    }
+)
+
+
 unicode_punctuation = unicode_break_hard | unicode_break_soft
 
 

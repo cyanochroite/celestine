@@ -101,12 +101,12 @@ def make_init_file():
     string.write(LINE_SEPARATOR)
 
     value = string.getvalue()
-    width = normalize.width(value)
+    width = normalize.wrap(value)
     save_module(width, LANGUAGE, INIT)
 
 
 def save_language(translation: TABLE, overridden: TABLE, *path: S) -> N:
     """Save a language file to disk."""
     file = language_file(translation, overridden)
-    string = normalize.width(file)
+    string = normalize.wrap(file)
     save_module(string, *path)
