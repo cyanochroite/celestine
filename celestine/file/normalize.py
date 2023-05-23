@@ -160,13 +160,10 @@ def wrap_text(string):
     count_a = 0
 
     for character in string:
-        if character == PARAGRAPH_SEPARATOR:
-            yield from LINE_FEED
-            yield from SECTION_BREAK
-            yield from LINE_FEED
-            continue
 
-        if character == LINE_SEPARATOR:
+        count += buffer.write(character)
+
+        if character == LINE_FEED:
             buffer.seek(0, io.SEEK_SET)
             line = buffer.read(count)
             buffer.seek(0, io.SEEK_SET)
@@ -174,28 +171,11 @@ def wrap_text(string):
             count = 0
             count_a = 0
 
-
             yield from line
             continue
 
-        if character == INFORMATION_SEPARATOR_FOUR:
-            count_a = count
-            continue
 
-        if character == INFORMATION_SEPARATOR_THREE:
-            count_a = count
-            continue
-
-        if character == INFORMATION_SEPARATOR_TWO:
-            count_a = count
-            continue
-
-        if character == INFORMATION_SEPARATOR_ONE:
-            count_a = count
-            continue
-
-        size = len(character)
-        if count + size > MAXIMUM_LINE_LENGTH:
+        if count  > MAXIMUM_LINE_LENGTH:
             buffer.seek(0, io.SEEK_SET)
 
             pull = 0
@@ -216,18 +196,9 @@ def wrap_text(string):
             count = buffer.write(string)
             count_a = max(0, count_a - pull)
 
-        count += buffer.write(character)
+        if character == SPACE:
+            count_a = count
 
-        if character == LINE_FEED:
-            buffer.seek(0, io.SEEK_SET)
-            # yield from buffer.read(count)
-
-            candy = buffer.read(count)
-            yield from candy
-            buffer.seek(0, io.SEEK_SET)
-
-            count = 0
-            count_a = 0
 
     buffer.seek(0, io.SEEK_SET)
     yield from buffer.read(count)

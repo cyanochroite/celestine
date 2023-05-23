@@ -4,6 +4,7 @@ import io
 from celestine import load
 from celestine.file import (
     open_file,
+    open_file_stream,
     save_file,
 )
 from celestine.load import directory
@@ -11,6 +12,7 @@ from celestine.package import run
 
 from celestine.file import normalize
 
+from celestine.unicode import LINE_FEED
 
 def clean(**star):
     """"""
@@ -25,29 +27,17 @@ def clean(**star):
 
 def licence(**star):
     """"""
-
-    split = "\n\n"
-
     location = load.pathway("licence")
-    files = directory.file(location, [], [])
+    files = directory.file(location, [], ["cascadia_code_en.txt"])
     for file in files:
         string = io.StringIO()
-
-        text = open_file(file)
-        lines = text.split(split)
+        lines = open_file_stream(file)
         for line in lines:
             character = normalize.character(line)
-            newline = normalize.whitespace(character)
-            whitespace = normalize.whitespace(newline)
-            punctuation = normalize.punctuation(whitespace)
-            newer = normalize.wrap_text(punctuation)
-            for stuff in newer:
-                string.write(stuff)
-
-            string.write(split)
-
+            wrap = normalize.wrap_text(character)
+            for text in wrap:
+                string.write(text)
         save_file(string.getvalue(), file)
-        #save_file(split.join(data), file)
 
 
 
