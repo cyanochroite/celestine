@@ -1,4 +1,5 @@
 ﻿EIROPAS SAVIENĪBAS SABIEDRISKĀ LICENCE 1.2. redakcija
+
 EUPL © Eiropas Savienība, 2007, 2016
 
 Eiropas Savienības sabiedriskā licence (EUPL) attiecas uz darbu (saskaņā ar turpmāk sniegto definīciju), kas izmantojams saskaņā ar šīs licences noteikumiem. Darbu ir atļauts izmantot tikai šajā licencē paredzētajā veidā (ciktāl uz šādu lietojumu attiecas darba autortiesību subjekta tiesības).
@@ -9,7 +10,7 @@ Licencēts saskaņā ar EUPL
 
 vai jebkādā citā veidā ir izteicis vēlēšanos darbu licencēt saskaņā ar EUPL.
 
-1.Definīcijas
+1. Definīcijas
 
 Šajā licencē turpmāk minētos terminus lieto šādā nozīmē:
 
@@ -33,7 +34,7 @@ vai jebkādā citā veidā ir izteicis vēlēšanos darbu licencēt saskaņā ar
 
 — “izplatīt” vai “darīt zināmu” ir veikt jebkuru darbību, ar kuru darba kopijas pārdod, dāvina, patapina, iznomā, izplata, dara zināmas, pārraida vai dara pieejamas citādā veidā, tiešsaistē vai bezsaistē, vai dod piekļuvi tā būtiskākajām funkcijām jebkurai fiziskai vai juridiskai personai.
 
-2.Ar licenci piešķirto tiesību apjoms
+2. Ar licenci piešķirto tiesību apjoms
 
 Ar šo licenciārs uz oriģināldarbam piemērojamo autortiesību aizsardzības laika posmu jums piešķir visā pasaulē izmantojamu vienkāršu bezatlīdzības licenci, ko var nodot trešām personām, šādām darbībām:
 
@@ -57,15 +58,15 @@ Valstīs, kurās eksistē autora personiskās tiesības, licenciārs atsakās ī
 
 Licenciārs bez tiesībām uz atlīdzību un bez izņēmuma tiesībām piešķir licenciātam visu licenciāra patentu lietošanas tiesības, ciktāl tas ir nepieciešams, lai realizētu ar šo licenci piešķirtās tiesības uz darbu.
 
-3.Pirmkoda pieejamība
+3. Pirmkoda pieejamība
 
 Licenciārs var izplatīt darbu vai nu pirmkoda, vai izpildkoda formā. Ja darbs ir pieejams izpildkoda formā, kopā ar katru licenciāra izplatītu darba kopiju licenciārs papildus sniedz piekļuvi mašīnlasāmai darba pirmkoda kopijai vai aiz darbam pievienotās autortiesību zīmes norāda krātuvi, kurā pirmkods ir brīvi un bez maksas pieejams tik ilgi, kamēr licenciārs darbu turpina izplatīt vai darīt zināmu.
 
-4.Autortiesību ierobežojumi
+4. Autortiesību ierobežojumi
 
 Ar šo licenci netiek ierobežoti licenciāta ieguvumi, kas tam pienākas saskaņā ar jebkādu tādu izņēmumu vai ierobežojumu, kas ierobežo autortiesību subjektu izņēmuma tiesības attiecībā uz darbu, vai kas tam pienākas saskaņā ar šo tiesību izsmelšanu vai saskaņā ar citiem piemērojamiem ierobežojumiem.
 
-5.Licenciāta pienākumi
+5. Licenciāta pienākumi
 
 Iepriekš minēto tiesību piešķiršana uzliek licenciātam vairākus ierobežojumus un pienākumus. Minētie pienākumi ir šādi:
 
@@ -79,7 +80,7 @@ Piekļuve pirmkodam: izplatot vai darot zināmas darba kopijas, licenciāts sag�
 
 Tiesiskā aizsardzība: šī licence nepiešķir atļauju lietot licenciāra tirdzniecības nosaukumus, preču zīmes, pakalpojumu zīmes vai licenciāra nosaukumus, izņemot gadījumus, kad tas ir nepieciešams pamatotam un ierastam lietojumam, kurā raksturo darba izcelsmi un atkārto autortiesību zīmes saturu.
 
-6.Autorības secība
+6. Autorības secība
 
 Sākotnējais licenciārs garantē, ka tam pieder autortiesības uz oriģināldarbu vai tās ir licenciāram piešķirtas ar licenci un ka tam ir tiesības un pilnvaras izdot licenci.
 
@@ -87,7 +88,7 @@ Katrs attīstītājs garantē, ka autortiesības uz tā veiktajiem darba pārvei
 
 Katru reizi, kad jūs pieņemat licenci, sākotnējais licenciārs un nākamie attīstītāji jums atļauj izmantot viņu ieguldījumu darbā atbilstoši šīs licences noteikumiem.
 
-7.Garantijas atruna
+7. Garantijas atruna
 
 Darba izstrāde turpinās, to nepārtraukti uzlabo daudzi attīstītāji. Tas nav pabeigts darbs, tāpēc tam var piemist trūkumi vai nepilnības, kas ir šāda veida izstrādes sastāvdaļa.
 
@@ -95,31 +96,31 @@ Minētā iemesla dēļ ar šo licenci darbam sniedz piekļuvi tādam, “kāds t
 
 Šī garantijas atruna ir būtiska licences sastāvdaļa un nosacījums, lai piešķirtu jebkādas tiesības uz darbu.
 
-8.Atbildības atruna
+8. Atbildības atruna
 
 Izņemot tīšu nodarījumu vai fiziskām personām tieši nodarītus kaitējumus, licenciārs nekādā gadījumā neuzņemas atbildību ne par kādiem tiešiem vai netiešiem, mantiskiem vai morāliem jebkāda veida kaitējumiem, kas izriet no licences vai darba lietošanas, tostarp, bet ne tikai, kaitējumiem, kas saistīti ar nemateriālās vērtības mazināšanos, darbības pārtraukšanu, datora bojājumiem vai darbības traucējumiem, datu zudumu vai jebkādu komerciālu kaitējumu pat tad, ja licenciāram ir darīta zināma šādu kaitējumu iespējamība. Tomēr licenciārs ir atbildīgs saskaņā ar normatīvajiem aktiem par produktatbildību, ciktāl tie attiecas uz darbu.
 
-9.Papildu vienošanās
+9. Papildu vienošanās
 
 Izplatot darbu, jūs drīkstat noslēgt papildu vienošanos, nosakot pienākumus vai pakalpojumus, kas nav pretrunā šai licencei. Taču, uzņemoties pienākumus, jūs varat rīkoties vienīgi savā vārdā un uz savu atbildību, ne sākotnējā licenciāra vai kāda cita attīstītāja vārdā, un vienīgi tad, ja jūs apņematies atbrīvot visus attīstītājus no atbildības par jebkādām saistībām vai prasībām, kā arī atlīdzināt visus zaudējumus un aizstāvēt attīstītājus, ja pret kādu no tiem tiktu celta prasība jūsu garantiju vai papildu saistību dēļ.
 
-10.Licences pieņemšana
+10. Licences pieņemšana
 
 Šīs licences noteikumus var pieņemt, noklikšķinot uz ikonas “Piekrītu”, kas atrodas zem loga, kurā parādīts šīs licences teksts, vai apstiprinot piekrišanu citā līdzīgā veidā saskaņā ar piemērojamiem tiesību aktiem. Noklikšķinot uz ikonas, jūs apliecināt skaidru un neatsaucamu šīs licences un visu tās noteikumu un nosacījumu pieņemšanu.
 
 Tāpat jūs neatsaucami pieņemat šo licenci un visus tās noteikumus un nosacījumus, īstenojot jebkuras no tiesībām, kas jums piešķirtas ar šīs licences 2. pantu, piemēram, izmantojot darbu, radot atvasinātu darbu vai izplatot vai darot pieejamu darbu vai tā kopijas.
 
-11.Sabiedrības informēšana
+11. Sabiedrības informēšana
 
 Ja jūs darbu izplatāt vai darāt zināmu ar elektroniskiem sakaru līdzekļiem (piemēram, piedāvājot darbu lejupielādēt no attālināta datu avota), informācijas izplatīšanas līdzekļiem vai informācijas nesējiem (piemēram, tīmekļa vietnei), ir jāsniedz sabiedrībai vismaz tā informācija, kas ir noteikta piemērojamos tiesību aktos attiecībā uz licenciāru, licenci un to, kā licenciāts tai var piekļūt, kā to var apstiprināt, uzglabāt un reproducēt.
 
-12.Licences izbeigšana
+12. Licences izbeigšana
 
 Licence un ar to piešķirtās tiesības izbeidzas automātiski, līdzko licenciāts pārkāpj licences noteikumus.
 
 Šāda izbeigšana neizbeidz licences citām personām, kas ir saņēmušas darbu no licenciāta atbilstoši licencei, ja šīs personas pilnībā turpina rīkoties saskaņā ar licences noteikumiem.
 
-13.Dažādi
+13. Dažādi
 
 Neskarot 9. pantu, licence pilnībā atspoguļo pušu galīgo vienošanos attiecībā uz darbu.
 
@@ -129,7 +130,7 @@ Eiropas Komisija var publicēt šīs licences redakcijas citās valodās vai jau
 
 Eiropas Komisijas apstiprinātas šīs licences redakcijas visās valodās ir vienlīdzīgas. Puses var izvēlēties, kuras valodas redakciju izmantot.
 
-14.Jurisdikcija
+14. Jurisdikcija
 
 Neskarot konkrētu starp pusēm noslēgtu vienošanos:
 
@@ -137,7 +138,7 @@ Neskarot konkrētu starp pusēm noslēgtu vienošanos:
 
 — jebkura tiesvedība, kas rodas starp citām pusēm un šīs licences interpretēšanas rezultātā, ir tās valsts kompetentās tiesas ekskluzīvā piekritībā, kur licenciārs pastāvīgi uzturas vai kur ir tā galvenā uzņēmējdarbības vieta.
 
-15.Piemērojamie tiesību akti
+15. Piemērojamie tiesību akti
 
 Neskarot konkrētu starp pusēm noslēgtu vienošanos:
 
@@ -171,4 +172,6 @@ Papildinājums
 
 Eiropas Komisija var atjaunināt šo pielikumu, lai iekļautu tajā iepriekš minēto licenču jaunākas redakcijas, nepieņemot jaunu EUPL redakciju, ja ar attiecīgajām licencēm tiek piešķirtas šīs licences 2. pantā noteiktās tiesības un netiek pieļauts, ka pirmkods, uz kuru attiecas licence, nonāk ekskluzīvā piederībā.
 
-Lai šajā pielikumā varētu izdarīt citas izmaiņas vai papildinājumus, ir jāveido jauna EUPL redakcija.  19.5.2017. L 128/64 Eiropas Savienības Oficiālais Vēstnesis LV
+Lai šajā pielikumā varētu izdarīt citas izmaiņas vai papildinājumus, ir jāveido jauna EUPL redakcija.
+
+19.5.2017. L 128/64 Eiropas Savienības Oficiālais Vēstnesis LV

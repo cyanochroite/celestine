@@ -1,4 +1,5 @@
 ﻿EUROPOS SĄJUNGOS VIEŠOJI LICENCIJA v. 1.2
+
 EUPL © Europos Sąjunga, 2007, 2016
 
 Ši Europos Sąjungos viešoji licencija (toliau – EUPL) taikoma kūriniui (kaip apibrėžta toliau), kuriuo naudotis leidžiama šioje licencijoje nustatytomis sąlygomis. Kūrinį naudoti kitaip, nei numatyta šioje licencijoje, draudžiama (tiek, kiek tokiam naudojimui taikomos kūrinio autoriaus teisių turėtojo teisės).
@@ -9,7 +10,7 @@ Licencijuota pagal EUPL
 
 arba kitomis priemonėmis išreiškia savo norą leisti jį naudoti pagal EUPL.
 
-1.Apibrėžtys
+1. Apibrėžtys
 
 Šioje licencijoje vartojamų terminų apibrėžtys:
 
@@ -23,7 +24,9 @@ arba kitomis priemonėmis išreiškia savo norą leisti jį naudoti pagal EUPL.
 
 — pirminis kodas – žmonėms suprantama kūrinio forma, kurią patogiausia nagrinėti ir keisti,
 
-— vykdomasis kodas – bet koks įprastai sukompiliuotas kodas, kurį kompiuteris gali vykdyti kaip programą,  — licenciaras–licencijoje nustatytomis sąlygomis kūrinį platinantis ir (arba) perduodantis fizinis arba juridinis asmuo,
+— vykdomasis kodas – bet koks įprastai sukompiliuotas kodas, kurį kompiuteris gali vykdyti kaip programą,
+
+— licenciaras–licencijoje nustatytomis sąlygomis kūrinį platinantis ir (arba) perduodantis fizinis arba juridinis asmuo,
 
 — bendraautoris (-iai) – bet kuris fizinis arba juridinis asmuo, kuris licencijoje nustatytomis sąlygomis kūrinį keičia arba kitaip prisideda prie išvestinio kūrinio sukūrimo,
 
@@ -31,7 +34,7 @@ arba kitomis priemonėmis išreiškia savo norą leisti jį naudoti pagal EUPL.
 
 — platinimas arba perdavimas–kūrinio kopijų pardavimas, perleidimas, paskolinimas, nuoma, platinimas, pateikimas, persiuntimas arba kitoks suteikimas prijungties arba atjungties režimu arba prieigos prie jo pagrindinių funkcijų suteikimas naudotis bet kuriam kitam fiziniam arba juridiniam asmeniui.
 
-2.Licencija suteiktų teisių taikymo sritis
+2. Licencija suteiktų teisių taikymo sritis
 
 Šiuo dokumentu licenciaras suteikia jums be autorinio atlyginimo neišimtinę, sublicencijuojamą licenciją visame pasaulyje vykdyti toliau nurodytą veiklą tol, kol saugomos originalaus kūrinio autoriaus teisės:
 
@@ -55,15 +58,15 @@ Valstybėse, kuriose taikomos neturtinės autoriaus teisės, licenciaras atsisak
 
 Licenciaras suteikia licenciatui neišimtines teises be autorinio atlyginimo naudotis visais licenciaro turimais patentais tiek, kiek tai būtina, kad būtų galima naudotis pagal šią licenciją suteiktomis teisėmis į kūrinį.
 
-3.Pirminio kodo perdavimas
+3. Pirminio kodo perdavimas
 
 Licenciaras kūrinį gali pateikti kaip pirminį kodą arba kaip vykdomąjį kodą. Jei kūrinys pateikiamas kaip vykdomasis kodas, licenciaras su kiekviena jo platinamo kūrinio kopija taip pat pateikia kūrinio pirminio kodo kopiją, pritaikytą skaityti techninėmis priemonėmis, arba po kūrinio autoriaus teisių nuorodos nurodo saugyklą, kurioje pirminis kodas lengvai ir be užmokesčio prieinamas tol, kol licenciaras platina arba perduoda kūrinį.
 
-4.Autoriaus teisių apribojimai
+4. Autoriaus teisių apribojimai
 
 Jokia šios licencijos nuostata nesiekiama atimti iš licenciato naudos, gaunamos dėl kūrinio teisių turėtojų išimtinių teisių išimčių arba apribojimų, dėl teisių išnaudojimo arba joms taikomų apribojimų.
 
-5.Licenciato pareigos
+5. Licenciato pareigos
 
 Pirmiau nurodytos teisės suteikiamos su sąlyga, kad licenciatui nustatomi tam tikri apribojimai ir pareigos. Šios pareigos yra tokios:
 
@@ -77,7 +80,7 @@ Pirminio kodo suteikimas. Platindamas arba perduodamas kūrinio kopijas, licenci
 
 Teisinė apsauga. Šia licencija nesuteikiamas leidimas naudoti prekių pavadinimų, prekių ženklų, paslaugų ženklų arba licenciato pavadinimų (vardų, pavardžių), išskyrus atvejus, kai to pagrįstai ir įprastai reikia kūrinio kilmei nurodyti ir autoriaus teisių nuorodos turiniui atgaminti.
 
-6.Autorystės seka
+6. Autorystės seka
 
 Pirminis licenciaras užtikrina, kad jis turi šiuo dokumentu suteiktas originalaus kūrinio autoriaus teises arba tos teisės jam suteiktos pagal licenciją ir kad jis turi teisę ir įgaliojimus suteikti šią licenciją.
 
@@ -85,7 +88,7 @@ Kiekvienas bendraautoris užtikrina, kad jo padarytų kūrinio pakeitimų autori
 
 Kiekvieną kartą jums sutikus su šia licencija, pirminis licenciaras ir paskesni bendraautoriai suteikia jums licenciją naudotis jų indėliu į kūrinį šioje licencijoje nustatytomis sąlygomis.
 
-7.Garantijų ribojimas
+7. Garantijų ribojimas
 
 Kūrinys vis dar kuriamas, jį nuolat tobulina daug bendraautorių. Jis nėra baigtinis, todėl jame gali būti trūkumų arba programos klaidų, būdingų tokiam kūrimo būdui.
 
@@ -93,29 +96,31 @@ Dėl pirmiau nurodytos priežasties kūrinys pagal licenciją pateikiamas „tok
 
 Toks garantijų ribojimas yra esminė šios licencijos dalis ir bet kokių teisių į kūrinį suteikimo sąlyga.
 
-8.Atsakomybės ribojimas
+8. Atsakomybės ribojimas
 
 Išskyrus tyčinius nusižengimus arba tiesioginę fiziniams asmenims padarytą žalą, licenciaras nėra atsakingas už jokią tiesioginę ar netiesioginę materialinę ar moralinę žalą, padarytą dėl šios licencijos arba naudojant kūrinį, įskaitant (be apribojimų) žalą dėl prarasto prestižo, nutraukto darbo, kompiuterių gedimo arba trikdžių, prarastų duomenų arba bet kokią komercinę žalą, net jei licenciarui buvo pranešta apie tokios žalos galimybę. Tačiau licenciaras atsako pagal įstatymus, kuriais nustatoma atsakomybė už gaminių kokybę, kiek tokie įstatymai taikomi kūriniui.
 
-9.Papildomi susitarimai
+9. Papildomi susitarimai
 
 Platindami kūrinį, jūs galite nuspręsti sudaryti papildomą susitarimą, kuriame būtų apibrėžti šios licencijos nuostatas atitinkantys įsipareigojimai arba paslaugos. Tačiau, jei prisiimate įsipareigojimus, jūs galite veikti tik savo, o ne pirminio licenciaro ar bet kurio kito bendraautorio vardu bei savo atsakomybe, ir tik jei sutinkate atlyginti nuostolius, ginti kiekvieną bendraautorį ir užtikrinti, kad dėl atsakomybės ir pretenzijų, reiškiamų dėl to, kad jūs sutikote su garantija arba prisiėmėte papildomą atsakomybę, jis nepatirtų žalos.
 
-10.Sutikimas su licencijos nuostatomis
+10. Sutikimas su licencijos nuostatomis
 
-Su šios licencijos nuostatomis galite sutikti spustelėdami piktogramą „Sutinku“, esančią lango, kuriame pateikiamas šios licencijos tekstas apačioje, arba patvirtindami savo sutikimą bet kuriuo kitu panašiu būdu pagal taikomų teisės aktų taisykles. Piktogramos spustelėjimas reiškia, kad aiškiai ir neatšaukiamai sutinkate laikytis šios licencijos nuostatų ir visų jos sąlygų. Lygiai taip pat, naudodamiesi bet kuria šios licencijos 2 straipsnyje jums suteikta teise, pavyzdžiui, teise naudotis kūriniu, kurti išvestinį kūrinį arba platinti arba perduoti kūrinį arba jo kopijas, jūs neatšaukiamai sutinkate laikytis visų šios licencijos nuostatų ir sąlygų.
+Su šios licencijos nuostatomis galite sutikti spustelėdami piktogramą „Sutinku“, esančią lango, kuriame pateikiamas šios licencijos tekstas apačioje, arba patvirtindami savo sutikimą bet kuriuo kitu panašiu būdu pagal taikomų teisės aktų taisykles. Piktogramos spustelėjimas reiškia, kad aiškiai ir neatšaukiamai sutinkate laikytis šios licencijos nuostatų ir visų jos sąlygų.
 
-11.Informacijos teikimas visuomenei
+Lygiai taip pat, naudodamiesi bet kuria šios licencijos 2 straipsnyje jums suteikta teise, pavyzdžiui, teise naudotis kūriniu, kurti išvestinį kūrinį arba platinti arba perduoti kūrinį arba jo kopijas, jūs neatšaukiamai sutinkate laikytis visų šios licencijos nuostatų ir sąlygų.
+
+11. Informacijos teikimas visuomenei
 
 Jei kūrinį platinate arba perduodate elektroninio ryšio priemonėmis (pavyzdžiui, siūlote kūrinį atsisiųsti iš nuotolinės buvimo vietos), platinimo kanale arba laikmenoje (pavyzdžiui, tinklalapyje) visuomenei turi būti pateikta bent tokia informacija, kuri yra būtina pagal taikomus įstatymus dėl licenciaro, licencijos ir dėl to, kaip licenciatas gali ją gauti, priimti, saugoti ir atgaminti.
 
-12.Licencijos galiojimo nutraukimas
+12. Licencijos galiojimo nutraukimas
 
 Licencija ir ja suteiktos teisės nustoja galioti iš karto, kai licenciatas pažeidžia šios licencijos sąlygas.
 
 Nepaisant tokio galiojimo nutraukimo, toliau galioja visų licencijoje nustatytomis sąlygomis iš licenciato kūrinį gavusių asmenų turimos licencijos, jei tokie asmenys ir toliau visapusiškai laikosi licencijos sąlygų.
 
-13.Kita
+13. Kita
 
 Nepažeidžiant 9 straipsnio, ši licencija – tai visiškas šalių susitarimas dėl šiuo dokumentu licencijuojamo kūrinio.
 
@@ -125,7 +130,7 @@ Prireikus dėl pagrįstų priežasčių Europos Komisija gali paskelbti šios li
 
 Visi Europos Komisijos patvirtinti šios licencijos teksto vertimai yra lygiareikšmiai. Šalys gali rinktis, kurio teksto vertimo laikytis.
 
-14.Jurisdikcija
+14. Jurisdikcija
 
 Nepažeidžiant konkretaus šalių susitarimo,
 
@@ -133,7 +138,7 @@ Nepažeidžiant konkretaus šalių susitarimo,
 
 — bet kokius kitų šalių teisinius ginčus dėl šios licencijos aiškinimo sprendžia išimtinę jurisdikciją turintis kompetentingas teismas, nustatomas pagal licenciaro gyvenamąją arba pagrindinės veiklos vykdymo vietą.
 
-15.Taikomi teisės aktai
+15. Taikomi teisės aktai
 
 Nepažeidžiant konkretaus šalių susitarimo,
 
@@ -167,4 +172,6 @@ Pagal EUPL 5 straipsnį analogiškos licencijos yra:
 
 Siekdama priedėlyje nurodyti naujesnes pirma išvardytų licencijų redakcijas, Europos Komisija jį gali atnaujinti nerengdama naujos EUPL redakcijos, jei tose naujesnėse redakcijose numatomos pagal šios licencijos 2 straipsnį suteiktos teisės, o pirminis kodas apsaugomas nuo pasisavinimo pasinaudojant išimtinėmis teisėmis.
 
-Dėl visų kitų šio priedėlio pakeitimų ar papildymų būtina parengti naują EUPL redakciją.  2017 5 19 L 128/64 Europos Sąjungos oficialusis leidinys LT
+Dėl visų kitų šio priedėlio pakeitimų ar papildymų būtina parengti naują EUPL redakciją.
+
+2017 5 19 L 128/64 Europos Sąjungos oficialusis leidinys LT

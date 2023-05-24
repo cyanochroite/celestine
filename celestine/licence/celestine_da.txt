@@ -1,4 +1,5 @@
 ﻿DEN EUROPÆISKE UNIONS OFFENTLIGE LICENS v. 1.2 EUPL
+
 © Den Europæiske Union 2007, 2016
 
 Den Europæiske Unions Offentlige Licens (»EUPL«) gælder for det værk (som defineret nedenfor), der stilles til rådighed i henhold til vilkårene i denne licens. Enhver anden brug af værket end den, der gives tilladelse til i denne licens, er forbudt (for så vidt som denne brug er omfattet af de rettigheder, der tilkommer indehaveren af ophavsretten til værket).
@@ -6,9 +7,10 @@ Den Europæiske Unions Offentlige Licens (»EUPL«) gælder for det værk (som d
 Værket stilles til rådighed på vilkårene i denne licens, når licensgiveren (som defineret nedenfor) har gjort følgende anmærkning umiddelbart efter ophavsretsnotitsen om værket:
 
 Licenseret i henhold til EUPL
+
 eller på anden måde har udtrykt sin indforståelse med at licensere værket i henhold til EUPL.
 
-1.Definitioner
+1. Definitioner
 
 I denne licens forstås ved:
 
@@ -32,13 +34,16 @@ I denne licens forstås ved:
 
 — »spredning« eller »formidling«:enhver handling, der består i at sælge, give, udlåne, udleje, sprede, formidle eller transmittere eksemplarer af værket eller på anden måde gøre dem tilgængelige, enten online eller offline, eller give adgang til værkets væsentlige funktioner for en anden fysisk eller juridisk person.
 
-2.Omfanget af licensrettighederne
+2. Omfanget af licensrettighederne
 
 Licensgiveren meddeler Dem herved en verdensomspændende, vederlagsfri, ikke-eksklusiv licens til at meddele underlicenser og til at gøre følgende, så længe ophavsretten til det oprindelige værk består:
 
-—  anvende værket under enhver omstændighed og til en hvilken som helst brug —  fremstille eksemplarer af værket
+—  anvende værket under enhver omstændighed og til en hvilken som helst brug
+
+—  fremstille eksemplarer af værket
 
 —  ændre i det oprindelige værk og frembringe bearbejdede værker på grundlag af værket
+
 —  overføre værket til almenheden, herunder retten til at gøre værket eller eksemplarer heraf tilgængeligt for almenheden, at fremvise værket eller eksemplarer heraf offentligt samt efter omstændighederne at fremføre værket offentligt
 
 —  sprede værket eller eksemplarer heraf
@@ -46,21 +51,22 @@ Licensgiveren meddeler Dem herved en verdensomspændende, vederlagsfri, ikke-eks
 —  udlåne og udleje værket eller eksemplarer heraf
 
 —  meddele underlicenser til værket eller eksemplarer heraf.
+
 Disse rettigheder kan udøves ved brug af alle nu kendte og senere udviklede medier, kanaler og formater, for så vidt det er tilladt i henhold til gældende ret.
 
 I lande, hvor ideelle rettigheder er beskyttede, giver licensgiveren afkald på sin ret til at udøve sine ideelle rettigheder i det omfang, det er tilladt i henhold til loven, for at den licensering af de økonomiske rettigheder, der er meddelt ovenfor, kan få virkning.
 
 Licensgiveren meddeler licenstageren vederlagsfri, ikke-eksklusive rettigheder til brug af alle sine patenter i det omfang, det er nødvendigt for at udøve de rettigheder til værket, der meddeles i henhold til denne licens.
 
-3.Formidling af kildekoden
+3. Formidling af kildekoden
 
 Licensgiveren kan stille værket til rådighed enten i form af kildekode eller som eksekverbar kode. Hvis værket stilles til rådighed som eksekverbar kode, udleverer licensgiveren desuden et maskinlæsbart eksemplar af kildekoden til værket sammen med hvert eksemplar af værket, som licensgiveren distribuerer, eller henviser i en anmærkning efter den ophavsretsnotits, der er påført værket, til et arkiv, hvor kildekoden er let og frit tilgængelig, så længe licensgiveren spreder og/eller formidler værket.
 
-4.Indskrænkninger i ophavsretten
+4. Indskrænkninger i ophavsretten
 
 Intet i denne licens skal anses for at afskære licenstageren fra at påberåbe sig en undtagelse fra eller indskrænkning i rettighedshaverens eksklusive rettigheder til værket, eller fra at påberåbe sig konsumption af disse rettigheder eller andre gældende indskrænkninger heri.
 
-5.Licenstagerens forpligtelser
+5. Licenstagerens forpligtelser
 
 Indrømmelsen af de ovennævnte rettigheder er undergivet visse begrænsninger og forpligtelser, der gælder for licenstageren. Forpligtelserne er følgende:
 
@@ -74,7 +80,7 @@ Tilrådighedsstillelse af kildekoden: Når licenstageren spreder eller formidler
 
 Retsbeskyttelse: Denne licens giver ikke licenstageren ret til at anvende licensgiverens firmanavn, varemærker, mærker for tjenesteydelser eller andre navne, ud over hvor det er nødvendigt for på rimelig og sædvanlig vis at gøre rede for værkets oprindelse og gengive indholdet af ophavsretsnotitsen.
 
-6.Licensgiverkæde
+6. Licensgiverkæde
 
 Den oprindelige licensgiver indestår for, at han er indehaver af ophavsretten til det oprindelige værk, der meddeles licens til, eller at han har fået overdraget ophavsretten i henhold til en licens, og at han har beføjelser og myndighed til at meddele licensen.
 
@@ -82,7 +88,7 @@ Hver bidragyder indestår for, at han er indehaver af ophavsretten til de ændri
 
 Hver gang De accepterer licensen, meddeler den oprindelige licensgiver og de efterfølgende bidragydere Dem en licens til deres bidrag til værket på vilkårene i denne licens.
 
-7.Fraskrivelse af ansvar for værket
+7. Fraskrivelse af ansvar for værket
 
 Værket udvikles løbende og forbedres hele tiden af forskellige bidragydere. Det er ikke et færdigt arbejde og kan derfor indeholde fejl eller »bugs«, hvilket er typisk ved denne type udvikling.
 
@@ -90,31 +96,31 @@ Af denne grund stilles værket til rådighed i henhold til denne licens »som de
 
 Denne ansvarsfraskrivelse er en væsentlig del af denne licens og en betingelse for at meddele rettigheder til værket.
 
-8.Fraskrivelse af erstatningsansvar
+8. Fraskrivelse af erstatningsansvar
 
 Bortset fra tilfælde af forsætlig skadevoldende adfærd og direkte personskade er licensgiveren under ingen omstændigheder erstatningsansvarlig for nogen form for direkte eller indirekte økonomisk eller ikke-økonomisk skade, der forvoldes på grund af licensen eller brugen af værket, herunder, men ikke begrænset til, tab af goodwill, tab som følge af arbejdsafbrydelse, computersvigt eller -fejl, tab af data og andet erhvervsmæssigt tab, heller ikke hvis licensgiveren er blevet gjort opmærksom på muligheden af sådanne skader. Licensgiveren er dog ansvarlig i henhold til lovgivningen om produktansvar, for så vidt som denne finder anvendelse på værket.
 
-9.Tillægsaftaler
+9. Tillægsaftaler
 
 Hvis De distribuerer værket, kan De vælge at indgå en tillægsaftale, hvori forpligtelser eller tjenesteydelser, der er forenelige med denne licens, fastsættes. Hvis De påtager Dem forpligtelser, handler De imidlertid udelukkende på egne vegne og på eget ansvar, og ikke på vegne af den oprindelige licensgiver eller andre bidragydere, og kun hvis De påtager Dem at forsvare og holde hver enkelt bidragyder skadesløs for eventuelle erstatningskrav eller andre krav, der rejses mod bidragyderen som følge af, at De har påtaget Dem garantiforpligtelser eller yderligere erstatningsansvar.
 
-10.Accept af licensen
+10. Accept af licensen
 
 De kan acceptere bestemmelserne i denne licens ved at klikke på ikonet »Acceptér«, der vises under vinduet med licensteksten, eller ved at tilkendegive Deres samtykke på en tilsvarende måde i overensstemmelse med gældende ret. Ved at klikke på det nævnte ikon tilkendegiver De Deres utvetydige og uigenkaldelige accept af denne licens og alle dens vilkår og betingelser.
 
 Ligeledes accepterer De uigenkaldeligt denne licens og alle dens vilkår og betingelser ved at udøve enhver af Deres rettigheder i henhold til licensens artikel 2, herunder retten til at bruge værket, frembringe bearbejdede værker og sprede eller formidle værket eller eksemplarer heraf.
 
-11.Oplysninger til offentligheden
+11. Oplysninger til offentligheden
 
 Hvis De spreder eller formidler værket via en elektronisk kommunikationskanal, (f.eks. ved at give mulighed for at downloade værket fra en fjernlokation), skal distributionskanalen eller -mediet (f.eks. en hjemmeside) som minimum forsyne offentligheden med de oplysninger, der kræves efter gældende ret, om licensgiveren, licensen, og hvordan licenstageren kan få adgang til licensen og acceptere, opbevare og gengive den.
 
-12.Licensens ophør
+12. Licensens ophør
 
 Licensen og rettighederne i henhold til den ophører automatisk ved licenstagerens misligholdelse af licensvilkårene.
 
 Dette ophør medfører ikke, at de personer, som har modtaget værket fra licenstageren i henhold til den pågældende licens, mister deres egen licens, medmindre disse personer ikke længere fuldt ud overholder licensvilkårene.
 
-13.Andre forhold
+13. Andre forhold
 
 Med forbehold af artikel 9 ovenfor udgør licensen den fuldstændige aftale mellem parterne om værket.
 
@@ -124,7 +130,7 @@ Europa-Kommissionen kan offentliggøre andre sprogudgaver eller nye versioner af
 
 Alle de af Europa-Kommissionen godkendte sprogudgaver af denne licens har identisk værdi. Parterne kan frit vælge mellem de forskellige sprogudgaver.
 
-14.Kompetence
+14. Kompetence
 
 Uden at det berører specifikke aftale mellem parterne
 
@@ -132,7 +138,7 @@ Uden at det berører specifikke aftale mellem parterne
 
 —  i retstvister mellem andre parter vedrørende fortolkningen af denne licens har retten på det sted, hvor licensgiveren har bopæl, eller hvor licensgiverens hovedforretningssted er beliggende, enekompetence.
 
-15.Gældende lovgivning
+15. Gældende lovgivning
 
 Uden at det berører specifikke aftale mellem parterne
 

@@ -1,4 +1,5 @@
 ﻿EURÓPAI UNIÓS NYILVÁNOS LICENC 1.2. verzió
+
 EUPL © Európai Unió 2007, 2016
 
 Az Európai Uniós Nyilvános Licencet (a továbbiakban: „EUPL”) az annak rendelkezései szerint rendelkezésre bocsátott (az alábbiakban meghatározott) Művekre kell alkalmazni. A Művek e Licencben engedélyezettől eltérő felhasználása tilos (amennyiben az adott Mű szerzői jogi tulajdonosának valamely joga e felhasználásra kiterjed).
@@ -9,7 +10,7 @@ Licenc az EUPL szerint
 
 vagy bármilyen egyéb formában az EUPL szerinti felhasználást engedélyező nyilatkozatot tett.
 
-1.Fogalommeghatározások
+1. Fogalommeghatározások
 
 E Licencben az alábbi fogalmak jelentése a következő:
 
@@ -33,7 +34,7 @@ E Licencben az alábbi fogalmak jelentése a következő:
 
 — Terjesztés vagy Nyilvánossághoz Közvetítés: a Mű példányának adásvétele, birtokba adása, haszonkölcsönbe adása, bérbe adása, terjesztése, nyilvánossághoz közvetítése, átvitele vagy bármely egyéb módon, online vagy offline történő hozzáférhetővé tétele, illetve alapvető funkcióihoz való hozzáférés biztosítása harmadik, természetes vagy jogi személy részére.
 
-2.A Licenc által biztosított jogok terjedelme
+2. A Licenc által biztosított jogok terjedelme
 
 A Licenciaadó az Eredeti Mű szerzői jogi védelmének időtartamára az egész világra kiterjedő, díjmentes, nem kizárólagos és harmadik személyeknek továbbengedélyezhető engedélyt ad Önnek az alábbi tevékenységekre:
 
@@ -57,15 +58,15 @@ Azokban az országokban, ahol elismerik a személyhez fűződő jogokat, a Licen
 
 A Licenciaadó díjmentes és nem kizárólagos használati engedélyt ad a Hasznosító számára a Licenciaadót megillető szabadalmak hasznosítására olyan mértékben, amely szükséges a Művön fennálló, e Licencben meghatározott jogok gyakorlásához.
 
-3.A Forráskód nyilvánossághoz való közvetítése
+3. A Forráskód nyilvánossághoz való közvetítése
 
 A Licenciaadó a Művet Forráskód, vagy Végrehajtható kód formájában bocsáthatja rendelkezésre. Ha a Művet Végrehajtható kódként bocsátotta rendelkezésre, a Hasznosító a Mű általa terjesztett valamennyi példányához köteles rendelkezésre bocsátani a Mű Forráskódjának géppel olvasható példányát, vagy a Műhöz csatolt szerzői jogi nyilatkozatot követő közleményben megadja azt a helyet, ahol a Forráskód egyszerűen és ingyenesen hozzáférhető mindaddig, amíg a Licenciaadó folytatja a Mű terjesztését vagy nyilvánossághoz közvetítését.
 
-4.A szerzői jog korlátai
+4. A szerzői jog korlátai
 
 E Licencben semmi sem irányul arra, hogy megfossza a Hasznosítót azoktól az előnyöktől, amelyek a Mű tulajdonosainak kizárólagos jogai alóli kivételeken vagy azok korlátain, kimerülésén vagy egyéb alkalmazandó korlátozásain alapulnak.
 
-5.A Hasznosító kötelezettségei
+5. A Hasznosító kötelezettségei
 
 A fent felsorolt jogok gyakorlása csak akkor engedélyezhető, ha a Hasznosító betartja az alábbi korlátozásokat és kötelezettségeket. E kötelezettségek a következők:
 
@@ -79,7 +80,7 @@ A Forráskód rendelkezésre bocsátása: A Felhasználó a Mű példányainak t
 
 Jogvédelem: A Licenc nem ad engedélyt a Licenciaadót illető kereskedelmi név, védjegy, szolgáltatási védjegy, illetve a Licenciaadó nevének használatára, kivéve a Mű eredetének leírásához szükséges észszerű és szokásos, valamint a szerzői jogi nyilatkozat többszörözéséhez szükséges használatot.
 
-6.Szerzőségi láncolat (jogszavatosság)
+6. Szerzőségi láncolat (jogszavatosság)
 
 Az eredeti Licenciaadó helytáll azért, hogy ő a felhasználásra engedélyezett Eredeti Mű szerzői jogosultja, vagy a szerzői jogok gyakorlására engedéllyel rendelkezik, és jogosult a Licenc szerinti engedély megadására.
 
@@ -87,7 +88,7 @@ Valamennyi Közreműködő helytáll azért, hogy ő a Művön az általa végre
 
 Minden alkalommal, amikor Ön elfogadja a Licencet, az eredeti Licenciaadó és az őt követő Közreműködők a Műhöz általuk nyújtott hozzájárulás felhasználására e Licenc feltételei szerinti engedélyt adnak Önnek.
 
-7.A szavatosság korlátozása
+7. A szavatosság korlátozása
 
 A Mű, amelyet számos közreműködő fejleszt, folyamatosan változik. Nem tekinthető befejezett műnek, emiatt az ilyen típusú fejlesztésre jellemző hiányosságokat vagy hibákat tartalmazhat.
 
@@ -95,31 +96,31 @@ A fenti okok miatt a Művet a Licenc feltételei szerint „ahogy van” alapon 
 
 A szavatosság korlátozására vonatkozó nyilatkozat a Licenc lényeges rendelkezése, és feltétele a Művön fennálló bármely jog engedélyezésének.
 
-8.Felelősségkorlátozás
+8. Felelősségkorlátozás
 
 A szándékosság vagy a természetes személyeknek okozott közvetlen károkozás esetét kivéve a Licenciaadó nem felel a Licencből vagy a Mű felhasználásából eredő semmilyen közvetlen vagy közvetett, vagyoni vagy nem vagyoni kárért, ideértve különösen az üzleti jó hírnév csorbításából, a termelés szüneteltetéséből, számítógépes meghibásodásból vagy üzemhibából, adatvesztésből eredő vagy kereskedelmi jellegű károkat, még abban az esetben sem, ha a Licenciaadót előzetesen figyelmeztették e károk bekövetkeztének lehetőségére. A Licenciaadó azonban a jogszabályban előírt termékfelelősséggel tartozik, amennyiben e szabályok a Műre alkalmazandók.
 
-9.Kiegészítő megállapodások
+9. Kiegészítő megállapodások
 
 A Mű terjesztése során Ön e Lincenccel összhangban álló kötelezettség vállalására vagy egyéb szolgáltatások nyújtására vonatkozó kiegészítő megállapodást köthet. A kötelezettségeket azonban Ön nem az eredeti Licenciaadó vagy az egyéb Közreműködő nevében és terhére, hanem csak a saját nevében és felelősségére vállalhatja el, és kizárólag akkor, ha vállalja, hogy a Közreműködőket kártérítésben részesíti, illetve mentesíti azon felelősség, illetve a velük szemben érvényesített azon igények alól, amelyek az Ön által vállalt szavatossági helytállás vagy kiegészítő felelősség következtében keletkeztek.
 
-10.A Licenc elfogadása
+10. A Licenc elfogadása
 
 E Licenc rendelkezéseit Ön elfogadhatja úgy, hogy az e Licenc szövegét tartalmazó ablak alatt található „Elfogadom” feliratú ikonra kattint, vagy ha az alkalmazandó jog rendelkezéseivel összhangban bármely más hasonló módon kifejezi a beleegyezésre irányuló akaratát. Ha Ön az ikonra kattint, az a Licenc és az abban foglalt valamennyi feltétel egyértelmű és visszavonhatatlan elfogadását jelenti.
 
 Ehhez hasonlóan e Licenc és az ebben foglalt valamennyi feltétel visszavonhatatlan elfogadását jelenti a Licenc 2. cikkében Önnek biztosított jogok gyakorlása, többek között Művek felhasználása, Származékos Mű Ön általi létrehozása, valamint Műveknek vagy példányainak Ön által történő terjesztése vagy nyilvánossághoz közvetítése.
 
-11.A nyilvánosság tájékoztatása
+11. A nyilvánosság tájékoztatása
 
 Amennyiben Ön a Művet elektronikus úton terjeszti vagy a nyilvánossághoz közvetíti (például a távolból való letöltésre kínálja fel), a terjesztési csatornának vagy médiumnak (például weboldalnak) legalább az alkalmazandó jog által előírt, a Licenciaadóra, a Licencre, valamint arra vonatkozó tájékoztatást kell közzétennie, hogy a Hasznosító miként férhet hozzá a Licenchez, azt hogyan fogadhatja el, tárolhatja, illetve sokszorosíthatja.
 
-12.A Licenc megszűnése
+12. A Licenc megszűnése
 
 A Licenc és az abban biztosított jogosultságok automatikusan hatályukat vesztik, ha a Hasznosító a Licenc feltételeit bármely módon megszegi.
 
 E megszűnés nem eredményezi azon személyeknek adott engedélyek hatályának megszűnését, akiknek a Hasznosító a Licenc keretében bocsátotta rendelkezésre a Művet, feltéve, hogy e személyek továbbra is teljes mértékben eleget tesznek a Licenc feltételeinek.
 
-13.Egyebek
+13. Egyebek
 
 A fenti 9. cikk sérelme nélkül a Licenc a Műre nézve a felek közötti teljes és mindenre kiterjedő megállapodás.
 
@@ -129,7 +130,7 @@ Az Európai Bizottság szükséges és indokolt esetben nyilvánosságra hozhatj
 
 E Licenc bármely az Európai Bizottság által jóváhagyott más nyelvű fordítása azonos joghatással rendelkezik. A szerződő felek szabadon használhatják a Licenc általuk választott nyelvre fordított változatát.
 
-14.Joghatóság
+14. Joghatóság
 
 A felek közötti konkrét megállapodás sérelme nélkül,
 
@@ -137,14 +138,13 @@ A felek közötti konkrét megállapodás sérelme nélkül,
 
 —  más felek közötti, e Licenc értelmezéséből eredő bármely jogvita azon ország megfelelő hatáskörrel rendelkező bíróságának kizárólagos illetékessége alá tartozik, ahol a Licenciaadó székhelye található, vagy ahol fő tevékenységét folytatja.
 
-15.Alkalmazandó jog
+15. Alkalmazandó jog
 
 A felek közötti konkrét megállapodás sérelme nélkül,
 
 —  e licencre az Európai Unió azon tagállamának a joga alkalmazandó, ahol a Licenciaadó székhelye vagy lakóhelye található,
 
 —  ha a Licenciaadó nem rendelkezik székhellyel vagy lakóhellyel az Európai Unió valamelyik tagállamában, akkor e Licencre a belga jog alkalmazandó.
-
 
 Függelék
 

@@ -1,14 +1,16 @@
 ﻿EUROOPA LIIDU TARKVARA VABA KASUTUSE LITSENTS v. 1.2
+
 EUPL © Euroopa Liit 2007, 2016
 
 Euroopa Liidu tarkvara vaba kasutuse litsents („EUPL“) kehtib allpool määratletud teose suhtes, mida levitatakse vastavalt käesoleva litsentsi tingimustele. Teost on keelatud kasutada muul viisil kui vastavalt käesoleva litsentsi tingimustele niivõrd, kuivõrd sellise kasutamise suhtes kehtivad teose autoriõiguse omaja õigused).
 
 Teost levitatakse vastavalt käesoleva litsentsi tingimustele, kui allpool määratletud litsentsiandja paneb vahetult teose autoriõiguse märke järele järgmise märke:
 
-                     Litsentsitud EUPL alusel
+Litsentsitud EUPL alusel
+
 või on muul viisil väljendanud soovi litsentsida originaalteos EUPL alusel.
 
-1.Mõisted
+1. Mõisted
 
 Käesolevas litsentsis kasutatakse järgmisi mõisteid:
 
@@ -32,7 +34,7 @@ Käesolevas litsentsis kasutatakse järgmisi mõisteid:
 
 — „levitamine“ või „edastamine“–teose koopiate müümine, teisele isikule andmine, laenutamine, rentimine, levitamine, edastamine, ülekandmine või teose koopiate või selle oluliste funktsioonide muul viisil teistele füüsilistele või juriidilistele isikutele kättesaadavaks tegemine võrgus või võrguväliselt.
 
-2.Litsentsiga antavate õiguste ulatus
+2. Litsentsiga antavate õiguste ulatus
 
 Käesolevaga annab litsentsiandja Teile ülemaailmse, tasuta, all-litsentsi andmise õigusega lihtlitsentsi, mille alusel võite teha originaalteose autoriõiguse kehtivusaja jooksul järgmist:
 
@@ -56,15 +58,15 @@ Riikides, kus kehtivad isiklikud õigused, loobub litsentsiandja seadusega lubat
 
 Litsentsiandja annab litsentsisaajale tasuta lihtlitsentsi kõigi litsentsiandjale kuuluvate patentide kasutamiseks ulatuses, mis on vajalik teose suhtes käesoleva litsentsiga antud õiguste kasutamiseks.
 
-3.Lähtekoodi edastamine
+3. Lähtekoodi edastamine
 
 Litsentsiandja võib teose kättesaadavaks teha kas lähtekoodi või täitmiskoodi kujul. Kui teos tehakse kättesaadavaks täitmiskoodi kujul, lisab litsentsiandja igale tema poolt levitatavale teose koopiale lähtekoodi masinloetava koopia või näitab teose autoriõiguse märke järele lisatud märkega ära hoidla, kust lähtekood on kergesti ja tasuta kättesaadav seni, kuni litsentsiandja jätkab teose levitamist või edastamist.
 
-4.Autoriõiguse piiramine
+4. Autoriõiguse piiramine
 
 Käesolev litsents ei võta litsentsisaajalt võimalusi, mis tulenevad teose õiguste omaja ainuõiguste suhtes kehtestatud eranditest või ainuõiguste piiramisest, nende õiguste ammendumisest või muudest nende õiguste suhtes kohaldatavatest piirangutest.
 
-5.Litsentsisaaja kohustused
+5. Litsentsisaaja kohustused
 
 Eespool nimetatud õigused antakse litsentsisaajale tingimusel, et ta peab kinni teatavatest piirangutest ja täidab teatavaid talle pandud kohustusi. Need kohustused on järgmised:
 
@@ -78,7 +80,7 @@ Lähtekoodi lisamine. Teose koopiate levitamisel või edastamisel lisab litsents
 
 Õiguskaitse. Käesoleva litsentsiga ei anta luba kasutada litsentsiandja ärinimesid, kaubamärke, teenindusmärke või nimesid, välja arvatud juhul, kui see on vajalik mõistlikuks ja tavapäraseks kasutamiseks teose päritolu kirjeldamisel ja autoriõiguse märke sisu reprodutseerimisel.
 
-6.Autorsuse ahel
+6. Autorsuse ahel
 
 Esialgne litsentsiandja tagab, et käesoleva litsentsiga antav autoriõigus originaalteosele kuulub talle või on talle litsentsitud ja et tal on õigus seda litsentsiga edasi anda.
 
@@ -86,7 +88,7 @@ Iga edasiarendaja tagab, et autoriõigus tema poolt teosele tehtavatele muudatus
 
 Iga kord, kui Te võtate vastu litsentsi, annavad esialgne litsentsiandja ja hilisemad edasiarendajad Teile litsentsi nende osaluse kasutamiseks teoses vastavalt käesoleva litsentsi tingimustele.
 
-7.Garantii puudumine
+7. Garantii puudumine
 
 Teos on veel pooleli ja arvukad edasiarendajad parendavad seda järjepidevalt. See ei ole lõpetatud teos ja võib seetõttu sisaldada defekte ja programmivigu, mis on omased seda liiki arendustegevusele.
 
@@ -94,30 +96,31 @@ Seetõttu levitatakse teost litsentsi alusel „sellisena, nagu see on“ ilma t
 
 Käesolev garantii puudumise klausel on litsentsi oluline osa ja teosele õiguste andmise eeltingimus.
 
-8.Vastutuse välistamine
+8. Vastutuse välistamine
 
 Välja arvatud tahtliku õiguserikkumise või füüsilistele isikutele tekitatud otsese kahju puhul, ei vastuta litsentsiandja mitte mingil juhul litsentsi või teose kasutamise tagajärjel tekkinud mistahes otsese või kaudse, varalise või moraalse kahju eest, muu hulgas maineväärtuse langusest tekkinud kahju, tööseisakute, arvutirikke ja talitlushäirete, andmete kadumise ja ärikahju eest, isegi juhul kui litsentsiandjat on sellise kahju tekkimise võimalikkusest teavitatud. Litsentsiandja vastutab siiski vastavalt tootevastutust käsitlevatele õigusaktidele niivõrd, kuivõrd need õigusaktid on teose suhtes kohaldatavad.
 
-9.Lisakokkulepped
+9. Lisakokkulepped
 
 Teose levitamisel võite Te sõlmida lisakokkuleppe, milles määratakse kindlaks käesoleva litsentsiga vastavuses olevad kohustused või teenused. Kuid kui olete nõus võtma kohustusi, võite Te tegutseda ainult iseenda nimel ja vastutusel, mitte esialgse litsentsiandja või teiste edasiarendajate nimel, ja ainult juhul, kui Te nõustute vabastama edasiarendajad vastutusest, kaitsma ja hoidma neid kahju tekkimise eest vastutuse või nõuete osas, mida nende vastu võidakse esitada selle tagajärjel, et Teie pakute garantiid või võtate lisavastutuse.
 
-10.Litsentsiga nõustumine
+10. Litsentsiga nõustumine
 
 Käesoleva litsentsi sätetega saab nõustuda, klõpsates ikoonile „Nõustun“ litsentsi teksti näitava akna all või väljendades nõusolekut muul sarnasel viisil vastavalt kehtivatele õigusaktidele. Sellele ikoonile klõpsates väljendate selgelt ja pöördumatult oma nõusolekut käesoleva litsentsi ja kõigi selle tingimuste suhtes.
 
 Samuti nõustute pöördumatult käesoleva litsentsi ja kõigi selle tingimustega, kui teostate Teile käesoleva litsentsi artikliga 2 antud õigusi, näiteks kasutate teost, loote tuletatud teose või levitate või edastate teost või selle koopiaid.
 
-11.Üldsuse teavitamine
+11. Üldsuse teavitamine
+
 Juhul, kui Te kasutate teose levitamiseks või edastamiseks elektroonilisi sidevahendeid (näiteks võimaldate teose allalaadimist veebisaidilt), tuleb levitamiskanalil või andmekandjal (näiteks veebisaidil) teha üldsusele kättesaadavaks vähemalt kohaldatava õiguse alusel kohustuslik teave litsentsiandja ja litsentsi kohta ning selle kohta, kuidas see on litsentsisaajale kättesaadav, litsentsilepingu sõlmimise kohta ja selle kohta, kuidas litsentsisaaja saab litsentsi säilitada ja reprodutseerida.
 
-12.Litsentsi lõppemine
+12. Litsentsi lõppemine
 
 Litsents ja sellega antud õigused lõppevad automaatselt juhul, kui litsentsisaaja rikub litsentsi tingimusi.
 
 Sellise lõppemise korral ei lõpe ühegi sellise isiku litsents, kes sai teose litsentsisaajalt vastavalt litsentsi tingimustele, juhul kui see isik täidab jätkuvalt litsentsi tingimusi.
 
-13.Muud sätted
+13. Muud sätted
 
 Ilma et see piiraks litsentsi artikli 9 kohaldamist, sisaldab litsents kogu kokkulepet, mis osapoolte vahel seose teosega on.
 
@@ -127,7 +130,7 @@ Euroopa Komisjon võib avaldada käesoleva litsentsi muid keeleversioone või uu
 
 Käesoleva litsentsi kõik keeleversioonid, mille Euroopa Komisjon on heaks kiitnud, on võrdväärsed. Osapooled võivad kasutada enda valitud keeleversiooni.
 
-14.Kohtualluvus
+14. Kohtualluvus
 
 Ilma et see piiraks konkreetse osapooltevahelise kokkuleppe kohaldamist,
 
@@ -135,7 +138,7 @@ Ilma et see piiraks konkreetse osapooltevahelise kokkuleppe kohaldamist,
 
 —  kuuluvad käesoleva litsentsi tõlgendamisest tulenevad kohtuvaidlused muude osapoolte vahel selle pädeva kohtu ainupädevusse, kelle tööpiirkonnas asub litsentsiandja elukoht või peamine tegevuskoht.
 
-15.Kohaldatav õigus
+15. Kohaldatav õigus
 
 Ilma et see piiraks konkreetse osapooltevahelise kokkuleppe kohaldamist,
 
