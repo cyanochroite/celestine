@@ -14,25 +14,25 @@ tai ilmaissut muilla keinoin suostumuksensa EUPL:n mukaiseen lisenssin myöntäm
 
 Tässä lisenssissä seuraavilla termeillä on seuraavat merkitykset:
 
-— ”Lisenssi”:tämä lisenssi.
+— ”Lisenssi”: tämä lisenssi.
 
-— ”Alkuperäisteos”:lisenssinantajan tämän lisenssin mukaisesti levittämä tai luovuttama teos tai ohjelmisto, joka on saatavana lähdekoodina sekä mahdollisesti myös suoritettavana koodina.
+— ”Alkuperäisteos”: lisenssinantajan tämän lisenssin mukaisesti levittämä tai luovuttama teos tai ohjelmisto, joka on saatavana lähdekoodina sekä mahdollisesti myös suoritettavana koodina.
 
-— ”Jälkiperäisteokset”:teokset tai ohjelmistot, joita lisenssinsaaja voi luoda alkuperäisteoksen tai sen muunnelmien pohjalta. Tässä lisenssissä ei määritellä, minkä laajuinen muuntelu tai riippuvuus alkuperäisteoksesta riittää luokittelemaan teoksen jälkiperäisteokseksi; tämä laajuus määritetään 15 kohdassa mainitussa maassa sovellettavassa tekijänoikeuslaissa.
+— ”Jälkiperäisteokset”: teokset tai ohjelmistot, joita lisenssinsaaja voi luoda alkuperäisteoksen tai sen muunnelmien pohjalta. Tässä lisenssissä ei määritellä, minkä laajuinen muuntelu tai riippuvuus alkuperäisteoksesta riittää luokittelemaan teoksen jälkiperäisteokseksi; tämä laajuus määritetään 15 kohdassa mainitussa maassa sovellettavassa tekijänoikeuslaissa.
 
-— ”Teos”:alkuperäisteos tai sen jälkiperäisteokset.
+— ”Teos”: alkuperäisteos tai sen jälkiperäisteokset.
 
-— ”Lähdekoodi”:teos ihmiselle luettavassa muodossa, jossa sitä on helpointa tutkia ja muunnella.
+— ”Lähdekoodi”: teos ihmiselle luettavassa muodossa, jossa sitä on helpointa tutkia ja muunnella.
 
-— ”Suoritettava koodi”:mikä tahansa koodi, yleensä käännettynä, joka on tarkoitettu tietokoneen tulkittavaksi ohjelmana.
+— ”Suoritettava koodi”: mikä tahansa koodi, yleensä käännettynä, joka on tarkoitettu tietokoneen tulkittavaksi ohjelmana.
 
-— ”Lisenssinantaja”:luonnollinen henkilö tai oikeushenkilö, joka levittää tai luovuttaa lisenssin alaista teosta.
+— ”Lisenssinantaja”: luonnollinen henkilö tai oikeushenkilö, joka levittää tai luovuttaa lisenssin alaista teosta.
 
-— ”Muu(t) tekijä(t)”:luonnollinen henkilö tai oikeushenkilö, joka muuntelee lisenssin alaista teosta tai muutoin myötävaikuttaa jälkiperäisteoksen luomiseen.
+— ”Muu(t) tekijä(t)”: luonnollinen henkilö tai oikeushenkilö, joka muuntelee lisenssin alaista teosta tai muutoin myötävaikuttaa jälkiperäisteoksen luomiseen.
 
-— ”Lisenssinsaaja” tai ”te”:luonnollinen henkilö tai oikeushenkilö, joka jollain tavoin käyttää teosta lisenssin ehdoilla.
+— ”Lisenssinsaaja” tai ”te”: luonnollinen henkilö tai oikeushenkilö, joka jollain tavoin käyttää teosta lisenssin ehdoilla.
 
-— ”Levittäminen” tai ”luovuttaminen”:kaikki toimet, joilla teoskappaleita myydään, annetaan, lainataan, vuokrataan, levitetään, luovutetaan, lähetetään tai muutoin asetetaan luonnollisten ja oikeushenkilöiden saataville tai joilla tarjotaan pääsyä teoksen olennaisiin toimintoihin verkon kautta tai sen ulkopuolella.
+— ”Levittäminen” tai ”luovuttaminen”: kaikki toimet, joilla teoskappaleita myydään, annetaan, lainataan, vuokrataan, levitetään, luovutetaan, lähetetään tai muutoin asetetaan luonnollisten ja oikeushenkilöiden saataville tai joilla tarjotaan pääsyä teoksen olennaisiin toimintoihin verkon kautta tai sen ulkopuolella.
 
 2. Tällä lisenssillä myönnettävien oikeuksien laajuus
 
@@ -172,4 +172,4 @@ EUPL:n 5 kohdan mukaisia ”yhteensopivia lisenssejä” ovat seuraavat:
 
 Euroopan komissio voi päivittää tätä lisäystä edellä mainittujen lisenssien myöhempiin versioihin laatimatta uutta versiota EUPL:stä, kunhan niillä tarjotaan tämän lisenssin 2 kohdassa myönnetyt oikeudet ja suojataan niiden piiriin kuuluva lähdekoodi yksinomaiseen oikeuteen perustuvalta käytöltä.
 
-Kaikki muut tämän lisäyksen muutokset tai siihen tehtävät lisäykset edellyttävät uuden EUPL-version laatimista.  19.5.2017 L 128/64 Euroopan unionin virallinen lehti FI
+Kaikki muut tämän lisäyksen muutokset tai siihen tehtävät lisäykset edellyttävät uuden EUPL-version laatimista.

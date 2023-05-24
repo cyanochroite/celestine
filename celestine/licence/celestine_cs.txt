@@ -114,7 +114,7 @@ Obdobně tuto licenci a veškeré její podmínky neodvolatelně přijímáte, p
 
 Pokud dílo šíříte nebo sdělujete prostřednictvím elektronické komunikace (např. nabízíte stažení díla ze vzdáleného umístění), musí příslušný distribuční kanál nebo média (např. internetové stránky) uvádět alespoň takové informace určené veřejnosti, které jsou požadovány rozhodným právem ohledně poskytovatele licence, licence samotné a způsobu jejího zpřístupnění, uzavření, uchovávání a reprodukování nabyvatelem licence.
 
-12 .Zánik licence
+12. Zánik licence
 
 Platnost licence a práv touto licencí udělených bez dalšího zaniká, pokud nabyvatel licence poruší jakýmkoli způsobem podmínky licence.
 

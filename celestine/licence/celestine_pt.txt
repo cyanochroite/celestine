@@ -14,25 +14,25 @@ ou tenha expresso por qualquer outro meio a sua vontade de licenciar a obra nos 
 
 Na presente licença, entende-se por:
 
-— Licença:a presente licença.
+— Licença: a presente licença.
 
-— Obra original:a obra ou software distribuídos ou comunicados pelo licenciante nos termos da presente licença, disponível como código-fonte e também como código executável, consoante o caso.
+— Obra original: a obra ou software distribuídos ou comunicados pelo licenciante nos termos da presente licença, disponível como código-fonte e também como código executável, consoante o caso.
 
-— Obras derivadas:obras ou software que podem ser criados pelo licenciado com base na obra original ou mediante modificações nela introduzidas. A presente licença não define o grau de modificação ou de dependência em relação à obra original necessário para classificar uma obra como obra derivada; esse grau é determinado pela legislação relativa aos direitos de autor aplicável no país mencionado no ponto 15.
+— Obras derivadas: obras ou software que podem ser criados pelo licenciado com base na obra original ou mediante modificações nela introduzidas. A presente licença não define o grau de modificação ou de dependência em relação à obra original necessário para classificar uma obra como obra derivada; esse grau é determinado pela legislação relativa aos direitos de autor aplicável no país mencionado no ponto 15.
 
-— Obra:a obra original ou as obras dela derivadas.
+— Obra: a obra original ou as obras dela derivadas.
 
-— Código-fonte:o formato legível por pessoas da obra que é o mais adequado para ser examinado e modificado.
+— Código-fonte: o formato legível por pessoas da obra que é o mais adequado para ser examinado e modificado.
 
-— Código executável:qualquer código que, em geral, foi compilado e se destina a ser interpretado por um computador como um programa.
+— Código executável: qualquer código que, em geral, foi compilado e se destina a ser interpretado por um computador como um programa.
 
-— Licenciante:pessoa singular ou coletiva que distribui ou comunica a obra nos termos da licença.
+— Licenciante: pessoa singular ou coletiva que distribui ou comunica a obra nos termos da licença.
 
-— Contribuidor(es):pessoa singular ou coletiva que modifica a obra abrangida pela licença ou contribui de outro modo para a criação de uma obra derivada.
+— Contribuidor(es): pessoa singular ou coletiva que modifica a obra abrangida pela licença ou contribui de outro modo para a criação de uma obra derivada.
 
-— Licenciado:pessoa singular ou coletiva que utiliza a obra nos termos da licença.
+— Licenciado: pessoa singular ou coletiva que utiliza a obra nos termos da licença.
 
-— Distribuição ou comunicação:ato de venda, doação, comodato, locação, distribuição, comunicação, transmissão ou qualquer outra forma de disponibilização, em linha ou fora de linha, de cópias da obra ou do acesso às suas funcionalidades essenciais a qualquer outra pessoa singular ou coletiva.
+— Distribuição ou comunicação: ato de venda, doação, comodato, locação, distribuição, comunicação, transmissão ou qualquer outra forma de disponibilização, em linha ou fora de linha, de cópias da obra ou do acesso às suas funcionalidades essenciais a qualquer outra pessoa singular ou coletiva.
 
 2. Âmbito dos direitos concedidos pela licença
 

@@ -173,5 +173,3 @@ Papildinājums
 Eiropas Komisija var atjaunināt šo pielikumu, lai iekļautu tajā iepriekš minēto licenču jaunākas redakcijas, nepieņemot jaunu EUPL redakciju, ja ar attiecīgajām licencēm tiek piešķirtas šīs licences 2. pantā noteiktās tiesības un netiek pieļauts, ka pirmkods, uz kuru attiecas licence, nonāk ekskluzīvā piederībā.
 
 Lai šajā pielikumā varētu izdarīt citas izmaiņas vai papildinājumus, ir jāveido jauna EUPL redakcija.
-
-19.5.2017. L 128/64 Eiropas Savienības Oficiālais Vēstnesis LV

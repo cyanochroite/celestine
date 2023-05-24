@@ -14,25 +14,25 @@ eller på anden måde har udtrykt sin indforståelse med at licensere værket i 
 
 I denne licens forstås ved:
 
-— »licensen«:denne licens
+— »licensen«: denne licens
 
-— »det oprindelige værk«:det værk eller den software, der spredes eller formidles af licensgiveren i henhold til denne licens, og som stilles til rådighed som kildekode og efter omstændighederne også som eksekverbar kode
+— »det oprindelige værk«: det værk eller den software, der spredes eller formidles af licensgiveren i henhold til denne licens, og som stilles til rådighed som kildekode og efter omstændighederne også som eksekverbar kode
 
-— »bearbejdede værker«:værker eller software, der kan frembringes af licenstageren på grundlag af det oprindelige værk eller ændringer heraf. I denne licens fastlægges ikke, hvor høj en grad af ændring eller afhængighed af det oprindelige værk, der kræves, for at et værk kan betragtes som et bearbejdet værk; dette bestemmes af de ophavsretlige regler i det land, der henvises til i artikel 15
+— »bearbejdede værker«: værker eller software, der kan frembringes af licenstageren på grundlag af det oprindelige værk eller ændringer heraf. I denne licens fastlægges ikke, hvor høj en grad af ændring eller afhængighed af det oprindelige værk, der kræves, for at et værk kan betragtes som et bearbejdet værk; dette bestemmes af de ophavsretlige regler i det land, der henvises til i artikel 15
 
-— »værket«:det oprindelige værk eller bearbejdede værker på grundlag heraf
+— »værket«: det oprindelige værk eller bearbejdede værker på grundlag heraf
 
-— »kildekoden«:den for mennesker læselige form af værket, som det er nemmest at studere og foretage ændringer i
+— »kildekoden«: den for mennesker læselige form af værket, som det er nemmest at studere og foretage ændringer i
 
-— »eksekverbar kode«:enhver kode, der i almindelighed er kompileret, og som er beregnet til at blive fortolket af en computer som et program
+— »eksekverbar kode«: enhver kode, der i almindelighed er kompileret, og som er beregnet til at blive fortolket af en computer som et program
 
-— »licensgiver«:den fysiske eller juridiske person, der spreder eller formidler værket i henhold til licensen
+— »licensgiver«: den fysiske eller juridiske person, der spreder eller formidler værket i henhold til licensen
 
-— »bidragyder«:enhver fysisk eller juridisk person, der ændrer værket i henhold til licensen, eller som på anden vis bidrager til frembringelsen af et bearbejdet værk
+— »bidragyder«: enhver fysisk eller juridisk person, der ændrer værket i henhold til licensen, eller som på anden vis bidrager til frembringelsen af et bearbejdet værk
 
-— »licenstager« eller »De«:enhver fysisk eller juridisk person, der gør brug af softwaren i henhold til licensens vilkår
+— »licenstager« eller »De«: enhver fysisk eller juridisk person, der gør brug af softwaren i henhold til licensens vilkår
 
-— »spredning« eller »formidling«:enhver handling, der består i at sælge, give, udlåne, udleje, sprede, formidle eller transmittere eksemplarer af værket eller på anden måde gøre dem tilgængelige, enten online eller offline, eller give adgang til værkets væsentlige funktioner for en anden fysisk eller juridisk person.
+— »spredning« eller »formidling«: enhver handling, der består i at sælge, give, udlåne, udleje, sprede, formidle eller transmittere eksemplarer af værket eller på anden måde gøre dem tilgængelige, enten online eller offline, eller give adgang til værkets væsentlige funktioner for en anden fysisk eller juridisk person.
 
 2. Omfanget af licensrettighederne
 

@@ -14,25 +14,25 @@ oder in einer anderen Form zum Ausdruck bringt, dass er es unter der EUPL lizenz
 
 Für diese Lizenz gelten folgende Begriffsbestimmungen:
 
-— „Lizenz“:diese Lizenz.
+— „Lizenz“: diese Lizenz.
 
-— „Originalwerk“:das Werk oder die Software, die vom Lizenzgeber unter dieser Lizenz verbreitet oder zugänglich gemacht wird, und zwar als Quellcode und gegebenenfalls auch als ausführbarer Code.
+— „Originalwerk“: das Werk oder die Software, die vom Lizenzgeber unter dieser Lizenz verbreitet oder zugänglich gemacht wird, und zwar als Quellcode und gegebenenfalls auch als ausführbarer Code.
 
-— „Bearbeitungen“:die Werke oder Software, die der Lizenznehmer auf der Grundlage des Originalwerks oder seiner Bearbeitungen schaffen kann. In dieser Lizenz wird nicht festgelegt, wie umfangreich die Änderung oder wie stark die Abhängigkeit vom Originalwerk für eine Einstufung als Bearbeitung sein muss; dies bestimmt sich nach dem Urheberrecht, das in dem unter Artikel 15 aufgeführten Land anwendbar ist.
+— „Bearbeitungen“: die Werke oder Software, die der Lizenznehmer auf der Grundlage des Originalwerks oder seiner Bearbeitungen schaffen kann. In dieser Lizenz wird nicht festgelegt, wie umfangreich die Änderung oder wie stark die Abhängigkeit vom Originalwerk für eine Einstufung als Bearbeitung sein muss; dies bestimmt sich nach dem Urheberrecht, das in dem unter Artikel 15 aufgeführten Land anwendbar ist.
 
-— „Werk“:das Originalwerk oder seine Bearbeitungen.
+— „Werk“: das Originalwerk oder seine Bearbeitungen.
 
-— „Quellcode“:diejenige Form des Werkes, die zur Auffassung durch den Menschen bestimmt ist und die am besten geeignet ist, um vom Menschen verstanden und verändert zu werden.
+— „Quellcode“: diejenige Form des Werkes, die zur Auffassung durch den Menschen bestimmt ist und die am besten geeignet ist, um vom Menschen verstanden und verändert zu werden.
 
-— „Ausführbarer Code“:die — üblicherweise — kompilierte Form des Werks, die von einem Computer als Programm ausgeführt werden soll.
+— „Ausführbarer Code“: die — üblicherweise — kompilierte Form des Werks, die von einem Computer als Programm ausgeführt werden soll.
 
-— „Lizenzgeber“:die natürliche oder juristische Person, die das Werk unter der Lizenz verbreitet oder zugänglich macht.
+— „Lizenzgeber“: die natürliche oder juristische Person, die das Werk unter der Lizenz verbreitet oder zugänglich macht.
 
-— „Bearbeiter“:jede natürliche oder juristische Person, die das Werk unter der Lizenz verändert oder auf andere Weise zur Schaffung einer Bearbeitung beiträgt.
+— „Bearbeiter“: jede natürliche oder juristische Person, die das Werk unter der Lizenz verändert oder auf andere Weise zur Schaffung einer Bearbeitung beiträgt.
 
-— „Lizenznehmer“ („Sie“):jede natürliche oder juristische Person, die das Werk unter den Lizenzbedingungen nutzt.
+— „Lizenznehmer“ („Sie“): jede natürliche oder juristische Person, die das Werk unter den Lizenzbedingungen nutzt.
 
-— „Verbreitung“ oder „Zugänglichmachung“:alle Formen von Verkauf, Überlassung, Verleih, Vermietung, Verbreitung, Weitergabe, Übermittlung oder anderweitiger Online- oder Offline-Bereitstellung von Vervielfältigungen des Werks oder Zugänglichmachung seiner wesentlichen Funktionen für dritte natürliche oder juristische Personen.
+— „Verbreitung“ oder „Zugänglichmachung“: alle Formen von Verkauf, Überlassung, Verleih, Vermietung, Verbreitung, Weitergabe, Übermittlung oder anderweitiger Online- oder Offline-Bereitstellung von Vervielfältigungen des Werks oder Zugänglichmachung seiner wesentlichen Funktionen für dritte natürliche oder juristische Personen.
 
 2. Umfang der Lizenzrechte
 

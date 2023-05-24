@@ -108,7 +108,7 @@ Du godkänner villkoren i denna licens genom att klicka på ikonen ”Jag godkä
 
 På motsvarande sätt godkänner du oåterkalleligt denna licens och villkoren i densamma genom att utöva någon av de rättigheter som du tillerkänns genom punkt 2 i licensen, såsom att använda verket, skapa dina egna härledda verk eller genom att du sprider eller kommunicerar verket eller kopior av detta.
 
-11 .Information till allmänheten
+11. Information till allmänheten
 
 Om du sprider och/eller kommunicerar verket på elektronisk väg (exempelvis genom att erbjuda nedladdning av verket på distans) ska du via distributionskanalen eller mediet (exempelvis en webbplats) som ett minimum tillhandahålla allmänheten de uppgifter som krävs enligt tillämplig lag om licensgivaren, licensen och hur licenstagaren ska gå till väga för att få tillgång till, slutföra, lagra och mångfaldiga verket.
 

@@ -14,25 +14,25 @@ o haya expresado por cualquier otro medio su voluntad de conceder una licencia c
 
 En la presente licencia, se entenderá por:
 
-— «licencia»:la presente licencia,
+— «licencia»: la presente licencia,
 
-— «obra original»:la obra o el programa de ordenador distribuido o comunicado por el licenciante con arreglo a la presente licencia en forma de código fuente o, en su caso, de código ejecutable,
+— «obra original»: la obra o el programa de ordenador distribuido o comunicado por el licenciante con arreglo a la presente licencia en forma de código fuente o, en su caso, de código ejecutable,
 
-— «obras derivadas»:las obras o programas de ordenador que pudiera crear el licenciatario sobre la base de la obra original o de alguna de las modificaciones de esta. La presente licencia no define el grado de modificación o dependencia de la obra original necesario para clasificar una obra como derivada; dicho grado se determinará de acuerdo con la legislación sobre derechos de autor aplicable con arreglo al artículo 15,
+— «obras derivadas»: las obras o programas de ordenador que pudiera crear el licenciatario sobre la base de la obra original o de alguna de las modificaciones de esta. La presente licencia no define el grado de modificación o dependencia de la obra original necesario para clasificar una obra como derivada; dicho grado se determinará de acuerdo con la legislación sobre derechos de autor aplicable con arreglo al artículo 15,
 
-— «obra»:la obra original o sus obras derivadas,
+— «obra»: la obra original o sus obras derivadas,
 
-— «código fuente»:la forma de la obra legible por seres humanos que pueda ser estudiada y modificada más fácilmente,
+— «código fuente»: la forma de la obra legible por seres humanos que pueda ser estudiada y modificada más fácilmente,
 
-— «código ejecutable»:cualquier código, en general compilado, destinado a ser interpretado como programa por un ordenador,
+— «código ejecutable»: cualquier código, en general compilado, destinado a ser interpretado como programa por un ordenador,
 
-— «licenciante»:la persona física o jurídica que distribuye o comunica la obra con arreglo a la licencia,
+— «licenciante»: la persona física o jurídica que distribuye o comunica la obra con arreglo a la licencia,
 
-— «colaborador»:la persona física o jurídica que modifica la obra con arreglo a la licencia o contribuye de cualquier otra manera a crear una obra derivada,
+— «colaborador»: la persona física o jurídica que modifica la obra con arreglo a la licencia o contribuye de cualquier otra manera a crear una obra derivada,
 
-— «licenciatario»:la persona física o jurídica que hace un uso cualquiera de la obra en las condiciones fijadas en la licencia,
+— «licenciatario»: la persona física o jurídica que hace un uso cualquiera de la obra en las condiciones fijadas en la licencia,
 
-— «distribución» o «comunicación»:cualquier acto de venta, donación, préstamo, alquiler, distribución, comunicación, transmisión o cualquier otro acto de puesta a disposición, en línea o fuera de línea, de copias de la obra o de acceso a sus funcionalidades esenciales a otra persona física o jurídica.
+— «distribución» o «comunicación»: cualquier acto de venta, donación, préstamo, alquiler, distribución, comunicación, transmisión o cualquier otro acto de puesta a disposición, en línea o fuera de línea, de copias de la obra o de acceso a sus funcionalidades esenciales a otra persona física o jurídica.
 
 2. Ámbito de los derechos otorgados por la Licencia
 
@@ -173,5 +173,3 @@ Son «licencias compatibles» con arreglo al artículo 5 de la EUPL:
 La Comisión Europea podrá actualizar el presente apéndice a versiones posteriores de las licencias mencionadas sin presentar una nueva versión de la EUPL, siempre que contemplen los derechos reconocidos en el artículo 2 de la presente licencia y protejan de la apropiación exclusiva el código fuente cubierto.
 
 Cualquier otra modificación o adición al presente apéndice exigirá la presentación de una nueva versión de la EUPL.
-
-19.5.2017 L 128/64 Diario Oficial de la Unión Europea ES

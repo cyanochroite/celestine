@@ -14,25 +14,25 @@ lub w jakikolwiek inny sposób wyrazi swój zamiar udzielenia licencji na podsta
 
 W niniejszej licencji stosuje się następujące definicje:
 
-— licencja:niniejsza licencja,
+— licencja: niniejsza licencja,
 
-— utwór oryginalny:utwór lub oprogramowanie rozpowszechniane lub udostępniane przez licencjodawcę na podstawie niniejszej licencji, dostępne w postaci kodu źródłowego, a także – stosownie do przypadku – kodu wykonywalnego,
+— utwór oryginalny: utwór lub oprogramowanie rozpowszechniane lub udostępniane przez licencjodawcę na podstawie niniejszej licencji, dostępne w postaci kodu źródłowego, a także – stosownie do przypadku – kodu wykonywalnego,
 
-— utwory zależne:utwory lub oprogramowanie, które mogą zostać opracowane przez licencjobiorcę na podstawie utworu oryginalnego lub modyfikacji utworu oryginalnego. Niniejsza licencja nie określa zakresu modyfikacji lub zależności od utworu oryginalnego, wymaganego dla sklasyfikowania utworu jako utworu zależnego; zakres taki wynika z przepisów prawa autorskiego obowiązującego w państwie, o którym mowa w pkt 15,
+— utwory zależne: utwory lub oprogramowanie, które mogą zostać opracowane przez licencjobiorcę na podstawie utworu oryginalnego lub modyfikacji utworu oryginalnego. Niniejsza licencja nie określa zakresu modyfikacji lub zależności od utworu oryginalnego, wymaganego dla sklasyfikowania utworu jako utworu zależnego; zakres taki wynika z przepisów prawa autorskiego obowiązującego w państwie, o którym mowa w pkt 15,
 
-— „utwór”:utwór oryginalny lub związane z nim utwory zależne,
+— „utwór”: utwór oryginalny lub związane z nim utwory zależne,
 
-— „kod źródłowy”:postać utworu czytelna dla człowieka, najdogodniejsza do analizy i modyfikacji,
+— „kod źródłowy”: postać utworu czytelna dla człowieka, najdogodniejsza do analizy i modyfikacji,
 
-— „kod wykonywalny”:każdy kod, który został zasadniczo skompilowany i który jako program przeznaczony jest do interpretacji przez komputer,
+— „kod wykonywalny”: każdy kod, który został zasadniczo skompilowany i który jako program przeznaczony jest do interpretacji przez komputer,
 
-— „licencjodawca”:osoba fizyczna bądź prawna, która rozpowszechnia lub udostępnia utwór na podstawie licencji,
+— „licencjodawca”: osoba fizyczna bądź prawna, która rozpowszechnia lub udostępnia utwór na podstawie licencji,
 
-— „współautor (współautorzy)”:każda osoba fizyczna lub prawna, która modyfikuje utwór na podstawie licencji lub w inny sposób przyczynia się do stworzenia utworu zależnego,
+— „współautor (współautorzy)”: każda osoba fizyczna lub prawna, która modyfikuje utwór na podstawie licencji lub w inny sposób przyczynia się do stworzenia utworu zależnego,
 
-— „licencjobiorca”:każda osoba fizyczna lub prawna, która w jakimkolwiek zakresie korzysta z utworu na warunkach licencji,
+— „licencjobiorca”: każda osoba fizyczna lub prawna, która w jakimkolwiek zakresie korzysta z utworu na warunkach licencji,
 
-—„rozpowszechnianie” lub „udostępnianie”:każdy przypadek sprzedaży, przekazania, wypożyczenia, najmu, rozpowszechnienia, udostępnienia, nadania lub innego oddania kopii utworu do dyspozycji innej osobie fizycznej bądź prawnej lub zapewnienia im dostępu do jego istotnych funkcji w trybie on-line lub off-line.
+—„rozpowszechnianie” lub „udostępnianie”: każdy przypadek sprzedaży, przekazania, wypożyczenia, najmu, rozpowszechnienia, udostępnienia, nadania lub innego oddania kopii utworu do dyspozycji innej osobie fizycznej bądź prawnej lub zapewnienia im dostępu do jego istotnych funkcji w trybie on-line lub off-line.
 
 2. Zakres praw przyznawanych na mocy licencji
 
@@ -173,5 +173,3 @@ Załącznik
 Komisja Europejska może zaktualizować ten załącznik, aby uwzględnić w nim późniejsze wersje wyżej wymienionych licencji bez sporządzania nowej wersji EUPL, o ile te nowe wersje przyznają prawa przewidziane w pkt 2 niniejszej licencji oraz chronią kod źródłowy wchodzący w jej zakres przed wyłącznym przywłaszczeniem.
 
 Wszelkie inne zmiany lub uzupełnienia niniejszego załącznika wymagają sporządzenia nowej wersji EUPL.
-
-19.5.2017 L 128/64 Dziennik Urzędowy Unii Europejskiej PL

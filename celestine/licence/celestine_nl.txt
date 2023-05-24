@@ -14,25 +14,25 @@ of op een andere wijze zijn bereidheid te kennen heeft gegeven krachtens de EUPL
 
 In deze licentie wordt verstaan onder:
 
-— „de licentie”:de onderhavige licentie;
+— „de licentie”: de onderhavige licentie;
 
-— „het oorspronkelijke werk”:het werk dat of de software die door de licentiegever krachtens deze licentie wordt verspreid of medegedeeld, en dat/die beschikbaar is als broncode en, in voorkomend geval, ook als uitvoerbare code;
+— „het oorspronkelijke werk”: het werk dat of de software die door de licentiegever krachtens deze licentie wordt verspreid of medegedeeld, en dat/die beschikbaar is als broncode en, in voorkomend geval, ook als uitvoerbare code;
 
-— „bewerkingen”:de werken of software die de licentiehouder kan creëren op grond van het oorspronkelijke werk of wijzigingen ervan. In deze licentie wordt niet gedefinieerd welke mate van wijziging of afhankelijkheid van het oorspronkelijke werk vereist is om een werk als een bewerking te kunnen aanmerken; dat wordt bepaald conform het auteursrecht dat van toepassing is in de in artikel 15 bedoelde staat;
+— „bewerkingen”: de werken of software die de licentiehouder kan creëren op grond van het oorspronkelijke werk of wijzigingen ervan. In deze licentie wordt niet gedefinieerd welke mate van wijziging of afhankelijkheid van het oorspronkelijke werk vereist is om een werk als een bewerking te kunnen aanmerken; dat wordt bepaald conform het auteursrecht dat van toepassing is in de in artikel 15 bedoelde staat;
 
-— „het werk”:het oorspronkelijke werk of de bewerkingen ervan;
+— „het werk”: het oorspronkelijke werk of de bewerkingen ervan;
 
-— „de broncode”:de voor mensen leesbare vorm van het werk, die het gemakkelijkste door mensen kan worden bestudeerd en gewijzigd;
+— „de broncode”: de voor mensen leesbare vorm van het werk, die het gemakkelijkste door mensen kan worden bestudeerd en gewijzigd;
 
-— „de uitvoerbare code”:elke code die over het algemeen is gecompileerd en is bedoeld om door een computer als een programma te worden uitgevoerd;
+— „de uitvoerbare code”: elke code die over het algemeen is gecompileerd en is bedoeld om door een computer als een programma te worden uitgevoerd;
 
-— „de licentiegever”:de natuurlijke of rechtspersoon die het werk krachtens de licentie verspreidt of mededeelt;
+— „de licentiegever”: de natuurlijke of rechtspersoon die het werk krachtens de licentie verspreidt of mededeelt;
 
-— „bewerker(s)”:elke natuurlijke of rechtspersoon die het werk krachtens de licentie wijzigt of op een andere wijze bijdraagt tot de totstandkoming van een bewerking;
+— „bewerker(s)”: elke natuurlijke of rechtspersoon die het werk krachtens de licentie wijzigt of op een andere wijze bijdraagt tot de totstandkoming van een bewerking;
 
-— „de licentiehouder” of „u”:elke natuurlijke of rechtspersoon die het werk onder de voorwaarden van de licentie gebruikt;
+— „de licentiehouder” of „u”: elke natuurlijke of rechtspersoon die het werk onder de voorwaarden van de licentie gebruikt;
 
-— „verspreiding” of „mededeling”:het verkopen, geven, uitlenen, verhuren, verspreiden, mededelen, doorgeven, of op een andere wijze online of offline beschikbaar stellen van kopieën van het werk of het verlenen van toegang tot de essentiële functies ervan ten behoeve van andere natuurlijke of rechtspersonen.
+— „verspreiding” of „mededeling”: het verkopen, geven, uitlenen, verhuren, verspreiden, mededelen, doorgeven, of op een andere wijze online of offline beschikbaar stellen van kopieën van het werk of het verlenen van toegang tot de essentiële functies ervan ten behoeve van andere natuurlijke of rechtspersonen.
 
 2. Draagwijdte van de uit hoofde van de licentie verleende rechten
 

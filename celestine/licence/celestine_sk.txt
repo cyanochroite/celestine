@@ -14,25 +14,25 @@ alebo akýmkoľvek iným spôsobom prejavil svoju vôľu poskytnúť licenciu po
 
 V tejto licencii majú tieto pojmy nasledujúci význam:
 
-— „licencia“:táto licencia,
+— „licencia“: táto licencia,
 
-— „pôvodné dielo“:dielo alebo počítačový program rozširovaný alebo poskytovaný poskytovateľom licencie na základe tejto licencie, dostupný v zdrojovom kóde a prípadne aj v strojovom kóde,
+— „pôvodné dielo“: dielo alebo počítačový program rozširovaný alebo poskytovaný poskytovateľom licencie na základe tejto licencie, dostupný v zdrojovom kóde a prípadne aj v strojovom kóde,
 
-— „odvodené diela“:diela alebo počítačové programy založené na pôvodnom diele alebo jeho úpravách, ktoré môže vytvoriť nadobúdateľ licencie. Táto licencia neurčuje rozsah úprav pôvodného diela alebo závislosti od pôvodného diela, ktoré sa vyžadujú na účely zatriedenia diela ako odvodeného diela; tento rozsah sa stanovuje autorským právom platným v krajine uvedenej v článku 15,
+— „odvodené diela“: diela alebo počítačové programy založené na pôvodnom diele alebo jeho úpravách, ktoré môže vytvoriť nadobúdateľ licencie. Táto licencia neurčuje rozsah úprav pôvodného diela alebo závislosti od pôvodného diela, ktoré sa vyžadujú na účely zatriedenia diela ako odvodeného diela; tento rozsah sa stanovuje autorským právom platným v krajine uvedenej v článku 15,
 
-— „dielo“:pôvodné dielo alebo diela od neho odvodené,
+— „dielo“: pôvodné dielo alebo diela od neho odvodené,
 
-— „zdrojový kód“:pre človeka čitateľná forma diela najvhodnejšia pre štúdium a úpravy,
+— „zdrojový kód“: pre človeka čitateľná forma diela najvhodnejšia pre štúdium a úpravy,
 
-— „strojový kód“:akýkoľvek kód, ktorý bol vo všeobecnosti zostavený, a to s cieľom, aby ho počítač spracoval ako program,
+— „strojový kód“: akýkoľvek kód, ktorý bol vo všeobecnosti zostavený, a to s cieľom, aby ho počítač spracoval ako program,
 
-— „poskytovateľ licencie“:je fyzická osoba alebo právnická osoba, ktorá rozširuje alebo poskytuje dielo na základe tejto licencie,
+— „poskytovateľ licencie“: je fyzická osoba alebo právnická osoba, ktorá rozširuje alebo poskytuje dielo na základe tejto licencie,
 
-— „spracovateľ(-lia)“:fyzická osoba alebo právnická osoba, ktorá upraví dielo podľa tejto licencie, alebo ktorá sa iným spôsobom podieľa na vytvorení odvodeného diela,
+— „spracovateľ(-lia)“: fyzická osoba alebo právnická osoba, ktorá upraví dielo podľa tejto licencie, alebo ktorá sa iným spôsobom podieľa na vytvorení odvodeného diela,
 
-— „nadobúdateľ licencie“ alebo „Vy“:fyzická osoba alebo právnická osoba, ktorá akýmkoľvek spôsobom využíva dielo podľa podmienok tejto licencie,
+— „nadobúdateľ licencie“ alebo „Vy“: fyzická osoba alebo právnická osoba, ktorá akýmkoľvek spôsobom využíva dielo podľa podmienok tejto licencie,
 
-— „rozširovanie“ alebo „poskytovanie“:akýkoľvek úkon predaja, odovzdania, požičania, nájmu, rozširovania, poskytnutia, prenášania alebo sprístupnenia rozmnoženín diela iným spôsobom, v režime online alebo offline, alebo poskytnutia prístupu k jeho základným funkciám v prospech ktorýchkoľvek tretích fyzických alebo právnických osôb.
+— „rozširovanie“ alebo „poskytovanie“: akýkoľvek úkon predaja, odovzdania, požičania, nájmu, rozširovania, poskytnutia, prenášania alebo sprístupnenia rozmnoženín diela iným spôsobom, v režime online alebo offline, alebo poskytnutia prístupu k jeho základným funkciám v prospech ktorýchkoľvek tretích fyzických alebo právnických osôb.
 
 2. Rozsah práv udelených touto licenciou
 

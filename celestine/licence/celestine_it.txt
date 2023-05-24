@@ -28,9 +28,9 @@ Nella presente licenza i seguenti termini sono così definiti:
 
 — Licenziante: la persona fisica o giuridica che distribuisce o comunica l'opera secondo i termini della licenza.
 
-— Contributore/i:la persona fisica o giuridica che modifica l'opera secondo i termini della licenza o altrimenti contribuisce alla creazione di un'opera derivata.
+— Contributore/i: la persona fisica o giuridica che modifica l'opera secondo i termini della licenza o altrimenti contribuisce alla creazione di un'opera derivata.
 
-— Licenziatario :la persona fisica o giuridica che fa uso del programma secondo i termini della licenza.
+— Licenziatario : la persona fisica o giuridica che fa uso del programma secondo i termini della licenza.
 
 — Distribuzione o comunicazione: la vendita, la cessione a titolo gratuito, il prestito, la locazione, la distribuzione, la comunicazione, la trasmissione o qualsiasi altro atto finalizzato a mettere copie dell'opera a disposizione di altre persone fisiche o giuridiche, o fornire loro accesso alle sue funzionalità essenziali, online o offline.
 

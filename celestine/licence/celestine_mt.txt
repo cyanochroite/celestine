@@ -14,25 +14,25 @@ jew tkun esprimiet b'xi mod jew ieħor ix-xewqa li tagħti liċenzja f'konformit
 
 F'din il-Liċenzja, it-termini li ġejjin għandhom dawn it-tifsiriet:
 
-— “Il-Liċenzja”:din il-Liċenzja.
+— “Il-Liċenzja”: din il-Liċenzja.
 
-— “Ix-Xogħol Oriġinali”:is-softwer distribwit u/jew ikkomunikat mill-Awtorità li toħroġ il-Liċenzja skont din il- Liċenzja, disponibbli bħala Kodiċi tas-Sors u wkoll bħala Kodiċi Eżegwibbli, skont il-każ.
+— “Ix-Xogħol Oriġinali”: is-softwer distribwit u/jew ikkomunikat mill-Awtorità li toħroġ il-Liċenzja skont din il- Liċenzja, disponibbli bħala Kodiċi tas-Sors u wkoll bħala Kodiċi Eżegwibbli, skont il-każ.
 
-— Xogħlijiet Derivattivi:ix-xogħlijiet jew softwer li jistgħu jinħolqu mid-Detentur tal-Liċenzja, ibbażati fuq ix-Xogħol Oriġinali jew modifiki tiegħu. Din il-Liċenzja ma tiddefinix sa fejn biċċa xogħol għandha tkun modifikata jew dipendenti fuq ix-Xogħol Oriġinali sabiex tiġi kklassifikata bħala Xogħol Derivattiv; dan jiġi determinat bil-liġi dwar id-drittijiet tal-awtur applikabbli fil-pajjiż imsemmi fl-Artikolu 15.
+— Xogħlijiet Derivattivi: ix-xogħlijiet jew softwer li jistgħu jinħolqu mid-Detentur tal-Liċenzja, ibbażati fuq ix-Xogħol Oriġinali jew modifiki tiegħu. Din il-Liċenzja ma tiddefinix sa fejn biċċa xogħol għandha tkun modifikata jew dipendenti fuq ix-Xogħol Oriġinali sabiex tiġi kklassifikata bħala Xogħol Derivattiv; dan jiġi determinat bil-liġi dwar id-drittijiet tal-awtur applikabbli fil-pajjiż imsemmi fl-Artikolu 15.
 
-— “Ix-Xogħol”:ix-Xogħol Oriġinali jew ix-Xogħlijiet Derivattivi tiegħu.
+— “Ix-Xogħol”: ix-Xogħol Oriġinali jew ix-Xogħlijiet Derivattivi tiegħu.
 
-— “Il-Kodiċi tas-Sors”:l-għamla tax-Xogħol li tista' tinqara' mill-bniedem li hija l-aktar waħda konvenjenti għan-nies biex jistudjawha u jimmodifikawha.
+— “Il-Kodiċi tas-Sors”: l-għamla tax-Xogħol li tista' tinqara' mill-bniedem li hija l-aktar waħda konvenjenti għan-nies biex jistudjawha u jimmodifikawha.
 
-— “Il-Kodiċi Eżegwibbli”:kwalunkwe kodiċi li ġie miġbur b'mod ġenerali u li huwa intenzjonat li jiġi interpretat minn kompjuter bħala programm.
+— “Il-Kodiċi Eżegwibbli”: kwalunkwe kodiċi li ġie miġbur b'mod ġenerali u li huwa intenzjonat li jiġi interpretat minn kompjuter bħala programm.
 
-— “L-Awtorità li toħroġ il-Liċenzja”:il-persuna naturali jew legali li tiddistribwixxi u/jew tikkomunika x-Xogħol permezz tal-Liċenzja.
+— “L-Awtorità li toħroġ il-Liċenzja”: il-persuna naturali jew legali li tiddistribwixxi u/jew tikkomunika x-Xogħol permezz tal-Liċenzja.
 
-— “Il-Kontributur(i)”:kwalunkwe persuna naturali jew legali li timmodifika x-Xogħol permezz tal-Liċenzja, jew inkella tikkontribwixxi għall-ħolqien ta' Xogħol Derivattiv.
+— “Il-Kontributur(i)”: kwalunkwe persuna naturali jew legali li timmodifika x-Xogħol permezz tal-Liċenzja, jew inkella tikkontribwixxi għall-ħolqien ta' Xogħol Derivattiv.
 
-— “Id-Detentur tal-Liċenzja” jew “Inti”:kwalunkwe persuna naturali jew legali li tuża x-Xogħol skont ir-rekwiżiti tal- Liċenzja.
+— “Id-Detentur tal-Liċenzja” jew “Inti”: kwalunkwe persuna naturali jew legali li tuża x-Xogħol skont ir-rekwiżiti tal- Liċenzja.
 
-— “Distribuzzjoni” jew “Komunikazzjoni”:kwalunkwe azzjoni ta' bejgħ, għoti, self, kiri, distribuzzjoni, komunikazzjoni, trażmissjoni, jew inkella b'modi oħra t-tqegħid għad-dispożizzjoni ta' kwalunkwe persuna oħra naturali jew legali ta' kopji tax-Xogħol, onlajn jew offlajn, jew l-għoti ta' aċċess għall-funzjonalitajiet essenzjali tax-Xogħol lil kwalunkwe persuna oħra naturali jew legali.
+— “Distribuzzjoni” jew “Komunikazzjoni”: kwalunkwe azzjoni ta' bejgħ, għoti, self, kiri, distribuzzjoni, komunikazzjoni, trażmissjoni, jew inkella b'modi oħra t-tqegħid għad-dispożizzjoni ta' kwalunkwe persuna oħra naturali jew legali ta' kopji tax-Xogħol, onlajn jew offlajn, jew l-għoti ta' aċċess għall-funzjonalitajiet essenzjali tax-Xogħol lil kwalunkwe persuna oħra naturali jew legali.
 
 2. L-ambitu tad-drittijiet mogħtija bil-Liċenzja
 
@@ -172,5 +172,3 @@ Appendiċi
 Il-Kummissjoni Ewropea tista' taġġorna dan l-Appendiċi għal verżjonijiet sussegwenti tal-liċenzji hawn fuq imsemmija mingħajr ma tipproduċi verżjoni ġdida tal-EUPL, sakemm jiġu pprovduti d-drittijiet garantiti fl-Artikolu 2 ta' din il-Liċenzja u jiġi protett minn approprjazzjoni esklużiva l-Kodiċi Sors kopert.
 
 Kull tibdil jew żieda ulterjuri għal dan l-Appendiċi jeħtieġ produzzjoni ta' verżjoni ġdida tal-EUPL.
-
-19.5.2017 L 128/64 Il-Ġurnal Uffiċjali tal-Unjoni Ewropea MT

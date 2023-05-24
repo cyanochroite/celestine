@@ -14,25 +14,25 @@ ali je na kateri koli drugi način izrazil svojo pripravljenost, da delo licenci
 
 V tej licenci imajo naslednji izrazi naslednji pomen:
 
-— „licenca“:ta licenca;
+— „licenca“: ta licenca;
 
-— „izvirnik dela“:delo ali programska oprema, ki jo distribuira ali posreduje dajalec licence na podlagi te licence ter je na voljo kot „izvirna koda“ in po potrebi tudi kot „izvršljiva koda“;
+— „izvirnik dela“: delo ali programska oprema, ki jo distribuira ali posreduje dajalec licence na podlagi te licence ter je na voljo kot „izvirna koda“ in po potrebi tudi kot „izvršljiva koda“;
 
-— „izvedena dela“:dela ali programska oprema, ki jih lahko ustvari pridobitelj licence na podlagi izvirnika dela ali njegovih sprememb. Ta licenca ne opredeljuje obsega sprememb ali odvisnosti od izvirnika dela, ki se zahteva za opredelitev dela kot izvedenega dela; ta obseg je določen v avtorskem pravu, ki se uporablja v državi v skladu s členom 15;
+— „izvedena dela“: dela ali programska oprema, ki jih lahko ustvari pridobitelj licence na podlagi izvirnika dela ali njegovih sprememb. Ta licenca ne opredeljuje obsega sprememb ali odvisnosti od izvirnika dela, ki se zahteva za opredelitev dela kot izvedenega dela; ta obseg je določen v avtorskem pravu, ki se uporablja v državi v skladu s členom 15;
 
-— „delo“:izvirnik dela ali njegova izvedena dela;
+— „delo“: izvirnik dela ali njegova izvedena dela;
 
-— „izvirna koda“:oblika dela, ki je najbolj primerna, da jo lahko ljudje proučijo in spreminjajo;
+— „izvirna koda“: oblika dela, ki je najbolj primerna, da jo lahko ljudje proučijo in spreminjajo;
 
-— „izvršljiva koda“:vsaka koda, ki je bila splošno sestavljena in naj bi jo računalnik prepoznal kot program;
+— „izvršljiva koda“: vsaka koda, ki je bila splošno sestavljena in naj bi jo računalnik prepoznal kot program;
 
-— „dajalec licence“:fizična ali pravna oseba, ki distribuira ali posreduje delo na podlagi licence;
+— „dajalec licence“: fizična ali pravna oseba, ki distribuira ali posreduje delo na podlagi licence;
 
-— „sodelavec“ oz. „sodelavci“:vsaka fizična ali pravna oseba, ki spremeni delo iz licence ali drugače prispeva k nastanku izvedenega dela;
+— „sodelavec“ oz. „sodelavci“: vsaka fizična ali pravna oseba, ki spremeni delo iz licence ali drugače prispeva k nastanku izvedenega dela;
 
-— „pridobitelj licence“ ali „Vi“:vsaka fizična ali pravna oseba, ki kakor koli uporablja delo pod pogoji iz licence;
+— „pridobitelj licence“ ali „Vi“: vsaka fizična ali pravna oseba, ki kakor koli uporablja delo pod pogoji iz licence;
 
-— „distribucija“ ali „posredovanje“:vsako dejanje prodaje, dajanja, posojanja, dajanja v najem, distribuiranja, posredovanja, prenašanja ali omogočanja razpolaganja po spletu ali zunaj njega s kopijami dela ali zagotavljanje dostopa do ključnih funkcij drugim fizičnim ali pravnim osebam.
+— „distribucija“ ali „posredovanje“: vsako dejanje prodaje, dajanja, posojanja, dajanja v najem, distribuiranja, posredovanja, prenašanja ali omogočanja razpolaganja po spletu ali zunaj njega s kopijami dela ali zagotavljanje dostopa do ključnih funkcij drugim fizičnim ali pravnim osebam.
 
 2. Obseg pravic, podeljenih z licenco
 

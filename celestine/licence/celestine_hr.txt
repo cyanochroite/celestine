@@ -14,25 +14,25 @@ ili je na bilo koji drugi način izrazio spremnost davanja licence u skladu s uv
 
 U ovoj licenciji sljedeći pojmovi imaju sljedeća značenja:
 
-— „licencija”:ova licencija,
+— „licencija”: ova licencija,
 
-— „originalno djelo”:djelo ili softver koje davatelj licencije distribuira ili stavlja na raspolaganje u skladu s ovom licencijom, dostupno u obliku izvornog ili izvršnog koda, ovisno o slučaju,
+— „originalno djelo”: djelo ili softver koje davatelj licencije distribuira ili stavlja na raspolaganje u skladu s ovom licencijom, dostupno u obliku izvornog ili izvršnog koda, ovisno o slučaju,
 
-— „izvedena djela”:djela ili softver koje bi davatelj licencije mogao proizvesti na temelju originalnog djela ili njegovih izmjena. Ovom licencijom nije utvrđena dopuštena mjera izmjene originalnog djela i ovisnost o njemu potrebna kako bi se određeno djelo smatralo izvedenim djelom. Ta je mjera utvrđena zakonom o autorskom pravu primjenjivim u zemlji iz članka 15.,
+— „izvedena djela”: djela ili softver koje bi davatelj licencije mogao proizvesti na temelju originalnog djela ili njegovih izmjena. Ovom licencijom nije utvrđena dopuštena mjera izmjene originalnog djela i ovisnost o njemu potrebna kako bi se određeno djelo smatralo izvedenim djelom. Ta je mjera utvrđena zakonom o autorskom pravu primjenjivim u zemlji iz članka 15.,
 
-— „djelo”:originalno djelo ili njegova izvedena djela,
+— „djelo”: originalno djelo ili njegova izvedena djela,
 
-— „izvorni kôd”:djelo u formatu koji je čitljiv ljudima te najpogodniji za proučavanje i izmjenu,
+— „izvorni kôd”: djelo u formatu koji je čitljiv ljudima te najpogodniji za proučavanje i izmjenu,
 
-— „izvršni kôd”:svaki kôd, koji je u načelu sastavljen, namijenjen da ga računalo izvršava kao program,
+— „izvršni kôd”: svaki kôd, koji je u načelu sastavljen, namijenjen da ga računalo izvršava kao program,
 
-— „davatelj licencije”:fizička ili pravna osoba koja distribuira ili stavlja na raspolaganje djelo u skladu s uvjetima licencije,
+— „davatelj licencije”: fizička ili pravna osoba koja distribuira ili stavlja na raspolaganje djelo u skladu s uvjetima licencije,
 
-— „sudionik”:svaka fizička ili pravna osoba koja je izmijenila djelo u skladu s uvjetima licencije ili koja je drukčije pridonijela izradi izvedenog djela,
+— „sudionik”: svaka fizička ili pravna osoba koja je izmijenila djelo u skladu s uvjetima licencije ili koja je drukčije pridonijela izradi izvedenog djela,
 
-— „nositelj licencije” ili „vi/vas/vam”:svaka fizička ili pravna osoba koja se koristi djelom u skladu s uvjetima licencije,
+— „nositelj licencije” ili „vi/vas/vam”: svaka fizička ili pravna osoba koja se koristi djelom u skladu s uvjetima licencije,
 
-— „distribucija ili stavljanje na raspolaganje”:svaki čin prodaje kopija djela, njihovo davanje, posudba, iznajmljivanje, distribucija, objava, prijenos ili stavljanje na raspolaganje na drukčiji način, na mreži ili izvan nje, drugoj fizičkoj ili pravnoj osobi ili omogućivanja pristupa osnovnim funkcijama djela.
+— „distribucija ili stavljanje na raspolaganje”: svaki čin prodaje kopija djela, njihovo davanje, posudba, iznajmljivanje, distribucija, objava, prijenos ili stavljanje na raspolaganje na drukčiji način, na mreži ili izvan nje, drugoj fizičkoj ili pravnoj osobi ili omogućivanja pristupa osnovnim funkcijama djela.
 
 2. Opseg prava dodijeljenih licencijom
 
@@ -172,4 +172,4 @@ Dodatak
 
 Europska unija može ažurirati dodatak u pogledu novih verzija prethodno navedenih licencija, a da pritom ne objavi novu verziju EUPL-a, uz uvjet da se tim licencijama pružaju prava zajamčena člankom 2. ove licencije, a obuhvaćeni izvorni kôd štiti od isključivog pripisivanja,
 
-Sve ostale izmjene i dopune dodatka zahtijevaju novu verziju EUPL-a.  19.5.2017. L 128/64 Službeni list Europske unije HR
+Sve ostale izmjene i dopune dodatka zahtijevaju novu verziju EUPL-a.
