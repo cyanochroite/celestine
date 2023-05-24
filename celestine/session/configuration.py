@@ -3,8 +3,8 @@
 import configparser
 
 from celestine import load
-from celestine.text.directory import APPLICATION
-from celestine.text.stream import (
+from celestine.data.directory import APPLICATION
+from celestine.data.stream import (
     UTF_8,
     WRITE_TEXT,
 )
@@ -18,7 +18,7 @@ from celestine.unicode import (
     POUND_SIGN,
 )
 
-from .text import FILE
+from .data import FILE
 
 
 class Configuration:

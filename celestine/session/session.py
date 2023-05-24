@@ -3,6 +3,11 @@
 from typing import TypeAlias as TA
 
 from celestine import load
+from celestine.data.directory import (
+    APPLICATION,
+    INTERFACE,
+    LANGUAGE,
+)
 from celestine.load import function
 from celestine.parser import default
 from celestine.session.argument import (
@@ -11,11 +16,6 @@ from celestine.session.argument import (
     InformationHelp,
     InformationVersion,
     Positional,
-)
-from celestine.text.directory import (
-    APPLICATION,
-    INTERFACE,
-    LANGUAGE,
 )
 from celestine.typed import (
     IT,
@@ -26,7 +26,7 @@ from celestine.typed import (
 )
 
 from .argument import Argument
-from .text import (
+from .data import (
     CONFIGURATION,
     HELP,
     MAIN,

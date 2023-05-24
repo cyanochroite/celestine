@@ -36,7 +36,7 @@ class Button(Abstract):
         self.action = action
         self.argument = argument
         self.call = call
-        self.text = text
+        self.data = text
         super().__init__(tag, **star)
 
 
@@ -61,5 +61,5 @@ class Label(Abstract):
     """"""
 
     def __init__(self, tag, text, **star):
-        self.text = text
+        self.data = text
         super().__init__(tag, **star)

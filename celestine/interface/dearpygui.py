@@ -31,7 +31,7 @@ class Button(Abstract, button):
 
         dearpygui.add_button(
             callback=self.callback,
-            label=self.text,
+            label=self.data,
             tag=self.tag,
             pos=(self.x_min, self.y_min),
         )
@@ -57,7 +57,7 @@ class Image(Abstract, image):
         photo = _image[3]
         name = path
 
-        with dearpygui.texture_registry(show=False):
+        with dearpygui.dataure_registry(show=False):
             try:
                 dearpygui.add_dynamic_texture(
                     default_value=photo,
@@ -110,7 +110,7 @@ class Label(Abstract, label):
             return
 
         dearpygui.add_text(
-            f" {self.text}",  # extra space hack to fix margin error
+            f" {self.data}",  # extra space hack to fix margin error
             tag=self.tag,
             pos=(self.x_min, self.y_min),
         )

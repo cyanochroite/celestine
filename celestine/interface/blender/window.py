@@ -79,8 +79,8 @@ class Window(window):
             data.material.remove(material)
         for mesh in bpy.data.meshes:
             data.mesh.remove(mesh)
-        for texture in bpy.data.textures:
-            data.texture.remove(texture)
+        for texture in bpy.data.dataures:
+            data.dataure.remove(texture)
 
         collection = data.collection.make("window")
 

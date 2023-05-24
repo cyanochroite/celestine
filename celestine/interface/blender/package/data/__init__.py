@@ -3,12 +3,12 @@ import bpy
 from .camera import _camera as camera
 from .collection import _collection as collection
 from .curve import _curve as curve
+from .dataure import _texture as texture
 from .image import _image as image
 from .light import _light as light
 from .material import _material as material
 from .mesh import _mesh as mesh
 from .object import _object as object_
-from .texture import _texture as texture
 
 
 def start():
@@ -26,7 +26,7 @@ def start():
     material.data = bpy.data.materials
     mesh.data = bpy.data.meshes
     object_.data = bpy.data.objects
-    texture.data = bpy.data.textures
+    texture.data = bpy.data.dataures
 
 
 def finish():

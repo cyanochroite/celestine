@@ -2,9 +2,8 @@
 
 import io
 
-
 from celestine import load
-from celestine.text import stream
+from celestine.data import stream
 from celestine.typed import (
     GE,
     N,
@@ -12,7 +11,8 @@ from celestine.typed import (
     S,
 )
 
-def read_stream(lines:GE[S, N, N])->S:
+
+def read_stream(lines: GE[S, N, N]) -> S:
     string = io.StringIO()
     for line in lines:
         string.write(line)
@@ -42,7 +42,6 @@ def context(file: P, mode: S) -> N:
     )
 
 
-
 def open_file(file: P) -> S:
     """"""
     stream = open_file_stream(file)
@@ -56,14 +55,10 @@ def open_file_stream(file: P) -> GE[S, N, N]:
         yield from document
 
 
-
-
 def open_module(*path: S) -> S:
     """"""
     stream = open_module_stream(file)
     return read_stream(stream)
-
-
 
 
 def open_module_stream(file: P) -> GE[S, N, N]:

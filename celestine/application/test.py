@@ -3,10 +3,10 @@
 import unittest
 
 from celestine import load
+from celestine.data import CELESTINE
+from celestine.data.directory import APPLICATION
 from celestine.load import directory
 from celestine.session.session import SuperSession
-from celestine.text import CELESTINE
-from celestine.text.directory import APPLICATION
 from celestine.typed import N
 from celestine.window.container import Container as Page
 

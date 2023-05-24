@@ -34,14 +34,14 @@ class Button(Abstract, button):
     """"""
 
     def draw(self, collection):
-        width = len(self.text) / 4
+        width = len(self.data) / 4
         height = 1 / 20
 
-        plane = _mesh.plane(self.text)
-        mesh = make_mesh.bind(collection, self.text, plane)
+        plane = _mesh.plane(self.data)
+        mesh = make_mesh.bind(collection, self.data, plane)
         mesh.scale = (width, height, 1)
 
-        word = _mesh.text(collection, self.text, self.text)
+        word = _mesh.data(collection, self.data, self.data)
         word.scale = (1 / width, 1 / height, 1)
         word.location = (-width / 4, -height, 0.1)
 
@@ -68,5 +68,5 @@ class Label(Abstract, label):
     """"""
 
     def draw(self, collection):
-        self.item = _mesh.text(collection, self.text, self.text)
+        self.item = _mesh.data(collection, self.data, self.data)
         super().draw(collection)

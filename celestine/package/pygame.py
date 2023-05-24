@@ -3,7 +3,7 @@
 import os
 import sys
 
-from celestine.text.stream import (
+from celestine.data.stream import (
     UTF_8,
     WRITE_TEXT,
 )

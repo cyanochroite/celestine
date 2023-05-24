@@ -1,13 +1,13 @@
 """"""
 
-from celestine.session.text import (
+from celestine.data import VERSION_NUMBER
+from celestine.session.data import (
     ACTION,
     CHOICES,
     HELP,
     NARGS,
     VERSION,
 )
-from celestine.text import VERSION_NUMBER
 from celestine.typed import (
     TA,
     A,

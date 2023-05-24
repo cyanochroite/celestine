@@ -41,7 +41,7 @@ class Button(Abstract, Button_):
 
         item = tkinter.Button
         star.update(command=self.callback)
-        star.update(text=f"button:{self.text}")
+        star.update(text=f"button:{self.data}")
         self.render(view, item, **star)
 
 
@@ -82,7 +82,7 @@ class Label(Abstract, Label_):
         item = tkinter.Label
         star.update(fg="blue")
         star.update(height=4)
-        star.update(text=f"label:{self.text}")
+        star.update(text=f"label:{self.data}")
         star.update(width=100)
         self.render(view, item, **star)
 

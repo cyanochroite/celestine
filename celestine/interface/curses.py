@@ -34,7 +34,7 @@ class Button(Abstract, button):
 
     def draw(self, collection, **star):
         """"""
-        item = f"button:{self.text}"
+        item = f"button:{self.data}"
         self.render(collection, item, **star)
 
 
@@ -53,7 +53,7 @@ class Label(Abstract, label):
 
     def draw(self, collection, **star):
         """"""
-        item = f"label:{self.text}"
+        item = f"label:{self.data}"
         self.render(collection, item, **star)
 
 

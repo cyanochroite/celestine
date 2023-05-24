@@ -20,12 +20,12 @@ from .attribute import (
     Nargs,
     Version,
 )
-from .hash import HashClass
-from .text import (
+from .data import (
     HELP,
     STORE_TRUE,
     VERSION,
 )
+from .hash import HashClass
 
 
 class Argument(HashClass, Attribute):

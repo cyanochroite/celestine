@@ -23,7 +23,7 @@ class Button(Abstract, button):
 
     def draw(self, view, *, font, **star):
         """"""
-        text = f"Button{self.text}"
+        text = f"Button{self.data}"
 
         item = font.render(text, True, (255, 255, 255))
         self.render(view, item, **star)
@@ -45,7 +45,7 @@ class Label(Abstract, label):
 
     def draw(self, view, *, font, **star):
         """"""
-        item = font.render(self.text, True, (255, 255, 255))
+        item = font.render(self.data, True, (255, 255, 255))
         self.render(view, item, **star)
 
 

@@ -2,12 +2,12 @@
 
 
 from celestine import load
-from celestine.parser import default
-from celestine.text.directory import (
+from celestine.data.directory import (
     APPLICATION,
     INTERFACE,
     LANGUAGE,
 )
+from celestine.parser import default
 from celestine.typed import (
     MT,
     B,
@@ -17,8 +17,8 @@ from celestine.typed import (
 )
 
 from .configuration import Configuration
+from .data import SESSION
 from .session import Session as SessionParse
-from .text import SESSION
 
 
 class Core:

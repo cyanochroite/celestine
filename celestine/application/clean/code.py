@@ -1,18 +1,16 @@
 """Run a bunch of auto formaters."""
 
 import io
+
 from celestine import load
 from celestine.file import (
-    open_file,
+    normalize,
     open_file_stream,
     save_file,
 )
 from celestine.load import directory
 from celestine.package import run
 
-from celestine.file import normalize
-
-from celestine.unicode import LINE_FEED
 
 def clean(**star):
     """"""
@@ -38,10 +36,3 @@ def licence(**star):
             for text in wrap:
                 string.write(text)
         save_file(string.getvalue(), file)
-
-
-
-
-
-
-

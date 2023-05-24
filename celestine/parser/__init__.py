@@ -5,8 +5,8 @@ import argparse
 from typing import TypeAlias as TA
 
 from celestine.session.configuration import Configuration
+from celestine.session.data import CONFIGURATION
 from celestine.session.session import Session as SessionParse
-from celestine.session.text import CONFIGURATION
 from celestine.typed import (
     A,
     D,

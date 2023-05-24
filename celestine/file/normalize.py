@@ -8,11 +8,10 @@ from celestine.alphabet import (
     unicode_break_hard,
     unicode_break_soft,
     unicode_identifier,
+    unicode_newline,
     unicode_punctuation,
     unicode_whitespace,
 )
-from celestine.alphabet import unicode_newline
-
 from celestine.unicode import (
     APOSTROPHE,
     INFORMATION_SEPARATOR_FOUR,
@@ -149,18 +148,14 @@ def wrap(string):
     yield from buffer.read(count)
 
 
-
-
 def wrap_text(string):
     """"""
     buffer = io.StringIO()
-    size = 0
 
     count = 0
     count_a = 0
 
     for character in string:
-
         count += buffer.write(character)
 
         if character == LINE_FEED:
@@ -174,8 +169,7 @@ def wrap_text(string):
             yield from line
             continue
 
-
-        if count  > MAXIMUM_LINE_LENGTH:
+        if count > MAXIMUM_LINE_LENGTH:
             buffer.seek(0, io.SEEK_SET)
 
             pull = 0
@@ -199,7 +193,6 @@ def wrap_text(string):
         if character == SPACE:
             count_a = count
 
-
     buffer.seek(0, io.SEEK_SET)
     yield from buffer.read(count)
 
@@ -214,6 +207,7 @@ def character(string):
             continue
 
         yield from character
+
 
 def newline(string):
     """Remove all newline characters."""

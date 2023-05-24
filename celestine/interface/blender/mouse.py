@@ -10,13 +10,13 @@ class Mouse(Abstract):
     """"""
 
     def __init__(self):
-        self.text = "mouse"
+        self.data = "mouse"
         super().__init__("mouse")
 
     def draw(self, collection):
         """"""
-        plane = _mesh.plane(self.text)
-        self.item = make_mesh.bind(collection, self.text, plane)
+        plane = _mesh.plane(self.data)
+        self.item = make_mesh.bind(collection, self.data, plane)
         super().draw(collection)
         self.item.location = (0, 0, -1)
         self.item.rotation_euler = (0, 0, radians(45))

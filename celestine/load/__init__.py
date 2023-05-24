@@ -3,8 +3,8 @@
 import os
 import sys
 
-from celestine.text import CELESTINE
-from celestine.text.stream import FILE_NAME_EXTENSION
+from celestine.data import CELESTINE
+from celestine.data.stream import FILE_NAME_EXTENSION
 from celestine.typed import (
     CA,
     MT,

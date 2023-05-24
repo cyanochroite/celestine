@@ -11,7 +11,7 @@ from celestine.typed import (
     S,
 )
 
-from .text import FUNCTION
+from .data import FUNCTION
 
 FN: TA = CA[[N], N]
 
