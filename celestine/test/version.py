@@ -1,5 +1,5 @@
 """
-Class to help represent and _compare different version numbers.
+Class to help represent and compare different version numbers.
 
 See https://semver.org/ for more details.
 """
@@ -7,7 +7,7 @@ See https://semver.org/ for more details.
 
 class Version:
     """
-    Class to help represent and _compare different version numbers.
+    Class to help represent and compare different version numbers.
 
     See https://semver.org/ for more details.
     """
