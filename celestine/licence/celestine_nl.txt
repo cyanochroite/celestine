@@ -38,19 +38,19 @@ In deze licentie wordt verstaan onder:
 
 De licentiegever verleent u hierbij een wereldwijde, royaltyvrije, niet-exclusieve, voor een sublicentie in aanmerking komende licentie, om voor de duur van het aan het oorspronkelijke werk verbonden auteursrecht, het volgende te doen:
 
-—  het werk in alle omstandigheden en voor ongeacht welk doel te gebruiken;
+— het werk in alle omstandigheden en voor ongeacht welk doel te gebruiken;
 
-—  het werk te verveelvoudigen;
+— het werk te verveelvoudigen;
 
-—  het werk te wijzigen en op grond van het werk bewerkingen te ontwikkelen;
+— het werk te wijzigen en op grond van het werk bewerkingen te ontwikkelen;
 
-—  het werk aan het publiek mede te delen, waaronder het recht om het werk of kopieën ervan aan het publiek ter beschikking te stellen of te vertonen, en het werk, in voorkomend geval, in het openbaar uit te voeren;
+— het werk aan het publiek mede te delen, waaronder het recht om het werk of kopieën ervan aan het publiek ter beschikking te stellen of te vertonen, en het werk, in voorkomend geval, in het openbaar uit te voeren;
 
-—  het werk of kopieën ervan te verspreiden;
+— het werk of kopieën ervan te verspreiden;
 
-—  het werk of kopieën ervan uit te lenen en te verhuren;
+— het werk of kopieën ervan uit te lenen en te verhuren;
 
-—  de rechten op het werk of op kopieën ervan in sublicentie te geven.
+— de rechten op het werk of op kopieën ervan in sublicentie te geven.
 
 Deze rechten kunnen worden uitgeoefend met gebruikmaking van alle thans bekende of nog uit te vinden media, dragers en formaten, voor zover het toepasselijke recht dit toestaat.
 
@@ -134,41 +134,41 @@ Alle door de Europese Commissie goedgekeurde taalversies van deze licentie hebbe
 
 Onverminderd specifieke overeenkomsten tussen de partijen,
 
-—  vallen alle geschillen tussen de instellingen, organen en instanties van de Europese Unie, als licentiegeefster, en een licentiehouder in verband met de uitlegging van deze licentie onder de bevoegdheid van het Hof van Justitie van de Europese Unie, conform artikel 272 van het Verdrag betreffende de werking van de Europese Unie,
+— vallen alle geschillen tussen de instellingen, organen en instanties van de Europese Unie, als licentiegeefster, en een licentiehouder in verband met de uitlegging van deze licentie onder de bevoegdheid van het Hof van Justitie van de Europese Unie, conform artikel 272 van het Verdrag betreffende de werking van de Europese Unie,
 
-—  vallen alle geschillen tussen andere partijen in verband met de uitlegging van deze licentie onder de uitsluitende bevoegdheid van het bevoegde gerecht van de plaats waar de licentiegever is gevestigd of zijn voornaamste activiteit uitoefent.
+— vallen alle geschillen tussen andere partijen in verband met de uitlegging van deze licentie onder de uitsluitende bevoegdheid van het bevoegde gerecht van de plaats waar de licentiegever is gevestigd of zijn voornaamste activiteit uitoefent.
 
 15. Toepasselijk recht
 
 Onverminderd specifieke overeenkomsten tussen de partijen,
 
-—  wordt deze licentie beheerst door het recht van de lidstaat van de Europese Unie waar de licentiegever zijn statutaire zetel, verblijfplaats of hoofdkantoor heeft,
+— wordt deze licentie beheerst door het recht van de lidstaat van de Europese Unie waar de licentiegever zijn statutaire zetel, verblijfplaats of hoofdkantoor heeft,
 
-—  wordt deze licentie beheerst door het Belgische recht indien de licentiegever geen statutaire zetel, verblijfplaats of hoofdkantoor heeft in een lidstaat van de Europese Unie.
+— wordt deze licentie beheerst door het Belgische recht indien de licentiegever geen statutaire zetel, verblijfplaats of hoofdkantoor heeft in een lidstaat van de Europese Unie.
 
 Aanhangsel
 
 „Verenigbare licenties” in de zin van artikel 5 EUPL zijn:
 
-—  GNU General Public License (GPL) v. 2, v. 3
+— GNU General Public License (GPL) v. 2, v. 3
 
-—  GNU Affero General Public License (AGPL) v. 3
+— GNU Affero General Public License (AGPL) v. 3
 
-—  Open Software License (OSL) v. 2.1, v. 3.0
+— Open Software License (OSL) v. 2.1, v. 3.0
 
-—  Eclipse Public License (EPL) v. 1.0
+— Eclipse Public License (EPL) v. 1.0
 
-—  CeCILL v. 2.0, v. 2.1
+— CeCILL v. 2.0, v. 2.1
 
-—  Mozilla Public Licence (MPL) v. 2
+— Mozilla Public Licence (MPL) v. 2
 
-—  GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
+— GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
 
-—  Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) voor andere werken dan software
+— Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) voor andere werken dan software
 
-—  European Union Public Licence (EUPL) v. 1.1, v. 1.2
+— European Union Public Licence (EUPL) v. 1.1, v. 1.2
 
-—  Québec Free and Open-Source Licence — Reciprocity (LiLiQ-R) of Strong Reciprocity (LiLiQ-R+).
+— Québec Free and Open-Source Licence — Reciprocity (LiLiQ-R) of Strong Reciprocity (LiLiQ-R+).
 
 De Europese Commissie kan dit aanhangsel actualiseren in geval van latere versies van de bovengenoemde licenties zonder dat er een nieuwe EUPL-versie wordt ontwikkeld, zolang die versies de uit hoofde van artikel 2 van deze licentie verleende rechten verlenen en ze de betrokken broncode beschermen tegen exclusieve toe-eigening.
 

@@ -36,19 +36,19 @@ eller på annat sätt har givit uttryck för sin avsikt att licensiera enligt EU
 
 Licensgivaren ger dig härmed en världsomfattande, royaltyfri, icke exklusiv licens, som kan licensieras vidare och som ger dig rätt att under giltighetstiden av den upphovsrätt som gäller för originalverket göra följande:
 
-—  Använda verket i alla sammanhang och för alla ändamål.
+— Använda verket i alla sammanhang och för alla ändamål.
 
-—  Mångfaldiga verket.
+— Mångfaldiga verket.
 
-—  Ändra verket och framställa härledda verk på grundval av verket.
+— Ändra verket och framställa härledda verk på grundval av verket.
 
-—  Kommunicera verket till allmänheten, vilket, beroende på omständigheterna, inkluderar en rätt att göra det tillgängligt eller visa det, eller kopior av det, för allmänheten och att framföra verket offentligt.
+— Kommunicera verket till allmänheten, vilket, beroende på omständigheterna, inkluderar en rätt att göra det tillgängligt eller visa det, eller kopior av det, för allmänheten och att framföra verket offentligt.
 
-—  Sprida verket eller kopior av det.
+— Sprida verket eller kopior av det.
 
-—  Låna eller hyra ut verket eller kopior av det.
+— Låna eller hyra ut verket eller kopior av det.
 
-—  Underlicensiera rättigheter till verket eller kopior av detta.
+— Underlicensiera rättigheter till verket eller kopior av detta.
 
 Dessa rättigheter kan utövas på valfritt lagringsmedium, underlag och format, oberoende av om det är känt nu eller kommer att uppfinnas i framtiden, i den mån detta är tillåtet enligt gällande rätt.
 
@@ -132,41 +132,41 @@ Alla språkversioner av licensen som Europeiska kommissionen godkänt är likvä
 
 Utan att det påverkar tillämpningen av specifika avtal mellan parterna gäller följande:
 
-—  Eventuella tvister till följd av tolkningen av licensen som uppkommer mellan Europeiska unionens institutioner, organ, kontor eller myndigheter, i egenskap av licensgivare, och en licenstagare, kommer att underställas Europeiska unionens domstols behörighet i enlighet med artikel 272 i fördraget om Europeiska unionens funktionssätt.
+— Eventuella tvister till följd av tolkningen av licensen som uppkommer mellan Europeiska unionens institutioner, organ, kontor eller myndigheter, i egenskap av licensgivare, och en licenstagare, kommer att underställas Europeiska unionens domstols behörighet i enlighet med artikel 272 i fördraget om Europeiska unionens funktionssätt.
 
-—  Eventuella tvister som uppkommer mellan andra parter och som följer av tolkningen av licensen, kommer att underställas exklusiv behörighet för den domstol som är behörig på den ort där licensgivaren är bosatt eller bedriver sin huvudsakliga verksamhet.
+— Eventuella tvister som uppkommer mellan andra parter och som följer av tolkningen av licensen, kommer att underställas exklusiv behörighet för den domstol som är behörig på den ort där licensgivaren är bosatt eller bedriver sin huvudsakliga verksamhet.
 
 15. Tillämplig lag
 
 Utan att det påverkar tillämpningen av specifika avtal mellan parterna gäller följande:
 
-—  Licensen ska omfattas av lagstiftningen i den medlemsstat i Europeiska unionen där licensgivaren har sitt säte, är bosatt eller har sitt huvudkontor.
+— Licensen ska omfattas av lagstiftningen i den medlemsstat i Europeiska unionen där licensgivaren har sitt säte, är bosatt eller har sitt huvudkontor.
 
-—  Licensen ska omfattas av belgisk lagstiftning om licensgivaren inte har sitt säte, är bosatt eller har sitt huvudkontor i en av Europeiska unionens medlemsstater.
+— Licensen ska omfattas av belgisk lagstiftning om licensgivaren inte har sitt säte, är bosatt eller har sitt huvudkontor i en av Europeiska unionens medlemsstater.
 
 Tillägg
 
 ”Kompatibla licenser” enligt punkt 5 EUPL är följande:
 
-—  GNU General Public License (GPL) v. 2, v. 3.
+— GNU General Public License (GPL) v. 2, v. 3.
 
-—  GNU Affero General Public License (AGPL) v. 3.
+— GNU Affero General Public License (AGPL) v. 3.
 
-—  Open Software License (OSL) v. 2.1, v. 3.0.
+— Open Software License (OSL) v. 2.1, v. 3.0.
 
-—  Eclipse Public License (EPL) v. 1.0.
+— Eclipse Public License (EPL) v. 1.0.
 
-—  CeCILL v. 2.0, v. 2.1.
+— CeCILL v. 2.0, v. 2.1.
 
-—  Mozilla Public Licence (MPL) v. 2.
+— Mozilla Public Licence (MPL) v. 2.
 
-—  GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3.
+— GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3.
 
-—  Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) för andra verk än programvara.
+— Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) för andra verk än programvara.
 
-—  European Union Public Licence (EUPL) v. 1.1, v. 1.2.
+— European Union Public Licence (EUPL) v. 1.1, v. 1.2.
 
-—  Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) or Strong Reciprocity (LiLiQ-R+).
+— Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) or Strong Reciprocity (LiLiQ-R+).
 
 Europeiska kommissionen får uppdatera detta tillägg med senare versioner av ovannämnda licenser utan att ta fram en ny version av EUPL, så länge som kommissionen tillhandahåller de rättigheter som beviljas i punkt 2 i denna licens och skyddar den källkod som omfattas från exklusiv rätt.
 

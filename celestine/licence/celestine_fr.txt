@@ -14,43 +14,43 @@ ou a exprimé de toute autre manière sa volonté de fournir l'œuvre sous licen
 
 Dans la présente licence, on entend par:
 
-—  «licence», la présente licence,
+— «licence», la présente licence,
 
-—  «œuvre originale», l'œuvre ou le logiciel distribué ou communiqué par le donneur de licence en vertu de la présente licence, sous forme de code source ou de code objet, selon le cas,
+— «œuvre originale», l'œuvre ou le logiciel distribué ou communiqué par le donneur de licence en vertu de la présente licence, sous forme de code source ou de code objet, selon le cas,
 
-—  «œuvres dérivées», les œuvres ou logiciels qui pourraient être créés par le licencié sur la base de l'œuvre originale ou des modifications qui y auraient été appliquées. La présente licence ne définit pas le degré de modification ou de dépendance requis par rapport à l'œuvre originale pour qu'une œuvre soit qualifiée d'œuvre dérivée; cette question est réglée par la loi applicable en matière de droit d'auteur dans le pays visé à l'article 15,
+— «œuvres dérivées», les œuvres ou logiciels qui pourraient être créés par le licencié sur la base de l'œuvre originale ou des modifications qui y auraient été appliquées. La présente licence ne définit pas le degré de modification ou de dépendance requis par rapport à l'œuvre originale pour qu'une œuvre soit qualifiée d'œuvre dérivée; cette question est réglée par la loi applicable en matière de droit d'auteur dans le pays visé à l'article 15,
 
-—  «œuvre», l'œuvre originale ou ses œuvres dérivées,
+— «œuvre», l'œuvre originale ou ses œuvres dérivées,
 
-—  «code source», la forme de l'œuvre, lisible par l'homme, la plus appropriée pour que des personnes puissent l'examiner et la modifier,
+— «code source», la forme de l'œuvre, lisible par l'homme, la plus appropriée pour que des personnes puissent l'examiner et la modifier,
 
-—  «code objet», l'œuvre codée, généralement après compilation, destinée à être exécutée en tant que programme par un ordinateur,
+— «code objet», l'œuvre codée, généralement après compilation, destinée à être exécutée en tant que programme par un ordinateur,
 
-—  «donneur de licence», la personne physique ou morale qui distribue ou communique l'œuvre sous licence,
+— «donneur de licence», la personne physique ou morale qui distribue ou communique l'œuvre sous licence,
 
-—  «contributeur», toute personne physique ou morale qui modifie l'œuvre sous licence, ou contribue de toute autre manière à en faire une œuvre dérivée,
+— «contributeur», toute personne physique ou morale qui modifie l'œuvre sous licence, ou contribue de toute autre manière à en faire une œuvre dérivée,
 
-—  «licencié» ou «vous», toute personne physique ou morale qui utilise l'œuvre conformément à la licence,
+— «licencié» ou «vous», toute personne physique ou morale qui utilise l'œuvre conformément à la licence,
 
-—  «distribution» ou «communication», tout acte de vente, don, prêt, location, distribution, communication, transmission ou mise à disposition, en ligne ou hors ligne, de copies de l'œuvre, et tout acte donnant accès à ses fonctions essentielles à toute autre personne physique ou morale.
+— «distribution» ou «communication», tout acte de vente, don, prêt, location, distribution, communication, transmission ou mise à disposition, en ligne ou hors ligne, de copies de l'œuvre, et tout acte donnant accès à ses fonctions essentielles à toute autre personne physique ou morale.
 
 2. Portée des droits accordés par la licence
 
 Par la présente, le donneur de licence vous concède, pour la durée de la protection de son droit d'auteur sur l'œuvre originale, une licence mondiale, libre de redevances, non exclusive et pouvant faire l'objet de sous-licences, en vertu de laquelle vous pouvez:
 
-—  utiliser l'œuvre en toute circonstance et pour tout usage,
+— utiliser l'œuvre en toute circonstance et pour tout usage,
 
-—  reproduire l'œuvre,
+— reproduire l'œuvre,
 
-—  modifier l'œuvre et créer des œuvres dérivées sur la base de l'œuvre,
+— modifier l'œuvre et créer des œuvres dérivées sur la base de l'œuvre,
 
-—  communiquer l'œuvre au public, ce qui inclut le droit de mettre à disposition du public ou de lui présenter l'œuvre ou des copies de l'œuvre et d'en effectuer des représentations publiques, le cas échéant,
+— communiquer l'œuvre au public, ce qui inclut le droit de mettre à disposition du public ou de lui présenter l'œuvre ou des copies de l'œuvre et d'en effectuer des représentations publiques, le cas échéant,
 
-—  distribuer l'œuvre ou des copies de celle-ci,
+— distribuer l'œuvre ou des copies de celle-ci,
 
-—  prêter et louer l'œuvre ou des copies de celles-ci,
+— prêter et louer l'œuvre ou des copies de celles-ci,
 
-—  accorder en sous-licence des droits sur l'œuvre ou sur des copies de celle-ci.
+— accorder en sous-licence des droits sur l'œuvre ou sur des copies de celle-ci.
 
 Ces droits peuvent être exercés sur tout support et format, connu ou encore à inventer, dans la mesure où le droit applicable le permet.
 
@@ -150,25 +150,25 @@ Appendice
 
 Aux fins de l'article 5 de l'EUPL, les licences compatibles sont les suivantes:
 
-—  GNU General Public License (GPL) v. 2, v. 3
+— GNU General Public License (GPL) v. 2, v. 3
 
-—  GNU Affero General Public License (AGPL) v. 3
+— GNU Affero General Public License (AGPL) v. 3
 
-—  Open Software License (OSL) v. 2.1, v. 3.0
+— Open Software License (OSL) v. 2.1, v. 3.0
 
-—  Eclipse Public License (EPL) v. 1.0
+— Eclipse Public License (EPL) v. 1.0
 
-—  CeCILL v. 2.0, v. 2.1
+— CeCILL v. 2.0, v. 2.1
 
-—  Mozilla Public licence (MPL) v. 2
+— Mozilla Public licence (MPL) v. 2
 
-—  GNU Lesser General Public licence (LGPL) v. 2.1, v. 3
+— GNU Lesser General Public licence (LGPL) v. 2.1, v. 3
 
-—  Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) pour les œuvres autres que logicielles
+— Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) pour les œuvres autres que logicielles
 
-—  Licence publique de l'Union européenne (EUPL) v. 1.1, v. 1.2
+— Licence publique de l'Union européenne (EUPL) v. 1.1, v. 1.2
 
-—  Licence libre du Québec — Réciprocité (LiLiQ-R) ou Réciprocité forte (LiLiQ-R+)
+— Licence libre du Québec — Réciprocité (LiLiQ-R) ou Réciprocité forte (LiLiQ-R+)
 
 La Commission européenne pourra actualiser le présent appendice afin d'y inclure des versions ultérieures des licences ci-dessus sans produire de nouvelle version de l'EUPL, dès lors que ces versions prévoient la concession des droits visés à l'article 2 de la présente licence et empêchent l'appropriation exclusive du code source couvert.
 

@@ -38,19 +38,19 @@ V tej licenci imajo naslednji izrazi naslednji pomen:
 
 Dajalec licence Vam s tem podeli svetovno, brezplačno, neizključno licenco, ki jo je mogoče podlicencirati, za čas trajanja avtorske pravice, podeljene izvirniku dela, za:
 
-—  uporabo dela v vseh okoliščinah in za vso rabo,
+— uporabo dela v vseh okoliščinah in za vso rabo,
 
-—  reprodukcijo dela,
+— reprodukcijo dela,
 
-—  spremembo dela in izdelavo izvedenih del na podlagi dela,
+— spremembo dela in izdelavo izvedenih del na podlagi dela,
 
-—  posredovanje dela javnosti, vključno s pravico do dajanja na razpolago ali prikazovanja dela ali njegovih kopij v javnosti in po potrebi njegovega javnega izvajanja,
+— posredovanje dela javnosti, vključno s pravico do dajanja na razpolago ali prikazovanja dela ali njegovih kopij v javnosti in po potrebi njegovega javnega izvajanja,
 
-—  distribucijo dela ali njegovih kopij,
+— distribucijo dela ali njegovih kopij,
 
-—  izposojo in dajanje v najem dela ali njegovih kopij,
+— izposojo in dajanje v najem dela ali njegovih kopij,
 
-—  pravico podlicenciranja dela ali njegovih kopij.
+— pravico podlicenciranja dela ali njegovih kopij.
 
 Te pravice se lahko izvršujejo na katerem koli mediju, na katerem koli nosilcu in v kakršnih koli formatih, bodisi že znanih bodisi pozneje izumljenih, če to dovoljuje pravo, ki se uporablja.
 
@@ -134,41 +134,41 @@ Vse jezikovne različice te licence, ki jih je odobrila Evropska komisija, so en
 
 Brez poseganja v posebne sporazume med strankami:
 
-—  bo za vse pravne spore zaradi razlage te licence, ki nastanejo med institucijami, organi, uradi ali agencijami Evropske unije kot dajalcem licence in katerim koli prejemnikom licence, veljala sodna pristojnost Sodišča Evropske unije, kot je določeno v členu 272 Pogodbe o delovanju Evropske unije,
+— bo za vse pravne spore zaradi razlage te licence, ki nastanejo med institucijami, organi, uradi ali agencijami Evropske unije kot dajalcem licence in katerim koli prejemnikom licence, veljala sodna pristojnost Sodišča Evropske unije, kot je določeno v členu 272 Pogodbe o delovanju Evropske unije,
 
-—  za vse pravne spore med strankami, ki izhajajo iz razlage te licence, bo veljala izključna pristojnost zadevnega sodišča države, v kateri ima dajalec licence prebivališče ali kjer opravlja svojo osnovno dejavnost.
+— za vse pravne spore med strankami, ki izhajajo iz razlage te licence, bo veljala izključna pristojnost zadevnega sodišča države, v kateri ima dajalec licence prebivališče ali kjer opravlja svojo osnovno dejavnost.
 
 15. Pravo, ki se uporablja
 
 Brez poseganja v posebne sporazume med strankami:
 
-—  to licenco ureja pravo države Evropske unije, v kateri ima dajalec licence svoj sedež, prebivališče ali statutarni sedež,
+— to licenco ureja pravo države Evropske unije, v kateri ima dajalec licence svoj sedež, prebivališče ali statutarni sedež,
 
-—  to licenco ureja belgijsko pravo, če dajalec licence nima sedeža, prebivališča ali statutarnega sedeža v državi članici Evropske unije.
+— to licenco ureja belgijsko pravo, če dajalec licence nima sedeža, prebivališča ali statutarnega sedeža v državi članici Evropske unije.
 
 Dodatek
 
 „Združljive licence“ v skladu s členom 5 EUPL so:
 
-—  GNU General Public License (GPL) v. 2, v. 3
+— GNU General Public License (GPL) v. 2, v. 3
 
-—  GNU Affero General Public License (AGPL) v. 3
+— GNU Affero General Public License (AGPL) v. 3
 
-—  Open Software License (OSL) v. 2.1, v. 3.0
+— Open Software License (OSL) v. 2.1, v. 3.0
 
-—  Eclipse Public License (EPL) v. 1.0
+— Eclipse Public License (EPL) v. 1.0
 
-—  CeCILL v. 2.0, v. 2.1
+— CeCILL v. 2.0, v. 2.1
 
-—  Mozilla Public Licence (MPL) v. 2
+— Mozilla Public Licence (MPL) v. 2
 
-—  GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
+— GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
 
-—  Creative Commons Attribution–ShareAlike v. 3.0 Unported (CC BY–SA 3.0) za dela razen programske opreme
+— Creative Commons Attribution–ShareAlike v. 3.0 Unported (CC BY–SA 3.0) za dela razen programske opreme
 
-—  Javna licenca Evropske unije (EUPL) v. 1.1, v. 1.2
+— Javna licenca Evropske unije (EUPL) v. 1.1, v. 1.2
 
-—  Javna licenca Québeca – vzajemnost (LiLiQ–R) ali močna vzajemnost (LiLiQ–R+).
+— Javna licenca Québeca – vzajemnost (LiLiQ–R) ali močna vzajemnost (LiLiQ–R+).
 
 Evropska komisija lahko ta dodatek dopolni s poznejšimi različicami zgoraj navedenih licenc, ne da bi pri tem ustvarila novo različico EUPL, če te različice zagotavljajo pravice iz člena 2 te licence in izvirno kodo, ki je njen predmet, varujejo pred izključno prisvojitvijo.
 

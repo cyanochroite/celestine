@@ -38,19 +38,19 @@ U ovoj licenciji sljedeći pojmovi imaju sljedeća značenja:
 
 Davatelj odobrenja daje vam sljedeću besplatnu, neisključivu licenciju, s pravom podlicenciranja, koja vrijedi u cijelom svijetu, na temelju koje tijekom trajanja zaštite autorskog prava dodijeljenog za originalno djelo možete:
 
-—  koristiti se djelom u svim okolnostima i za sve namjene,
+— koristiti se djelom u svim okolnostima i za sve namjene,
 
-—  reproducirati djelo,
+— reproducirati djelo,
 
-—  izmijeniti djelo i proizvesti izvedena djela na temelju njega,
+— izmijeniti djelo i proizvesti izvedena djela na temelju njega,
 
-—  objaviti djelo, uključujući pravo stavljanja na raspolaganje ili prikaza djela ili njegovih kopija javnosti te javne izvedbe djela, ovisno o slučaju,
+— objaviti djelo, uključujući pravo stavljanja na raspolaganje ili prikaza djela ili njegovih kopija javnosti te javne izvedbe djela, ovisno o slučaju,
 
-—  distribuirati djelo ili njegove kopije,
+— distribuirati djelo ili njegove kopije,
 
-—  posuđivati i iznajmljivati djelo ili njegove kopije,
+— posuđivati i iznajmljivati djelo ili njegove kopije,
 
-—  podlicencirati prava na djelo ili njegove kopije.
+— podlicencirati prava na djelo ili njegove kopije.
 
 Ta se prava mogu ostvarivati na bilo kojem mediju, podršci ili formatu, neovisno o tome jesu li već poznati ili će se tek izumjeti, ako je to dopušteno zakonom.
 
@@ -134,41 +134,41 @@ Sve jezične verzije ove licencije koje je odobrila Europska komisija imaju istu
 
 Ne dovodeći u pitanje poseban ugovor koje su stranke sklopile, svaki spor koji proizlazi iz tumačenja ove licencije, a nastao je:
 
-—  između bilo kojeg nositelja licencije i institucija, tijela, ureda i agencija Europske unije kao davatelja licencije u nadležnosti je Suda Europske unije, kako je utvrđeno člankom 272. Ugovora o funkcioniranju Europske unije,
+— između bilo kojeg nositelja licencije i institucija, tijela, ureda i agencija Europske unije kao davatelja licencije u nadležnosti je Suda Europske unije, kako je utvrđeno člankom 272. Ugovora o funkcioniranju Europske unije,
 
-—  između drugih stranaka u isključivoj je nadležnosti mjerodavnog suda u zemlji u kojoj davatelj licencije boravi ili obavlja osnovnu djelatnost.
+— između drugih stranaka u isključivoj je nadležnosti mjerodavnog suda u zemlji u kojoj davatelj licencije boravi ili obavlja osnovnu djelatnost.
 
 15. Mjerodavno pravo
 
 Ne dovodeći u pitanje poseban ugovor koje su stranke sklopile, ova je licencija uređena:
 
-—  pravom države članice Europske unije u kojoj davatelj licencije ima sjedište, boravak ili registrirani ured,
+— pravom države članice Europske unije u kojoj davatelj licencije ima sjedište, boravak ili registrirani ured,
 
-—  belgijskim pravom ako davatelj licencije nema sjedište, boravak odnosno registrirani ured u državi članici Europske unije.
+— belgijskim pravom ako davatelj licencije nema sjedište, boravak odnosno registrirani ured u državi članici Europske unije.
 
 Dodatak
 
 „Kompatibilne licencije” u skladu s člankom 5. EUPL-a:
 
-—  GNU General Public License (GPL) v. 2., v. 3.,
+— GNU General Public License (GPL) v. 2., v. 3.,
 
-—  GNU Affero General Public License (AGPL) v. 3.,
+— GNU Affero General Public License (AGPL) v. 3.,
 
-—  Open Software License (OSL) v. 2.1., v. 3.0.,
+— Open Software License (OSL) v. 2.1., v. 3.0.,
 
-—  Eclipse Public License (EPL) v. 1.0.,
+— Eclipse Public License (EPL) v. 1.0.,
 
-—  CeCILL v. 2.0., v. 2.1.,
+— CeCILL v. 2.0., v. 2.1.,
 
-—  Mozilla Public Licence (MPL) v. 2.,
+— Mozilla Public Licence (MPL) v. 2.,
 
-—  GNU Lesser General Public Licence (LGPL) v. 2.1., v. 3.,
+— GNU Lesser General Public Licence (LGPL) v. 2.1., v. 3.,
 
-—  Creative Commons Attribution-ShareAlike v. 3.0. Unported (CC BY-SA 3.0) za djela koja nisu softver,
+— Creative Commons Attribution-ShareAlike v. 3.0. Unported (CC BY-SA 3.0) za djela koja nisu softver,
 
-—  Javna licencija Europske unije (EUPL) v. 1.1., v. 1.2.,
+— Javna licencija Europske unije (EUPL) v. 1.1., v. 1.2.,
 
-—  Javna licencija Québeca otvorenoga koda – uzajamnost (LiLiQ-R) ili snažna uzajamnost (LiLiQ-R+).
+— Javna licencija Québeca otvorenoga koda – uzajamnost (LiLiQ-R) ili snažna uzajamnost (LiLiQ-R+).
 
 Europska unija može ažurirati dodatak u pogledu novih verzija prethodno navedenih licencija, a da pritom ne objavi novu verziju EUPL-a, uz uvjet da se tim licencijama pružaju prava zajamčena člankom 2. ove licencije, a obuhvaćeni izvorni kôd štiti od isključivog pripisivanja,
 

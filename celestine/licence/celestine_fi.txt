@@ -38,19 +38,19 @@ Tässä lisenssissä seuraavilla termeillä on seuraavat merkitykset:
 
 Lisenssinantaja myöntää teille maailmanlaajuisen, rojaltimaksuttoman, yksinoikeudettoman, alilisensoitavan lisenssin seuraaviin toimiin alkuperäisteokseen kohdistuvien tekijänoikeuksien ajaksi:
 
-—  teoksen käyttö kaikissa olosuhteissa ja käyttötarkoituksissa,
+— teoksen käyttö kaikissa olosuhteissa ja käyttötarkoituksissa,
 
-—  teoksen toisinto,
+— teoksen toisinto,
 
-—  teoksen muuntelu ja teokseen perustuvien jälkiperäisteosten tekeminen,
+— teoksen muuntelu ja teokseen perustuvien jälkiperäisteosten tekeminen,
 
-—  teoksen luovuttaminen yleisölle, mukaan lukien oikeus asettaa teos tai teoskappaleita yleisön saataville tai näytteille sekä mahdollisesti suorittaa teos julkisesti,
+— teoksen luovuttaminen yleisölle, mukaan lukien oikeus asettaa teos tai teoskappaleita yleisön saataville tai näytteille sekä mahdollisesti suorittaa teos julkisesti,
 
-—  teoksen tai teoskappaleiden levittäminen,
+— teoksen tai teoskappaleiden levittäminen,
 
-—  teoksen tai teoskappaleiden lainaaminen ja vuokraaminen,
+— teoksen tai teoskappaleiden lainaaminen ja vuokraaminen,
 
-—  teoksen tai teoskappaleiden oikeuksien alilisensointi.
+— teoksen tai teoskappaleiden oikeuksien alilisensointi.
 
 Näitä oikeuksia voidaan harjoittaa millä tahansa välineellä, alustalla tai muodolla, riippumatta siitä onko se tiedossa nyt tai keksitäänkö se myöhemmin, kunhan sovellettavaa lakia noudatetaan.
 
@@ -134,41 +134,41 @@ Kaikki Euroopan komission hyväksymät kieliversiot tästä lisenssistä ovat sa
 
 Rajoittamatta sopimuspuolten välistä erityistä sopimusta
 
-—  Euroopan unionin tuomioistuimella on toimivalta ratkaista kaikki tämän lisenssin tulkinnasta aiheutuvat riita-asiat Euroopan unionin toimielinten, elinten, toimistojen tai virastojen, lisenssinantajan ominaisuudessa, ja kenen tahansa lisenssinsaajan välillä Euroopan unionin toiminnasta tehdyn sopimuksen 272 artiklassa määrätyllä tavalla,
+— Euroopan unionin tuomioistuimella on toimivalta ratkaista kaikki tämän lisenssin tulkinnasta aiheutuvat riita-asiat Euroopan unionin toimielinten, elinten, toimistojen tai virastojen, lisenssinantajan ominaisuudessa, ja kenen tahansa lisenssinsaajan välillä Euroopan unionin toiminnasta tehdyn sopimuksen 272 artiklassa määrätyllä tavalla,
 
-—  kaikissa tämän lisenssin tulkinnasta aiheutuvissa riita-asioissa, joissa asianosaisena on muu osapuoli, yksinomainen toimivalta on toimivaltaisella tuomioistuimella siinä maassa, jossa lisenssinantaja asuu tai harjoittaa pääasiallista liiketoimintaansa.
+— kaikissa tämän lisenssin tulkinnasta aiheutuvissa riita-asioissa, joissa asianosaisena on muu osapuoli, yksinomainen toimivalta on toimivaltaisella tuomioistuimella siinä maassa, jossa lisenssinantaja asuu tai harjoittaa pääasiallista liiketoimintaansa.
 
 15. Sovellettava laki
 
 Rajoittamatta sopimuspuolten välistä erityistä sopimusta
 
-—  tähän lisenssiin sovelletaan sen Euroopan unionin jäsenvaltion lakia, jossa on lisenssinantajan kotipaikka tai jossa lisenssinantaja asuu tai hänellä on sääntömääräinen toimipaikka,
+— tähän lisenssiin sovelletaan sen Euroopan unionin jäsenvaltion lakia, jossa on lisenssinantajan kotipaikka tai jossa lisenssinantaja asuu tai hänellä on sääntömääräinen toimipaikka,
 
-—  tähän lisenssiin sovelletaan Belgian lakia, jos lisenssinantajalla ei ole kotipaikkaa tai lisenssinantaja ei asu tai hänellä ei ole sääntömääräistä toimipaikkaa Euroopan unionin jäsenvaltiossa.
+— tähän lisenssiin sovelletaan Belgian lakia, jos lisenssinantajalla ei ole kotipaikkaa tai lisenssinantaja ei asu tai hänellä ei ole sääntömääräistä toimipaikkaa Euroopan unionin jäsenvaltiossa.
 
 Lisäys
 
 EUPL:n 5 kohdan mukaisia ”yhteensopivia lisenssejä” ovat seuraavat:
 
-—  GNU General Public License (GPL) v. 2, v. 3
+— GNU General Public License (GPL) v. 2, v. 3
 
-—  GNU Affero General Public License (AGPL) v. 3
+— GNU Affero General Public License (AGPL) v. 3
 
-—  Open Software License (OSL) v. 2.1, v. 3.0
+— Open Software License (OSL) v. 2.1, v. 3.0
 
-—  Eclipse Public License (EPL) v. 1.0
+— Eclipse Public License (EPL) v. 1.0
 
-—  CeCILL v. 2.0, v. 2.1
+— CeCILL v. 2.0, v. 2.1
 
-—  Mozilla Public Licence (MPL) v. 2
+— Mozilla Public Licence (MPL) v. 2
 
-—  GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
+— GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
 
-—  Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) muiden teosten kuin ohjelmiston osalta
+— Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) muiden teosten kuin ohjelmiston osalta
 
-—  European Union Public Licence (EUPL) v. 1.1, v. 1.2
+— European Union Public Licence (EUPL) v. 1.1, v. 1.2
 
-—  Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) or Strong Reciprocity (LiLiQ-R+).
+— Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) or Strong Reciprocity (LiLiQ-R+).
 
 Euroopan komissio voi päivittää tätä lisäystä edellä mainittujen lisenssien myöhempiin versioihin laatimatta uutta versiota EUPL:stä, kunhan niillä tarjotaan tämän lisenssin 2 kohdassa myönnetyt oikeudet ja suojataan niiden piiriin kuuluva lähdekoodi yksinomaiseen oikeuteen perustuvalta käytöltä.
 

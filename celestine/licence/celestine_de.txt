@@ -38,19 +38,19 @@ Für diese Lizenz gelten folgende Begriffsbestimmungen:
 
 Der Lizenzgeber erteilt Ihnen hiermit für die Gültigkeitsdauer der am Originalwerk bestehenden Urheberrechte eine weltweite, unentgeltliche, nicht ausschließliche, unterlizenzierbare Lizenz, die Sie berechtigt:
 
-—  das Werk uneingeschränkt zu nutzen,
+— das Werk uneingeschränkt zu nutzen,
 
-—  das Werk zu vervielfältigen,
+— das Werk zu vervielfältigen,
 
-—  das Werk zu verändern und Bearbeitungen auf der Grundlage des Werks zu schaffen,
+— das Werk zu verändern und Bearbeitungen auf der Grundlage des Werks zu schaffen,
 
-—  das Werk öffentlich zugänglich zu machen, was das Recht einschließt, das Werk oder Vervielfältigungsstücke davon öffentlich bereitzustellen oder wahrnehmbar zu machen oder das Werk, soweit möglich, öffentlich aufzuführen,
+— das Werk öffentlich zugänglich zu machen, was das Recht einschließt, das Werk oder Vervielfältigungsstücke davon öffentlich bereitzustellen oder wahrnehmbar zu machen oder das Werk, soweit möglich, öffentlich aufzuführen,
 
-—  das Werk oder Vervielfältigungen davon zu verbreiten,
+— das Werk oder Vervielfältigungen davon zu verbreiten,
 
-—  das Werk oder Vervielfältigungen davon zu vermieten oder zu verleihen,
+— das Werk oder Vervielfältigungen davon zu vermieten oder zu verleihen,
 
-—  das Werk oder Vervielfältigungen davon weiter zu lizenzieren.
+— das Werk oder Vervielfältigungen davon weiter zu lizenzieren.
 
 Für die Wahrnehmung dieser Rechte können beliebige, derzeit bekannte oder künftige Medien, Träger und Formate verwendet werden, soweit das geltende Recht dem nicht entgegensteht.
 
@@ -134,41 +134,41 @@ Alle von der Europäischen Kommission anerkannten Sprachfassungen dieser Lizenz 
 
 Unbeschadet besonderer Vereinbarungen zwischen den Parteien gilt Folgendes:
 
-—  Für alle Streitigkeiten über die Auslegung dieser Lizenz zwischen den Organen, Einrichtungen und sonstigen Stellen der Europäischen Union als Lizenzgeber und einem Lizenznehmer ist der Gerichtshof der Europäischen Union gemäß Artikel 272 des Vertrags über die Arbeitsweise der Europäischen Union zuständig;
+— Für alle Streitigkeiten über die Auslegung dieser Lizenz zwischen den Organen, Einrichtungen und sonstigen Stellen der Europäischen Union als Lizenzgeber und einem Lizenznehmer ist der Gerichtshof der Europäischen Union gemäß Artikel 272 des Vertrags über die Arbeitsweise der Europäischen Union zuständig;
 
-—  Gerichtsstand für Streitigkeiten zwischen anderen Parteien über die Auslegung dieser Lizenz ist allein der Ort, an dem der Lizenzgeber seinen Wohnsitz oder den wirtschaftlichen Mittelpunkt seiner Tätigkeit hat.
+— Gerichtsstand für Streitigkeiten zwischen anderen Parteien über die Auslegung dieser Lizenz ist allein der Ort, an dem der Lizenzgeber seinen Wohnsitz oder den wirtschaftlichen Mittelpunkt seiner Tätigkeit hat.
 
 15. Anwendbares Recht
 
 Unbeschadet besonderer Vereinbarungen zwischen den Parteien gilt Folgendes:
 
-—  Diese Lizenz unterliegt dem Recht des Mitgliedstaats der Europäischen Union, in dem der Lizenzgeber seinen Sitz, Wohnsitz oder eingetragenen Sitz hat;
+— Diese Lizenz unterliegt dem Recht des Mitgliedstaats der Europäischen Union, in dem der Lizenzgeber seinen Sitz, Wohnsitz oder eingetragenen Sitz hat;
 
-—  diese Lizenz unterliegt dem belgischen Recht, wenn der Lizenzgeber keinen Sitz, Wohnsitz oder eingetragenen Sitz in einem Mitgliedstaat der Europäischen Union hat.
+— diese Lizenz unterliegt dem belgischen Recht, wenn der Lizenzgeber keinen Sitz, Wohnsitz oder eingetragenen Sitz in einem Mitgliedstaat der Europäischen Union hat.
 
 Anlage
 
 „Kompatible Lizenzen“ nach Artikel 5 der EUPL sind:
 
-—  GNU General Public License (GPL) v. 2, v. 3
+— GNU General Public License (GPL) v. 2, v. 3
 
-—  GNU Affero General Public License (AGPL) v. 3
+— GNU Affero General Public License (AGPL) v. 3
 
-—  Open Software License (OSL) v. 2.1, v. 3.0
+— Open Software License (OSL) v. 2.1, v. 3.0
 
-—  Eclipse Public License (EPL) v. 1.0
+— Eclipse Public License (EPL) v. 1.0
 
-—  CeCILL v. 2.0, v. 2.1
+— CeCILL v. 2.0, v. 2.1
 
-—  Mozilla Public Licence (MPL) v. 2
+— Mozilla Public Licence (MPL) v. 2
 
-—  GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
+— GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
 
-—  Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) für andere Werke als Software
+— Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) für andere Werke als Software
 
-—  European Union Public Licence (EUPL) v. 1.1, v. 1.2
+— European Union Public Licence (EUPL) v. 1.1, v. 1.2
 
-—  Québec Free and Open-Source Licence — Reciprocity (LiLiQ-R) oder Strong Reciprocity (LiLiQ-R+)
+— Québec Free and Open-Source Licence — Reciprocity (LiLiQ-R) oder Strong Reciprocity (LiLiQ-R+)
 
 Die Europäische Kommission kann diesen Anhang aktualisieren, um neuere Fassungen der obigen Lizenzen aufzunehmen, ohne hierfür eine neue Fassung der EUPL auszuarbeiten, solange diese Lizenzen die in Artikel 2 gewährten Rechte gewährleisten und den erfassten Quellcode vor ausschließlicher Aneignung schützen.
 

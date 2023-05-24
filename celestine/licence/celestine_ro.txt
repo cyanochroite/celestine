@@ -38,19 +38,19 @@ sau și-a exprimat, prin orice altă modalitate, dorința de a licenția produsu
 
 Licențiatorul vă oferă prin prezenta o licență internațională, scutită de redevențe, neexclusivă, care poate fi sublicențiată în următoarele scopuri, pe durata valabilității dreptului de autor dobândit pentru produsul original:
 
-—  folosirea produsului în orice circumstanțe și pentru orice tip de utilizare,
+— folosirea produsului în orice circumstanțe și pentru orice tip de utilizare,
 
-—  reproducerea produsului,
+— reproducerea produsului,
 
-—  modificarea produsului și crearea de produse derivate bazate pe produsul original,
+— modificarea produsului și crearea de produse derivate bazate pe produsul original,
 
-—  comunicarea către public, inclusiv dreptul de a prezenta sau a pune la dispoziția publicului produsul sau copii ale acestuia și de a reda produsul în mod public, după caz,
+— comunicarea către public, inclusiv dreptul de a prezenta sau a pune la dispoziția publicului produsul sau copii ale acestuia și de a reda produsul în mod public, după caz,
 
-—  distribuirea produsului sau a copiilor acestuia,
+— distribuirea produsului sau a copiilor acestuia,
 
-—  împrumutul sau închirierea produsului sau a copiilor acestuia,
+— împrumutul sau închirierea produsului sau a copiilor acestuia,
 
-—  sublicențierea drepturilor asupra produsului sau a copiilor acestuia.
+— sublicențierea drepturilor asupra produsului sau a copiilor acestuia.
 
 Aceste drepturi pot fi exercitate prin intermediul oricărui mijloc de comunicare, pe orice suport și în orice format, fie disponibil deja, fie care va fi inventat ulterior, în măsura în care acest lucru nu contravine legislației în vigoare.
 
@@ -134,41 +134,41 @@ Toate versiunile lingvistice ale prezentei licențe, aprobată de Comisia Europe
 
 Fără a aduce atingere acordului între părți,
 
-—  orice litigiu care decurge din interpretarea prezentei licențe, apărut între instituțiile, organismele sau agențiile Uniunii Europene, în calitate de licențiator, și un licențiat, va intra sub jurisdicția Curții de Justiție a Uniunii Europene, așa cum se prevede la articolul 272 din Tratatul privind funcționarea Uniunii Europene;
+— orice litigiu care decurge din interpretarea prezentei licențe, apărut între instituțiile, organismele sau agențiile Uniunii Europene, în calitate de licențiator, și un licențiat, va intra sub jurisdicția Curții de Justiție a Uniunii Europene, așa cum se prevede la articolul 272 din Tratatul privind funcționarea Uniunii Europene;
 
-—  orice litigiu între alte părți, care rezultă din interpretarea prezentei licențe, va intra sub jurisdicția exclusivă a instanței competente din locul în care licențiatorul își are reședința sau își derulează activitatea comercială principală.
+— orice litigiu între alte părți, care rezultă din interpretarea prezentei licențe, va intra sub jurisdicția exclusivă a instanței competente din locul în care licențiatorul își are reședința sau își derulează activitatea comercială principală.
 
 15. Dreptul aplicabil
 
 Fără a aduce atingere acordului între părți,
 
-—  prezenta licență intră sub incidența legislației statului din Uniunea Europeană în care licențiatorul își are reședința sau sediul social;
+— prezenta licență intră sub incidența legislației statului din Uniunea Europeană în care licențiatorul își are reședința sau sediul social;
 
-—  prezenta licență intră sub incidența legislației belgiene, în cazul în care licențiatorul nu își are reședința sau sediul social într-un stat membru al Uniunii Europene.
+— prezenta licență intră sub incidența legislației belgiene, în cazul în care licențiatorul nu își are reședința sau sediul social într-un stat membru al Uniunii Europene.
 
 Apendice
 
 „Licențele compatibile” în temeiul articolului 5 EUPL sunt:
 
-—  Licența publică generală GNU (GPL) v. 2, v. 3
+— Licența publică generală GNU (GPL) v. 2, v. 3
 
-—  Licența publică generală Affero GNU (AGPL) v. 3
+— Licența publică generală Affero GNU (AGPL) v. 3
 
-—  Open Software License (OSL) v. 2.1, v. 3.0
+— Open Software License (OSL) v. 2.1, v. 3.0
 
-—  Licența publică Eclipse (EPL) v. 1.0
+— Licența publică Eclipse (EPL) v. 1.0
 
-—  CeCILL v. 2.0, v. 2.1
+— CeCILL v. 2.0, v. 2.1
 
-—  Licența publică Mozilla (MPL) v. 2
+— Licența publică Mozilla (MPL) v. 2
 
-—  GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
+— GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
 
-—  Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) pentru alte produse decât programe informatice
+— Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) pentru alte produse decât programe informatice
 
-—  Licența publică a Uniunii Europene (EUPL) v. 1.1, v. 1.2
+— Licența publică a Uniunii Europene (EUPL) v. 1.1, v. 1.2
 
-—  Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) or Strong Reciprocity (LiLiQ-R+).
+— Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) or Strong Reciprocity (LiLiQ-R+).
 
 Comisia Europeană poate actualiza prezentul apendice, pentru a include versiunile ulterioare ale licențelor menționate mai sus, fără a da naștere unei noi versiuni ale EUPL, atât timp cât statele membre asigură drepturile acordate în temeiul articolului 2 din prezenta licență, precum și protejarea de însușirea exclusivă a codului sursă acoperit.
 

@@ -38,19 +38,19 @@ W niniejszej licencji stosuje się następujące definicje:
 
 Licencjodawca niniejszym udziela licencjobiorcy obowiązującej na całym świecie, bezpłatnej, niewyłącznej licencji, obejmującej prawo do udzielania dalszych licencji, na wykonywanie następujących czynności przez okres obowiązywania praw autorskich do utworu oryginalnego:
 
-—  korzystanie z utworu we wszelkich okolicznościach i do wszelkich celów,
+— korzystanie z utworu we wszelkich okolicznościach i do wszelkich celów,
 
-—  zwielokrotnianie utworu,
+— zwielokrotnianie utworu,
 
-—  modyfikacja utworu oryginalnego oraz opracowywanie utworów zależnych na podstawie utworu,
+— modyfikacja utworu oryginalnego oraz opracowywanie utworów zależnych na podstawie utworu,
 
-—  publiczne udostępnianie, w tym, stosownie do przypadku, prawo do publicznego udostępniania lub prezentacji utworu lub jego kopii oraz publicznego wykonywania utworu,
+— publiczne udostępnianie, w tym, stosownie do przypadku, prawo do publicznego udostępniania lub prezentacji utworu lub jego kopii oraz publicznego wykonywania utworu,
 
-—  rozpowszechnianie utworu lub jego kopii,
+— rozpowszechnianie utworu lub jego kopii,
 
-—  wypożyczanie i najem utworu lub jego kopii,
+— wypożyczanie i najem utworu lub jego kopii,
 
-—  sublicencjonowanie praw do utworu lub jego kopii.
+— sublicencjonowanie praw do utworu lub jego kopii.
 
 Powyższe prawa mogą być wykonywane bez względu na nośnik, rodzaj wsparcia i format, znany obecnie lub opracowany w przyszłości, w zakresie dozwolonym przepisami obowiązującego prawa.
 
@@ -134,41 +134,41 @@ Wszystkie zatwierdzone przez Komisję Europejską wersje językowe niniejszej li
 
 Bez uszczerbku dla szczegółowych uzgodnień między stronami,
 
-—  wszelkie spory sądowe związane z interpretacją niniejszej licencji, wynikłe między instytucjami, organami, urzędami lub agencjami Unii Europejskiej jako licencjodawcą a dowolnym licencjobiorcą, podlegają jurysdykcji Trybunału Sprawiedliwości Unii Europejskiej, zgodnie z postanowieniami art. 272 Traktatu o funkcjonowaniu Unii Europejskiej,
+— wszelkie spory sądowe związane z interpretacją niniejszej licencji, wynikłe między instytucjami, organami, urzędami lub agencjami Unii Europejskiej jako licencjodawcą a dowolnym licencjobiorcą, podlegają jurysdykcji Trybunału Sprawiedliwości Unii Europejskiej, zgodnie z postanowieniami art. 272 Traktatu o funkcjonowaniu Unii Europejskiej,
 
-—  wszelkie spory sądowe związane z interpretacją niniejszej licencji, wynikłe między innymi stronami, podlegają wyłącznej jurysdykcji sądu właściwego miejscowo dla miejsca zamieszkania licencjodawcy bądź jego głównego miejsca prowadzenia działalności gospodarczej.
+— wszelkie spory sądowe związane z interpretacją niniejszej licencji, wynikłe między innymi stronami, podlegają wyłącznej jurysdykcji sądu właściwego miejscowo dla miejsca zamieszkania licencjodawcy bądź jego głównego miejsca prowadzenia działalności gospodarczej.
 
 15. Prawo właściwe
 
 Bez uszczerbku dla szczegółowych uzgodnień między stronami,
 
-—  prawem właściwym dla wykonania niniejszej licencji jest prawo państwa członkowskiego Unii Europejskiej, w którym zamieszkuje lub posiada swą siedzibę (statutową) licencjodawca,
+— prawem właściwym dla wykonania niniejszej licencji jest prawo państwa członkowskiego Unii Europejskiej, w którym zamieszkuje lub posiada swą siedzibę (statutową) licencjodawca,
 
-—  prawem właściwym dla wykonania niniejszej licencji jest prawo belgijskie, jeżeli licencjodawca nie ma miejsca zamieszkania lub siedziby (statutowej) na terenie państwa członkowskiego Unii Europejskiej.
+— prawem właściwym dla wykonania niniejszej licencji jest prawo belgijskie, jeżeli licencjodawca nie ma miejsca zamieszkania lub siedziby (statutowej) na terenie państwa członkowskiego Unii Europejskiej.
 
 Załącznik
 
 „Zgodne licencje” w rozumieniu pkt 5 EUPL to:
 
-—  GNU General Public License (GPL) wersja 2, wersja 3
+— GNU General Public License (GPL) wersja 2, wersja 3
 
-—  GNU Affero General Public License (AGPL) wersja 3
+— GNU Affero General Public License (AGPL) wersja 3
 
-—  Open Software License (OSL) wersja 2.1, wersja 3.0
+— Open Software License (OSL) wersja 2.1, wersja 3.0
 
-—  Eclipse Public License (EPL) wersja 1.0
+— Eclipse Public License (EPL) wersja 1.0
 
-—  CeCILL wersja 2.0, wersja 2.1
+— CeCILL wersja 2.0, wersja 2.1
 
-—  Mozilla Public Licence (MPL) wersja 2
+— Mozilla Public Licence (MPL) wersja 2
 
-—  GNU Lesser General Public Licence (LGPL) wersja 2.1, wersja 3
+— GNU Lesser General Public Licence (LGPL) wersja 2.1, wersja 3
 
-—  Creative Commons Attribution-ShareAlike wersja 3.0 Unported (CC BY-SA 3.0) w odniesieniu do utworów innych niż oprogramowanie
+— Creative Commons Attribution-ShareAlike wersja 3.0 Unported (CC BY-SA 3.0) w odniesieniu do utworów innych niż oprogramowanie
 
-—  licencja publiczna Unii Europejskiej (EUPL) wersja 1.1, wersja 1.2
+— licencja publiczna Unii Europejskiej (EUPL) wersja 1.1, wersja 1.2
 
-—  Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) lub Strong Reciprocity (LiLiQ-R+).
+— Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) lub Strong Reciprocity (LiLiQ-R+).
 
 Komisja Europejska może zaktualizować ten załącznik, aby uwzględnić w nim późniejsze wersje wyżej wymienionych licencji bez sporządzania nowej wersji EUPL, o ile te nowe wersje przyznają prawa przewidziane w pkt 2 niniejszej licencji oraz chronią kod źródłowy wchodzący w jej zakres przed wyłącznym przywłaszczeniem.
 

@@ -38,19 +38,19 @@ V tejto licencii majú tieto pojmy nasledujúci význam:
 
 Poskytovateľ licencie Vám týmto na obdobie platnosti ochrany autorských práv k pôvodnému dielu udeľuje celosvetovú, bezodplatnú, nevýhradnú licenciu, s možnosťou ďalšieho sublicencovania, na nasledovné použitie:
 
-—  používať dielo za akýchkoľvek okolností a akýmkoľvek spôsobom,
+— používať dielo za akýchkoľvek okolností a akýmkoľvek spôsobom,
 
-—  zhotoviť rozmnoženinu diela,
+— zhotoviť rozmnoženinu diela,
 
-—  upraviť pôvodné dielo a vytvoriť odvodené dielo založené na pôvodnom diele,
+— upraviť pôvodné dielo a vytvoriť odvodené dielo založené na pôvodnom diele,
 
-—  uskutočniť verejný prenos vrátane práva sprístupniť alebo vystaviť dielo alebo jeho rozmnoženiny na verejnosti a prípadne verejné vykonanie diela,
+— uskutočniť verejný prenos vrátane práva sprístupniť alebo vystaviť dielo alebo jeho rozmnoženiny na verejnosti a prípadne verejné vykonanie diela,
 
-—  rozširovať dielo alebo jeho rozmnoženiny,
+— rozširovať dielo alebo jeho rozmnoženiny,
 
-—  požičať alebo prenajať dielo alebo jeho rozmnoženiny,
+— požičať alebo prenajať dielo alebo jeho rozmnoženiny,
 
-—  sublicenciou poskytnúť práva k dielu alebo jeho rozmnoženinám.
+— sublicenciou poskytnúť práva k dielu alebo jeho rozmnoženinám.
 
 Tieto práva sa môžu uplatniť na akýchkoľvek v súčasnosti známych alebo v budúcnosti objavených médiách, nosičoch a formátoch, pokiaľ to umožňuje platné právo.
 
@@ -134,42 +134,42 @@ Všetky jazykové verzie tejto licencie, ktoré schválila Európska komisia, s�
 
 Bez toho, aby boli dotknuté osobitné dohody medzi zmluvnými stranami:
 
-—  pre akékoľvek spory medzi inštitúciami, orgánmi, úradmi alebo agentúrami Európskej únie ako poskytovateľom licencie a ktorýmkoľvek nadobúdateľom licencie vyplývajúce z výkladu tejto licencie je príslušný Súdny dvor Európskej únie, v zmysle článku 272 Zmluvy o fungovaní Európskej únie,
+— pre akékoľvek spory medzi inštitúciami, orgánmi, úradmi alebo agentúrami Európskej únie ako poskytovateľom licencie a ktorýmkoľvek nadobúdateľom licencie vyplývajúce z výkladu tejto licencie je príslušný Súdny dvor Európskej únie, v zmysle článku 272 Zmluvy o fungovaní Európskej únie,
 
-—  akékoľvek spory medzi inými stranami, ktoré vyplývajú z výkladu tejto licencie, sú vo výhradnej právomoci súdu príslušného podľa miesta pobytu poskytovateľa licencie alebo miesta, kde tento vykonáva svoju hlavnú podnikateľskú činnosť.
+— akékoľvek spory medzi inými stranami, ktoré vyplývajú z výkladu tejto licencie, sú vo výhradnej právomoci súdu príslušného podľa miesta pobytu poskytovateľa licencie alebo miesta, kde tento vykonáva svoju hlavnú podnikateľskú činnosť.
 
 15. Rozhodné právo
 
 Bez toho, aby boli dotknuté osobitné dohody medzi zmluvnými stranami:
 
-—  táto licencia sa spravuje právom členského štátu Európskej únie, v ktorom má poskytovateľ licencie pobyt alebo sídlo,
+— táto licencia sa spravuje právom členského štátu Európskej únie, v ktorom má poskytovateľ licencie pobyt alebo sídlo,
 
-—  ak poskytovateľ licencie nemá pobyt alebo sídlo v členskom štáte Európskej únie, táto licencia sa spravuje belgickým právom.
+— ak poskytovateľ licencie nemá pobyt alebo sídlo v členskom štáte Európskej únie, táto licencia sa spravuje belgickým právom.
 
 
 Dodatok
 
 „Zlučiteľné licencie“ podľa článku 5 EUPL sú:
 
-—  GNU General Public License (GPL) v. 2, v. 3,
+— GNU General Public License (GPL) v. 2, v. 3,
 
-—  GNU Affero General Public License (AGPL) v. 3,
+— GNU Affero General Public License (AGPL) v. 3,
 
-—  Open Software License (OSL) v. 2.1, v. 3.0,
+— Open Software License (OSL) v. 2.1, v. 3.0,
 
-—  Eclipse Public License (EPL) v. 1.0,
+— Eclipse Public License (EPL) v. 1.0,
 
-—  CeCILL v. 2.0, v. 2.1,
+— CeCILL v. 2.0, v. 2.1,
 
-—  Mozilla Public Licence (MPL) v. 2,
+— Mozilla Public Licence (MPL) v. 2,
 
-—  GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3,
+— GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3,
 
-—  Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) for works other than software,
+— Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) for works other than software,
 
-—  European Union Public Licence (EUPL) v. 1.1, v. 1.2,
+— European Union Public Licence (EUPL) v. 1.1, v. 1.2,
 
-—  Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) or Strong Reciprocity (LiLiQ-R+).
+— Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) or Strong Reciprocity (LiLiQ-R+).
 
 Európska komisia môže tento dodatok aktualizovať, aby zahŕňal neskoršie verzie uvedených licencií, bez zavedenia novej verzie EUPL, pokiaľ uvedené licencie zabezpečujú práva udelené článkom 2 tejto licencie a chránia zdrojový kód, ktorý je jej predmetom, pred výhradným privlastnením.
 

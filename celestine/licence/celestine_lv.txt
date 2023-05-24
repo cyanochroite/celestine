@@ -150,25 +150,25 @@ Papildinājums
 
 “Saderīgas licences” saskaņā ar EUPL 5. pantu ir:
 
-—  GNU General Public License (GPL) v. 2, v. 3,
+— GNU General Public License (GPL) v. 2, v. 3,
 
-—  GNU Affero General Public License (AGPL) v. 3,
+— GNU Affero General Public License (AGPL) v. 3,
 
-—  Open Software License (OSL) v. 2.1, v. 3.0,
+— Open Software License (OSL) v. 2.1, v. 3.0,
 
-—  Eclipse Public License (EPL) v. 1.0,
+— Eclipse Public License (EPL) v. 1.0,
 
-—  CeCILL v. 2.0, v. 2.1,
+— CeCILL v. 2.0, v. 2.1,
 
-—  Mozilla Public Licence (MPL) v. 2,
+— Mozilla Public Licence (MPL) v. 2,
 
-—  GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3,
+— GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3,
 
-—  Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) attiecībā uz darbiem, kas nav programmatūra,
+— Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) attiecībā uz darbiem, kas nav programmatūra,
 
-—  Eiropas Savienības sabiedriskā licence (EUPL), 1.1., 1.2. redakcija,
+— Eiropas Savienības sabiedriskā licence (EUPL), 1.1., 1.2. redakcija,
 
-—  Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) vai Strong Reciprocity (LiLiQ-R+).
+— Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) vai Strong Reciprocity (LiLiQ-R+).
 
 Eiropas Komisija var atjaunināt šo pielikumu, lai iekļautu tajā iepriekš minēto licenču jaunākas redakcijas, nepieņemot jaunu EUPL redakciju, ja ar attiecīgajām licencēm tiek piešķirtas šīs licences 2. pantā noteiktās tiesības un netiek pieļauts, ka pirmkods, uz kuru attiecas licence, nonāk ekskluzīvā piederībā.
 

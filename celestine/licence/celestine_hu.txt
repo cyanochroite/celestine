@@ -134,41 +134,41 @@ E Licenc bármely az Európai Bizottság által jóváhagyott más nyelvű ford�
 
 A felek közötti konkrét megállapodás sérelme nélkül,
 
-—  az e Licenc értelmezéséből eredő bármely, az európai uniós intézmények, szervek, hivatalok és ügynökségek, mint Licenciaadó és bármely Hasznosító közötti jogvita az Európai Unió működéséről szóló szerződés 272. cikkének megfelelően az Európai Unió Bíróságának hatáskörébe tartozik,
+— az e Licenc értelmezéséből eredő bármely, az európai uniós intézmények, szervek, hivatalok és ügynökségek, mint Licenciaadó és bármely Hasznosító közötti jogvita az Európai Unió működéséről szóló szerződés 272. cikkének megfelelően az Európai Unió Bíróságának hatáskörébe tartozik,
 
-—  más felek közötti, e Licenc értelmezéséből eredő bármely jogvita azon ország megfelelő hatáskörrel rendelkező bíróságának kizárólagos illetékessége alá tartozik, ahol a Licenciaadó székhelye található, vagy ahol fő tevékenységét folytatja.
+— más felek közötti, e Licenc értelmezéséből eredő bármely jogvita azon ország megfelelő hatáskörrel rendelkező bíróságának kizárólagos illetékessége alá tartozik, ahol a Licenciaadó székhelye található, vagy ahol fő tevékenységét folytatja.
 
 15. Alkalmazandó jog
 
 A felek közötti konkrét megállapodás sérelme nélkül,
 
-—  e licencre az Európai Unió azon tagállamának a joga alkalmazandó, ahol a Licenciaadó székhelye vagy lakóhelye található,
+— e licencre az Európai Unió azon tagállamának a joga alkalmazandó, ahol a Licenciaadó székhelye vagy lakóhelye található,
 
-—  ha a Licenciaadó nem rendelkezik székhellyel vagy lakóhellyel az Európai Unió valamelyik tagállamában, akkor e Licencre a belga jog alkalmazandó.
+— ha a Licenciaadó nem rendelkezik székhellyel vagy lakóhellyel az Európai Unió valamelyik tagállamában, akkor e Licencre a belga jog alkalmazandó.
 
 Függelék
 
 Az EUPL 5. cikke szerinti „Kompatibilis licencek”:
 
-—  GNU General Public License (GPL) v. 2, v. 3
+— GNU General Public License (GPL) v. 2, v. 3
 
-—  GNU Affero General Public License (AGPL) v. 3
+— GNU Affero General Public License (AGPL) v. 3
 
-—  Open Software License (OSL) v. 2.1, v. 3.0
+— Open Software License (OSL) v. 2.1, v. 3.0
 
-—  Eclipse Public License (EPL) v. 1.0
+— Eclipse Public License (EPL) v. 1.0
 
-—  CeCILL v. 2.0, v. 2.1
+— CeCILL v. 2.0, v. 2.1
 
-—  Mozilla Public Licence (MPL) v. 2
+— Mozilla Public Licence (MPL) v. 2
 
-—  GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
+— GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
 
-—  Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) a szofverektől eltérő művek esetében
+— Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) a szofverektől eltérő művek esetében
 
-—  European Union Public Licence (EUPL) v. 1.1, v. 1.2
+— European Union Public Licence (EUPL) v. 1.1, v. 1.2
 
-—  Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) or Strong Reciprocity (LiLiQ-R+).
+— Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) or Strong Reciprocity (LiLiQ-R+).
 
 E Függeléket az Európai Bizottság a fent említett licencek későbbi verzióival naprakésszé teheti anélkül, hogy új EUPL-verziót kellene készítenie, feltéve, hogy a szóban forgó licencek biztosítják az e Licenc 2. cikkében foglalt jogokat, és védelmet nyújtanak az érintett Forráskód kizárólagos felhasználása ellen.
 

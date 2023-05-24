@@ -38,19 +38,19 @@ I denne licens forstås ved:
 
 Licensgiveren meddeler Dem herved en verdensomspændende, vederlagsfri, ikke-eksklusiv licens til at meddele underlicenser og til at gøre følgende, så længe ophavsretten til det oprindelige værk består:
 
-—  anvende værket under enhver omstændighed og til en hvilken som helst brug
+— anvende værket under enhver omstændighed og til en hvilken som helst brug
 
-—  fremstille eksemplarer af værket
+— fremstille eksemplarer af værket
 
-—  ændre i det oprindelige værk og frembringe bearbejdede værker på grundlag af værket
+— ændre i det oprindelige værk og frembringe bearbejdede værker på grundlag af værket
 
-—  overføre værket til almenheden, herunder retten til at gøre værket eller eksemplarer heraf tilgængeligt for almenheden, at fremvise værket eller eksemplarer heraf offentligt samt efter omstændighederne at fremføre værket offentligt
+— overføre værket til almenheden, herunder retten til at gøre værket eller eksemplarer heraf tilgængeligt for almenheden, at fremvise værket eller eksemplarer heraf offentligt samt efter omstændighederne at fremføre værket offentligt
 
-—  sprede værket eller eksemplarer heraf
+— sprede værket eller eksemplarer heraf
 
-—  udlåne og udleje værket eller eksemplarer heraf
+— udlåne og udleje værket eller eksemplarer heraf
 
-—  meddele underlicenser til værket eller eksemplarer heraf.
+— meddele underlicenser til værket eller eksemplarer heraf.
 
 Disse rettigheder kan udøves ved brug af alle nu kendte og senere udviklede medier, kanaler og formater, for så vidt det er tilladt i henhold til gældende ret.
 
@@ -134,41 +134,41 @@ Alle de af Europa-Kommissionen godkendte sprogudgaver af denne licens har identi
 
 Uden at det berører specifikke aftale mellem parterne
 
-—  henhører enhver retstvist, der måtte opstå ved fortolkningen af denne licens, mellem Den Europæiske Unions institutioner, organer, kontorer eller agenturer i dennes egenskab af licensgiver og enhver licenstager under Den Europæiske Unions Domstols kompetence, jf. artikel 272 i traktaten om Den Europæiske Unions funktionsmåde
+— henhører enhver retstvist, der måtte opstå ved fortolkningen af denne licens, mellem Den Europæiske Unions institutioner, organer, kontorer eller agenturer i dennes egenskab af licensgiver og enhver licenstager under Den Europæiske Unions Domstols kompetence, jf. artikel 272 i traktaten om Den Europæiske Unions funktionsmåde
 
-—  i retstvister mellem andre parter vedrørende fortolkningen af denne licens har retten på det sted, hvor licensgiveren har bopæl, eller hvor licensgiverens hovedforretningssted er beliggende, enekompetence.
+— i retstvister mellem andre parter vedrørende fortolkningen af denne licens har retten på det sted, hvor licensgiveren har bopæl, eller hvor licensgiverens hovedforretningssted er beliggende, enekompetence.
 
 15. Gældende lovgivning
 
 Uden at det berører specifikke aftale mellem parterne
 
-—  finder lovgivningen i den EU-medlemsstat, hvor licensgiveren har hovedsæde, bopæl eller hjemsted, anvendelse på denne licens
+— finder lovgivningen i den EU-medlemsstat, hvor licensgiveren har hovedsæde, bopæl eller hjemsted, anvendelse på denne licens
 
-—  denne licens er underlagt belgisk lovgivning, hvis licensgiveren ikke har hovedsæde, bopæl eller hjemsted i en EU- medlemsstat.
+— denne licens er underlagt belgisk lovgivning, hvis licensgiveren ikke har hovedsæde, bopæl eller hjemsted i en EU- medlemsstat.
 
 Tillæg
 
 »Kompatible licenser« ifølge artikel 5 i EUPL er:
 
-—  GNU General Public License (GPL) v. 2, v. 3
+— GNU General Public License (GPL) v. 2, v. 3
 
-—  GNU Affero General Public License (AGPL) v. 3
+— GNU Affero General Public License (AGPL) v. 3
 
-—  Open Software License (OSL) v. 2.1, v. 3.0
+— Open Software License (OSL) v. 2.1, v. 3.0
 
-—  Eclipse Public License (EPL) v. 1.0
+— Eclipse Public License (EPL) v. 1.0
 
-—  CeCILL v. 2.0, v. 2.1
+— CeCILL v. 2.0, v. 2.1
 
-—  Mozilla Public Licence (MPL) v. 2
+— Mozilla Public Licence (MPL) v. 2
 
-—  GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
+— GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
 
-—  Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) for andre værker end software
+— Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) for andre værker end software
 
-—  Den Europæiske Unions Offentlige Licens (EUPL) v. 1.1, v. 1,2
+— Den Europæiske Unions Offentlige Licens (EUPL) v. 1.1, v. 1,2
 
-—  Québec Free and Open-Source Licence — Reciprocity (LiLiQ-R) eller Strong Reciprocity (LiLiQ-R+)
+— Québec Free and Open-Source Licence — Reciprocity (LiLiQ-R) eller Strong Reciprocity (LiLiQ-R+)
 
 Europa-Kommissionen vil eventuelt ajourføre dette tillæg med senere versioner af ovennævnte licenser uden at udarbejde en ny version af Den Europæiske Unions Offentlige Licens, så længe disse versioner af licensen sikrer de rettigheder, der gives i artikel 2 i nærværende licens, og beskytter den omfattede kildekode fra monopol.
 

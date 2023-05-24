@@ -150,25 +150,25 @@ Appendice
 
 «Licenze compatibili» ai sensi dell'articolo 5 EUPL sono le seguenti:
 
-—  GNU General Public License (GPL) v. 2, v. 3
+— GNU General Public License (GPL) v. 2, v. 3
 
-—  GNU Affero General Public License (AGPL) v. 3
+— GNU Affero General Public License (AGPL) v. 3
 
-—  Open Software License (OSL) v. 2.1, v. 3.0
+— Open Software License (OSL) v. 2.1, v. 3.0
 
-—  Eclipse Public License (EPL) v. 1.0
+— Eclipse Public License (EPL) v. 1.0
 
-—  CeCILL v. 2.0, v. 2.1
+— CeCILL v. 2.0, v. 2.1
 
-—  Mozilla Public Licence (MPL) v. 2
+— Mozilla Public Licence (MPL) v. 2
 
-—  GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
+— GNU Lesser General Public Licence (LGPL) v. 2.1, v. 3
 
-—  Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) per le opere diverse dal software
+— Creative Commons Attribution-ShareAlike v. 3.0 Unported (CC BY-SA 3.0) per le opere diverse dal software
 
-—  European Union Public Licence (EUPL) v. 1.1, v. 1.2
+— European Union Public Licence (EUPL) v. 1.1, v. 1.2
 
-—  Québec Free and Open-Source Licence — Reciprocity (LiLiQ-R) or Strong Reciprocity (LiLiQ-R+).
+— Québec Free and Open-Source Licence — Reciprocity (LiLiQ-R) or Strong Reciprocity (LiLiQ-R+).
 
 La Commissione può aggiornare la presente Appendice per tener conto delle versioni più recenti delle licenze summenzionate senza produrre una nuova versione dell'EUPL, purché esse garantiscano i diritti concessi dall'articolo 2 della presente licenza e proteggano il codice sorgente coperto dall'appropriazione esclusiva.
 
