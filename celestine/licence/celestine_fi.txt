@@ -1,4 +1,5 @@
 ﻿EUROOPAN UNIONIN YLEINEN LISENSSI v. 1.2
+
 EUPL © Euroopan unioni 2007, 2016
 
 Tätä Euroopan unionin yleistä lisenssiä (”EUPL”) sovelletaan teokseen (sellaisina kuin se määritellään jäljempänä), joka toimitetaan tämän lisenssin ehdoilla. Teoksen kaikki muu kuin tämän lisenssin nojalla sallittu käyttö on kielletty (siltä osin kuin tällainen käyttö on suojattu teoksen tekijänoikeuden haltijan oikeuksilla).
@@ -9,7 +10,7 @@ Lisensoitu EUPL:n nojalla
 
 tai ilmaissut muilla keinoin suostumuksensa EUPL:n mukaiseen lisenssin myöntämiseen.
 
-1.Määritelmät
+1. Määritelmät
 
 Tässä lisenssissä seuraavilla termeillä on seuraavat merkitykset:
 
@@ -33,7 +34,7 @@ Tässä lisenssissä seuraavilla termeillä on seuraavat merkitykset:
 
 — ”Levittäminen” tai ”luovuttaminen”:kaikki toimet, joilla teoskappaleita myydään, annetaan, lainataan, vuokrataan, levitetään, luovutetaan, lähetetään tai muutoin asetetaan luonnollisten ja oikeushenkilöiden saataville tai joilla tarjotaan pääsyä teoksen olennaisiin toimintoihin verkon kautta tai sen ulkopuolella.
 
-2.Tällä lisenssillä myönnettävien oikeuksien laajuus
+2. Tällä lisenssillä myönnettävien oikeuksien laajuus
 
 Lisenssinantaja myöntää teille maailmanlaajuisen, rojaltimaksuttoman, yksinoikeudettoman, alilisensoitavan lisenssin seuraaviin toimiin alkuperäisteokseen kohdistuvien tekijänoikeuksien ajaksi:
 
@@ -57,15 +58,15 @@ Maissa, joissa sovelletaan moraalisia oikeuksia, lisenssinantaja luopuu oikeudes
 
 Lisenssinantaja myöntää lisenssinsaajalle rojaltimaksuttomat, yksinoikeudettomat käyttöoikeudet kaikkiin lisenssinantajan hallussa pitämiin patentteihin siinä määrin kuin on tarpeen tällä lisenssillä teokseen myönnettyjen oikeuksien käyttämiseksi.
 
-3.Lähdekoodin luovuttaminen
+3. Lähdekoodin luovuttaminen
 
 Lisenssinantaja voi toimittaa teoksen joko lähdekoodina tai suoritettavana koodina. Jos teos toimitetaan suoritettavana koodina, lisenssinantaja toimittaa lisäksi koneella luettavan kopion teoksen lähdekoodista lisenssinantajan levittämän kunkin teoskappaleen yhteydessä tai ilmoittaa teokseen liitetyn tekijänoikeusilmoituksen perään lisätyssä ilmoituksessa paikan, josta lähdekoodi on helposti ja vapaasti saatavissa niin pitkään kuin lisenssinantaja jatkaa teoksen levittämistä tai luovuttamista.
 
-4.Tekijänoikeuden rajoitukset
+4. Tekijänoikeuden rajoitukset
 
 Tässä lisenssissä ei ole mitään sellaista, jonka tarkoitus on estää lisenssinsaajaa hyötymästä oikeudenomistajien teokseen kohdistuvien yksinoikeuksien poikkeuksesta tai rajoituksesta, näiden oikeuksien päättymisestä tai muista niihin sovellettavista rajoituksista.
 
-5.Lisenssinsaajan velvoitteet
+5. Lisenssinsaajan velvoitteet
 
 Edellä mainittujen oikeuksien myöntäminen lisenssinsaajalle on sidottu tiettyihin rajoituksiin ja velvoitteisiin. Nämä velvoitteet ovat seuraavat:
 
@@ -79,7 +80,7 @@ Lähdekoodin toimittaminen: Levittäessään tai luovuttaessaan teoksesta teoska
 
 Oikeussuoja: Tämä lisenssi ei anna lupaa käyttää kauppanimiä, tavaramerkkejä, palvelumerkkejä tai lisenssinantajan nimiä paitsi siltä osin kuin niiden kohtuullinen ja tavanmukainen käyttö edellyttää teoksen alkuperän kuvailemisessa ja tekijänoikeusilmoituksen sisällön toisintamisessa.
 
-6.Tekijyysketju
+6. Tekijyysketju
 
 Alkuperäinen lisenssinantaja takaa, että hän omistaa tällä lisenssillä myönnettävän tekijänoikeuden alkuperäisteokseen tai se on lisensoitu hänelle ja että hänellä on oikeus ja valtuudet lisenssin myöntämiseen.
 
@@ -87,7 +88,7 @@ Jokainen muu tekijä takaa, että hän omistaa teokseen tekemiensä muunnelmien 
 
 Aina kun hyväksytte lisenssin, alkuperäinen lisenssinantaja ja sen jälkeiset muut tekijät antavat teille lisenssin omaan panokseensa teoksessa tämän lisenssin ehdoilla.
 
-7.Takuunrajoitus
+7. Takuunrajoitus
 
 Teos on tekeillä oleva teos, jota lukuisat muut tekijät parantelevat jatkuvasti. Se ei ole viimeistelty teos ja saattaa sen vuoksi sisältää tämänkaltaiselle kehitykselle tunnusomaisia toimintavirheitä (”bugeja”).
 
@@ -95,29 +96,31 @@ Tästä syystä teos toimitetaan lisenssin nojalla ”sellaisena kuin se on” i
 
 Tämä takuunrajoitus on olennainen osa lisenssiä ja ehtona teokseen kohdistuvien oikeuksien myöntämiselle.
 
-8.Vastuunrajoitus
+8. Vastuunrajoitus
 
 Lukuun ottamatta tapauksia, joissa on kyse tahallisesta teosta tai luonnollisille henkilöille välittömästi aiheutetusta vahingosta, lisenssinantaja ei ole missään tapauksessa vastuussa minkäänlaisesta välittömästä tai välillisestä, materiaalisesta tai moraalisesta vahingosta, joka johtuu lisenssistä tai teoksen käytöstä, mukaan lukien vahingot liikearvon menettämisestä, työnseisauksesta, tietokoneen viasta tai toimintahäiriöstä, tietojen menettämisestä tai liiketaloudellisesta vahingosta, vaikka lisenssinantajalle olisi ilmoitettu tällaisen vahingon mahdollisuudesta. Lisenssinantaja on kuitenkin tuotevastuulakien alaisessa vastuussa siltä osin kuin näitä lakeja sovelletaan teokseen.
 
-9.Lisäsopimukset
+9. Lisäsopimukset
 
 Teosta levittäessänne voitte halutessanne tehdä lisäsopimuksen, jolla määritellään tämän lisenssin mukaisesti velvoitteet tai palvelut. Jos kuitenkin hyväksytte velvoitteita, voitte toimia ainoastaan omasta puolestanne ja omalla vastuullanne ettekä alkuperäisen lisenssinantajan tai kenenkään muun tekijän puolesta, ja ainoastaan jos suostutte vapauttamaan kunkin muun tekijän vastuusta, puolustamaan häntä ja pitäytymään aiheuttamasta hänelle haittaa, jos se, että olette hyväksyneet takuun tai lisävastuun, aiheuttaa tällaiselle muulle tekijälle vastuita tai vaatimuksia.
 
-10.Lisenssin hyväksyminen
+10. Lisenssin hyväksyminen
 
-Voitte hyväksyä tämän lisenssin määräykset napsauttamalla ”Hyväksyn”-kuvaketta, joka on tämän lisenssin tekstin esittävän ikkunan alareunassa, tai vahvistamalla suostumuksenne muulla vastaavalla tavalla sovellettavan lain mukaisesti. Napsauttamalla kuvaketta ilmoitatte hyväksyvänne yksiselitteisesti ja peruuttamattomasti tämän lisenssin ja kaikki sen ehdot ja edellytykset. Samoin ilmoitatte hyväksyvänne peruuttamattomasti tämän lisenssin ja kaikki sen ehdot ja edellytykset harjoittamalla mitä tahansa teille tämän lisenssin 2 kohdalla myönnettyjä oikeuksia, kuten teoksen käyttö, jälkiperäisteoksen luominen tai teoksen tai sen teoskappaleiden levittäminen tai luovuttaminen.
+Voitte hyväksyä tämän lisenssin määräykset napsauttamalla ”Hyväksyn”-kuvaketta, joka on tämän lisenssin tekstin esittävän ikkunan alareunassa, tai vahvistamalla suostumuksenne muulla vastaavalla tavalla sovellettavan lain mukaisesti. Napsauttamalla kuvaketta ilmoitatte hyväksyvänne yksiselitteisesti ja peruuttamattomasti tämän lisenssin ja kaikki sen ehdot ja edellytykset.
 
-11.Tiedottaminen yleisölle
+Samoin ilmoitatte hyväksyvänne peruuttamattomasti tämän lisenssin ja kaikki sen ehdot ja edellytykset harjoittamalla mitä tahansa teille tämän lisenssin 2 kohdalla myönnettyjä oikeuksia, kuten teoksen käyttö, jälkiperäisteoksen luominen tai teoksen tai sen teoskappaleiden levittäminen tai luovuttaminen.
+
+11. Tiedottaminen yleisölle
 
 Teoksen levittämisessä tai luovuttamisessa sähköisen viestinnän keinoin (esimerkiksi tarjoamalla teoksen ladattavaksi etäpisteestä käsin) jakelukanavan tai viestimen (esimerkiksi verkkosivun) on annettava yleisölle vähintään sovellettavan lain edellyttämät tiedot lisenssinantajasta, lisenssistä ja tavoista, joilla lisenssinsaaja voi saada, solmia, tallentaa ja toisintaa sen.
 
-12.Lisenssin päättyminen
+12. Lisenssin päättyminen
 
 Lisenssi ja sen nojalla myönnetyt oikeudet päättyvät automaattisesti lisenssinsaajan rikkoessa mitä tahansa tämän lisenssin ehtoja.
 
 Tällainen päättyminen ei päätä lisenssejä muilta henkilöiltä, jotka ovat saaneet teoksen lisenssinsaajalta tämän lisenssin nojalla, jos nämä henkilöt jatkavat lisenssin ehtojen täydellistä noudattamista.
 
-13.Muuta
+13. Muuta
 
 Rajoittamatta 9 kohdan soveltamista lisenssi edustaa kaiken kattavaa sopimusta sopimuspuolten välillä teoksen osalta.
 
@@ -127,7 +130,7 @@ Euroopan komissio voi julkaista tästä lisenssistä muita kieliversioita tai uu
 
 Kaikki Euroopan komission hyväksymät kieliversiot tästä lisenssistä ovat samanarvoisia. Sopimuspuolet voivat käyttää valitsemaansa kieliversiota.
 
-14.Toimivalta
+14. Toimivalta
 
 Rajoittamatta sopimuspuolten välistä erityistä sopimusta
 
@@ -135,7 +138,7 @@ Rajoittamatta sopimuspuolten välistä erityistä sopimusta
 
 —  kaikissa tämän lisenssin tulkinnasta aiheutuvissa riita-asioissa, joissa asianosaisena on muu osapuoli, yksinomainen toimivalta on toimivaltaisella tuomioistuimella siinä maassa, jossa lisenssinantaja asuu tai harjoittaa pääasiallista liiketoimintaansa.
 
-15.Sovellettava laki
+15. Sovellettava laki
 
 Rajoittamatta sopimuspuolten välistä erityistä sopimusta
 

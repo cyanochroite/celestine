@@ -1,4 +1,5 @@
 ﻿JAVNA LICENCA EVROPSKE UNIJE v. 1.2
+
 EUPL © Evropska unija 2007, 2016
 
 Ta javna licenca Evropske unije (v nadaljnjem besedilu: EUPL) se uporablja za delo (kakor je opredeljeno spodaj), zagotovljeno pod pogoji iz te licence. Vsaka uporaba dela, ki ni dovoljena s to licenco, je prepovedana (kolikor je ta uporaba zajeta v pravici imetnika avtorske pravice tega dela).
@@ -9,7 +10,7 @@ Licencirano po EUPL
 
 ali je na kateri koli drugi način izrazil svojo pripravljenost, da delo licencira na podlagi EUPL.
 
-1.Opredelitve pojmov
+1. Opredelitve pojmov
 
 V tej licenci imajo naslednji izrazi naslednji pomen:
 
@@ -33,7 +34,7 @@ V tej licenci imajo naslednji izrazi naslednji pomen:
 
 — „distribucija“ ali „posredovanje“:vsako dejanje prodaje, dajanja, posojanja, dajanja v najem, distribuiranja, posredovanja, prenašanja ali omogočanja razpolaganja po spletu ali zunaj njega s kopijami dela ali zagotavljanje dostopa do ključnih funkcij drugim fizičnim ali pravnim osebam.
 
-2.Obseg pravic, podeljenih z licenco
+2. Obseg pravic, podeljenih z licenco
 
 Dajalec licence Vam s tem podeli svetovno, brezplačno, neizključno licenco, ki jo je mogoče podlicencirati, za čas trajanja avtorske pravice, podeljene izvirniku dela, za:
 
@@ -57,15 +58,15 @@ V državah, kjer veljajo moralne pravice, se dajalec licence odpove svoji pravic
 
 Dajalec licence pridobitelju licence podeli brezplačno, neizključno pravico do uporabe za vse patente, ki jih ima dajalec licence, v obsegu, ki je potreben za uporabo pravic, podeljenih v zvezi z delom na podlagi te licence.
 
-3.Posredovanje izvirne kode
+3. Posredovanje izvirne kode
 
 Dajalec licence lahko zagotovi delo v obliki izvirne kode ali kot izvršljivo kodo. Če je delo zagotovljeno kot izvršljiva koda, zagotovi dajalec licence strojno berljivo kopijo izvirne kode dela vsaki kopiji dela, ki jo distribuira, ali v obvestilu, ki sledi obvestilu o avtorski pravici in je priloženo k delu, shranjevalnik, na katerem je izvirna koda enostavno in prosto dostopna, dokler še distribuira ali posreduje delo.
 
-4.Omejitve avtorske pravice
+4. Omejitve avtorske pravice
 
 S to licenco ne sme biti pridobitelj licence na noben način prikrajšan glede svojih koristi na podlagi kakršne koli izjeme ali omejitve izključnih pravic lastnikov pravic v zvezi z delom, prenehanjem teh pravic ali drugimi omejitvami, ki se glede tega uporabljajo.
 
-5.Obveznosti pridobitelja licence
+5. Obveznosti pridobitelja licence
 
 Za podelitev zgoraj navedenih pravic veljajo nekatere omejitve in obveznosti za pridobitelja licence. Te obveznosti so:
 
@@ -79,7 +80,7 @@ Zagotavljanje izvirne kode: pri distribuiranju ali posredovanju kopij dela, bo d
 
 Pravno varstvo: ta licenca ne dovoljuje uporabe trgovskih imen, blagovnih znamk, storitvenih znamk ali imen dajalca licence, razen kot se to zahteva za primerno in običajno uporabo pri opisovanju izvora dela ter reprodukciji vsebine obvestila o avtorski pravici.
 
-6.Avtorska veriga
+6. Avtorska veriga
 
 Prvotni dajalec licence jamči, da je v skladu s to licenco lastnik avtorske pravice izvirnika dela ali da mu je bila dodeljena licenca in da je pristojen in upravičen za dajanje licence.
 
@@ -87,7 +88,7 @@ Vsak sodelavec jamči, da je lastnik avtorske pravice za spremembe, ki jih je vn
 
 Vsakič, ko prejmete licenco, Vam prvotni dajalec licence in vsi nadaljnji sodelavci podelijo licenco za svoje prispevke k delu pod pogoji iz te licence.
 
-7.Izjava o omejitvi jamstva
+7. Izjava o omejitvi jamstva
 
 Delo se razume kot delo, ki se stalno razvija in ki ga nenehno izboljšujejo številni sodelavci. Ni dokončano delo in lahko zato vsebuje napake ali „hrošče“, ki so povezani s tovrstnim razvojem.
 
@@ -95,29 +96,31 @@ Iz zgoraj navedenih razlogov se delo zagotavlja na podlagi licence po načelu �
 
 Ta izjava o jamstvih je bistveni del te licence in pogoj za podelitev kakršnih koli pravic v zvezi z delom.
 
-8.Izjava o omejitvi odgovornosti
+8. Izjava o omejitvi odgovornosti
 
 Razen v primerih namerne kršitve ali škode, neposredno povzročene fizičnim osebam, dajalec licence ne bo v nobenem primeru odgovoren za kakršno koli neposredno ali posredno materialno ali moralno škodo, nastalo na podlagi licence ali uporabe dela, med drugim vključno s škodo zaradi izgube dobrega imena, prekinitve dela, okvare ali motnje v delovanju računalnika, izgube podatkov ali kakršne koli poslovne škode, čeprav je bil dajalec licence opozorjen na možnost nastanka takšne škode. Vendar bo dajalec licence odgovoren po zakonskih predpisih o odgovornosti za proizvode, če takšni predpisi veljajo za delo.
 
-9.Dodatni dogovori
+9. Dodatni dogovori
 
 Pri distribuiranju dela se lahko odločite za sklenitev dodatnega sporazuma, v katerem so opredeljene obveznosti ali storitve, skladne s to licenco. Vendar če obveznosti prevzamete, lahko delujete samo v lastnem imenu in izključno na podlagi lastne odgovornosti, ne pa v imenu prvotnega dajalca licence ali katerega koli drugega sodelavca, in samo, če se strinjate, da boste vsakemu sodelavcu povrnili škodo, ga branili in izvzeli iz kakršnih koli nastalih odgovornosti ali zahtevkov na njegov račun, ki bi izhajali iz tega, da ste prevzeli jamstvo ali dodatno odgovornost.
 
-10.Sprejetje licence
+10. Sprejetje licence
 
 Določbe v licenci je mogoče sprejeti s klikom na ikono „Strinjam se“ („I agree“), ki je pod spodnjim delom okna z besedilom te licence, ali s kakršno koli podobno potrditvijo v skladu s pravili prava, ki se uporablja. S klikom na to ikono boste izrazili nedvoumno in nepreklicno sprejetje te licence in vseh njenih pogojev.
 
 Podobno nepreklicno sprejemate to licenco in vse njene pogoje pri uveljavljanju pravic, ki so Vam bile podeljene s členom 2 te licence, kot je uporaba dela, izdelava izvedenih del ali distribucija oz. posredovanje dela ali njegovih kopij.
 
-11.Obveščanje javnosti
+11. Obveščanje javnosti
 
 Če boste distribuirali ali posredovali delo s sredstvi elektronskega posredovanja (na primer s ponudbo za prenos dela z oddaljenega mesta), mora distribucijski kanal ali medij (na primer spletna stran) navajati vsaj informacije za javnost, ki se zahtevajo v skladu s pravom, ki se uporablja v zvezi z dajalcem licence, licenco in načinom, kako je licenca lahko dostopna, ter kako jo pridobitelj licence lahko sklene, shrani in reproducira.
 
-12.Prenehanje licence
+12. Prenehanje licence
 
-Licenca in pravice, ki se podelijo na njeni podlagi, bodo avtomatsko prenehale z vsakršno kršitvijo pogojev iz licence s strani pridobitelja licence. Takšno prenehanje ne bo veljalo za licence oseb, ki so prejele delo od pridobitelja licence na podlagi te licence, če te osebe še naprej v celoti ravnajo v skladu s pogoji licence.
+Licenca in pravice, ki se podelijo na njeni podlagi, bodo avtomatsko prenehale z vsakršno kršitvijo pogojev iz licence s strani pridobitelja licence.
 
-13.Razno
+Takšno prenehanje ne bo veljalo za licence oseb, ki so prejele delo od pridobitelja licence na podlagi te licence, če te osebe še naprej v celoti ravnajo v skladu s pogoji licence.
+
+13. Razno
 
 Brez poseganja v člen 9 licenca pomeni popoln dogovor med strankami glede dela.
 
@@ -127,7 +130,7 @@ Brez poseganja v člen 9 licenca pomeni popoln dogovor med strankami glede dela.
 
 Vse jezikovne različice te licence, ki jih je odobrila Evropska komisija, so enakovredne. Stranke lahko uporabljajo jezikovne različice po svoji izbiri.
 
-14.Pristojnost
+14. Pristojnost
 
 Brez poseganja v posebne sporazume med strankami:
 
@@ -135,14 +138,13 @@ Brez poseganja v posebne sporazume med strankami:
 
 —  za vse pravne spore med strankami, ki izhajajo iz razlage te licence, bo veljala izključna pristojnost zadevnega sodišča države, v kateri ima dajalec licence prebivališče ali kjer opravlja svojo osnovno dejavnost.
 
-15.Pravo, ki se uporablja
+15. Pravo, ki se uporablja
 
 Brez poseganja v posebne sporazume med strankami:
 
 —  to licenco ureja pravo države Evropske unije, v kateri ima dajalec licence svoj sedež, prebivališče ali statutarni sedež,
 
 —  to licenco ureja belgijsko pravo, če dajalec licence nima sedeža, prebivališča ali statutarnega sedeža v državi članici Evropske unije.
-
 
 Dodatek
 

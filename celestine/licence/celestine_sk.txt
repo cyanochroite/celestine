@@ -1,4 +1,5 @@
 ﻿VEREJNÁ LICENCIA EURÓPSKEJ ÚNIE v. 1.2
+
 EUPL © Európska únia, 2007, 2016
 
 Táto verejná licencia Európskej únie („EUPL“) sa vzťahuje na diela (ako sú definované ďalej), ktoré sú poskytnuté podľa podmienok tejto licencie. Akékoľvek použitie diela v rozpore s podmienkami tejto licencie sa zakazuje (v rozsahu, v akom sa na takéto použitie vzťahuje ochrana právami nositeľa autorských práv k dielu).
@@ -9,7 +10,7 @@ Licencia poskytnutá podľa EUPL
 
 alebo akýmkoľvek iným spôsobom prejavil svoju vôľu poskytnúť licenciu podľa EUPL.
 
-1.Vymedzenie pojmov
+1. Vymedzenie pojmov
 
 V tejto licencii majú tieto pojmy nasledujúci význam:
 
@@ -33,7 +34,7 @@ V tejto licencii majú tieto pojmy nasledujúci význam:
 
 — „rozširovanie“ alebo „poskytovanie“:akýkoľvek úkon predaja, odovzdania, požičania, nájmu, rozširovania, poskytnutia, prenášania alebo sprístupnenia rozmnoženín diela iným spôsobom, v režime online alebo offline, alebo poskytnutia prístupu k jeho základným funkciám v prospech ktorýchkoľvek tretích fyzických alebo právnických osôb.
 
-2.Rozsah práv udelených touto licenciou
+2. Rozsah práv udelených touto licenciou
 
 Poskytovateľ licencie Vám týmto na obdobie platnosti ochrany autorských práv k pôvodnému dielu udeľuje celosvetovú, bezodplatnú, nevýhradnú licenciu, s možnosťou ďalšieho sublicencovania, na nasledovné použitie:
 
@@ -57,15 +58,15 @@ V krajinách, v ktorých sa uplatňujú osobnostné práva, sa poskytovateľ lic
 
 Poskytovateľ licencie udeľuje nadobúdateľovi licencie súhlas na bezodplatné, nevýhradné využitie patentov, ktorých majiteľom je poskytovateľ licencie, v rozsahu potrebnom na využitie práv k dielu udelených touto licenciou.
 
-3.Poskytnutie zdrojového kódu
+3. Poskytnutie zdrojového kódu
 
 Poskytovateľ licencie môže poskytnúť dielo buď vo forme zdrojového kódu, alebo v strojovom kóde. Ak sa dielo poskytuje v strojovom kóde, poskytovateľ licencie poskytne navyše ku každej ním rozširovanej rozmnoženine diela strojovo čitateľnú rozmnoženinu zdrojového kódu diela, alebo v oznámení za doložkou o autorských právach pripojenou k dielu uvedie zdroj, kde je tento zdrojový kód ľahko a voľne dostupný počas celého obdobia, keď poskytovateľ licencie rozširuje alebo poskytuje dielo.
 
-4.Obmedzenia autorských práv
+4. Obmedzenia autorských práv
 
 Žiadne ustanovenie tejto licencie nemá za cieľ zbaviť nadobúdateľa licencie výhod vyplývajúcich z akýchkoľvek výnimiek alebo obmedzení výhradných práv nositeľov práv k dielu, zo zániku týchto práv alebo z iných uplatniteľných obmedzení týchto práv.
 
-5.Povinnosti nadobúdateľa licencie
+5. Povinnosti nadobúdateľa licencie
 
 Udelenie uvedených práv podlieha určitým obmedzeniam a povinnostiam, ktoré sa ukladajú nadobúdateľovi licencie. Ide o tieto povinnosti:
 
@@ -79,7 +80,7 @@ Poskytovanie zdrojového kódu: Pri rozširovaní alebo poskytovaní rozmnožen�
 
 Právna ochrana: Touto licenciou sa neudeľuje povolenie na použitie obchodných mien, ochranných známok, ochranných známok pre služby alebo označení poskytovateľa licencie, iba ak si to vyžaduje ich primerané a obvyklé použitie pri opise pôvodu diela a reprodukovaní obsahu doložky o autorských právach.
 
-6.Reťazec autorstva
+6. Reťazec autorstva
 
 Pôvodný poskytovateľ licencie zaručuje, že je oprávneným nositeľom autorského práva alebo nadobúdateľom licencie k pôvodnému dielu, ktoré je predmetom tejto licencie, a že má právo udeliť túto licenciu.
 
@@ -87,7 +88,7 @@ Každý spracovateľ zaručuje, že je oprávneným nositeľom autorského práv
 
 Vždy, keď Vy ako nadobúdateľ licencie prijmete podmienky tejto licencie, udeľujú Vám podľa podmienok tejto licencie pôvodný poskytovateľ licencie a každý nasledujúci spracovateľ licenciu k tomu, čím na dielo prispeli.
 
-7.Vylúčenie záruky
+7. Vylúčenie záruky
 
 Toto dielo je dielom vo vývoji, ktoré je neustále vylepšované množstvom spracovateľov. Nie je ukončeným dielom, a preto môže obsahovať nedostatky alebo logické chyby v programe príznačné pre tento druh vývoja.
 
@@ -95,31 +96,31 @@ Z týchto dôvodov sa dielo podľa tejto licencie poskytuje „ako stojí a lež
 
 Toto vylúčenie záruky je podstatnou súčasťou tejto licencie a podmienkou pre udelenie akýchkoľvek práv k dielu.
 
-8.Vylúčenie zodpovednosti
+8. Vylúčenie zodpovednosti
 
 S výnimkou prípadov úmyselného protiprávneho konania alebo škôd priamo spôsobených fyzickým osobám poskytovateľ licencie v žiadnom prípade nezodpovedá za žiadne priame alebo nepriame, materiálne alebo morálne škody akéhokoľvek druhu, ktoré vyplývajú z licencie alebo použitia diela, okrem iného vrátane poškodenia dobrého mena (goodwill), zastavenia prác, zlyhania alebo nesprávneho fungovania počítača, straty údajov alebo akejkoľvek škody obchodnej povahy, a to aj v prípade, ak poskytovateľ licencie bol na možnosť takejto škody upozornený. Poskytovateľ licencie však zodpovedá podľa právnych predpisov o zodpovednosti za chybné výrobky v rozsahu, v akom sa takéto predpisy vzťahujú na dielo.
 
-9.Dodatočné dohody
+9. Dodatočné dohody
 
 Pri rozširovaní diela sa môžete (Vy) rozhodnúť uzavrieť dodatočné dohody, v ktorých sa vymedzia povinnosti alebo služby v súlade s touto licenciou. Pri preberaní takýchto povinností však môžete (Vy) konať len vo vlastnom mene a na vlastnú zodpovednosť, a nie v mene pôvodného poskytovateľa licencie alebo akéhokoľvek ďalšieho spracovateľa, a len ak sa (Vy) zaviažete každého spracovateľa odškodniť, brániť a zbaviť zodpovednosti alebo nárokov uplatnených voči takémuto spracovateľovi v dôsledku toho, že ste prijali akúkoľvek záruku alebo dodatočnú zodpovednosť.
 
-10.Prijatie podmienok licencie
+10. Prijatie podmienok licencie
 
 Podmienky tejto licencie možno prijať kliknutím na ikonku „Súhlasím“ umiestnenú pod spodnou časťou okna, ktoré zobrazuje text tejto licencie, alebo vyjadrením súhlasu akýmkoľvek iným podobným spôsobom v súlade s pravidlami platného práva. Kliknutím na túto ikonku vyjadrujete jednoznačné a neodvolateľné prijatie tejto licencie a všetkých jej podmienok.
 
 Podobne túto licenciu a všetky jej podmienky neodvolateľne prijímate aj využitím akéhokoľvek práva, ktoré sa Vám udeľuje na základe článku 2 tejto licencie, ako napríklad použitím diela, vytvorením odvodeného diela alebo rozširovaním alebo poskytovaním diela alebo jeho rozmnoženín.
 
-11.Informácie pre verejnosť
+11. Informácie pre verejnosť
 
 V prípadoch akéhokoľvek rozširovania alebo poskytovania diela využitím prostriedkov elektronickej komunikácie (napríklad ponukou na stiahnutie diela zo vzdialeného miesta) musí distribučný kanál alebo médium (napríklad webová stránka) poskytnúť verejnosti aspoň informácie požadované platným právom týkajúce sa poskytovateľa licencie, licencie a toho, ako k nej nadobúdateľ licencie získa prístup, ako ju môže uzatvoriť, uložiť a reprodukovať.
 
-12.Ukončenie licencie
+12. Ukončenie licencie
 
 Licencia a práva udelené na jej základe bez ďalšieho zaniknú v prípade akéhokoľvek porušenia podmienok tejto licencie nadobúdateľom licencie.
 
 Týmto zánikom nezaniknú licencie žiadnych osôb, ktoré získali dielo od nadobúdateľa licencie podľa tejto licencie za podmienky, že takéto osoby budú v plnom rozsahu dodržiavať podmienky tejto licencie.
 
-13.Rôzne
+13. Rôzne
 
 Bez toho, aby boli dotknuté ustanovenia článku 9 vyššie, licencia predstavuje úplnú dohodu medzi stranami vo vzťahu k dielu.
 
@@ -129,7 +130,7 @@ Európska komisia môže, ak je to žiaduce a primerané, uverejniť ostatné ja
 
 Všetky jazykové verzie tejto licencie, ktoré schválila Európska komisia, sú rovnocenné. Zmluvné strany môžu využívať tú jazykovú verziu, ktorú si vyberú.
 
-14.Súdna príslušnosť
+14. Súdna príslušnosť
 
 Bez toho, aby boli dotknuté osobitné dohody medzi zmluvnými stranami:
 
@@ -137,7 +138,7 @@ Bez toho, aby boli dotknuté osobitné dohody medzi zmluvnými stranami:
 
 —  akékoľvek spory medzi inými stranami, ktoré vyplývajú z výkladu tejto licencie, sú vo výhradnej právomoci súdu príslušného podľa miesta pobytu poskytovateľa licencie alebo miesta, kde tento vykonáva svoju hlavnú podnikateľskú činnosť.
 
-15.Rozhodné právo
+15. Rozhodné právo
 
 Bez toho, aby boli dotknuté osobitné dohody medzi zmluvnými stranami:
 

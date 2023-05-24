@@ -1,4 +1,5 @@
 ﻿LICENȚA PUBLICĂ A UNIUNII EUROPENE V. 1.2
+
 EUPL© Uniunea Europeană 2007, 2016
 
 Prezenta licență publică a Uniunii Europene („EUPL”) se aplică produselor (astfel cum sunt definite mai jos) care fac obiectul prezentei licențe. Orice utilizare a produsului, alta decât cea autorizată în temeiul prezentei licențe, este interzisă (în măsura în care o astfel de utilizare intră sub incidența unui drept al deținătorului drepturilor de autor asupra produsului).
@@ -9,7 +10,7 @@ Licențiat în baza EUPL
 
 sau și-a exprimat, prin orice altă modalitate, dorința de a licenția produsul în baza EUPL.
 
-1.Definiții
+1. Definiții
 
 În prezenta licență, următorii termeni au următoarele semnificații:
 
@@ -33,7 +34,7 @@ sau și-a exprimat, prin orice altă modalitate, dorința de a licenția produsu
 
 — Distribuire sau Comunicare: orice act de vânzare, oferire, împrumut, închiriere, distribuire, comunicare, transmitere sau punere în orice alt mod la dispoziție, online sau offline, a unor copii ale produsului sau furnizarea accesului la funcțiile principale ale acestuia oricărei alte persoane fizice sau juridice.
 
-2.Domeniul de aplicare al drepturilor conferite de licență
+2. Domeniul de aplicare al drepturilor conferite de licență
 
 Licențiatorul vă oferă prin prezenta o licență internațională, scutită de redevențe, neexclusivă, care poate fi sublicențiată în următoarele scopuri, pe durata valabilității dreptului de autor dobândit pentru produsul original:
 
@@ -57,15 +58,15 @@ Aceste drepturi pot fi exercitate prin intermediul oricărui mijloc de comunicar
 
 Licențiatorul nu solicită redevențe licențiatului și îi acordă drepturi de utilizare neexclusive pentru orice brevet de invenție deținut de licențiator, în măsura necesară pentru a se folosi de drepturile acordate asupra produsului în baza prezentei licențe.
 
-3.Comunicarea codului sursă
+3. Comunicarea codului sursă
 
 Licențiatorul poate furniza produsul fie sub formă de cod sursă, fie sub formă de cod executabil. În cazul în care produsul este furnizat sub formă de cod executabil, licențiatorul va furniza, de asemenea, o copie care poate fi citită de computer a codului sursă al produsului pentru fiecare copie a produsului pe care licențiatorul o distribuie, sau indică, într-o mențiune care urmează mențiunii privind dreptul de autor anexată produsului, o arhivă unde codul sursă este accesibil ușor și în mod gratuit pe toată durata perioadei în care licențiatorul continuă să distribuie sau să comunice produsul.
 
-4.Limitări ale dreptului de autor
+4. Limitări ale dreptului de autor
 
 Nicio prevedere a prezentei licențe nu are ca scop să priveze licențiatul de beneficiile rezultate din orice excepție sau limitare a drepturilor exclusive ale titularilor drepturilor asupra produsului, de încetarea acestor drepturi sau de alte limitări aplicabile acestora.
 
-5.Obligațiile licențiatului
+5. Obligațiile licențiatului
 
 Conferirea drepturilor menționate mai sus face obiectul unor restricții și obligații impuse licențiatului. Aceste obligații sunt următoarele:
 
@@ -79,7 +80,7 @@ Furnizarea codului sursă: în momentul distribuirii sau comunicării de copii a
 
 Protecția juridică: prezenta licență nu acordă permisiunea de a folosi denumirile comerciale, mărcile comerciale, mărcile de servicii sau numele licențiatorului, cu excepția situației în care acestea sunt necesare în cadrul unei utilizări rezonabile și normale pentru descrierea originii produsului și pentru reproducerea conținutului mențiunii referitoare la dreptul de autor.
 
-6.Lanțul de autori
+6. Lanțul de autori
 
 Licențiatorul original garantează faptul că dreptul de autor pentru produsul original acordat prin prezenta este deținut de către acesta sau este licențiat în favoarea sa și că are competența și autoritatea de a acorda licența.
 
@@ -87,7 +88,7 @@ Fiecare contribuitor garantează faptul că dreptul de autor asupra modificăril
 
 De fiecare dată când dumneavoastră acceptați licența, licențiatorul original și contribuitorii ulteriori vă acordă o licență asupra contribuțiilor lor aduse produsului, în condițiile prevăzute de prezenta licență.
 
-7.Renunțarea la garanții
+7. Renunțarea la garanții
 
 Produsul este un produs în curs de elaborare îmbunătățit în mod continuu de mai mulți contribuitori. Acesta nu este un produs finalizat și, prin urmare, poate conține deficiențe sau erori („bugs”) inerente acestui tip de dezvoltare.
 
@@ -95,31 +96,31 @@ Având în vedere motivul de mai sus, produsul este furnizat în baza licenței 
 
 Această renunțare la garanții reprezintă o parte esențială a licenței și o condiție pentru acordarea oricăror drepturi asupra produsului.
 
-8.Limitarea responsabilității
+8. Limitarea responsabilității
 
 Cu excepția erorilor intenționate sau a daunelor cauzate în mod direct persoanelor fizice, licențiatorul nu va fi ținut răspunzător în nicio situație, pentru niciun fel de daune directe sau indirecte, materiale sau morale care derivă din licență sau din utilizarea produsului, inclusiv, și fără a se limita la acestea, daunele pentru pierderea fondului comercial, sau cele rezultate din întreruperea activității, nefuncționarea sau funcționarea necorespunzătoare a computerului, pierderea de date sau orice prejudicii comerciale, chiar dacă licențiatorul a fost informat asupra eventualității producerii unor astfel de daune. Cu toate acestea, licențiatorul va fi ținut răspunzător în baza legilor referitoare la răspunderea privind produsul în măsura în care astfel de legi se aplică în cazul produsului.
 
-9.Convenții suplimentare
+9. Convenții suplimentare
 
 Cu ocazia distribuirii produsului, puteți opta să încheiați o convenție suplimentară, cu definirea unor obligații sau servicii conforme cu prezenta licență. Cu toate acestea, acceptând astfel de obligații, licențiatul poate acționa doar în nume personal și pe răspunderea proprie, și nu în numele licențiatorului original sau al oricărui alt contribuitor, și doar dacă acceptă să despăgubească, să apere și să protejeze contribuitorul de orice răspundere angajată sau de orice plângeri formulate împotriva acestuia, din cauza faptului că licențiatul a acceptat să ofere o garanție sau o răspundere suplimentară.
 
-10.Acceptarea licenței
+10. Acceptarea licenței
 
 Prevederile prezentei licențe pot fi acceptate prin apăsarea butonului „Sunt de acord” din partea de jos a ferestrei care afișează textul prezentei licențe sau prin declararea consimțământului în orice alt mod similar, în conformitate cu normele aplicabile. Prin apăsarea acestui buton, licențiatul indică în mod clar și irevocabil faptul că acceptă prezenta licență, precum și toate clauzele și condițiile prevăzute de aceasta.
 
 De asemenea, licențiatul acceptă în mod irevocabil prezenta licență, împreună cu toate clauzele și condițiile prevăzute de aceasta, în momentul în care exercită orice drepturi conferite de articolul 2 al prezentei licențe, precum utilizarea produsului, crearea de către licențiat a unui produs derivat sau distribuirea sau comunicarea de către licențiat a produsului sau a unor copii ale acestuia.
 
-11.Informarea publicului
+11. Informarea publicului
 
 În cazul oricărei distribuiri sau comunicări a produsului de către licențiat prin mijloace de comunicare electronică (de exemplu, prin oferirea posibilității de a descărca produsul de la distanță), canalul sau mijlocul de distribuire (de exemplu, un site web) trebuie să furnizeze publicului cel puțin informațiile necesare în temeiul legii aplicabile privind licențiatorul, licența și modul în care aceasta poate fi accesată, acceptată, stocată și reprodusă de către licențiat.
 
-12.Încetarea licenței
+12. Încetarea licenței
 
 Licența și drepturile conferite de aceasta încetează automat în cazul oricărei încălcări de către licențiat a prevederilor licenței.
 
 O astfel de încetare nu va duce la încetarea licențelor oricărei persoane care a intrat în posesia produsului de la licențiat în baza licenței, cu condiția ca aceste persoane să respecte în totalitate prevederile licenței.
 
-13.Diverse
+13. Diverse
 
 Fără a aduce atingere articolului 9 de mai sus, licența reprezintă acordul integral dintre părți referitor la produs.
 
@@ -129,7 +130,7 @@ Comisia Europeană poate publica alte versiuni lingvistice sau noi versiuni ale 
 
 Toate versiunile lingvistice ale prezentei licențe, aprobată de Comisia Europeană, au valoare identică. Părțile pot alege să utilizeze oricare dintre versiunile lingvistice.
 
-14.Competență
+14. Competență
 
 Fără a aduce atingere acordului între părți,
 
@@ -137,14 +138,13 @@ Fără a aduce atingere acordului între părți,
 
 —  orice litigiu între alte părți, care rezultă din interpretarea prezentei licențe, va intra sub jurisdicția exclusivă a instanței competente din locul în care licențiatorul își are reședința sau își derulează activitatea comercială principală.
 
-15.Dreptul aplicabil
+15. Dreptul aplicabil
 
 Fără a aduce atingere acordului între părți,
 
 —  prezenta licență intră sub incidența legislației statului din Uniunea Europeană în care licențiatorul își are reședința sau sediul social;
 
 —  prezenta licență intră sub incidența legislației belgiene, în cazul în care licențiatorul nu își are reședința sau sediul social într-un stat membru al Uniunii Europene.
-
 
 Apendice
 

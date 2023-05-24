@@ -1,4 +1,5 @@
 ﻿LICENCJA PUBLICZNA UNII EUROPEJSKIEJ wersja 1.2
+
 EUPL © Unia Europejska 2007, 2016
 
 Niniejsza licencja publiczna Unii Europejskiej („EUPL”) stosowana jest w odniesieniu do utworu (w rozumieniu definicji poniżej) udostępnianego na warunkach niniejszej licencji. Każde wykorzystanie utworu inne niż dozwolone na mocy niniejszej licencji jest zakazane (w zakresie, w jakim takie wykorzystanie wchodzi w zakres prawa przysługującego posiadaczowi praw autorskich do utworu).
@@ -9,7 +10,7 @@ Na licencji EUPL
 
 lub w jakikolwiek inny sposób wyrazi swój zamiar udzielenia licencji na podstawie EUPL.
 
-1.Definicje
+1. Definicje
 
 W niniejszej licencji stosuje się następujące definicje:
 
@@ -33,7 +34,7 @@ W niniejszej licencji stosuje się następujące definicje:
 
 —„rozpowszechnianie” lub „udostępnianie”:każdy przypadek sprzedaży, przekazania, wypożyczenia, najmu, rozpowszechnienia, udostępnienia, nadania lub innego oddania kopii utworu do dyspozycji innej osobie fizycznej bądź prawnej lub zapewnienia im dostępu do jego istotnych funkcji w trybie on-line lub off-line.
 
-2.Zakres praw przyznawanych na mocy licencji
+2. Zakres praw przyznawanych na mocy licencji
 
 Licencjodawca niniejszym udziela licencjobiorcy obowiązującej na całym świecie, bezpłatnej, niewyłącznej licencji, obejmującej prawo do udzielania dalszych licencji, na wykonywanie następujących czynności przez okres obowiązywania praw autorskich do utworu oryginalnego:
 
@@ -57,15 +58,15 @@ W państwach, w których przysługują autorskie prawa osobiste, licencjodawca z
 
 Licencjodawca niniejszym przyznaje licencjobiorcy bezpłatne, niewyłączne prawa do eksploatacji wszelkich patentów posiadanych przez licencjodawcę w zakresie niezbędnym do korzystania z praw do utworu przyznanych na mocy niniejszej licencji.
 
-3.Udostępnienie kodu źródłowego
+3. Udostępnienie kodu źródłowego
 
 Licencjodawca może udostępnić utwór w postaci kodu źródłowego lub kodu wykonywalnego. Jeżeli utwór udostępnia się w postaci kodu wykonywalnego, licencjodawca udostępnia jednocześnie kopię kodu źródłowego utworu w formie przeznaczonej do odczytu maszynowego wraz z każdą kopią utworu, którą licencjodawca rozpowszechnia, bądź wskazuje, w adnotacji następującej po informacji o prawach autorskich dołączonej do utworu, repozytorium, w którym łatwo i bezpłatnie dostępny jest kod źródłowy w czasie, w którym licencjodawca rozpowszechnia lub udostępnia utwór.
 
-4.Ograniczenia praw autorskich
+4. Ograniczenia praw autorskich
 
 Żadne z postanowień niniejszej licencji nie ma na celu pozbawienia licencjobiorcy korzyści wynikających z wszelkich wyjątków lub ograniczeń w stosunku do wyłącznych praw przysługujących właścicielom praw do utworu, ani korzyści płynących z faktu wyczerpania powyższych praw lub innych stosownych ograniczeń tych praw.
 
-5.Obowiązki licencjobiorcy
+5. Obowiązki licencjobiorcy
 
 Przyznanie praw, o których mowa powyżej, podlega określonym ograniczeniom i obowiązkom nałożonym na licencjobiorcę. Obowiązki te obejmują:
 
@@ -79,7 +80,7 @@ Udostępnienie kodu źródłowego: Rozpowszechniając lub udostępniając kopie 
 
 Ochrona prawna: Niniejsza licencja nie upoważnia do korzystania z nazw handlowych, znaków towarowych, znaków usługowych ani nazw licencjodawcy, z wyjątkiem przypadków uzasadnionego i zwyczajowo przyjętego opisu pochodzenia utworu i powielania treści informacji o prawach autorskich.
 
-6.Ciąg autorstwa
+6. Ciąg autorstwa
 
 Pierwotny licencjodawca gwarantuje, że prawa autorskie do utworu oryginalnego przyznane na mocy niniejszej licencji stanowią jego własność lub że posiada je na mocy stosownej licencji oraz że jest uprawniony i upoważniony do udzielania licencji.
 
@@ -87,7 +88,7 @@ Każdy współautor gwarantuje, że prawa autorskie do modyfikacji, jakie wprowa
 
 Każdorazowo gdy licencjobiorca akceptuje licencję, pierwotny licencjodawca i późniejsi współautorzy udzielają licencjobiorcy licencji w stosunku do ich wkładu w utwór na warunkach niniejszej licencji.
 
-7.Wyłączenie gwarancji
+7. Wyłączenie gwarancji
 
 Utwór ma charakter utworu nieukończonego, wciąż udoskonalanego przez wielu współautorów. Nie stanowi on utworu gotowego i dlatego może posiadać wady lub błędy właściwe dla tej formy opracowywania utworów.
 
@@ -95,31 +96,31 @@ Z powyższych względów utwór przekazuje się na mocy licencji w postaci, w ja
 
 Niniejsze wyłączenie gwarancji stanowi istotny element licencji oraz warunek przyznania jakichkolwiek praw do utworu.
 
-8.Wyłączenie odpowiedzialności
+8. Wyłączenie odpowiedzialności
 
 Z zastrzeżeniem przypadków działań umyślnych na szkodę osób fizycznych lub szkód wyrządzonych bezpośrednio osobom fizycznym, licencjodawca w żadnym wypadku nie ponosi odpowiedzialności za bezpośrednie lub pośrednie, majątkowe lub osobiste szkody dowolnego rodzaju powstałe w związku z licencją lub eksploatacją utworu, w tym między innymi za szkody związane z utratą wartości firmy, przerwami w pracy, awarią bądź zakłóceniami pracy komputera, utratą danych ani za wszelkie inne szkody gospodarcze, nawet jeżeli licencjodawca został poinformowany o możliwości ich wystąpienia. Licencjodawca ponosi jednak odpowiedzialność zgodnie z ustawowymi przepisami regulującymi kwestie odpowiedzialności za produkt w zakresie, w jakim takie przepisy mają zastosowanie do utworu.
 
-9.Dodatkowe umowy
+9. Dodatkowe umowy
 
 Rozpowszechniając utwór, licencjobiorca może postanowić o zawarciu dodatkowej umowy określającej zobowiązania lub świadczenia zgodne z niniejszą licencją. Przyjmując takie zobowiązania, licencjobiorca może występować jedynie we własnym imieniu i na własną odpowiedzialność, a nie w imieniu pierwotnego licencjodawcy ani żadnego innego współautora, oraz tylko pod warunkiem że licencjobiorca zobowiąże się względem każdego współautora do wypłacenia mu rekompensaty, jego obrony i zwolnienia go z odpowiedzialności, jeśli w związku z faktem, że licencjobiorca przyjął dodatkowe zobowiązania lub gwarancje, po stronie takiego współautora powstanie odpowiedzialność lub wysunięte zostaną wobec niego roszczenia.
 
-10.Akceptacja licencji
+10. Akceptacja licencji
 
 Postanowienia niniejszej licencji mogą zostać zaakceptowane poprzez kliknięcie ikony „Wyrażam zgodę” umieszczonej na dole okna, w którym wyświetlono pełną treść niniejszej licencji, lub poprzez potwierdzenie własnej zgody w jakikolwiek inny podobny sposób zgodny z przepisami obowiązującego prawa. Kliknięcie takiej ikony jest równoznaczne z wyraźną i nieodwołalną akceptacją niniejszej licencji oraz wszystkich jej warunków.
 
 Analogicznie, nieodwołalną akceptację przez licencjobiorcę niniejszej licencji i wszystkich jej warunków stanowi także wykonanie jakiegokolwiek prawa przyznanego licencjobiorcy na mocy pkt 2 niniejszej licencji, takie jak wykorzystanie utworu, opracowanie przez licencjobiorcę utworu zależnego bądź rozpowszechnienie lub udostępnienie przez licencjobiorcę utworu lub jego kopii.
 
-11.Podawanie informacji do publicznej wiadomości
+11. Podawanie informacji do publicznej wiadomości
 
 W przypadku rozpowszechniania lub udostępniania przez licencjobiorcę utworu drogą komunikacji elektronicznej (na przykład poprzez oferowanie utworu do pobrania z lokalizacji zdalnej), w obrębie kanału rozpowszechniania lub nośnika (na przykład witryny internetowej) należy przynajmniej podać do wiadomości publicznej informacje wymagane przepisami obowiązującego prawa dotyczące licencjodawcy, licencji oraz sposobu, w jaki może zostać udostępniona, zawarta, przechowywana i zwielokrotniana przez licencjobiorcę.
 
-12.Wygaśnięcie licencji
+12. Wygaśnięcie licencji
 
 Licencja i prawa przyznane na jej mocy wygasają automatycznie z chwilą naruszenia przez licencjobiorcę warunków licencji.
 
 Takie wygaśnięcie nie skutkuje jednak wygaśnięciem licencji przysługującej którejkolwiek z osób, które otrzymały utwór od licencjobiorcy na mocy licencji, pod warunkiem że takie osoby nadal przestrzegają w pełni postanowień licencji.
 
-13.Postanowienia różne
+13. Postanowienia różne
 
 Nie naruszając postanowień pkt 9, licencja stanowi całość porozumienia między stronami w odniesieniu do utworu.
 
@@ -129,7 +130,7 @@ Komisja Europejska może publikować inne wersje językowe lub nowe wersje ninie
 
 Wszystkie zatwierdzone przez Komisję Europejską wersje językowe niniejszej licencji mają taką samą wartość. Strony mogą korzystać z dowolnej wybranej przez siebie wersji językowej.
 
-14.Jurysdykcja
+14. Jurysdykcja
 
 Bez uszczerbku dla szczegółowych uzgodnień między stronami,
 
@@ -137,14 +138,13 @@ Bez uszczerbku dla szczegółowych uzgodnień między stronami,
 
 —  wszelkie spory sądowe związane z interpretacją niniejszej licencji, wynikłe między innymi stronami, podlegają wyłącznej jurysdykcji sądu właściwego miejscowo dla miejsca zamieszkania licencjodawcy bądź jego głównego miejsca prowadzenia działalności gospodarczej.
 
-15.Prawo właściwe
+15. Prawo właściwe
 
 Bez uszczerbku dla szczegółowych uzgodnień między stronami,
 
 —  prawem właściwym dla wykonania niniejszej licencji jest prawo państwa członkowskiego Unii Europejskiej, w którym zamieszkuje lub posiada swą siedzibę (statutową) licencjodawca,
 
 —  prawem właściwym dla wykonania niniejszej licencji jest prawo belgijskie, jeżeli licencjodawca nie ma miejsca zamieszkania lub siedziby (statutowej) na terenie państwa członkowskiego Unii Europejskiej.
-
 
 Załącznik
 
@@ -172,4 +172,6 @@ Załącznik
 
 Komisja Europejska może zaktualizować ten załącznik, aby uwzględnić w nim późniejsze wersje wyżej wymienionych licencji bez sporządzania nowej wersji EUPL, o ile te nowe wersje przyznają prawa przewidziane w pkt 2 niniejszej licencji oraz chronią kod źródłowy wchodzący w jej zakres przed wyłącznym przywłaszczeniem.
 
-Wszelkie inne zmiany lub uzupełnienia niniejszego załącznika wymagają sporządzenia nowej wersji EUPL.  19.5.2017 L 128/64 Dziennik Urzędowy Unii Europejskiej PL
+Wszelkie inne zmiany lub uzupełnienia niniejszego załącznika wymagają sporządzenia nowej wersji EUPL.
+
+19.5.2017 L 128/64 Dziennik Urzędowy Unii Europejskiej PL
