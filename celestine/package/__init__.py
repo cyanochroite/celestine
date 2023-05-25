@@ -3,10 +3,14 @@
 import os
 import sys
 
+from celestine.load import directory
+
+
 from celestine import load
 from celestine.typed import (
     MT,
     L,
+    P,
     N,
     S,
 )
@@ -15,12 +19,17 @@ CELESTINE = "celestine"
 PACKAGE = "package"
 
 
+
+
+
+
 class Package:
     """"""
 
     def main(self, package: MT) -> N:
         """"""
         package.main()
+
 
     def module(self) -> L[S]:
         """The 'import PACKAGE.MODULE' name."""

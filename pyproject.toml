@@ -134,9 +134,7 @@ Tracker = "https://github.com/mem-dixy/celestine/issues"
 
 
 [tool.autoflake]
-exclude = [
-    "unicode.py",
-]
+exclude = ["unicode"]
 in-place = true
 recursive = true
 remove-all-unused-imports = true
@@ -145,7 +143,7 @@ remove-unused-variables = true
 
 
 [tool.black]
-extend-exclude = "unicode.py"
+extend-exclude = "unicode"
 line_length = 72
 safe = true
 target-version = [
@@ -154,9 +152,7 @@ target-version = [
 
 
 [tool.isort]
-extend_skip = [
-    "unicode.py",
-]
+extend_skip = ["unicode"]
 force_grid_wrap = 2
 line_ending = "\r\n"
 line_length = 72
@@ -174,12 +170,9 @@ show_column_numbers = true
 beginning-quotes = true
 capitalize-first-letter = true
 closing-quotes = true
-exclude = [  # Does not actually work.
-    "unicode.py",
-]
 final-period = true
 linewrap-full-docstring = true
-max-line-length = 75  # Should be 72 but gets clipped too soon.
+max-line-length = 75  # Length should be 72 but it clipped too soon.
 max-summary-lines = 1
 numpydoc-name-type-spacing = false
 numpydoc-section-hyphen-length = false
@@ -188,9 +181,7 @@ numpydoc-section-spacing = false
 quotes-type = true
 split-summary-body = true
 strip-whitespaces = true
-style = [
-    "pep257",
-]
+style = ["pep257"]
 write = true
 
 

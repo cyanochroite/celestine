@@ -1,6 +1,7 @@
 """Run a bunch of auto formaters."""
 
 import io
+import math
 
 from celestine import load
 from celestine.file import (
