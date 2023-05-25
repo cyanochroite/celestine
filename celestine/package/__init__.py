@@ -3,14 +3,10 @@
 import os
 import sys
 
-from celestine.load import directory
-
-
 from celestine import load
 from celestine.typed import (
     MT,
     L,
-    P,
     N,
     S,
 )
@@ -19,17 +15,13 @@ CELESTINE = "celestine"
 PACKAGE = "package"
 
 
-
-
-
-
 class Package:
     """"""
 
-    def main(self, package: MT) -> N:
+    def main(self, package: MT, path: S) -> N:
         """"""
+        sys.argv.append(path)
         package.main()
-
 
     def module(self) -> L[S]:
         """The 'import PACKAGE.MODULE' name."""
@@ -49,7 +41,7 @@ class Package:
 
         try:
             module = load.package(self.name, *self.module())
-            self.main(module)
+            self.main(module, path)
         except ModuleNotFoundError:
             print("Module failed to load. To install, run:")
             print(self.pip())

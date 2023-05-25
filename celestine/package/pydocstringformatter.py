@@ -6,10 +6,10 @@ import os
 import sys
 
 from celestine.load import directory
-
 from celestine.typed import (
     MT,
     N,
+    S,
 )
 
 from . import Package as Package_
@@ -18,24 +18,25 @@ from . import Package as Package_
 class Package(Package_):
     """"""
 
-    def main(self, package: MT) -> N:
-        """Setting exclude in pyproject just does not work."""
-        path = os.getcwd()
+    def main(self, package: MT, path: S) -> N:
+        """
+        This package is troublesome.
 
-        # Change current directory so we can find pyproject file.
-        path = sys.path[0]
-        os.chdir(path)
+        It can't find the pyproject file unless run from root directory.
+        Exclude argument simply does not work.
+        Manually feeding it files works.
+        """
 
+        location = os.getcwd()
+        os.chdir(sys.path[0])
 
-        #TODO fix security argv os walk
-        #TODO add config options??
-        top = sys.argv[1]
+        top = path
         include = [".py"]
-        exclude = [".mypy_cache","__pycache__","unicode"]
+        exclude = [".mypy_cache", "__pycache__", "unicode"]
 
         files = directory.file(top, include, exclude)
-        atlas = map(str, files)
-        argv = [*atlas]
+        file = map(str, files)
+        argv = [*file]
         package.run_docstring_formatter(argv)
 
-        os.chdir(path)
+        os.chdir(location)
