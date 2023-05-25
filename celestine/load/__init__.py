@@ -160,7 +160,7 @@ def pathway(*path: S) -> S:
 
 def asset(item: S) -> S:
     """"""
-    return pathway("asset", item)
+    return pathway("data", item)
 
 
 def method(name: S, *path: S):

@@ -106,32 +106,38 @@ def make_parser(language: MT, exit_on_error: B) -> AP:
 
         def _check_value(self, action, value):
             # converted value must be one of the choices (if specified)
-            exists = action.choices is not None
-            valid = len(action.choices) > 0
-            missing = value not in action.choices
-            if exists and valid and missing:
-                string = io.StringIO()
-                string.write(language.ARGUMENT_PARSER_CHOICE)
-                string.write(COLON)
-                string.write(SPACE)
-                string.write(APOSTROPHE)
-                string.write(value)
-                string.write(APOSTROPHE)
-                string.write(SPACE)
-                string.write(LEFT_PARENTHESIS)
-                string.write(language.ARGUMENT_PARSER_CHOOSE)
-                string.write(SPACE)
 
-                comma_separated = [COMMA, SPACE]
-                comma_separated_list = NONE.join(comma_separated)
-                choice_map = map(repr, action.choices)
-                choices = comma_separated_list.join(choice_map)
-                string.write(choices)
+            if not action.choices:
+                return
 
-                string.write(RIGHT_PARENTHESIS)
+            if len(action.choices) <= 0:
+                return
 
-                message = string.getvalue()
-                raise ArgumentError(action, message)
+            if value in action.choices:
+                return
+
+            string = io.StringIO()
+            string.write(language.ARGUMENT_PARSER_CHOICE)
+            string.write(COLON)
+            string.write(SPACE)
+            string.write(APOSTROPHE)
+            string.write(value)
+            string.write(APOSTROPHE)
+            string.write(SPACE)
+            string.write(LEFT_PARENTHESIS)
+            string.write(language.ARGUMENT_PARSER_CHOOSE)
+            string.write(SPACE)
+
+            comma_separated = [COMMA, SPACE]
+            comma_separated_list = NONE.join(comma_separated)
+            choice_map = map(repr, action.choices)
+            choices = comma_separated_list.join(choice_map)
+            string.write(choices)
+
+            string.write(RIGHT_PARENTHESIS)
+
+            message = string.getvalue()
+            raise ArgumentError(action, message)
 
     parser = Parser(
         add_help=False,
