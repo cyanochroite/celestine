@@ -7,6 +7,10 @@ import PIL.Image
 
 sys.path[0] = os.path.dirname(sys.path[0])
 
+
+for index in range(256):
+    print(chr(index))
+
 #celestine = __import__("celestine")
 #celestine.main(sys.argv[1:], True)
 palettedata = [
@@ -40,6 +44,17 @@ ASCII_CHARS = [".", ",", ":", ";", "+", "*", "?", "%", "S", "#", "@"]
 ASCII_CHARS = [".", ",", ":", ";", "+", "*", "?", "%", "S", "#", "@"]
 ASCII_CHARS = ASCII_CHARS[::-1]
 
+ASCII_CHARS = [
+    ".", "`", "'", ",", "-", ";", "^", "!", '"',
+    "+", "=", "*", "?", "%", "#", "&", "$", "@",
+]
+
+ASCII_CHARS = [
+    "@", "$", "&", "#", "%", "?", "*", "=", "+",
+    '"', "!", "^", ";", "-", ",", "'", "`", ".",
+]
+
+
 """
 Method resize():
 
@@ -63,10 +78,10 @@ method modify():
 """
 
 
-def modify(image, buckets=25):
+def modify(image):
     initial_pixels = list(image.getdata())
     new_pixels = [
-        ASCII_CHARS[pixel_value // buckets]
+        ASCII_CHARS[pixel_value // 15]
         for pixel_value in initial_pixels
     ]
     return "".join(new_pixels)
@@ -79,8 +94,15 @@ method do():
 
 
 def do(image, new_width=100):
+
     image = resize(image)
-    image = image.convert("L")
+
+    #image = image_resize(image, (32, 18))
+    image = image_quantize(image)
+    image = image_convert(image, "L")
+
+    image.save("test.png")
+
 
     pixels = modify(image)
     len_pixels = len(pixels)
@@ -105,7 +127,8 @@ method runner():
 def runner(path):
     image = None
     try:
-        image = Image.open(path)
+        image = PIL.Image.open(path)
+        image = image_convert(image, "RGB")
     except Exception:
         print("Unable to find image in", path)
         # print(e)
@@ -124,6 +147,46 @@ def runner(path):
     f.close()
 
 
+######
+
+PALETTE = PIL.Image.new("P", (1, 1))
+PALETTE.putpalette(
+    [
+        0x00, 0x00, 0x00,
+        0x0F, 0x0F, 0x0F,
+        0x1E, 0x1E, 0x1E,
+        0x2D, 0x2D, 0x2D,
+        0x3C, 0x3C, 0x3C,
+        0x4B, 0x4B, 0x4B,
+        0x5A, 0x5A, 0x5A,
+        0x69, 0x69, 0x69,
+        0x78, 0x78, 0x78,
+        0x87, 0x87, 0x87,
+        0x96, 0x96, 0x96,
+        0xA5, 0xA5, 0xA5,
+        0xB4, 0xB4, 0xB4,
+        0xC3, 0xC3, 0xC3,
+        0xD2, 0xD2, 0xD2,
+        0xE1, 0xE1, 0xE1,
+        0xF0, 0xF0, 0xF0,
+        0xFF, 0xFF, 0xFF,
+    ]
+)
+
+
+def image_convert(image, mode):
+    """"""
+
+    matrix = None
+    dither = PIL.Image.Dither.NONE
+    palette = PIL.Image.Palette.WEB
+    colors = 256
+
+    result = image.convert(mode, matrix, dither, palette, colors)
+
+    return result
+
+
 def image_resize(image, size):
     """"""
 
@@ -139,33 +202,10 @@ def image_resize(image, size):
 def image_quantize(image):
     """"""
 
-    palettedata = [
-        0x00, 0x00, 0x00,
-        0x0F, 0x0F, 0x0F,
-        0x1E, 0x1E, 0x1E,
-        0x2D, 0x2D, 0x2D,
-        0x3C, 0x3C, 0x3C,
-        0x4B, 0x4B, 0x4B,
-        0x5A, 0x5A, 0x5A,
-        0x69, 0x69, 0x69,
-        0x78, 0x78, 0x78,
-        0x87, 0x87, 0x87,
-        0x96, 0x96, 0x96,
-        0xA5, 0xA5, 0xA5,
-        0xB4, 0xB4, 0xB4,
-        0xC3, 0xC3, 0xC3,
-        0xD2, 0xD2, 0xD2,
-        0xE1, 0xE1, 0xE1,
-        0xF0, 0xF0, 0xF0,
-        0xFF, 0xFF, 0xFF,
-    ]
-    palimage = PIL.Image.new("P", (1, 1))
-    palimage.putpalette(palettedata)
-
     colors = 256
     method = None
     kmeans = 0
-    palette = palimage
+    palette = PALETTE
     dither = PIL.Image.Dither.NONE
 
     result = image.quantize(colors, method, kmeans, palette, dither)
@@ -175,64 +215,49 @@ def image_quantize(image):
 
 if __name__ == "__main__":
     path = sys.argv[1]
-    #runner(path)
+    runner(path)
 
-    image = PIL.Image.open(path)
 
-    palettedata = [
-     0x00, 0x00, 0x00,
-     0x11, 0x11, 0x11,
-     0x22, 0x22, 0x22,
-     0x33, 0x33, 0x33,
-     0x44, 0x44, 0x44,
-     0x55, 0x55, 0x55,
-     0x66, 0x66, 0x66,
-     0x77, 0x77, 0x77,
-     0x88, 0x88, 0x88,
-     0x99, 0x99, 0x99,
-     0xAA, 0xAA, 0xAA,
-     0xBB, 0xBB, 0xBB,
-     0xCC, 0xCC, 0xCC,
-     0xDD, 0xDD, 0xDD,
-     0xEE, 0xEE, 0xEE,
-     0xFF, 0xFF, 0xFF,
-    ]
+items = []
 
-    palettedata = [
-        0x00, 0x00, 0x00,
-        0x0F, 0x0F, 0x0F,
-        0x1E, 0x1E, 0x1E,
-        0x2D, 0x2D, 0x2D,
-        0x3C, 0x3C, 0x3C,
-        0x4B, 0x4B, 0x4B,
-        0x5A, 0x5A, 0x5A,
-        0x69, 0x69, 0x69,
-        0x78, 0x78, 0x78,
-        0x87, 0x87, 0x87,
-        0x96, 0x96, 0x96,
-        0xA5, 0xA5, 0xA5,
-        0xB4, 0xB4, 0xB4,
-        0xC3, 0xC3, 0xC3,
-        0xD2, 0xD2, 0xD2,
-        0xE1, 0xE1, 0xE1,
-        0xF0, 0xF0, 0xF0,
-        0xFF, 0xFF, 0xFF,
-    ]
+def work(name):
+    global items
 
-    palimage = PIL.Image.new("P", (1, 1))
-    palimage.putpalette(palettedata)
+    black = 0
+    white = 0
+    path = sys.argv[1]
+    file = ""
+    file = f"{path}\\{name}.png"
 
-    image = image.convert("RGB")
+    image = PIL.Image.open(file)
+    image = image.convert("1")
 
-    image2 = image_resize(image, (32, 18))
+    initial_pixels = list(image.getdata())
 
-    color = image_quantize(image)
-    color.save("test.png")
+    for pixel_value in initial_pixels:
+        if pixel_value == 0:
+            black += 1
+        elif pixel_value == 255:
+            white += 1
+        else:
+            raise RuntimeError()
 
-#    color.show()
-    #color = image.convert(mode=None, matrix=None, dither=None, palette=Image.Palette.WEB, colors=16)
-    #color.show()
-    #new = image.quantize(16)
-    #new.show()
- #   new.show()
-  #  print(image)
+    items.append((black, name))
+
+for index in range(23):
+    name = str(index).zfill(2)
+    work(name)
+
+items = sorted(items)
+
+for item in items:
+    print(item[0], item[1])
+
+print("$$$$")
+contrast = []
+
+last = 0
+for item in items:
+    diff = item[0] - last
+    print(diff, item[1])
+    last = item[0]

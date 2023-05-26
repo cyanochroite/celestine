@@ -1,4 +1,41 @@
-from PIL import Image
+""""""
+
+import os
+import sys
+import PIL
+import PIL.Image
+
+sys.path[0] = os.path.dirname(sys.path[0])
+
+#celestine = __import__("celestine")
+#celestine.main(sys.argv[1:], True)
+palettedata = [
+    0x00,
+    0x0F,
+    0x1E,
+    0x2D,
+    0x3C,
+    0x4B,
+    0x5A,
+    0x69,
+    0x78,
+    0x87,
+    0x96,
+    0xA5,
+    0xB4,
+    0xC3,
+    0xD2,
+    0xE1,
+    0xF0,
+    0xFF,
+]
+
+#for item in palettedata:
+    #print(item//15)
+
+
+" "
+ASCII_CHARS = [".", ",", ":", ";", "+", "*", "?", "%", "S", "#", "@"]
 
 ASCII_CHARS = [".", ",", ":", ";", "+", "*", "?", "%", "S", "#", "@"]
 ASCII_CHARS = ASCII_CHARS[::-1]
@@ -18,17 +55,6 @@ def resize(image, new_width=100):
     new_dim = (new_width, new_height)
     new_image = image.resize(new_dim)
     return new_image
-
-
-"""
-method grayscalify():
-    - takes an image as a parameter
-    - returns the grayscale version of image
-"""
-
-
-def grayscalify(image):
-    return image.convert("L")
 
 
 """
@@ -53,15 +79,19 @@ method do():
 
 
 def do(image, new_width=100):
+
     image = resize(image)
-    image = grayscalify(image)
+
+    #image = image_resize(image, (32, 18))
+    image = image_quantize(image)
+
 
     pixels = modify(image)
     len_pixels = len(pixels)
 
     # Construct the image from the character list
     new_image = [
-        pixels[index : index + new_width]
+        pixels[index: index + new_width]
         for index in range(0, len_pixels, new_width)
     ]
 
@@ -79,7 +109,8 @@ method runner():
 def runner(path):
     image = None
     try:
-        image = Image.open(path)
+        image = PIL.Image.open(path)
+        image = image_convert(image, "RGB")
     except Exception:
         print("Unable to find image in", path)
         # print(e)
@@ -98,6 +129,81 @@ def runner(path):
     f.close()
 
 
+######
+
+PALETTE = PIL.Image.new("P", (1, 1))
+PALETTE.putpalette(
+    [
+        0x00, 0x00, 0x00,
+        0x0F, 0x0F, 0x0F,
+        0x1E, 0x1E, 0x1E,
+        0x2D, 0x2D, 0x2D,
+        0x3C, 0x3C, 0x3C,
+        0x4B, 0x4B, 0x4B,
+        0x5A, 0x5A, 0x5A,
+        0x69, 0x69, 0x69,
+        0x78, 0x78, 0x78,
+        0x87, 0x87, 0x87,
+        0x96, 0x96, 0x96,
+        0xA5, 0xA5, 0xA5,
+        0xB4, 0xB4, 0xB4,
+        0xC3, 0xC3, 0xC3,
+        0xD2, 0xD2, 0xD2,
+        0xE1, 0xE1, 0xE1,
+        0xF0, 0xF0, 0xF0,
+        0xFF, 0xFF, 0xFF,
+    ]
+)
+
+
+def image_convert(image, mode):
+    """"""
+
+    matrix = None
+    dither = PIL.Image.Dither.NONE
+    palette = PIL.Image.Palette.WEB
+    colors = 256
+
+    result = image.convert(mode, matrix, dither, palette, colors)
+
+    return result
+
+
+def image_resize(image, size):
+    """"""
+
+    resample = PIL.Image.Resampling.LANCZOS
+    box = None
+    reducing_gap = None
+
+    result = image.resize(size, resample, box, reducing_gap)
+
+    return result
+
+
+def image_quantize(image):
+    """"""
+
+    colors = 256
+    method = None
+    kmeans = 0
+    palette = PALETTE
+    dither = PIL.Image.Dither.NONE
+
+    result = image.quantize(colors, method, kmeans, palette, dither)
+
+    return result
+
+
 if __name__ == "__main__":
     path = sys.argv[1]
-    runner(path)
+    #runner(path)
+
+    image = PIL.Image.open(path)
+    image = image_convert(image, "RGB")
+    image2 = image_resize(image, (32, 18))
+    color = image_quantize(image)
+
+    color.save("test.png")
+    new = image_convert(color, "L")
+    new.save("black.png")
