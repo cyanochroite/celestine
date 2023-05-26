@@ -1,6 +1,7 @@
 """"""
 
 from celestine import load
+from celestine.package import pillow
 from celestine.package.curses import package as curses
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
@@ -8,10 +9,16 @@ from celestine.window.element import Image as image
 from celestine.window.element import Label as label
 from celestine.window.window import Window as window
 
-from celestine.package import pillow
+TERMINAL_RATIO = 15 / 7
+WIDTH = 18
+HEIGHT = 4
+
+WIDTH = 24
+HEIGHT = 8
 
 
-TERMINAL_RATIO = 15/7
+WIDTH = 48
+HEIGHT = 16
 
 ASCII_CHARS = [
     "@",
@@ -33,6 +40,7 @@ ASCII_CHARS = [
     "`",
     ".",
 ]
+
 
 class Abstract(abstract):
     """"""
@@ -75,7 +83,7 @@ class Image(Abstract, image):
         for index in range(start, stop, step):
             if row <= 0:
                 return
-            yield text[index:index+step]
+            yield text[index : index + step]
             row -= 1
 
     def render(self, collection, item, **star):
@@ -87,10 +95,8 @@ class Image(Abstract, image):
 
         row = 0
         for stuff in self.output(text):
-            self.add_string(collection, x_dot, y_dot+row, stuff)
+            self.add_string(collection, x_dot, y_dot + row, stuff)
             row += 1
-
-
 
     def draw(self, collection, **star):
         """"""
@@ -101,33 +107,34 @@ class Image(Abstract, image):
 
         (x, y) = self.cache.size
 
-        x *= TERMINAL_RATIO
-        y *= 1
+        if x > WIDTH or y > HEIGHT:
+            x *= TERMINAL_RATIO
+            y *= 1
 
         width = x * min(x / y, 1)
         height = y * min(y / x, 1)
 
-        print(x, y, width, height)
-        self.cache.resize(width, height)
+        self.width = max(min(round(width), WIDTH), 1)
+        self.height = max(min(round(height), HEIGHT), 1)
+
+        self.cache.resize(self.width, self.height)
         self.cache.quantize()
         self.cache.convert("L")
 
-
         initial_pixels = list(self.cache.image.getdata())
         new_pixels = [
-            ASCII_CHARS[pixel_value // 15] for pixel_value in initial_pixels
+            ASCII_CHARS[pixel_value // 15]
+            for pixel_value in initial_pixels
         ]
         text = "".join(new_pixels)
-
-
-        self.width = 19
-        self.height = 4
 
         item = f"image:{path}"
 
         item = text
-        self.render(collection, item, **star)
 
+        # self.cache.image.show()
+        # print(text)
+        self.render(collection, item, **star)
 
 
 class Label(Abstract, label):
@@ -264,4 +271,5 @@ def window(session, **star):
         "label": Label,
     }
     size = (80, 24)
+    size = (120, 35)
     return Window(session, element, size, **star)

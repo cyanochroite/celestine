@@ -1,10 +1,7 @@
 """"""
 
-import os
-import sys
 import PIL
 import PIL.Image
-
 
 palettedata = [
     0x00,
@@ -27,7 +24,7 @@ palettedata = [
     0xFF,
 ]
 
-TERMINAL_RATIO = 15/7
+TERMINAL_RATIO = 15 / 7
 
 ASCII_CHARS = [
     "@",
@@ -114,8 +111,7 @@ PALETTE.putpalette(
 )
 
 
-class Image():
-
+class Image:
     def convert(self, mode):
         """"""
 
@@ -124,7 +120,9 @@ class Image():
         palette = PIL.Image.Palette.WEB
         colors = 256
 
-        self.image = self.image.convert(mode, matrix, dither, palette, colors)
+        self.image = self.image.convert(
+            mode, matrix, dither, palette, colors
+        )
 
     def resize(self, width, height):
         """"""
@@ -137,13 +135,14 @@ class Image():
         box = None
         reducing_gap = None
 
-        self.image = self.image.resize(size, resample, box, reducing_gap)
+        self.image = self.image.resize(
+            size, resample, box, reducing_gap
+        )
 
     @property
     def size(self):
         """"""
         return self.image.size
-
 
     def quantize(self):
         """"""
@@ -154,7 +153,9 @@ class Image():
         palette = PALETTE
         dither = PIL.Image.Dither.NONE
 
-        self.image = self.image.quantize(colors, method, kmeans, palette, dither)
+        self.image = self.image.quantize(
+            colors, method, kmeans, palette, dither
+        )
 
     def __init__(self, path):
         fp = path

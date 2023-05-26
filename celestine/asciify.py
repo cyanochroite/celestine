@@ -2,11 +2,11 @@
 
 import os
 import sys
+
 import PIL
 import PIL.Image
 
 sys.path[0] = os.path.dirname(sys.path[0])
-
 
 
 # celestine = __import__("celestine")
@@ -78,7 +78,8 @@ ASCII_CHARS = [
 
 
 """
-method modify():
+Method modify():
+
     - replaces every pixel with a character whose intensity is similar
 """
 
@@ -305,4 +306,3 @@ for item in items:
     diff = item[0] - last
     print(diff, item[1])
     last = item[0]
-

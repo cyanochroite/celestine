@@ -2,11 +2,11 @@
 
 import os
 import sys
+
 import PIL
 import PIL.Image
 
 sys.path[0] = os.path.dirname(sys.path[0])
-
 
 
 # celestine = __import__("celestine")
@@ -34,7 +34,7 @@ palettedata = [
     0xFF,
 ]
 
-TERMINAL_RATIO = 15/7
+TERMINAL_RATIO = 15 / 7
 
 ASCII_CHARS = [
     "@",
@@ -59,7 +59,8 @@ ASCII_CHARS = [
 
 
 """
-method modify():
+Method modify():
+
     - replaces every pixel with a character whose intensity is similar
 """
 
@@ -235,4 +236,3 @@ def image_quantize(image):
 if __name__ == "__main__":
     path = sys.argv[1]
     runner(path)
-

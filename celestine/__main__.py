@@ -2,8 +2,6 @@
 
 import os
 import sys
-import PIL
-import PIL.Image
 
 sys.path[0] = os.path.dirname(sys.path[0])
 
