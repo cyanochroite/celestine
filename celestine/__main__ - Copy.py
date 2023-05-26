@@ -34,26 +34,7 @@ palettedata = [
     0xFF,
 ]
 
-ASCII_CHARS = [
-    ".",
-    "`",
-    "'",
-    ",",
-    "-",
-    ";",
-    "^",
-    "!",
-    '"',
-    "+",
-    "=",
-    "*",
-    "?",
-    "%",
-    "#",
-    "&",
-    "$",
-    "@",
-]
+TERMINAL_RATIO = 15/7
 
 ASCII_CHARS = [
     "@",
@@ -97,11 +78,13 @@ method do():
 """
 
 
-def do(image, new_width=100):
+def do(image, new_width=64):
     (x, y) = image.size
+    x *= TERMINAL_RATIO
+    y *= 1
 
-    width = 128 * max(x / y, 1)
-    height = 128 * max(y / x, 1)
+    width = new_width * min(x / y, 1)
+    height = new_width * min(y / x, 1)
 
     image = image_resize(image, width, height)
     image = image_quantize(image)
@@ -130,14 +113,8 @@ method runner():
 
 
 def runner(path):
-    image = None
-    try:
-        image = PIL.Image.open(path)
-        image = image_convert(image, "RGB")
-    except Exception:
-        print("Unable to find image in", path)
-        # print(e)
-        return
+    image = PIL.Image.open(path)
+    image = image_convert(image, "RGB")
     image = do(image)
 
     # To print on console
@@ -258,51 +235,4 @@ def image_quantize(image):
 if __name__ == "__main__":
     path = sys.argv[1]
     runner(path)
-
-
-items = []
-
-
-def work(name):
-    global items
-
-    black = 0
-    white = 0
-    path = sys.argv[1]
-    file = ""
-    file = f"{path}\\{name}.png"
-
-    image = PIL.Image.open(file)
-    image = image.convert("1")
-
-    initial_pixels = list(image.getdata())
-
-    for pixel_value in initial_pixels:
-        if pixel_value == 0:
-            black += 1
-        elif pixel_value == 255:
-            white += 1
-        else:
-            raise RuntimeError()
-
-    items.append((black, name))
-
-
-for index in range(23):
-    name = str(index).zfill(2)
-    work(name)
-
-items = sorted(items)
-
-for item in items:
-    print(item[0], item[1])
-
-print("$$$$")
-contrast = []
-
-last = 0
-for item in items:
-    diff = item[0] - last
-    print(diff, item[1])
-    last = item[0]
 

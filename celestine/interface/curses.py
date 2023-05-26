@@ -8,6 +8,31 @@ from celestine.window.element import Image as image
 from celestine.window.element import Label as label
 from celestine.window.window import Window as window
 
+from celestine.package import pillow
+
+
+TERMINAL_RATIO = 15/7
+
+ASCII_CHARS = [
+    "@",
+    "$",
+    "&",
+    "#",
+    "%",
+    "?",
+    "*",
+    "=",
+    "+",
+    '"',
+    "!",
+    "^",
+    ";",
+    "-",
+    ",",
+    "'",
+    "`",
+    ".",
+]
 
 class Abstract(abstract):
     """"""
@@ -41,11 +66,68 @@ class Button(Abstract, button):
 class Image(Abstract, image):
     """"""
 
+    def output(self, text):
+        row = self.height
+
+        start = 0
+        stop = len(text)
+        step = self.width
+        for index in range(start, stop, step):
+            if row <= 0:
+                return
+            yield text[index:index+step]
+            row -= 1
+
+    def render(self, collection, item, **star):
+        """"""
+        text = item
+        (x_dot, y_dot) = self.origin()
+
+        text = item
+
+        row = 0
+        for stuff in self.output(text):
+            self.add_string(collection, x_dot, y_dot+row, stuff)
+            row += 1
+
+
+
     def draw(self, collection, **star):
         """"""
         path = self.image or load.asset("null.png")
+
+        self.cache = pillow.Image(path)
+        self.cache.convert("RGB")
+
+        (x, y) = self.cache.size
+
+        x *= TERMINAL_RATIO
+        y *= 1
+
+        width = x * min(x / y, 1)
+        height = y * min(y / x, 1)
+
+        print(x, y, width, height)
+        self.cache.resize(width, height)
+        self.cache.quantize()
+        self.cache.convert("L")
+
+
+        initial_pixels = list(self.cache.image.getdata())
+        new_pixels = [
+            ASCII_CHARS[pixel_value // 15] for pixel_value in initial_pixels
+        ]
+        text = "".join(new_pixels)
+
+
+        self.width = 19
+        self.height = 4
+
         item = f"image:{path}"
+
+        item = text
         self.render(collection, item, **star)
+
 
 
 class Label(Abstract, label):
