@@ -299,6 +299,13 @@ BRAILLE = {
 
 
 
+print(f"{chr(0x28FF)}{chr(0x28FF)}{chr(0x28FF)}{chr(0x28FF)}{chr(0x28FF)}{chr(0x28FF)}")
+print(f"{chr(0x28FF)}{chr(0x28FF)}{chr(0x28FF)}{chr(0x28FF)}{chr(0x28FF)}{chr(0x28FF)}")
+print(f"{chr(0x28FF)}{chr(0x28FF)}{chr(0x28FF)}{chr(0x28FF)}{chr(0x28FF)}{chr(0x28FF)}")
+for item, value in BRAILLE.items():
+    pass
+    #print(value, item)
+
 def file_name(index):
     string = str(index)
     fill = string.zfill(8)
