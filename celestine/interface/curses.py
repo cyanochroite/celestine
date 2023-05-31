@@ -1,44 +1,16 @@
 """"""
 
+import io
+
 from celestine import load
 from celestine.package import pillow
 from celestine.package.curses import package as curses
+from celestine.unicode import LINE_FEED
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
 from celestine.window.element import Image as image
 from celestine.window.element import Label as label
 from celestine.window.window import Window as window
-
-
-import os
-import shutil
-import io
-
-
-import PIL
-from PIL import (
-    ImageDraw,
-    ImageFont,
-)
-
-import pathlib
-from collections.abc import (  # noqa: F401 pylint: disable=W0611
-    Callable as CA,
-)
-from collections.abc import (  # noqa: F401 pylint: disable=W0611
-    Generator as GE,
-)
-from collections.abc import (  # noqa: F401 pylint: disable=W0611
-    Iterable as IT,
-)
-from types import ModuleType as MT  # noqa: F401 pylint: disable=W0611
-from celestine.unicode import LINE_FEED
-
-from celestine.typed import (
-    S,
-    N,
-    )
-
 
 BRAILLE = {
     0b00000000: chr(0x2800),
@@ -300,43 +272,15 @@ BRAILLE = {
 }
 
 
-
-
-TERMINAL_RATIO = 15 / 7
 WIDTH = 18
 HEIGHT = 4
 
-#WIDTH = 24
-#HEIGHT = 8
+# WIDTH = 24
+# HEIGHT = 8
 
 
 WIDTH = 48 * 2
 HEIGHT = 16 * 4
-
-ASCII_CHARS = [
-    "@",
-    "$",
-    "&",
-    "#",
-    "%",
-    "?",
-    "*",
-    "=",
-    "+",
-    '"',
-    "!",
-    "^",
-    ";",
-    "-",
-    ",",
-    "'",
-    "`",
-    ".",
-]
-
-
-
-
 
 
 class Abstract(abstract):
@@ -371,12 +315,9 @@ class Button(Abstract, button):
 class Image(Abstract, image):
     """"""
 
-    def output(self, text):
-
-        self.cache.image.show()
+    def output(self):
         pixels = list(self.cache.getdata())
         string = io.StringIO()
-
 
         def shift(offset_x, offset_y):
             nonlocal braille
@@ -414,17 +355,12 @@ class Image(Abstract, image):
         value = value[0:-1]
         return value.split(LINE_FEED)
 
-
-
     def render(self, collection, item, **star):
         """"""
-        text = item
         (x_dot, y_dot) = self.origin()
 
-        text = item
-
         row = 0
-        for stuff in self.output(text):
+        for stuff in item:
             self.add_string(collection, x_dot, y_dot + row, stuff)
             row += 1
 
@@ -438,19 +374,7 @@ class Image(Abstract, image):
 
         self.width, self.height = self.cache.size
 
-        initial_pixels = list(self.cache.image.getdata())
-        new_pixels = [
-            ASCII_CHARS[pixel_value // 15]
-            for pixel_value in initial_pixels
-        ]
-        text = "".join(new_pixels)
-
-        item = f"image:{path}"
-
-        item = text
-
-        # self.cache.image.show()
-        # print(text)
+        item = self.output()
         self.render(collection, item, **star)
 
 

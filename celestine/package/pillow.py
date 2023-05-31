@@ -112,8 +112,6 @@ PALETTE.putpalette(
 
 
 class Image:
-
-
     def convert(self, mode):
         """"""
 
@@ -170,20 +168,15 @@ class Image:
         self.image = PIL.Image.open(fp, mode, formats)
 
 
-
-
-
 class Mono:
-
-
     def convert(self):
         """"""
 
         mode = "1"
-        matrix = None# Unused default.
+        matrix = None  # Unused default.
         dither = PIL.Image.Dither.FLOYDSTEINBERG
-        palette = PIL.Image.Palette.WEB# Unused default.
-        colors = 256# Unused default.
+        palette = PIL.Image.Palette.WEB  # Unused default.
+        colors = 256  # Unused default.
 
         hold = self.image.convert(mode, matrix, dither, palette, colors)
         self.image = hold
@@ -201,14 +194,13 @@ class Mono:
             number = max(number, step)
             return number
 
-
         width = fix(width, 2)
         height = fix(height, 4)
 
         size = (width, height)
         resample = PIL.Image.Resampling.LANCZOS
-        box = None# Unused default.
-        reducing_gap = None# Unused default.
+        box = None  # Unused default.
+        reducing_gap = None  # Unused default.
 
         hold = self.image.resize(size, resample, box, reducing_gap)
         self.image = hold
