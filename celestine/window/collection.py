@@ -50,7 +50,6 @@ class Axis(Object):
         self.minimum = minimum
         self.maximum = maximum
 
-
     @property
     def size(self):
         """"""
@@ -119,8 +118,7 @@ class Collection(Object):
 
     def __iter__(self):
         """"""
-        for key, value in self.item.items():
-            yield (key, value)
+        yield from self.item.items()
 
 
 class Collection2:

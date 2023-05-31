@@ -186,17 +186,6 @@ class Mono:
 
     def resize(self, width, height):
         """"""
-
-        def fix(number, step):
-            number /= step
-            number = round(number)
-            number *= step
-            number = max(number, step)
-            return number
-
-        width = fix(width, 2)
-        height = fix(height, 4)
-
         size = (width, height)
         resample = PIL.Image.Resampling.LANCZOS
         box = None  # Unused default.

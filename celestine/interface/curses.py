@@ -6,13 +6,13 @@ from celestine import load
 from celestine.package import pillow
 from celestine.package.curses import package as curses
 from celestine.unicode import LINE_FEED
+from celestine.unicode.notational_systems import BRAILLE_PATTERNS
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
 from celestine.window.element import Image as image
 from celestine.window.element import Label as label
 from celestine.window.window import Window as window
 
-from celestine.unicode.notational_systems import BRAILLE_PATTERNS
 
 class Abstract(abstract):
     """"""
@@ -100,13 +100,10 @@ class Image(Abstract, image):
         path = self.image or load.asset("null.png")
         self.cache = pillow.Mono(path)
 
-        width = self.axis_x.size * 2
-        height = self.axis_y.size * 4
-
         width = self.x_max - self.x_min
         height = self.y_max - self.y_min
 
-        self.cache.resize(width, height)
+        self.cache.resize(width * 2, height * 4)
         self.cache.convert()
 
         self.width, self.height = self.cache.size
@@ -159,11 +156,13 @@ class Window(window):
         self.background = curses.window(0, 0, self.width, self.height)
         self.background.box()
 
-        header = curses.subwindow(self.background, 0, 0, self.width, 1)
+        header = curses.subwindow(
+            self.background, 1, 0, self.width - 2, 1
+        )
         header.addstr(self.session.language.APPLICATION_TITLE)
 
         footer = curses.subwindow(
-            self.background, 0, self.height - 1, self.width, 1
+            self.background, 1, self.height - 1, self.width - 2, 1
         )
         footer.addstr(self.session.language.CURSES_EXIT)
 
@@ -249,5 +248,5 @@ def window(session, **star):
         "label": Label,
     }
     size = (80, 24)
-    size = (120, 35)
+    size = (122, 35)
     return Window(session, element, size, **star)
