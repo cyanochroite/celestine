@@ -26,7 +26,8 @@ def setup(window):
     images = _execute(window.session, directory)
     grid = window.load("grid")
 
-    items = zip(grid.items(), images)
+    items = zip(grid.__iter__(), images)
 
-    for item, image in items:
+    for group, image in items:
+        (_, item) = group
         item.update(image=image)

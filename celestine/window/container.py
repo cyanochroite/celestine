@@ -33,7 +33,7 @@ class Container(Rectangle):
             ),
         )
 
-    def grid(self, tag, width, **star):
+    def grid(self, tag, width, height, **star):
         """"""
         return self.item_set(
             tag,
@@ -43,6 +43,7 @@ class Container(Rectangle):
                 self.window,
                 self.element,
                 width=width,
+                height=height,
                 **star,
             ),
         )
@@ -133,33 +134,6 @@ class Container(Rectangle):
 class Grid(Container):
     """"""
 
-    def button(self, tag, text, action):
-        """"""
-        name = self._get_tag(tag)
-        super().button(name, text, action)
-
-    def image(self, tag, image):
-        """"""
-        name = self._get_tag(tag)
-        super().image(name, image)
-
-    def label(self, tag, text):
-        """"""
-        name = self._get_tag(tag)
-        super().label(name, text)
-
-    def items(self):
-        """"""
-        yield from [item for (_, item) in self.item.items()]
-
-    def _get_tag(self, name):
-        """"""
-        length = len(self.item)
-        index_x = length % self.width
-        index_y = length // self.width
-
-        return f"{name}_{index_x}-{index_y}"
-
     def spot(self, x_min, y_min, x_max, y_max):
         """"""
         self.set(x_min, y_min, x_max, y_max)
@@ -168,7 +142,7 @@ class Grid(Container):
         partition_y = math.ceil(len(self.item) / self.width)
         (axis_x, axis_y) = self.get(partition_x, partition_y)
 
-        items = self.items()
+        items = self.__iter__()
 
         for _ in range(partition_y):
             (ymin, ymax) = next(axis_y)
@@ -176,7 +150,7 @@ class Grid(Container):
             for _ in range(partition_x):
                 (xmin, xmax) = next(axis_x)
 
-                item = next(items)
+                (_, item) = next(items)
                 item.spot(xmin, ymin, xmax, ymax)
 
         axis_x.close()
@@ -190,9 +164,9 @@ class Grid(Container):
         element,
         *,
         width,
+        height,
         **star,
     ):
-        self.width = width
         super().__init__(
             session,
             name,
@@ -200,6 +174,13 @@ class Grid(Container):
             element,
             **star,
         )
+
+        self.width = width
+
+        for range_y in range(height):
+            for range_x in range(width):
+                tag = f"{self.tag}_{range_x}-{range_y}"
+                self.item[tag] = None
 
 
 class Drop(Container):

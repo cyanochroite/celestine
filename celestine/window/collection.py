@@ -50,6 +50,12 @@ class Axis(Object):
         self.minimum = minimum
         self.maximum = maximum
 
+
+    @property
+    def size(self):
+        """"""
+        return self.maximum - self.minimum
+
     def __init__(self, **star):
         self.minimum = 0
         self.maximum = 0
@@ -90,11 +96,6 @@ class Box(Object):
 class Collection(Object):
     """"""
 
-    def children(self):
-        """"""
-        for _, item in self.item.items():
-            yield item
-
     def item_get(self, tag):
         """"""
         return self.item[tag]
@@ -115,6 +116,11 @@ class Collection(Object):
     def __init__(self, **star):
         self.item = {}
         super().__init__(**star)
+
+    def __iter__(self):
+        """"""
+        for key, value in self.item.items():
+            yield (key, value)
 
 
 class Collection2:
