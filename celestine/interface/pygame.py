@@ -101,6 +101,8 @@ class Window(window):
                 case pygame.QUIT:
                     break
                 case pygame.MOUSEBUTTONDOWN:
+                    # TODO: This triggers on all mouse buttons
+                    # including scroll wheel! That is bad.
                     (x_dot, y_dot) = pygame.mouse.get_pos()
                     self.page.poke(x_dot, y_dot)
 
