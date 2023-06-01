@@ -1,6 +1,8 @@
 """"""
 
+
 import io
+import math
 
 from celestine import load
 from celestine.package import pillow
@@ -12,6 +14,39 @@ from celestine.window.element import Button as button
 from celestine.window.element import Image as image
 from celestine.window.element import Label as label
 from celestine.window.window import Window as window
+
+
+def start_color():
+
+    print(curses.COLORS)
+    print(curses.COLOR_PAIRS)
+
+
+    reserved = 8
+
+    limit = min(curses.COLORS, curses.COLOR_PAIRS)
+    # 8 reserved colors. Remaining split over 3 channels.
+    split = (limit - reserved) ** (1/3)
+    base = math.floor(split)
+
+    power_zero = base ** 0
+    power_one = base ** 1
+    power_two = base ** 2
+    power_three = base ** 3
+
+    scale = 1000 // (base - 1)
+
+    for index in range(reserved, reserved + power_three):
+        color = index - reserved
+
+        red = ((color // power_zero) % base) * scale
+        green = ((color // power_one) % base) * scale
+        blue = ((color // power_two) % base) * scale
+
+        curses.init_color(index, red, green, blue)
+        curses.init_pair(index, 0, index)
+
+
 
 
 class Abstract(abstract):
@@ -47,6 +82,9 @@ class Image(Abstract, image):
     """"""
 
     def output(self):
+
+
+
         pixels = list(self.cache.getdata())
         string = io.StringIO()
 
@@ -148,8 +186,8 @@ class Window(window):
         super().__enter__()
 
         self.stdscr = curses.initscr()
-        curses.cbreak()
         curses.noecho()
+        curses.cbreak()
         self.stdscr.keypad(1)
         curses.start_color()
 
@@ -170,6 +208,7 @@ class Window(window):
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
+        start_color()
         while True:
             event = self.stdscr.getch()
             match event:
@@ -201,6 +240,9 @@ class Window(window):
         curses.nocbreak()
         curses.endwin()
         return False
+
+
+
 
     def __init__(self, session, element, size, **star):
         super().__init__(session, element, size, **star)

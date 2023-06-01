@@ -48,6 +48,10 @@ class Package:
             "nocbreak",
             "endwin",
             "newwin",
+            "COLORS",
+            "COLOR_PAIRS",
+            "init_color",
+            "init_pair"
         ]
         two = [
             "doupdate",
@@ -86,6 +90,7 @@ class Package:
                 return object.__getattribute__(self, name)
             case "doupdate":
                 return object.__getattribute__(self, name)
+
 
 
 package = Package()
