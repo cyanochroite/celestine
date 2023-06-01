@@ -50,6 +50,7 @@ class Package:
             "newwin",
             "COLORS",
             "COLOR_PAIRS",
+            "color_pair",
             "init_color",
             "init_pair"
         ]

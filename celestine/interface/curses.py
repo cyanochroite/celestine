@@ -3,6 +3,7 @@
 
 import io
 import math
+import random
 
 from celestine import load
 from celestine.package import pillow
@@ -15,8 +16,10 @@ from celestine.window.element import Image as image
 from celestine.window.element import Label as label
 from celestine.window.window import Window as window
 
+color_table = {}
 
 def start_color():
+    global color_table
 
     print(curses.COLORS)
     print(curses.COLOR_PAIRS)
@@ -43,18 +46,68 @@ def start_color():
         green = ((color // power_one) % base) * scale
         blue = ((color // power_two) % base) * scale
 
-        curses.init_color(index, red, green, blue)
-        curses.init_pair(index, 0, index)
+        red1 = color // power_zero
+        green1 = color // power_one
+        blue1 = color // power_two
 
+
+        red2 = red1 % base
+        green2 = green1 % base
+        blue2 = blue1 % base
+
+
+        red3 = red2 * scale
+        green3 = green2 * scale
+        blue3 = blue2 * scale
+
+
+        curses.init_color(index, red, green, blue)
+        curses.init_pair(index, index, 0)
+
+        color_table[(red2, green2, blue2)] = index
+
+
+
+def round_a_color(color):
+
+    reserved = 8
+    limit = min(curses.COLORS, curses.COLOR_PAIRS)
+    # 8 reserved colors. Remaining split over 3 channels.
+    split = (limit - reserved) ** (1/3)
+    base = math.floor(split)
+
+
+    color /= 255
+    color *= (base -1)
+    color = round(color)
+    color = int(color)
+
+    return color
+
+
+def round_colors(color):
+    global color_table
+
+    red, green, blue = color
+
+    red = round_a_color(red)
+    green = round_a_color(green)
+    blue = round_a_color(blue)
+
+
+
+    index = color_table[(red, green, blue)]
+
+    return index
 
 
 
 class Abstract(abstract):
     """"""
 
-    def add_string(self, frame, x_dot, y_dot, text):
+    def add_string(self, frame, x_dot, y_dot, text, *extra):
         """Curses swaps x and y."""
-        frame.addstr(y_dot, x_dot, text)
+        frame.addstr(y_dot, x_dot, text, *extra)
 
     def origin(self):
         """"""
@@ -128,10 +181,43 @@ class Image(Abstract, image):
         """"""
         (x_dot, y_dot) = self.origin()
 
-        row = 0
-        for stuff in item:
-            self.add_string(collection, x_dot, y_dot + row, stuff)
-            row += 1
+        color = list(self.color.getdata())
+
+
+        index_y = 0
+        for row_text in item:
+            #print(f"({row_text})")
+
+            index_x = 0
+            for col_text in row_text:
+                #print(f"<{col_text}>")
+
+
+                width, height = self.color.size
+                index = index_y * width + index_x
+                pretty = color[index]
+
+                ugly = round_colors(pretty)
+
+
+
+                index = random.randrange(8,72)
+                extra = curses.color_pair(index)
+
+                extra = curses.color_pair(ugly)
+
+                self.add_string(
+                    collection,
+                    x_dot +index_x,
+                    y_dot + index_y,
+                    col_text,
+                    extra,
+                )
+
+                index_x += 1
+
+            index_y += 1
+
 
     def draw(self, collection, **star):
         """"""
@@ -143,6 +229,12 @@ class Image(Abstract, image):
 
         self.cache.resize(width * 2, height * 4)
         self.cache.convert()
+
+
+        self.color = pillow.Color(path)
+        self.color.resize(width, height)
+        self.color.convert()
+
 
         self.width, self.height = self.cache.size
 
@@ -190,6 +282,7 @@ class Window(window):
         curses.cbreak()
         self.stdscr.keypad(1)
         curses.start_color()
+        start_color()
 
         self.background = curses.window(0, 0, self.width, self.height)
         self.background.box()
@@ -208,7 +301,6 @@ class Window(window):
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-        start_color()
         while True:
             event = self.stdscr.getch()
             match event:

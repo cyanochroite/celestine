@@ -205,3 +205,20 @@ class Mono:
         formats = None
 
         self.image = PIL.Image.open(fp, mode, formats)
+
+
+
+
+class Color(Mono):
+    def convert(self):
+        """"""
+
+        mode = "RGB"
+        matrix = None  # Unused default.
+        dither = PIL.Image.Dither.FLOYDSTEINBERG
+        palette = PIL.Image.Palette.WEB  # Unused default.
+        colors = 256  # Unused default.
+
+        hold = self.image.convert(mode, matrix, dither, palette, colors)
+        self.image = hold
+
