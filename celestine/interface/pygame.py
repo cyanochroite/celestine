@@ -35,8 +35,14 @@ class Image(Abstract, image):
     def draw(self, view, **star):
         """"""
         path = self.image or load.asset("null.png")
+
         item = pygame.image.load(path)
         item = item.convert_alpha()
+
+        size = self.resize(item.get_width(), item.get_height())
+
+        item = pygame.transform.scale(item, size)
+
         self.render(view, item, **star)
 
 

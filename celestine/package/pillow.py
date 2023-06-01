@@ -184,11 +184,10 @@ class Mono:
     def getdata(self):
         return self.image.getdata()
 
-    def resize(self, width, height):
+    def resize(self, width, height, box):
         """"""
         size = (width, height)
         resample = PIL.Image.Resampling.LANCZOS
-        box = None  # Unused default.
         reducing_gap = None  # Unused default.
 
         hold = self.image.resize(size, resample, box, reducing_gap)

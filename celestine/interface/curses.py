@@ -18,6 +18,8 @@ from celestine.window.window import Window as window
 
 color_table = {}
 
+TEST = 0
+
 def start_color():
     global color_table
 
@@ -221,20 +223,44 @@ class Image(Abstract, image):
 
     def draw(self, collection, **star):
         """"""
+        global TEST
+
         path = self.image or load.asset("null.png")
         self.cache = pillow.Mono(path)
 
-        width = self.x_max - self.x_min
-        height = self.y_max - self.y_min
+        width, height = self.size()
+        width *= 10
+        height *= 10
 
-        self.cache.resize(width * 2, height * 4)
+        if TEST == 11:
+            print(path)
+            import PIL.Image
+
+            tester = PIL.Image.open(path)
+
+            dog = tester.resize(
+                (width, height),
+                PIL.Image.Resampling.LANCZOS,
+                (0, 0, 394, 394),
+                None,
+            )
+            dog.show()
+
+
+        width, height = self.resize(self.cache.image.width, self.cache.image.height)
+
+        box = self.crop(self.cache.image.width, self.cache.image.height)
+
+        self.cache.resize(width * 2, height * 4, box)
         self.cache.convert()
 
 
         self.color = pillow.Color(path)
-        self.color.resize(width, height)
+        self.color.resize(width, height, box)
         self.color.convert()
 
+
+        TEST += 1
 
         self.width, self.height = self.cache.size
 

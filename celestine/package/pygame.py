@@ -39,3 +39,5 @@ quit = PYGAME.quit
 QUIT = PYGAME.QUIT
 mouse = PYGAME.mouse
 MOUSEBUTTONDOWN = PYGAME.MOUSEBUTTONDOWN
+
+transform = PYGAME.transform
