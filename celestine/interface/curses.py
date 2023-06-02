@@ -1,9 +1,6 @@
 """"""
 
 import io
-import random
-
-import PIL.Image
 
 from celestine import load
 from celestine.package import pillow
@@ -60,7 +57,6 @@ class Abstract(abstract):
 
         Also minus the window border to get local location.
         """
-        print(y_dot, x_dot, f"({text})", *extra)
         frame.addstr(y_dot - 1, x_dot - 1, text, *extra)
 
     def origin(self):
@@ -89,6 +85,8 @@ class Image(Abstract, image):
     """"""
 
     def output(self):
+        width, height = self.cache.size
+
         pixels = list(self.cache.getdata())
         string = io.StringIO()
 
@@ -100,14 +98,14 @@ class Image(Abstract, image):
             index_x = range_x + offset_x
             index_y = range_y + offset_y
 
-            index = index_y * self.width + index_x
+            index = index_y * width + index_x
             pixel = pixels[index] // 255
 
             braille <<= 1
             braille |= pixel
 
-        for range_y in range(0, self.height, 4):
-            for range_x in range(0, self.width, 2):
+        for range_y in range(0, height, 4):
+            for range_x in range(0, width, 2):
                 braille = 0
 
                 shift(0, 0)
@@ -136,22 +134,14 @@ class Image(Abstract, image):
 
         index_y = 0
         for row_text in item:
-
             index_x = 0
             for col_text in row_text:
-
                 width, height = self.color.size
                 index = index_y * width + index_x
 
                 (red, green, blue) = color[index]
-                ugly = color_table[(red, green, blue)]
-
-                index = random.randrange(8, 72)
-                extra = curses.color_pair(index)
-
-                extra = curses.color_pair(ugly)
-
-                # print(self.x_min, self.x_max, x_dot, index_x, x_dot + index_x)
+                table = color_table[(red, green, blue)]
+                extra = curses.color_pair(table)
 
                 self.add_string(
                     collection,
@@ -172,15 +162,12 @@ class Image(Abstract, image):
         self.cache = pillow.Image.load(path)
         self.color = pillow.Image.clone(self.cache)
 
-        width, height = self.resize(
-            self.cache.image.width, self.cache.image.height
-        )
-
+        # Crop box.
         source_length_x = self.cache.image.width
         source_length_y = self.cache.image.height
 
-        length_x = self.x_max - self.x_min - 2
-        length_y = self.y_max - self.y_min - 2
+        length_x = self.x_max - self.x_min
+        length_y = self.y_max - self.y_min
 
         target_length_x = length_x * 2
         target_length_y = length_y * 4
@@ -189,40 +176,19 @@ class Image(Abstract, image):
         target_length = (target_length_x, target_length_y)
 
         box = self.crop(source_length, target_length)
+        # Done.
 
-        im = self.color.image
-
-        # Convert to HSV colourspace and split channels for ease of separate processing
-        H, S, V = im.convert("HSV").split()
-
-        # Increase the brightness, or Value channel
-        # Change 30 to 50 for bigger effect, or 10 for smaller effect
-        newV = V.point(lambda i: i + int(64 * (255 - i) / 255))
-
-        # Recombine channels and convert back to RGB
-        self.color.image = PIL.Image.merge(
-            mode="HSV", bands=(H, S, newV)
-        ).convert("RGB")
+        self.color.brightwing()
 
         self.cache.resize(target_length_x, target_length_y, box)
         self.color.resize(length_x, length_y, box)
 
-        colors = COLORS  # 17 - 256
-        method = PIL.Image.Quantize.MEDIANCUT
-        kmeans = 0
-        palette = None
-        dither = PIL.Image.Dither.FLOYDSTEINBERG
-
-        self.color.image = self.color.image.quantize(
-            colors, method, kmeans, palette, dither
-        )
+        self.color.quantize()
 
         self.cache.convert_to_mono()
         self.color.convert_to_color()
 
         get_colors(self.color.image)
-
-        self.width, self.height = self.cache.size
 
         item = self.output()
         self.render(collection, item, **star)
@@ -242,7 +208,7 @@ class Window(window):
 
     def data(self, container):
         """"""
-        data_box = (1,1,self.width - 2,self.height - 2)
+        data_box = (1, 1, self.width - 2, self.height - 2)
         container.data = curses.window(*data_box)
 
     def draw(self, **star):
@@ -268,9 +234,8 @@ class Window(window):
         container = self.container.drop(name)
         self.data(container)
         function(container)
-        container.spot(1, 1, self.width-1, self.height-1)
+        container.spot(1, 1, self.width - 1, self.height - 1)
         self._view.set(name, container)
-
 
     def __enter__(self):
         super().__enter__()

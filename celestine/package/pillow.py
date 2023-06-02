@@ -1,6 +1,5 @@
 """"""
 
-import PIL
 import PIL.Image
 
 palettedata = [
@@ -48,7 +47,7 @@ ASCII_CHARS = [
 ]
 
 
-######
+########################################################################
 
 PALETTE = PIL.Image.new("P", (1, 1))
 PALETTE.putpalette(
@@ -111,7 +110,45 @@ PALETTE.putpalette(
 )
 
 
+def _quantize(self):
+    """"""
+
+    colors = 256
+    method = None
+    kmeans = 0
+    palette = PALETTE
+    dither = PIL.Image.Dither.NONE
+
+    self.image = self.image.quantize(
+        colors, method, kmeans, palette, dither
+    )
+
+
+########################################################################
+
+COLORS = 15  # int(255 - 8 / 16)
+
+
 class Image:
+    def brightwing(self):
+        """
+        Brightwing no like the dark colors.
+
+        Make image bright.
+        """
+
+        def brighter(pixel):
+            invert = (255 - pixel) / 255
+            boost = invert * 64
+            shift = pixel + boost
+            return shift
+
+        hue, saturation, value = self.image.convert("HSV").split()
+        new_value = value.point(brighter)
+
+        bands = (hue, saturation, new_value)
+        self.image = PIL.Image.merge("HSV", bands).convert("RGB")
+
     @classmethod
     def clone(cls, item):
         """"""
@@ -178,14 +215,14 @@ class Image:
         """"""
         return self.image.size
 
-    def _quantize(self):
+    def quantize(self):
         """"""
 
-        colors = 256
-        method = None
+        colors = COLORS
+        method = PIL.Image.Quantize.MEDIANCUT
         kmeans = 0
-        palette = PALETTE
-        dither = PIL.Image.Dither.NONE
+        palette = None
+        dither = PIL.Image.Dither.FLOYDSTEINBERG
 
         self.image = self.image.quantize(
             colors, method, kmeans, palette, dither
