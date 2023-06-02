@@ -1,7 +1,7 @@
 """"""
 
 import PIL.Image
-from PIL import Image
+from PIL import Image, ImageOps, ImageStat
 from typing import Tuple, Type, List
 
 import io
@@ -19,9 +19,42 @@ from celestine.window.element import Image as image
 from celestine.window.element import Label as label
 from celestine.window.window import Window as window
 
+color_index = 8 # skip the 8 reserved colors
 color_table = {}
+
+COLORS = 15
+
 TEST = 0
 
+
+
+def get_colors(image):
+    """Fails after being called 16 times."""
+
+    global color_index
+    global color_table
+
+    colors = image.getcolors()
+    for color in colors:
+        (count, pixel) = color
+        (red, green, blue) = pixel
+
+        red *= 1000
+        green *= 1000
+        blue *= 1000
+
+        red //= 255
+        green //= 255
+        blue //= 255
+
+        if red >= 920 or green >= 920 or blue >= 920:
+            pass
+            #print(red, green, blue)
+        curses.init_color(color_index, red, green, blue)
+        curses.init_pair(color_index, color_index, 0)
+
+        color_table[pixel] = color_index
+        color_index += 1
 
 def test_pillow(
     img_input: Image.Image, method: int
@@ -49,7 +82,6 @@ def test_pillow(
     palette: [int] = quantized_img.getpalette()
     colours_list: [[int]] = [palette[i : i + 3] for i in range(0, nb_colours * 3, 3)]
     return quantized_img, colours_list
-
 
 
 def start_color():
@@ -99,6 +131,7 @@ def start_color():
         curses.init_pair(index, index, 0)
 
         color_table[(red2, green2, blue2)] = index
+
 
 
 
@@ -228,9 +261,14 @@ class Image(Abstract, image):
 
                 width, height = self.color.size
                 index = index_y * width + index_x
-                pretty = color[index]
 
-                ugly = round_colors(pretty)
+
+
+                (red, green, blue) = color[index]
+                ugly = color_table[(red, green, blue)]
+
+                #pretty = color[index]
+                #ugly = round_colors(pretty)
 
 
 
@@ -286,25 +324,64 @@ class Image(Abstract, image):
             self.cache.image.save("cat.png")
 
 
-            dog, cow = test_pillow( self.cache.image, 0)
+            moo = PIL.ImageStat.Stat(self.cache.image, mask=None)
+            print(moo.extrema)
+
+            cat = PIL.ImageOps.autocontrast(self.cache.image, cutoff=0)
+            cat.save("cat.png")
+
+
+            from PIL import Image
+
+            # Open the image
+            im =  cat
+
+            # Convert to HSV colourspace and split channels for ease of separate processing
+            H, S, V = im.convert('HSV').split()
+
+            # Increase the brightness, or Value channel
+            # Change 30 to 50 for bigger effect, or 10 for smaller effect
+            newV = V.point(lambda i: i + int(128*(255-i)/255))
+
+            # Recombine channels and convert back to RGB
+            dog = Image.merge(mode="HSV", bands=(H,S,newV)).convert('RGB')
+
+
             dog.save("dog.png")
-            print(dog, cow)
 
 
-            colors = 15 # 17 - 256
-            method = PIL.Image.Quantize.MEDIANCUT
-            kmeans = 0
-            palette = None
-            dither = PIL.Image.Dither.FLOYDSTEINBERG
 
-            self.cache.image = self.cache.image.quantize(
-                colors, method, kmeans, palette, dither
-            )
-            self.cache.image.save("pig.png")
-            self.cache.convert_to_color()
-            self.cache.image.show()
 
-            #self.cache.image.show()
+            # Open the image
+            im =  cat
+
+            # Convert to HSV colourspace and split channels for ease of separate processing
+            H, S, V = im.convert('HSV').split()
+
+            # Increase the brightness, or Value channel
+            # Change 30 to 50 for bigger effect, or 10 for smaller effect
+            newV = V.point(lambda i: i + int(64*(255-i)/255))
+
+            # Recombine channels and convert back to RGB
+            dog = Image.merge(mode="HSV", bands=(H,S,newV)).convert('RGB')
+
+
+            dog.save("pig.png")
+
+
+        im =  self.color.image
+
+        # Convert to HSV colourspace and split channels for ease of separate processing
+        H, S, V = im.convert('HSV').split()
+
+        # Increase the brightness, or Value channel
+        # Change 30 to 50 for bigger effect, or 10 for smaller effect
+        newV = V.point(lambda i: i + int(64*(255-i)/255))
+
+        # Recombine channels and convert back to RGB
+        self.color.image = PIL.Image.merge(mode="HSV", bands=(H,S,newV)).convert('RGB')
+
+
 
 
 
@@ -314,14 +391,13 @@ class Image(Abstract, image):
 
 
 
-        colors = 15 # 17 - 256
+        colors = COLORS # 17 - 256
         method = PIL.Image.Quantize.MEDIANCUT
         kmeans = 0
         palette = None
         dither = PIL.Image.Dither.FLOYDSTEINBERG
 
-        #self.color.image = self.color.image.quantize(
-        self_color_image = self.color.image.quantize(
+        self.color.image = self.color.image.quantize(
             colors, method, kmeans, palette, dither
         )
 
@@ -329,8 +405,14 @@ class Image(Abstract, image):
         self.cache.convert_to_mono()
         self.color.convert_to_color()
 
-        self.width, self.height = self.cache.size
 
+
+
+
+
+        get_colors(self.color.image)
+
+        self.width, self.height = self.cache.size
 
         item = self.output()
         self.render(collection, item, **star)
@@ -397,6 +479,10 @@ class Window(window):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        # TODO reset
+        global color_table
+        color_table = {}
+
         super().__exit__(exc_type, exc_value, traceback)
         while True:
             event = self.stdscr.getch()
