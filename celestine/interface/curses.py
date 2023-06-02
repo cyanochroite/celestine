@@ -1,5 +1,8 @@
 """"""
 
+import PIL.Image
+from PIL import Image
+from typing import Tuple, Type, List
 
 import io
 import math
@@ -18,6 +21,36 @@ from celestine.window.window import Window as window
 
 color_table = {}
 TEST = 0
+
+
+def test_pillow(
+    img_input: Image.Image, method: int
+) -> Tuple[Type[Image.Image], List[List[int]]]:
+
+    img = img_input
+
+    threshold_pixel_percentage: float = 0.05
+    nb_colours: int = 20
+    nb_colours_under_threshold: int
+    nb_pixels: int = img.width * img.height
+    quantized_img: Image.Image
+
+    while True:
+        # method 0 = median cut 1 = maximum coverage 2 = fast octree
+        quantized_img = img.quantize(colors=nb_colours, method=method, kmeans=0)
+        nb_colours_under_threshold = 0
+        colours_list: [Tuple[int, int]] = quantized_img.getcolors(nb_colours)
+        for (count, pixel) in colours_list:
+            if count / nb_pixels < threshold_pixel_percentage:
+                nb_colours_under_threshold += 1
+        if nb_colours_under_threshold == 0:
+            break
+        nb_colours -= -(-nb_colours_under_threshold // 2)  # ceil integer division
+    palette: [int] = quantized_img.getpalette()
+    colours_list: [[int]] = [palette[i : i + 3] for i in range(0, nb_colours * 3, 3)]
+    return quantized_img, colours_list
+
+
 
 def start_color():
     global color_table
@@ -247,9 +280,32 @@ class Image(Abstract, image):
 
         box = self.crop(source_length, target_length)
 
-        if TEST == 11:
-            print(source_length, target_length)
+        if TEST == 11 * 10:
+
+            #self.cache.image.show()
+            self.cache.image.save("cat.png")
+
+
+            dog, cow = test_pillow( self.cache.image, 0)
+            dog.save("dog.png")
+            print(dog, cow)
+
+
+            colors = 15 # 17 - 256
+            method = PIL.Image.Quantize.MEDIANCUT
+            kmeans = 0
+            palette = None
+            dither = PIL.Image.Dither.FLOYDSTEINBERG
+
+            self.cache.image = self.cache.image.quantize(
+                colors, method, kmeans, palette, dither
+            )
+            self.cache.image.save("pig.png")
+            self.cache.convert_to_color()
             self.cache.image.show()
+
+            #self.cache.image.show()
+
 
 
 
@@ -257,9 +313,17 @@ class Image(Abstract, image):
         self.color.resize(length_x, length_y, box)
 
 
-        if TEST == 11:
-            print(box)
-            self.cache.image.show()
+
+        colors = 15 # 17 - 256
+        method = PIL.Image.Quantize.MEDIANCUT
+        kmeans = 0
+        palette = None
+        dither = PIL.Image.Dither.FLOYDSTEINBERG
+
+        #self.color.image = self.color.image.quantize(
+        self_color_image = self.color.image.quantize(
+            colors, method, kmeans, palette, dither
+        )
 
 
         self.cache.convert_to_mono()

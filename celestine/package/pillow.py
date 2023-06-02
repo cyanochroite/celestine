@@ -153,7 +153,8 @@ class Image:
         formats = None
         image  = PIL.Image.open(fp, mode, formats)
 
-        mode = "RGBA"
+        # Highest mode for median cut.
+        mode = "RGB"
         matrix = None
         dither = PIL.Image.Dither.NONE
         palette = PIL.Image.Palette.ADAPTIVE
