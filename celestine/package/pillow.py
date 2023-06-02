@@ -112,146 +112,17 @@ PALETTE.putpalette(
 
 
 class Image:
-    def convert(self, mode):
-        """"""
-
-        matrix = None
-        dither = PIL.Image.Dither.NONE
-        palette = PIL.Image.Palette.WEB
-        colors = 256
-
-        self.image = self.image.convert(
-            mode, matrix, dither, palette, colors
-        )
-
-    def getdata(self):
-        return self.image.getdata()
-
-    def resize(self, width, height):
-        """"""
-
-        width = max(1, round(width))
-        height = max(1, round(height))
-
-        size = (width, height)
-        resample = PIL.Image.Resampling.LANCZOS
-        box = None
-        reducing_gap = None
-
-        self.image = self.image.resize(
-            size, resample, box, reducing_gap
-        )
-
-    @property
-    def size(self):
-        """"""
-        return self.image.size
-
-    def quantize(self):
-        """"""
-
-        colors = 256
-        method = None
-        kmeans = 0
-        palette = PALETTE
-        dither = PIL.Image.Dither.NONE
-
-        self.image = self.image.quantize(
-            colors, method, kmeans, palette, dither
-        )
-
-    def __init__(self, path):
-        fp = path
-        mode = "r"
-        formats = None
-
-        self.image = PIL.Image.open(fp, mode, formats)
-
-
-class Mono:
-    def convert(self):
-        """"""
-
-        mode = "1"
-        matrix = None  # Unused default.
-        dither = PIL.Image.Dither.FLOYDSTEINBERG
-        palette = PIL.Image.Palette.WEB  # Unused default.
-        colors = 256  # Unused default.
-
-        hold = self.image.convert(mode, matrix, dither, palette, colors)
-        self.image = hold
-
-    def getdata(self):
-        return self.image.getdata()
-
-    def resize(self, width, height, box):
-        """"""
-        size = (width, height)
-        resample = PIL.Image.Resampling.LANCZOS
-        reducing_gap = None  # Unused default.
-
-        hold = self.image.resize(size, resample, box, reducing_gap)
-        self.image = hold
-
-    @property
-    def size(self):
-        """"""
-        return self.image.size
-
-    def __init__(self, path):
-        fp = path
-        mode = "r"
-        formats = None
-
-        self.image = PIL.Image.open(fp, mode, formats)
-
-
-
-
-class Color(Mono):
-    def convert(self):
-        """"""
-
-        mode = "RGB"
-        matrix = None  # Unused default.
-        dither = PIL.Image.Dither.FLOYDSTEINBERG
-        palette = PIL.Image.Palette.WEB  # Unused default.
-        colors = 256  # Unused default.
-
-        hold = self.image.convert(mode, matrix, dither, palette, colors)
-        self.image = hold
-
-
-#################################
-
-
-class Image:
 
     @classmethod
     def clone(cls, item):
         """"""
         image = item.image.copy()
-        print("B", image)
         new = cls(image)
-        print("C", new)
         return new
 
-    def _convert(self, mode):
+    def convert(self, mode):
         """"""
 
-        matrix = None
-        dither = PIL.Image.Dither.NONE
-        palette = PIL.Image.Palette.WEB
-        colors = 256
-
-        self.image = self.image.convert(
-            mode, matrix, dither, palette, colors
-        )
-
-    def convert_mono(self):
-        """"""
-
-        mode = "1"
         matrix = None  # Unused default.
         dither = PIL.Image.Dither.FLOYDSTEINBERG
         palette = PIL.Image.Palette.WEB  # Unused default.
@@ -261,17 +132,16 @@ class Image:
         self.image = hold
 
 
-    def convert_color(self):
+    def convert_to_color(self):
+        """"""
+        self.convert("RGB")
+
+
+    def convert_to_mono(self):
         """"""
 
-        mode = "RGB"
-        matrix = None  # Unused default.
-        dither = PIL.Image.Dither.FLOYDSTEINBERG
-        palette = PIL.Image.Palette.WEB  # Unused default.
-        colors = 256  # Unused default.
+        self.convert("1")
 
-        hold = self.image.convert(mode, matrix, dither, palette, colors)
-        self.image = hold
 
     def getdata(self):
         return self.image.getdata()
@@ -281,10 +151,16 @@ class Image:
         fp = path
         mode = "r"
         formats = None
-
         image  = PIL.Image.open(fp, mode, formats)
-        new = cls(image)
 
+        mode = "RGBA"
+        matrix = None
+        dither = PIL.Image.Dither.NONE
+        palette = PIL.Image.Palette.ADAPTIVE
+        colors = 256
+        image = image.convert(mode, matrix, dither, palette, colors)
+
+        new = cls(image)
         return new
 
     def resize(self, size_x, size_y, box=None):
@@ -320,4 +196,3 @@ class Image:
 
     def __init__(self, image):
         self.image = image
-        print("D", image, self.image)

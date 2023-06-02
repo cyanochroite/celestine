@@ -17,7 +17,6 @@ from celestine.window.element import Label as label
 from celestine.window.window import Window as window
 
 color_table = {}
-
 TEST = 0
 
 def start_color():
@@ -185,7 +184,6 @@ class Image(Abstract, image):
 
         color = list(self.color.getdata())
 
-
         index_y = 0
         for row_text in item:
             #print(f"({row_text})")
@@ -224,63 +222,57 @@ class Image(Abstract, image):
     def draw(self, collection, **star):
         """"""
         global TEST
-
         path = self.image or load.asset("null.png")
 
         self.cache = pillow.Image.load(path)
         self.color = pillow.Image.clone(self.cache)
 
-        width, height = self.size()
-        width *= 10
-        height *= 10
-
-        if TEST == 11:
-            print(path)
-            import PIL.Image
-
-            tester = PIL.Image.open(path)
-
-            diff = self.cache.image.height - height
-            half = diff / 2
-
-
-            box = self.crop(self.cache.image.width, self.cache.image.height)
-
-            print("E", box)
-
-          #  cat = tester.crop(box=(0, 0 + half, self.cache.image.width, height + half))
-
-
-            dog = tester.resize(
-                (width, height),
-                PIL.Image.Resampling.LANCZOS,
-                box,
-                None,
-            )
-            dog.show()
-            self.cache.image.save("one.png")
-            dog.save("two.png")
-
 
         width, height = self.resize(self.cache.image.width, self.cache.image.height)
 
-        box = self.crop(self.cache.image.width, self.cache.image.height)
-
-        self.cache.resize(width * 2, height * 4, box)
-        self.cache.convert_mono()
 
 
+        source_length_x = self.cache.image.width
+        source_length_y = self.cache.image.height
 
-        self.color.resize(width, height, box)
-        self.color.convert_color()
+        length_x = self.x_max - self.x_min
+        length_y = self.y_max - self.y_min
+
+        target_length_x = length_x * 2
+        target_length_y = length_y * 4
 
 
-        TEST += 1
+        source_length = (source_length_x, source_length_y)
+        target_length = (target_length_x, target_length_y)
+
+        box = self.crop(source_length, target_length)
+
+        if TEST == 11:
+            print(source_length, target_length)
+            self.cache.image.show()
+
+
+
+        self.cache.resize(target_length_x, target_length_y, box)
+        self.color.resize(length_x, length_y, box)
+
+
+        if TEST == 11:
+            print(box)
+            self.cache.image.show()
+
+
+        self.cache.convert_to_mono()
+        self.color.convert_to_color()
 
         self.width, self.height = self.cache.size
 
+
         item = self.output()
         self.render(collection, item, **star)
+
+        TEST += 1
+
 
 
 class Label(Abstract, label):

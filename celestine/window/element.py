@@ -6,6 +6,8 @@ from celestine.window.collection import Box
 from celestine.typed import Z, T, TA
 
 BOX : TA = T[Z,Z,Z,Z]
+PAIR: TA = T[Z, Z]
+
 
 class Abstract(Box):
     """"""
@@ -67,21 +69,21 @@ class Image(Abstract):
 
 
 
-    def crop(self, source_length_x:Z, source_length_y:Z)->BOX:
+    def crop(self, source_length:PAIR, target_length:PAIR)->BOX:
         """"""
 
-        target_length_x = self.x_max - self.x_min
-        target_length_y = self.y_max - self.y_min
+        (source_length_x, source_length_y) = source_length
+        (target_length_x, target_length_y) = target_length
 
-        target_ratio = target_length_x / target_length_y
         source_ratio = source_length_x / source_length_y
+        target_ratio = target_length_x / target_length_y
 
-        if target_ratio > source_ratio:
+        if source_ratio < target_ratio:
             length = round(source_length_x / target_ratio)
             offset = round((source_length_y - length) / 2)
             return (0, 0 + offset, source_length_x, length + offset)
 
-        if target_ratio < source_ratio:
+        if source_ratio > target_ratio:
             length = round(source_length_y * target_ratio)
             offset = round((source_length_x - length) / 2)
             return (0 + offset, 0, length + offset, source_length_y)
