@@ -52,7 +52,7 @@ class Package:
             "COLOR_PAIRS",
             "color_pair",
             "init_color",
-            "init_pair"
+            "init_pair",
         ]
         two = [
             "doupdate",
@@ -91,7 +91,6 @@ class Package:
                 return object.__getattribute__(self, name)
             case "doupdate":
                 return object.__getattribute__(self, name)
-
 
 
 package = Package()

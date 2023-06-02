@@ -1,11 +1,14 @@
 """"""
 
 
+from celestine.typed import (
+    TA,
+    T,
+    Z,
+)
 from celestine.window.collection import Box
 
-from celestine.typed import Z, T, TA
-
-BOX : TA = T[Z,Z,Z,Z]
+BOX: TA = T[Z, Z, Z, Z]
 PAIR: TA = T[Z, Z]
 
 
@@ -51,6 +54,7 @@ class Image(Abstract):
     def size(self):
         x_size = self.x_max - self.x_min
         y_size = self.y_max - self.y_min
+        print(x_size, y_size, "MOO")
         return (x_size, y_size)
 
     def resize(self, x_length, y_length):
@@ -67,9 +71,7 @@ class Image(Abstract):
 
         return (round(x_size), round(y_size))
 
-
-
-    def crop(self, source_length:PAIR, target_length:PAIR)->BOX:
+    def crop(self, source_length: PAIR, target_length: PAIR) -> BOX:
         """"""
 
         (source_length_x, source_length_y) = source_length
@@ -89,7 +91,6 @@ class Image(Abstract):
             return (0 + offset, 0, length + offset, source_length_y)
 
         return (0, 0, source_length_x, source_length_y)
-
 
     def update(self, *, image, **star):
         """"""

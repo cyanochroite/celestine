@@ -1,12 +1,9 @@
 """"""
 
-import PIL.Image
-from PIL import Image, ImageOps, ImageStat
-from typing import Tuple, Type, List
-
 import io
-import math
 import random
+
+import PIL.Image
 
 from celestine import load
 from celestine.package import pillow
@@ -19,13 +16,10 @@ from celestine.window.element import Image as image
 from celestine.window.element import Label as label
 from celestine.window.window import Window as window
 
-color_index = 8 # skip the 8 reserved colors
+color_index = 8  # skip the 8 reserved colors
 color_table = {}
 
 COLORS = 15
-
-TEST = 0
-
 
 
 def get_colors(image):
@@ -49,132 +43,25 @@ def get_colors(image):
 
         if red >= 920 or green >= 920 or blue >= 920:
             pass
-            #print(red, green, blue)
+            # print(red, green, blue)
         curses.init_color(color_index, red, green, blue)
         curses.init_pair(color_index, color_index, 0)
 
         color_table[pixel] = color_index
         color_index += 1
 
-def test_pillow(
-    img_input: Image.Image, method: int
-) -> Tuple[Type[Image.Image], List[List[int]]]:
-
-    img = img_input
-
-    threshold_pixel_percentage: float = 0.05
-    nb_colours: int = 20
-    nb_colours_under_threshold: int
-    nb_pixels: int = img.width * img.height
-    quantized_img: Image.Image
-
-    while True:
-        # method 0 = median cut 1 = maximum coverage 2 = fast octree
-        quantized_img = img.quantize(colors=nb_colours, method=method, kmeans=0)
-        nb_colours_under_threshold = 0
-        colours_list: [Tuple[int, int]] = quantized_img.getcolors(nb_colours)
-        for (count, pixel) in colours_list:
-            if count / nb_pixels < threshold_pixel_percentage:
-                nb_colours_under_threshold += 1
-        if nb_colours_under_threshold == 0:
-            break
-        nb_colours -= -(-nb_colours_under_threshold // 2)  # ceil integer division
-    palette: [int] = quantized_img.getpalette()
-    colours_list: [[int]] = [palette[i : i + 3] for i in range(0, nb_colours * 3, 3)]
-    return quantized_img, colours_list
-
-
-def start_color():
-    global color_table
-
-    print(curses.COLORS)
-    print(curses.COLOR_PAIRS)
-
-
-    reserved = 8
-
-    limit = min(curses.COLORS, curses.COLOR_PAIRS)
-    # 8 reserved colors. Remaining split over 3 channels.
-    split = (limit - reserved) ** (1/3)
-    base = math.floor(split)
-
-    power_zero = base ** 0
-    power_one = base ** 1
-    power_two = base ** 2
-    power_three = base ** 3
-
-    scale = 1000 // (base - 1)
-
-    for index in range(reserved, reserved + power_three):
-        color = index - reserved
-
-        red = ((color // power_zero) % base) * scale
-        green = ((color // power_one) % base) * scale
-        blue = ((color // power_two) % base) * scale
-
-        red1 = color // power_zero
-        green1 = color // power_one
-        blue1 = color // power_two
-
-
-        red2 = red1 % base
-        green2 = green1 % base
-        blue2 = blue1 % base
-
-
-        red3 = red2 * scale
-        green3 = green2 * scale
-        blue3 = blue2 * scale
-
-
-        curses.init_color(index, red, green, blue)
-        curses.init_pair(index, index, 0)
-
-        color_table[(red2, green2, blue2)] = index
-
-
-
-
-def round_a_color(color):
-
-    reserved = 8
-    limit = min(curses.COLORS, curses.COLOR_PAIRS)
-    # 8 reserved colors. Remaining split over 3 channels.
-    split = (limit - reserved) ** (1/3)
-    base = math.floor(split)
-
-
-    color /= 255
-    color *= (base -1)
-    color = round(color)
-    color = int(color)
-
-    return color
-
-
-def round_colors(color):
-    global color_table
-
-    red, green, blue = color
-
-    red = round_a_color(red)
-    green = round_a_color(green)
-    blue = round_a_color(blue)
-
-
-
-    index = color_table[(red, green, blue)]
-
-    return index
-
-
 
 class Abstract(abstract):
     """"""
 
     def add_string(self, frame, x_dot, y_dot, text, *extra):
-        """Curses swaps x and y."""
-        frame.addstr(y_dot, x_dot, text, *extra)
+        """
+        Curses swaps x and y.
+
+        Also minus the window border to get local location.
+        """
+        print(y_dot, x_dot, f"({text})", *extra)
+        frame.addstr(y_dot - 1, x_dot - 1, text, *extra)
 
     def origin(self):
         """"""
@@ -202,9 +89,6 @@ class Image(Abstract, image):
     """"""
 
     def output(self):
-
-
-
         pixels = list(self.cache.getdata())
         string = io.StringIO()
 
@@ -252,34 +136,26 @@ class Image(Abstract, image):
 
         index_y = 0
         for row_text in item:
-            #print(f"({row_text})")
 
             index_x = 0
             for col_text in row_text:
-                #print(f"<{col_text}>")
-
 
                 width, height = self.color.size
                 index = index_y * width + index_x
 
-
-
                 (red, green, blue) = color[index]
                 ugly = color_table[(red, green, blue)]
 
-                #pretty = color[index]
-                #ugly = round_colors(pretty)
-
-
-
-                index = random.randrange(8,72)
+                index = random.randrange(8, 72)
                 extra = curses.color_pair(index)
 
                 extra = curses.color_pair(ugly)
 
+                # print(self.x_min, self.x_max, x_dot, index_x, x_dot + index_x)
+
                 self.add_string(
                     collection,
-                    x_dot +index_x,
+                    x_dot + index_x,
                     y_dot + index_y,
                     col_text,
                     extra,
@@ -289,109 +165,49 @@ class Image(Abstract, image):
 
             index_y += 1
 
-
     def draw(self, collection, **star):
         """"""
-        global TEST
         path = self.image or load.asset("null.png")
 
         self.cache = pillow.Image.load(path)
         self.color = pillow.Image.clone(self.cache)
 
-
-        width, height = self.resize(self.cache.image.width, self.cache.image.height)
-
-
+        width, height = self.resize(
+            self.cache.image.width, self.cache.image.height
+        )
 
         source_length_x = self.cache.image.width
         source_length_y = self.cache.image.height
 
-        length_x = self.x_max - self.x_min
-        length_y = self.y_max - self.y_min
+        length_x = self.x_max - self.x_min - 2
+        length_y = self.y_max - self.y_min - 2
 
         target_length_x = length_x * 2
         target_length_y = length_y * 4
-
 
         source_length = (source_length_x, source_length_y)
         target_length = (target_length_x, target_length_y)
 
         box = self.crop(source_length, target_length)
 
-        if TEST == 11 * 10:
-
-            #self.cache.image.show()
-            self.cache.image.save("cat.png")
-
-
-            moo = PIL.ImageStat.Stat(self.cache.image, mask=None)
-            print(moo.extrema)
-
-            cat = PIL.ImageOps.autocontrast(self.cache.image, cutoff=0)
-            cat.save("cat.png")
-
-
-            from PIL import Image
-
-            # Open the image
-            im =  cat
-
-            # Convert to HSV colourspace and split channels for ease of separate processing
-            H, S, V = im.convert('HSV').split()
-
-            # Increase the brightness, or Value channel
-            # Change 30 to 50 for bigger effect, or 10 for smaller effect
-            newV = V.point(lambda i: i + int(128*(255-i)/255))
-
-            # Recombine channels and convert back to RGB
-            dog = Image.merge(mode="HSV", bands=(H,S,newV)).convert('RGB')
-
-
-            dog.save("dog.png")
-
-
-
-
-            # Open the image
-            im =  cat
-
-            # Convert to HSV colourspace and split channels for ease of separate processing
-            H, S, V = im.convert('HSV').split()
-
-            # Increase the brightness, or Value channel
-            # Change 30 to 50 for bigger effect, or 10 for smaller effect
-            newV = V.point(lambda i: i + int(64*(255-i)/255))
-
-            # Recombine channels and convert back to RGB
-            dog = Image.merge(mode="HSV", bands=(H,S,newV)).convert('RGB')
-
-
-            dog.save("pig.png")
-
-
-        im =  self.color.image
+        im = self.color.image
 
         # Convert to HSV colourspace and split channels for ease of separate processing
-        H, S, V = im.convert('HSV').split()
+        H, S, V = im.convert("HSV").split()
 
         # Increase the brightness, or Value channel
         # Change 30 to 50 for bigger effect, or 10 for smaller effect
-        newV = V.point(lambda i: i + int(64*(255-i)/255))
+        newV = V.point(lambda i: i + int(64 * (255 - i) / 255))
 
         # Recombine channels and convert back to RGB
-        self.color.image = PIL.Image.merge(mode="HSV", bands=(H,S,newV)).convert('RGB')
-
-
-
-
-
+        self.color.image = PIL.Image.merge(
+            mode="HSV", bands=(H, S, newV)
+        ).convert("RGB")
 
         self.cache.resize(target_length_x, target_length_y, box)
         self.color.resize(length_x, length_y, box)
 
-
-
-        colors = COLORS # 17 - 256
+        colors = COLORS  # 17 - 256
         method = PIL.Image.Quantize.MEDIANCUT
         kmeans = 0
         palette = None
@@ -401,14 +217,8 @@ class Image(Abstract, image):
             colors, method, kmeans, palette, dither
         )
 
-
         self.cache.convert_to_mono()
         self.color.convert_to_color()
-
-
-
-
-
 
         get_colors(self.color.image)
 
@@ -416,9 +226,6 @@ class Image(Abstract, image):
 
         item = self.output()
         self.render(collection, item, **star)
-
-        TEST += 1
-
 
 
 class Label(Abstract, label):
@@ -435,15 +242,12 @@ class Window(window):
 
     def data(self, container):
         """"""
-        container.data = curses.window(
-            1,
-            1,
-            self.width - 1,
-            self.height - 2,
-        )
+        data_box = (1,1,self.width - 2,self.height - 2)
+        container.data = curses.window(*data_box)
 
     def draw(self, **star):
         """"""
+        # Do normal draw stuff.
         self.data(self.page)
 
         super().draw(**star)
@@ -453,6 +257,21 @@ class Window(window):
         self.page.data.noutrefresh()
         curses.doupdate()
 
+        # Reset the global color counter.
+        global color_index
+        global color_table
+        color_index = 8
+        color_table = {}
+
+    def view(self, name, function):
+        """"""
+        container = self.container.drop(name)
+        self.data(container)
+        function(container)
+        container.spot(1, 1, self.width-1, self.height-1)
+        self._view.set(name, container)
+
+
     def __enter__(self):
         super().__enter__()
 
@@ -461,28 +280,21 @@ class Window(window):
         curses.cbreak()
         self.stdscr.keypad(1)
         curses.start_color()
-        start_color()
 
         self.background = curses.window(0, 0, self.width, self.height)
         self.background.box()
 
-        header = curses.subwindow(
-            self.background, 1, 0, self.width - 2, 1
-        )
+        header_box = (1, 0, self.width - 2, 1)
+        header = curses.subwindow(self.background, *header_box)
         header.addstr(self.session.language.APPLICATION_TITLE)
 
-        footer = curses.subwindow(
-            self.background, 1, self.height - 1, self.width - 2, 1
-        )
+        footer_box = (1, self.height - 1, self.width - 2, 1)
+        footer = curses.subwindow(self.background, *footer_box)
         footer.addstr(self.session.language.CURSES_EXIT)
 
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        # TODO reset
-        global color_table
-        color_table = {}
-
         super().__exit__(exc_type, exc_value, traceback)
         while True:
             event = self.stdscr.getch()
@@ -504,20 +316,13 @@ class Window(window):
                 case curses.KEY_EXIT:
                     break
                 case curses.KEY_CLICK:
-                    (x_dot, y_dot) = (
-                        self.cord_x - 1,
-                        self.cord_y - 1,
-                    )
-                    self.page.poke(x_dot, y_dot)
+                    self.page.poke(self.cord_x, self.cord_y)
 
         self.stdscr.keypad(0)
         curses.echo()
         curses.nocbreak()
         curses.endwin()
         return False
-
-
-
 
     def __init__(self, session, element, size, **star):
         super().__init__(session, element, size, **star)

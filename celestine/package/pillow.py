@@ -112,7 +112,6 @@ PALETTE.putpalette(
 
 
 class Image:
-
     @classmethod
     def clone(cls, item):
         """"""
@@ -131,17 +130,14 @@ class Image:
         hold = self.image.convert(mode, matrix, dither, palette, colors)
         self.image = hold
 
-
     def convert_to_color(self):
         """"""
         self.convert("RGB")
-
 
     def convert_to_mono(self):
         """"""
 
         self.convert("1")
-
 
     def getdata(self):
         return self.image.getdata()
@@ -151,7 +147,7 @@ class Image:
         fp = path
         mode = "r"
         formats = None
-        image  = PIL.Image.open(fp, mode, formats)
+        image = PIL.Image.open(fp, mode, formats)
 
         # Highest mode for median cut.
         mode = "RGB"
