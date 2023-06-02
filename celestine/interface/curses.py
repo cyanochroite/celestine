@@ -226,7 +226,9 @@ class Image(Abstract, image):
         global TEST
 
         path = self.image or load.asset("null.png")
-        self.cache = pillow.Mono(path)
+
+        self.cache = pillow.Image.load(path)
+        self.color = pillow.Image.clone(self.cache)
 
         width, height = self.size()
         width *= 10
@@ -238,13 +240,26 @@ class Image(Abstract, image):
 
             tester = PIL.Image.open(path)
 
+            diff = self.cache.image.height - height
+            half = diff / 2
+
+
+            box = self.crop(self.cache.image.width, self.cache.image.height)
+
+            print("E", box)
+
+          #  cat = tester.crop(box=(0, 0 + half, self.cache.image.width, height + half))
+
+
             dog = tester.resize(
                 (width, height),
                 PIL.Image.Resampling.LANCZOS,
-                (0, 0, 394, 394),
+                box,
                 None,
             )
             dog.show()
+            self.cache.image.save("one.png")
+            dog.save("two.png")
 
 
         width, height = self.resize(self.cache.image.width, self.cache.image.height)
@@ -252,12 +267,12 @@ class Image(Abstract, image):
         box = self.crop(self.cache.image.width, self.cache.image.height)
 
         self.cache.resize(width * 2, height * 4, box)
-        self.cache.convert()
+        self.cache.convert_mono()
 
 
-        self.color = pillow.Color(path)
+
         self.color.resize(width, height, box)
-        self.color.convert()
+        self.color.convert_color()
 
 
         TEST += 1

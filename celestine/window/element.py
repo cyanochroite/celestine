@@ -3,6 +3,9 @@
 
 from celestine.window.collection import Box
 
+from celestine.typed import Z, T, TA
+
+BOX : TA = T[Z,Z,Z,Z]
 
 class Abstract(Box):
     """"""
@@ -63,58 +66,27 @@ class Image(Abstract):
         return (round(x_size), round(y_size))
 
 
-    def crop(self, x_length, y_length):
-        x_min = 0
-        y_min = 0
-        x_max = self.x_max - self.x_min
-        y_max = self.x_max - self.x_min
 
-        x_over_y = x_length / y_length
-        y_over_x = y_length / x_length
+    def crop(self, source_length_x:Z, source_length_y:Z)->BOX:
+        """"""
 
-        if x_over_y > y_over_x:
-            stuff = y_max * x_over_y
-            thing = stuff - x_max
-            diff = thing // 2
-            x_min += diff
-            x_max += diff
-        else:
-            stuff = x_max * y_over_x
-            thing = stuff - y_max
-            diff = thing // 2
-            y_min += diff
-            y_max += diff
+        target_length_x = self.x_max - self.x_min
+        target_length_y = self.y_max - self.y_min
 
-        return (x_min, y_min, x_max, y_max)
+        target_ratio = target_length_x / target_length_y
+        source_ratio = source_length_x / source_length_y
 
+        if target_ratio > source_ratio:
+            length = round(source_length_x / target_ratio)
+            offset = round((source_length_y - length) / 2)
+            return (0, 0 + offset, source_length_x, length + offset)
 
-    def crop(self, x_length, y_length):
-        x_min = 0
-        y_min = 0
-        x_max = self.x_max - self.x_min
-        y_max = self.x_max - self.x_min
+        if target_ratio < source_ratio:
+            length = round(source_length_y * target_ratio)
+            offset = round((source_length_x - length) / 2)
+            return (0 + offset, 0, length + offset, source_length_y)
 
-        x_over_y_import = x_length / y_length
-        x_over_y_export = x_max / y_max
-
-        y_over_x_import = y_length / x_length
-        y_over_x_export = y_max / x_max
-
-
-        ratio_import = x_length / y_length
-        ratio_export = x_max / y_max
-
-        if ratio_import > ratio_export:
-            length = x_length * y_over_x_import
-            offset = (x_length - length) / 2
-            return ( 0 + offset, 0, length + offset, y_length)
-
-        if ratio_import < ratio_export:
-            length = x_length * y_over_x_import
-            offset = (y_length - length) / 2
-            return (0, 0 + offset, x_length, length + offset)
-
-        return (0, 0, x_length, y_length)
+        return (0, 0, source_length_x, source_length_y)
 
 
     def update(self, *, image, **star):

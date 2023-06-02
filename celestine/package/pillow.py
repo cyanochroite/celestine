@@ -221,3 +221,103 @@ class Color(Mono):
         hold = self.image.convert(mode, matrix, dither, palette, colors)
         self.image = hold
 
+
+#################################
+
+
+class Image:
+
+    @classmethod
+    def clone(cls, item):
+        """"""
+        image = item.image.copy()
+        print("B", image)
+        new = cls(image)
+        print("C", new)
+        return new
+
+    def _convert(self, mode):
+        """"""
+
+        matrix = None
+        dither = PIL.Image.Dither.NONE
+        palette = PIL.Image.Palette.WEB
+        colors = 256
+
+        self.image = self.image.convert(
+            mode, matrix, dither, palette, colors
+        )
+
+    def convert_mono(self):
+        """"""
+
+        mode = "1"
+        matrix = None  # Unused default.
+        dither = PIL.Image.Dither.FLOYDSTEINBERG
+        palette = PIL.Image.Palette.WEB  # Unused default.
+        colors = 256  # Unused default.
+
+        hold = self.image.convert(mode, matrix, dither, palette, colors)
+        self.image = hold
+
+
+    def convert_color(self):
+        """"""
+
+        mode = "RGB"
+        matrix = None  # Unused default.
+        dither = PIL.Image.Dither.FLOYDSTEINBERG
+        palette = PIL.Image.Palette.WEB  # Unused default.
+        colors = 256  # Unused default.
+
+        hold = self.image.convert(mode, matrix, dither, palette, colors)
+        self.image = hold
+
+    def getdata(self):
+        return self.image.getdata()
+
+    @classmethod
+    def load(cls, path):
+        fp = path
+        mode = "r"
+        formats = None
+
+        image  = PIL.Image.open(fp, mode, formats)
+        new = cls(image)
+
+        return new
+
+    def resize(self, size_x, size_y, box=None):
+        """"""
+
+        size_x = max(1, round(size_x))
+        size_y = max(1, round(size_y))
+
+        size = (size_x, size_y)
+        resample = PIL.Image.Resampling.LANCZOS
+        reducing_gap = None
+
+        hold = self.image.resize(size, resample, box, reducing_gap)
+        self.image = hold
+
+    @property
+    def size(self):
+        """"""
+        return self.image.size
+
+    def _quantize(self):
+        """"""
+
+        colors = 256
+        method = None
+        kmeans = 0
+        palette = PALETTE
+        dither = PIL.Image.Dither.NONE
+
+        self.image = self.image.quantize(
+            colors, method, kmeans, palette, dither
+        )
+
+    def __init__(self, image):
+        self.image = image
+        print("D", image, self.image)
