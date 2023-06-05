@@ -5,8 +5,8 @@ import io
 from celestine import load
 from celestine.file import (
     normalize,
-    open_file_stream,
-    save_file,
+    text_open,
+    text_save,
 )
 from celestine.load import directory
 from celestine.package import run
@@ -29,10 +29,10 @@ def licence(**star):
     files = directory.file(location, [], ["cascadia_code_en.txt"])
     for file in files:
         string = io.StringIO()
-        lines = open_file_stream(file)
+        lines = text_open(file)
         for line in lines:
             character = normalize.character(line)
             wrap = normalize.wrap_text(character)
             for text in wrap:
                 string.write(text)
-        save_file(string.getvalue(), file)
+        text_save(string.getvalue(), file)

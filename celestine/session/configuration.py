@@ -4,7 +4,7 @@ import configparser
 
 from celestine import load
 from celestine.data.directory import APPLICATION
-from celestine.data.stream import (
+from celestine.file.data import (
     UTF_8,
     WRITE_TEXT,
 )

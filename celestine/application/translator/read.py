@@ -3,7 +3,7 @@
 import io
 
 from celestine.alphabet import UNICODE
-from celestine.file import open_module_stream
+from celestine.file import module_open
 from celestine.file.data import SECTION_BREAK
 from celestine.typed import S
 from celestine.unicode import (
@@ -18,7 +18,7 @@ def fix_line_split(*path: S) -> YIELD_TEXT:
     """"""
     skip = False
 
-    document = open_module_stream(*path)
+    document = module_open(*path)
     for string in document:
         for character in string:
             if character not in UNICODE:

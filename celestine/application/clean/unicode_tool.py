@@ -12,8 +12,8 @@ sys.path[0] = os.path.dirname(sys.path[0])
 
 from celestine import load
 from celestine.file import (
-    open_file,
-    save_module,
+    module_save,
+    text_open,
 )
 
 
@@ -47,6 +47,16 @@ def work(document):
 
 
 file = load.pathway("UnicodeData.txt")
-load = open_file(file)
+
+def read_stream(lines: GE[S, N, N]) -> S:
+    string = io.StringIO()
+    for line in lines:
+        string.write(line)
+
+    value = string.getvalue()
+    return value
+
+lines = text_open(file)
+load = read_stream(lines)
 text = work(load)
-save_module(text, "unicode")
+module_save(text, "unicode")

@@ -4,8 +4,8 @@ import io
 import keyword
 
 from celestine.file import (
+    module_save,
     normalize,
-    save_module,
 )
 from celestine.typed import (
     N,
@@ -102,11 +102,11 @@ def make_init_file():
 
     value = string.getvalue()
     width = normalize.wrap(value)
-    save_module(width, LANGUAGE, INIT)
+    module_save(width, LANGUAGE, INIT)
 
 
 def save_language(translation: TABLE, overridden: TABLE, *path: S) -> N:
     """Save a language file to disk."""
     file = language_file(translation, overridden)
     string = normalize.wrap(file)
-    save_module(string, *path)
+    module_save(string, *path)

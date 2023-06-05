@@ -4,7 +4,7 @@ import os
 import sys
 
 from celestine.data import CELESTINE
-from celestine.data.stream import FILE_NAME_EXTENSION
+from celestine.file.data import FILE_NAME_EXTENSION
 from celestine.typed import (
     CA,
     MT,

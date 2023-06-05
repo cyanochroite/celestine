@@ -1,9 +1,7 @@
 """Central place for loading and importing external files."""
 
-import io
 
 from celestine import load
-from celestine.data import stream
 from celestine.typed import (
     GE,
     N,
@@ -11,13 +9,7 @@ from celestine.typed import (
     S,
 )
 
-
-def read_stream(lines: GE[S, N, N]) -> S:
-    string = io.StringIO()
-    for line in lines:
-        string.write(line)
-    value = string.getvalue()
-    return value
+from . import data as stream
 
 
 def context(file: P, mode: S) -> N:
@@ -42,41 +34,75 @@ def context(file: P, mode: S) -> N:
     )
 
 
-def open_file(file: P) -> S:
-    """"""
-    stream = open_file_stream(file)
-    return read_stream(stream)
+def raw(file: P, mode: S, encoding, errors) -> N:
+    """Does all file opperations."""
+    buffering = 1  # Use line buffering.
+    newline = stream.UNIVERSAL  # Universal newlines mode.
+    closefd = True  # The close file descriptor must be True.
+    opener = None  # Use the default opener.
+    return open(
+        file,
+        mode,
+        buffering,
+        encoding,
+        errors,
+        newline,
+        closefd,
+        opener,
+    )
 
 
-def open_file_stream(file: P) -> GE[S, N, N]:
+def context_binary(file: P, mode: S) -> N:
+    """Does all file opperations."""
+    file = file
+    mode = mode
+    encoding = None  # Binary mode doesn't take an encoding argument.
+    errors = None  #: Binary mode doesn't take an errors argument
+    return raw(file, mode, encoding, errors)
+
+
+def open_binary_stream(file: P) -> GE[S, N, N]:
     """"""
-    mode = stream.READ_TEXT
-    with context(file, mode) as document:
+    mode = stream.READ_BINARY
+    with context_binary(file, mode) as document:
         yield from document
 
 
-def open_module(*path: S) -> S:
-    """"""
-    stream = open_module_stream(file)
-    return read_stream(stream)
+########################################################################
 
 
-def open_module_stream(file: P) -> GE[S, N, N]:
+def text(file: P, mode: S) -> N:
+    """Does all file opperations."""
+    file = file
+    mode = mode
+    encoding = stream.UTF_8  # Use UTF 8 encoding.
+    errors = stream.STRICT  # Raise a ValueError exception on error.
+    return raw(file, mode, encoding, errors)
+
+
+def text_open(file: P) -> GE[S, N, N]:
     """"""
     mode = stream.READ_TEXT
-    with context(file, mode) as document:
+    with text(file, mode) as document:
         yield from document
 
 
-def save_file(string: S, file: P) -> N:
+def text_save(string: S, file: P) -> N:
     """"""
     mode = stream.WRITE_TEXT
-    with context(file, mode) as document:
+    with text(file, mode) as document:
         for line in string:
             document.write(line)
 
 
-def save_module(string: S, *path: S) -> N:
+def module_open(file: P) -> GE[S, N, N]:
+    """"""
+    mode = stream.READ_TEXT
+    with text(file, mode) as document:
+        yield from document
+
+
+def module_save(string: S, *path: S) -> N:
     """"""
     file = load.python(*path)
-    save_file(string, file)
+    text_save(string, file)
