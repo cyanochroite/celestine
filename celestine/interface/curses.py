@@ -157,7 +157,7 @@ class Image(Abstract, image):
 
     def draw(self, collection, **star):
         """"""
-        path = self.image or load.asset("null.png")
+        path = self.image or load.path.asset("null.png")
 
         self.cache = pillow.Image.load(path)
         self.color = pillow.Image.clone(self.cache)

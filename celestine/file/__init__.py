@@ -7,7 +7,6 @@ from celestine.typed import (
     P,
     S,
 )
-from celestine.unicode import NONE
 
 from . import data as stream
 
@@ -104,5 +103,5 @@ def module_open(file: P) -> GE[S, N, N]:
 
 def module_save(string: S, *path: S) -> N:
     """"""
-    file = NONE.join([pathway(*path), PYTHON_EXTENSION])
+    file = load.path.python(*path)
     text_save(string, file)

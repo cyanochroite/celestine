@@ -34,7 +34,7 @@ class Image(Abstract, image):
 
     def draw(self, view, **star):
         """"""
-        path = self.image or load.asset("null.png")
+        path = self.image or load.path.asset("null.png")
 
         item = pygame.image.load(path)
         item = item.convert_alpha()
@@ -77,13 +77,13 @@ class Window(window):
 
         def set_font():
             pygame.font.init()
-            file_path = load.asset("cascadia_code_regular.otf")
+            file_path = load.path.asset("cascadia_code_regular.otf")
             size = 40
             self.font = pygame.font.Font(file_path, size)
 
         def set_icon():
             path = "icon.png"
-            asset = load.asset(path)
+            asset = load.path.asset(path)
             image = pygame.image.load(asset)
             icon = image.convert_alpha()
             pygame.display.set_icon(icon)

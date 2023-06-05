@@ -1,4 +1,5 @@
 """"""
+from celestine.load.many import file
 
 
 def find_image(session, directory):

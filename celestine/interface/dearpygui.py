@@ -48,7 +48,7 @@ class Image(Abstract, image):
         """"""
 
         empty = (0, 0, 0, [])
-        path = self.image or load.asset("null.png")
+        path = self.image or load.path.asset("null.png")
 
         _image = dearpygui.load_image(path) or empty
         width = _image[0]

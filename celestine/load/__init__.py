@@ -17,10 +17,7 @@ from celestine.typed import (
 from celestine.unicode import (
     FULL_STOP,
     LOW_LINE,
-    NONE,
 )
-
-from .data import PYTHON_EXTENSION
 
 FN: TA = CA[[N], N]
 
@@ -99,11 +96,6 @@ def dictionary(*path: S) -> D[S, S]:
     return mapping
 
 
-def python(*path: S) -> S:
-    """"""
-    return NONE.join([pathway(*path), PYTHON_EXTENSION])
-
-
 def argument_default(path: S) -> S:
     """"""
     array = argument(path)
@@ -131,11 +123,6 @@ def module_to_name(_module: MT) -> S:
 
 
 ####
-
-
-def asset(item: S) -> S:
-    """"""
-    return pathway("data", item)
 
 
 def method(name: S, *path: S):

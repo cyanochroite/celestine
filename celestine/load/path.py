@@ -1,6 +1,7 @@
 """Central place for loading and importing external files."""
 
 import os
+import pathlib
 import sys
 
 from celestine.data import CELESTINE
@@ -11,10 +12,11 @@ from celestine.unicode import NONE
 def pathfinder() -> S:
     """When running as a package, sys.path[0] is wrong."""
     for path in sys.path:
-        _package = os.path.join(path, CELESTINE)
-        if os.path.exists(_package):
-            return _package
-    return sys.path[0]
+        directory = pathlib.Path(path, CELESTINE)
+        if directory.is_dir():
+            return directory
+    directory = pathlib.Path(os.curdir)
+    return directory
 
 
 def pathway(*path: S) -> S:
@@ -26,6 +28,9 @@ def pathway(*path: S) -> S:
 def python(*path: S) -> S:
     """"""
     return NONE.join([pathway(*path), PYTHON_EXTENSION])
+
+
+#########
 
 
 def asset(item: S) -> S:
