@@ -27,6 +27,15 @@ FN: TA = CA[[N], N]
 FUNCTION = "<function"
 
 
+from . import path
+
+path = path
+
+from . import many
+
+many = many
+
+
 def functions(_module: MT) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
     _dictionary = vars(_module)

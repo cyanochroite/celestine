@@ -1,7 +1,6 @@
 """Removes unused imports and unused variables."""
 
-
-from celestine.load import directory
+from celestine import load
 from celestine.typed import (
     MT,
     L,
@@ -21,7 +20,7 @@ class Package(Package_):
 
         Since no way to configure exclude files, we do it ourself.
         """
-        files = directory.python(path, [], ["unicode"])
+        files = load.many.python(path, [], ["unicode"])
 
         file = map(str, files)
         argv = [*file, "--py311-plus"]

@@ -5,7 +5,7 @@ It tries to follow. recommendations from PEP 8 and PEP 257.
 import os
 import sys
 
-from celestine.load import directory
+from celestine import load
 from celestine.typed import (
     MT,
     N,
@@ -30,7 +30,7 @@ class Package(Package_):
         location = os.getcwd()
         os.chdir(sys.path[0])
 
-        files = directory.python(path, [], ["unicode"])
+        files = load.many.python(path, [], ["unicode"])
 
         file = map(str, files)
         argv = [*file]

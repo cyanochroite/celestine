@@ -8,7 +8,6 @@ from celestine.file import (
     text_open,
     text_save,
 )
-from celestine.load import directory
 from celestine.package import run
 
 
@@ -25,8 +24,8 @@ def clean(**star):
 
 def licence(**star):
     """"""
-    location = load.pathway("licence")
-    files = directory.file(location, [], ["cascadia_code_en.txt"])
+    location = load.path.pathway("licence")
+    files = load.many.file(location, [], [])
     for file in files:
         string = io.StringIO()
         lines = text_open(file)

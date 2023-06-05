@@ -43,7 +43,6 @@ def find(target: S) -> L[T[S, ...]]:
 def main(_: Page) -> N:
     """Run the unittest library."""
     module = load.module(APPLICATION, TEST)
-    # CATDOG
     paths = find(TARGET)
     for path in paths:
         dictionary = load.dictionary(*path)

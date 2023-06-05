@@ -1,13 +1,13 @@
 """Central place for loading and importing external files."""
 
 
-from celestine import load
 from celestine.typed import (
     GE,
     N,
     P,
     S,
 )
+from celestine.unicode import NONE
 
 from . import data as stream
 
@@ -104,5 +104,5 @@ def module_open(file: P) -> GE[S, N, N]:
 
 def module_save(string: S, *path: S) -> N:
     """"""
-    file = load.python(*path)
+    file = NONE.join([pathway(*path), PYTHON_EXTENSION])
     text_save(string, file)
