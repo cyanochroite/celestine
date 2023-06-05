@@ -4,7 +4,6 @@ import os
 import sys
 
 from celestine.data import CELESTINE
-from celestine.file.data import FILE_NAME_EXTENSION
 from celestine.typed import (
     CA,
     MT,
@@ -20,6 +19,8 @@ from celestine.unicode import (
     LOW_LINE,
     NONE,
 )
+
+from .data import PYTHON_EXTENSION
 
 FN: TA = CA[[N], N]
 
@@ -89,18 +90,9 @@ def dictionary(*path: S) -> D[S, S]:
     return mapping
 
 
-def pathfinder() -> S:
-    """When running as a package, sys.path[0] is wrong."""
-    for path in sys.path:
-        _package = os.path.join(path, CELESTINE)
-        if os.path.exists(_package):
-            return _package
-    return sys.path[0]
-
-
 def python(*path: S) -> S:
     """"""
-    return NONE.join([pathway(*path), FILE_NAME_EXTENSION])
+    return NONE.join([pathway(*path), PYTHON_EXTENSION])
 
 
 def argument_default(path: S) -> S:
@@ -117,6 +109,32 @@ def argument_default(path: S) -> S:
         message = f"Failed to load any package in '{path}' directory."
         raise ReferenceError(message)
     return result
+
+
+def module_to_name(_module: MT) -> S:
+    """"""
+    string = repr(_module)
+    array = string.split("'")
+    name = array[1]
+    split = name.split(".")
+    section = split[-1]
+    return section
+
+
+####
+
+
+def asset(item: S) -> S:
+    """"""
+    return pathway("data", item)
+
+
+def method(name: S, *path: S):
+    """"""
+    return getattr(module(*path), name)
+
+
+####
 
 
 def argument(*path: S) -> L[S]:
@@ -141,28 +159,16 @@ def argument(*path: S) -> L[S]:
     return result
 
 
-def module_to_name(_module: MT) -> S:
-    """"""
-    string = repr(_module)
-    array = string.split("'")
-    name = array[1]
-    split = name.split(".")
-    section = split[-1]
-    return section
-
-
-####
 def pathway(*path: S) -> S:
     """"""
     _package = pathfinder()
     return os.path.join(_package, *path)
 
 
-def asset(item: S) -> S:
-    """"""
-    return pathway("data", item)
-
-
-def method(name: S, *path: S):
-    """"""
-    return getattr(module(*path), name)
+def pathfinder() -> S:
+    """When running as a package, sys.path[0] is wrong."""
+    for path in sys.path:
+        _package = os.path.join(path, CELESTINE)
+        if os.path.exists(_package):
+            return _package
+    return sys.path[0]

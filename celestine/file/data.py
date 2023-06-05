@@ -7,8 +7,6 @@ SECTION_BREAK = "######################################################\
 
 """"""
 
-FILE_NAME_EXTENSION = ".py"
-
 # encoding
 ASCII = "ascii"
 ISO_8859_1 = "iso_8859_1"

@@ -2,7 +2,6 @@
 
 import io
 
-from celestine.alphabet import UNICODE
 from celestine.file import module_open
 from celestine.file.data import SECTION_BREAK
 from celestine.typed import S
@@ -10,6 +9,7 @@ from celestine.unicode import (
     LINE_FEED,
     REVERSE_SOLIDUS,
 )
+from celestine.unicode.alphabet2 import UNICODE
 
 from .data import YIELD_TEXT
 

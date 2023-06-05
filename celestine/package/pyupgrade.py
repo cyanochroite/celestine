@@ -21,12 +21,8 @@ class Package(Package_):
 
         Since no way to configure exclude files, we do it ourself.
         """
+        files = directory.python(path, [], ["unicode"])
 
-        top = path
-        include = [".py"]
-        exclude = [".mypy_cache", "__pycache__", "unicode"]
-
-        files = directory.file(top, include, exclude)
         file = map(str, files)
         argv = [*file, "--py311-plus"]
         package.main(argv)

@@ -27,16 +27,6 @@ def load(module: MT) -> D[S, FN]:
     return iterable
 
 
-def find(dictionary: D[S, FN], prefix: S) -> D[S, FN]:
-    """Filter the dictionary based on a name."""
-    iterable = {
-        key: value
-        for key, value in dictionary.items()
-        if key.startswith(prefix)
-    }
-    return iterable
-
-
 def function_page(module: MT) -> L[S]:
     """Load from module all functions and turn them into dictionary."""
 

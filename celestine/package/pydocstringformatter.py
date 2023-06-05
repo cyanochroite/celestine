@@ -30,11 +30,8 @@ class Package(Package_):
         location = os.getcwd()
         os.chdir(sys.path[0])
 
-        top = path
-        include = [".py"]
-        exclude = [".mypy_cache", "__pycache__", "unicode"]
+        files = directory.python(path, [], ["unicode"])
 
-        files = directory.file(top, include, exclude)
         file = map(str, files)
         argv = [*file]
         package.run_docstring_formatter(argv)
