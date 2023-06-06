@@ -47,7 +47,11 @@ classifiers = [
     "Topic :: Multimedia :: Graphics :: Viewers",
     "Typing :: Typed",
 ]
-dependencies = []
+dependencies = [
+    "more-itertools >= 9.0.0",
+    "Pillow >= 9.0.0",
+    "platformdirs >= 3.0.0",
+]
 description = "A simple image viewer."
 dynamic = []
 license = {file = "LICENCE.txt"}
@@ -91,10 +95,6 @@ distribution = [
 ]
 documentation = [
     "Sphinx",
-]
-extension = [
-    "more-itertools >= 8.13.0",
-    "Pillow >= 9.0.0",
 ]
 macOS = [
     "dearpygui",
@@ -183,6 +183,7 @@ split-summary-body = true
 strip-whitespaces = true
 style = ["pep257"]
 write = true
+
 
 
 [tool.pylint.main]

@@ -22,7 +22,7 @@ from celestine.unicode import (
 FN: TA = CA[[N], N]
 
 FUNCTION = "<function"
-
+PACKAGE = "package"
 
 from . import path
 
@@ -31,6 +31,29 @@ path = path
 from . import many
 
 many = many
+
+
+########################################################################
+
+
+def package(base: S, *path: S) -> MT:
+    """Load an external package from the system path."""
+    iterable = [base, *path]
+    name = FULL_STOP.join(iterable)
+    file = __import__(name)
+    for item in path:
+        file = getattr(file, item)
+    if "from" not in repr(file):
+        raise ModuleNotFoundError(f"Module failed to load: {name}")
+    return file
+
+
+def module(*path: S) -> MT:
+    """Load an internal module from anywhere in the application."""
+    return package(CELESTINE, *path)
+
+
+########################################################################
 
 
 def functions(_module: MT) -> D[S, FN]:
@@ -53,23 +76,6 @@ def attempt(*path: S) -> B:
     except ModuleNotFoundError:
         pass
     return False
-
-
-def package(base: S, *path: S) -> MT:
-    """Load an external package from anywhere in the application."""
-    iterable = [base, *path]
-    name = FULL_STOP.join(iterable)
-    file = __import__(name)
-    for _path in path:
-        file = getattr(file, _path)
-    if "from" not in repr(file):
-        raise ModuleNotFoundError(f"Module failed to load: {name}")
-    return file
-
-
-def module(*path: S) -> MT:
-    """Load an internal module from anywhere in the application."""
-    return package(CELESTINE, *path)
 
 
 def module_fallback(*path: S) -> MT:
@@ -168,3 +174,12 @@ def pathfinder() -> S:
         if os.path.exists(_package):
             return _package
     return sys.path[0]
+
+
+def package_dependency(name: S, fail) -> MT:
+    """Attempt to make loading packages easier."""
+    try:
+        flag = package(CELESTINE, PACKAGE, name)
+    except ModuleNotFoundError:
+        flag = fail
+    return flag
