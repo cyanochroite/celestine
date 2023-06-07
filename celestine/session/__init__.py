@@ -7,97 +7,15 @@ from celestine.data.directory import (
     INTERFACE,
     LANGUAGE,
 )
-from celestine.parser import (
-    add_argument,
-    add_attribute,
-    default,
-)
-from celestine.parser.argument import make_argument_group
-from celestine.parser.parser import make_parser
 from celestine.typed import (
     MT,
     B,
     L,
-    N,
     S,
 )
 
-from .configuration import Configuration
-from .data import SESSION
+from .magic import Magic
 from .session import Session as SessionParse
-
-
-class Core:
-    """"""
-
-    application: MT
-    interface: MT
-    language: MT
-
-    def __init__(self, application: S, interface: S, language: S) -> N:
-        """"""
-
-        self.application = application
-        self.interface = interface
-        self.language = language
-
-    def __setattr__(self, name, value):
-        module = load.module(name, value)
-        module.name = value
-        super().__setattr__(name, module)
-
-
-class Magic:
-    def get_parser(
-        self,
-        attributes: L[SessionParse],
-        fast: B,
-    ):
-        """Attributes is modified in place."""
-
-        parser = make_parser(self.core.language, self.exit_on_error)
-
-        arguments = make_argument_group(self.core.language, parser)
-
-        add_argument(attributes, arguments, self.core)
-
-        if fast:
-            args = parser.parse_known_args(self.argument_list)[0]
-        else:
-            args = parser.parse_args(self.argument_list)
-
-        add_attribute(
-            attributes,
-            self.configuration,
-            args,
-            self.core.application.name,
-            self.core,
-        )
-
-    def parse(self, name) -> MT:
-        """Quickly parse important attributes."""
-        method = load.method(name.capitalize(), SESSION, SESSION)
-        self.get_parser([method], True)
-        setattr(self.core, name, getattr(method, name))
-
-    def __enter__(self):
-        self.configuration.load()
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.configuration.save()
-        return False
-
-    def __init__(self, argument_list: L[S], exit_on_error: B) -> N:
-        self.argument_list = argument_list
-        self.configuration = Configuration()
-        self.exit_on_error = exit_on_error
-
-        self.core = Core(
-            default.application(),
-            default.interface(),
-            default.language(),
-        )
 
 
 class Session:

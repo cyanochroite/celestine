@@ -21,7 +21,17 @@ def binary(file: P, mode: S) -> N:
     return raw(file, mode, encoding, errors)
 
 
-def raw(file: P, mode: S, encoding, errors) -> N:
+def binary_load(file: P) -> N:
+    """"""
+    return binary(file, stream.READ_BINARY)
+
+
+def binary_save(file: P) -> N:
+    """"""
+    return binary(file, stream.WRITE_BINARY)
+
+
+def raw(file: P, mode: S, encoding: S | N, errors: S | N) -> N:
     """Does all file opperations."""
     buffering = 1  # Use line buffering.
     newline = stream.UNIVERSAL  # Universal newlines mode.
@@ -48,14 +58,14 @@ def text(file: P, mode: S) -> N:
     return raw(file, mode, encoding, errors)
 
 
-def text_save(file: P) -> N:
-    """"""
-    return text(file, stream.WRITE_TEXT)
-
-
 def text_load(file: P) -> N:
     """"""
     return text(file, stream.READ_TEXT)
+
+
+def text_save(file: P) -> N:
+    """"""
+    return text(file, stream.WRITE_TEXT)
 
 
 ########################################################################
