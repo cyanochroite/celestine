@@ -16,18 +16,16 @@ from celestine.unicode import (
     LOW_LINE,
 )
 
-from . import (
-    many,
-    pathway,
-)
+from . import many as _many
+from . import pathway as _pathway
 
 FN: TA = CA[[N], N]
 
 FUNCTION = "<function"
 PACKAGE = "package"
 
-pathway = pathway
-many = many
+pathway = _pathway
+many = _many
 
 
 ########################################################################
@@ -50,7 +48,7 @@ def module(*path: S) -> MT:
     return package(CELESTINE, *path)
 
 
-def redirect(call, *path: S) -> MT:
+def redirect(call, *path: S) -> N:
     """Load an internal module from anywhere in the application."""
     item = package(CELESTINE, *path)
     work = getattr(item, call)
@@ -106,22 +104,6 @@ def dictionary(*path: S) -> D[S, S]:
         if not key.startswith(LOW_LINE)
     }
     return mapping
-
-
-def argument_default(path: S) -> S:
-    """"""
-    array = argument(path)
-    result = None
-    for item in array:
-        try:
-            _ = module(path, item)
-            result = item
-        except ModuleNotFoundError:
-            pass
-    if not result:
-        message = f"Failed to load any package in '{path}' directory."
-        raise ReferenceError(message)
-    return result
 
 
 def module_to_name(_module: MT) -> S:

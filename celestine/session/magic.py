@@ -2,7 +2,6 @@
 
 import argparse
 import io
-from typing import TypeAlias as TA
 
 from celestine import load
 from celestine.data import CELESTINE
@@ -15,9 +14,7 @@ from celestine.session.argument import (
     Optional,
     Positional,
 )
-from celestine.session.configuration import Configuration
 from celestine.session.data import CONFIGURATION
-from celestine.session.session import Session as SessionParse
 from celestine.typed import (
     MT,
     TA,
@@ -90,7 +87,7 @@ def make_parser(language: MT, exit_on_error: B) -> AP:
         implementation detail.
         """
 
-        def add_usage(self, usage, actions, groups):
+        def add_usage(self, usage, actions, groups, prefix=None):
             string = io.StringIO()
             string.write(language.ARGUMENT_PARSER_USAGE)
             string.write(COLON)
@@ -172,40 +169,39 @@ def make_parser(language: MT, exit_on_error: B) -> AP:
             message = string.getvalue()
             raise ArgumentError(action, message)
 
-    prog = CELESTINE
-    usage = None  # Default.
-    description = None  # Default.
-    epilog = None  # Default.
-    parents = []  # Default.
-    formatter_class = HelpFormatter
-    prefix_chars = HYPHEN_MINUS  # Default.
-    fromfile_prefix_chars = None  # Default.
-    argument_default = None  # Default.
-    conflict_handler = ERROR  # Default.
-    add_help = False
-    allow_abbrev = True  # Default.
-    exit_on_error = exit_on_error
-
     parser = Parser(
-        prog,
-        usage,
-        description,
-        epilog,
-        parents,
-        formatter_class,
-        prefix_chars,
-        fromfile_prefix_chars,
-        argument_default,
-        conflict_handler,
-        add_help,
-        allow_abbrev,
-        exit_on_error,
+        prog=CELESTINE,
+        usage=None,  # Default.
+        description=None,  # Default.
+        epilog=None,  # Default.
+        parents=[],  # Default.
+        formatter_class=HelpFormatter,
+        prefix_chars=HYPHEN_MINUS,  # Default
+        fromfile_prefix_chars=None,  # Default.
+        argument_default=None,  # Default.
+        conflict_handler=ERROR,  # Default.
+        add_help=False,
+        allow_abbrev=True,  # Default.
+        exit_on_error=exit_on_error,
     )
 
     return parser
 
 
 class Magic:
+    """"""
+
+    args: argparse.Namespace
+    parser: argparse.ArgumentParser
+
+    argument_list: L[S]
+    configuration: Configuration
+    exit_on_error: B
+
+    application: MT
+    interface: MT
+    language: MT
+
     def get_parser(self, attributes: L[SessionParse], known: B) -> N:
         """
         All parser magic happens here.
@@ -226,7 +222,7 @@ class Magic:
 
         self._add_attribute(attributes)
 
-    def parse(self, name) -> MT:
+    def parse(self, name) -> N:
         """Quickly parse important attributes."""
         method = load.method(name.capitalize(), SESSION, SESSION)
         self.get_parser([method], True)
@@ -338,15 +334,15 @@ class Magic:
             value = module
         super().__setattr__(name, value)
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, *_):
         save = bool(getattr(self.args, CONFIGURATION, NONE))
         if save:
             self.configuration.save()
         return False
 
     def __init__(self, argument_list: L[S], exit_on_error: B) -> N:
-        self.args = None
-        self.parser = None
+        self.args = argparse.Namespace()
+        self.parser = argparse.ArgumentParser()
 
         self.argument_list = argument_list
         self.configuration = Configuration()
