@@ -1,6 +1,7 @@
 """"""
 
 import configparser
+import os
 
 from celestine import load
 from celestine.data.directory import APPLICATION
@@ -68,7 +69,9 @@ class Configuration:
 
     def __init__(self) -> N:
         """"""
-        self.path = load.pathway(FILE)
+        module = load.module("package", "platformdirs")
+        path = os.path.join(module.directory, FILE)
+        self.path = path
 
         defaults = None  # Default.
         dict_type = dict  # Default.

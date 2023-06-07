@@ -42,14 +42,14 @@ def start_session(
 
         session1 = load.method("Session", "session", "session")
         session2 = load.method(
-            "Session", APPLICATION, magic.core.application.name
+            "Session", APPLICATION, magic.application.name
         )
         session3 = load.method("Information", "session", "session")
 
         magic.get_parser([session1, session2, session3], False)
 
     # Save values to session object.
-    application = magic.core.application.name
+    application = magic.application.name
     session = Session()
 
     session.application = load.module(APPLICATION, session1.application)
