@@ -50,7 +50,7 @@ class Image(Abstract, Image_):
 
     def draw(self, view, *, make, **star):
         """"""
-        file = self.image or load.path.asset("null.png")
+        file = self.image or load.pathway.asset("null.png")
 
         if not make:
             return

@@ -24,7 +24,7 @@ def clean(**star):
 
 def licence(**star):
     """"""
-    location = load.path.pathway("licence")
+    location = load.pathway.pathway("licence")
     files = load.many.file(location, [], [])
     for file in files:
         string = io.StringIO()

@@ -30,7 +30,7 @@ def modularize(path: S, start: S) -> T[S, ...]:
 
 def find(target: S) -> L[T[S, ...]]:
     """Find all project directories with this name."""
-    start = load.path.celestine()
+    start = load.pathway.celestine()
 
     array = [
         modularize(directory, start)

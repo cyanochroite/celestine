@@ -67,7 +67,7 @@ def parser_magic(session, source):
 def reset():
     """Remove the directory and rebuild it."""
 
-    path = load.pathway(LANGUAGE)
+    path = load.pathwayway(LANGUAGE)
     if os.path.islink(path):
         raise RuntimeError
 

@@ -46,7 +46,7 @@ def work(document):
         yield text
 
 
-file = load.pathway("UnicodeData.txt")
+file = load.pathwayway("UnicodeData.txt")
 
 def read_stream(lines: GE[S, N, N]) -> S:
     string = io.StringIO()

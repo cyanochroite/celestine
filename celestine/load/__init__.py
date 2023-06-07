@@ -1,7 +1,5 @@
 """Central place for loading and importing external files."""
 
-import os
-import sys
 
 from celestine.data import CELESTINE
 from celestine.typed import (
@@ -10,7 +8,6 @@ from celestine.typed import (
     TA,
     B,
     D,
-    L,
     N,
     S,
 )
@@ -19,17 +16,17 @@ from celestine.unicode import (
     LOW_LINE,
 )
 
+from . import (
+    many,
+    pathway,
+)
+
 FN: TA = CA[[N], N]
 
 FUNCTION = "<function"
 PACKAGE = "package"
 
-from . import path
-
-path = path
-
-from . import many
-
+pathway = pathway
 many = many
 
 
@@ -146,43 +143,6 @@ def method(name: S, *path: S):
 
 
 ####
-
-
-def argument(*path: S) -> L[S]:
-    """
-    Build a path to the selected package.
-
-    Scan all items in directory.
-    Return a list of items that are not private, such as '.private' or
-    '_private'. (First letter is not a symbol.)
-    Strip off all file extensions, if any.
-    """
-    directory = pathway(*path)
-    try:
-        folder = os.listdir(directory)
-    except FileNotFoundError:
-        return []
-
-    splitext = os.path.splitext
-    result = [splitext(file)[0] for file in folder if file[0].isalpha()]
-
-    result.sort()
-    return result
-
-
-def pathway(*path: S) -> S:
-    """"""
-    _package = pathfinder()
-    return os.path.join(_package, *path)
-
-
-def pathfinder() -> S:
-    """When running as a package, sys.path[0] is wrong."""
-    for path in sys.path:
-        _package = os.path.join(path, CELESTINE)
-        if os.path.exists(_package):
-            return _package
-    return sys.path[0]
 
 
 def package_dependency(name: S, fail) -> MT:

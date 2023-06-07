@@ -56,7 +56,6 @@ APD: TA = D[A, A]
 AP: TA = argparse.ArgumentParser
 
 
-
 def make_parser(language: MT, exit_on_error: B) -> AP:
     """A basic parser with overloaded functions for text translation."""
 
@@ -317,7 +316,6 @@ class Magic:
         exit_on_error = self.exit_on_error
         self.parser = make_parser(language, exit_on_error)
 
-
     def _parse_args(self, known: B) -> N:
         """"""
         parser = self.parser
@@ -340,10 +338,9 @@ class Magic:
             value = module
         super().__setattr__(name, value)
 
-
     def __exit__(self, exc_type, exc_value, traceback):
         save = bool(getattr(self.args, CONFIGURATION, NONE))
-        if save and override:
+        if save:
             self.configuration.save()
         return False
 

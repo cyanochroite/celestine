@@ -87,7 +87,7 @@ class Application(Dictionary):
             APPLICATION: Customization(
                 default.application(),
                 core.language.ARGUMENT_INTERFACE_HELP,
-                load.argument(APPLICATION),
+                load.pathway.argument(APPLICATION),
             ),
         }
 
@@ -104,7 +104,7 @@ class Interface(Dictionary):
             INTERFACE: Customization(
                 default.interface(),
                 core.language.ARGUMENT_INTERFACE_HELP,
-                load.argument(INTERFACE),
+                load.pathway.argument(INTERFACE),
             ),
         }
 
@@ -121,7 +121,7 @@ class Language(Dictionary):
             LANGUAGE: Customization(
                 default.language(),
                 core.language.ARGUMENT_LANGUAGE_HELP,
-                load.argument(LANGUAGE),
+                load.pathway.argument(LANGUAGE),
             ),
         }
 

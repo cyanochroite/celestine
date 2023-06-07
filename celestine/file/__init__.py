@@ -73,14 +73,14 @@ def text_save(file: P) -> N:
 
 def module_open(*path: S) -> GE[S, N, N]:
     """"""
-    file = load.path.python(*path)
+    file = load.pathway.python(*path)
     with text_load(file) as document:
         yield from document
 
 
 def module_save(string: S, *path: S) -> N:
     """"""
-    file = load.path.python(*path)
+    file = load.pathway.python(*path)
     with text_save(file) as document:
         for line in string:
             document.write(line)
