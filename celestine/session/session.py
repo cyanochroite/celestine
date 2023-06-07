@@ -9,7 +9,6 @@ from celestine.data.directory import (
     LANGUAGE,
 )
 from celestine.load import function
-from celestine.parser import default
 from celestine.session.argument import (
     Customization,
     InformationConfiguration,
@@ -25,6 +24,7 @@ from celestine.typed import (
     T,
 )
 
+from . import default
 from .argument import Argument
 from .data import (
     CONFIGURATION,
