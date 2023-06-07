@@ -53,6 +53,15 @@ def module(*path: S) -> MT:
     return package(CELESTINE, *path)
 
 
+def redirect(call, *path: S) -> MT:
+    """Load an internal module from anywhere in the application."""
+    item = package(CELESTINE, *path)
+    work = getattr(item, call)
+    work()
+    # blender = load.module(INTERFACE, BLENDER)
+    # blender.unregister()
+
+
 ########################################################################
 
 

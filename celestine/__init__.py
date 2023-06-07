@@ -1,6 +1,10 @@
 """"""
 
 from celestine import load
+from celestine.data import (
+    BLENDER,
+    INTERFACE,
+)
 from celestine.session import start_session
 from celestine.typed import (
     B,
@@ -9,16 +13,13 @@ from celestine.typed import (
     S,
 )
 
-INTERFACE = "interface"
-BLENDER = "blender"
-
 bl_info = {
-    "name": "Célestine (Framework)",
+    "name": "celestine",
     "description": "A python framework for desktop applications.",
     "author": "mem_dixy",
     "version": (0, 4, 0),
     "blender": (3, 3, 0),
-    "location": "View3D > Properties > Object Properties > Celestine",
+    "location": "View3D > Properties > Object Properties > celestine",
     "warning": "",
     "support": "COMMUNITY",
     "doc_url": "https://celestine.readthedocs.io/en/latest/",
@@ -48,8 +49,7 @@ def register() -> N:
     This is a function which only runs when enabling the add-on,
     this means the module can be loaded without activating the add-on.
     """
-    blender = load.module(INTERFACE, BLENDER)
-    blender.register()
+    load.redirect(register, INTERFACE, BLENDER)
 
 
 def unregister() -> N:
@@ -59,5 +59,4 @@ def unregister() -> N:
     This is a function to unload anything setup by register,
     this is called when the add-on is disabled.
     """
-    blender = load.module(INTERFACE, BLENDER)
-    blender.unregister()
+    load.redirect(unregister, INTERFACE, BLENDER)

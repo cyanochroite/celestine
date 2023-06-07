@@ -13,7 +13,7 @@ sys.path[0] = os.path.dirname(sys.path[0])
 from celestine import load
 from celestine.file import (
     module_save,
-    text_open,
+    text_load,
 )
 
 
@@ -56,7 +56,7 @@ def read_stream(lines: GE[S, N, N]) -> S:
     value = string.getvalue()
     return value
 
-lines = text_open(file)
-load = read_stream(lines)
-text = work(load)
+with text_load(file) as lines:
+    load = read_stream(lines)
+    text = work(load)
 module_save(text, "unicode")

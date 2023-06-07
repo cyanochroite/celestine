@@ -7,7 +7,13 @@ from celestine.data.directory import (
     INTERFACE,
     LANGUAGE,
 )
-from celestine.parser import default
+from celestine.parser import (
+    add_argument,
+    add_attribute,
+    default,
+)
+from celestine.parser.argument import make_argument_group
+from celestine.parser.parser import make_parser
 from celestine.typed import (
     MT,
     B,
@@ -39,24 +45,6 @@ class Core:
         module = load.module(name, value)
         module.name = value
         super().__setattr__(name, module)
-
-
-class Session:
-    application: MT
-    attribute: L[S]
-    code: MT
-    interface: MT
-    language: MT
-    main: S
-    view: MT
-
-
-from celestine.parser import (
-    add_argument,
-    add_attribute,
-)
-from celestine.parser.argument import make_argument_group
-from celestine.parser.parser import make_parser
 
 
 class Magic:
@@ -112,6 +100,16 @@ class Magic:
         )
 
 
+class Session:
+    application: MT
+    attribute: L[S]
+    code: MT
+    interface: MT
+    language: MT
+    main: S
+    view: MT
+
+
 def start_session(
     argument_list: L[S], exit_on_error: B
 ) -> SessionParse:
@@ -132,6 +130,7 @@ def start_session(
 
         magic.get_parser([session1, session2, session3], False)
 
+    # Save values to session object.
     application = magic.core.application.name
     session = Session()
 
