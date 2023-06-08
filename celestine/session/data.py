@@ -19,6 +19,9 @@ CHOICES = "choices"
 HELP = "help"
 NARGS = "nargs"
 
+# parser
+ERROR = "error"
+
 # value
 CONFIGURATION = "configuration"
 MAIN = "main"

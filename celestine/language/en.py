@@ -1,5 +1,16 @@
 """English English en."""
 
+SESSION_PARSER_USAGE = "usage"
+
+SESSION_PARSER_ERROR = "error"
+
+SESSION_PARSER_CHOICE = "invalid choice"
+
+SESSION_PARSER_CHOOSE = "choose from"
+
+SESSION_PARSER_UNRECOGNIZED = "unrecognized arguments"
+
+
 APPLICATION_TITLE = "Celestine Image Viewer"
 
 ARGUMENT_APPLICATION_DESCRIPTION = "\
