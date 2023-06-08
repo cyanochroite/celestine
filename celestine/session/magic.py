@@ -1,6 +1,7 @@
 """"""
 
 import argparse
+import dataclasses
 
 from celestine import load
 from celestine.session.argument import (
@@ -43,16 +44,25 @@ APD: TA = D[A, A]
 class Magic:
     """"""
 
+    @dataclasses.dataclass
+    class Core:
+        """"""
+        application: MT
+        interface: MT
+        language: MT
+
+        def __setattr__(self, name, value):
+            module = load.module(name, value)
+            module.name = value
+            super().__setattr__(name, module)
+
+    core: Core
     args: argparse.Namespace
     parser: argparse.ArgumentParser
 
     argument_list: L[S]
     configuration: Configuration
     exit_on_error: B
-
-    application: MT
-    interface: MT
-    language: MT
 
     def get_parser(self, attributes: L[SessionParse], known: B) -> N:
         """
@@ -78,14 +88,14 @@ class Magic:
         """Quickly parse important attributes."""
         method = load.method(name.capitalize(), SESSION, SESSION)
         self.get_parser([method], True)
-        setattr(self, name, getattr(method, name))
+        setattr(self.core, name, getattr(method, name))
 
     ###
 
     def _make_argument_group(self) -> APD:
         """"""
 
-        language = self.language
+        language = self.core.language
 
         application = self.parser.add_argument_group(
             title=language.ARGUMENT_APPLICATION_TITLE,
@@ -129,7 +139,7 @@ class Magic:
         arguments = self._make_argument_group()
 
         for session in sessions:
-            for name, argument in session.items(self):
+            for name, argument in session.items(self.core):
                 if not argument.argument:
                     continue
                 parser = arguments[argument]
@@ -139,9 +149,9 @@ class Magic:
 
     def _add_attribute(self, sessions: list[SessionParse]) -> N:
         """"""
-        section = self.application.name
+        section = self.core.application.name
         for session in sessions:
-            for option, argument in session.items(self):
+            for option, argument in session.items(self.core):
                 if not argument.attribute:
                     continue
 
@@ -160,7 +170,7 @@ class Magic:
 
     def _make_parser(self):
         """"""
-        language = self.language
+        language = self.core.language
         exit_on_error = self.exit_on_error
         self.parser = make_parser(language, exit_on_error)
 
@@ -178,14 +188,6 @@ class Magic:
         self.configuration.load()
         return self
 
-    def __setattr__(self, name, value):
-        important = ["application", "interface", "language"]
-        if name in important:
-            module = load.module(name, value)
-            module.name = value
-            value = module
-        super().__setattr__(name, value)
-
     def __exit__(self, *_):
         save = bool(getattr(self.args, CONFIGURATION, NONE))
         if save:
@@ -200,7 +202,8 @@ class Magic:
         self.configuration = Configuration()
         self.exit_on_error = exit_on_error
 
-        # Magic functions.
-        self.application = default.application()
-        self.interface = default.interface()
-        self.language = default.language()
+        self.core = self.Core(
+            default.application(),
+            default.interface(),
+            default.language(),
+        )
