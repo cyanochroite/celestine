@@ -1,14 +1,9 @@
+import math
+
 import bpy
 
-from celestine.window.container import Container
 from celestine.window.window import Window as window
 
-from .element import (
-    Button,
-    Image,
-    Label,
-)
-from .mouse import Mouse
 from .package import data
 
 
@@ -25,10 +20,16 @@ def context():
 class Window(window):
     """"""
 
+    def data(self, container):
+        """"""
+        collection = data.collection.make(container.tag)
+        collection.hide()
+        container.data = collection
+
     def poke(self, **star):
         """"""
         page = bpy.context.scene.celestine.page
-        item = self.item_get(page)
+        item = self._view.get(page)
         item.poke(**star)
 
     def page(self, name, document):
@@ -80,7 +81,7 @@ class Window(window):
         for mesh in bpy.data.meshes:
             data.mesh.remove(mesh)
         for texture in bpy.data.textures:
-            data.dataure.remove(texture)
+            data.texture.remove(texture)
 
         collection = data.collection.make("window")
 
@@ -91,12 +92,24 @@ class Window(window):
         camera.type = "ORTHO"
 
         light = data.light.sun.make(collection, "light")
-        light.location = (00.0, 00.0, -60.0)
+        light.location = (0, 0, -60)
         light.rotation = (180, 0, 0)
 
-        self.mouse = Mouse()
-        collection = data.collection.scene()
-        self.mouse.draw(collection)
+        mesh = data.mesh.make(collection, "mouse")
+        mesh.location = (0, 0, -1)
+        mesh.rotation_euler = (0, 0, math.radians(45))
+        mesh.scale = (0.5, 0.5, 0.5)
+
+        # self.mouse = Mouse()
+        # collection = data.collection.scene()
+        # self.mouse.draw(collection)
+
+        @classmethod
+        def bind(cls, collection, name, soul):
+            """Give an existing soul a body."""
+            body = bpy.data.objects.new(name, soul)
+            collection.objects.link(body)
+            return cls(body, soul)
 
         override = context()
         bpy.ops.view3d.toggle_shading(override, type="RENDERED")
@@ -104,28 +117,20 @@ class Window(window):
 
         return self
 
-    def collection(self, name):
-        """"""
-        collection = data.collection.make(name)
-        collection.hide()
-        return collection
-
     def __exit__(self, exc_type, exc_value, traceback):
         if self.call:
             call = getattr(self, self.call)
             call(**self.star)
             return False
 
-        for name, item in self._view.item.items():
-            collection = self.collection(name)
-            item.draw(collection)
         # yes super must go after
         super().__exit__(exc_type, exc_value, traceback)
         return False
 
-    def __init__(self, session, element, size, *, call, **star):
+    def __init__(self, session, element, size, *, call=None, **star):
         super().__init__(session, element, size, **star)
         self.frame = None
         self.mouse = None
+
         self.call = call
         self.star = star

@@ -2,7 +2,6 @@
 
 import configparser
 import os
-import pathlib
 
 from celestine import load
 from celestine.data.directory import APPLICATION

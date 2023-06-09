@@ -6,11 +6,11 @@ from celestine.typed import (
     CA,
     MT,
     TA,
+    A,
     B,
     D,
     N,
     S,
-    A,
 )
 from celestine.unicode import (
     FULL_STOP,
