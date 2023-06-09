@@ -1,38 +1,9 @@
 """"""
-# <pep8-80 compliant>
-import bmesh as bmesh_
 import mathutils
 
-from . import data
+from . import make
 
-
-def mesh(name, verts, edges, faces, layers):
-    """"""
-    bmesh = bmesh_.new(use_operators=False)
-
-    for vert in verts:
-        bmesh.verts.new(vert)
-    bmesh.verts.ensure_lookup_table()
-
-    for one, two in edges:
-        bmesh.edges.new((bmesh.verts[one], bmesh.verts[two]))
-    bmesh.edges.ensure_lookup_table()
-
-    for face in faces:
-        bmesh.faces.new(map(lambda vert: bmesh.verts[vert], face))
-    bmesh.faces.ensure_lookup_table()
-
-    layer = bmesh.loops.layers.uv.verify()
-    for face, loop, one, two in layers:
-        bmesh.faces[face].loops[loop][layer].uv = (one, two)
-
-    mesh_ = data.mesh.new(name)
-    bmesh.to_mesh(mesh_)
-    bmesh.free()
-    return mesh_
-
-
-def quadrilateral(name, verts, layers):
+def quadrilateral(mesh, verts, layers):
     """"""
     edges = [
         (0, 1),
@@ -45,7 +16,7 @@ def quadrilateral(name, verts, layers):
         (0, 1, 2, 3),
     ]
 
-    return mesh(name, verts, edges, faces, layers)
+    make(mesh, verts, edges, faces, layers)
 
 
 class Planar:
@@ -67,7 +38,7 @@ class Planar:
 class Plane(Planar):
     """"""
 
-    def make(self, name, normal=(+0, +0, +1), uv_x=0, uv_y=0):
+    def make(self, mesh, normal=(+0, +0, +1), uv_x=0, uv_y=0):
         """"""
         normal = mathutils.Vector(normal)
 
@@ -85,40 +56,35 @@ class Plane(Planar):
             (0, 3, 1 + uv_x, 0 - uv_y),
         ]
 
-        return quadrilateral(name, verts, layers)
+        quadrilateral(mesh, verts, layers)
 
 
-def plane(name, uv_x=0, uv_y=0):
+class Diamond(Planar):
+    """"""
+
+    def make(self, mesh):
+        """"""
+        normal = mathutils.Vector((+0, +0, +1))
+
+        verts = [
+            self.vertex_new((+1, +0), normal),
+            self.vertex_new((-0, +1), normal),
+            self.vertex_new((-1, -0), normal),
+            self.vertex_new((+0, -1), normal),
+        ]
+
+        layers = [
+            (0, 0, 1, 1),
+            (0, 1, 0, 1),
+            (0, 2, 0, 0),
+            (0, 3, 1, 0),
+        ]
+
+        quadrilateral(mesh, verts, layers)
+
+
+def plane(mesh, name, uv_x=0, uv_y=0):
     """"""
     box = Plane()
-    return box.make(name, (+0, +0, +1), uv_x, uv_y)
-
-
-def text(collection, name, text):
-    """"""
-    font_curve = data.curve.font.make(collection, name, text)
-    return font_curve
-
-
-def _offset(numerator, denominator):
-    """"""
-    ratio = numerator / denominator
-    unit = 1
-    maximum = max(ratio, unit)
-    normalization = maximum - unit
-    half = 1 / 2
-    halving = normalization * half
-    return halving
-    #  return (max(numerator / denominator, 1) - 1) / 2
-
-
-def image(image):
-    """"""
-    size = image.size
-    x = size[0]
-    y = size[1]
-    y_to_x = _offset(y, x)
-    x_to_y = _offset(x, y)
-    (x, y) = (y_to_x, x_to_y)
-
-    return plane(image.name, x, y)
+    box.make(mesh, (+0, +0, +1), uv_x, uv_y)
+    return mesh

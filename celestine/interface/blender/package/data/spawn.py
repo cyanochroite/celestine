@@ -35,7 +35,8 @@ class _real(_imaginary):
     def bind(cls, collection, name, soul):
         """Give an existing soul a body."""
         body = bpy.data.objects.new(name, soul)
-        collection.objects.link(body)
+        if collection:
+            collection.objects.link(body)
         return cls(body, soul)
 
     @classmethod

@@ -6,6 +6,8 @@ from celestine.window.window import Window as window
 
 from .package import data
 
+from .mouse import Mouse
+
 
 def context():
     """"""
@@ -95,14 +97,14 @@ class Window(window):
         light.location = (0, 0, -60)
         light.rotation = (180, 0, 0)
 
-        mesh = data.mesh.make(collection, "mouse")
-        mesh.location = (0, 0, -1)
-        mesh.rotation_euler = (0, 0, math.radians(45))
-        mesh.scale = (0.5, 0.5, 0.5)
+        click = data.collection.make("click")
+        click.soul.hide_select = False
 
-        # self.mouse = Mouse()
-        # collection = data.collection.scene()
-        # self.mouse.draw(collection)
+        mesh = data.mesh.make(click, "mouse")
+        mesh.location = (0, 0, -1)
+
+        self.mouse = Mouse(mesh)
+        self.mouse.draw(collection)
 
         @classmethod
         def bind(cls, collection, name, soul):
