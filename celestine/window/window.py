@@ -76,4 +76,3 @@ class Window:
             offset_x=0,
             offset_y=0,
         )
-        super().__init__(**star)

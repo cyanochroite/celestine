@@ -1,12 +1,9 @@
-import math
-
 import bpy
 
 from celestine.window.window import Window as window
 
-from .package import data
-
 from .mouse import Mouse
+from .package import data
 
 
 def context():
@@ -61,6 +58,12 @@ class Window(window):
         item.hide_render = False
         item.hide_viewport = False
         bpy.context.scene.celestine.page = page
+
+    def view(self, name, function):
+        """"""
+        super().view(name, function)
+        self.page = self._view.get(name)
+        self.draw(make=True)
 
     def __enter__(self):
         if self.call:

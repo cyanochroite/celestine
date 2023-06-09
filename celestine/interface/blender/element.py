@@ -44,34 +44,33 @@ class Abstract(Abstract_):
 class Button(Abstract, Button_):
     """"""
 
-    def draw(self, view: COLLECTION, *, draw: B, **star) -> N:
+    def draw(self, view: COLLECTION, *, make: B, **star) -> N:
         """"""
-        if not draw:
+        if not make:
             return
 
-        width = len(self.text) / 4
+        width = len(self.data) / 4
         height = 1 / 20
 
-        plane = _mesh.plane(self.text)
-        mesh = make_mesh.bind(view, self.text, plane)
-        mesh.scale = (width, height, 1)
+        plane = _mesh.quadrilateral.plane(view, self.data)
+        plane.scale = (width, height, 1)
 
-        word = _mesh.text(view, self.text, self.text)
-        word.scale = (1 / width, 1 / height, 1)
-        word.location = (-width / 4, -height, 0.1)
+        text = _mesh.text(view, self.data, self.data)
+        text.scale = (1 / width, 1 / height, 1)
+        text.location = (-width / 4, -height, 0.1)
 
-        word.parent = mesh
+        text.parent = plane
 
-        self.item = mesh
+        self.item = plane
         self.render()
 
 
 class Image(Abstract, Image_):
     """"""
 
-    def draw(self, view: COLLECTION, *, draw: B, **star) -> N:
+    def draw(self, view: COLLECTION, *, make: B, **star) -> N:
         """"""
-        if not draw:
+        if not make:
             return
 
         path = self.image or load.asset("null.png")
@@ -98,10 +97,10 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, view: COLLECTION, *, draw: B, **star) -> N:
+    def draw(self, view: COLLECTION, *, make: B, **star) -> N:
         """"""
-        if not draw:
+        if not make:
             return
 
-        self.item = _mesh.text(view, self.text, self.text)
+        self.item = _mesh.text(view, self.data, self.data)
         self.render()

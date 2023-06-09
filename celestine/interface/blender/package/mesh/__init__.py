@@ -1,7 +1,8 @@
 """"""
 # <pep8-80 compliant>
 import bmesh as bmesh_
-import mathutils
+
+from celestine.interface.blender.package import data
 
 
 def make(mesh, verts, edges, faces, layers):
@@ -28,10 +29,9 @@ def make(mesh, verts, edges, faces, layers):
     bmesh.free()
 
 
-def text(collection, name, text):
+def text(collection, name, words):
     """"""
-    from . import data
-    font_curve = data.curve.font.make(collection, name, text)
+    font_curve = data.curve.font.make(collection, name, words)
     return font_curve
 
 
