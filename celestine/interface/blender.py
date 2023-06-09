@@ -7,11 +7,13 @@ from celestine import load
 from celestine.package.blender import (
     UV,
     data,
+    preferences,
 )
-from celestine.package.blender import mesh as _mesh
-from celestine.package.blender import preferences
-from celestine.package.blender.data import mesh as make_mesh
 from celestine.package.blender.data.collection import _collection
+from celestine.package.blender.mesh import (
+    basic,
+    quadrilateral,
+)
 from celestine.package.blender.mesh.quadrilateral import Diamond
 from celestine.typed import (
     B,
@@ -216,10 +218,10 @@ class Button(Abstract, Button_):
         width = len(self.data) / 4
         height = 1 / 20
 
-        plane = _mesh.quadrilateral.plane(view, self.data)
+        plane = quadrilateral.plane(view, self.data)
         plane.scale = (width, height, 1)
 
-        text = _mesh.text(view, self.data, self.data)
+        text = basic.text(view, self.data, self.data)
         text.scale = (1 / width, 1 / height, 1)
         text.location = (-width / 4, -height, 0.1)
 
@@ -237,13 +239,12 @@ class Image(Abstract, Image_):
         if not make:
             return
 
-        path = self.image or load.asset("null.png")
+        path = self.image or load.pathway.asset("null.png")
         _image = data.image.load(path)
         material = UV.material("pretty", _image)
-        plane = _mesh.image(_image)
-        mesh = make_mesh.bind(view, path, plane)
-        mesh.body.data.materials.append(material)
-        self.item = mesh
+        plane = basic.image(view, _image)
+        plane.body.data.materials.append(material)
+        self.item = plane
         self.render()
 
     def update(self, *, image: S, **star) -> B:
@@ -266,7 +267,7 @@ class Label(Abstract, Label_):
         if not make:
             return
 
-        self.item = _mesh.text(view, self.data, self.data)
+        self.item = basic.text(view, self.data, self.data)
         self.render()
 
 

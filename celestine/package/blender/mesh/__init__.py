@@ -1,13 +1,11 @@
 """"""
 
-import bmesh as bmesh_
-
-from celestine.package.blender import data
+import bmesh as bpy_bmesh
 
 
 def make(mesh, verts, edges, faces, layers):
     """"""
-    bmesh = bmesh_.new(use_operators=False)
+    bmesh = bpy_bmesh.new(use_operators=False)
 
     for vert in verts:
         bmesh.verts.new(vert)
@@ -27,33 +25,3 @@ def make(mesh, verts, edges, faces, layers):
 
     bmesh.to_mesh(mesh)
     bmesh.free()
-
-
-def text(collection, name, words):
-    """"""
-    font_curve = data.curve.font.make(collection, name, words)
-    return font_curve
-
-
-def _offset(numerator, denominator):
-    """"""
-    ratio = numerator / denominator
-    unit = 1
-    maximum = max(ratio, unit)
-    normalization = maximum - unit
-    half = 1 / 2
-    halving = normalization * half
-    return halving
-    #  return (max(numerator / denominator, 1) - 1) / 2
-
-
-def image(image):
-    """"""
-    size = image.size
-    x = size[0]
-    y = size[1]
-    y_to_x = _offset(y, x)
-    x_to_y = _offset(x, y)
-    (x, y) = (y_to_x, x_to_y)
-
-    return plane(image.name, x, y)

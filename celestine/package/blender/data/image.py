@@ -30,5 +30,6 @@ class _image(_real):
         )
 
     @classmethod
-    def load(cls, filepath, check_existing=False):
+    def load(cls, path, check_existing=False):
+        filepath = str(path)
         return cls.data.load(filepath, check_existing=check_existing)
