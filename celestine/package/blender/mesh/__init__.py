@@ -1,5 +1,5 @@
 """"""
-# <pep8-80 compliant>
+
 import bmesh as bmesh_
 
 from celestine.package.blender import data
