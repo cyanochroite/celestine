@@ -2,7 +2,7 @@
 # <pep8-80 compliant>
 import bmesh as bmesh_
 
-from celestine.interface.blender.package import data
+from celestine.package.blender import data
 
 
 def make(mesh, verts, edges, faces, layers):

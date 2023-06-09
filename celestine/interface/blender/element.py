@@ -1,6 +1,13 @@
 """"""
 
 from celestine import load
+from celestine.package.blender import (
+    UV,
+    data,
+)
+from celestine.package.blender import mesh as _mesh
+from celestine.package.blender.data import mesh as make_mesh
+from celestine.package.blender.data.collection import _collection
 from celestine.typed import (
     B,
     F,
@@ -12,14 +19,6 @@ from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
-
-from .package import (
-    UV,
-    data,
-)
-from .package import mesh as _mesh
-from .package.data import mesh as make_mesh
-from .package.data.collection import _collection
 
 COLLECTION = _collection
 

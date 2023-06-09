@@ -1,7 +1,7 @@
 """"""
 import mathutils
 
-from celestine.interface.blender.package import data
+from celestine.package.blender import data
 
 from . import make
 

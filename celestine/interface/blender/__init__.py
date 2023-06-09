@@ -3,6 +3,10 @@
 import bpy  # pylint: disable=import-error
 
 import celestine
+from celestine.package.blender import (
+    data,
+    preferences,
+)
 from celestine.typed import (
     B,
     N,
@@ -12,10 +16,6 @@ from .element import (
     Button,
     Image,
     Label,
-)
-from .package import (
-    data,
-    preferences,
 )
 from .window import Window
 

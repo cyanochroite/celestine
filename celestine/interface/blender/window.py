@@ -1,9 +1,9 @@
 import bpy
 
+from celestine.package.blender import data
 from celestine.window.window import Window as window
 
 from .mouse import Mouse
-from .package import data
 
 
 def context():

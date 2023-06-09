@@ -1,13 +1,13 @@
 """"""
 
+from celestine.package.blender.data.collection import _collection
 from celestine.typed import N
 
 from .element import Abstract
-from .package.data.collection import _collection
 
 COLLECTION = _collection
 
-from .package.mesh.quadrilateral import Diamond
+from celestine.package.blender.mesh.quadrilateral import Diamond
 
 
 class Mouse(Abstract):
