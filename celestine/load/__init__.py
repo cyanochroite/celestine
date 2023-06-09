@@ -10,6 +10,7 @@ from celestine.typed import (
     D,
     N,
     S,
+    A,
 )
 from celestine.unicode import (
     FULL_STOP,
@@ -26,7 +27,6 @@ PACKAGE = "package"
 
 pathway = _pathway
 many = _many
-
 
 ########################################################################
 
@@ -48,16 +48,22 @@ def module(*path: S) -> MT:
     return package(CELESTINE, *path)
 
 
+def attribute(*path: S) -> A:
+    """Functions like the 'from package import item' syntax."""
+    iterable = [*path]
+    name = iterable.pop(-1)
+    item = module(*iterable)
+    result = getattr(item, name)
+    return result
+
+
 def redirect(*path: S) -> N:
     """
     Loads a function from the specified path, and then runs it.
 
     :param path: The last item is the function name.
     """
-    iterable = [*path]
-    name = iterable.pop(-1)
-    item = module(*iterable)
-    function = getattr(item, name)
+    function = attribute(*path)
     function()
 
 

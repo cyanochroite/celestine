@@ -3,17 +3,15 @@ from __future__ import annotations
 import ctypes
 import os
 import sys
-from collections.abc import Callable
 from functools import lru_cache
+from typing import Callable
 
 from .api import PlatformDirsABC
 
 
 class Windows(PlatformDirsABC):
-    """`MSDN on where to store app data files.
-
-    <http://support.microsoft.com/default.aspx?
-    scid=kb;en-us;310294#XSLTH3194121123120121120120>`_.
+    """`MSDN on where to store app data files
+    <http://support.microsoft.com/default.aspx?scid=kb;en-us;310294#XSLTH3194121123120121120120>`_.
     Makes use of the
     `appname <platformdirs.api.PlatformDirsABC.appname>`,
     `appauthor <platformdirs.api.PlatformDirsABC.appauthor>`,
@@ -27,21 +25,14 @@ class Windows(PlatformDirsABC):
     def user_data_dir(self) -> str:
         """
         :return: data directory tied to the user, e.g.
-
-         ``%USERPROFILE%\\AppData\\Local\\$appauthor\\$appname``
-         (not roaming) or
-         ``%USERPROFILE%\\AppData\\Roaming\\$appauthor\\$appname``
-         (roaming)
+         ``%USERPROFILE%\\AppData\\Local\\$appauthor\\$appname`` (not roaming) or
+         ``%USERPROFILE%\\AppData\\Roaming\\$appauthor\\$appname`` (roaming)
         """
-        const = (
-            "CSIDL_APPDATA" if self.roaming else "CSIDL_LOCAL_APPDATA"
-        )
+        const = "CSIDL_APPDATA" if self.roaming else "CSIDL_LOCAL_APPDATA"
         path = os.path.normpath(get_win_folder(const))
         return self._append_parts(path)
 
-    def _append_parts(
-        self, path: str, *, opinion_value: str | None = None
-    ) -> str:
+    def _append_parts(self, path: str, *, opinion_value: str | None = None) -> str:
         params = []
         if self.appname:
             if self.appauthor is not False:
@@ -58,64 +49,44 @@ class Windows(PlatformDirsABC):
 
     @property
     def site_data_dir(self) -> str:
-        """:return: data directory shared by users, e.g.
-
-        ``C:\\ProgramData\\$appauthor\\$appname``
-        """
+        """:return: data directory shared by users, e.g. ``C:\\ProgramData\\$appauthor\\$appname``"""
         path = os.path.normpath(get_win_folder("CSIDL_COMMON_APPDATA"))
         return self._append_parts(path)
 
     @property
     def user_config_dir(self) -> str:
-        """:return: config directory tied to the user, same as.
-
-        `user_data_dir`
-        """
+        """:return: config directory tied to the user, same as `user_data_dir`"""
         return self.user_data_dir
 
     @property
     def site_config_dir(self) -> str:
-        """:return: config directory shared by the users, same as.
-
-        `site_data_dir`
-        """
+        """:return: config directory shared by the users, same as `site_data_dir`"""
         return self.site_data_dir
 
     @property
     def user_cache_dir(self) -> str:
         """
-        :return: cache directory tied to the user (if opinionated.
-
-        with ``Cache`` folder within ``$appname``) e.g.
-         ``%USERPROFILE%\\AppData\\Local\\$appauthor\\$appname
-         \\Cache\\$version``
+        :return: cache directory tied to the user (if opinionated with ``Cache`` folder within ``$appname``) e.g.
+         ``%USERPROFILE%\\AppData\\Local\\$appauthor\\$appname\\Cache\\$version``
         """
         path = os.path.normpath(get_win_folder("CSIDL_LOCAL_APPDATA"))
         return self._append_parts(path, opinion_value="Cache")
 
     @property
     def site_cache_dir(self) -> str:
-        """:return: cache directory shared by users, e.g.
-
-        ``C:\\ProgramData\\$appauthor\\$appname\\Cache\\$version``
-        """
+        """:return: cache directory shared by users, e.g. ``C:\\ProgramData\\$appauthor\\$appname\\Cache\\$version``"""
         path = os.path.normpath(get_win_folder("CSIDL_COMMON_APPDATA"))
         return self._append_parts(path, opinion_value="Cache")
 
     @property
     def user_state_dir(self) -> str:
-        """:return: state directory tied to the user, same as.
-
-        `user_data_dir`
-        """
+        """:return: state directory tied to the user, same as `user_data_dir`"""
         return self.user_data_dir
 
     @property
     def user_log_dir(self) -> str:
         """
-        :return: log directory tied to the user, same as.
-
-        `user_data_dir` if not opinionated else ``Logs`` in it
+        :return: log directory tied to the user, same as `user_data_dir` if not opinionated else ``Logs`` in it
         """
         path = self.user_data_dir
         if self.opinion:
@@ -126,36 +97,28 @@ class Windows(PlatformDirsABC):
     @property
     def user_documents_dir(self) -> str:
         """
-        :return: documents directory tied to the user e.g.
-
-        ``%USERPROFILE%\\Documents``
+        :return: documents directory tied to the user e.g. ``%USERPROFILE%\\Documents``
         """
         return os.path.normpath(get_win_folder("CSIDL_PERSONAL"))
 
     @property
     def user_pictures_dir(self) -> str:
         """
-        :return: pictures directory tied to the user e.g.
-
-        ``%USERPROFILE%\\Pictures``
+        :return: pictures directory tied to the user e.g. ``%USERPROFILE%\\Pictures``
         """
         return os.path.normpath(get_win_folder("CSIDL_MYPICTURES"))
 
     @property
     def user_videos_dir(self) -> str:
         """
-        :return: videos directory tied to the user e.g.
-
-        ``%USERPROFILE%\\Videos``
+        :return: videos directory tied to the user e.g. ``%USERPROFILE%\\Videos``
         """
         return os.path.normpath(get_win_folder("CSIDL_MYVIDEO"))
 
     @property
     def user_music_dir(self) -> str:
         """
-        :return: music directory tied to the user e.g.
-
-        ``%USERPROFILE%\\Music``
+        :return: music directory tied to the user e.g. ``%USERPROFILE%\\Music``
         """
         return os.path.normpath(get_win_folder("CSIDL_MYMUSIC"))
 
@@ -163,12 +126,9 @@ class Windows(PlatformDirsABC):
     def user_runtime_dir(self) -> str:
         """
         :return: runtime directory tied to the user, e.g.
-
          ``%USERPROFILE%\\AppData\\Local\\Temp\\$appauthor\\$appname``
         """
-        path = os.path.normpath(
-            os.path.join(get_win_folder("CSIDL_LOCAL_APPDATA"), "Temp")
-        )
+        path = os.path.normpath(os.path.join(get_win_folder("CSIDL_LOCAL_APPDATA"), "Temp"))
         return self._append_parts(path)
 
 
@@ -191,32 +151,19 @@ def get_win_folder_from_env_vars(csidl_name: str) -> str:
     return result
 
 
-def get_win_folder_if_csidl_name_not_env_var(
-    csidl_name: str,
-) -> str | None:
-    """Get folder for a CSIDL name that does not exist as an.
-
-    environment variable.
-    """
+def get_win_folder_if_csidl_name_not_env_var(csidl_name: str) -> str | None:
+    """Get folder for a CSIDL name that does not exist as an environment variable."""
     if csidl_name == "CSIDL_PERSONAL":
-        return os.path.join(
-            os.path.normpath(os.environ["USERPROFILE"]), "Documents"
-        )
+        return os.path.join(os.path.normpath(os.environ["USERPROFILE"]), "Documents")
 
     if csidl_name == "CSIDL_MYPICTURES":
-        return os.path.join(
-            os.path.normpath(os.environ["USERPROFILE"]), "Pictures"
-        )
+        return os.path.join(os.path.normpath(os.environ["USERPROFILE"]), "Pictures")
 
     if csidl_name == "CSIDL_MYVIDEO":
-        return os.path.join(
-            os.path.normpath(os.environ["USERPROFILE"]), "Videos"
-        )
+        return os.path.join(os.path.normpath(os.environ["USERPROFILE"]), "Videos")
 
     if csidl_name == "CSIDL_MYMUSIC":
-        return os.path.join(
-            os.path.normpath(os.environ["USERPROFILE"]), "Music"
-        )
+        return os.path.join(os.path.normpath(os.environ["USERPROFILE"]), "Music")
     return None
 
 
@@ -238,19 +185,11 @@ def get_win_folder_from_registry(csidl_name: str) -> str:
     }.get(csidl_name)
     if shell_folder_name is None:
         raise ValueError(f"Unknown CSIDL name: {csidl_name}")
-    if (
-        sys.platform != "win32"
-    ):  # only needed for mypy type checker to know that this code
-        # runs only on Windows
+    if sys.platform != "win32":  # only needed for mypy type checker to know that this code runs only on Windows
         raise NotImplementedError
     import winreg
 
-    one = "Software\\Microsoft\\Windows\\"
-    two = "CurrentVersion\\Explorer\\Shell Folders"
-    key = winreg.OpenKey(
-        winreg.HKEY_CURRENT_USER,
-        f"{one}{two}",
-    )
+    key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders")
     directory, _ = winreg.QueryValueEx(key, shell_folder_name)
     return str(directory)
 
@@ -270,10 +209,7 @@ def get_win_folder_via_ctypes(csidl_name: str) -> str:
         raise ValueError(f"Unknown CSIDL name: {csidl_name}")
 
     buf = ctypes.create_unicode_buffer(1024)
-    windll = getattr(
-        ctypes, "windll"
-    )  # noqa: B009 # using getattr to avoid false positive with mypy
-    # type checker
+    windll = getattr(ctypes, "windll")  # noqa: B009 # using getattr to avoid false positive with mypy type checker
     windll.shell32.SHGetFolderPathW(None, csidl_const, None, 0, buf)
 
     # Downgrade to short path name if it has highbit chars.

@@ -18,13 +18,9 @@ else:
 
 class Unix(PlatformDirsABC):
     """
-    On Unix/Linux, we follow the.
-
-    `XDG Basedir Spec
-    <https://specifications.freedesktop.org/basedir-spec/
-    basedir-spec-latest.html>`_. The spec allows
-    overriding directories with environment variables. The examples
-    show are the default values, alongside the name of
+    On Unix/Linux, we follow the
+    `XDG Basedir Spec <https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html>`_. The spec allows
+    overriding directories with environment variables. The examples show are the default values, alongside the name of
     the environment variable that overrides them. Makes use of the
     `appname <platformdirs.api.PlatformDirsABC.appname>`,
     `version <platformdirs.api.PlatformDirsABC.version>`,
@@ -36,10 +32,7 @@ class Unix(PlatformDirsABC):
     @property
     def user_data_dir(self) -> str:
         """
-        :return: data directory tied to the user, e.g.
-
-        ``~/.local/share/$appname/$version`` or.
-
+        :return: data directory tied to the user, e.g. ``~/.local/share/$appname/$version`` or
          ``$XDG_DATA_HOME/$appname/$version``
         """
         path = os.environ.get("XDG_DATA_HOME", "")
@@ -50,17 +43,11 @@ class Unix(PlatformDirsABC):
     @property
     def site_data_dir(self) -> str:
         """
-        :return: data directories shared by users (if `multipath.
-
-        <platformdirs.api.PlatformDirsABC.multipath>` is.
-
-         enabled and ``XDG_DATA_DIR`` is set and a multi path
-         the response is also a multi path separated by the OS
-         path separator), e.g. ``/usr/local/share/$appname/$version``
-         or ``/usr/share/$appname/$version``
+        :return: data directories shared by users (if `multipath <platformdirs.api.PlatformDirsABC.multipath>` is
+         enabled and ``XDG_DATA_DIR`` is set and a multi path the response is also a multi path separated by the OS
+         path separator), e.g. ``/usr/local/share/$appname/$version`` or ``/usr/share/$appname/$version``
         """
-        # XDG default for $XDG_DATA_DIRS; only first, if multipath
-        # is False
+        # XDG default for $XDG_DATA_DIRS; only first, if multipath is False
         path = os.environ.get("XDG_DATA_DIRS", "")
         if not path.strip():
             path = f"/usr/local/share{os.pathsep}/usr/share"
@@ -70,19 +57,13 @@ class Unix(PlatformDirsABC):
         path_list = path.split(os.pathsep)
         if not self.multipath:
             path_list = path_list[0:1]
-        path_list = [
-            self._append_app_name_and_version(os.path.expanduser(p))
-            for p in path_list
-        ]
+        path_list = [self._append_app_name_and_version(os.path.expanduser(p)) for p in path_list]
         return os.pathsep.join(path_list)
 
     @property
     def user_config_dir(self) -> str:
         """
-        :return: config directory tied to the user, e.g.
-
-        ``~/.config/$appname/$version`` or.
-
+        :return: config directory tied to the user, e.g. ``~/.config/$appname/$version`` or
          ``$XDG_CONFIG_HOME/$appname/$version``
         """
         path = os.environ.get("XDG_CONFIG_HOME", "")
@@ -93,16 +74,11 @@ class Unix(PlatformDirsABC):
     @property
     def site_config_dir(self) -> str:
         """
-        :return: config directories shared by users (if `multipath.
-
-        <platformdirs.api.PlatformDirsABC.multipath>`.
-
-         is enabled and ``XDG_DATA_DIR`` is set and a multi path the
-         response is also a multi path separated by the OS
+        :return: config directories shared by users (if `multipath <platformdirs.api.PlatformDirsABC.multipath>`
+         is enabled and ``XDG_DATA_DIR`` is set and a multi path the response is also a multi path separated by the OS
          path separator), e.g. ``/etc/xdg/$appname/$version``
         """
-        # XDG default for $XDG_CONFIG_DIRS only first, if multipath is
-        # False
+        # XDG default for $XDG_CONFIG_DIRS only first, if multipath is False
         path = os.environ.get("XDG_CONFIG_DIRS", "")
         if not path.strip():
             path = "/etc/xdg"
@@ -111,10 +87,7 @@ class Unix(PlatformDirsABC):
     @property
     def user_cache_dir(self) -> str:
         """
-        :return: cache directory tied to the user, e.g.
-
-        ``~/.cache/$appname/$version`` or.
-
+        :return: cache directory tied to the user, e.g. ``~/.cache/$appname/$version`` or
          ``~/$XDG_CACHE_HOME/$appname/$version``
         """
         path = os.environ.get("XDG_CACHE_HOME", "")
@@ -125,19 +98,14 @@ class Unix(PlatformDirsABC):
     @property
     def site_cache_dir(self) -> str:
         """
-        :return: cache directory shared by users, e.g.
-
-        ``/var/tmp/$appname/$version``.
+        :return: cache directory shared by users, e.g. ``/var/tmp/$appname/$version``
         """
         return self._append_app_name_and_version("/var/tmp")
 
     @property
     def user_state_dir(self) -> str:
         """
-        :return: state directory tied to the user, e.g.
-
-        ``~/.local/state/$appname/$version`` or.
-
+        :return: state directory tied to the user, e.g. ``~/.local/state/$appname/$version`` or
          ``$XDG_STATE_HOME/$appname/$version``
         """
         path = os.environ.get("XDG_STATE_HOME", "")
@@ -148,9 +116,7 @@ class Unix(PlatformDirsABC):
     @property
     def user_log_dir(self) -> str:
         """
-        :return: log directory tied to the user, same as.
-
-        `user_state_dir` if not opinionated else ``log`` in it.
+        :return: log directory tied to the user, same as `user_state_dir` if not opinionated else ``log`` in it
         """
         path = self.user_state_dir
         if self.opinion:
@@ -160,45 +126,35 @@ class Unix(PlatformDirsABC):
     @property
     def user_documents_dir(self) -> str:
         """
-        :return: documents directory tied to the user, e.g.
-
-        ``~/Documents``.
+        :return: documents directory tied to the user, e.g. ``~/Documents``
         """
         return _get_user_media_dir("XDG_DOCUMENTS_DIR", "~/Documents")
 
     @property
     def user_pictures_dir(self) -> str:
         """
-        :return: pictures directory tied to the user, e.g.
-
-        ``~/Pictures``.
+        :return: pictures directory tied to the user, e.g. ``~/Pictures``
         """
         return _get_user_media_dir("XDG_PICTURES_DIR", "~/Pictures")
 
     @property
     def user_videos_dir(self) -> str:
         """
-        :return: videos directory tied to the user, e.g.
-
-        ``~/Videos``.
+        :return: videos directory tied to the user, e.g. ``~/Videos``
         """
         return _get_user_media_dir("XDG_VIDEOS_DIR", "~/Videos")
 
     @property
     def user_music_dir(self) -> str:
-        """:return: music directory tied to the user, e.g.
-
-        ``~/Music``.
+        """
+        :return: music directory tied to the user, e.g. ``~/Music``
         """
         return _get_user_media_dir("XDG_MUSIC_DIR", "~/Music")
 
     @property
     def user_runtime_dir(self) -> str:
         """
-        :return: runtime directory tied to the user, e.g.
-
-        ``/run/user/$(id -u)/$appname/$version`` or.
-
+        :return: runtime directory tied to the user, e.g. ``/run/user/$(id -u)/$appname/$version`` or
          ``$XDG_RUNTIME_DIR/$appname/$version``
         """
         path = os.environ.get("XDG_RUNTIME_DIR", "")
@@ -208,32 +164,18 @@ class Unix(PlatformDirsABC):
 
     @property
     def site_data_path(self) -> Path:
-        """:return: data path shared by users.
-
-        Only return first item, even if ``multipath`` is set to ``True``
-        """
+        """:return: data path shared by users. Only return first item, even if ``multipath`` is set to ``True``"""
         return self._first_item_as_path_if_multipath(self.site_data_dir)
 
     @property
     def site_config_path(self) -> Path:
-        """:return: config path shared by the users.
-
-        Only return first item, even if ``multipath`` is set to ``True``
-        """
-        return self._first_item_as_path_if_multipath(
-            self.site_config_dir
-        )
+        """:return: config path shared by the users. Only return first item, even if ``multipath`` is set to ``True``"""
+        return self._first_item_as_path_if_multipath(self.site_config_dir)
 
     @property
     def site_cache_path(self) -> Path:
-        """
-        :return: cache path shared by users.
-
-        Only return first item, even if ``multipath`` is set to ``True``
-        """
-        return self._first_item_as_path_if_multipath(
-            self.site_cache_dir
-        )
+        """:return: cache path shared by users. Only return first item, even if ``multipath`` is set to ``True``"""
+        return self._first_item_as_path_if_multipath(self.site_cache_dir)
 
     def _first_item_as_path_if_multipath(self, directory: str) -> Path:
         if self.multipath:
@@ -253,14 +195,8 @@ def _get_user_media_dir(env_var: str, fallback_tilde_path: str) -> str:
 
 
 def _get_user_dirs_folder(key: str) -> str | None:
-    """
-    Return directory from user-dirs.dirs config file.
-
-    See https://freedesktop.org/wiki/Software/xdg-user-dirs/
-    """
-    user_dirs_config_path = os.path.join(
-        Unix().user_config_dir, "user-dirs.dirs"
-    )
+    """Return directory from user-dirs.dirs config file. See https://freedesktop.org/wiki/Software/xdg-user-dirs/"""
+    user_dirs_config_path = os.path.join(Unix().user_config_dir, "user-dirs.dirs")
     if os.path.exists(user_dirs_config_path):
         parser = ConfigParser()
 

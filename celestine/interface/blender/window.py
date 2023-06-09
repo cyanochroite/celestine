@@ -79,7 +79,7 @@ class Window(window):
             data.material.remove(material)
         for mesh in bpy.data.meshes:
             data.mesh.remove(mesh)
-        for texture in bpy.data.dataures:
+        for texture in bpy.data.textures:
             data.dataure.remove(texture)
 
         collection = data.collection.make("window")
@@ -116,34 +116,16 @@ class Window(window):
             call(**self.star)
             return False
 
-        for name, item in self.item.items():
+        for name, item in self._view.item.items():
             collection = self.collection(name)
             item.draw(collection)
         # yes super must go after
         super().__exit__(exc_type, exc_value, traceback)
         return False
 
-    def __init__(self, session, *, call=None, **star):
-        super().__init__(session, **star)
+    def __init__(self, session, element, size, *, call, **star):
+        super().__init__(session, element, size, **star)
         self.frame = None
-        self.width = 20
-        self.height = 20
         self.mouse = None
-
-        self.container = Container(
-            self.session,
-            "window",
-            self,
-            Button,
-            Image,
-            Label,
-            x_min=0,
-            y_min=0,
-            x_max=self.width,
-            y_max=self.height,
-            offset_x=0,
-            offset_y=2.5,
-        )
-
         self.call = call
         self.star = star

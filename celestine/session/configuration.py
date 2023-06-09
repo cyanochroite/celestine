@@ -70,25 +70,8 @@ class Configuration:
 
     def __init__(self) -> N:
         """"""
-        platformdirs = load.module("package", "platformdirs")
-
-        appname = "celestine"
-        appauthor = "celestine"
-        version = "0.4"
-        roaming = False
-        ensure_exists = True
-
-        directory = pathlib.Path(
-            platformdirs.user_data_dir(
-                appname,
-                appauthor,
-                version,
-                roaming,
-                ensure_exists,
-            )
-        )
-
-        path = os.path.join(directory, FILE)
+        module = load.module("package", "platformdirs")
+        path = os.path.join(module.directory, FILE)
         self.path = path
 
         defaults = None  # Default.

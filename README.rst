@@ -1,5 +1,5 @@
-Célestine (Framework)
-#####################
+celestine
+#########
 
 .. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
    :target: https://celestine.readthedocs.io/en/latest/?badge=latest
@@ -13,11 +13,6 @@ Localized for members of the European Union.
 
 The only requirement is Python.
 However, you can install additional packages for extended functionality.
-
-It has three customizable directories. ``application``, ``interface``, ``language``.
-Any modules added to them should be automatically detected.
-
-Comes with the application that started it all, a primitive image viewer.
 
 Installation
 ************
@@ -57,31 +52,13 @@ Blender comes with a python interpreter, which means this can be run as a blende
 
 Note that Blender is an isolated environment, so no other packages can be used with it.
 
-Extensions
-**********
 
-If you are on Linux, you won’t have TKinter installed.
-If you are on Windows, you won’t have curses installed.
-
-For a better user experience, you may want to install these packages as well.
-
-Note: Pygame has not yet been released for Python 3.11. Which is too bad because this currently does not run on Python 3.10.
-
-+-------------------+----------------+------------------------------------------------------------------------+
-| Package           | pip install    | Information                                                            |
-+===================+================+========================================================================+
-| `Dear PyGui`_     | dearpygui      | DearPyGui: A simple Python GUI Toolkit.                                |
-+-------------------+----------------+------------------------------------------------------------------------+
-| `Pygame`_         | pygame         | Python Game Development.                                               |
-+-------------------+----------------+------------------------------------------------------------------------+
-| `Windows Curses`_ | windows-curses | Support for the standard curses module on Windows.                     |
-+-------------------+----------------+------------------------------------------------------------------------+
 
 Commands
 ********
 
-Application
-^^^^^^^^^^^
+Applications
+^^^^^^^^^^^^
 
 Sample application to try out.
 
@@ -97,30 +74,62 @@ Caution: By default the viewer application will try to load every image it finds
 | Viewer      | celestine -a viewer     | View a very small amount of pictures at once.                    |
 +-------------+-------------------------+------------------------------------------------------------------+
 
-Graphical User Interface
-^^^^^^^^^^^^^^^^^^^^^^^^
 
-+---------------+-------------------------+------------------------+
-| Interface     | Type                    | Command                |
-+===============+=========================+========================+
-| `Blender`_    | Application             | celestine -i blender   |
-+---------------+-------------------------+------------------------+
-| `Curses`_     | Python Standard Library | celestine -i curses    |
-+---------------+-------------------------+------------------------+
-| `Dear PyGui`_ | Python Package Index    | celestine -i dearpygui |
-+---------------+-------------------------+------------------------+
-| `Pygame`_     | Python Package Index    | celestine -i pygame    |
-+---------------+-------------------------+------------------------+
-| `Tkinter`_    | Python Standard Library | celestine -i tkinter   |
-+---------------+-------------------------+------------------------+
+Graphical User Interfaces
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-World Language
-^^^^^^^^^^^^^^
++--------------+-------------------------+------------------------+
+| Interface    | Source                  | Command                |
++==============+=========================+========================+
+| `blender`_   | Blender Foundation      | celestine -i blender   |
++--------------+-------------------------+------------------------+
+| `curses`_    | Python Standard Library | celestine -i curses    |
++--------------+-------------------------+------------------------+
+| `dearpygui`_ | Python Package Index    | celestine -i dearpygui |
++--------------+-------------------------+------------------------+
+| `pygame`_    | Python Package Index    | celestine -i pygame    |
++--------------+-------------------------+------------------------+
+| `tkinter`_   | Python Standard Library | celestine -i tkinter   |
++--------------+-------------------------+------------------------+
+
++--------------+-------------------------+--------------+-----------------------------+
+| Interface    | Source                  | celestine -i | pip install                 |
++==============+=========================+==============+=============================+
+| `blender`_   | Blender Foundation      | blender      | dearpygui                   |
++--------------+-------------------------+--------------+-----------------------------+
+| `curses`_    | Python Standard Library | curses       | windows-curses [1]_         |
++--------------+-------------------------+--------------+-----------------------------+
+| `dearpygui`_ | Python Package Index    | dearpygui    | dearpygui                   |
++--------------+-------------------------+--------------+-----------------------------+
+| `pygame`_    | Python Package Index    | pygame       | pygame                      |
++--------------+-------------------------+--------------+-----------------------------+
+| `tkinter`_   | Python Standard Library | tkinter      | tkinter                     |
++--------------+-------------------------+--------------+-----------------------------+
+
+
+Note:
+
+.. [1] This is only needed on Windows.
+
+
+
+
+
+.. _`blender`: https://www.blender.org/
+.. _`curses`: https://docs.python.org/3/howto/curses.html
+.. _`dearpygui`: https://pypi.org/project/dearpygui/
+.. _`pygame`: https://pypi.org/project/pygame/
+.. _`pyupgrade`: https://pypi.org/project/pyupgrade/
+.. _`tkinter`: https://docs.python.org/3/library/tk.html
+
+
+World Languages
+^^^^^^^^^^^^^^^
 
 +------------+-------------+-----------------+
 | Language   | Translation | Command         |
 +============+=============+=================+
-| Bulgarian  | български   | celestine -l en |
+| Bulgarian  | български   | celestine -l bg |
 +------------+-------------+-----------------+
 | Czech      | čeština     | celestine -l cs |
 +------------+-------------+-----------------+
@@ -169,24 +178,50 @@ World Language
 | Swedish    | svenska     | celestine -l sv |
 +------------+-------------+-----------------+
 
-Resources
-*********
 
-* `Email`_
-* `Discord`_
-* `Read the Docs`_
+Optional Dependencies
+*********************
 
-.. _`Blender`: https://www.blender.org/
-.. _`Celestine`: https://pypi.org/project/celestine/
-.. _`Curses`: https://docs.python.org/3/howto/curses.html
-.. _`Dear PyGui`: https://github.com/hoffstadt/DearPyGui/
-.. _`Discord`: https://discord.gg/aNmDWPXd7B
-.. _`Email`: celestine@mem-dixy.ch
-.. _`Python`: https://www.python.org/
-.. _`Pygame`: https://www.pygame.org/
-.. _`Read the Docs`: https://celestine.readthedocs.io/en/latest/
-.. _`Tkinter`: https://docs.python.org/3/library/tk.html
-.. _`Windows Curses`: https://github.com/zephyrproject-rtos/windows-curses/
++-------------------+----------------+------------------------------------------------------------------------+
+| Package           | pip install    | Information                                                            |
++===================+================+========================================================================+
+| `dearpygui`_      | dearpygui      | DearPyGui: A simple Python GUI Toolkit.                                |
++-------------------+----------------+------------------------------------------------------------------------+
+| `pygame`_         | pygame         | Python Game Development.                                               |
++-------------------+----------------+------------------------------------------------------------------------+
 
 
+Windows
+^^^^^^^
 
++-------------------+----------------+------------------------------------------------------------------------+
+| Package           | pip install    | Information                                                            |
++===================+================+========================================================================+
+| `windows-curses`_ | windows-curses | Support for the standard curses module on Windows.                     |
++-------------------+----------------+------------------------------------------------------------------------+
+
+
+.. _`dearpygui`: https://pypi.org/project/dearpygui/
+.. _`pygame`: https://pypi.org/project/pygame/
+.. _`windows-curses`: https://github.com/zephyrproject-rtos/windows-curses/
+
+
+Licences
+********
+
+The licence for :program:`Cascadia Code` is the
+`SIL Open Font License <https://scripts.sil.org/OFL>`_.
+
+The licence for :program:`celestine` is the
+`European Union Public Licence <https://eupl.eu/>`_.
+
+
+Project Links
+*************
+
+* `Discord <https://discord.gg/aNmDWPXd7B>`_
+* `Documentation <https://celestine.readthedocs.io/>`_
+* `Email <celestine@mem-dixy.ch>`_
+* `PyPI <https://pypi.org/project/celestine/>`_
+* `Source <https://github.com/mem-dixy/celestine>`_
+* `Tracker <https://github.com/mem-dixy/celestine/issues>`_

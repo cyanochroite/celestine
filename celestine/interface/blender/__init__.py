@@ -6,6 +6,11 @@ from celestine.typed import (
     B,
     N,
 )
+from .element import (
+    Button,
+    Image,
+    Label,
+)
 
 from .package import (
     data,
@@ -44,7 +49,13 @@ def image_format():
 
 def window(session, **star):
     """"""
-    return Window(session, **star)
+    element = {
+        "button": Button,
+        "image": Image,
+        "label": Label,
+    }
+    size = (20, 20)
+    return Window(session, element, size, **star)
 
 
 def main(call: B, **star) -> N:
