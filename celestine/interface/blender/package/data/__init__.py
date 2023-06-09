@@ -26,7 +26,7 @@ def start():
     material.data = bpy.data.materials
     mesh.data = bpy.data.meshes
     object_.data = bpy.data.objects
-    texture.data = bpy.data.dataures
+    texture.data = bpy.data.textures
 
 
 def finish():

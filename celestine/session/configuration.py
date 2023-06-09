@@ -2,6 +2,7 @@
 
 import configparser
 import os
+import pathlib
 
 from celestine import load
 from celestine.data.directory import APPLICATION
@@ -69,8 +70,25 @@ class Configuration:
 
     def __init__(self) -> N:
         """"""
-        module = load.module("package", "platformdirs")
-        path = os.path.join(module.directory, FILE)
+        platformdirs = load.module("package", "platformdirs")
+
+        appname = "celestine"
+        appauthor = "celestine"
+        version = "0.4"
+        roaming = False
+        ensure_exists = True
+
+        directory = pathlib.Path(
+            platformdirs.user_data_dir(
+                appname,
+                appauthor,
+                version,
+                roaming,
+                ensure_exists,
+            )
+        )
+
+        path = os.path.join(directory, FILE)
         self.path = path
 
         defaults = None  # Default.
