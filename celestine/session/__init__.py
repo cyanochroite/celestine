@@ -1,6 +1,5 @@
 """"""
 
-import dataclasses
 
 from celestine import load
 from celestine.data.directory import (
@@ -16,12 +15,11 @@ from celestine.typed import (
 )
 
 from .magic import Magic
-from .session import Session as SessionParse
 
 
-@dataclasses.dataclass
 class Session:
     """"""
+
     application: MT
     attribute: L[S]
     code: MT
@@ -31,9 +29,7 @@ class Session:
     view: MT
 
 
-def start_session(
-    argument_list: L[S], exit_on_error: B
-) -> Session:
+def start_session(argument_list: L[S], exit_on_error: B) -> Session:
     """"""
 
     magic = Magic(argument_list, exit_on_error)

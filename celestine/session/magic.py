@@ -47,6 +47,7 @@ class Magic:
     @dataclasses.dataclass
     class Core:
         """"""
+
         application: MT
         interface: MT
         language: MT

@@ -4,6 +4,8 @@ from celestine import load
 from celestine.data import (
     BLENDER,
     INTERFACE,
+    REGISTER,
+    UNREGISTER,
 )
 from celestine.session import start_session
 from celestine.typed import (
@@ -49,7 +51,7 @@ def register() -> N:
     This is a function which only runs when enabling the add-on,
     this means the module can be loaded without activating the add-on.
     """
-    load.redirect(register, INTERFACE, BLENDER)
+    load.redirect(INTERFACE, BLENDER, REGISTER)
 
 
 def unregister() -> N:
@@ -59,4 +61,4 @@ def unregister() -> N:
     This is a function to unload anything setup by register,
     this is called when the add-on is disabled.
     """
-    load.redirect(unregister, INTERFACE, BLENDER)
+    load.redirect(INTERFACE, BLENDER, UNREGISTER)

@@ -48,13 +48,17 @@ def module(*path: S) -> MT:
     return package(CELESTINE, *path)
 
 
-def redirect(call, *path: S) -> N:
-    """Load an internal module from anywhere in the application."""
-    item = package(CELESTINE, *path)
-    work = getattr(item, call)
-    work()
-    # blender = load.module(INTERFACE, BLENDER)
-    # blender.unregister()
+def redirect(*path: S) -> N:
+    """
+    Loads a function from the specified path, and then runs it.
+
+    :param path: The last item is the function name.
+    """
+    iterable = [*path]
+    name = iterable.pop(-1)
+    item = module(*iterable)
+    function = getattr(item, name)
+    function()
 
 
 ########################################################################
