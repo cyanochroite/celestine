@@ -20,29 +20,34 @@ Thank you!
 
 ----
 
-## Version
+Version
+*******
 
 Version: XXX
 Operating System: XXX (Windows 10, macOs xx, Ubuntu 20.04, etc.)
 
-## My Issue/Question
+My Issue/Question
+*****************
 
 A clear and concise description of what the issue/question is. Please provide as much context as possible.
 
-## To Reproduce
-
+To Reproduce
+************
 Steps to reproduce the behavior:
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
 
-## Expected behavior
+Expected behavior
+*****************
 
 A clear and concise description of what you expected to happen.
 
-## Screenshots/Video
+Screenshots/Video
+*****************
 
 XXX _(you can drag files here)_
 
-## Standalone, minimal, complete and verifiable example
+Standalone, minimal, complete and verifiable example
+****************************************************

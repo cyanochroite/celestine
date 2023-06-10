@@ -15,11 +15,13 @@ Thank you!
 
 ----
 
-**My Improvement**
+My Improvement
+**************
 
 A clear and concise description of what the improvement is. Please provide as much context as possible.
 
-**Necessary Assets**
+Necessary Assets
+****************
 
 - [ ] Pictures
 - [ ] Code Sample
