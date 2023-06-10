@@ -2,8 +2,36 @@
 # Visit https://bit.ly/cffinit to generate yours today!
 
 cff-version: 1.2.0
-title: The Celestine Image Viewer
-message: Please cite this software using these metadata.
+title: celestine
+message: >-
+  If you need to cite this software, please do so using the
+  metadata from this file.
 type: software
 authors:
-  - email: mem_dixy@pm.me
+  - given-names: Mem
+    family-names: Dixy
+    email: mem_dixy@pm.me
+identifiers:
+  - type: url
+    value: 'https://pypi.org/project/celestine/'
+    description: Python Package Index
+repository-code: 'https://github.com/mem-dixy/celestine/'
+url: 'https://pypi.org/project/celestine/'
+abstract: >-
+  A python framework for desktop applications. Featuring
+  support for multiple graphical user interfaces. Localized
+  for members of the European Union.
+keywords:
+  - python
+  - application
+  - wrapper
+  - framework
+  - localization
+  - cross-platform
+  - offline
+  - desktop
+  - image-viewer
+license: EUPL-1.2
+commit: 5444efed33f124879cbd28e5ae5b19f03ec56b9
+version: 0.4.0
+date-released: '2023-01-17'
