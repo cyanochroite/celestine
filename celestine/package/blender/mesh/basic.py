@@ -33,6 +33,7 @@ def image(collection, image):
 
     return quadrilateral.plane(collection, image.name, x, y)
 
+
 def image(collection, name, size):
     """"""
     size_x = size[0]

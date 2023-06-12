@@ -69,3 +69,23 @@ def material(name, image):
     tree.links.new(bbb.outputs["BSDF"], ccc.inputs["Surface"])
 
     return material
+
+
+def image(name, image):
+    """"""
+    material = data.material.new(name)
+    material.use_nodes = True
+
+    tree = material.node_tree
+    nodes = tree.nodes
+    nodes.clear()
+
+    aaa = shader_image(nodes, image)
+    aaa.location = (000, 000)
+
+    bbb = shader_output(nodes)
+    bbb.location = (300, 000)
+
+    tree.links.new(aaa.outputs["Color"], bbb.inputs["Surface"])
+
+    return material

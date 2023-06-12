@@ -257,14 +257,9 @@ class Image(Abstract, Image_):
 
         path = self.image or load.pathway.asset("null.png")
         image = data.image.load(path)
-        material = UV.material(self.tag, image)
+        material = UV.image(self.tag, image)
         plane = basic.image(view, self.tag, image.size)
 
-
-        #path = self.image
-        #image = data.image.load(path) if path else self.default
-        #material = UV.material(self.tag, image)
-        #plane = basic.image(view, image)
         plane.body.data.materials.append(material)
         self.item = plane
         self.render()
@@ -373,9 +368,13 @@ class Window(Window_):
         camera.ortho_scale = +35.0
         camera.type = "ORTHO"
 
-        light = data.light.sun.make(collection, "light")
-        light.location = (0, 0, -60)
-        light.rotation = (180, 0, 0)
+        starlight = data.light.sun.make(collection, "light")
+        starlight.rotation = (180, 0, 0)
+        starlight.energy = 10.0
+        starlight.diffuse_factor = 1.0
+        starlight.specular_factor = 1.0
+        starlight.volume_factor = 1.0
+        starlight.angle = 0.0
 
         click = data.collection.make("click")
         click.soul.hide_select = False

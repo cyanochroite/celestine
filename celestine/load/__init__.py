@@ -38,8 +38,6 @@ def package(base: S, *path: S) -> MT:
     iterable = [base, *path]
     name = FULL_STOP.join(iterable)
     file = __import__(name)
-    check = str(file)
-    test = repr(file)
     for item in path:
         file = getattr(file, item)
     if "from" not in repr(file):
@@ -73,6 +71,7 @@ def redirect(*path: S) -> N:
 
 ########################################################################
 
+
 def package(base: S, *path: S) -> MT:
     """Load an external package from the system path."""
     iterable = [base, *path]
@@ -80,6 +79,7 @@ def package(base: S, *path: S) -> MT:
     _package = base
     _module = importlib.import_module(name, _package)
     return _module
+
 
 def module(*path: S) -> MT:
     """Load an internal module from anywhere in the application."""
