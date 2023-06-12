@@ -29,7 +29,7 @@ show_viewport = dearpygui.dearpygui.show_viewport
 start_dearpygui = dearpygui.dearpygui.start_dearpygui
 table = dearpygui.dearpygui.table
 table_row = dearpygui.dearpygui.table_row
-texture_registry = dearpygui.dearpygui.dataure_registry
+texture_registry = dearpygui.dearpygui.texture_registry
 window = dearpygui.dearpygui.window
 
 group = dearpygui.dearpygui.group
@@ -40,3 +40,10 @@ def tag_root(tag):
     root = tag.split("_")[0]
     combine = f"{root}"
     return combine
+
+
+from . import AbstractPackage
+
+
+class Package(AbstractPackage):
+    """"""

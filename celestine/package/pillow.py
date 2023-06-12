@@ -2,6 +2,8 @@
 
 import PIL.Image
 
+from . import AbstractPackage
+
 palettedata = [
     0x00,
     0x0F,
@@ -230,3 +232,7 @@ class Image:
 
     def __init__(self, image):
         self.image = image
+
+
+class Package(AbstractPackage):
+    """"""

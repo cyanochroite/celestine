@@ -1,7 +1,14 @@
 """Removes unused imports and unused variables."""
 
-from . import Package as Package_
+from . import (
+    AbstractLinter,
+    AbstractPackage,
+)
 
 
-class Package(Package_):
+class Linter(AbstractLinter):
+    """"""
+
+
+class Package(AbstractPackage):
     """"""

@@ -13,9 +13,10 @@ def find_image(session, directory):
 
 def setup(window):
     """"""
+    session = window.session
     print("cow")
-    directory = window.session.attribute.directory
-    images = find_image(window.session, directory)
+    directory = session.attribute.directory
+    images = find_image(session, directory)
     grid = window.load("grid")
 
     items = zip(grid.__iter__(), images)

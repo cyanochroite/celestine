@@ -6,6 +6,7 @@ import sys
 from celestine import load
 from celestine.typed import (
     MT,
+    A,
     L,
     N,
     S,
@@ -13,9 +14,10 @@ from celestine.typed import (
 
 CELESTINE = "celestine"
 PACKAGE = "package"
+DICTIONARY = "dictionary"
 
 
-class Package:
+class AbstractLinter:
     """"""
 
     def main(self, package: MT, path: S) -> N:
@@ -57,5 +59,28 @@ class Package:
 def run(name: str) -> None:
     """"""
     module = load.module(PACKAGE, name)
-    package = module.Package(name)
+    package = module.Linter(name)
     package.run(name)
+
+
+class AbstractPackage:
+    """"""
+
+
+class Package:
+    """"""
+
+    def __getattr__(self, name) -> A:
+        """"""
+        try:
+            return self.dictionary[name]
+        except KeyError:
+            message = f"'{PACKAGE}' object has no attribute '{name}'"
+            raise AttributeError(message)
+
+    def __init__(self):
+        self.dictionary = {}
+        argument = load.pathway.argument(PACKAGE)
+        for name in argument:
+            package = load.attribute(PACKAGE, name, "Package")
+            self.dictionary[name] = package()

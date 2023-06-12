@@ -7,6 +7,7 @@ from celestine.data.directory import (
     INTERFACE,
     LANGUAGE,
 )
+from celestine.package import Package
 from celestine.typed import (
     MT,
     B,
@@ -63,6 +64,8 @@ def start_session(argument_list: L[S], exit_on_error: B) -> Session:
     session.language = load.module(LANGUAGE, session1.language)
 
     session.main = session1.main
+
+    session.package = Package()
 
     view = load.module(APPLICATION, application, "view")
     session.view = load.functions(view)

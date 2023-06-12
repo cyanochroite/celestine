@@ -135,6 +135,7 @@ def image_format():
         ".pnm",
         ".gif",
         ".png",
+        ".jpg",
     ]
 
 

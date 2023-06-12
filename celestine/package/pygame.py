@@ -11,6 +11,13 @@ from celestine.file.data import (
 PYGAME = None
 
 
+from . import AbstractPackage
+
+
+class Package(AbstractPackage):
+    """"""
+
+
 class HiddenPrints:
     """Pygame will spam the console if we load it directly."""
 

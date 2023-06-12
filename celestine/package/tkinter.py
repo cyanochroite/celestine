@@ -17,3 +17,10 @@ filedialog = tkinter.filedialog
 
 
 LEFT = tkinter.LEFT
+
+
+from . import AbstractPackage
+
+
+class Package(AbstractPackage):
+    """"""

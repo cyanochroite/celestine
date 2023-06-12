@@ -4,6 +4,12 @@ This is a wrapper around more-itertools 8.13.0.
 https://more-itertools.readthedocs.io/en/stable/api.html
 """
 
+from . import AbstractPackage
+
+
+class Package(AbstractPackage):
+    """"""
+
 
 def split_when(iterable, pred, maxsplit=-1):
     """Split this when we feel like it."""

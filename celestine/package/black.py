@@ -8,13 +8,20 @@ from celestine.typed import (
     S,
 )
 
-from . import Package as Package_
+from . import (
+    AbstractLinter,
+    AbstractPackage,
+)
 
 
-class Package(Package_):
+class Linter(AbstractLinter):
     """"""
 
     def main(self, package: MT, path: S) -> N:
         """"""
         sys.argv.append(path)
         package.patched_main()
+
+
+class Package(AbstractPackage):
+    """"""

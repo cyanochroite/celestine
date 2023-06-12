@@ -8,17 +8,19 @@ Hidding everything in the __getattribute__ function.
 
 # https://dearpygui.readthedocs.io/en/latest/
 import curses
-import typing
 
 import _curses
 
+from celestine.typed import A
 from celestine.unicode import (
     ESCAPE,
     SPACE,
 )
 
+from . import AbstractPackage
 
-class Package:
+
+class Package(AbstractPackage):
     """"""
 
     def window(self, column, row, width, height):
@@ -37,7 +39,7 @@ class Package:
         begin_x = column
         return window.subwin(nlines, ncols, begin_y, begin_x)
 
-    def __getattribute__(self, name) -> typing.Any:
+    def __getattribute__(self, name) -> A:
         """"""
         one = [
             "noecho",
