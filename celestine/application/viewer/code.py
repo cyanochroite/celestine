@@ -12,9 +12,8 @@ def find_image(session, directory):
     return files
 
 
-def setup(window, **star):
+def setup(*, session, window, **star):
     """"""
-    session = window.session
     print("cow")
     directory = session.attribute.directory
     images = find_image(session, directory)

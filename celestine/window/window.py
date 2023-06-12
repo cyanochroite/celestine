@@ -27,7 +27,7 @@ class Window:
         """"""
         container = self.container.drop(name)
         self.data(container)
-        function(container, self.session)
+        function(self.session, container)
         container.spot(0, 0, self.width, self.height)
         self._view.set(name, container)
 
@@ -67,6 +67,7 @@ class Window:
 
     def work(self, task, **star):
         """"""
+        star.update(session=self.session)
         caller = self.task.get(task)
         caller(**star)
         self.draw(make=False)

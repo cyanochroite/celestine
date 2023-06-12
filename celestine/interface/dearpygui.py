@@ -125,7 +125,7 @@ class Window(window):
         self._view.set(name, value)
         with value.data:
             dearpygui.configure_item(value.tag, show=False)
-            document(value)
+            document(self.session, value)
             value.spot(0, 0, 1920, 1080)
             value.draw(None, make=True)
 

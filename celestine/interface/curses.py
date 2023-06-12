@@ -233,7 +233,7 @@ class Window(window):
         """"""
         container = self.container.drop(name)
         self.data(container)
-        function(container)
+        function(self.session, container)
         container.spot(1, 1, self.width - 1, self.height - 1)
         self._view.set(name, container)
 

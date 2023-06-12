@@ -32,7 +32,7 @@ def parser_magic(session, source):
     azure_to_iso = {}
     dest_code = []
 
-    language_list = load.argument(LANGUAGE)
+    language_list = load.pathway.argument(LANGUAGE)
     for language in language_list:
         head, body = open_language(LANGUAGE, language)
 
@@ -67,7 +67,7 @@ def parser_magic(session, source):
 def reset():
     """Remove the directory and rebuild it."""
 
-    path = load.pathwayway(LANGUAGE)
+    path = load.pathway.pathway(LANGUAGE)
     if os.path.islink(path):
         raise RuntimeError
 

@@ -17,6 +17,8 @@ class Container(Rectangle):
                 call=self.window.work,
                 action=action,
                 argument=star,
+                session=self.session,
+                **star,
             )
         )
 

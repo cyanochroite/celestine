@@ -90,5 +90,8 @@ class Package:
         self.dictionary = {}
         argument = load.pathway.argument(PACKAGE)
         for name in argument:
-            package = load.attribute(PACKAGE, name, "Package")
-            self.dictionary[name] = package(name)
+            try:
+                package = load.attribute(PACKAGE, name, "Package")(name)
+            except ModuleNotFoundError:
+                package = None
+            self.dictionary[name] = package
