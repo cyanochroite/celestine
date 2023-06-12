@@ -1,10 +1,11 @@
 """"""
 
+from celestine.session.session import Session
 from celestine.typed import N
 from celestine.window.container import Container as Page
 
 
-def main(page: Page) -> N:
+def main(page: Page, session: Session) -> N:
     """"""
     language = page.session.language
     with page.span("main_head") as line:

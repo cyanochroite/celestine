@@ -1,5 +1,10 @@
 """"""
 
+from celestine.typed import (
+    L,
+    S,
+)
+
 from .collection import Collection2
 from .container import Container
 
@@ -22,9 +27,37 @@ class Window:
         """"""
         container = self.container.drop(name)
         self.data(container)
-        function(container)
+        function(container, self.session)
         container.spot(0, 0, self.width, self.height)
         self._view.set(name, container)
+
+    def image_support(self) -> L[S]:
+        """"""
+        return [
+            ".bmp",
+            ".sgi",
+            ".rgb",
+            ".bw",
+            ".png",
+            ".jpg",
+            ".jpeg",
+            ".jp2",
+            ".j2c",
+            ".tga",
+            ".cin",
+            ".dpx",
+            ".exr",
+            ".hdr",
+            ".tif",
+            ".tiff",
+            ".webp",
+            ".pbm",
+            ".pgm",
+            ".ppm",
+            ".pnm",
+            ".gif",
+            ".png",
+        ]
 
     def turn(self, page, **star):
         """"""

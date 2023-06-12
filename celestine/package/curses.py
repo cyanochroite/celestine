@@ -20,7 +20,7 @@ from celestine.unicode import (
 from . import AbstractPackage
 
 
-class Package(AbstractPackage):
+class PackageWrap:
     """"""
 
     def window(self, column, row, width, height):
@@ -95,4 +95,8 @@ class Package(AbstractPackage):
                 return object.__getattribute__(self, name)
 
 
-package = Package()
+class Package(AbstractPackage):
+    """"""
+
+
+package = PackageWrap()

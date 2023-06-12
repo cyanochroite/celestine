@@ -1,11 +1,12 @@
 """The View page."""
 
 
+from celestine.session.session import Session
 from celestine.typed import N
 from celestine.window.container import Container as Page
 
 
-def main(page: Page) -> N:
+def main(page: Page, session: Session) -> N:
     """"""
     with page.span("main") as line:
         line.call(
@@ -17,7 +18,7 @@ def main(page: Page) -> N:
 
 
 # TODO:figure out how to make actions not trigger on function load
-def report(page: Page) -> N:
+def report(page: Page, session: Session) -> N:
     """"""
     with page.span("head") as line:
         line.label("title", "Page main")

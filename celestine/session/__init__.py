@@ -67,6 +67,8 @@ def start_session(argument_list: L[S], exit_on_error: B) -> Session:
 
     session.package = Package()
 
+    session.window = None
+
     view = load.module(APPLICATION, application, "view")
     session.view = load.functions(view)
 

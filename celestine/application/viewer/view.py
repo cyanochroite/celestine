@@ -1,13 +1,14 @@
 """"""
 
 
+from celestine.session.session import Session
 from celestine.typed import N
-from celestine.window.container import Container as Page
+from celestine.window.container import Container as View
 
 
-def main(page: Page) -> N:
+def main(view: View, session: Session) -> N:
     """"""
-    page.call("load", "Load image.", "setup", window=page)
-    with page.grid("grid", 4, 4) as grid:
+    view.call("load", "Load image.", "setup", window=view)
+    with view.grid("grid", 4, 4) as grid:
         for key, value in grid:
             grid.image(key, value)

@@ -5,13 +5,14 @@ from celestine.load.many import file
 def find_image(session, directory):
     """"""
     path = directory
+    # include = window.image_support()
     include = session.interface.image_format()
     exclude = []
     files = list(file(path, include, exclude))
     return files
 
 
-def setup(window):
+def setup(window, **star):
     """"""
     session = window.session
     print("cow")

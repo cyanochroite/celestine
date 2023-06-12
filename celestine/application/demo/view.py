@@ -1,11 +1,12 @@
 """"""
 
 
+from celestine.session.session import Session
 from celestine.typed import N
 from celestine.window.container import Container as Page
 
 
-def one(page: Page) -> N:
+def one(page: Page, session: Session) -> N:
     """"""
     language = page.session.language
     with page.span("one_head") as line:
@@ -16,7 +17,7 @@ def one(page: Page) -> N:
         line.view("one_next", language.DEMO_ONE_NEXT, "two")
 
 
-def two(page: Page) -> N:
+def two(page: Page, session: Session) -> N:
     """"""
     language = page.session.language
     with page.span("two_head") as line:
@@ -27,7 +28,7 @@ def two(page: Page) -> N:
         line.view("two_next", language.DEMO_TWO_NEXT, "main")
 
 
-def main(page: Page) -> N:
+def main(page: Page, session: Session) -> N:
     """"""
     language = page.session.language
     with page.span("main_head") as line:
