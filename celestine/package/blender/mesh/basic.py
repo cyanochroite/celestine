@@ -32,3 +32,13 @@ def image(collection, image):
     (x, y) = (y_to_x, x_to_y)
 
     return quadrilateral.plane(collection, image.name, x, y)
+
+def image(collection, name, size):
+    """"""
+    size_x = size[0]
+    size_y = size[1]
+    y_to_x = _offset(size_y, size_x)
+    x_to_y = _offset(size_x, size_y)
+    (resize_x, resize_y) = (y_to_x, x_to_y)
+
+    return quadrilateral.plane(collection, name, resize_x, resize_y)

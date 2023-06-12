@@ -22,6 +22,7 @@ from typing import Tuple as T  # noqa: F401 pylint: disable=W0611
 from typing import Type as TY  # noqa: F401 pylint: disable=W0611
 from typing import TypeAlias as TA
 from typing import Union as U  # noqa: F401 pylint: disable=W0611
+from typing import IO # noqa: F401 pylint: disable=W0611
 
 P: TA = pathlib.Path
 B: TA = bool

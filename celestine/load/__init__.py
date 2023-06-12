@@ -1,6 +1,8 @@
 """Central place for loading and importing external files."""
 
 
+import importlib
+
 from celestine.data import CELESTINE
 from celestine.typed import (
     CA,
@@ -36,12 +38,48 @@ def package(base: S, *path: S) -> MT:
     iterable = [base, *path]
     name = FULL_STOP.join(iterable)
     file = __import__(name)
+    check = str(file)
+    test = repr(file)
     for item in path:
         file = getattr(file, item)
     if "from" not in repr(file):
         raise ModuleNotFoundError(f"Module failed to load: {name}")
     return file
 
+
+def module(*path: S) -> MT:
+    """Load an internal module from anywhere in the application."""
+    return package(CELESTINE, *path)
+
+
+def attribute(*path: S) -> A:
+    """Functions like the 'from package import item' syntax."""
+    iterable = [*path]
+    name = iterable.pop(-1)
+    item = module(*iterable)
+    result = getattr(item, name)
+    return result
+
+
+def redirect(*path: S) -> N:
+    """
+    Loads a function from the specified path, and then runs it.
+
+    :param path: The last item is the function name.
+    """
+    function = attribute(*path)
+    function()
+
+
+########################################################################
+
+def package(base: S, *path: S) -> MT:
+    """Load an external package from the system path."""
+    iterable = [base, *path]
+    name = FULL_STOP.join(iterable)
+    _package = base
+    _module = importlib.import_module(name, _package)
+    return _module
 
 def module(*path: S) -> MT:
     """Load an internal module from anywhere in the application."""

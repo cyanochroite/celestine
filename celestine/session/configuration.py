@@ -4,11 +4,9 @@ import configparser
 import os
 
 from celestine import load
+from celestine.data import CELESTINE
 from celestine.data.directory import APPLICATION
-from celestine.file import (
-    text_load,
-    text_save,
-)
+from celestine.file import text_save
 from celestine.file.data import UTF_8
 from celestine.typed import (
     B,
@@ -49,9 +47,9 @@ class Configuration:
 
     def load(self) -> N:
         """Load the configuration file."""
-        with text_load(self.path) as filenames:
-            encoding = UTF_8
-            self.configuration.read(filenames, encoding)
+        filenames = self.path
+        encoding = UTF_8
+        self.configuration.read(filenames, encoding)
 
     def save(self) -> N:
         """Save the configuration file."""
@@ -81,7 +79,7 @@ class Configuration:
         inline_comment_prefixes = None  # Default.
         strict = True  # Important.
         empty_lines_in_values = False
-        default_section = APPLICATION
+        default_section = CELESTINE
         interpolation = configparser.BasicInterpolation()  # Default.
         converters = {}  # Default.
         self.configuration = configparser.ConfigParser(

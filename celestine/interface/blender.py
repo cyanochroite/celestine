@@ -30,8 +30,6 @@ from celestine.window.window import Window as Window_
 
 COLLECTION = _collection
 
-COLLECTION = _collection
-
 
 INTERFACE = "interface"
 BLENDER = "blender"
@@ -119,6 +117,7 @@ class celestine_start(bpy.types.Operator):
         print("start")
         car = bpy.context.preferences.addons["celestine"].preferences
         data.start()
+        Image.start()
         preferences.start()
         car.ready = True
 
@@ -137,6 +136,7 @@ class celestine_finish(bpy.types.Operator):
         """"""
         print("finish")
         preferences.finish()
+        Image.finish()
         data.finish()
         return {"FINISHED"}
 
@@ -234,15 +234,37 @@ class Button(Abstract, Button_):
 class Image(Abstract, Image_):
     """"""
 
+    default: data.image
+
+    @classmethod
+    def start(cls):
+        """"""
+        name = "null.png"
+        path = load.pathway.asset(name)
+        cls.default = data.image.load(path)
+
+    @classmethod
+    def finish(cls):
+        """"""
+        item = cls.default
+        data.image.remove(item)
+        cls.default = None
+
     def draw(self, view: COLLECTION, *, make: B, **star) -> N:
         """"""
         if not make:
             return
 
         path = self.image or load.pathway.asset("null.png")
-        _image = data.image.load(path)
-        material = UV.material("pretty", _image)
-        plane = basic.image(view, _image)
+        image = data.image.load(path)
+        material = UV.material(self.tag, image)
+        plane = basic.image(view, self.tag, image.size)
+
+
+        #path = self.image
+        #image = data.image.load(path) if path else self.default
+        #material = UV.material(self.tag, image)
+        #plane = basic.image(view, image)
         plane.body.data.materials.append(material)
         self.item = plane
         self.render()
@@ -252,10 +274,10 @@ class Image(Abstract, Image_):
         if not super().update(image=image, **star):
             return False
 
-        _image = data.image.load(self.image)
-        material = UV.material("pretty", _image)
-        self.item.body.data.materials.clear()
-        self.item.body.data.materials.append(material)
+        material = bpy.data.materials[self.tag]
+        node = material.node_tree.nodes["Image Texture"]
+        node.image = data.image.load(image)
+
         return True
 
 
