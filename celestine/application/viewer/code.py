@@ -5,8 +5,7 @@ from celestine.load.many import file
 def find_image(session, directory):
     """"""
     path = directory
-    # include = window.image_support()
-    include = session.interface.image_format()
+    include = session.window.extension()
     exclude = []
     files = list(file(path, include, exclude))
     return files
@@ -23,4 +22,4 @@ def setup(*, session, window, **star):
 
     for group, image in items:
         (_, item) = group
-        item.update(image=image)
+        item.update(session=session, image=image)

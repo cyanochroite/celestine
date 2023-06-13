@@ -66,6 +66,11 @@ def run(name: str) -> None:
 class AbstractPackage:
     """"""
 
+    def __getattr__(self, name):
+        # TODO do we need this?
+        raise RuntimeError("Do we need this?")
+        return getattr(self.package, name)
+
     def __init__(self, name):
         self.name = name
 
@@ -91,7 +96,8 @@ class Package:
         argument = load.pathway.argument(PACKAGE)
         for name in argument:
             try:
-                package = load.attribute(PACKAGE, name, "Package")(name)
+                attribute = load.attribute(PACKAGE, name, "Package")
+                package = attribute(name)
             except ModuleNotFoundError:
                 package = None
             self.dictionary[name] = package

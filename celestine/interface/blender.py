@@ -297,6 +297,28 @@ class Window(Window_):
         collection.hide()
         container.data = collection
 
+    def extension(self):
+        """"""
+        return [
+            ".bmp",
+            ".sgi",
+            ".rgb",
+            ".bw",
+            ".png",
+            ".jpg",
+            ".jpeg",
+            ".jp2",
+            ".j2c",
+            ".tga",
+            ".cin",
+            ".dpx",
+            ".exr",
+            ".hdr",
+            ".tif",
+            ".tiff",
+            ".webp",
+        ]
+
     def poke(self, **star):
         """"""
         page = bpy.context.scene.celestine.page
@@ -415,29 +437,6 @@ class Window(Window_):
 
         self.call = call
         self.star = star
-
-
-def image_format():
-    """"""
-    return [
-        ".bmp",
-        ".sgi",
-        ".rgb",
-        ".bw",
-        ".png",
-        ".jpg",
-        ".jpeg",
-        ".jp2",
-        ".j2c",
-        ".tga",
-        ".cin",
-        ".dpx",
-        ".exr",
-        ".hdr",
-        ".tif",
-        ".tiff",
-        ".webp",
-    ]
 
 
 def window(session, **star):

@@ -229,6 +229,13 @@ class Window(window):
         color_index = 8
         color_table = {}
 
+    def extension(self):
+        """"""
+        if self.session.package.pillow:
+            return self.session.package.pillow.extension()
+
+        return []
+
     def view(self, name, function):
         """"""
         container = self.container.drop(name)
@@ -296,35 +303,6 @@ class Window(window):
         self.cord_y = 0
         self.frame = None
         self.stdscr = None
-
-
-def image_format():
-    """"""
-    return [
-        ".bmp",
-        ".sgi",
-        ".rgb",
-        ".bw",
-        ".png",
-        ".jpg",
-        ".jpeg",
-        ".jp2",
-        ".j2c",
-        ".tga",
-        ".cin",
-        ".dpx",
-        ".exr",
-        ".hdr",
-        ".tif",
-        ".tiff",
-        ".webp",
-        ".pbm",
-        ".pgm",
-        ".ppm",
-        ".pnm",
-        ".gif",
-        ".png",
-    ]
 
 
 def window(session, **star):

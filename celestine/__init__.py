@@ -35,6 +35,7 @@ def main(argument_list: L[S], exit_on_error: B, **star) -> N:
 
     session = start_session(argument_list, exit_on_error)
     window = session.interface.window(session, **star)
+    session.window = window
 
     with window:
         for name, function in session.code.items():

@@ -2,6 +2,12 @@
 
 import PIL.Image
 
+from celestine import load
+from celestine.typed import (
+    L,
+    S,
+)
+
 from . import AbstractPackage
 
 palettedata = [
@@ -236,3 +242,16 @@ class Image:
 
 class Package(AbstractPackage):
     """"""
+
+    def extension(self) -> L[S]:
+        """"""
+        dictionary = PIL.Image.registered_extensions()
+        items = dictionary.items()
+        values = PIL.Image.OPEN
+        result = [key for key, value in items if value in values]
+        result.sort()
+        return result
+
+    def __init__(self, _):
+        super().__init__("PIL")
+        setattr(self, "ImageTk", load.package("PIL", "ImageTk"))

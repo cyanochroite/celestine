@@ -60,12 +60,17 @@ class Image(Abstract, Image_):
         star.update(image=self.cache)
         self.render(view, item, **star)
 
-    def update(self, *, image, **star):
+    def update(self, *, session, image, **star):
         """"""
         if not super().update(image=image, **star):
             return False
 
-        self.cache = tkinter.PhotoImage(file=self.image)
+        pillow = session.package.pillow
+        if pillow:
+            self.cache = pillow.ImageTk.PhotoImage(file=self.image)
+        else:
+            self.cache = tkinter.PhotoImage(file=self.image)
+
         self.item.configure(image=self.cache)
         self.item.image = self.cache
         return True
@@ -102,6 +107,20 @@ class Window(window):
         )
         container.data.place(x=0, y=0)
 
+    def extension(self):
+        """"""
+        if self.session.package.pillow:
+            return self.session.package.pillow.extension()
+
+        return [
+            ".pbm",
+            ".pgm",
+            ".ppm",
+            ".pnm",
+            ".gif",
+            ".png",
+        ]
+
     def turn(self, page, **star):
         super().turn(page, **star)
         self.page.data.tkraise()
@@ -124,19 +143,6 @@ class Window(window):
     def __init__(self, session, element, size, **star):
         super().__init__(session, element, size, **star)
         self.root = None
-
-
-def image_format():
-    """"""
-    return [
-        ".pbm",
-        ".pgm",
-        ".ppm",
-        ".pnm",
-        ".gif",
-        ".png",
-        ".jpg",
-    ]
 
 
 def window(session, **star):

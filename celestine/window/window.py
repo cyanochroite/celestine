@@ -31,7 +31,7 @@ class Window:
         container.spot(0, 0, self.width, self.height)
         self._view.set(name, container)
 
-    def image_support(self) -> L[S]:
+    def extension(self) -> L[S]:
         """"""
         return [
             ".bmp",

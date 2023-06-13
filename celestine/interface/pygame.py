@@ -2,6 +2,10 @@
 
 from celestine import load
 from celestine.package import pygame
+from celestine.typed import (
+    L,
+    S,
+)
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
 from celestine.window.element import Image as image
@@ -70,6 +74,33 @@ class Window(window):
 
         pygame.display.flip()
 
+    def extension(self) -> L[S]:
+        return [
+            ".bmp",
+            ".sgi",
+            ".rgb",
+            ".bw",
+            ".png",
+            ".jpg",
+            ".jpeg",
+            ".jp2",
+            ".j2c",
+            ".tga",
+            ".cin",
+            ".dpx",
+            ".exr",
+            ".hdr",
+            ".tif",
+            ".tiff",
+            ".webp",
+            ".pbm",
+            ".pgm",
+            ".ppm",
+            ".pnm",
+            ".gif",
+            ".png",
+        ]
+
     def __enter__(self):
         def set_caption():
             caption = self.session.language.APPLICATION_TITLE
@@ -119,35 +150,6 @@ class Window(window):
         super().__init__(session, element, size, **star)
         self.book = None
         self.font = None
-
-
-def image_format():
-    """"""
-    return [
-        ".bmp",
-        ".sgi",
-        ".rgb",
-        ".bw",
-        ".png",
-        ".jpg",
-        ".jpeg",
-        ".jp2",
-        ".j2c",
-        ".tga",
-        ".cin",
-        ".dpx",
-        ".exr",
-        ".hdr",
-        ".tif",
-        ".tiff",
-        ".webp",
-        ".pbm",
-        ".pgm",
-        ".ppm",
-        ".pnm",
-        ".gif",
-        ".png",
-    ]
 
 
 def window(session, **star):

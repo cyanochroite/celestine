@@ -119,6 +119,22 @@ class Label(Abstract, label):
 class Window(window):
     """"""
 
+    def extension(self):
+        """"""
+        return [
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".bmp",
+            ".gif",
+            ".hdr",
+            ".pic",
+            ".pbm",
+            ".pgm",
+            ".ppm",
+            ".pnm",
+        ]
+
     def view(self, name, document):
         value = self.container.drop(name)
         value.data = dearpygui.window(tag=value.tag)
@@ -178,23 +194,6 @@ class Window(window):
     def __init__(self, session, element, size, **star):
         super().__init__(session, element, size, **star)
         self.tag = "window"
-
-
-def image_format():
-    """"""
-    return [
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".bmp",
-        ".gif",
-        ".hdr",
-        ".pic",
-        ".pbm",
-        ".pgm",
-        ".ppm",
-        ".pnm",
-    ]
 
 
 def window(session, **star):
