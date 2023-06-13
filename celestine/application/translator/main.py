@@ -24,7 +24,7 @@ from .write import (
 )
 
 
-def parser_magic(this, source):
+def parser_magic(ring, source):
     """Do all parser stuff here."""
 
     all_languages = {}
@@ -46,13 +46,13 @@ def parser_magic(this, source):
         all_languages[language]["skip"] = body
         # all_languages[language]["work"] = {}
 
-        # this because we skipped translator
+        # ring because we skipped translator
         all_languages[language]["work"] = head
 
     source_list = load.dictionary(LANGUAGE, source)
     for name, value in source_list.items():
         continue  # disable post
-        items = post(this, dest_code, value)
+        items = post(ring, dest_code, value)
         for item in items:
             translations = item[TRANSLATIONS]
             for translation in translations:
@@ -77,9 +77,9 @@ def reset():
     os.mkdir(path)
 
 
-def post(this, code, text):
+def post(ring, code, text):
     """Generate a post request."""
-    translator = Translator(this.attribute)
+    translator = Translator(ring.attribute)
     url = translator.endpoint()
     data = None
     json = [{TEXT: text}]
@@ -91,13 +91,13 @@ def post(this, code, text):
     return request.json()
 
 
-def do_translate(this):
+def do_translate(ring):
     """Translate the language files."""
 
     # Add ability to choose master language file.
     source = "en"
 
-    dictionary = parser_magic(this, source)
+    dictionary = parser_magic(ring, source)
 
     reset()
 

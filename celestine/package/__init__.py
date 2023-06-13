@@ -67,8 +67,8 @@ class AbstractPackage:
     """"""
 
     def __getattr__(self, name):
-        # TODO do we need this?
-        raise RuntimeError("Do we need this?")
+        # TODO do we need ring?
+        raise RuntimeError("Do we need ring?")
         return getattr(self.package, name)
 
     def __init__(self, name):

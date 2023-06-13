@@ -6,19 +6,19 @@ from celestine.typed import N
 from celestine.window.container import Container as View
 
 
-def main(this: Session, view: View) -> N:
+def main(ring: Session, view: View) -> N:
     """"""
     with view.span("main") as line:
         line.call(
             "main_action",
             "Translate Files",
             "translate",
-            this=this,
+            ring=ring,
         )
 
 
 # TODO:figure out how to make actions not trigger on function load
-def report(this: Session, view: View) -> N:
+def report(ring: Session, view: View) -> N:
     """"""
     with view.span("head") as line:
         line.label("title", "Page main")
@@ -28,7 +28,7 @@ def report(this: Session, view: View) -> N:
         "main_action",
         "Translate Files",
         "train",
-        page=this,
+        page=ring,
     )
 
     for tag, text in train.items():

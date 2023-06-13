@@ -103,7 +103,7 @@ class Window(window):
 
     def __enter__(self):
         def set_caption():
-            caption = self.this.language.APPLICATION_TITLE
+            caption = self.ring.language.APPLICATION_TITLE
             pygame.display.set_caption(caption)
 
         def set_font():
@@ -146,13 +146,13 @@ class Window(window):
         pygame.quit()
         return False
 
-    def __init__(self, this, element, size, **star):
-        super().__init__(this, element, size, **star)
+    def __init__(self, ring, element, size, **star):
+        super().__init__(ring, element, size, **star)
         self.book = None
         self.font = None
 
 
-def window(this, **star):
+def window(ring, **star):
     """"""
     element = {
         "button": Button,
@@ -160,4 +160,4 @@ def window(this, **star):
         "label": Label,
     }
     size = (1280, 960)
-    return Window(this, element, size, **star)
+    return Window(ring, element, size, **star)

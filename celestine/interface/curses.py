@@ -231,8 +231,8 @@ class Window(window):
 
     def extension(self):
         """"""
-        if self.this.package.pillow:
-            return self.this.package.pillow.extension()
+        if self.ring.package.pillow:
+            return self.ring.package.pillow.extension()
 
         return []
 
@@ -240,7 +240,7 @@ class Window(window):
         """"""
         container = self.container.drop(name)
         self.data(container)
-        function(self.this, container)
+        function(self.ring, container)
         container.spot(1, 1, self.width - 1, self.height - 1)
         self._view.set(name, container)
 
@@ -258,11 +258,11 @@ class Window(window):
 
         header_box = (1, 0, self.width - 2, 1)
         header = curses.subwindow(self.background, *header_box)
-        header.addstr(self.this.language.APPLICATION_TITLE)
+        header.addstr(self.ring.language.APPLICATION_TITLE)
 
         footer_box = (1, self.height - 1, self.width - 2, 1)
         footer = curses.subwindow(self.background, *footer_box)
-        footer.addstr(self.this.language.CURSES_EXIT)
+        footer.addstr(self.ring.language.CURSES_EXIT)
 
         return self
 
@@ -296,8 +296,8 @@ class Window(window):
         curses.endwin()
         return False
 
-    def __init__(self, this, element, size, **star):
-        super().__init__(this, element, size, **star)
+    def __init__(self, ring, element, size, **star):
+        super().__init__(ring, element, size, **star)
         self.background = None
         self.cord_x = 0
         self.cord_y = 0
@@ -305,7 +305,7 @@ class Window(window):
         self.stdscr = None
 
 
-def window(this, **star):
+def window(ring, **star):
     """"""
     element = {
         "button": Button,
@@ -314,4 +314,4 @@ def window(this, **star):
     }
     size = (80, 24)
     size = (122, 35)
-    return Window(this, element, size, **star)
+    return Window(ring, element, size, **star)

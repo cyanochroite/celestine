@@ -5,10 +5,10 @@ from celestine import load
 from .main import do_translate
 
 
-def translate(*, this, **star):
+def translate(*, ring, **star):
     """Translate the language files."""
 
-    do_translate(this)
+    do_translate(ring)
 
 
 def train():

@@ -17,7 +17,7 @@ class Container(Rectangle):
                 call=self.window.work,
                 action=action,
                 argument=star,
-                this=self.this,
+                ring=self.ring,
                 **star,
             )
         )
@@ -27,7 +27,7 @@ class Container(Rectangle):
         return self.item_set(
             tag,
             Drop(
-                self.this,
+                self.ring,
                 tag,
                 self.window,
                 self.element,
@@ -40,7 +40,7 @@ class Container(Rectangle):
         return self.item_set(
             tag,
             Grid(
-                self.this,
+                self.ring,
                 tag,
                 self.window,
                 self.element,
@@ -55,7 +55,7 @@ class Container(Rectangle):
         return self.item_set(
             tag,
             Span(
-                self.this,
+                self.ring,
                 tag,
                 self.window,
                 self.element,
@@ -111,13 +111,13 @@ class Container(Rectangle):
 
     def __init__(
         self,
-        this,
+        ring,
         name,
         window,
         element,
         **star,
     ):
-        self.this = this
+        self.ring = ring
 
         self.tag = name
         self.window = window
@@ -160,7 +160,7 @@ class Grid(Container):
 
     def __init__(
         self,
-        this,
+        ring,
         name,
         window,
         element,
@@ -170,7 +170,7 @@ class Grid(Container):
         **star,
     ):
         super().__init__(
-            this,
+            ring,
             name,
             window,
             element,

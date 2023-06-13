@@ -2,24 +2,24 @@
 from celestine.load.many import file
 
 
-def find_image(this, directory):
+def find_image(ring, directory):
     """"""
     path = directory
-    include = this.window.extension()
+    include = ring.window.extension()
     exclude = []
     files = list(file(path, include, exclude))
     return files
 
 
-def setup(*, this, window, **star):
+def setup(*, ring, window, **star):
     """"""
     print("cow")
-    directory = this.attribute.directory
-    images = find_image(this, directory)
+    directory = ring.attribute.directory
+    images = find_image(ring, directory)
     grid = window.load("grid")
 
     items = zip(grid.__iter__(), images)
 
     for group, image in items:
         (_, item) = group
-        item.update(this=this, image=image)
+        item.update(ring=ring, image=image)

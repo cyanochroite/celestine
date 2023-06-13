@@ -6,9 +6,9 @@ from celestine.typed import N
 from celestine.window.container import Container as View
 
 
-def one(this: Session, view: View) -> N:
+def one(ring: Session, view: View) -> N:
     """"""
-    language = view.this.language
+    language = view.ring.language
     with view.span("one_head") as line:
         line.label("one_title", language.DEMO_ONE_TITLE)
         line.call("one_action", "Feed Cow", "cow", say="I eat you.")
@@ -17,9 +17,9 @@ def one(this: Session, view: View) -> N:
         line.view("one_next", language.DEMO_ONE_NEXT, "two")
 
 
-def two(this: Session, view: View) -> N:
+def two(ring: Session, view: View) -> N:
     """"""
-    language = view.this.language
+    language = view.ring.language
     with view.span("two_head") as line:
         line.label("two_title", language.DEMO_TWO_TITLE)
         line.call("two_action", "Wave Cow", "cow", say="Good Bye!")
@@ -28,9 +28,9 @@ def two(this: Session, view: View) -> N:
         line.view("two_next", language.DEMO_TWO_NEXT, "main")
 
 
-def main(this: Session, view: View) -> N:
+def main(ring: Session, view: View) -> N:
     """"""
-    language = view.this.language
+    language = view.ring.language
     with view.span("main_head") as line:
         line.label("main_title", language.DEMO_MAIN_TITLE)
         line.call("main_action", "Greet Cow", "cow", say="Hello!")

@@ -141,7 +141,7 @@ class Window(window):
         self._view.set(name, value)
         with value.data:
             dearpygui.configure_item(value.tag, show=False)
-            document(self.this, value)
+            document(self.ring, value)
             value.spot(0, 0, 1920, 1080)
             value.draw(None, make=True)
 
@@ -160,7 +160,7 @@ class Window(window):
 
     def __enter__(self):
         super().__enter__()
-        title = self.this.language.APPLICATION_TITLE
+        title = self.ring.language.APPLICATION_TITLE
         dearpygui.create_context()
         dearpygui.create_viewport(
             title=title,
@@ -191,12 +191,12 @@ class Window(window):
         self.container = None
         return False
 
-    def __init__(self, this, element, size, **star):
-        super().__init__(this, element, size, **star)
+    def __init__(self, ring, element, size, **star):
+        super().__init__(ring, element, size, **star)
         self.tag = "window"
 
 
-def window(this, **star):
+def window(ring, **star):
     """"""
     element = {
         "button": Button,
@@ -204,4 +204,4 @@ def window(this, **star):
         "label": Label,
     }
     size = (1280, 1080)
-    return Window(this, element, size, **star)
+    return Window(ring, element, size, **star)
