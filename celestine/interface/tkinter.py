@@ -12,7 +12,7 @@ from celestine.window.window import Window as window
 class Abstract(Abstract_):
     """"""
 
-    def render(self, view, item, **star):
+    def render(self, view, item, *, ring, **star):
         """"""
         self.item = item(view, **star)
 

@@ -66,12 +66,14 @@ def run(name: str) -> None:
 class AbstractPackage:
     """"""
 
+    def __bool__(self):
+        return self.package is not None
+
     def __getattr__(self, name):
-        # TODO do we need ring?
-        raise RuntimeError("Do we need ring?")
         return getattr(self.package, name)
 
-    def __init__(self, name):
+    def __init__(self, ring, /, name, **star):
+        self.ring = ring
         self.name = name
 
         try:
@@ -91,13 +93,10 @@ class Package:
             message = f"'{PACKAGE}' object has no attribute '{name}'"
             raise AttributeError(message)
 
-    def __init__(self):
+    def __init__(self, ring, /, **star):
         self.dictionary = {}
         argument = load.pathway.argument(PACKAGE)
         for name in argument:
-            try:
-                attribute = load.attribute(PACKAGE, name, "Package")
-                package = attribute(name)
-            except ModuleNotFoundError:
-                package = None
+            attribute = load.attribute(PACKAGE, name, "Package")
+            package = attribute(ring, name)
             self.dictionary[name] = package

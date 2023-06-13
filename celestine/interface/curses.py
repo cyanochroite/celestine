@@ -3,7 +3,6 @@
 import io
 
 from celestine import load
-from celestine.package import pillow
 from celestine.package.curses import package as curses
 from celestine.unicode import LINE_FEED
 from celestine.unicode.notational_systems import BRAILLE_PATTERNS
@@ -126,9 +125,18 @@ class Image(Abstract, image):
         value = value[0:-1]
         return value.split(LINE_FEED)
 
-    def render(self, collection, item, **star):
+    def render(self, ring, /, collection, item, **star):
         """"""
         (x_dot, y_dot) = self.origin()
+
+        if not ring.package.pillow:
+            self.add_string(
+                collection,
+                x_dot,
+                y_dot,
+                item,
+            )
+            return
 
         color = list(self.color.getdata())
 
@@ -155,12 +163,18 @@ class Image(Abstract, image):
 
             index_y += 1
 
-    def draw(self, collection, **star):
+    def draw(self, collection, *, ring, **star):
         """"""
+        pillow = ring.package.pillow
+
         path = self.image or load.pathway.asset("null.png")
 
-        self.cache = pillow.Image.load(path)
-        self.color = pillow.Image.clone(self.cache)
+        if not pillow:
+            self.render(ring, collection, path.name, **star)
+            return
+
+        self.cache = pillow.image_load(path)
+        self.color = pillow.image_clone(self.cache)
 
         # Crop box.
         source_length_x = self.cache.image.width
@@ -191,7 +205,7 @@ class Image(Abstract, image):
         get_colors(self.color.image)
 
         item = self.output()
-        self.render(collection, item, **star)
+        self.render(ring, collection, item, **star)
 
 
 class Label(Abstract, label):
@@ -313,5 +327,5 @@ def window(ring, **star):
         "label": Label,
     }
     size = (80, 24)
-    size = (122, 35)
+    # size = (122, 35)
     return Window(ring, element, size, **star)

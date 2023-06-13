@@ -17,6 +17,7 @@ class Window:
 
     def draw(self, **star):
         """"""
+        star.update(ring=self.ring)
         self.page.draw(self.page.data, **star)
 
     def code(self, name, function):

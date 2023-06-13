@@ -65,7 +65,7 @@ def begin_session(argument_list: L[S], exit_on_error: B) -> Session:
 
     session.main = session1.main
 
-    session.package = Package()
+    session.package = Package(session)
 
     session.window = None
 

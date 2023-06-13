@@ -1,7 +1,5 @@
 """"""
 
-import PIL.Image
-
 from celestine import load
 from celestine.typed import (
     L,
@@ -9,128 +7,6 @@ from celestine.typed import (
 )
 
 from . import AbstractPackage
-
-palettedata = [
-    0x00,
-    0x0F,
-    0x1E,
-    0x2D,
-    0x3C,
-    0x4B,
-    0x5A,
-    0x69,
-    0x78,
-    0x87,
-    0x96,
-    0xA5,
-    0xB4,
-    0xC3,
-    0xD2,
-    0xE1,
-    0xF0,
-    0xFF,
-]
-
-TERMINAL_RATIO = 15 / 7
-
-ASCII_CHARS = [
-    "@",
-    "$",
-    "&",
-    "#",
-    "%",
-    "?",
-    "*",
-    "=",
-    "+",
-    '"',
-    "!",
-    "^",
-    ";",
-    "-",
-    ",",
-    "'",
-    "`",
-    ".",
-]
-
-
-########################################################################
-
-PALETTE = PIL.Image.new("P", (1, 1))
-PALETTE.putpalette(
-    [
-        0x00,
-        0x00,
-        0x00,
-        0x0F,
-        0x0F,
-        0x0F,
-        0x1E,
-        0x1E,
-        0x1E,
-        0x2D,
-        0x2D,
-        0x2D,
-        0x3C,
-        0x3C,
-        0x3C,
-        0x4B,
-        0x4B,
-        0x4B,
-        0x5A,
-        0x5A,
-        0x5A,
-        0x69,
-        0x69,
-        0x69,
-        0x78,
-        0x78,
-        0x78,
-        0x87,
-        0x87,
-        0x87,
-        0x96,
-        0x96,
-        0x96,
-        0xA5,
-        0xA5,
-        0xA5,
-        0xB4,
-        0xB4,
-        0xB4,
-        0xC3,
-        0xC3,
-        0xC3,
-        0xD2,
-        0xD2,
-        0xD2,
-        0xE1,
-        0xE1,
-        0xE1,
-        0xF0,
-        0xF0,
-        0xF0,
-        0xFF,
-        0xFF,
-        0xFF,
-    ]
-)
-
-
-def _quantize(self):
-    """"""
-
-    colors = 256
-    method = None
-    kmeans = 0
-    palette = PALETTE
-    dither = PIL.Image.Dither.NONE
-
-    self.image = self.image.quantize(
-        colors, method, kmeans, palette, dither
-    )
-
 
 ########################################################################
 
@@ -144,6 +20,7 @@ class Image:
 
         Make image bright.
         """
+        pillow = self.ring.package.pillow
 
         def brighter(pixel):
             invert = (255 - pixel) / 255
@@ -155,21 +32,16 @@ class Image:
         new_value = value.point(brighter)
 
         bands = (hue, saturation, new_value)
-        self.image = PIL.Image.merge("HSV", bands).convert("RGB")
 
-    @classmethod
-    def clone(cls, item):
-        """"""
-        image = item.image.copy()
-        new = cls(image)
-        return new
+        self.image = pillow.Image.merge("HSV", bands).convert("RGB")
 
     def convert(self, mode):
         """"""
+        pillow = self.ring.package.pillow
 
         matrix = None  # Unused default.
-        dither = PIL.Image.Dither.FLOYDSTEINBERG
-        palette = PIL.Image.Palette.WEB  # Unused default.
+        dither = pillow.Image.Dither.FLOYDSTEINBERG
+        palette = pillow.Image.Palette.WEB  # Unused default.
         colors = 256  # Unused default.
 
         hold = self.image.convert(mode, matrix, dither, palette, colors)
@@ -187,32 +59,15 @@ class Image:
     def getdata(self):
         return self.image.getdata()
 
-    @classmethod
-    def load(cls, path):
-        fp = path
-        mode = "r"
-        formats = None
-        image = PIL.Image.open(fp, mode, formats)
-
-        # Highest mode for median cut.
-        mode = "RGB"
-        matrix = None
-        dither = PIL.Image.Dither.NONE
-        palette = PIL.Image.Palette.ADAPTIVE
-        colors = 256
-        image = image.convert(mode, matrix, dither, palette, colors)
-
-        new = cls(image)
-        return new
-
     def resize(self, size_x, size_y, box=None):
         """"""
+        pillow = self.ring.package.pillow
 
         size_x = max(1, round(size_x))
         size_y = max(1, round(size_y))
 
         size = (size_x, size_y)
-        resample = PIL.Image.Resampling.LANCZOS
+        resample = pillow.Image.Resampling.LANCZOS
         reducing_gap = None
 
         hold = self.image.resize(size, resample, box, reducing_gap)
@@ -225,33 +80,63 @@ class Image:
 
     def quantize(self):
         """"""
+        pillow = self.ring.package.pillow
 
         colors = COLORS
-        method = PIL.Image.Quantize.MEDIANCUT
+        method = pillow.Image.Quantize.MEDIANCUT
         kmeans = 0
         palette = None
-        dither = PIL.Image.Dither.FLOYDSTEINBERG
+        dither = pillow.Image.Dither.FLOYDSTEINBERG
 
         self.image = self.image.quantize(
             colors, method, kmeans, palette, dither
         )
 
-    def __init__(self, image, **star):
+    def __init__(self, ring, /, image, **star):
+        self.ring = ring
         self.image = image
 
 
 class Package(AbstractPackage):
     """"""
 
+    def image_clone(self, item):
+        """"""
+        image = item.image.copy()
+        new = Image(self.ring, image)
+        return new
+
+    def image_load(self, path):
+        """"""
+        pillow = self.ring.package.pillow
+
+        mode = "r"
+        formats = None
+        image = pillow.Image.open(path, mode, formats)
+
+        # Highest mode for median cut.
+        mode = "RGB"
+        matrix = None
+        dither = pillow.Image.Dither.NONE
+        palette = pillow.Image.Palette.ADAPTIVE
+        colors = 256
+        image = image.convert(mode, matrix, dither, palette, colors)
+
+        new = Image(self.ring, image)
+        return new
+
     def extension(self) -> L[S]:
         """"""
-        dictionary = PIL.Image.registered_extensions()
+        pillow = self.ring.package.pillow
+
+        dictionary = pillow.Image.registered_extensions()
         items = dictionary.items()
-        values = PIL.Image.OPEN
+        values = pillow.Image.OPEN
         result = [key for key, value in items if value in values]
         result.sort()
         return result
 
-    def __init__(self, _, **star):
-        super().__init__("PIL")
-        setattr(self, "ImageTk", load.package("PIL", "ImageTk"))
+    def __init__(self, ring, /, _, **star):
+        super().__init__(ring, "PIL")
+        if self.package:
+            setattr(self, "ImageTk", load.package("PIL", "ImageTk"))
