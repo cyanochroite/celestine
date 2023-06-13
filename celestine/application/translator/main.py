@@ -24,7 +24,7 @@ from .write import (
 )
 
 
-def parser_magic(session, source):
+def parser_magic(this, source):
     """Do all parser stuff here."""
 
     all_languages = {}
@@ -52,7 +52,7 @@ def parser_magic(session, source):
     source_list = load.dictionary(LANGUAGE, source)
     for name, value in source_list.items():
         continue  # disable post
-        items = post(session, dest_code, value)
+        items = post(this, dest_code, value)
         for item in items:
             translations = item[TRANSLATIONS]
             for translation in translations:
@@ -77,9 +77,9 @@ def reset():
     os.mkdir(path)
 
 
-def post(session, code, text):
+def post(this, code, text):
     """Generate a post request."""
-    translator = Translator(session.attribute)
+    translator = Translator(this.attribute)
     url = translator.endpoint()
     data = None
     json = [{TEXT: text}]
@@ -91,13 +91,13 @@ def post(session, code, text):
     return request.json()
 
 
-def do_translate(session):
+def do_translate(this):
     """Translate the language files."""
 
     # Add ability to choose master language file.
     source = "en"
 
-    dictionary = parser_magic(session, source)
+    dictionary = parser_magic(this, source)
 
     reset()
 

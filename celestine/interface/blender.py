@@ -430,8 +430,8 @@ class Window(Window_):
         super().__exit__(exc_type, exc_value, traceback)
         return False
 
-    def __init__(self, session, element, size, *, call=None, **star):
-        super().__init__(session, element, size, **star)
+    def __init__(self, this, element, size, *, call=None, **star):
+        super().__init__(this, element, size, **star)
         self.frame = None
         self.mouse = None
 
@@ -439,7 +439,7 @@ class Window(Window_):
         self.star = star
 
 
-def window(session, **star):
+def window(this, **star):
     """"""
     element = {
         "button": Button,
@@ -447,4 +447,4 @@ def window(session, **star):
         "label": Label,
     }
     size = (20, 20)
-    return Window(session, element, size, **star)
+    return Window(this, element, size, **star)

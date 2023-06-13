@@ -5,9 +5,9 @@ from celestine.typed import N
 from celestine.window.container import Container as View
 
 
-def main(session: Session, view: View) -> N:
+def main(this: Session, view: View) -> N:
     """"""
-    language = view.session.language
+    language = view.this.language
     with view.span("main_head") as line:
         line.label("main_title", language.DEMO_MAIN_TITLE)
         line.call("main_action", "Greet Cow", "clean")

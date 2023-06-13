@@ -27,7 +27,7 @@ class Window:
         """"""
         container = self.container.drop(name)
         self.data(container)
-        function(self.session, container)
+        function(self.this, container)
         container.spot(0, 0, self.width, self.height)
         self._view.set(name, container)
 
@@ -67,7 +67,7 @@ class Window:
 
     def work(self, task, **star):
         """"""
-        star.update(session=self.session)
+        star.update(this=self.this)
         caller = self.task.get(task)
         caller(**star)
         self.draw(make=False)
@@ -89,9 +89,9 @@ class Window:
             raise RuntimeError(message) from error
         return False
 
-    def __init__(self, session, element, size, **star):
-        self.session = session
-        self.turn_page = session.main
+    def __init__(self, this, element, size, **star):
+        self.this = this
+        self.turn_page = this.main
         self.page = None
         self.task = Collection2()
         self._view = Collection2()
@@ -99,7 +99,7 @@ class Window:
         (self.width, self.height) = size
 
         self.container = Container(
-            self.session,
+            self.this,
             "window",
             self,
             element,

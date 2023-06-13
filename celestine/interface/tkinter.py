@@ -60,12 +60,12 @@ class Image(Abstract, Image_):
         star.update(image=self.cache)
         self.render(view, item, **star)
 
-    def update(self, *, session, image, **star):
+    def update(self, *, this, image, **star):
         """"""
         if not super().update(image=image, **star):
             return False
 
-        pillow = session.package.pillow
+        pillow = this.package.pillow
         if pillow:
             self.cache = pillow.ImageTk.PhotoImage(file=self.image)
         else:
@@ -109,8 +109,8 @@ class Window(window):
 
     def extension(self):
         """"""
-        if self.session.package.pillow:
-            return self.session.package.pillow.extension()
+        if self.this.package.pillow:
+            return self.this.package.pillow.extension()
 
         return [
             ".pbm",
@@ -128,7 +128,7 @@ class Window(window):
     def __enter__(self):
         super().__enter__()
         self.root = tkinter.Tk()
-        self.root.title(self.session.language.APPLICATION_TITLE)
+        self.root.title(self.this.language.APPLICATION_TITLE)
         self.root.geometry("1920x1080")
         self.root.minsize(640, 480)
         self.root.maxsize(3840, 2160)
@@ -140,12 +140,12 @@ class Window(window):
         self.root.mainloop()
         return False
 
-    def __init__(self, session, element, size, **star):
-        super().__init__(session, element, size, **star)
+    def __init__(self, this, element, size, **star):
+        super().__init__(this, element, size, **star)
         self.root = None
 
 
-def window(session, **star):
+def window(this, **star):
     """"""
     element = {
         "button": Button,
@@ -153,4 +153,4 @@ def window(session, **star):
         "label": Label,
     }
     size = (1280, 1080)
-    return Window(session, element, size, **star)
+    return Window(this, element, size, **star)
