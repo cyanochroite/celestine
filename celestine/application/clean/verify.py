@@ -19,9 +19,9 @@ class Session(SuperSession):
     """"""
 
 
-def modularize(path: S, start: S) -> T[S, ...]:
+def modularize(path: S, begin: S) -> T[S, ...]:
     """"""
-    relative = os.path.relpath(path, start)
+    relative = os.path.relpath(path, begin)
     (root, _) = os.path.splitext(relative)
     pure = pathlib.PurePath(root)
     parts = pure.parts
@@ -30,11 +30,11 @@ def modularize(path: S, start: S) -> T[S, ...]:
 
 def find(target: S) -> L[T[S, ...]]:
     """Find all project directories with this name."""
-    start = load.pathway.celestine()
+    begin = load.pathway.celestine()
 
     array = [
-        modularize(directory, start)
-        for directory in walk_file(start)
+        modularize(directory, begin)
+        for directory in walk_file(begin)
         if directory.endswith(target)
     ]
     return array

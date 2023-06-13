@@ -236,7 +236,7 @@ class Image:
             colors, method, kmeans, palette, dither
         )
 
-    def __init__(self, image):
+    def __init__(self, image, **star):
         self.image = image
 
 
@@ -252,6 +252,6 @@ class Package(AbstractPackage):
         result.sort()
         return result
 
-    def __init__(self, _):
+    def __init__(self, _, **star):
         super().__init__("PIL")
         setattr(self, "ImageTk", load.package("PIL", "ImageTk"))

@@ -41,7 +41,7 @@ def wrap(string):
 
     The following breaks on long lines.
     Higher number has higher priority.
-    INFORMATION_SEPARATOR_FOUR indicates start of string.
+    INFORMATION_SEPARATOR_FOUR indicates begining of string.
     INFORMATION_SEPARATOR_THREE indicates hard punctuation.
     INFORMATION_SEPARATOR_TWO indicates soft punctuation.
     INFORMATION_SEPARATOR_ONE indicates whitespace.
@@ -220,7 +220,7 @@ def newline(string):
 
 def whitespace(string):
     """
-    Remove (ignore) all whitespace from the start and end of the string.
+    Remove (ignore) all whitespace from the front and end of the string.
 
     Convert all whitespace to spaces.
     Remove all duplicate spaces.

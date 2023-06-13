@@ -30,7 +30,7 @@ class Session:
     view: MT
 
 
-def start_session(argument_list: L[S], exit_on_error: B) -> Session:
+def begin_session(argument_list: L[S], exit_on_error: B) -> Session:
     """"""
 
     magic = Magic(argument_list, exit_on_error)

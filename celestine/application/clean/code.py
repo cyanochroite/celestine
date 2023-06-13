@@ -13,7 +13,7 @@ from celestine.package import run
 
 def clean(**star):
     """"""
-    print("clean start")
+    print("clean begin")
     run("pyupgrade")
     run("pydocstringformatter")
     run("autoflake")

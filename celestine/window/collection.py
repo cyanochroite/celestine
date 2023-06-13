@@ -177,10 +177,10 @@ class Rectangle(Box, Collection):
         if "col" in star:
             offset_y = 50
 
-        self.start_x_min = self.x_min
-        self.start_y_min = self.y_min
-        self.start_x_max = self.x_max
-        self.start_y_max = self.y_max
+        self.begin_x_min = self.x_min
+        self.begin_y_min = self.y_min
+        self.begin_x_max = self.x_max
+        self.begin_y_max = self.y_max
 
         self.move_x_min = self.x_min
         self.move_y_min = self.y_min

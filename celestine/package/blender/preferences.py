@@ -84,7 +84,7 @@ def unregister():
     bpy.utils.unregister_class(CelestineAddonPreferences)
 
 
-def start():
+def begin():
     """"""
     state = content()
     state.ready = True

@@ -7,7 +7,7 @@ from celestine.data import (
     REGISTER,
     UNREGISTER,
 )
-from celestine.session import start_session
+from celestine.session import begin_session
 from celestine.typed import (
     B,
     L,
@@ -33,7 +33,7 @@ bl_info = {
 def main(argument_list: L[S], exit_on_error: B, **star) -> N:
     """Run the main program."""
 
-    session = start_session(argument_list, exit_on_error)
+    session = begin_session(argument_list, exit_on_error)
     window = session.interface.window(session, **star)
     session.window = window
 

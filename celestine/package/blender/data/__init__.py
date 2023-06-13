@@ -12,7 +12,7 @@ from .object import _object as object_
 from .texture import _texture as texture
 
 
-def start():
+def begin():
     """
     Blender register function.
 

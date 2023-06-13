@@ -92,7 +92,7 @@ class celestine_main(bpy.types.Panel):
         content = preferences.content()
         self.layout.operator("celestine.click")
         if content.ready:
-            self.layout.operator("celestine.start")
+            self.layout.operator("celestine.begin")
         else:
             self.layout.operator("celestine.finish")
 
@@ -103,22 +103,22 @@ class celestine_main(bpy.types.Panel):
         """"""
 
 
-class celestine_start(bpy.types.Operator):
+class celestine_begin(bpy.types.Operator):
     """"""
 
     bl_description = "whati ti do"
 
     bl_label = "Startup"
-    bl_idname = "celestine.start"
+    bl_idname = "celestine.begin"
 
     def execute(self, _):
         """"""
 
-        print("start")
+        print("begin")
         car = bpy.context.preferences.addons["celestine"].preferences
-        data.start()
-        Image.start()
-        preferences.start()
+        data.begin()
+        Image.begin()
+        preferences.begin()
         car.ready = True
 
         main(None)
@@ -144,7 +144,7 @@ class celestine_finish(bpy.types.Operator):
 def register():
     """"""
     preferences.register()
-    bpy.utils.register_class(celestine_start)
+    bpy.utils.register_class(celestine_begin)
     bpy.utils.register_class(celestine_finish)
     bpy.utils.register_class(celestine_click)
     bpy.utils.register_class(celestine_main)
@@ -155,7 +155,7 @@ def unregister():
     bpy.utils.unregister_class(celestine_main)
     bpy.utils.unregister_class(celestine_click)
     bpy.utils.unregister_class(celestine_finish)
-    bpy.utils.unregister_class(celestine_start)
+    bpy.utils.unregister_class(celestine_begin)
     preferences.unregister()
 
 
@@ -237,7 +237,7 @@ class Image(Abstract, Image_):
     default: data.image
 
     @classmethod
-    def start(cls):
+    def begin(cls):
         """"""
         name = "null.png"
         path = load.pathway.asset(name)
