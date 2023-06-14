@@ -98,7 +98,9 @@ class Container(Rectangle):
 
     def view(self, tag, text, action):
         """"""
-        item = self._button(tag, text, call=self.turn, action=action, argument={})
+        item = self._button(
+            tag, text, call=self.turn, action=action, argument={}
+        )
         return self.save(item)
 
     def __enter__(self):

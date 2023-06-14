@@ -29,4 +29,4 @@ def setup(*, ring: R, window: A, **star) -> N:
 
     for group, image in items:
         (_, item) = group
-        item.update(ring=ring, image=image)
+        item.update(ring, image)

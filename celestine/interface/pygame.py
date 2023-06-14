@@ -6,14 +6,14 @@ from celestine.typed import (
     R,
     S,
 )
-from celestine.window.element import Abstract as abstract
-from celestine.window.element import Button as button
-from celestine.window.element import Image as image
-from celestine.window.element import Label as label
-from celestine.window.window import Window as window
+from celestine.window.element import Abstract as Abstract_
+from celestine.window.element import Button as Button_
+from celestine.window.element import Image as Image_
+from celestine.window.element import Label as Label_
+from celestine.window.window import Window as Window_
 
 
-class Abstract(abstract):
+class Abstract(Abstract_):
     """"""
 
     def render(self, collection, item, **star):
@@ -22,7 +22,7 @@ class Abstract(abstract):
         collection.blit(item, position)
 
 
-class Button(Abstract, button):
+class Button(Abstract, Button_):
     """"""
 
     def draw(self, ring: R, view, *, font, **star):
@@ -33,7 +33,7 @@ class Button(Abstract, button):
         self.render(view, item, **star)
 
 
-class Image(Abstract, image):
+class Image(Abstract, Image_):
     """"""
 
     def draw(self, ring: R, view, **star):
@@ -52,7 +52,7 @@ class Image(Abstract, image):
         self.render(view, item, **star)
 
 
-class Label(Abstract, label):
+class Label(Abstract, Label_):
     """"""
 
     def draw(self, ring: R, view, *, font, **star):
@@ -61,7 +61,7 @@ class Label(Abstract, label):
         self.render(view, item, **star)
 
 
-class Window(window):
+class Window(Window_):
     """"""
 
     def data(self, container):

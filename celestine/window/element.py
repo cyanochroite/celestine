@@ -3,6 +3,7 @@
 
 from celestine.typed import (
     TA,
+    R,
     T,
     Z,
 )
@@ -92,7 +93,7 @@ class Image(Abstract):
 
         return (0, 0, source_length_x, source_length_y)
 
-    def update(self, *, image, **star):
+    def update(self, ring: R, image, **star):
         """"""
         if not image:
             return False

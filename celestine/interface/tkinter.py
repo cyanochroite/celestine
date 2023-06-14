@@ -6,7 +6,7 @@ from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
-from celestine.window.window import Window as window
+from celestine.window.window import Window as Window_
 
 
 class Abstract(Abstract_):
@@ -63,11 +63,11 @@ class Image(Abstract, Image_):
         star.update(image=self.cache)
         self.render(view, item, ring=ring, **star)
 
-    def update(self, *, ring, image, **star):
+    def update(self, ring: R, image, **star):
         """"""
         tkinter = ring.package.tkinter
 
-        if not super().update(image=image, **star):
+        if not super().update(ring, image, **star):
             return False
 
         pillow = ring.package.pillow
@@ -99,7 +99,7 @@ class Label(Abstract, Label_):
         self.render(view, item, ring=ring, **star)
 
 
-class Window(window):
+class Window(Window_):
     """"""
 
     def data(self, container):

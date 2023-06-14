@@ -2,6 +2,7 @@
 
 from celestine import load
 from celestine.package import dearpygui
+from celestine.typed import R
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
 from celestine.window.element import Image as image
@@ -92,9 +93,9 @@ class Image(Abstract, image):
             pos=(self.x_min, self.y_min),
         )
 
-    def update(self, *, image, **star):
+    def update(self, ring: R, image, **star):
         """"""
-        if not super().update(image=image, **star):
+        if not super().update(ring, image, **star):
             return False
 
         dearpygui.set_value(self.tag, self.image)

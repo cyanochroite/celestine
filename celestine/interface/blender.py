@@ -19,8 +19,8 @@ from celestine.typed import (
     B,
     F,
     N,
-    S,
     R,
+    S,
     T,
 )
 from celestine.window.element import Abstract as Abstract_
@@ -265,9 +265,9 @@ class Image(Abstract, Image_):
         self.item = plane
         self.render()
 
-    def update(self, *, image: S, **star) -> B:
+    def update(self, ring: R, image: S, **star) -> B:
         """"""
-        if not super().update(image=image, **star):
+        if not super().update(ring, image, **star):
             return False
 
         material = bpy.data.materials[self.tag]

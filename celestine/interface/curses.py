@@ -3,6 +3,7 @@
 import io
 
 from celestine import load
+from celestine.typed import R
 from celestine.unicode import LINE_FEED
 from celestine.unicode.notational_systems import BRAILLE_PATTERNS
 from celestine.window.element import Abstract as abstract
@@ -10,8 +11,6 @@ from celestine.window.element import Button as button
 from celestine.window.element import Image as image
 from celestine.window.element import Label as label
 from celestine.window.window import Window as window
-
-from celestine.typed import R
 
 color_index = 8  # skip the 8 reserved colors
 color_table = {}
