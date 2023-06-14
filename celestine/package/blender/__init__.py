@@ -1,8 +1,8 @@
 """"""
 
 
-from celestine.package import AbstractPackage
+from celestine.package import Abstract
 
 
-class Package(AbstractPackage):
+class Package(Abstract):
     """"""

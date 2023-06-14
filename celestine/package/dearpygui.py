@@ -42,8 +42,8 @@ def tag_root(tag):
     return combine
 
 
-from . import AbstractPackage
+from . import Abstract
 
 
-class Package(AbstractPackage):
+class Package(Abstract):
     """"""

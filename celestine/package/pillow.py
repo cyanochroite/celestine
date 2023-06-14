@@ -6,7 +6,7 @@ from celestine.typed import (
     S,
 )
 
-from . import AbstractPackage
+from . import Abstract
 
 ########################################################################
 
@@ -97,7 +97,7 @@ class Image:
         self.image = image
 
 
-class Package(AbstractPackage):
+class Package(Abstract):
     """"""
 
     def image_clone(self, item):

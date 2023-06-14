@@ -2,7 +2,7 @@
 
 import pathlib
 
-from . import AbstractPackage
+from . import Abstract
 
 try:
     import platformdirs
@@ -30,5 +30,5 @@ except ModuleNotFoundError:
     directory = pathlib.Path(os.getcwd())
 
 
-class Package(AbstractPackage):
+class Package(Abstract):
     """"""

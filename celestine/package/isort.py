@@ -5,10 +5,10 @@ from celestine.typed import (
     S,
 )
 
-from . import AbstractPackage
+from . import Abstract
 
 
-class Package(AbstractPackage):
+class Package(Abstract):
     """"""
 
     def module(self) -> L[S]:

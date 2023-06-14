@@ -4,10 +4,10 @@ This is a wrapper around more-itertools 8.13.0.
 https://more-itertools.readthedocs.io/en/stable/api.html
 """
 
-from . import AbstractPackage
+from . import Abstract
 
 
-class Package(AbstractPackage):
+class Package(Abstract):
     """"""
 
 

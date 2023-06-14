@@ -1,5 +1,6 @@
 """Run a bunch of auto formaters."""
 
+import logging
 import os
 import sys
 
@@ -16,7 +17,7 @@ CELESTINE = "celestine"
 PACKAGE = "package"
 
 
-class AbstractPackage:
+class Abstract:
     """"""
 
     ring: A
@@ -63,13 +64,13 @@ class AbstractPackage:
         self.name = name
 
         try:
-            self.package = load.package(self.name)
+            self.package = load.package(name)
         except ModuleNotFoundError:
             self.package = None
             found = f"Module {name} not found."
             install = f"Install with 'pip install {name}'."
             message = f"{found} {install}"
-            print(message)
+            logging.warning(message)
 
 
 class Package:

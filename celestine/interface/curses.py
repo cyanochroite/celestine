@@ -3,7 +3,6 @@
 import io
 
 from celestine import load
-from celestine.package.curses import package as curses
 from celestine.unicode import LINE_FEED
 from celestine.unicode.notational_systems import BRAILLE_PATTERNS
 from celestine.window.element import Abstract as abstract
@@ -222,11 +221,15 @@ class Window(window):
 
     def data(self, container):
         """"""
+        curses = self.ring.package.curses
+
         data_box = (1, 1, self.width - 2, self.height - 2)
         container.data = curses.window(*data_box)
 
     def draw(self, **star):
         """"""
+        curses = self.ring.package.curses
+
         # Do normal draw stuff.
         self.data(self.page)
 
@@ -261,6 +264,8 @@ class Window(window):
     def __enter__(self):
         super().__enter__()
 
+        curses = self.ring.package.curses
+
         self.stdscr = curses.initscr()
         curses.noecho()
         curses.cbreak()
@@ -282,6 +287,9 @@ class Window(window):
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
+
+        curses = self.ring.package.curses
+
         while True:
             event = self.stdscr.getch()
             match event:

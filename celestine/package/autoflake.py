@@ -1,7 +1,7 @@
 """Removes unused imports and unused variables."""
 
-from . import AbstractPackage
+from . import Abstract
 
 
-class Package(AbstractPackage):
+class Package(Abstract):
     """"""

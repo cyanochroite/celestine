@@ -17,10 +17,11 @@ from celestine.unicode import (
     SPACE,
 )
 
-from . import AbstractPackage
+from . import Abstract
 
 
-class PackageWrap:
+
+class Package(Abstract):
     """"""
 
     def window(self, column, row, width, height):
@@ -29,7 +30,7 @@ class PackageWrap:
         ncols = width
         begin_y = row
         begin_x = column
-        return package.newwin(nlines, ncols, begin_y, begin_x)
+        return self.package.newwin(nlines, ncols, begin_y, begin_x)
 
     def subwindow(self, window, column, row, width, height):
         """"""
@@ -39,7 +40,7 @@ class PackageWrap:
         begin_x = column
         return window.subwin(nlines, ncols, begin_y, begin_x)
 
-    def __getattribute__(self, name) -> A:
+    def __getattr__(self, name) -> A:
         """"""
         one = [
             "noecho",
@@ -93,10 +94,3 @@ class PackageWrap:
                 return object.__getattribute__(self, name)
             case "doupdate":
                 return object.__getattribute__(self, name)
-
-
-class Package(AbstractPackage):
-    """"""
-
-
-package = PackageWrap()
