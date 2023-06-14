@@ -1,15 +1,4 @@
-"""
-Pylint can't seem to find curses and so gives a bnuch of errors.
-
-Putting alias here to contain errors to this file only.
-
-Hidding everything in the __getattribute__ function.
-"""
-
-# https://dearpygui.readthedocs.io/en/latest/
-import curses
-
-import _curses
+"""Terminal handling for character-cell displays."""
 
 from celestine.typed import A
 from celestine.unicode import (
@@ -18,7 +7,6 @@ from celestine.unicode import (
 )
 
 from . import Abstract
-
 
 
 class Package(Abstract):
@@ -66,9 +54,11 @@ class Package(Abstract):
         ]
 
         if name in one:
-            return getattr(_curses, name)
+            return getattr(self.package, name)
+            #return getattr(_curses, name)
         if name in two:
-            return getattr(curses, name)
+            return getattr(self.package, name)
+            #return getattr(curses, name)
 
         match name:
             case "KEY_EXIT":

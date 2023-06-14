@@ -136,7 +136,7 @@ class Package(Abstract):
         result.sort()
         return result
 
-    def __init__(self, ring, /, _, **star):
-        super().__init__(ring, "PIL")
+    def __init__(self, ring, /, name, **star):
+        super().__init__(ring, name, pypi="PIL")
         if self.package:
             setattr(self, "ImageTk", load.package("PIL", "ImageTk"))

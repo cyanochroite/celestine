@@ -23,11 +23,40 @@ from typing import Tuple as T  # noqa: F401 pylint: disable=W0611
 from typing import Type as TY  # noqa: F401 pylint: disable=W0611
 from typing import TypeAlias as TA
 from typing import Union as U  # noqa: F401 pylint: disable=W0611
+from typing import Optional as O
+
+
 
 P: TA = pathlib.Path
+N: TA = None
+OBJ: TA = object
+
 B: TA = bool
 F: TA = float
-N: TA = None
-O: TA = object
 S: TA = str
 Z: TA = int
+
+OB: TA = O[B]
+OF: TA = O[F]
+OS: TA = O[S]
+OZ: TA = O[Z]
+
+LB: TA = L[B]
+LF: TA = L[F]
+LS: TA = L[S]
+LZ: TA = L[Z]
+
+
+class Session:
+    """"""
+
+    application: MT
+    attribute: L[S]
+    code: MT
+    interface: MT
+    language: MT
+    main: S
+    view: MT
+
+
+R = Session # noqa: F401 pylint: disable=W0611

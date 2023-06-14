@@ -17,11 +17,12 @@ color_table = {}
 COLORS = 15
 
 
-def get_colors(image):
+def get_colors(curses, image):
     """Fails after being called 16 times."""
 
     global color_index
     global color_table
+
 
     colors = image.getcolors()
     for color in colors:
@@ -126,6 +127,8 @@ class Image(Abstract, image):
 
     def render(self, ring, /, collection, item, **star):
         """"""
+        curses = ring.package.curses
+
         (x_dot, y_dot) = self.origin()
 
         if not ring.package.pillow:
@@ -164,7 +167,9 @@ class Image(Abstract, image):
 
     def draw(self, collection, *, ring, **star):
         """"""
+        curses = ring.package.curses
         pillow = ring.package.pillow
+
 
         path = self.image or load.pathway.asset("null.png")
 
@@ -201,7 +206,7 @@ class Image(Abstract, image):
         self.cache.convert_to_mono()
         self.color.convert_to_color()
 
-        get_colors(self.color.image)
+        get_colors(curses, self.color.image)
 
         item = self.output()
         self.render(ring, collection, item, **star)

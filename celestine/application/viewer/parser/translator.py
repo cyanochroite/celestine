@@ -6,6 +6,8 @@ from celestine.application.viewer.data.alphabet import (
     Unary,
 )
 from celestine.application.viewer.data.encoding import encoding
+
+# change to ring.package.itertools
 from celestine.application.viewer.extension.more_itertools import (
     filter_true,
     split_when,

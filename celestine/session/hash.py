@@ -18,7 +18,7 @@ print(dictionary[Test]) -> "test"
 
 from celestine.typed import (
     B,
-    O,
+    OBJ,
     S,
     Z,
 )
@@ -32,7 +32,7 @@ from celestine.unicode import (
 class HashMetaClass(type):
     """"""
 
-    def __eq__(cls, other: O) -> B:
+    def __eq__(cls, other: OBJ) -> B:
         return str(cls) == str(other)
 
     def __hash__(cls) -> Z:

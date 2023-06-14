@@ -11,6 +11,8 @@ from celestine.typed import (
     L,
     N,
     S,
+    OS,
+    R,
 )
 
 CELESTINE = "celestine"
@@ -59,16 +61,17 @@ class Abstract:
     def __getattr__(self, name):
         return getattr(self.package, name)
 
-    def __init__(self, ring, /, name: S, **star):
+    def __init__(self, ring: R, name: S, pypi: OS = None, **star) -> N:
         self.ring = ring
         self.name = name
+        self.pypi = pypi or name
 
         try:
-            self.package = load.package(name)
+            self.package = load.package(self.pypi)
         except ModuleNotFoundError:
             self.package = None
-            found = f"Module {name} not found."
-            install = f"Install with 'pip install {name}'."
+            found = f"Module {self.name} not found."
+            install = f"Install with 'pip install {self.pypi}'."
             message = f"{found} {install}"
             logging.warning(message)
 

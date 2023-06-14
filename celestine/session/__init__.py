@@ -13,21 +13,12 @@ from celestine.typed import (
     B,
     L,
     S,
+    Session,
 )
 
 from .magic import Magic
 
 
-class Session:
-    """"""
-
-    application: MT
-    attribute: L[S]
-    code: MT
-    interface: MT
-    language: MT
-    main: S
-    view: MT
 
 
 def begin_session(argument_list: L[S], exit_on_error: B) -> Session:
