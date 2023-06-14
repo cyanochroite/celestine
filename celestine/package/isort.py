@@ -5,19 +5,12 @@ from celestine.typed import (
     S,
 )
 
-from . import (
-    AbstractLinter,
-    AbstractPackage,
-)
+from . import AbstractPackage
 
 
-class Linter(AbstractLinter):
+class Package(AbstractPackage):
     """"""
 
     def module(self) -> L[S]:
         """"""
         return ["main"]
-
-
-class Package(AbstractPackage):
-    """"""

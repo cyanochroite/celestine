@@ -12,13 +12,10 @@ from celestine.typed import (
     S,
 )
 
-from . import (
-    AbstractLinter,
-    AbstractPackage,
-)
+from . import AbstractPackage
 
 
-class Linter(AbstractLinter):
+class Package(AbstractPackage):
     """"""
 
     def main(self, package: MT, path: S) -> N:
@@ -40,7 +37,3 @@ class Linter(AbstractLinter):
         package.run_docstring_formatter(argv)
 
         os.chdir(location)
-
-
-class Package(AbstractPackage):
-    """"""

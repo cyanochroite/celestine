@@ -8,17 +8,25 @@ from celestine.file import (
     text_load,
     text_save,
 )
-from celestine.package import run
+
+PACKAGE = "package"
 
 
-def clean(**star):
+def run(name: str) -> None:
+    """"""
+    module = load.module(PACKAGE, name)
+    package = module.Linter(name)
+    package.run()
+
+
+def clean(*, ring, **star):
     """"""
     print("clean begin")
-    run("pyupgrade")
-    run("pydocstringformatter")
-    run("autoflake")
-    run("isort")
-    run("black")
+    ring.package.pyupgrade.run()
+    ring.package.pydocstringformatter.run()
+    ring.package.autoflake.run()
+    ring.package.isort.run()
+    ring.package.black.run()
     print("clean finish")
 
 
