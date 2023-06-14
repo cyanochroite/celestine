@@ -1,7 +1,7 @@
 """"""
 
 from celestine import load
-from celestine.package import tkinter
+from celestine.typed import R
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -33,8 +33,9 @@ class Button(Abstract, Button_):
         """"""
         self.call(self.action, **self.argument)
 
-    def draw(self, view, *, make, **star):
+    def draw(self, view, *, make, ring: R, **star):
         """"""
+        tkinter = ring.package.tkinter
 
         if not make:
             return
@@ -42,14 +43,16 @@ class Button(Abstract, Button_):
         item = tkinter.Button
         star.update(command=self.callback)
         star.update(text=f"button:{self.data}")
-        self.render(view, item, **star)
+        self.render(view, item, ring=ring, **star)
 
 
 class Image(Abstract, Image_):
     """"""
 
-    def draw(self, view, *, make, **star):
+    def draw(self, view, *, make, ring: R, **star):
         """"""
+        tkinter = ring.package.tkinter
+
         file = self.image or load.pathway.asset("null.png")
 
         if not make:
@@ -58,10 +61,12 @@ class Image(Abstract, Image_):
         item = tkinter.Label
         self.cache = tkinter.PhotoImage(file=file)
         star.update(image=self.cache)
-        self.render(view, item, **star)
+        self.render(view, item, ring=ring, **star)
 
     def update(self, *, ring, image, **star):
         """"""
+        tkinter = ring.package.tkinter
+
         if not super().update(image=image, **star):
             return False
 
@@ -79,8 +84,10 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, view, *, make, **star):
+    def draw(self, view, *, make, ring: R, **star):
         """"""
+        tkinter = ring.package.tkinter
+
         if not make:
             return
 
@@ -89,7 +96,7 @@ class Label(Abstract, Label_):
         star.update(height=4)
         star.update(text=f"label:{self.data}")
         star.update(width=100)
-        self.render(view, item, **star)
+        self.render(view, item, ring=ring, **star)
 
 
 class Window(window):
@@ -97,6 +104,8 @@ class Window(window):
 
     def data(self, container):
         """"""
+        tkinter = self.ring.package.tkinter
+
         container.data = tkinter.Frame(
             self.root,
             padx=5,
@@ -126,6 +135,8 @@ class Window(window):
         self.page.data.tkraise()
 
     def __enter__(self):
+        tkinter = self.ring.package.tkinter
+
         super().__enter__()
         self.root = tkinter.Tk()
         self.root.title(self.ring.language.APPLICATION_TITLE)

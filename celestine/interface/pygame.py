@@ -3,8 +3,8 @@
 from celestine import load
 from celestine.typed import (
     L,
-    S,
     R,
+    S,
 )
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button

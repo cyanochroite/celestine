@@ -1,13 +1,13 @@
-""""""
+"""Python Game Development."""
 
 import os
 import sys
 
-from celestine.typed import A
 from celestine.file.data import (
     UTF_8,
     WRITE_TEXT,
 )
+from celestine.typed import A
 
 PYGAME = None
 

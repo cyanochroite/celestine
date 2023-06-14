@@ -5,6 +5,10 @@ import os
 import sys
 
 from celestine import load
+from celestine.file.data import (
+    UTF_8,
+    WRITE_TEXT,
+)
 from celestine.typed import (
     MT,
     OS,
@@ -13,11 +17,6 @@ from celestine.typed import (
     N,
     R,
     S,
-)
-from celestine.typed import A
-from celestine.file.data import (
-    UTF_8,
-    WRITE_TEXT,
 )
 
 CELESTINE = "celestine"

@@ -1,4 +1,4 @@
-""""""
+"""Python Imaging Library (Fork)."""
 
 from celestine import load
 from celestine.typed import (

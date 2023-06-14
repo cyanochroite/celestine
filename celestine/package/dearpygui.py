@@ -1,10 +1,9 @@
 """"DearPyGui: A simple Python GUI Toolkit."""
 
 
-from . import Abstract
-
-
 from celestine.typed import A
+
+from . import Abstract
 
 
 class Package(Abstract):

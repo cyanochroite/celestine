@@ -1,7 +1,4 @@
-"""A tool to automatically format Python docstrings.
-
-It tries to follow. recommendations from PEP 8 and PEP 257.
-"""
+"""A tool to automatically format Python docstrings."""
 import os
 import sys
 

@@ -1,4 +1,4 @@
-""""""
+"""A package for determining appropriate platform-specific dirs."""
 
 import pathlib
 
