@@ -81,10 +81,10 @@ class Container(Rectangle):
             )
         )
 
-    def draw(self, view, **star):
+    def draw(self, ring, view, **star):
         """"""
         for _, item in self.item.items():
-            item.draw(view, **star)
+            item.draw(ring, view, **star)
 
     def poke(self, x_dot, y_dot, **star):
         """"""
@@ -98,9 +98,7 @@ class Container(Rectangle):
 
     def view(self, tag, text, action):
         """"""
-        item = self._button(
-            tag, text, call=self.turn, action=action, argument={}
-        )
+        item = self._button(tag, text, call=self.turn, action=action, argument={})
         return self.save(item)
 
     def __enter__(self):

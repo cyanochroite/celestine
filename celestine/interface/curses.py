@@ -11,6 +11,8 @@ from celestine.window.element import Image as image
 from celestine.window.element import Label as label
 from celestine.window.window import Window as window
 
+from celestine.typed import R
+
 color_index = 8  # skip the 8 reserved colors
 color_table = {}
 
@@ -63,20 +65,20 @@ class Abstract(abstract):
         y_dot = int(self.y_min)
         return (x_dot, y_dot)
 
-    def render(self, collection, item, **star):
+    def render(self, view, item, **star):
         """"""
         text = item
         (x_dot, y_dot) = self.origin()
-        self.add_string(collection, x_dot, y_dot, text)
+        self.add_string(view, x_dot, y_dot, text)
 
 
 class Button(Abstract, button):
     """"""
 
-    def draw(self, collection, **star):
+    def draw(self, ring: R, view, **star):
         """"""
         item = f"button:{self.data}"
-        self.render(collection, item, **star)
+        self.render(view, item, **star)
 
 
 class Image(Abstract, image):
@@ -164,7 +166,7 @@ class Image(Abstract, image):
 
             index_y += 1
 
-    def draw(self, collection, *, ring, **star):
+    def draw(self, ring: R, view, **star):
         """"""
         curses = ring.package.curses
         pillow = ring.package.pillow
@@ -172,7 +174,7 @@ class Image(Abstract, image):
         path = self.image or load.pathway.asset("null.png")
 
         if not pillow:
-            self.render(ring, collection, path.name, **star)
+            self.render(ring, view, path.name, **star)
             return
 
         self.cache = pillow.image_load(path)
@@ -207,16 +209,16 @@ class Image(Abstract, image):
         get_colors(curses, self.color.image)
 
         item = self.output()
-        self.render(ring, collection, item, **star)
+        self.render(ring, view, item, **star)
 
 
 class Label(Abstract, label):
     """"""
 
-    def draw(self, collection, **star):
+    def draw(self, ring: R, view, **star):
         """"""
         item = f"label:{self.data}"
-        self.render(collection, item, **star)
+        self.render(view, item, **star)
 
 
 class Window(window):

@@ -54,6 +54,7 @@ class Ring:
     interface: MT
     language: MT
     main: S
+    package: MT
     view: MT
 
 

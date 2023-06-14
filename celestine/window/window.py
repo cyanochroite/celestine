@@ -17,8 +17,7 @@ class Window:
 
     def draw(self, **star):
         """"""
-        star.update(ring=self.ring)
-        self.page.draw(self.page.data, **star)
+        self.page.draw(self.ring, self.page.data, **star)
 
     def code(self, name, function):
         """"""
@@ -64,14 +63,14 @@ class Window:
         """"""
         self.page = self._view.get(page)
         self.turn_page = page
-        self.draw(make=True, ring=self.ring)
+        self.draw(make=True)
 
     def work(self, task, **star):
         """"""
         star.update(ring=self.ring)
         caller = self.task.get(task)
         caller(**star)
-        self.draw(make=False, ring=self.ring)
+        self.draw(make=False)
 
     def __enter__(self):
         return self

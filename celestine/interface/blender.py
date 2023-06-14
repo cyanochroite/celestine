@@ -20,6 +20,7 @@ from celestine.typed import (
     F,
     N,
     S,
+    R,
     T,
 )
 from celestine.window.element import Abstract as Abstract_
@@ -210,7 +211,7 @@ class Mouse(Abstract):
 class Button(Abstract, Button_):
     """"""
 
-    def draw(self, view: COLLECTION, *, make: B, **star) -> N:
+    def draw(self, ring: R, view: COLLECTION, *, make: B, **star) -> N:
         """"""
         if not make:
             return
@@ -250,7 +251,7 @@ class Image(Abstract, Image_):
         data.image.remove(item)
         cls.default = None
 
-    def draw(self, view: COLLECTION, *, make: B, **star) -> N:
+    def draw(self, ring: R, view: COLLECTION, *, make: B, **star) -> N:
         """"""
         if not make:
             return
@@ -279,7 +280,7 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, view: COLLECTION, *, make: B, **star) -> N:
+    def draw(self, ring: R, view: COLLECTION, *, make: B, **star) -> N:
         """"""
         if not make:
             return

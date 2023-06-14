@@ -25,7 +25,7 @@ class Abstract(abstract):
 class Button(Abstract, button):
     """"""
 
-    def draw(self, view, *, font, **star):
+    def draw(self, ring: R, view, *, font, **star):
         """"""
         text = f"Button{self.data}"
 
@@ -36,7 +36,7 @@ class Button(Abstract, button):
 class Image(Abstract, image):
     """"""
 
-    def draw(self, view, *, ring: R, **star):
+    def draw(self, ring: R, view, **star):
         """"""
         pygame = ring.package.pygame
 
@@ -55,7 +55,7 @@ class Image(Abstract, image):
 class Label(Abstract, label):
     """"""
 
-    def draw(self, view, *, font, **star):
+    def draw(self, ring: R, view, *, font, **star):
         """"""
         item = font.render(self.data, True, (255, 255, 255))
         self.render(view, item, **star)
@@ -68,9 +68,9 @@ class Window(window):
         """"""
         container.data = self.book
 
-    def draw(self, *, ring: R, **star):
+    def draw(self, **star):
         """"""
-        pygame = ring.package.pygame
+        pygame = self.ring.package.pygame
 
         self.book.fill((0, 0, 0))
 

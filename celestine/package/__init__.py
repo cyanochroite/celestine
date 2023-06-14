@@ -70,6 +70,9 @@ class Abstract:
         self.name = name
         self.pypi = pypi or name
 
+        # pygame prints an anoying message on import
+        # so this here to hide any messages a package may print
+        # when being imported
         sys_stdout = sys.stdout
         sys.stdout = open(os.devnull, WRITE_TEXT, encoding=UTF_8)
         try:
