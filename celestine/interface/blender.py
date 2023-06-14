@@ -122,7 +122,7 @@ class celestine_begin(bpy.types.Operator):
         preferences.begin()
         car.ready = True
 
-        main(None)
+        main("make")
 
         return {"FINISHED"}
 
@@ -361,7 +361,11 @@ class Window(Window_):
         self.draw(make=True)
 
     def __enter__(self):
-        if self.call:
+        if self.call is None:
+            print("THIS IS BEST RUN AS A BLENDER ADD-ONS")
+            register()
+            data.begin()
+        elif self.call != "make":
             return self
 
         super().__enter__()
@@ -417,17 +421,20 @@ class Window(Window_):
 
         override = context()
         bpy.ops.view3d.toggle_shading(override, type="RENDERED")
-        bpy.ops.view3d.view_camera(override)
+
+        if self.call == "make":
+            bpy.ops.view3d.view_camera(override)
 
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        if self.call:
+        if self.call is None:
+            pass
+        elif self.call != "make":
             call = getattr(self, self.call)
             call(**self.star)
             return False
 
-        # yes super must go after
         super().__exit__(exc_type, exc_value, traceback)
         return False
 
