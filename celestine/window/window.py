@@ -64,14 +64,14 @@ class Window:
         """"""
         self.page = self._view.get(page)
         self.turn_page = page
-        self.draw(make=True)
+        self.draw(make=True, ring=self.ring)
 
     def work(self, task, **star):
         """"""
         star.update(ring=self.ring)
         caller = self.task.get(task)
         caller(**star)
-        self.draw(make=False)
+        self.draw(make=False, ring=self.ring)
 
     def __enter__(self):
         return self

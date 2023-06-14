@@ -3,6 +3,7 @@
 import os
 import sys
 
+from celestine.typed import A
 from celestine.file.data import (
     UTF_8,
     WRITE_TEXT,
@@ -17,34 +18,26 @@ from . import Abstract
 class Package(Abstract):
     """"""
 
-
-class HiddenPrints:
-    """Pygame will spam the console if we load it directly."""
-
-    def __init__(self):
-        self._original_stdout = sys.stdout
-
-    def __enter__(self):
-        sys.stdout = open(os.devnull, WRITE_TEXT, encoding=UTF_8)
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        sys.stdout.close()
-        sys.stdout = self._original_stdout
+    draw: A
+    display: A
+    image: A
+    display: A
+    font: A
+    event: A
+    quit: A
+    QUIT: A
+    mouse: A
+    MOUSEBUTTONDOWN: A
+    transform: A
 
 
-with HiddenPrints():
+def hide():
+    sys_stdout = sys.stdout
+    sys.stdout = open(os.devnull, WRITE_TEXT, encoding=UTF_8)
+
     PYGAME = __import__("pygame")
 
+    sys.stdout.close()
+    sys.stdout = sys_stdout
 
-draw = PYGAME.draw
-display = PYGAME.display
-image = PYGAME.image
-display = PYGAME.display
-font = PYGAME.font
-event = PYGAME.event
-quit = PYGAME.quit
-QUIT = PYGAME.QUIT
-mouse = PYGAME.mouse
-MOUSEBUTTONDOWN = PYGAME.MOUSEBUTTONDOWN
-
-transform = PYGAME.transform
+    return PYGAME

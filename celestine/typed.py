@@ -19,13 +19,11 @@ from typing import IO  # noqa: F401 pylint: disable=W0611
 from typing import Any as A  # noqa: F401 pylint: disable=W0611
 from typing import Dict as D  # noqa: F401 pylint: disable=W0611
 from typing import List as L  # noqa: F401 pylint: disable=W0611
+from typing import Optional as O
 from typing import Tuple as T  # noqa: F401 pylint: disable=W0611
 from typing import Type as TY  # noqa: F401 pylint: disable=W0611
 from typing import TypeAlias as TA
 from typing import Union as U  # noqa: F401 pylint: disable=W0611
-from typing import Optional as O
-
-
 
 P: TA = pathlib.Path
 N: TA = None
@@ -47,7 +45,7 @@ LS: TA = L[S]
 LZ: TA = L[Z]
 
 
-class Session:
+class Ring:
     """"""
 
     application: MT
@@ -59,4 +57,4 @@ class Session:
     view: MT
 
 
-R = Session # noqa: F401 pylint: disable=W0611
+R = Ring  # noqa: F401 pylint: disable=W0611

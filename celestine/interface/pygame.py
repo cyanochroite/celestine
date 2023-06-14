@@ -1,10 +1,10 @@
 """"""
 
 from celestine import load
-from celestine.package import pygame
 from celestine.typed import (
     L,
     S,
+    R,
 )
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
@@ -36,8 +36,10 @@ class Button(Abstract, button):
 class Image(Abstract, image):
     """"""
 
-    def draw(self, view, **star):
+    def draw(self, view, *, ring: R, **star):
         """"""
+        pygame = ring.package.pygame
+
         path = self.image or load.pathway.asset("null.png")
 
         item = pygame.image.load(path)
@@ -66,8 +68,10 @@ class Window(window):
         """"""
         container.data = self.book
 
-    def draw(self, **star):
+    def draw(self, *, ring: R, **star):
         """"""
+        pygame = ring.package.pygame
+
         self.book.fill((0, 0, 0))
 
         super().draw(font=self.font, **star)
@@ -102,6 +106,8 @@ class Window(window):
         ]
 
     def __enter__(self):
+        pygame = self.ring.package.pygame
+
         def set_caption():
             caption = self.ring.language.APPLICATION_TITLE
             pygame.display.set_caption(caption)
@@ -132,6 +138,9 @@ class Window(window):
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
+
+        pygame = self.ring.package.pygame
+
         while True:
             event = pygame.event.wait()
             match event.type:

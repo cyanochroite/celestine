@@ -9,19 +9,16 @@ from celestine.data.directory import (
 )
 from celestine.package import Package
 from celestine.typed import (
-    MT,
     B,
     L,
+    Ring,
     S,
-    Session,
 )
 
 from .magic import Magic
 
 
-
-
-def begin_session(argument_list: L[S], exit_on_error: B) -> Session:
+def begin_session(argument_list: L[S], exit_on_error: B) -> Ring:
     """"""
 
     magic = Magic(argument_list, exit_on_error)
@@ -41,7 +38,7 @@ def begin_session(argument_list: L[S], exit_on_error: B) -> Session:
 
     # Save values to session object.
     application = magic.core.application.name
-    session = Session()
+    session = Ring()
 
     session.application = load.module(APPLICATION, session1.application)
 

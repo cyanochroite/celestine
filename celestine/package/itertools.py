@@ -6,7 +6,7 @@ from . import Abstract
 class Package(Abstract):
     """"""
 
-    def split_when(iterable, pred, maxsplit=-1):
+    def split_when(self, iterable, pred, maxsplit=-1):
         """Split this when we feel like it."""
         if maxsplit == 0:
             yield list(iterable)
@@ -33,16 +33,13 @@ class Package(Abstract):
 
         yield buf
 
-
-    def filter_true(iterable, predicate=None):
+    def filter_true(self, iterable, predicate=None):
         """Filter when we see a True value."""
         return list(filter(predicate, iterable))
 
-
-    def first_true(iterable, default=None, pred=None):
+    def first_true(self, iterable, default=None, pred=None):
         """Return the first True value."""
         return next(filter(pred, iterable), default)
 
     def __init__(self, ring, /, name, **star):
-        super().__init__(ring, name, pypi="more-itertools")
-
+        super().__init__(ring, name, pypi="more_itertools")

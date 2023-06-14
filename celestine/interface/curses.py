@@ -23,7 +23,6 @@ def get_colors(curses, image):
     global color_index
     global color_table
 
-
     colors = image.getcolors()
     for color in colors:
         (count, pixel) = color
@@ -169,7 +168,6 @@ class Image(Abstract, image):
         """"""
         curses = ring.package.curses
         pillow = ring.package.pillow
-
 
         path = self.image or load.pathway.asset("null.png")
 

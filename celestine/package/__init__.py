@@ -7,12 +7,17 @@ import sys
 from celestine import load
 from celestine.typed import (
     MT,
+    OS,
     A,
     L,
     N,
-    S,
-    OS,
     R,
+    S,
+)
+from celestine.typed import A
+from celestine.file.data import (
+    UTF_8,
+    WRITE_TEXT,
 )
 
 CELESTINE = "celestine"
@@ -66,14 +71,18 @@ class Abstract:
         self.name = name
         self.pypi = pypi or name
 
+        sys_stdout = sys.stdout
+        sys.stdout = open(os.devnull, WRITE_TEXT, encoding=UTF_8)
         try:
             self.package = load.package(self.pypi)
         except ModuleNotFoundError:
             self.package = None
-            found = f"Module {self.name} not found."
+            found = f"Package '{self.name}' not found."
             install = f"Install with 'pip install {self.pypi}'."
             message = f"{found} {install}"
             logging.warning(message)
+        sys.stdout.close()
+        sys.stdout = sys_stdout
 
 
 class Package:
@@ -87,7 +96,7 @@ class Package:
             message = f"'{PACKAGE}' object has no attribute '{name}'"
             raise AttributeError(message) from error
 
-    def __init__(self, ring, /, **star):
+    def __init__(self, ring: R, **star):
         self.dictionary = {}
         argument = load.pathway.argument(PACKAGE)
         for name in argument:

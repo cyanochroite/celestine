@@ -8,18 +8,23 @@ from celestine.file import (
     text_load,
     text_save,
 )
+from celestine.typed import (
+    N,
+    R,
+    S,
+)
 
 PACKAGE = "package"
 
 
-def run(name: str) -> None:
+def run(name: S) -> N:
     """"""
     module = load.module(PACKAGE, name)
     package = module.Linter(name)
     package.run()
 
 
-def clean(*, ring, **star):
+def clean(*, ring: R, **star) -> N:
     """"""
     print("clean begin")
     ring.package.pyupgrade.run()

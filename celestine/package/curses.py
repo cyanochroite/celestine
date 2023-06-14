@@ -55,10 +55,10 @@ class Package(Abstract):
 
         if name in one:
             return getattr(self.package, name)
-            #return getattr(_curses, name)
+            # return getattr(_curses, name)
         if name in two:
             return getattr(self.package, name)
-            #return getattr(curses, name)
+            # return getattr(curses, name)
 
         match name:
             case "KEY_EXIT":
