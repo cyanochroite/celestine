@@ -1,5 +1,6 @@
 """Python Imaging Library (Fork)."""
 
+
 from celestine import load
 from celestine.typed import (
     L,
@@ -47,6 +48,10 @@ class Image:
         hold = self.image.convert(mode, matrix, dither, palette, colors)
         self.image = hold
 
+    def convert_to_alpha(self):
+        """"""
+        self.convert("RGBA")
+
     def convert_to_color(self):
         """"""
         self.convert("RGB")
@@ -59,9 +64,11 @@ class Image:
     def getdata(self):
         return self.image.getdata()
 
-    def resize(self, size_x, size_y, box=None):
+    def resize(self, size, box=None):
         """"""
         pillow = self.ring.package.pillow
+
+        size_x, size_y = size
 
         size_x = max(1, round(size_x))
         size_y = max(1, round(size_y))
@@ -82,15 +89,16 @@ class Image:
         """"""
         pillow = self.ring.package.pillow
 
+        # Median Cut only works in RGB mode.
+        self.convert_to_color()
+
         colors = COLORS
         method = pillow.Image.Quantize.MEDIANCUT
         kmeans = 0
         palette = None
         dither = pillow.Image.Dither.FLOYDSTEINBERG
 
-        self.image = self.image.quantize(
-            colors, method, kmeans, palette, dither
-        )
+        self.image = self.image.quantize(colors, method, kmeans, palette, dither)
 
     def __init__(self, ring, /, image, **star):
         self.ring = ring
@@ -115,7 +123,7 @@ class Package(Abstract):
         image = pillow.Image.open(path, mode, formats)
 
         # Highest mode for median cut.
-        mode = "RGB"
+        mode = "RGBA"
         matrix = None
         dither = pillow.Image.Dither.NONE
         palette = pillow.Image.Palette.ADAPTIVE

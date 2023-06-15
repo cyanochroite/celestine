@@ -64,7 +64,7 @@ class Container(Rectangle):
         )
 
     def image(self, tag, image):
-        """"""
+        """A thumbnail image of a big picture."""
         self.save(
             self._image(
                 tag,
@@ -78,6 +78,15 @@ class Container(Rectangle):
             self._label(
                 tag,
                 text,
+            )
+        )
+
+    def photo(self, tag, photo):
+        """A higher quality full resolution picture."""
+        self.save(
+            self._photo(
+                tag,
+                photo,
             )
         )
 
@@ -98,9 +107,7 @@ class Container(Rectangle):
 
     def view(self, tag, text, action):
         """"""
-        item = self._button(
-            tag, text, call=self.turn, action=action, argument={}
-        )
+        item = self._button(tag, text, call=self.turn, action=action, argument={})
         return self.save(item)
 
     def __enter__(self):
@@ -128,6 +135,7 @@ class Container(Rectangle):
         self._button = element["button"]
         self._image = element["image"]
         self._label = element["label"]
+        self._photo = element["photo"]
 
         self.turn = window.turn
         super().__init__(**star)

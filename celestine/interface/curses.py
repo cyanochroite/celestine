@@ -6,10 +6,12 @@ from celestine import load
 from celestine.typed import R
 from celestine.unicode import LINE_FEED
 from celestine.unicode.notational_systems import BRAILLE_PATTERNS
-from celestine.window.element import Abstract as abstract
-from celestine.window.element import Button as button
-from celestine.window.element import Image as image
-from celestine.window.element import Label as label
+from celestine.window.element import Abstract as Abstract_
+from celestine.window.element import Button as Button_
+from celestine.window.element import Image as Image_
+from celestine.window.element import Label as Label_
+from celestine.window.element import Photo as Photo_
+from celestine.window.element import Picture as Picture_
 from celestine.window.window import Window as window
 
 color_index = 8  # skip the 8 reserved colors
@@ -47,7 +49,7 @@ def get_colors(curses, image):
         color_index += 1
 
 
-class Abstract(abstract):
+class Abstract(Abstract_):
     """"""
 
     def add_string(self, frame, x_dot, y_dot, text, *extra):
@@ -71,7 +73,7 @@ class Abstract(abstract):
         self.add_string(view, x_dot, y_dot, text)
 
 
-class Button(Abstract, button):
+class Button(Abstract, Button_):
     """"""
 
     def draw(self, ring: R, view, **star):
@@ -80,7 +82,7 @@ class Button(Abstract, button):
         self.render(view, item, **star)
 
 
-class Image(Abstract, image):
+class Picture(Abstract, Picture_):
     """"""
 
     def output(self):
@@ -211,13 +213,21 @@ class Image(Abstract, image):
         self.render(ring, view, item, **star)
 
 
-class Label(Abstract, label):
+class Image(Picture, Image_):
+    """"""
+
+
+class Label(Abstract, Label_):
     """"""
 
     def draw(self, ring: R, view, **star):
         """"""
         item = f"label:{self.data}"
         self.render(view, item, **star)
+
+
+class Photo(Picture, Photo_):
+    """"""
 
 
 class Window(window):
@@ -275,6 +285,12 @@ class Window(window):
         curses.cbreak()
         self.stdscr.keypad(1)
         curses.start_color()
+
+        (size_y, size_x) = self.stdscr.getmaxyx()
+        if not self.width:
+            self.width = size_x
+        if not self.height:
+            self.height = size_y
 
         self.background = curses.window(0, 0, self.width, self.height)
         self.background.box()
@@ -337,7 +353,7 @@ def window(ring, **star):
         "button": Button,
         "image": Image,
         "label": Label,
+        "photo": Photo,
     }
-    size = (80, 24)
-    # size = (122, 35)
+    size = (0, 0)  # Auto size.
     return Window(ring, element, size, **star)

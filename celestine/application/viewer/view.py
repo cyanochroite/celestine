@@ -9,6 +9,6 @@ from celestine.window.container import Container as View
 def main(ring: Session, view: View) -> N:
     """"""
     view.call("load", "Load image.", "setup", window=view)
-    with view.grid("grid", 4, 4) as grid:
+    with view.grid("grid", 4, 2) as grid:
         for key, value in grid:
-            grid.image(key, value)
+            grid.photo(key, value)

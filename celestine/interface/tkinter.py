@@ -6,6 +6,7 @@ from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
+from celestine.window.element import Photo as Photo_
 from celestine.window.window import Window as Window_
 
 
@@ -99,6 +100,41 @@ class Label(Abstract, Label_):
         self.render(view, item, ring=ring, **star)
 
 
+class Photo(Abstract, Photo_):
+    """"""
+
+    def draw(self, ring: R, view, *, make, **star):
+        """"""
+        tkinter = ring.package.tkinter
+
+        file = self.image or load.pathway.asset("null.png")
+
+        if not make:
+            return
+
+        item = tkinter.Label
+        self.cache = tkinter.PhotoImage(file=file)
+        star.update(image=self.cache)
+        self.render(view, item, ring=ring, **star)
+
+    def update(self, ring: R, image, **star):
+        """"""
+        tkinter = ring.package.tkinter
+
+        if not super().update(ring, image, **star):
+            return False
+
+        pillow = ring.package.pillow
+        if pillow:
+            self.cache = pillow.ImageTk.PhotoImage(file=self.image)
+        else:
+            self.cache = tkinter.PhotoImage(file=self.image)
+
+        self.item.configure(image=self.cache)
+        self.item.image = self.cache
+        return True
+
+
 class Window(Window_):
     """"""
 
@@ -162,6 +198,7 @@ def window(ring, **star):
         "button": Button,
         "image": Image,
         "label": Label,
+        "photo": Photo,
     }
     size = (1280, 1080)
     return Window(ring, element, size, **star)

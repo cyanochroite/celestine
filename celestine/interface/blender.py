@@ -27,6 +27,7 @@ from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
+from celestine.window.element import Photo as Photo_
 from celestine.window.window import Window as Window_
 
 COLLECTION = _collection
@@ -289,6 +290,51 @@ class Label(Abstract, Label_):
         self.render()
 
 
+class Photo(Abstract, Photo_):
+    """"""
+
+    default: data.image
+
+    @classmethod
+    def begin(cls):
+        """"""
+        name = "null.png"
+        path = load.pathway.asset(name)
+        cls.default = data.image.load(path)
+
+    @classmethod
+    def finish(cls):
+        """"""
+        item = cls.default
+        data.image.remove(item)
+        cls.default = None
+
+    def draw(self, ring: R, view: COLLECTION, *, make: B, **star) -> N:
+        """"""
+        if not make:
+            return
+
+        path = self.image or load.pathway.asset("null.png")
+        image = data.image.load(path)
+        material = UV.image(self.tag, image)
+        plane = basic.image(view, self.tag, image.size)
+
+        plane.body.data.materials.append(material)
+        self.item = plane
+        self.render()
+
+    def update(self, ring: R, image: S, **star) -> B:
+        """"""
+        if not super().update(ring, image, **star):
+            return False
+
+        material = bpy.data.materials[self.tag]
+        node = material.node_tree.nodes["Image Texture"]
+        node.image = data.image.load(image)
+
+        return True
+
+
 class Window(Window_):
     """"""
 
@@ -453,6 +499,7 @@ def window(this, **star):
         "button": Button,
         "image": Image,
         "label": Label,
+        "photo": Photo,
     }
     size = (20, 20)
     return Window(this, element, size, **star)
