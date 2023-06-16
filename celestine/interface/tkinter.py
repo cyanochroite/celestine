@@ -16,11 +16,10 @@ class Abstract(Abstract_):
         """"""
         self.item = item(view, **star)
 
-        width = self.x_max - self.x_min
-        height = self.y_max - self.y_min
+        width, height = self.size
         self.item.place(
-            x=self.x_min,
-            y=self.y_min,
+            x=self.axis_x.minimum,
+            y=self.axis_y.minimum,
             width=width,
             height=height,
         )

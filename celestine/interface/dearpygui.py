@@ -34,7 +34,7 @@ class Button(Abstract, button):
             callback=self.callback,
             label=self.data,
             tag=self.tag,
-            pos=(self.x_min, self.y_min),
+            pos=(self.axis_x.minimum, self.axis_y.minimum),
         )
 
 
@@ -90,7 +90,7 @@ class Image(Abstract, image):
         dearpygui.add_image(
             name,
             tag=self.tag,
-            pos=(self.x_min, self.y_min),
+            pos=(self.axis_x.minimum, self.axis_y.minimum),
         )
 
     def update(self, ring: R, image, **star):
@@ -113,7 +113,7 @@ class Label(Abstract, label):
         dearpygui.add_text(
             f" {self.data}",  # extra space hack to fix margin error
             tag=self.tag,
-            pos=(self.x_min, self.y_min),
+            pos=(self.axis_x.minimum, self.axis_y.minimum),
         )
 
 

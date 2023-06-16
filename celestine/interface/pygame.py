@@ -18,7 +18,7 @@ class Abstract(Abstract_):
 
     def render(self, collection, item, **star):
         """"""
-        position = (self.x_min, self.y_min)
+        position = (self.axis_x.minimum, self.axis_y.minimum)
         collection.blit(item, position)
 
 

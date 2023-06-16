@@ -10,8 +10,6 @@ from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
-from celestine.window.element import Photo as Photo_
-from celestine.window.element import Picture as Picture_
 from celestine.window.window import Window as window
 
 color_index = 8  # skip the 8 reserved colors
@@ -62,9 +60,7 @@ class Abstract(Abstract_):
 
     def origin(self):
         """"""
-        x_dot = int(self.x_min)
-        y_dot = int(self.y_min)
-        return (x_dot, y_dot)
+        return (self.axis_x.minimum, self.axis_y.minimum)
 
     def render(self, view, item, **star):
         """"""
@@ -82,7 +78,7 @@ class Button(Abstract, Button_):
         self.render(view, item, **star)
 
 
-class Picture(Abstract, Picture_):
+class Image(Abstract, Image_):
     """"""
 
     def output(self):
@@ -185,8 +181,7 @@ class Picture(Abstract, Picture_):
         source_length_x = self.cache.image.width
         source_length_y = self.cache.image.height
 
-        length_x = self.x_max - self.x_min
-        length_y = self.y_max - self.y_min
+        length_x, length_y = self.size
 
         target_length_x = length_x * 2
         target_length_y = length_y * 4
@@ -213,10 +208,6 @@ class Picture(Abstract, Picture_):
         self.render(ring, view, item, **star)
 
 
-class Image(Picture, Image_):
-    """"""
-
-
 class Label(Abstract, Label_):
     """"""
 
@@ -224,10 +215,6 @@ class Label(Abstract, Label_):
         """"""
         item = f"label:{self.data}"
         self.render(view, item, **star)
-
-
-class Photo(Picture, Photo_):
-    """"""
 
 
 class Window(window):
@@ -353,7 +340,6 @@ def window(ring, **star):
         "button": Button,
         "image": Image,
         "label": Label,
-        "photo": Photo,
     }
     size = (0, 0)  # Auto size.
     return Window(ring, element, size, **star)

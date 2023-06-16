@@ -18,6 +18,7 @@ class Object:
     """"""
 
     def __init__(self, **star) -> N:
+        """Make sure object does not get the star parameter."""
         super().__init__()
 
 
@@ -54,6 +55,10 @@ class Axis(Object):
             indexer %= partition
             yield (minimum, maximum)
 
+    def inside(self, midterm: Z) -> B:
+        """"""
+        return self.minimum <= midterm < self.maximum
+
     def set(self, minimum: Z, maximum: Z) -> N:
         """"""
         if minimum < 0:
@@ -71,10 +76,10 @@ class Axis(Object):
         """"""
         return self.maximum - self.minimum
 
-    def __init__(self, **star) -> N:
+    def __init__(self, minimum: Z, maximum: Z, **star) -> N:
         super().__init__(**star)
-        self.minimum = 0
-        self.maximum = 0
+        self.minimum = minimum
+        self.maximum = maximum
 
 
 class Box(Object):
@@ -82,10 +87,6 @@ class Box(Object):
 
     axis_x: Axis
     axis_y: Axis
-    x_min: Z
-    y_min: Z
-    x_max: Z
-    y_max: Z
 
     def get(self, partition_x: Z, partition_y: Z) -> T[AXIS, AXIS]:
         """"""
@@ -93,16 +94,19 @@ class Box(Object):
         axis_y = self.axis_y.get(partition_y)
         return (axis_x, axis_y)
 
+    def inside(self, x_dot: Z, y_dot: Z) -> B:
+        """"""
+        return self.axis_x.inside(x_dot) and self.axis_y.inside(y_dot)
+
     def set(self, x_min: Z, y_min: Z, x_max: Z, y_max: Z) -> N:
         """"""
         self.axis_x.set(x_min, x_max)
         self.axis_y.set(y_min, y_max)
 
-    def inside(self, x_dot: Z, y_dot: Z) -> B:
+    @property
+    def size(self) -> T[Z, Z]:
         """"""
-        x_test = self.x_min <= x_dot < self.x_max
-        y_test = self.y_min <= y_dot < self.y_max
-        return x_test and y_test
+        return (self.axis_x.size, self.axis_y.size)
 
     def __init__(
         self,
@@ -113,12 +117,8 @@ class Box(Object):
         **star,
     ) -> N:
         super().__init__(**star)
-        self.axis_x = Axis()
-        self.axis_y = Axis()
-        self.x_min = x_min
-        self.y_min = y_min
-        self.x_max = x_max
-        self.y_max = y_max
+        self.axis_x = Axis(x_min, x_max)
+        self.axis_y = Axis(y_min, y_max)
 
 
 class Collection(Object):
@@ -223,15 +223,15 @@ class Rectangle(Box, Collection):
         if "col" in star:
             offset_y = 50
 
-        self.begin_x_min = self.x_min
-        self.begin_y_min = self.y_min
-        self.begin_x_max = self.x_max
-        self.begin_y_max = self.y_max
+        self.begin_x_min = self.axis_x.minimum
+        self.begin_y_min = self.axis_y.minimum
+        self.begin_x_max = self.axis_x.maximum
+        self.begin_y_max = self.axis_y.maximum
 
-        self.move_x_min = self.x_min
-        self.move_y_min = self.y_min
-        self.move_x_max = self.x_max
-        self.move_y_max = self.y_max
+        self.move_x_min = self.axis_x.minimum
+        self.move_y_min = self.axis_y.minimum
+        self.move_x_max = self.axis_x.maximum
+        self.move_y_max = self.axis_y.maximum
 
         self.offset_x = offset_x
         self.offset_y = offset_y

@@ -27,10 +27,7 @@ class Abstract(Item, Box):
 
     def spot(self, x_min, y_min, x_max, y_max):
         """"""
-        self.x_min = x_min
-        self.y_min = y_min
-        self.x_max = x_max
-        self.y_max = y_max
+        self.set(x_min, y_min, x_max, y_max)
 
     def __init__(self, name, **star):
         self.item = None
@@ -109,8 +106,7 @@ class Image(Abstract):
         """"""
         x_length, y_length = size
 
-        x_size = self.x_max - self.x_min
-        y_size = self.y_max - self.y_min
+        (x_size, y_size) = self.size
 
         new_x = y_size * x_length / y_length
         new_y = x_size * y_length / x_length
@@ -129,12 +125,6 @@ class Image(Abstract):
     def path(self):
         """"""
         return self.image or load.pathway.asset("null.png")
-
-    def size(self):
-        x_size = self.x_max - self.x_min
-        y_size = self.y_max - self.y_min
-        print(x_size, y_size, "MOO")
-        return (x_size, y_size)
 
     def update(self, ring: R, image, **star):
         """"""
@@ -176,9 +166,8 @@ class Image(Abstract):
     """
 
     def resize_(self, size):
-        x_size = self.x_max - self.x_min
-        y_size = self.y_max - self.y_min
-
+        # TODO this is old
+        x_size, y_size = self.size
         return (math.floor(x_size), math.floor(y_size))
 
     def crop(_self, source_length: PAIR, target_length: PAIR) -> BOX:
