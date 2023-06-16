@@ -34,7 +34,8 @@ def main(argument_list: L[S], exit_on_error: B, **star) -> N:
     """Run the main program."""
 
     session = begin_session(argument_list, exit_on_error)
-    window = session.interface.window(session, **star)
+
+    window = session.interface.Window(session, **star)
     session.window = window
 
     with window:

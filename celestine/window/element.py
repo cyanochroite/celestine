@@ -11,8 +11,8 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Area,
-    Item,
     Axis,
+    Item,
 )
 
 BOX: TA = T[Z, Z, Z, Z]

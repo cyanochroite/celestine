@@ -3,9 +3,16 @@
 import io
 
 from celestine import load
-from celestine.typed import R
+from celestine.typed import (
+    N,
+    R,
+)
 from celestine.unicode import LINE_FEED
 from celestine.unicode.notational_systems import BRAILLE_PATTERNS
+from celestine.window.collection import (
+    Area,
+    Axis,
+)
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -60,7 +67,7 @@ class Abstract(Abstract_):
 
     def origin(self):
         """"""
-        return (self.axis_x.minimum, self.axis_y.minimum)
+        return (self.area.axis_x.minimum, self.area.axis_y.minimum)
 
     def render(self, view, item, **star):
         """"""
@@ -224,7 +231,9 @@ class Window(window):
         """"""
         curses = self.ring.package.curses
 
-        data_box = (1, 1, self.width - 2, self.height - 2)
+        width = self.container.area.axis_x.size
+        height = self.container.area.axis_y.size
+        data_box = (1, 1, width - 2, height - 2)
         container.data = curses.window(*data_box)
 
     def draw(self, **star):
@@ -259,7 +268,11 @@ class Window(window):
         container = self.container.drop(name)
         self.data(container)
         function(self.ring, container)
-        container.spot(1, 1, self.width - 1, self.height - 1)
+
+        width = self.container.area.axis_x.size
+        height = self.container.area.axis_y.size
+        area = Area(Axis(1, width - 1), Axis(1, height - 1))
+        container.spot(area)
         self._view.set(name, container)
 
     def __enter__(self):
@@ -274,19 +287,16 @@ class Window(window):
         curses.start_color()
 
         (size_y, size_x) = self.stdscr.getmaxyx()
-        if not self.width:
-            self.width = size_x
-        if not self.height:
-            self.height = size_y
+        self.container.area = Area(Axis(0, size_x), Axis(0, size_y))
 
-        self.background = curses.window(0, 0, self.width, self.height)
+        self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
 
-        header_box = (1, 0, self.width - 2, 1)
+        header_box = (1, 0, size_x - 2, 1)
         header = curses.subwindow(self.background, *header_box)
         header.addstr(self.ring.language.APPLICATION_TITLE)
 
-        footer_box = (1, self.height - 1, self.width - 2, 1)
+        footer_box = (1, size_y - 1, size_x - 2, 1)
         footer = curses.subwindow(self.background, *footer_box)
         footer.addstr(self.ring.language.CURSES_EXIT)
 
@@ -311,8 +321,8 @@ class Window(window):
                         case curses.KEY_RIGHT:
                             self.cord_x += 1
 
-                    self.cord_x %= self.width
-                    self.cord_y %= self.height
+                    self.cord_x %= self.container.area.axis_x.size
+                    self.cord_y %= self.container.area.axis_y.size
                     self.stdscr.move(self.cord_y, self.cord_x)
                 case curses.KEY_EXIT:
                     break
@@ -325,21 +335,16 @@ class Window(window):
         curses.endwin()
         return False
 
-    def __init__(self, ring, element, size, **star):
-        super().__init__(ring, element, size, **star)
+    def __init__(self, ring: R, **star) -> N:
+        element = {
+            "button": Button,
+            "image": Image,
+            "label": Label,
+        }
+        area = Area(Axis(0, 0), Axis(0, 0))
+        super().__init__(ring, element, area, **star)
         self.background = None
         self.cord_x = 0
         self.cord_y = 0
         self.frame = None
         self.stdscr = None
-
-
-def window(ring, **star):
-    """"""
-    element = {
-        "button": Button,
-        "image": Image,
-        "label": Label,
-    }
-    size = (0, 0)  # Auto size.
-    return Window(ring, element, size, **star)

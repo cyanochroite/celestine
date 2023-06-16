@@ -22,7 +22,7 @@ class Object:
         super().__init__()
 
 
-class Axis(Object):
+class Axis:
     """"""
 
     minimum: Z
@@ -66,13 +66,12 @@ class Axis(Object):
         """"""
         return self.maximum - self.minimum
 
-    def __init__(self, minimum: Z, maximum: Z, **star) -> N:
-        super().__init__(**star)
+    def __init__(self, minimum: Z, maximum: Z) -> N:
         self.minimum = minimum
         self.maximum = maximum
 
 
-class Area(Object):
+class Area:
     """"""
 
     axis_x: Axis
@@ -98,9 +97,8 @@ class Area(Object):
         """"""
         return (self.axis_x.size, self.axis_y.size)
 
-    def __init__(self, axis_x: Axis, axis_y: Axis, **star) -> N:
+    def __init__(self, axis_x: Axis, axis_y: Axis) -> N:
         """"""
-        super().__init__(**star)
         self.axis_x = Axis(axis_x.minimum, axis_x.maximum)
         self.axis_y = Axis(axis_y.minimum, axis_y.maximum)
 
@@ -112,7 +110,7 @@ class Item(Object):
 
     def __init__(self, name: S, area: Area, **star) -> N:
         super().__init__(**star)
-        self.area = area
+        self.area = Area(area.axis_x, area.axis_y)
         self.name = name
 
 

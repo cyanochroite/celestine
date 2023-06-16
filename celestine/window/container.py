@@ -2,8 +2,16 @@
 
 import math
 
-from celestine.typed import S, N
-from celestine.window.collection import Item, Area, Collection, Axis
+from celestine.typed import (
+    N,
+    S,
+)
+from celestine.window.collection import (
+    Area,
+    Axis,
+    Collection,
+    Item,
+)
 
 
 class Container(Item, Collection):
@@ -101,7 +109,9 @@ class Container(Item, Collection):
 
     def view(self, name, text, action):
         """"""
-        item = self._button(name, text, call=self.turn, action=action, argument={})
+        item = self._button(
+            name, text, call=self.turn, action=action, argument={}
+        )
         return self.save(item)
 
     def __enter__(self):
@@ -202,8 +212,8 @@ class Drop(Container):
             (xmin, xmax) = next(axis_x)
             (ymin, ymax) = next(axis_y)
 
-            new_area = Area(Axis(xmin, xmax), Axis(ymin, ymax))
-            item.spot(new_area)
+            area = Area(Axis(xmin, xmax), Axis(ymin, ymax))
+            item.spot(area)
 
         axis_x.close()
         axis_y.close()
@@ -224,8 +234,8 @@ class Span(Container):
             (xmin, xmax) = next(axis_x)
             (ymin, ymax) = next(axis_y)
 
-            new_area = Area(Axis(xmin, xmax), Axis(ymin, ymax))
-            item.spot(new_area)
+            area = Area(Axis(xmin, xmax), Axis(ymin, ymax))
+            item.spot(area)
 
         axis_x.close()
         axis_y.close()

@@ -23,6 +23,10 @@ from celestine.typed import (
     S,
     T,
 )
+from celestine.window.collection import (
+    Area,
+    Axis,
+)
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -178,8 +182,11 @@ class Abstract(Abstract_):
 
     def center_float(self) -> T[F, F]:
         """"""
-        x_dot = (self.axis_x.minimum + self.axis_x.maximum) / 2
-        y_dot = (self.axis_y.minimum + self.axis_y.maximum) / 2
+        x_dot = self.area.axis_x.minimum + self.area.axis_x.maximum
+        y_dot = self.area.axis_y.minimum + self.area.axis_y.maximum
+
+        x_dot /= 2
+        y_dot /= 2
         return (x_dot, y_dot)
 
     def render(self) -> N:
@@ -258,8 +265,8 @@ class Image(Abstract, Image_):
 
         path = self.image or load.pathway.asset("null.png")
         image = data.image.load(path)
-        material = UV.image(self.tag, image)
-        plane = basic.image(view, self.tag, image.size)
+        material = UV.image(self.name, image)
+        plane = basic.image(view, self.name, image.size)
 
         plane.body.data.materials.append(material)
         self.item = plane
@@ -270,7 +277,7 @@ class Image(Abstract, Image_):
         if not super().update(ring, image, **star):
             return False
 
-        material = bpy.data.materials[self.tag]
+        material = bpy.data.materials[self.name]
         node = material.node_tree.nodes["Image Texture"]
         node.image = data.image.load(image)
 
@@ -294,7 +301,7 @@ class Window(Window_):
 
     def data(self, container):
         """"""
-        collection = data.collection.make(container.tag)
+        collection = data.collection.make(container.name)
         collection.hide()
         container.data = collection
 
@@ -330,7 +337,9 @@ class Window(Window_):
         """"""
         page = self.container.drop(name)
         document(page)
-        page.spot(0, 0, self.width, self.height)
+        width = self.container.area.axis_x.size
+        height = self.container.area.axis_y.size
+        page.spot(0, 0, width, height)
 
         self.item_set(name, page)
 
@@ -438,21 +447,17 @@ class Window(Window_):
         super().__exit__(exc_type, exc_value, traceback)
         return False
 
-    def __init__(self, this, element, size, *, call=None, **star):
-        super().__init__(this, element, size, **star)
+    def __init__(self, ring: R, *, call=None, **star) -> N:
+        element = {
+            "button": Button,
+            "image": Image,
+            "label": Label,
+        }
+        area = Area(Axis(0, 20), Axis(0, 20))
+        super().__init__(ring, element, area, **star)
+
         self.frame = None
         self.mouse = None
 
         self.call = call
         self.star = star
-
-
-def window(this, **star):
-    """"""
-    element = {
-        "button": Button,
-        "image": Image,
-        "label": Label,
-    }
-    size = (20, 20)
-    return Window(this, element, size, **star)

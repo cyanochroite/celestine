@@ -1,6 +1,5 @@
 """Run a bunch of auto formaters."""
 
-import logging
 import os
 import sys
 
@@ -79,10 +78,10 @@ class Abstract:
             self.package = load.package(self.pypi)
         except ModuleNotFoundError:
             self.package = None
-            found = f"Package '{self.name}' not found."
-            install = f"Install with 'pip install {self.pypi}'."
-            message = f"{found} {install}"
-            logging.warning(message)
+            # found = f"Package '{self.name}' not found."
+            # install = f"Install with 'pip install {self.pypi}'."
+            # message = f"{found} {install}"
+            # logging.warning(message)
         sys.stdout.close()
         sys.stdout = sys_stdout
 

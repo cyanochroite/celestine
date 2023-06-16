@@ -1,8 +1,14 @@
 """"""
 
 from celestine import load
-from celestine.package import dearpygui
-from celestine.typed import R
+from celestine.typed import (
+    N,
+    R,
+)
+from celestine.window.collection import (
+    Area,
+    Axis,
+)
 from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
 from celestine.window.element import Image as image
@@ -25,16 +31,18 @@ class Button(Abstract, button):
         """
         self.call(self.action, **self.argument)
 
-    def draw(self, _, *, make, **star):
+    def draw(self, ring, _, *, make, **star):
         """"""
         if not make:
             return
 
+        dearpygui = ring.package.dearpygui
+
         dearpygui.add_button(
             callback=self.callback,
             label=self.data,
-            tag=self.tag,
-            pos=(self.axis_x.minimum, self.axis_y.minimum),
+            tag=self.name,
+            pos=(self.area.axis_x.minimum, self.area.axis_y.minimum),
         )
 
 
@@ -71,7 +79,7 @@ class Image(Abstract, image):
 
         return name
 
-    def draw(self, _, *, make, **star):
+    def draw(self, ring, _, *, make, **star):
         """
         Draw the image to screen.
 
@@ -85,18 +93,22 @@ class Image(Abstract, image):
         if not make:
             return
 
+        dearpygui = ring.package.dearpygui
+
         name = self.add()
 
         dearpygui.add_image(
             name,
-            tag=self.tag,
-            pos=(self.axis_x.minimum, self.axis_y.minimum),
+            tag=self.name,
+            pos=(self.area.axis_x.minimum, self.area.axis_y.minimum),
         )
 
     def update(self, ring: R, image, **star):
         """"""
         if not super().update(ring, image, **star):
             return False
+
+        dearpygui = ring.package.dearpygui
 
         dearpygui.set_value(self.tag, self.image)
         return True
@@ -105,15 +117,17 @@ class Image(Abstract, image):
 class Label(Abstract, label):
     """"""
 
-    def draw(self, _, *, make, **star):
+    def draw(self, ring, _, *, make, **star):
         """"""
         if not make:
             return
 
+        dearpygui = ring.package.dearpygui
+
         dearpygui.add_text(
             f" {self.data}",  # extra space hack to fix margin error
-            tag=self.tag,
-            pos=(self.axis_x.minimum, self.axis_y.minimum),
+            tag=self.name,
+            pos=(self.area.axis_x.minimum, self.area.axis_y.minimum),
         )
 
 
@@ -137,30 +151,38 @@ class Window(window):
         ]
 
     def view(self, name, document):
+        dearpygui = self.ring.package.dearpygui
+
         value = self.container.drop(name)
-        value.data = dearpygui.window(tag=value.tag)
+        value.data = dearpygui.window(tag=value.name)
         self._view.set(name, value)
         with value.data:
-            dearpygui.configure_item(value.tag, show=False)
+            dearpygui.configure_item(value.name, show=False)
             document(self.ring, value)
-            value.spot(0, 0, 1920, 1080)
-            value.draw(None, make=True)
+            area = Area(Axis(0, 1920), Axis(0, 1080))
+            value.spot(area)
+            value.draw(self.ring, None, make=True)
 
     def draw(self, **star):
         """"""
 
     def turn(self, page, **star):
+        dearpygui = self.ring.package.dearpygui
+
         if self.page:
-            dearpygui.hide_item(self.page.tag)
+            dearpygui.hide_item(self.page.name)
 
         super().turn(page, **star)
 
-        tag = self.page.tag
+        tag = self.page.name
         dearpygui.show_item(tag)
         dearpygui.set_primary_window(tag, True)
 
     def __enter__(self):
         super().__enter__()
+
+        dearpygui = self.ring.package.dearpygui
+
         title = self.ring.language.APPLICATION_TITLE
         dearpygui.create_context()
         dearpygui.create_viewport(
@@ -185,6 +207,8 @@ class Window(window):
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
+        dearpygui = self.ring.package.dearpygui
+
         dearpygui.setup_dearpygui()
         dearpygui.show_viewport(minimized=False, maximized=False)
         dearpygui.start_dearpygui()
@@ -192,18 +216,12 @@ class Window(window):
         self.container = None
         return False
 
-    def __init__(self, ring, element, size, **star):
-        super().__init__(ring, element, size, **star)
+    def __init__(self, ring: R, **star) -> N:
+        element = {
+            "button": Button,
+            "image": Image,
+            "label": Label,
+        }
+        area = Area(Axis(0, 1280), Axis(0, 1080))
+        super().__init__(ring, element, area, **star)
         self.tag = "window"
-
-
-def window(ring, **star):
-    """"""
-    element = {
-        "button": Button,
-        "image": Image,
-        "label": Label,
-        "photo": Photo,
-    }
-    size = (1280, 1080)
-    return Window(ring, element, size, **star)

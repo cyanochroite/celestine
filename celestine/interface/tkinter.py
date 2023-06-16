@@ -1,7 +1,14 @@
 """"""
 
 from celestine import load
-from celestine.typed import R
+from celestine.typed import (
+    N,
+    R,
+)
+from celestine.window.collection import (
+    Area,
+    Axis,
+)
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -16,10 +23,10 @@ class Abstract(Abstract_):
         """"""
         self.item = item(view, **star)
 
-        width, height = self.size
+        width, height = self.area.size
         self.item.place(
-            x=self.axis_x.minimum,
-            y=self.axis_y.minimum,
+            x=self.area.axis_x.minimum,
+            y=self.area.axis_y.minimum,
             width=width,
             height=height,
         )
@@ -150,17 +157,12 @@ class Window(Window_):
         self.root.mainloop()
         return False
 
-    def __init__(self, ring, element, size, **star):
-        super().__init__(ring, element, size, **star)
+    def __init__(self, ring: R, **star) -> N:
+        element = {
+            "button": Button,
+            "image": Image,
+            "label": Label,
+        }
+        area = Area(Axis(0, 1280), Axis(0, 1080))
+        super().__init__(ring, element, area, **star)
         self.root = None
-
-
-def window(ring, **star):
-    """"""
-    element = {
-        "button": Button,
-        "image": Image,
-        "label": Label,
-    }
-    size = (1280, 1080)
-    return Window(ring, element, size, **star)

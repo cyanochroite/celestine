@@ -3,11 +3,14 @@
 from celestine import load
 from celestine.typed import (
     L,
+    N,
     R,
     S,
 )
-
-from celestine.window.collection import Area, Axis
+from celestine.window.collection import (
+    Area,
+    Axis,
+)
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -141,7 +144,8 @@ class Window(Window_):
             pygame.display.set_icon(icon)
 
         def set_mode():
-            self.book = pygame.display.set_mode(self.area.size)
+            size = self.container.area.size
+            self.book = pygame.display.set_mode(size)
 
         super().__enter__()
         set_mode()
@@ -169,18 +173,13 @@ class Window(Window_):
         pygame.quit()
         return False
 
-    def __init__(self, ring, element, area, **star):
+    def __init__(self, ring: R, **star) -> N:
+        element = {
+            "button": Button,
+            "image": Image,
+            "label": Label,
+        }
+        area = Area(Axis(0, 1280), Axis(0, 960))
         super().__init__(ring, element, area, **star)
         self.book = None
         self.font = None
-
-
-def window(ring, **star):
-    """"""
-    element = {
-        "button": Button,
-        "image": Image,
-        "label": Label,
-    }
-    area = Area(Axis(0, 1280), Axis(0, 960))
-    return Window(ring, element, area, **star)
