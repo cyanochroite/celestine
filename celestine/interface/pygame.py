@@ -56,7 +56,7 @@ class Image(Abstract, Image_):
         pygame = ring.package.pygame
 
         path = self.path()
-        size = self.size()
+        size = self.area.size
 
         if mode == "one":
             pass

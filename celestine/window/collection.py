@@ -108,6 +108,18 @@ class Item(Object):
 
     name: S
 
+    def draw(self, ring, view, **star):
+        """"""
+        raise NotImplementedError(ring, view)
+
+    def poke(self, x_dot: Z, y_dot: Z, **star) -> B:
+        """"""
+        return self.area.inside(x_dot, y_dot)
+
+    def spot(self, area: Area):
+        """"""
+        raise NotImplementedError(area)
+
     def __init__(self, name: S, area: Area, **star) -> N:
         super().__init__(**star)
         self.area = Area(area.axis_x, area.axis_y)
@@ -140,7 +152,7 @@ class Collection(Object):
         self.item = {}
         super().__init__(**star)
 
-    def __iter__(self) -> GE[T[S, Item], N, N]:
+    def __iter__(self) -> GE[S, N, N]:
         """"""
         yield from self.item.items()
 

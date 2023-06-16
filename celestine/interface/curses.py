@@ -188,7 +188,7 @@ class Image(Abstract, Image_):
         source_length_x = self.cache.image.width
         source_length_y = self.cache.image.height
 
-        length_x, length_y = self.size
+        length_x, length_y = self.area.size
 
         target_length_x = length_x * 2
         target_length_y = length_y * 4
@@ -201,8 +201,9 @@ class Image(Abstract, Image_):
 
         self.color.brightwing()
 
-        self.cache.resize(target_length_x, target_length_y, box)
-        self.color.resize(length_x, length_y, box)
+        target_length = (target_length_x, target_length_y)
+        self.cache.resize(target_length, box)
+        self.color.resize(self.area.size, box)
 
         self.color.quantize()
 

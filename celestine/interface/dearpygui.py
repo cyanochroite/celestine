@@ -53,8 +53,9 @@ class Image(Abstract, image):
     delete_item(...)
     """
 
-    def add(self):
+    def add(self, ring):
         """"""
+        dearpygui = ring.package.dearpygui
 
         empty = (0, 0, 0, [])
         path = self.image or load.pathway.asset("null.png")
@@ -95,7 +96,7 @@ class Image(Abstract, image):
 
         dearpygui = ring.package.dearpygui
 
-        name = self.add()
+        name = self.add(ring)
 
         dearpygui.add_image(
             name,

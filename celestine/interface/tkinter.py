@@ -67,6 +67,8 @@ class Image(Abstract, Image_):
         item = tkinter.Label
         self.cache = tkinter.PhotoImage(file=file)
         star.update(image=self.cache)
+
+        item = ring.package.tkinter.Label
         self.render(view, item, ring=ring, **star)
 
     def update(self, ring: R, image, **star):
@@ -78,7 +80,10 @@ class Image(Abstract, Image_):
 
         pillow = ring.package.pillow
         if pillow:
-            self.cache = pillow.ImageTk.PhotoImage(file=self.image)
+            image = pillow.image_load(image)
+            size = self.resize(image.size)
+            image.resize(size)
+            self.cache = pillow.ImageTk.PhotoImage(image=image.image)
         else:
             self.cache = tkinter.PhotoImage(file=self.image)
 

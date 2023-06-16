@@ -22,11 +22,11 @@ PAIR: TA = T[Z, Z]
 class Abstract(Item):
     """"""
 
-    # TODO combine abstract and container into item clas
-
-    def poke(self, x_dot, y_dot):
+    def draw(self, ring, view, **star):
         """"""
-        return self.area.inside(x_dot, y_dot)
+        super().draw(ring, view)
+
+    # TODO combine abstract and container into item clas
 
     def spot(self, area: Area):
         """"""
@@ -110,7 +110,7 @@ class Image(Abstract):
         """"""
         x_length, y_length = size
 
-        (x_size, y_size) = self.size
+        (x_size, y_size) = self.area.size
 
         new_x = y_size * x_length / y_length
         new_y = x_size * y_length / x_length
@@ -121,8 +121,6 @@ class Image(Abstract):
         else:
             done_x = x_size
             done_y = new_y
-
-        return (math.floor(done_x), math.floor(done_y))
 
         return (math.floor(done_x), math.floor(done_y))
 

@@ -3,6 +3,7 @@
 import math
 
 from celestine.typed import (
+    D,
     N,
     S,
 )
@@ -16,6 +17,8 @@ from celestine.window.collection import (
 
 class Container(Item, Collection):
     """"""
+
+    item: D[S, Item]
 
     def call(self, name, text, action, **star):
         """"""
@@ -54,6 +57,7 @@ class Container(Item, Collection):
                 name,
                 self.window,
                 self.element,
+                self.area,
                 width=width,
                 height=height,
                 **star,
@@ -102,15 +106,19 @@ class Container(Item, Collection):
         for _, item in self.item.items():
             item.poke(x_dot, y_dot, **star)
 
-    def spot(self, x_min, y_min, x_max, y_max, **star):
+    def spot(self, area: Area, **star):
         """"""
         for _, item in self.item.items():
-            item.spot(x_min, y_min, x_max, y_max, **star)
+            item.spot(area, **star)
 
     def view(self, name, text, action):
         """"""
         item = self._button(
-            name, text, call=self.turn, action=action, argument={}
+            name,
+            text,
+            call=self.turn,
+            action=action,
+            argument={},
         )
         return self.save(item)
 
@@ -148,15 +156,15 @@ class Container(Item, Collection):
 class Grid(Container):
     """"""
 
-    def spot(self, x_min, y_min, x_max, y_max):
+    def spot(self, area: Area, **star) -> N:
         """"""
-        self.set(x_min, y_min, x_max, y_max)
+        self.area.set(area.axis_x, area.axis_y)
 
         partition_x = self.width
         partition_y = math.ceil(len(self.item) / self.width)
-        (axis_x, axis_y) = self.get(partition_x, partition_y)
+        (axis_x, axis_y) = self.area.get(partition_x, partition_y)
 
-        items = self.__iter__()
+        items = iter(self)
 
         for _ in range(partition_y):
             (ymin, ymax) = next(axis_y)
@@ -165,7 +173,9 @@ class Grid(Container):
                 (xmin, xmax) = next(axis_x)
 
                 (_, item) = next(items)
-                item.spot(xmin, ymin, xmax, ymax)
+
+                area = Area(Axis(xmin, xmax), Axis(ymin, ymax))
+                item.spot(area)
 
         axis_x.close()
         axis_y.close()
@@ -176,16 +186,18 @@ class Grid(Container):
         name,
         window,
         element,
+        area,
         *,
         width,
         height,
         **star,
-    ):
+    ) -> N:
         super().__init__(
             ring,
             name,
             window,
             element,
+            area,
             **star,
         )
 
@@ -194,13 +206,13 @@ class Grid(Container):
         for range_y in range(height):
             for range_x in range(width):
                 name = f"{self.name}_{range_x}-{range_y}"
-                self.item[name] = None
+                self.item[name] = Item(name, area)
 
 
 class Drop(Container):
     """"""
 
-    def spot(self, area: Area) -> N:
+    def spot(self, area: Area, **star) -> N:
         """"""
         self.area.set(area.axis_x, area.axis_y)
 
@@ -222,7 +234,7 @@ class Drop(Container):
 class Span(Container):
     """"""
 
-    def spot(self, area: Area):
+    def spot(self, area: Area, **star) -> N:
         """"""
         self.area.set(area.axis_x, area.axis_y)
 

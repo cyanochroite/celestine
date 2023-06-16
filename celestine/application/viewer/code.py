@@ -23,10 +23,10 @@ def setup(*, ring: R, window: A, **star) -> N:
     print("cow")
     directory = ring.attribute.directory
     images = find_image(ring, directory)
+    images = iter(images)
+
     grid = window.load("grid")
-
-    items = zip(grid.__iter__(), images)
-
-    for group, image in items:
-        (_, item) = group
-        item.update(ring, image)
+    for _, line in grid.item.items():
+        for _, item in line.item.items():
+            image = next(images)
+            item.update(ring, image)
