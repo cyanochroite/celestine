@@ -10,28 +10,32 @@ from celestine.typed import (
     Z,
 )
 from celestine.window.collection import (
-    Box,
+    Area,
     Item,
+    Axis,
 )
 
 BOX: TA = T[Z, Z, Z, Z]
 PAIR: TA = T[Z, Z]
 
 
-class Abstract(Item, Box):
+class Abstract(Item):
     """"""
+
+    # TODO combine abstract and container into item clas
 
     def poke(self, x_dot, y_dot):
         """"""
-        return self.inside(x_dot, y_dot)
+        return self.area.inside(x_dot, y_dot)
 
-    def spot(self, x_min, y_min, x_max, y_max):
+    def spot(self, area: Area):
         """"""
-        self.set(x_min, y_min, x_max, y_max)
+        self.area.set(area.axis_x, area.axis_y)
 
     def __init__(self, name, **star):
         self.item = None
-        super().__init__(name, **star)
+        area = Area(Axis(0, 0), Axis(0, 0))
+        super().__init__(name, area, **star)
 
 
 class Button(Abstract):

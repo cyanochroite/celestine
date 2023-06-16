@@ -5,11 +5,13 @@ from celestine.typed import (
     S,
 )
 
+from celestine.window.collection import Area, Axis, Item
+
 from .collection import Collection2
 from .container import Container
 
 
-class Window:
+class Window(Item):
     """"""
 
     def data(self, container):
@@ -28,7 +30,7 @@ class Window:
         container = self.container.drop(name)
         self.data(container)
         function(self.ring, container)
-        container.spot(0, 0, self.width, self.height)
+        container.spot(self.area)
         self._view.set(name, container)
 
     def extension(self) -> L[S]:
@@ -89,24 +91,20 @@ class Window:
             raise RuntimeError(message) from error
         return False
 
-    def __init__(self, ring, element, size, **star):
+    def __init__(self, ring, element, area, **star):
+        super().__init__("window", area, **star)
         self.ring = ring
         self.turn_page = ring.main
         self.page = None
         self.task = Collection2()
         self._view = Collection2()
 
-        (self.width, self.height) = size
-
         self.container = Container(
             self.ring,
             "window",
             self,
             element,
-            x_min=0,
-            y_min=0,
-            x_max=self.width,
-            y_max=self.height,
+            area,
             offset_x=0,
             offset_y=0,
         )

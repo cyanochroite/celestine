@@ -6,6 +6,8 @@ from celestine.typed import (
     R,
     S,
 )
+
+from celestine.window.collection import Area, Axis
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -18,7 +20,7 @@ class Abstract(Abstract_):
 
     def render(self, collection, item, **star):
         """"""
-        position = (self.axis_x.minimum, self.axis_y.minimum)
+        position = (self.area.axis_x.minimum, self.area.axis_y.minimum)
         collection.blit(item, position)
 
 
@@ -139,8 +141,7 @@ class Window(Window_):
             pygame.display.set_icon(icon)
 
         def set_mode():
-            size = (self.width, self.height)
-            self.book = pygame.display.set_mode(size)
+            self.book = pygame.display.set_mode(self.area.size)
 
         super().__enter__()
         set_mode()
@@ -168,8 +169,8 @@ class Window(Window_):
         pygame.quit()
         return False
 
-    def __init__(self, ring, element, size, **star):
-        super().__init__(ring, element, size, **star)
+    def __init__(self, ring, element, area, **star):
+        super().__init__(ring, element, area, **star)
         self.book = None
         self.font = None
 
@@ -181,5 +182,5 @@ def window(ring, **star):
         "image": Image,
         "label": Label,
     }
-    size = (1280, 960)
-    return Window(ring, element, size, **star)
+    area = Area(Axis(0, 1280), Axis(0, 960))
+    return Window(ring, element, area, **star)

@@ -2,18 +2,18 @@
 
 import math
 
-from celestine.typed import S
-from celestine.window.collection import Rectangle
+from celestine.typed import S, N
+from celestine.window.collection import Item, Area, Collection, Axis
 
 
-class Container(Rectangle):
+class Container(Item, Collection):
     """"""
 
-    def call(self, tag, text, action, **star):
+    def call(self, name, text, action, **star):
         """"""
         self.save(
             self._button(
-                tag,
+                name,
                 text,
                 call=self.window.work,
                 action=action,
@@ -23,26 +23,27 @@ class Container(Rectangle):
             )
         )
 
-    def drop(self, tag: S, **star):
+    def drop(self, name: S, **star):
         """"""
         return self.item_set(
-            tag,
+            name,
             Drop(
                 self.ring,
-                tag,
+                name,
                 self.window,
                 self.element,
+                self.area,
                 **star,
             ),
         )
 
-    def grid(self, tag, width, height, **star):
+    def grid(self, name, width, height, **star):
         """"""
         return self.item_set(
-            tag,
+            name,
             Grid(
                 self.ring,
-                tag,
+                name,
                 self.window,
                 self.element,
                 width=width,
@@ -51,33 +52,34 @@ class Container(Rectangle):
             ),
         )
 
-    def span(self, tag, **star):
+    def span(self, name, **star):
         """"""
         return self.item_set(
-            tag,
+            name,
             Span(
                 self.ring,
-                tag,
+                name,
                 self.window,
                 self.element,
+                self.area,
                 **star,
             ),
         )
 
-    def image(self, tag, image):
+    def image(self, name, image):
         """A thumbnail image of a big picture."""
         self.save(
             self._image(
-                tag,
+                name,
                 image,
             )
         )
 
-    def label(self, tag, text):
+    def label(self, name, text):
         """"""
         self.save(
             self._label(
-                tag,
+                name,
                 text,
             )
         )
@@ -97,11 +99,9 @@ class Container(Rectangle):
         for _, item in self.item.items():
             item.spot(x_min, y_min, x_max, y_max, **star)
 
-    def view(self, tag, text, action):
+    def view(self, name, text, action):
         """"""
-        item = self._button(
-            tag, text, call=self.turn, action=action, argument={}
-        )
+        item = self._button(name, text, call=self.turn, action=action, argument={})
         return self.save(item)
 
     def __enter__(self):
@@ -116,11 +116,11 @@ class Container(Rectangle):
         name,
         window,
         element,
+        area,
         **star,
     ):
         self.ring = ring
 
-        self.tag = name
         self.window = window
 
         self.data = None
@@ -131,7 +131,8 @@ class Container(Rectangle):
         self._label = element["label"]
 
         self.turn = window.turn
-        super().__init__(**star)
+
+        super().__init__(name, area, **star)
 
 
 class Grid(Container):
@@ -182,26 +183,27 @@ class Grid(Container):
 
         for range_y in range(height):
             for range_x in range(width):
-                tag = f"{self.tag}_{range_x}-{range_y}"
-                self.item[tag] = None
+                name = f"{self.name}_{range_x}-{range_y}"
+                self.item[name] = None
 
 
 class Drop(Container):
     """"""
 
-    def spot(self, x_min, y_min, x_max, y_max):
+    def spot(self, area: Area) -> N:
         """"""
-        self.set(x_min, y_min, x_max, y_max)
+        self.area.set(area.axis_x, area.axis_y)
 
         partition_x = 1
         partition_y = len(self.item)
-        (axis_x, axis_y) = self.get(partition_x, partition_y)
+        (axis_x, axis_y) = self.area.get(partition_x, partition_y)
 
         for _, item in self.item.items():
             (xmin, xmax) = next(axis_x)
             (ymin, ymax) = next(axis_y)
 
-            item.spot(xmin, ymin, xmax, ymax)
+            new_area = Area(Axis(xmin, xmax), Axis(ymin, ymax))
+            item.spot(new_area)
 
         axis_x.close()
         axis_y.close()
@@ -210,19 +212,20 @@ class Drop(Container):
 class Span(Container):
     """"""
 
-    def spot(self, x_min, y_min, x_max, y_max):
+    def spot(self, area: Area):
         """"""
-        self.set(x_min, y_min, x_max, y_max)
+        self.area.set(area.axis_x, area.axis_y)
 
         partition_x = len(self.item)
         partition_y = 1
-        (axis_x, axis_y) = self.get(partition_x, partition_y)
+        (axis_x, axis_y) = self.area.get(partition_x, partition_y)
 
         for _, item in self.item.items():
             (xmin, xmax) = next(axis_x)
             (ymin, ymax) = next(axis_y)
 
-            item.spot(xmin, ymin, xmax, ymax)
+            new_area = Area(Axis(xmin, xmax), Axis(ymin, ymax))
+            item.spot(new_area)
 
         axis_x.close()
         axis_y.close()

@@ -22,16 +22,6 @@ class Object:
         super().__init__()
 
 
-class Item(Object):
-    """"""
-
-    name: S
-
-    def __init__(self, name: S, **star) -> N:
-        super().__init__()
-        self.name = name
-
-
 class Axis(Object):
     """"""
 
@@ -82,7 +72,7 @@ class Axis(Object):
         self.maximum = maximum
 
 
-class Box(Object):
+class Area(Object):
     """"""
 
     axis_x: Axis
@@ -98,27 +88,32 @@ class Box(Object):
         """"""
         return self.axis_x.inside(x_dot) and self.axis_y.inside(y_dot)
 
-    def set(self, x_min: Z, y_min: Z, x_max: Z, y_max: Z) -> N:
+    def set(self, axis_x: Axis, axis_y: Axis) -> N:
         """"""
-        self.axis_x.set(x_min, x_max)
-        self.axis_y.set(y_min, y_max)
+        self.axis_x.set(axis_x.minimum, axis_x.maximum)
+        self.axis_y.set(axis_y.minimum, axis_y.maximum)
 
     @property
     def size(self) -> T[Z, Z]:
         """"""
         return (self.axis_x.size, self.axis_y.size)
 
-    def __init__(
-        self,
-        x_min: Z = 0,
-        y_min: Z = 0,
-        x_max: Z = 0,
-        y_max: Z = 0,
-        **star,
-    ) -> N:
+    def __init__(self, axis_x: Axis, axis_y: Axis, **star) -> N:
+        """"""
         super().__init__(**star)
-        self.axis_x = Axis(x_min, x_max)
-        self.axis_y = Axis(y_min, y_max)
+        self.axis_x = Axis(axis_x.minimum, axis_x.maximum)
+        self.axis_y = Axis(axis_y.minimum, axis_y.maximum)
+
+
+class Item(Object):
+    """"""
+
+    name: S
+
+    def __init__(self, name: S, area: Area, **star) -> N:
+        super().__init__(**star)
+        self.area = area
+        self.name = name
 
 
 class Collection(Object):
@@ -173,65 +168,3 @@ class Collection2:
 
     def __init__(self) -> N:
         self.item = {}
-
-
-class Rectangle(Box, Collection):
-    """"""
-
-    begin_x_min: Z
-    begin_y_min: Z
-    begin_x_max: Z
-    begin_y_max: Z
-
-    move_x_min: Z
-    move_y_min: Z
-    move_x_max: Z
-    move_y_max: Z
-
-    offset_x: Z
-    offset_y: Z
-
-    def get_next(self) -> T[Z, Z, Z, Z]:
-        """"""
-        x_min = self.move_x_min
-        self.move_x_min += self.offset_x
-
-        y_min = self.move_y_min
-        self.move_y_min += self.offset_y
-
-        x_max = self.move_x_min if self.offset_x else self.x_max
-        y_max = self.move_y_min if self.offset_y else self.y_max
-
-        return (x_min, y_min, x_max, y_max)
-
-    def spawn(self):
-        """"""
-        (x_min, y_min, x_max, y_max) = self.get_next()
-        return Rectangle(
-            x_min=x_min,
-            y_min=y_min,
-            x_max=x_max,
-            y_max=y_max,
-            offset_x=self.offset_x,
-            offset_y=self.offset_y,
-        )
-
-    def __init__(self, offset_x: Z = 0, offset_y: Z = 0, **star) -> N:
-        super().__init__(**star)
-        if "row" in star:
-            offset_x = 300
-        if "col" in star:
-            offset_y = 50
-
-        self.begin_x_min = self.axis_x.minimum
-        self.begin_y_min = self.axis_y.minimum
-        self.begin_x_max = self.axis_x.maximum
-        self.begin_y_max = self.axis_y.maximum
-
-        self.move_x_min = self.axis_x.minimum
-        self.move_y_min = self.axis_y.minimum
-        self.move_x_max = self.axis_x.maximum
-        self.move_y_max = self.axis_y.maximum
-
-        self.offset_x = offset_x
-        self.offset_y = offset_y
