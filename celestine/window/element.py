@@ -1,7 +1,5 @@
 """"""
 
-import abc
-
 import math
 
 from celestine import load
@@ -11,13 +9,16 @@ from celestine.typed import (
     T,
     Z,
 )
-from celestine.window.collection import Box
+from celestine.window.collection import (
+    Box,
+    Item,
+)
 
 BOX: TA = T[Z, Z, Z, Z]
 PAIR: TA = T[Z, Z]
 
 
-class Abstract(Box):
+class Abstract(Item, Box):
     """"""
 
     def poke(self, x_dot, y_dot):
@@ -31,10 +32,9 @@ class Abstract(Box):
         self.x_max = x_max
         self.y_max = y_max
 
-    def __init__(self, tag, **star):
+    def __init__(self, name, **star):
         self.item = None
-        self.tag = tag
-        super().__init__(**star)
+        super().__init__(name, **star)
 
 
 class Button(Abstract):
@@ -45,12 +45,12 @@ class Button(Abstract):
         if super().poke(x_dot, y_dot):
             self.call(self.action, **self.argument)
 
-    def __init__(self, tag, text, *, call, action, argument, **star):
+    def __init__(self, name, text, *, call, action, argument, **star):
         self.action = action
         self.argument = argument
         self.call = call
         self.data = text
-        super().__init__(tag, **star)
+        super().__init__(name, **star)
 
 
 class Unit:
@@ -84,109 +84,7 @@ class Unit:
         self.data = 0
 
 
-class Picture(Abstract, abc.ABC):
-    """
-    A small version of an image.
-
-    Terminal:
-    minimum = 2**5 = 32
-    maximum = 2**7 = 128
-
-    Regular:
-    minimum = 2**05 = 64
-    maximum = 2**13 = 8192
-
-    Minimum:
-    Fairly good detail preservation at 64 pixels.
-
-    Maximum
-    Biggest TV is 8k and "biggest" monitors are less then 8K.
-    """
-
-    @abc.abstractmethod
-    def resize(self, size):
-        """"""
-
-    def path(self):
-        """"""
-        return self.image or load.pathway.asset("null.png")
-
-    def size(self):
-        x_size = self.x_max - self.x_min
-        y_size = self.y_max - self.y_min
-        print(x_size, y_size, "MOO")
-        return (x_size, y_size)
-
-    def update(self, ring: R, image, **star):
-        """"""
-        if not image:
-            return False
-
-        self.image = image
-        return True
-
-    def __init__(self, tag, image, **star):
-        self.cache = None
-        self.image = image
-        super().__init__(tag, **star)
-
-        minimum = 2**6
-        maximum = 2**16
-
-        minimum = 2**5
-        maximum = 2**8
-        self.unit_x = Unit(minimum, maximum)
-        self.unit_y = Unit(minimum, maximum)
-
-
-class Image(Picture):
-    """
-    A small version of an image.
-
-    Terminal:
-    minimum = 2**5 = 32
-    maximum = 2**7 = 128
-
-    Regular:
-    minimum = 2**05 = 64
-    maximum = 2**13 = 8192
-
-    Minimum:
-    Fairly good detail preservation at 64 pixels.
-
-    Maximum
-    Biggest TV is 8k and "biggest" monitors are less then 8K.
-    """
-
-    def resize(self, size):
-        x_size = self.x_max - self.x_min
-        y_size = self.y_max - self.y_min
-
-        return (math.floor(x_size), math.floor(y_size))
-
-    def crop(self, source_length: PAIR, target_length: PAIR) -> BOX:
-        """"""
-
-        (source_length_x, source_length_y) = source_length
-        (target_length_x, target_length_y) = target_length
-
-        source_ratio = source_length_x / source_length_y
-        target_ratio = target_length_x / target_length_y
-
-        if source_ratio < target_ratio:
-            length = round(source_length_x / target_ratio)
-            offset = round((source_length_y - length) / 2)
-            return (0, 0 + offset, source_length_x, length + offset)
-
-        if source_ratio > target_ratio:
-            length = round(source_length_y * target_ratio)
-            offset = round((source_length_x - length) / 2)
-            return (0 + offset, 0, length + offset, source_length_y)
-
-        return (0, 0, source_length_x, source_length_y)
-
-
-class Photo(Picture):
+class Image(Abstract):
     """
     A small version of an image.
 
@@ -226,10 +124,88 @@ class Photo(Picture):
 
         return (math.floor(done_x), math.floor(done_y))
 
+        return (math.floor(done_x), math.floor(done_y))
+
+    def path(self):
+        """"""
+        return self.image or load.pathway.asset("null.png")
+
+    def size(self):
+        x_size = self.x_max - self.x_min
+        y_size = self.y_max - self.y_min
+        print(x_size, y_size, "MOO")
+        return (x_size, y_size)
+
+    def update(self, ring: R, image, **star):
+        """"""
+        if not image:
+            return False
+
+        self.image = image
+        return True
+
+    def __init__(self, name, image, **star):
+        self.cache = None
+        self.image = image
+        super().__init__(name, **star)
+
+        minimum = 2**6
+        maximum = 2**16
+
+        minimum = 2**5
+        maximum = 2**8
+        self.unit_x = Unit(minimum, maximum)
+        self.unit_y = Unit(minimum, maximum)
+
+    """
+    A small version of an image.
+
+    Terminal:
+    minimum = 2**5 = 32
+    maximum = 2**7 = 128
+
+    Regular:
+    minimum = 2**05 = 64
+    maximum = 2**13 = 8192
+
+    Minimum:
+    Fairly good detail preservation at 64 pixels.
+
+    Maximum
+    Biggest TV is 8k and "biggest" monitors are less then 8K.
+    """
+
+    def resize_(self, size):
+        x_size = self.x_max - self.x_min
+        y_size = self.y_max - self.y_min
+
+        return (math.floor(x_size), math.floor(y_size))
+
+    def crop(_self, source_length: PAIR, target_length: PAIR) -> BOX:
+        """"""
+
+        (source_length_x, source_length_y) = source_length
+        (target_length_x, target_length_y) = target_length
+
+        source_ratio = source_length_x / source_length_y
+        target_ratio = target_length_x / target_length_y
+
+        if source_ratio < target_ratio:
+            length = round(source_length_x / target_ratio)
+            offset = round((source_length_y - length) / 2)
+            return (0, 0 + offset, source_length_x, length + offset)
+
+        if source_ratio > target_ratio:
+            length = round(source_length_y * target_ratio)
+            offset = round((source_length_x - length) / 2)
+            return (0 + offset, 0, length + offset, source_length_y)
+
+        return (0, 0, source_length_x, source_length_y)
+
 
 class Label(Abstract):
     """"""
 
-    def __init__(self, tag, text, **star):
+    def __init__(self, name, text, **star):
         self.data = text
-        super().__init__(tag, **star)
+        super().__init__(name, **star)

@@ -3,7 +3,10 @@
 from celestine.typed import (
     GE,
     TA,
+    B,
+    D,
     N,
+    S,
     T,
     Z,
 )
@@ -14,12 +17,25 @@ AXIS: TA = GE[T[Z, Z], N, N]
 class Object:
     """"""
 
-    def __init__(self, **star):
+    def __init__(self, **star) -> N:
         super().__init__()
+
+
+class Item(Object):
+    """"""
+
+    name: S
+
+    def __init__(self, name: S, **star) -> N:
+        super().__init__()
+        self.name = name
 
 
 class Axis(Object):
     """"""
+
+    minimum: Z
+    maximum: Z
 
     def get(self, partition: Z) -> AXIS:
         """"""
@@ -51,18 +67,25 @@ class Axis(Object):
         self.maximum = maximum
 
     @property
-    def size(self):
+    def size(self) -> Z:
         """"""
         return self.maximum - self.minimum
 
-    def __init__(self, **star):
+    def __init__(self, **star) -> N:
+        super().__init__(**star)
         self.minimum = 0
         self.maximum = 0
-        super().__init__(**star)
 
 
 class Box(Object):
     """"""
+
+    axis_x: Axis
+    axis_y: Axis
+    x_min: Z
+    y_min: Z
+    x_max: Z
+    y_max: Z
 
     def get(self, partition_x: Z, partition_y: Z) -> T[AXIS, AXIS]:
         """"""
@@ -75,48 +98,56 @@ class Box(Object):
         self.axis_x.set(x_min, x_max)
         self.axis_y.set(y_min, y_max)
 
-    def inside(self, x_dot, y_dot):
+    def inside(self, x_dot: Z, y_dot: Z) -> B:
         """"""
         x_test = self.x_min <= x_dot < self.x_max
         y_test = self.y_min <= y_dot < self.y_max
-
         return x_test and y_test
 
-    def __init__(self, x_min=0, y_min=0, x_max=0, y_max=0, **star):
+    def __init__(
+        self,
+        x_min: Z = 0,
+        y_min: Z = 0,
+        x_max: Z = 0,
+        y_max: Z = 0,
+        **star,
+    ) -> N:
+        super().__init__(**star)
         self.axis_x = Axis()
         self.axis_y = Axis()
         self.x_min = x_min
         self.y_min = y_min
         self.x_max = x_max
         self.y_max = y_max
-        super().__init__(**star)
 
 
 class Collection(Object):
     """"""
 
-    def item_get(self, tag):
-        """"""
-        return self.item[tag]
+    item: D[S, Item]
 
-    def item_set(self, tag, value):
+    def item_get(self, name: S) -> Item:
         """"""
-        self.item[tag] = value
-        return value
+        return self.item[name]
 
-    def load(self, tag):
+    def item_set(self, name: S, item: Item) -> Item:
         """"""
-        return self.item[tag]
+        self.item[name] = item
+        return item
 
-    def save(self, item):
+    def load(self, name: S) -> Item:
         """"""
-        self.item[item.tag] = item
+        return self.item[name]
 
-    def __init__(self, **star):
+    def save(self, item: Item) -> N:
+        """"""
+        self.item[item.name] = item
+
+    def __init__(self, **star) -> N:
         self.item = {}
         super().__init__(**star)
 
-    def __iter__(self):
+    def __iter__(self) -> GE[T[S, Item], N, N]:
         """"""
         yield from self.item.items()
 
@@ -124,28 +155,43 @@ class Collection(Object):
 class Collection2:
     """"""
 
-    def children(self):
+    item: D[S, Item]
+
+    def children(self) -> GE[Item, N, N]:
         """"""
         for _, item in self.item.items():
             yield item
 
-    def get(self, name):
+    def get(self, name: S) -> Item:
         """"""
         return self.item[name]
 
-    def set(self, name, item):
+    def set(self, name: S, item: Item) -> Item:
         """"""
         self.item[name] = item
         return item
 
-    def __init__(self):
+    def __init__(self) -> N:
         self.item = {}
 
 
 class Rectangle(Box, Collection):
     """"""
 
-    def get_next(self):
+    begin_x_min: Z
+    begin_y_min: Z
+    begin_x_max: Z
+    begin_y_max: Z
+
+    move_x_min: Z
+    move_y_min: Z
+    move_x_max: Z
+    move_y_max: Z
+
+    offset_x: Z
+    offset_y: Z
+
+    def get_next(self) -> T[Z, Z, Z, Z]:
         """"""
         x_min = self.move_x_min
         self.move_x_min += self.offset_x
@@ -170,7 +216,7 @@ class Rectangle(Box, Collection):
             offset_y=self.offset_y,
         )
 
-    def __init__(self, offset_x=0, offset_y=0, **star):
+    def __init__(self, offset_x: Z = 0, offset_y: Z = 0, **star) -> N:
         super().__init__(**star)
         if "row" in star:
             offset_x = 300

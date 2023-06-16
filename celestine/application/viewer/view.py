@@ -11,4 +11,4 @@ def main(ring: Session, view: View) -> N:
     view.call("load", "Load image.", "setup", window=view)
     with view.grid("grid", 4, 2) as grid:
         for key, value in grid:
-            grid.photo(key, value)
+            grid.image(key, value)  # , mode="one")

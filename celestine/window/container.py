@@ -2,6 +2,7 @@
 
 import math
 
+from celestine.typed import S
 from celestine.window.collection import Rectangle
 
 
@@ -22,7 +23,7 @@ class Container(Rectangle):
             )
         )
 
-    def drop(self, tag, **star):
+    def drop(self, tag: S, **star):
         """"""
         return self.item_set(
             tag,
@@ -81,15 +82,6 @@ class Container(Rectangle):
             )
         )
 
-    def photo(self, tag, photo):
-        """A higher quality full resolution picture."""
-        self.save(
-            self._photo(
-                tag,
-                photo,
-            )
-        )
-
     def draw(self, ring, view, **star):
         """"""
         for _, item in self.item.items():
@@ -107,7 +99,9 @@ class Container(Rectangle):
 
     def view(self, tag, text, action):
         """"""
-        item = self._button(tag, text, call=self.turn, action=action, argument={})
+        item = self._button(
+            tag, text, call=self.turn, action=action, argument={}
+        )
         return self.save(item)
 
     def __enter__(self):
@@ -135,7 +129,6 @@ class Container(Rectangle):
         self._button = element["button"]
         self._image = element["image"]
         self._label = element["label"]
-        self._photo = element["photo"]
 
         self.turn = window.turn
         super().__init__(**star)

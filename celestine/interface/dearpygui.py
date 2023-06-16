@@ -7,7 +7,6 @@ from celestine.window.element import Abstract as abstract
 from celestine.window.element import Button as button
 from celestine.window.element import Image as image
 from celestine.window.element import Label as label
-from celestine.window.element import Photo as Photo_
 from celestine.window.window import Window as window
 
 

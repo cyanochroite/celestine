@@ -10,8 +10,6 @@ from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
-from celestine.window.element import Picture as Picture_
-from celestine.window.element import Photo as Photo_
 from celestine.window.window import Window as Window_
 
 
@@ -44,16 +42,19 @@ class Label(Abstract, Label_):
         self.render(view, item, **star)
 
 
-class Picture(Abstract, Picture_):
+class Image(Abstract, Image_):
     """"""
 
-    def draw(self, ring: R, view, **star):
+    def draw(self, ring: R, view, *, mode="hi", **star):
         """"""
         pillow = ring.package.pillow
         pygame = ring.package.pygame
 
         path = self.path()
         size = self.size()
+
+        if mode == "one":
+            pass
 
         if pillow or True:
             image = pillow.image_load(path)
@@ -71,14 +72,6 @@ class Picture(Abstract, Picture_):
             image = pygame.transform.scale(image, size)
 
         self.render(view, image, **star)
-
-
-class Image(Picture, Image_):
-    """"""
-
-
-class Photo(Picture, Photo_):
-    """"""
 
 
 class Window(Window_):
@@ -187,7 +180,6 @@ def window(ring, **star):
         "button": Button,
         "image": Image,
         "label": Label,
-        "photo": Photo,
     }
     size = (1280, 960)
     return Window(ring, element, size, **star)

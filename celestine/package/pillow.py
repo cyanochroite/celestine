@@ -98,7 +98,9 @@ class Image:
         palette = None
         dither = pillow.Image.Dither.FLOYDSTEINBERG
 
-        self.image = self.image.quantize(colors, method, kmeans, palette, dither)
+        self.image = self.image.quantize(
+            colors, method, kmeans, palette, dither
+        )
 
     def __init__(self, ring, /, image, **star):
         self.ring = ring
