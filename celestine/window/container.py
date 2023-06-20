@@ -78,12 +78,12 @@ class Container(Item, Collection):
             ),
         )
 
-    def image(self, name, image):
+    def image(self, name, path):
         """A thumbnail image of a big picture."""
         self.save(
             self._image(
                 name,
-                image,
+                path,
             )
         )
 

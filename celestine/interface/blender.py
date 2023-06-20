@@ -263,8 +263,7 @@ class Image(Abstract, Image_):
         if not make:
             return
 
-        path = self.image or load.pathway.asset("null.png")
-        image = data.image.load(path)
+        image = data.image.load(self.path)
         material = UV.image(self.name, image)
         plane = basic.image(view, self.name, image.size)
 
@@ -274,8 +273,7 @@ class Image(Abstract, Image_):
 
     def update(self, ring: R, image: S, **star) -> B:
         """"""
-        if not super().update(ring, image, **star):
-            return False
+        super().update(ring, image, **star)
 
         material = bpy.data.materials[self.name]
         node = material.node_tree.nodes["Image Texture"]

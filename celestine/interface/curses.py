@@ -175,13 +175,11 @@ class Image(Abstract, Image_):
         curses = ring.package.curses
         pillow = ring.package.pillow
 
-        path = self.image or load.pathway.asset("null.png")
-
         if not pillow:
-            self.render(ring, view, path.name, **star)
+            self.render(ring, view, self.path.name, **star)
             return
 
-        self.cache = pillow.image_load(path)
+        self.cache = pillow.image_load(self.path)
         self.color = pillow.image_clone(self.cache)
 
         # Crop box.

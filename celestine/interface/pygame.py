@@ -55,14 +55,15 @@ class Image(Abstract, Image_):
         pillow = ring.package.pillow
         pygame = ring.package.pygame
 
-        path = self.path()
+        # do we call parent or some other function to get this right?
+        # maybe call super, which does nothing but set name
         size = self.area.size
 
         if mode == "one":
             pass
 
-        if pillow or True:
-            image = pillow.image_load(path)
+        if pillow:
+            image = pillow.image_load(self.path)
             size = self.resize(image.size)
             image.resize(size)
             image = pygame.image.fromstring(
@@ -71,7 +72,7 @@ class Image(Abstract, Image_):
                 image.image.mode,
             )
         else:
-            image = pygame.image.load(path)
+            image = pygame.image.load(self.path)
             image = image.convert_alpha()
             size = self.resize((image.get_width(), image.get_height()))
             image = pygame.transform.scale(image, size)

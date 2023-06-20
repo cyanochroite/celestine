@@ -59,36 +59,31 @@ class Image(Abstract, Image_):
         """"""
         tkinter = ring.package.tkinter
 
-        file = self.image or load.pathway.asset("null.png")
-
         if not make:
             return
 
-        item = tkinter.Label
-        self.cache = tkinter.PhotoImage(file=file)
-        star.update(image=self.cache)
+        self.image = tkinter.PhotoImage(file=self.path)
+        star.update(image=self.image)
 
-        item = ring.package.tkinter.Label
+        item = tkinter.Label
         self.render(view, item, ring=ring, **star)
 
-    def update(self, ring: R, image, **star):
+    def update(self, ring: R, path, **star):
         """"""
+        super().update(ring, path)
         tkinter = ring.package.tkinter
-
-        if not super().update(ring, image, **star):
-            return False
-
         pillow = ring.package.pillow
+
         if pillow:
-            image = pillow.image_load(image)
+            image = pillow.image_load(self.path)
             size = self.resize(image.size)
             image.resize(size)
-            self.cache = pillow.ImageTk.PhotoImage(image=image.image)
+            self.image = pillow.ImageTk.PhotoImage(image=image.image)
         else:
-            self.cache = tkinter.PhotoImage(file=self.image)
+            self.image = tkinter.PhotoImage(file=self.path)
 
-        self.item.configure(image=self.cache)
-        self.item.image = self.cache
+        self.item.configure(image=self.image)
+        self.item.image = self.image
         return True
 
 

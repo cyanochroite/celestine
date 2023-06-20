@@ -106,11 +106,11 @@ class Area:
 class Item(Object):
     """"""
 
-    name: S
+    name: S  # The key to use to find this in the window dictionary.
 
     def draw(self, ring, view, **star):
         """"""
-        raise NotImplementedError(ring, view)
+        raise NotImplementedError(area)
 
     def poke(self, x_dot: Z, y_dot: Z, **star) -> B:
         """"""

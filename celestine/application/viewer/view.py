@@ -5,6 +5,11 @@ from celestine.session.session import Session
 from celestine.typed import N
 from celestine.window.container import Container as View
 
+from celestine import load
+
+NULL = load.pathway.asset("null.png")
+NULL = load.pathway.asset("32.png")
+
 
 def main(ring: Session, view: View) -> N:
     """"""
@@ -22,4 +27,4 @@ def main(ring: Session, view: View) -> N:
             with grid.span(f"line-{range_y}") as line:
                 for range_x in range(4):
                     name = f"grid_{range_x}-{range_y}"
-                    line.image(name, None)  # , mode="one")
+                    line.image(name, NULL)  # , mode="one")

@@ -9,18 +9,18 @@ from celestine.window.collection import (
     Area,
     Axis,
 )
-from celestine.window.element import Abstract as abstract
-from celestine.window.element import Button as button
-from celestine.window.element import Image as image
-from celestine.window.element import Label as label
-from celestine.window.window import Window as window
+from celestine.window.element import Abstract as Abstract_
+from celestine.window.element import Button as Button_
+from celestine.window.element import Image as Image_
+from celestine.window.element import Label as Label_
+from celestine.window.window import Window as Window_
 
 
-class Abstract(abstract):
+class Abstract(Abstract_):
     """"""
 
 
-class Button(Abstract, button):
+class Button(Abstract, Button_):
     """"""
 
     def callback(self, *_):
@@ -46,39 +46,12 @@ class Button(Abstract, button):
         )
 
 
-class Image(Abstract, image):
+class Image(Abstract, Image_):
     """
     Manages image objects.
 
     delete_item(...)
     """
-
-    def add(self, ring):
-        """"""
-        dearpygui = ring.package.dearpygui
-
-        empty = (0, 0, 0, [])
-        path = self.image or load.pathway.asset("null.png")
-
-        _image = dearpygui.load_image(path) or empty
-        width = _image[0]
-        height = _image[1]
-        # channels = _image[2]
-        photo = _image[3]
-        name = path
-
-        with dearpygui.dataure_registry(show=False):
-            try:
-                dearpygui.add_dynamic_texture(
-                    default_value=photo,
-                    height=height,
-                    tag=name,
-                    width=width,
-                )
-            except SystemError:
-                """Image already exists."""
-
-        return name
 
     def draw(self, ring, _, *, make, **star):
         """
@@ -96,26 +69,39 @@ class Image(Abstract, image):
 
         dearpygui = ring.package.dearpygui
 
-        name = self.add(ring)
+        image = dearpygui.load_image(str(self.path))
+        width = image[0]
+        height = image[1]
+        # channels = image[2]
+        photo = image[3]
+
+        with dearpygui.texture_registry(show=False):
+            try:
+                dearpygui.add_dynamic_texture(
+                    default_value=photo,
+                    height=height,
+                    tag=f"{self.name}-image",
+                    width=width,
+                )
+            except SystemError:
+                """Image already exists."""
 
         dearpygui.add_image(
-            name,
+            f"{self.name}-image",
             tag=self.name,
             pos=(self.area.axis_x.minimum, self.area.axis_y.minimum),
         )
 
     def update(self, ring: R, image, **star):
         """"""
-        if not super().update(ring, image, **star):
-            return False
+        super().update(ring, image, **star)
 
         dearpygui = ring.package.dearpygui
 
-        dearpygui.set_value(self.tag, self.image)
-        return True
+        dearpygui.set_value(self.name, self.image)
 
 
-class Label(Abstract, label):
+class Label(Abstract, Label_):
     """"""
 
     def draw(self, ring, _, *, make, **star):
@@ -132,7 +118,7 @@ class Label(Abstract, label):
         )
 
 
-class Window(window):
+class Window(Window_):
     """"""
 
     def extension(self):

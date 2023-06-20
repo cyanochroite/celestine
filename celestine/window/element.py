@@ -8,6 +8,11 @@ from celestine.typed import (
     R,
     T,
     Z,
+    A,
+    S,
+    N,
+    B,
+    P,
 )
 from celestine.window.collection import (
     Area,
@@ -22,9 +27,7 @@ PAIR: TA = T[Z, Z]
 class Abstract(Item):
     """"""
 
-    def draw(self, ring, view, **star):
-        """"""
-        super().draw(ring, view)
+    item: A  # The object that the window system interacts with.
 
     # TODO combine abstract and container into item clas
 
@@ -86,6 +89,9 @@ class Unit:
 
 
 class Image(Abstract):
+    path: P  # The location of the image on disk.
+    image: A  # The image object after being loaded from disk.
+
     """
     A small version of an image.
 
@@ -106,6 +112,14 @@ class Image(Abstract):
     Keeping it within a byte (256) a nice goal.
     """
 
+    def draw(self, ring, view, **star):
+        """"""
+        raise NotImplementedError(area)
+
+    def update(self, ring: R, path, **star):
+        """"""
+        self.path = path
+
     def resize(self, size):
         """"""
         x_length, y_length = size
@@ -124,21 +138,9 @@ class Image(Abstract):
 
         return (math.floor(done_x), math.floor(done_y))
 
-    def path(self):
-        """"""
-        return self.image or load.pathway.asset("null.png")
-
-    def update(self, ring: R, image, **star):
-        """"""
-        if not image:
-            return False
-
-        self.image = image
-        return True
-
-    def __init__(self, name, image, **star):
-        self.cache = None
-        self.image = image
+    def __init__(self, name, path, **star):
+        self.path = path
+        self.image = None
         super().__init__(name, **star)
 
         minimum = 2**6
