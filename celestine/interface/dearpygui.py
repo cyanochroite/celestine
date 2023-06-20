@@ -4,6 +4,7 @@ from celestine import load
 from celestine.typed import (
     N,
     R,
+    S,
 )
 from celestine.window.collection import (
     Area,
@@ -69,36 +70,40 @@ class Image(Abstract, Image_):
 
         dearpygui = ring.package.dearpygui
 
-        image = dearpygui.load_image(str(self.path))
+        path = str(self.path)
+        image = dearpygui.load_image(path)
         width = image[0]
         height = image[1]
         # channels = image[2]
         photo = image[3]
 
         with dearpygui.texture_registry(show=False):
-            try:
-                dearpygui.add_dynamic_texture(
-                    default_value=photo,
-                    height=height,
-                    tag=f"{self.name}-image",
-                    width=width,
-                )
-            except SystemError:
-                """Image already exists."""
+            dearpygui.add_dynamic_texture(
+                default_value=photo,
+                height=height,
+                tag=self.name,
+                width=width,
+            )
 
         dearpygui.add_image(
-            f"{self.name}-image",
-            tag=self.name,
+            self.name,
+            tag=f"{self.name}-base",
             pos=(self.area.axis_x.minimum, self.area.axis_y.minimum),
         )
 
     def update(self, ring: R, image, **star):
         """"""
+        dearpygui = ring.package.dearpygui
         super().update(ring, image, **star)
 
-        dearpygui = ring.package.dearpygui
+        path = str(self.path)
+        image = dearpygui.load_image(path)
+        # width = image[0]
+        # height = image[1]
+        # channels = image[2]
+        photo = image[3]
 
-        dearpygui.set_value(self.name, self.image)
+        dearpygui.set_value(self.name, photo)
 
 
 class Label(Abstract, Label_):
@@ -146,8 +151,7 @@ class Window(Window_):
         with value.data:
             dearpygui.configure_item(value.name, show=False)
             document(self.ring, value)
-            area = Area(Axis(0, 1920), Axis(0, 1080))
-            value.spot(area)
+            value.spot(self.container.area)
             value.draw(self.ring, None, make=True)
 
     def draw(self, **star):
@@ -176,8 +180,8 @@ class Window(Window_):
             title=title,
             small_icon="celestine_small.ico",
             large_icon="celestine_large.ico",
-            width=1920,
-            height=1080,
+            width=self.container.area.axis_x.size,
+            height=self.container.area.axis_y.size,
             x_pos=256,
             y_pos=256,
             min_width=640,
@@ -209,6 +213,6 @@ class Window(Window_):
             "image": Image,
             "label": Label,
         }
-        area = Area(Axis(0, 1280), Axis(0, 1080))
+        area = Area(Axis(0, 960), Axis(0, 640))
         super().__init__(ring, element, area, **star)
         self.tag = "window"
