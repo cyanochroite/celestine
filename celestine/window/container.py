@@ -21,7 +21,9 @@ class Container(Item, Collection):
 
     item: D[S, Item]
 
-    def partition(self, partition_x: Z, partition_y: Z) -> GE[Rectangle, N, N]:
+    def partition(
+        self, partition_x: Z, partition_y: Z
+    ) -> GE[Rectangle, N, N]:
         """"""
 
         items = iter(self.item.items())
@@ -59,17 +61,18 @@ class Container(Item, Collection):
         """"""
         return self.item_set(
             name,
-            Drop(
+            Grid(
                 self.ring,
                 name,
                 self.window,
                 self.element,
                 self.area,
+                mode="drop",
                 **star,
             ),
         )
 
-    def grid(self, name, width, height, **star):
+    def grid(self, name, **star):
         """"""
         return self.item_set(
             name,
@@ -79,8 +82,6 @@ class Container(Item, Collection):
                 self.window,
                 self.element,
                 self.area,
-                width=width,
-                height=height,
                 **star,
             ),
         )
@@ -89,12 +90,13 @@ class Container(Item, Collection):
         """"""
         return self.item_set(
             name,
-            Span(
+            Grid(
                 self.ring,
                 name,
                 self.window,
                 self.element,
                 self.area,
+                mode="span",
                 **star,
             ),
         )
@@ -179,20 +181,20 @@ class Container(Item, Collection):
 class Grid(Container):
     """"""
 
-    def tag(self) -> S:
-        """"""
-        length = len(self.item)
-        range_x = length % self.width
-        range_y = length // self.width
-        name = f"{self.name}_{range_x}-{range_y}"
-        return name
-
     def spot(self, area: Rectangle, **star) -> N:
         """"""
         self.area.copy(area)
 
-        partition_x = self.width
-        partition_y = math.ceil(len(self.item) / self.width)
+        match self.mode:
+            case "drop":
+                partition_x = 1
+                partition_y = len(self.item)
+            case "span":
+                partition_x = len(self.item)
+                partition_y = 1
+            case "grid":
+                partition_x = self.width
+                partition_y = math.ceil(len(self.item) / self.width)
 
         self.partition(partition_x, partition_y)
 
@@ -204,8 +206,9 @@ class Grid(Container):
         element,
         area,
         *,
-        width,
-        height,
+        mode="grid",
+        row=0,
+        col=0,
         **star,
     ) -> N:
         super().__init__(
@@ -217,36 +220,11 @@ class Grid(Container):
             **star,
         )
 
-        self.width = width
-        self.height = height
+        self.width = col
+        self.height = row
+        self.mode = mode
 
-        for range_y in range(height):
-            for range_x in range(width):
+        for range_y in range(row):
+            for range_x in range(col):
                 name = f"{self.name}_{range_x}-{range_y}"
                 self.item[name] = Item(name, area)
-
-
-class Drop(Container):
-    """"""
-
-    def spot(self, area: Rectangle, **star) -> N:
-        """"""
-        self.area.copy(area)
-
-        partition_x = 1
-        partition_y = len(self.item)
-
-        self.partition(partition_x, partition_y)
-
-
-class Span(Container):
-    """"""
-
-    def spot(self, area: Rectangle, **star) -> N:
-        """"""
-        self.area.copy(area)
-
-        partition_x = len(self.item)
-        partition_y = 1
-
-        self.partition(partition_x, partition_y)

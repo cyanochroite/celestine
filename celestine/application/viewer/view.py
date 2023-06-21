@@ -13,6 +13,6 @@ NULL = load.pathway.asset("32.png")
 def main(ring: Session, view: View) -> N:
     """"""
     view.call("load", "Load image.", "setup", window=view)
-    with view.grid("grid", 4, 2) as grid:
+    with view.grid("grid", row=2, col=4) as grid:
         for name, _ in grid:
             grid.image(name, NULL, mode="A")
