@@ -15,8 +15,7 @@ from celestine.typed import (
     P,
 )
 from celestine.window.collection import (
-    Area,
-    Axis,
+    Rectangle,
     Item,
 )
 
@@ -31,13 +30,13 @@ class Abstract(Item):
 
     # TODO combine abstract and container into item clas
 
-    def spot(self, area: Area):
+    def spot(self, area: Rectangle):
         """"""
-        self.area.set(area.axis_x, area.axis_y)
+        self.area.copy(area)
 
     def __init__(self, name, **star):
         self.item = None
-        area = Area(Axis(0, 0), Axis(0, 0))
+        area = Rectangle(0, 0, 0, 0)
         super().__init__(name, area, **star)
 
 
@@ -88,6 +87,28 @@ class Unit:
         self.data = 0
 
 
+class Picture:
+    def scale_to_any(self, frame: Rectangle, crop=False):
+        """"""
+        (size_x, size_y) = self.size
+        (area_x, area_y) = area
+
+        down_x = math.floor(area_y * size_x / size_y)
+        down_y = math.floor(area_x * size_y / size_x)
+
+        if crop:
+            best_x = max(area_x, down_x)
+            best_y = max(area_y, down_y)
+        else:
+            best_x = min(area_x, down_x)
+            best_y = min(area_y, down_y)
+
+        return (best_x, best_y)
+
+    def __init__(self):
+        self.area = Area(axis_x, axis_y)
+
+
 class Image(Abstract):
     path: P  # The location of the image on disk.
     image: A  # The image object after being loaded from disk.
@@ -122,21 +143,38 @@ class Image(Abstract):
 
     def resize(self, size):
         """"""
-        x_length, y_length = size
+        (size_x, size_y) = size
+        (area_x, area_y) = self.area.size
 
-        (x_size, y_size) = self.area.size
+        down_x = math.floor(area_y * size_x / size_y)
+        down_y = math.floor(area_x * size_y / size_x)
 
-        new_x = y_size * x_length / y_length
-        new_y = x_size * y_length / x_length
+        best_x = min(area_x, down_x)
+        best_y = min(area_y, down_y)
 
-        if new_y > y_size:
-            done_x = new_x
-            done_y = y_size
-        else:
-            done_x = x_size
-            done_y = new_y
+        return (best_x, best_y)
 
-        return (math.floor(done_x), math.floor(done_y))
+    def scale_to_fit(self, area):
+        """"""
+        pillow = self.ring.package.pillow
+
+        (size_x, size_y) = self.size
+        (area_x, area_y) = area
+
+        down_x = math.floor(area_y * size_x / size_y)
+        down_y = math.floor(area_x * size_y / size_x)
+
+        best_x = min(area_x, down_x)
+        best_y = min(area_y, down_y)
+
+        size = moo
+
+        self.image = self.image.resize(
+            size=(best_x, best_y),
+            resample=pillow.Image.Resampling.LANCZOS,
+            box=None,
+            reducing_gap=None,
+        )
 
     def __init__(self, name, path, **star):
         self.path = path

@@ -7,10 +7,7 @@ from celestine.typed import (
     R,
     S,
 )
-from celestine.window.collection import (
-    Area,
-    Axis,
-)
+from celestine.window.collection import Rectangle
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -23,8 +20,7 @@ class Abstract(Abstract_):
 
     def render(self, collection, item, **star):
         """"""
-        position = (self.area.axis_x.minimum, self.area.axis_y.minimum)
-        collection.blit(item, position)
+        collection.blit(item, self.area.origin)
 
 
 class Button(Abstract, Button_):
@@ -64,8 +60,8 @@ class Image(Abstract, Image_):
 
         if pillow:
             image = pillow.image_load(self.path)
-            size = self.resize(image.size)
-            image.resize(size)
+            # image.scale_to_fit(self.area.size)
+            image.scale_to_fill(self.area.size)
             image = pygame.image.fromstring(
                 image.image.tobytes(),
                 image.image.size,
@@ -180,7 +176,7 @@ class Window(Window_):
             "image": Image,
             "label": Label,
         }
-        area = Area(Axis(0, 1280), Axis(0, 960))
+        area = Rectangle(0, 0, 1280, 960)
         super().__init__(ring, element, area, **star)
         self.book = None
         self.font = None

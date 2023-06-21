@@ -1,5 +1,6 @@
 """Python Imaging Library (Fork)."""
 
+import math
 
 from celestine import load
 from celestine.typed import (
@@ -80,6 +81,71 @@ class Image:
         hold = self.image.resize(size, resample, box, reducing_gap)
         self.image = hold
 
+    def scale_to_any(self, area, crop=False):
+        """"""
+        (size_x, size_y) = self.size
+        (area_x, area_y) = area
+
+        down_x = math.floor(area_y * size_x / size_y)
+        down_y = math.floor(area_x * size_y / size_x)
+
+        if crop:
+            best_x = max(area_x, down_x)
+            best_y = max(area_y, down_y)
+        else:
+            best_x = min(area_x, down_x)
+            best_y = min(area_y, down_y)
+
+        return (best_x, best_y)
+
+    def scale_to_fit(self, area):
+        """"""
+        pillow = self.ring.package.pillow
+
+        (size_x, size_y) = self.size
+        (area_x, area_y) = area
+
+        down_x = math.floor(area_y * size_x / size_y)
+        down_y = math.floor(area_x * size_y / size_x)
+
+        best_x = min(area_x, down_x)
+        best_y = min(area_y, down_y)
+
+        self.image = self.image.resize(
+            size=(best_x, best_y),
+            resample=pillow.Image.Resampling.LANCZOS,
+            box=None,
+            reducing_gap=None,
+        )
+
+    def scale_to_fill(self, area):
+        """"""
+        pillow = self.ring.package.pillow
+
+        (size_x, size_y) = self.size
+        (area_x, area_y) = area
+
+        down_x = math.floor(area_y * size_x / size_y)
+        down_y = math.floor(area_x * size_y / size_x)
+
+        best_x = max(area_x, down_x)
+        best_y = max(area_y, down_y)
+
+        length_x = round(area_x / best_x * size_x)
+        length_y = round(area_y / best_y * size_y)
+
+        offset_x = round((size_x - length_x) / 2)
+        offset_y = round((size_y - length_y) / 2)
+        cutoff_x = offset_x + length_x
+        cutoff_y = offset_y + length_y
+
+        self.image = self.image.resize(
+            size=(area_x, area_y),
+            resample=pillow.Image.Resampling.LANCZOS,
+            box=(offset_x, offset_y, cutoff_x, cutoff_y),
+            reducing_gap=None,
+        )
+
     @property
     def size(self):
         """"""
@@ -98,9 +164,7 @@ class Image:
         palette = None
         dither = pillow.Image.Dither.FLOYDSTEINBERG
 
-        self.image = self.image.quantize(
-            colors, method, kmeans, palette, dither
-        )
+        self.image = self.image.quantize(colors, method, kmeans, palette, dither)
 
     def __init__(self, ring, /, image, **star):
         self.ring = ring

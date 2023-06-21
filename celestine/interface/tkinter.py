@@ -5,10 +5,7 @@ from celestine.typed import (
     N,
     R,
 )
-from celestine.window.collection import (
-    Area,
-    Axis,
-)
+from celestine.window.collection import Rectangle
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -24,9 +21,10 @@ class Abstract(Abstract_):
         self.item = item(view, **star)
 
         width, height = self.area.size
+        dot_x, dot_y = self.area.origin
         self.item.place(
-            x=self.area.axis_x.minimum,
-            y=self.area.axis_y.minimum,
+            x=dot_x,
+            y=dot_y,
             width=width,
             height=height,
         )
@@ -163,6 +161,6 @@ class Window(Window_):
             "image": Image,
             "label": Label,
         }
-        area = Area(Axis(0, 1280), Axis(0, 1080))
+        area = Rectangle(0, 0, 1280, 1080)
         super().__init__(ring, element, area, **star)
         self.root = None

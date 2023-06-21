@@ -6,10 +6,7 @@ from celestine.typed import (
     R,
     S,
 )
-from celestine.window.collection import (
-    Area,
-    Axis,
-)
+from celestine.window.collection import Rectangle
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -43,7 +40,7 @@ class Button(Abstract, Button_):
             callback=self.callback,
             label=self.data,
             tag=self.name,
-            pos=(self.area.axis_x.minimum, self.area.axis_y.minimum),
+            pos=self.area.origin,
         )
 
 
@@ -88,7 +85,7 @@ class Image(Abstract, Image_):
         dearpygui.add_image(
             self.name,
             tag=f"{self.name}-base",
-            pos=(self.area.axis_x.minimum, self.area.axis_y.minimum),
+            pos=self.area.origin,
         )
 
     def update(self, ring: R, image, **star):
@@ -119,7 +116,7 @@ class Label(Abstract, Label_):
         dearpygui.add_text(
             f" {self.data}",  # extra space hack to fix margin error
             tag=self.name,
-            pos=(self.area.axis_x.minimum, self.area.axis_y.minimum),
+            pos=self.area.origin,
         )
 
 
@@ -176,12 +173,13 @@ class Window(Window_):
 
         title = self.ring.language.APPLICATION_TITLE
         dearpygui.create_context()
+        width, height = self.container.area.origin
         dearpygui.create_viewport(
             title=title,
             small_icon="celestine_small.ico",
             large_icon="celestine_large.ico",
-            width=self.container.area.axis_x.size,
-            height=self.container.area.axis_y.size,
+            width=width,
+            height=height,
             x_pos=256,
             y_pos=256,
             min_width=640,
@@ -213,6 +211,6 @@ class Window(Window_):
             "image": Image,
             "label": Label,
         }
-        area = Area(Axis(0, 960), Axis(0, 640))
+        area = Rectangle(0, 0, 960, 640)
         super().__init__(ring, element, area, **star)
         self.tag = "window"

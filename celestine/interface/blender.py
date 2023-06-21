@@ -23,10 +23,7 @@ from celestine.typed import (
     S,
     T,
 )
-from celestine.window.collection import (
-    Area,
-    Axis,
-)
+from celestine.window.collection import Rectangle
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -182,8 +179,8 @@ class Abstract(Abstract_):
 
     def center_float(self) -> T[F, F]:
         """"""
-        x_dot = self.area.axis_x.minimum + self.area.axis_x.maximum
-        y_dot = self.area.axis_y.minimum + self.area.axis_y.maximum
+        x_dot = self.area.left + self.area.right
+        y_dot = self.area.upper + self.area.lower
 
         x_dot /= 2
         y_dot /= 2
@@ -451,7 +448,7 @@ class Window(Window_):
             "image": Image,
             "label": Label,
         }
-        area = Area(Axis(0, 20), Axis(0, 20))
+        area = Rectangle(0, 0, 20, 20)
         super().__init__(ring, element, area, **star)
 
         self.frame = None

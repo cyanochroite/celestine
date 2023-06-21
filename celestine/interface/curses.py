@@ -9,10 +9,7 @@ from celestine.typed import (
 )
 from celestine.unicode import LINE_FEED
 from celestine.unicode.notational_systems import BRAILLE_PATTERNS
-from celestine.window.collection import (
-    Area,
-    Axis,
-)
+from celestine.window.collection import Rectangle
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -65,14 +62,10 @@ class Abstract(Abstract_):
         """
         frame.addstr(y_dot - 1, x_dot - 1, text, *extra)
 
-    def origin(self):
-        """"""
-        return (self.area.axis_x.minimum, self.area.axis_y.minimum)
-
     def render(self, view, item, **star):
         """"""
         text = item
-        (x_dot, y_dot) = self.origin()
+        (x_dot, y_dot) = self.area.origin
         self.add_string(view, x_dot, y_dot, text)
 
 
@@ -230,8 +223,7 @@ class Window(window):
         """"""
         curses = self.ring.package.curses
 
-        width = self.container.area.axis_x.size
-        height = self.container.area.axis_y.size
+        width, height = self.container.area.size
         data_box = (1, 1, width - 2, height - 2)
         container.data = curses.window(*data_box)
 
@@ -268,9 +260,8 @@ class Window(window):
         self.data(container)
         function(self.ring, container)
 
-        width = self.container.area.axis_x.size
-        height = self.container.area.axis_y.size
-        area = Area(Axis(1, width - 1), Axis(1, height - 1))
+        width, height = self.container.area.size
+        area = Rectangle(1, 1, width - 1, height - 1)
         container.spot(area)
         self._view.set(name, container)
 
@@ -286,7 +277,7 @@ class Window(window):
         curses.start_color()
 
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.container.area = Area(Axis(0, size_x), Axis(0, size_y))
+        self.container.area = Rectangle(0, 0, size_x, size_y)
 
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
@@ -320,8 +311,9 @@ class Window(window):
                         case curses.KEY_RIGHT:
                             self.cord_x += 1
 
-                    self.cord_x %= self.container.area.axis_x.size
-                    self.cord_y %= self.container.area.axis_y.size
+                    size_x, size_y = self.container.area.size
+                    self.cord_x %= size_x
+                    self.cord_y %= size_y
                     self.stdscr.move(self.cord_y, self.cord_x)
                 case curses.KEY_EXIT:
                     break
@@ -340,7 +332,7 @@ class Window(window):
             "image": Image,
             "label": Label,
         }
-        area = Area(Axis(0, 0), Axis(0, 0))
+        area = Rectangle(0, 0, 0, 0)
         super().__init__(ring, element, area, **star)
         self.background = None
         self.cord_x = 0

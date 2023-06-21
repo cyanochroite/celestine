@@ -6,10 +6,11 @@ from celestine.typed import (
     D,
     N,
     S,
+    GE,
+    Z,
 )
 from celestine.window.collection import (
-    Area,
-    Axis,
+    Rectangle,
     Collection,
     Item,
 )
@@ -19,6 +20,23 @@ class Container(Item, Collection):
     """"""
 
     item: D[S, Item]
+
+    def partition(self, partition_x: Z, partition_y: Z) -> GE[Rectangle, N, N]:
+        """"""
+
+        size_x, size_y = self.area.size
+
+        fragment_x = size_x // partition_x
+        fragment_y = size_y // partition_y
+
+        for index_y in range(partition_y):
+            ymin = self.area.upper + fragment_y * (index_y + 0)
+            ymax = self.area.upper + fragment_y * (index_y + 1)
+            for index_x in range(partition_x):
+                xmin = self.area.left + fragment_x * (index_x + 0)
+                xmax = self.area.left + fragment_x * (index_x + 1)
+
+                yield Rectangle(xmin, ymin, xmax, ymax)
 
     def call(self, name, text, action, **star):
         """"""
@@ -106,7 +124,7 @@ class Container(Item, Collection):
         for _, item in self.item.items():
             item.poke(x_dot, y_dot, **star)
 
-    def spot(self, area: Area, **star):
+    def spot(self, area: Rectangle, **star):
         """"""
         for _, item in self.item.items():
             item.spot(area, **star)
@@ -156,7 +174,7 @@ class Container(Item, Collection):
 class Grid(Container):
     """"""
 
-    def spot(self, area: Area, **star) -> N:
+    def spot(self, area: Rectangle, **star) -> N:
         """"""
         self.area.set(area.axis_x, area.axis_y)
 
@@ -212,42 +230,30 @@ class Grid(Container):
 class Drop(Container):
     """"""
 
-    def spot(self, area: Area, **star) -> N:
+    def spot(self, area: Rectangle, **star) -> N:
         """"""
-        self.area.set(area.axis_x, area.axis_y)
+        self.area.copy(area)
 
         partition_x = 1
         partition_y = len(self.item)
-        (axis_x, axis_y) = self.area.get(partition_x, partition_y)
 
+        box = self.partition(partition_x, partition_y)
         for _, item in self.item.items():
-            (xmin, xmax) = next(axis_x)
-            (ymin, ymax) = next(axis_y)
-
-            area = Area(Axis(xmin, xmax), Axis(ymin, ymax))
-            item.spot(area)
-
-        axis_x.close()
-        axis_y.close()
+            item.spot(next(box))
+        box.close()
 
 
 class Span(Container):
     """"""
 
-    def spot(self, area: Area, **star) -> N:
+    def spot(self, area: Rectangle, **star) -> N:
         """"""
-        self.area.set(area.axis_x, area.axis_y)
+        self.area.copy(area)
 
         partition_x = len(self.item)
         partition_y = 1
-        (axis_x, axis_y) = self.area.get(partition_x, partition_y)
 
+        box = self.partition(partition_x, partition_y)
         for _, item in self.item.items():
-            (xmin, xmax) = next(axis_x)
-            (ymin, ymax) = next(axis_y)
-
-            area = Area(Axis(xmin, xmax), Axis(ymin, ymax))
-            item.spot(area)
-
-        axis_x.close()
-        axis_y.close()
+            item.spot(next(box))
+        box.close()

@@ -71,41 +71,51 @@ class Axis:
         self.maximum = maximum
 
 
-class Area:
+class Rectangle:
     """"""
 
-    axis_x: Axis
-    axis_y: Axis
+    left: Z
+    upper: Z
+    right: Z
+    lower: Z
 
-    def get(self, partition_x: Z, partition_y: Z) -> T[AXIS, AXIS]:
-        """"""
-        axis_x = self.axis_x.get(partition_x)
-        axis_y = self.axis_y.get(partition_y)
-        return (axis_x, axis_y)
+    def copy(self, other):
+        self.left = other.left
+        self.upper = other.upper
+        self.right = other.right
+        self.lower = other.lower
 
-    def inside(self, x_dot: Z, y_dot: Z) -> B:
-        """"""
-        return self.axis_x.inside(x_dot) and self.axis_y.inside(y_dot)
+    def within(self, dox_x: Z, dot_y: Z) -> B:
+        test_x = self.left <= dox_x < self.right
+        test_y = self.upper <= dot_y < self.lower
+        return test_x and test_y
 
-    def set(self, axis_x: Axis, axis_y: Axis) -> N:
-        """"""
-        self.axis_x.set(axis_x.minimum, axis_x.maximum)
-        self.axis_y.set(axis_y.minimum, axis_y.maximum)
+    @property
+    def origin(self) -> T[Z, Z]:
+        return (self.left, self.upper)
 
     @property
     def size(self) -> T[Z, Z]:
         """"""
-        return (self.axis_x.size, self.axis_y.size)
+        return (self.right - self.left, self.lower - self.upper)
 
-    def __init__(self, axis_x: Axis, axis_y: Axis) -> N:
+    @property
+    def value(self) -> T[Z, Z, Z, Z]:
         """"""
-        self.axis_x = Axis(axis_x.minimum, axis_x.maximum)
-        self.axis_y = Axis(axis_y.minimum, axis_y.maximum)
+        return (self.left, self.upper, self.right, self.lower)
+
+    def __init__(self, left: Z, upper: Z, right: Z, lower: Z) -> N:
+        """"""
+        self.left = left
+        self.upper = upper
+        self.right = right
+        self.lower = lower
 
 
 class Item(Object):
     """"""
 
+    area: Rectangle
     name: S  # The key to use to find this in the window dictionary.
 
     def draw(self, ring, view, **star):
@@ -114,15 +124,15 @@ class Item(Object):
 
     def poke(self, x_dot: Z, y_dot: Z, **star) -> B:
         """"""
-        return self.area.inside(x_dot, y_dot)
+        return self.area.within(x_dot, y_dot)
 
-    def spot(self, area: Area):
+    def spot(self, area: Rectangle):
         """"""
         raise NotImplementedError(area)
 
-    def __init__(self, name: S, area: Area, **star) -> N:
+    def __init__(self, name: S, area: Rectangle, **star) -> N:
         super().__init__(**star)
-        self.area = Area(area.axis_x, area.axis_y)
+        self.area = Rectangle(*area.value)
         self.name = name
 
 
