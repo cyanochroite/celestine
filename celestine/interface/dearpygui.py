@@ -1,10 +1,8 @@
 """"""
 
-from celestine import load
 from celestine.typed import (
     N,
     R,
-    S,
 )
 from celestine.window.collection import Rectangle
 from celestine.window.element import Abstract as Abstract_

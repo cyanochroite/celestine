@@ -22,55 +22,6 @@ class Object:
         super().__init__()
 
 
-class Axis:
-    """"""
-
-    minimum: Z
-    maximum: Z
-
-    def get(self, partition: Z) -> AXIS:
-        """"""
-        if partition <= 0:
-            raise ValueError("need: partition > 0")
-
-        distance = self.maximum - self.minimum
-        fragment = int(distance // partition)
-        position = self.minimum
-
-        indexer = 0
-        while True:
-            minimum = indexer * fragment + position
-            indexer += 1
-            maximum = indexer * fragment + position
-            indexer %= partition
-            yield (minimum, maximum)
-
-    def inside(self, midterm: Z) -> B:
-        """"""
-        return self.minimum <= midterm < self.maximum
-
-    def set(self, minimum: Z, maximum: Z) -> N:
-        """"""
-        if minimum < 0:
-            raise ValueError("need: minimum >= 0")
-        if maximum < 0:
-            raise ValueError("need: maximum >= 0")
-        if minimum > maximum:
-            raise ValueError("need: minimum <= maximum")
-
-        self.minimum = minimum
-        self.maximum = maximum
-
-    @property
-    def size(self) -> Z:
-        """"""
-        return self.maximum - self.minimum
-
-    def __init__(self, minimum: Z, maximum: Z) -> N:
-        self.minimum = minimum
-        self.maximum = maximum
-
-
 class Rectangle:
     """"""
 
@@ -80,18 +31,21 @@ class Rectangle:
     lower: Z
 
     def copy(self, other):
+        """Copy the values from another object."""
         self.left = other.left
         self.upper = other.upper
         self.right = other.right
         self.lower = other.lower
 
     def within(self, dox_x: Z, dot_y: Z) -> B:
-        test_x = self.left <= dox_x < self.right
-        test_y = self.upper <= dot_y < self.lower
+        """Test that click inside us."""
+        test_x = self.left <= dox_x <= self.right
+        test_y = self.upper <= dot_y <= self.lower
         return test_x and test_y
 
     @property
     def origin(self) -> T[Z, Z]:
+        """"""
         return (self.left, self.upper)
 
     @property
@@ -120,7 +74,7 @@ class Item(Object):
 
     def draw(self, ring, view, **star):
         """"""
-        raise NotImplementedError(area)
+        raise NotImplementedError(ring, view)
 
     def poke(self, x_dot: Z, y_dot: Z, **star) -> B:
         """"""
@@ -162,7 +116,7 @@ class Collection(Object):
         self.item = {}
         super().__init__(**star)
 
-    def __iter__(self) -> GE[S, N, N]:
+    def __iter__(self) -> GE[T[S, Item], N, N]:
         """"""
         yield from self.item.items()
 

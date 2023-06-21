@@ -3,16 +3,16 @@
 import math
 
 from celestine.typed import (
+    GE,
     D,
     N,
     S,
-    GE,
     Z,
 )
 from celestine.window.collection import (
-    Rectangle,
     Collection,
     Item,
+    Rectangle,
 )
 
 
@@ -24,6 +24,7 @@ class Container(Item, Collection):
     def partition(self, partition_x: Z, partition_y: Z) -> GE[Rectangle, N, N]:
         """"""
 
+        items = iter(self.item.items())
         size_x, size_y = self.area.size
 
         fragment_x = size_x // partition_x
@@ -36,7 +37,9 @@ class Container(Item, Collection):
                 xmin = self.area.left + fragment_x * (index_x + 0)
                 xmax = self.area.left + fragment_x * (index_x + 1)
 
-                yield Rectangle(xmin, ymin, xmax, ymax)
+                _, item = next(items)
+                rectangle = Rectangle(xmin, ymin, xmax, ymax)
+                item.spot(rectangle)
 
     def call(self, name, text, action, **star):
         """"""
@@ -96,21 +99,23 @@ class Container(Item, Collection):
             ),
         )
 
-    def image(self, name, path):
+    def image(self, name, path, **star):
         """A thumbnail image of a big picture."""
         self.save(
             self._image(
                 name,
                 path,
+                **star,
             )
         )
 
-    def label(self, name, text):
+    def label(self, name, text, **star):
         """"""
         self.save(
             self._label(
                 name,
                 text,
+                **star,
             )
         )
 
@@ -174,29 +179,22 @@ class Container(Item, Collection):
 class Grid(Container):
     """"""
 
+    def tag(self) -> S:
+        """"""
+        length = len(self.item)
+        range_x = length % self.width
+        range_y = length // self.width
+        name = f"{self.name}_{range_x}-{range_y}"
+        return name
+
     def spot(self, area: Rectangle, **star) -> N:
         """"""
-        self.area.set(area.axis_x, area.axis_y)
+        self.area.copy(area)
 
         partition_x = self.width
         partition_y = math.ceil(len(self.item) / self.width)
-        (axis_x, axis_y) = self.area.get(partition_x, partition_y)
 
-        items = iter(self)
-
-        for _ in range(partition_y):
-            (ymin, ymax) = next(axis_y)
-
-            for _ in range(partition_x):
-                (xmin, xmax) = next(axis_x)
-
-                (_, item) = next(items)
-
-                area = Area(Axis(xmin, xmax), Axis(ymin, ymax))
-                item.spot(area)
-
-        axis_x.close()
-        axis_y.close()
+        self.partition(partition_x, partition_y)
 
     def __init__(
         self,
@@ -220,6 +218,7 @@ class Grid(Container):
         )
 
         self.width = width
+        self.height = height
 
         for range_y in range(height):
             for range_x in range(width):
@@ -237,10 +236,7 @@ class Drop(Container):
         partition_x = 1
         partition_y = len(self.item)
 
-        box = self.partition(partition_x, partition_y)
-        for _, item in self.item.items():
-            item.spot(next(box))
-        box.close()
+        self.partition(partition_x, partition_y)
 
 
 class Span(Container):
@@ -253,7 +249,4 @@ class Span(Container):
         partition_x = len(self.item)
         partition_y = 1
 
-        box = self.partition(partition_x, partition_y)
-        for _, item in self.item.items():
-            item.spot(next(box))
-        box.close()
+        self.partition(partition_x, partition_y)

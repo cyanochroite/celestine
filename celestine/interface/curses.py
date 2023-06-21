@@ -2,7 +2,6 @@
 
 import io
 
-from celestine import load
 from celestine.typed import (
     N,
     R,
@@ -127,7 +126,7 @@ class Image(Abstract, Image_):
         """"""
         curses = ring.package.curses
 
-        (x_dot, y_dot) = self.origin()
+        (x_dot, y_dot) = self.area.origin
 
         if not ring.package.pillow:
             self.add_string(

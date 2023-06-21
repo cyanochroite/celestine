@@ -1,6 +1,5 @@
 """"""
 
-from celestine import load
 from celestine.typed import (
     N,
     R,

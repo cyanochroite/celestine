@@ -26,7 +26,6 @@ def setup(*, ring: R, window: A, **star) -> N:
     images = iter(images)
 
     grid = window.load("grid")
-    for _, line in grid.item.items():
-        for _, item in line.item.items():
-            image = next(images)
-            item.update(ring, image)
+    for _, item in grid.item.items():
+        image = next(images)
+        item.update(ring, image)

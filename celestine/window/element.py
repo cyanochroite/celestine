@@ -2,21 +2,17 @@
 
 import math
 
-from celestine import load
 from celestine.typed import (
     TA,
+    A,
+    P,
     R,
     T,
     Z,
-    A,
-    S,
-    N,
-    B,
-    P,
 )
 from celestine.window.collection import (
-    Rectangle,
     Item,
+    Rectangle,
 )
 
 BOX: TA = T[Z, Z, Z, Z]
@@ -166,8 +162,6 @@ class Image(Abstract):
 
         best_x = min(area_x, down_x)
         best_y = min(area_y, down_y)
-
-        size = moo
 
         self.image = self.image.resize(
             size=(best_x, best_y),
