@@ -1,13 +1,12 @@
 """"""
 
+import enum
 import math
 
 from celestine.typed import (
-    GE,
     D,
     N,
     S,
-    Z,
 )
 from celestine.window.collection import (
     Collection,
@@ -16,32 +15,19 @@ from celestine.window.collection import (
 )
 
 
+class Zone(enum.Enum):
+    """"""
+
+    DROP = enum.auto()
+    GRID = enum.auto()
+    NONE = enum.auto()
+    SPAN = enum.auto()
+
+
 class Container(Item, Collection):
     """"""
 
     item: D[S, Item]
-
-    def partition(
-        self, partition_x: Z, partition_y: Z
-    ) -> GE[Rectangle, N, N]:
-        """"""
-
-        items = iter(self.item.items())
-        size_x, size_y = self.area.size
-
-        fragment_x = size_x // partition_x
-        fragment_y = size_y // partition_y
-
-        for index_y in range(partition_y):
-            ymin = self.area.upper + fragment_y * (index_y + 0)
-            ymax = self.area.upper + fragment_y * (index_y + 1)
-            for index_x in range(partition_x):
-                xmin = self.area.left + fragment_x * (index_x + 0)
-                xmax = self.area.left + fragment_x * (index_x + 1)
-
-                _, item = next(items)
-                rectangle = Rectangle(xmin, ymin, xmax, ymax)
-                item.spot(rectangle)
 
     def call(self, name, text, action, **star):
         """"""
@@ -57,49 +43,10 @@ class Container(Item, Collection):
             )
         )
 
-    def drop(self, name: S, **star):
+    def draw(self, ring, view, **star):
         """"""
-        return self.item_set(
-            name,
-            Grid(
-                self.ring,
-                name,
-                self.window,
-                self.element,
-                self.area,
-                mode="drop",
-                **star,
-            ),
-        )
-
-    def grid(self, name, **star):
-        """"""
-        return self.item_set(
-            name,
-            Grid(
-                self.ring,
-                name,
-                self.window,
-                self.element,
-                self.area,
-                **star,
-            ),
-        )
-
-    def span(self, name, **star):
-        """"""
-        return self.item_set(
-            name,
-            Grid(
-                self.ring,
-                name,
-                self.window,
-                self.element,
-                self.area,
-                mode="span",
-                **star,
-            ),
-        )
+        for _, item in self.item.items():
+            item.draw(ring, view, **star)
 
     def image(self, name, path, **star):
         """A thumbnail image of a big picture."""
@@ -121,20 +68,48 @@ class Container(Item, Collection):
             )
         )
 
-    def draw(self, ring, view, **star):
-        """"""
-        for _, item in self.item.items():
-            item.draw(ring, view, **star)
-
     def poke(self, x_dot, y_dot, **star):
         """"""
         for _, item in self.item.items():
             item.poke(x_dot, y_dot, **star)
 
-    def spot(self, area: Rectangle, **star):
+    def spot(self, area: Rectangle, **star) -> N:
         """"""
-        for _, item in self.item.items():
-            item.spot(area, **star)
+        self.area.copy(area)
+
+        match self.mode:
+            case Zone.DROP:
+                partition_x = 1
+                partition_y = len(self.item)
+            case Zone.SPAN:
+                partition_x = len(self.item)
+                partition_y = 1
+            case Zone.GRID:
+                partition_x = self.width
+                partition_y = math.ceil(len(self.item) / self.width)
+            case Zone.NONE:
+                partition_x = 1
+                partition_y = 1
+
+        size_x, size_y = self.area.size
+        index = 0
+
+        fragment_x = size_x // partition_x
+        fragment_y = size_y // partition_y
+
+        items = self.item.items()
+        for _, item in items:
+            index_x = index % partition_x
+            index_y = min(index // partition_x, partition_y - 1)
+            index += 1
+
+            ymin = self.area.upper + fragment_y * (index_y + 0)
+            ymax = self.area.upper + fragment_y * (index_y + 1)
+            xmin = self.area.left + fragment_x * (index_x + 0)
+            xmax = self.area.left + fragment_x * (index_x + 1)
+
+            rectangle = Rectangle(xmin, ymin, xmax, ymax)
+            item.spot(rectangle)
 
     def view(self, name, text, action):
         """"""
@@ -146,6 +121,21 @@ class Container(Item, Collection):
             argument={},
         )
         return self.save(item)
+
+    def zone(self, name: S, *, mode=Zone.SPAN, **star):
+        """"""
+        return self.item_set(
+            name,
+            Container(
+                self.ring,
+                name,
+                self.window,
+                self.element,
+                self.area,
+                mode=mode,
+                **star,
+            ),
+        )
 
     def __enter__(self):
         return self
@@ -160,8 +150,12 @@ class Container(Item, Collection):
         window,
         element,
         area,
+        *,
+        mode=Zone.NONE,
+        row=0,
+        col=0,
         **star,
-    ):
+    ) -> N:
         self.ring = ring
 
         self.window = window
@@ -176,49 +170,6 @@ class Container(Item, Collection):
         self.turn = window.turn
 
         super().__init__(name, area, **star)
-
-
-class Grid(Container):
-    """"""
-
-    def spot(self, area: Rectangle, **star) -> N:
-        """"""
-        self.area.copy(area)
-
-        match self.mode:
-            case "drop":
-                partition_x = 1
-                partition_y = len(self.item)
-            case "span":
-                partition_x = len(self.item)
-                partition_y = 1
-            case "grid":
-                partition_x = self.width
-                partition_y = math.ceil(len(self.item) / self.width)
-
-        self.partition(partition_x, partition_y)
-
-    def __init__(
-        self,
-        ring,
-        name,
-        window,
-        element,
-        area,
-        *,
-        mode="grid",
-        row=0,
-        col=0,
-        **star,
-    ) -> N:
-        super().__init__(
-            ring,
-            name,
-            window,
-            element,
-            area,
-            **star,
-        )
 
         self.width = col
         self.height = row

@@ -6,7 +6,10 @@ from celestine.typed import (
 )
 
 from .collection import Collection2
-from .container import Container
+from .container import (
+    Container,
+    Zone,
+)
 
 
 class Window:
@@ -25,10 +28,9 @@ class Window:
 
     def view(self, name, function):
         """"""
-        container = self.container.drop(name)
+        container = self.container.zone(name, mode=Zone.DROP)
         self.data(container)
         function(self.ring, container)
-        container.spot(self.container.area)
         self._view.set(name, container)
 
     def extension(self) -> L[S]:
@@ -76,6 +78,7 @@ class Window:
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        self.container.spot(self.container.area)
         if exc_type:
             raise exc_type
         try:
