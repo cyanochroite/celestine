@@ -105,19 +105,19 @@ class Label(Abstract, Label_):
 class Window(Window_):
     """"""
 
-    def data(self, container):
+    def setup(self, container):
         """"""
         tkinter = self.ring.package.tkinter
 
-        container.data = tkinter.Frame(
-            self.root,
+        container.canvas = tkinter.Frame(
+            self.canvas,
             padx=5,
             pady=5,
             bg="skyblue",
             width=1920,
             height=1080,
         )
-        container.data.place(x=0, y=0)
+        container.canvas.place(x=0, y=0)
 
     def extension(self):
         """"""
@@ -135,23 +135,23 @@ class Window(Window_):
 
     def turn(self, page, **star):
         super().turn(page, **star)
-        self.page.data.tkraise()
+        self.page.canvas.tkraise()
 
     def __enter__(self):
         tkinter = self.ring.package.tkinter
 
         super().__enter__()
-        self.root = tkinter.Tk()
-        self.root.title(self.ring.language.APPLICATION_TITLE)
-        self.root.geometry("1920x1080")
-        self.root.minsize(640, 480)
-        self.root.maxsize(3840, 2160)
-        self.root.config(bg="blue")
+        self.canvas = tkinter.Tk()
+        self.canvas.title(self.ring.language.APPLICATION_TITLE)
+        self.canvas.geometry("1920x1080")
+        self.canvas.minsize(640, 480)
+        self.canvas.maxsize(3840, 2160)
+        self.canvas.config(bg="blue")
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-        self.root.mainloop()
+        self.canvas.mainloop()
         return False
 
     def __init__(self, ring: R, **star) -> N:
@@ -162,4 +162,3 @@ class Window(Window_):
         }
         area = Rectangle(0, 0, 1280, 1080)
         super().__init__(ring, element, area, **star)
-        self.root = None

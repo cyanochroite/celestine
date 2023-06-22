@@ -2,7 +2,7 @@
 
 from celestine.session.session import Session
 from celestine.typed import N
-from celestine.window.container import Container as View
+from celestine.window.container import View
 
 
 def main(ring: Session, view: View) -> N:

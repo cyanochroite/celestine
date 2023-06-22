@@ -1,6 +1,7 @@
 """"""
 
 import io
+import math
 
 from celestine.typed import (
     N,
@@ -14,6 +15,7 @@ from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
 from celestine.window.window import Window as window
+from celestine.window.container import View, Zone
 
 color_index = 8  # skip the 8 reserved colors
 color_table = {}
@@ -58,6 +60,8 @@ class Abstract(Abstract_):
         Curses swaps x and y.
 
         Also minus the window border to get local location.
+
+        Text length need be size-1 long.
         """
         frame.addstr(y_dot - 1, x_dot - 1, text, *extra)
 
@@ -218,26 +222,26 @@ class Label(Abstract, Label_):
 class Window(window):
     """"""
 
-    def data(self, container):
+    def setup(self, container):
         """"""
         curses = self.ring.package.curses
-
-        width, height = self.container.area.size
-        data_box = (1, 1, width - 2, height - 2)
-        container.data = curses.window(*data_box)
+        container.canvas = curses.window(*self.area.value)
 
     def draw(self, **star):
         """"""
         curses = self.ring.package.curses
 
         # Do normal draw stuff.
-        self.data(self.page)
+        # self.setup(self.page)
+
+        value = self.container.area.value
+        self.page.canvas = curses.window(*value)
 
         super().draw(**star)
 
         self.stdscr.noutrefresh()
         self.background.noutrefresh()
-        self.page.data.noutrefresh()
+        self.page.canvas.noutrefresh()
         curses.doupdate()
 
         # Reset the global color counter.
@@ -255,12 +259,11 @@ class Window(window):
 
     def view(self, name, function):
         """"""
-        container = self.container.drop(name)
-        self.data(container)
+        container = self.container.zone(name, mode=Zone.DROP)
+        self.setup(container)
         function(self.ring, container)
 
-        width, height = self.container.area.size
-        area = Rectangle(1, 1, width - 1, height - 1)
+        area = Rectangle(*self.container.area.value)
         container.spot(area)
         self._view.set(name, container)
 
@@ -276,18 +279,30 @@ class Window(window):
         curses.start_color()
 
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.container.area = Rectangle(0, 0, size_x, size_y)
+        self.area = Rectangle(0, 0, size_x, size_y)
 
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
 
-        header_box = (1, 0, size_x - 2, 1)
+        header_box = (0, 0, size_x, 1)
         header = curses.subwindow(self.background, *header_box)
-        header.addstr(self.ring.language.APPLICATION_TITLE)
+        header.addstr(0, 1, self.ring.language.APPLICATION_TITLE)
 
-        footer_box = (1, size_y - 1, size_x - 2, 1)
+        footer_box = (0, size_y - 1, size_x, 1)
         footer = curses.subwindow(self.background, *footer_box)
-        footer.addstr(self.ring.language.CURSES_EXIT)
+        footer.addstr(0, 1, self.ring.language.CURSES_EXIT)
+
+        #
+        area = Rectangle(1, 1, size_x - 2, size_y - 2)
+        self.container = View(
+            self.ring,
+            "window",
+            self,
+            self.element,
+            area,
+            offset_x=0,
+            offset_y=0,
+        )
 
         return self
 
@@ -310,10 +325,13 @@ class Window(window):
                         case curses.KEY_RIGHT:
                             self.cord_x += 1
 
-                    size_x, size_y = self.container.area.size
+                    size_x, size_y = self.area.size
                     self.cord_x %= size_x
                     self.cord_y %= size_y
-                    self.stdscr.move(self.cord_y, self.cord_x)
+                    self.stdscr.move(
+                        math.floor(self.cord_y),
+                        math.floor(self.cord_x),
+                    )
                 case curses.KEY_EXIT:
                     break
                 case curses.KEY_CLICK:
@@ -334,7 +352,9 @@ class Window(window):
         area = Rectangle(0, 0, 0, 0)
         super().__init__(ring, element, area, **star)
         self.background = None
-        self.cord_x = 0
-        self.cord_y = 0
+        self.cord_x = 0.5
+        self.cord_y = 0.5
         self.frame = None
         self.stdscr = None
+
+        self.container = None

@@ -7,20 +7,21 @@ from celestine.typed import (
 
 from .collection import Collection2
 from .container import (
-    Container,
+    View,
     Zone,
 )
 
 
-class Window:
+class Window(View):
     """"""
 
-    def data(self, container):
+    def setup(self, container):
         """"""
+        container.canvas = self.canvas
 
     def draw(self, **star):
         """"""
-        self.page.draw(self.ring, self.page.data, **star)
+        self.page.draw(self.ring, self.page.canvas, **star)
 
     def code(self, name, function):
         """"""
@@ -28,8 +29,8 @@ class Window:
 
     def view(self, name, function):
         """"""
-        container = self.container.zone(name, mode=Zone.DROP)
-        self.data(container)
+        container = self.zone(name, mode=Zone.DROP)
+        self.setup(container)
         function(self.ring, container)
         self._view.set(name, container)
 
@@ -78,7 +79,7 @@ class Window:
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        self.container.spot(self.container.area)
+        self.spot(self.area)
         if exc_type:
             raise exc_type
         try:
@@ -99,7 +100,7 @@ class Window:
         self.task = Collection2()
         self._view = Collection2()
 
-        self.container = Container(
+        super().__init__(
             self.ring,
             "window",
             self,

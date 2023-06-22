@@ -30,6 +30,8 @@ from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
 from celestine.window.window import Window as Window_
 
+from celestine.window.container import Zone
+
 COLLECTION = _collection
 
 
@@ -294,11 +296,11 @@ class Label(Abstract, Label_):
 class Window(Window_):
     """"""
 
-    def data(self, container):
+    def setup(self, container):
         """"""
         collection = data.collection.make(container.name)
         collection.hide()
-        container.data = collection
+        container.canvas = collection
 
     def extension(self):
         """"""
@@ -330,10 +332,9 @@ class Window(Window_):
 
     def page(self, name, document):
         """"""
-        page = self.container.drop(name)
+        page = self.zone(name, mode=Zone.DROP)
         document(page)
-        width = self.container.area.axis_x.size
-        height = self.container.area.axis_y.size
+        width, height = self.area.size
         page.spot(0, 0, width, height)
 
         self.item_set(name, page)

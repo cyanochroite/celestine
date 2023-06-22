@@ -79,15 +79,11 @@ class Image(Abstract, Image_):
 class Window(Window_):
     """"""
 
-    def data(self, container):
-        """"""
-        container.data = self.book
-
     def draw(self, **star):
         """"""
         pygame = self.ring.package.pygame
 
-        self.book.fill((0, 0, 0))
+        self.canvas.fill((0, 0, 0))
 
         super().draw(font=self.font, **star)
 
@@ -141,8 +137,8 @@ class Window(Window_):
             pygame.display.set_icon(icon)
 
         def set_mode():
-            size = self.container.area.size
-            self.book = pygame.display.set_mode(size)
+            size = self.area.size
+            self.canvas = pygame.display.set_mode(size)
 
         super().__enter__()
         set_mode()
@@ -178,5 +174,4 @@ class Window(Window_):
         }
         area = Rectangle(0, 0, 1280, 960)
         super().__init__(ring, element, area, **star)
-        self.book = None
         self.font = None

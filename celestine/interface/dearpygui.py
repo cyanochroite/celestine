@@ -11,6 +11,8 @@ from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
 from celestine.window.window import Window as Window_
 
+from celestine.window.container import Zone
+
 
 class Abstract(Abstract_):
     """"""
@@ -140,13 +142,13 @@ class Window(Window_):
     def view(self, name, document):
         dearpygui = self.ring.package.dearpygui
 
-        value = self.container.drop(name)
+        value = self.zone(name, mode=Zone.DROP)
         value.data = dearpygui.window(tag=value.name)
         self._view.set(name, value)
         with value.data:
             dearpygui.configure_item(value.name, show=False)
             document(self.ring, value)
-            value.spot(self.container.area)
+            value.spot(self.area)
             value.draw(self.ring, None, make=True)
 
     def draw(self, **star):
@@ -171,7 +173,7 @@ class Window(Window_):
 
         title = self.ring.language.APPLICATION_TITLE
         dearpygui.create_context()
-        width, height = self.container.area.origin
+        width, height = self.area.origin
         dearpygui.create_viewport(
             title=title,
             small_icon="celestine_small.ico",
@@ -200,7 +202,6 @@ class Window(Window_):
         dearpygui.show_viewport(minimized=False, maximized=False)
         dearpygui.start_dearpygui()
         dearpygui.destroy_context()
-        self.container = None
         return False
 
     def __init__(self, ring: R, **star) -> N:

@@ -24,7 +24,14 @@ class Zone(enum.Enum):
     SPAN = enum.auto()
 
 
-class Container(Item, Collection):
+class Image(enum.Enum):
+    """"""
+
+    FILL = enum.auto()
+    FULL = enum.auto()
+
+
+class View(Item, Collection):
     """"""
 
     item: D[S, Item]
@@ -126,7 +133,7 @@ class Container(Item, Collection):
         """"""
         return self.item_set(
             name,
-            Container(
+            View(
                 self.ring,
                 name,
                 self.window,
@@ -160,7 +167,7 @@ class Container(Item, Collection):
 
         self.window = window
 
-        self.data = None
+        self.canvas = None
         #
         self.element = element
         self._button = element["button"]
