@@ -71,16 +71,24 @@ class Item(Object):
 
     area: Rectangle
     name: S  # The key to use to find this in the window dictionary.
+    hidden: B
 
-    def draw(self, ring, view, **star):
+    def draw(self, ring, canvas, **star) -> N:
         """"""
-        raise NotImplementedError(ring, view)
+        if self.hidden:
+            return
+
+    def make(self, ring, canvas, **star) -> N:
+        """"""
 
     def poke(self, x_dot: Z, y_dot: Z, **star) -> B:
         """"""
+        if self.hidden:
+            return False
+
         return self.area.within(x_dot, y_dot)
 
-    def spot(self, area: Rectangle):
+    def spot(self, area: Rectangle) -> N:
         """"""
         raise NotImplementedError(area)
 
@@ -88,6 +96,7 @@ class Item(Object):
         super().__init__(**star)
         self.area = Rectangle(*area.value)
         self.name = name
+        self.hidden = False
 
 
 class Collection(Object):

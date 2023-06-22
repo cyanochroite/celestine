@@ -1,6 +1,7 @@
 """"""
 
 from celestine.typed import (
+    A,
     L,
     S,
 )
@@ -15,13 +16,9 @@ from .container import (
 class Window(View):
     """"""
 
-    def setup(self, container):
+    def setup(self, container) -> A:
         """"""
-        container.canvas = self.canvas
-
-    def draw(self, **star):
-        """"""
-        self.page.draw(self.ring, self.page.canvas, **star)
+        return self.canvas
 
     def code(self, name, function):
         """"""
@@ -30,7 +27,8 @@ class Window(View):
     def view(self, name, function):
         """"""
         container = self.zone(name, mode=Zone.DROP)
-        self.setup(container)
+        container.canvas = self.setup(container)
+        container.hidden = True
         function(self.ring, container)
         self._view.set(name, container)
 
@@ -64,25 +62,30 @@ class Window(View):
 
     def turn(self, page, **star):
         """"""
+        self.page.hidden = True
         self.page = self._view.get(page)
+        self.page.hidden = False
+
         self.turn_page = page
-        self.draw(make=True)
+        self.draw(self.ring, self.canvas)
 
     def work(self, task, **star):
         """"""
         star.update(ring=self.ring)
         caller = self.task.get(task)
         caller(**star)
-        self.draw(make=False)
+        self.draw(self.ring, self.canvas)
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.spot(self.area)
+        self.make(self.ring, self.canvas)
         if exc_type:
             raise exc_type
         try:
+            self.page = self._view.get(self.turn_page)
             self.turn(self.turn_page)
         except AttributeError as error:
             message = "Application has no functions whatsoever."

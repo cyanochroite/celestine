@@ -5,13 +5,12 @@ from celestine.typed import (
     R,
 )
 from celestine.window.collection import Rectangle
+from celestine.window.container import Zone
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
 from celestine.window.window import Window as Window_
-
-from celestine.window.container import Zone
 
 
 class Abstract(Abstract_):

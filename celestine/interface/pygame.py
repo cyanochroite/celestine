@@ -2,6 +2,7 @@
 
 from celestine import load
 from celestine.typed import (
+    A,
     L,
     N,
     R,
@@ -18,36 +19,39 @@ from celestine.window.window import Window as Window_
 class Abstract(Abstract_):
     """"""
 
-    def render(self, collection, item, **star):
+    def render(self, canvas, item, **star):
         """"""
-        collection.blit(item, self.area.origin)
+        canvas.blit(item, self.area.origin)
 
 
 class Button(Abstract, Button_):
     """"""
 
-    def draw(self, ring: R, view, *, font, **star):
+    def draw(self, ring: R, canvas: A, *, font, **star):
         """"""
+
         text = f"Button{self.data}"
 
         item = font.render(text, True, (255, 255, 255))
-        self.render(view, item, **star)
+        self.render(canvas, item, **star)
 
 
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, ring: R, view, *, font, **star):
+    def draw(self, ring: R, canvas: A, *, font, **star):
         """"""
+
         item = font.render(self.data, True, (255, 255, 255))
-        self.render(view, item, **star)
+        self.render(canvas, item, **star)
 
 
 class Image(Abstract, Image_):
     """"""
 
-    def draw(self, ring: R, view, *, mode="hi", **star):
+    def draw(self, ring: R, canvas: A, *, mode="hi", **star):
         """"""
+
         pillow = ring.package.pillow
         pygame = ring.package.pygame
 
@@ -73,19 +77,19 @@ class Image(Abstract, Image_):
             size = self.resize((image.get_width(), image.get_height()))
             image = pygame.transform.scale(image, size)
 
-        self.render(view, image, **star)
+        self.render(canvas, image, **star)
 
 
 class Window(Window_):
     """"""
 
-    def draw(self, **star):
+    def draw(self, ring: R, canvas: A, **star):
         """"""
         pygame = self.ring.package.pygame
 
         self.canvas.fill((0, 0, 0))
 
-        super().draw(font=self.font, **star)
+        super().draw(ring, canvas, font=self.font, **star)
 
         pygame.display.flip()
 
@@ -161,7 +165,7 @@ class Window(Window_):
                     # TODO: This triggers on all mouse buttons
                     # including scroll wheel! That is bad.
                     (x_dot, y_dot) = pygame.mouse.get_pos()
-                    self.page.poke(x_dot, y_dot)
+                    self.poke(x_dot, y_dot)
 
         pygame.quit()
         return False

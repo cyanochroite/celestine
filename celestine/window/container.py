@@ -4,8 +4,11 @@ import enum
 import math
 
 from celestine.typed import (
+    A,
+    B,
     D,
     N,
+    R,
     S,
 )
 from celestine.window.collection import (
@@ -36,7 +39,7 @@ class View(Item, Collection):
 
     item: D[S, Item]
 
-    def call(self, name, text, action, **star):
+    def call(self, name, text, action, **star) -> N:
         """"""
         self.save(
             self._button(
@@ -50,12 +53,20 @@ class View(Item, Collection):
             )
         )
 
-    def draw(self, ring, view, **star):
+    def draw(self, ring: R, canvas: A, **star) -> N:
+        """"""
+        if self.hidden:
+            return
+
+        for _, item in self.item.items():
+            item.draw(ring, canvas, **star)
+
+    def make(self, ring: R, canvas: A, **star) -> N:
         """"""
         for _, item in self.item.items():
-            item.draw(ring, view, **star)
+            item.make(ring, canvas, **star)
 
-    def image(self, name, path, **star):
+    def image(self, name, path, **star) -> N:
         """A thumbnail image of a big picture."""
         self.save(
             self._image(
@@ -65,7 +76,7 @@ class View(Item, Collection):
             )
         )
 
-    def label(self, name, text, **star):
+    def label(self, name, text, **star) -> N:
         """"""
         self.save(
             self._label(
@@ -75,8 +86,11 @@ class View(Item, Collection):
             )
         )
 
-    def poke(self, x_dot, y_dot, **star):
+    def poke(self, x_dot, y_dot, **star) -> B:
         """"""
+        if self.hidden:
+            return False
+
         for _, item in self.item.items():
             item.poke(x_dot, y_dot, **star)
 

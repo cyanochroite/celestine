@@ -1,6 +1,7 @@
 """"""
 
 from celestine.typed import (
+    A,
     N,
     R,
 )
@@ -15,9 +16,9 @@ from celestine.window.window import Window as Window_
 class Abstract(Abstract_):
     """"""
 
-    def render(self, view, item, *, ring, **star):
+    def render(self, canvas, item, *, ring, **star):
         """"""
-        self.item = item(view, **star)
+        self.item = item(canvas, **star)
 
         width, height = self.area.size
         dot_x, dot_y = self.area.origin
@@ -36,34 +37,28 @@ class Button(Abstract, Button_):
         """"""
         self.call(self.action, **self.argument)
 
-    def draw(self, ring: R, view, *, make, **star):
+    def make(self, ring: R, canvas: A, **star):
         """"""
         tkinter = ring.package.tkinter
-
-        if not make:
-            return
 
         item = tkinter.Button
         star.update(command=self.callback)
         star.update(text=f"button:{self.data}")
-        self.render(view, item, ring=ring, **star)
+        self.render(canvas, item, ring=ring, **star)
 
 
 class Image(Abstract, Image_):
     """"""
 
-    def draw(self, ring: R, view, *, make, **star):
+    def make(self, ring: R, canvas: A, **star):
         """"""
         tkinter = ring.package.tkinter
-
-        if not make:
-            return
 
         self.image = tkinter.PhotoImage(file=self.path)
         star.update(image=self.image)
 
         item = tkinter.Label
-        self.render(view, item, ring=ring, **star)
+        self.render(canvas, item, ring=ring, **star)
 
     def update(self, ring: R, path, **star):
         """"""
@@ -87,19 +82,16 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, ring: R, view, *, make, **star):
+    def make(self, ring: R, canvas: A, **star):
         """"""
         tkinter = ring.package.tkinter
-
-        if not make:
-            return
 
         item = tkinter.Label
         star.update(fg="blue")
         star.update(height=4)
         star.update(text=f"label:{self.data}")
         star.update(width=100)
-        self.render(view, item, ring=ring, **star)
+        self.render(canvas, item, ring=ring, **star)
 
 
 class Window(Window_):

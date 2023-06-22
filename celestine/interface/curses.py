@@ -4,6 +4,7 @@ import io
 import math
 
 from celestine.typed import (
+    A,
     N,
     R,
 )
@@ -15,7 +16,6 @@ from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
 from celestine.window.window import Window as window
-from celestine.window.container import View, Zone
 
 color_index = 8  # skip the 8 reserved colors
 color_table = {}
@@ -55,7 +55,7 @@ def get_colors(curses, image):
 class Abstract(Abstract_):
     """"""
 
-    def add_string(self, frame, x_dot, y_dot, text, *extra):
+    def add_string(self, canvas, x_dot, y_dot, text, *extra):
         """
         Curses swaps x and y.
 
@@ -63,22 +63,22 @@ class Abstract(Abstract_):
 
         Text length need be size-1 long.
         """
-        frame.addstr(y_dot - 1, x_dot - 1, text, *extra)
+        canvas.addstr(y_dot - 1, x_dot - 1, text, *extra)
 
-    def render(self, view, item, **star):
+    def render(self, canvas, item, **star):
         """"""
         text = item
         (x_dot, y_dot) = self.area.origin
-        self.add_string(view, x_dot, y_dot, text)
+        self.add_string(canvas, x_dot, y_dot, text)
 
 
 class Button(Abstract, Button_):
     """"""
 
-    def draw(self, ring: R, view, **star):
+    def draw(self, ring: R, canvas: A, **star):
         """"""
         item = f"button:{self.data}"
-        self.render(view, item, **star)
+        self.render(canvas, item, **star)
 
 
 class Image(Abstract, Image_):
@@ -166,13 +166,13 @@ class Image(Abstract, Image_):
 
             index_y += 1
 
-    def draw(self, ring: R, view, **star):
+    def draw(self, ring: R, canvas: A, **star):
         """"""
         curses = ring.package.curses
         pillow = ring.package.pillow
 
         if not pillow:
-            self.render(ring, view, self.path.name, **star)
+            self.render(ring, canvas, self.path.name, **star)
             return
 
         self.cache = pillow.image_load(self.path)
@@ -207,16 +207,16 @@ class Image(Abstract, Image_):
         get_colors(curses, self.color.image)
 
         item = self.output()
-        self.render(ring, view, item, **star)
+        self.render(ring, canvas, item, **star)
 
 
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, ring: R, view, **star):
+    def draw(self, ring: R, canvas: A, **star):
         """"""
         item = f"label:{self.data}"
-        self.render(view, item, **star)
+        self.render(canvas, item, **star)
 
 
 class Window(window):
@@ -225,23 +225,22 @@ class Window(window):
     def setup(self, container):
         """"""
         curses = self.ring.package.curses
-        container.canvas = curses.window(*self.area.value)
+        return curses.window(*self.area.value)
 
-    def draw(self, **star):
+    def draw(self, ring: R, canvas: A, **star):
         """"""
         curses = self.ring.package.curses
 
         # Do normal draw stuff.
         # self.setup(self.page)
 
-        value = self.container.area.value
-        self.page.canvas = curses.window(*value)
+        canvas = curses.window(*self.area.value)
 
-        super().draw(**star)
+        super().draw(ring, canvas, **star)
 
         self.stdscr.noutrefresh()
         self.background.noutrefresh()
-        self.page.canvas.noutrefresh()
+        canvas.noutrefresh()
         curses.doupdate()
 
         # Reset the global color counter.
@@ -257,16 +256,6 @@ class Window(window):
 
         return []
 
-    def view(self, name, function):
-        """"""
-        container = self.container.zone(name, mode=Zone.DROP)
-        self.setup(container)
-        function(self.ring, container)
-
-        area = Rectangle(*self.container.area.value)
-        container.spot(area)
-        self._view.set(name, container)
-
     def __enter__(self):
         super().__enter__()
 
@@ -279,7 +268,7 @@ class Window(window):
         curses.start_color()
 
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.area = Rectangle(0, 0, size_x, size_y)
+        self.full = Rectangle(0, 0, size_x, size_y)
 
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
@@ -294,15 +283,7 @@ class Window(window):
 
         #
         area = Rectangle(1, 1, size_x - 2, size_y - 2)
-        self.container = View(
-            self.ring,
-            "window",
-            self,
-            self.element,
-            area,
-            offset_x=0,
-            offset_y=0,
-        )
+        self.area = area
 
         return self
 
@@ -325,7 +306,7 @@ class Window(window):
                         case curses.KEY_RIGHT:
                             self.cord_x += 1
 
-                    size_x, size_y = self.area.size
+                    size_x, size_y = self.full.size
                     self.cord_x %= size_x
                     self.cord_y %= size_y
                     self.stdscr.move(
@@ -354,7 +335,5 @@ class Window(window):
         self.background = None
         self.cord_x = 0.5
         self.cord_y = 0.5
-        self.frame = None
         self.stdscr = None
-
-        self.container = None
+        self.full = None
