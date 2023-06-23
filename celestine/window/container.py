@@ -59,19 +59,11 @@ class View(Item, Collection):
         for _, item in self.item.items():
             item.make(ring, **star)
 
-    def image(self, name, path, **star) -> N:
-        """A thumbnail image of a big picture."""
-        self.save(
-            self._image(
-                self.canvas,
-                name,
-                path,
-                **star,
-            )
-        )
-
-    def text(self, name, text, *, call="", **star) -> N:
+    def new(self, name, *, text="", path="", call="", **star) -> N:
         """"""
+        if text != "" and path != "":
+            raise AttributeError("text and path can't both be set")
+
         action = Call.NONE
         work = None
 
@@ -84,14 +76,24 @@ class View(Item, Collection):
             work = self.window.work
 
         if action == Call.NONE:
-            self.save(
-                self._label(
-                    self.canvas,
-                    name,
-                    text,
-                    **star,
+            if path:
+                self.save(
+                    self._image(
+                        self.canvas,
+                        name,
+                        path,
+                        **star,
+                    )
                 )
-            )
+            else:
+                self.save(
+                    self._label(
+                        self.canvas,
+                        name,
+                        text,
+                        **star,
+                    )
+                )
         else:
             self.save(
                 self._button(
