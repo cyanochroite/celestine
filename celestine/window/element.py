@@ -5,6 +5,7 @@ import math
 from celestine.typed import (
     TA,
     A,
+    N,
     P,
     R,
     T,
@@ -40,9 +41,9 @@ class Abstract(Item):
 class Button(Abstract):
     """"""
 
-    def poke(self, x_dot, y_dot):
+    def poke(self, ring: R, x_dot: Z, y_dot: Z, **star) -> N:
         """"""
-        if super().poke(x_dot, y_dot):
+        if super().poke(ring, x_dot, y_dot, **star):
             self.call(self.action, **self.argument)
 
     def __init__(

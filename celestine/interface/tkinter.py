@@ -110,7 +110,7 @@ class Window(Window_):
             ".png",
         ]
 
-    def setup(self, container):
+    def setup(self, name):
         """"""
         tkinter = self.ring.package.tkinter
 

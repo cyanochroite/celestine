@@ -4,11 +4,11 @@ import enum
 import math
 
 from celestine.typed import (
-    B,
     D,
     N,
     R,
     S,
+    Z,
 )
 from celestine.window.collection import (
     Collection,
@@ -31,6 +31,14 @@ class Image(enum.Enum):
 
     FILL = enum.auto()
     FULL = enum.auto()
+
+
+class Call(enum.Enum):
+    """"""
+
+    NONE = enum.auto()
+    VIEW = enum.auto()
+    WORK = enum.auto()
 
 
 class View(Item, Collection):
@@ -88,13 +96,49 @@ class View(Item, Collection):
             )
         )
 
-    def poke(self, x_dot, y_dot, **star) -> B:
+    def text(self, name, text, *, call="", **star) -> N:
+        """"""
+        action = Call.NONE
+        work = None
+
+        if call in self.window._view.item:
+            action = Call.VIEW
+            work = self.window.turn
+
+        if call in self.window.task.item:
+            action = Call.WORK
+            work = self.window.work
+
+        if action == Call.NONE:
+            self.save(
+                self._label(
+                    self.canvas,
+                    name,
+                    text,
+                    **star,
+                )
+            )
+        else:
+            self.save(
+                self._button(
+                    self.canvas,
+                    name,
+                    text,
+                    call=work,  # the window function to call
+                    action=call,  # the name of the user function
+                    argument=star,
+                    ring=self.ring,
+                    **star,
+                )
+            )
+
+    def poke(self, ring: R, x_dot: Z, y_dot: Z, **star) -> N:
         """"""
         if self.hidden:
             return False
 
         for _, item in self.item.items():
-            item.poke(x_dot, y_dot, **star)
+            item.poke(ring, x_dot, y_dot, **star)
 
     def spot(self, area: Rectangle, **star) -> N:
         """"""

@@ -57,6 +57,8 @@ def begin_session(argument_list: L[S], exit_on_error: B) -> Ring:
 
     session.window = None
 
+    session.event = []
+
     view = load.module(APPLICATION, application, "view")
     session.view = load.functions(view)
 

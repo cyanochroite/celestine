@@ -16,7 +16,7 @@ from .container import (
 class Window(View):
     """"""
 
-    def setup(self, container) -> A:
+    def setup(self, name) -> A:
         """"""
         return self.canvas
 
@@ -27,7 +27,7 @@ class Window(View):
     def view(self, name, function):
         """"""
         container = self.zone(name, mode=Zone.DROP)
-        container.canvas = self.setup(container)
+        container.canvas = self.setup(name)
         container.hidden = True
         function(self.ring, container)
         self._view.set(name, container)

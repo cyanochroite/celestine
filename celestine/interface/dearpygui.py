@@ -136,10 +136,9 @@ class Window(Window_):
                 dearpygui.configure_item(item.name, show=False)
                 item.make(ring)
 
-    def setup(self, container):
+    def setup(self, name):
         """"""
         dearpygui = self.ring.package.dearpygui
-        name = container.name
         canvas = dearpygui.window(tag=name)
         return canvas
 

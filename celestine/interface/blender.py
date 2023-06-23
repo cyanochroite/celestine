@@ -309,9 +309,9 @@ class Window(Window_):
             ".webp",
         ]
 
-    def setup(self, container):
+    def setup(self, name):
         """"""
-        collection = data.collection.make(container.name)
+        collection = data.collection.make(name)
         collection.hide()
         return collection
 
@@ -413,7 +413,7 @@ class Window(Window_):
             item.hidden = False
 
             call = getattr(self, self.call)
-            call(**self.star)
+            call(self.ring, **self.star)
             return False
 
         super().__exit__(exc_type, exc_value, traceback)

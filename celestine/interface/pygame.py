@@ -159,7 +159,7 @@ class Window(Window_):
                     # TODO: This triggers on all mouse buttons
                     # including scroll wheel! That is bad.
                     (x_dot, y_dot) = pygame.mouse.get_pos()
-                    self.poke(x_dot, y_dot)
+                    self.poke(self.ring, x_dot, y_dot)
 
         pygame.quit()
         return False

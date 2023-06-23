@@ -7,6 +7,7 @@ from celestine.typed import (
     B,
     D,
     N,
+    R,
     S,
     T,
     Z,
@@ -83,7 +84,7 @@ class Item(Object):
     def make(self, ring, **star) -> N:
         """"""
 
-    def poke(self, x_dot: Z, y_dot: Z, **star) -> B:
+    def poke(self, ring: R, x_dot: Z, y_dot: Z, **star) -> N:
         """"""
         if self.hidden:
             return False

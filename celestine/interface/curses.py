@@ -250,7 +250,7 @@ class Window(window):
 
         return []
 
-    def setup(self, container):
+    def setup(self, name):
         """"""
         curses = self.ring.package.curses
         return curses.window(*self.area.value)
@@ -315,7 +315,7 @@ class Window(window):
                 case curses.KEY_EXIT:
                     break
                 case curses.KEY_CLICK:
-                    self.page.poke(self.cord_x, self.cord_y)
+                    self.page.poke(self.ring, self.cord_x, self.cord_y)
 
         self.stdscr.keypad(0)
         curses.echo()
