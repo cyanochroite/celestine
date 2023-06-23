@@ -4,7 +4,6 @@ import io
 import math
 
 from celestine.typed import (
-    A,
     N,
     R,
 )
@@ -220,11 +219,6 @@ class Label(Abstract, Label_):
 class Window(window):
     """"""
 
-    def setup(self, container):
-        """"""
-        curses = self.ring.package.curses
-        return curses.window(*self.area.value)
-
     def draw(self, ring: R, **star):
         """"""
         curses = self.ring.package.curses
@@ -255,6 +249,11 @@ class Window(window):
             return self.ring.package.pillow.extension()
 
         return []
+
+    def setup(self, container):
+        """"""
+        curses = self.ring.package.curses
+        return curses.window(*self.area.value)
 
     def __enter__(self):
         super().__enter__()

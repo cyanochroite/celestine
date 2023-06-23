@@ -3,12 +3,12 @@
 from celestine.typed import (
     GE,
     TA,
+    A,
     B,
     D,
     N,
     S,
     T,
-    A,
     Z,
 )
 
@@ -94,7 +94,9 @@ class Item(Object):
         """"""
         raise NotImplementedError(area)
 
-    def __init__(self, canvas: A, name: S, area: Rectangle, **star) -> N:
+    def __init__(
+        self, canvas: A, name: S, area: Rectangle, **star
+    ) -> N:
         super().__init__(**star)
         self.area = Rectangle(*area.value)
         self.canvas = canvas

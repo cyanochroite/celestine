@@ -1,7 +1,6 @@
 """"""
 
 from celestine.typed import (
-    A,
     N,
     R,
 )
@@ -97,6 +96,20 @@ class Label(Abstract, Label_):
 class Window(Window_):
     """"""
 
+    def extension(self):
+        """"""
+        if self.ring.package.pillow:
+            return self.ring.package.pillow.extension()
+
+        return [
+            ".pbm",
+            ".pgm",
+            ".ppm",
+            ".pnm",
+            ".gif",
+            ".png",
+        ]
+
     def setup(self, container):
         """"""
         tkinter = self.ring.package.tkinter
@@ -111,20 +124,6 @@ class Window(Window_):
         )
         canvas.place(x=0, y=0)
         return canvas
-
-    def extension(self):
-        """"""
-        if self.ring.package.pillow:
-            return self.ring.package.pillow.extension()
-
-        return [
-            ".pbm",
-            ".pgm",
-            ".ppm",
-            ".pnm",
-            ".gif",
-            ".png",
-        ]
 
     def turn(self, page, **star):
         super().turn(page, **star)

@@ -4,7 +4,6 @@ import enum
 import math
 
 from celestine.typed import (
-    A,
     B,
     D,
     N,

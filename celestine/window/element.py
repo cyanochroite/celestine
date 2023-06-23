@@ -45,7 +45,9 @@ class Button(Abstract):
         if super().poke(x_dot, y_dot):
             self.call(self.action, **self.argument)
 
-    def __init__(self, canvas, name, text, *, call, action, argument, **star):
+    def __init__(
+        self, canvas, name, text, *, call, action, argument, **star
+    ):
         self.action = action
         self.argument = argument
         self.call = call

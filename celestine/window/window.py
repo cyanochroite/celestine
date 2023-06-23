@@ -67,14 +67,13 @@ class Window(View):
         self.page.hidden = False
 
         self.turn_page = page
-        self.draw(self.ring)
+        self.draw(self.ring, **star)
 
     def work(self, task, **star):
         """"""
-        star.update(ring=self.ring)
         caller = self.task.get(task)
-        caller(**star)
-        self.draw(self.ring)
+        caller(ring=self.ring, **star)
+        self.draw(self.ring, **star)
 
     def __enter__(self):
         return self

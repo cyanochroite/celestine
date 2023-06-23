@@ -24,7 +24,6 @@ from celestine.typed import (
     T,
 )
 from celestine.window.collection import Rectangle
-from celestine.window.container import Zone
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -288,12 +287,6 @@ class Label(Abstract, Label_):
 class Window(Window_):
     """"""
 
-    def setup(self, container):
-        """"""
-        collection = data.collection.make(container.name)
-        collection.hide()
-        return collection
-
     def extension(self):
         """"""
         return [
@@ -316,33 +309,30 @@ class Window(Window_):
             ".webp",
         ]
 
-    def page(self, name, document):
+    def setup(self, container):
         """"""
-        page = self.zone(name, mode=Zone.DROP)
-        document(page)
-        width, height = self.area.size
-        page.spot(0, 0, width, height)
-
-        self.item_set(name, page)
-
-        self.frame = name
-
-    def item_find(self, page):
-        """"""
-        for name, item in bpy.data.collections.items():
-            if page == name:
-                return item
+        collection = data.collection.make(container.name)
+        collection.hide()
+        return collection
 
     def turn(self, page, **star):
         """"""
-        name = bpy.context.scene.celestine.page
-        item = self.item_find(name)
-        item.hide_render = True
-        item.hide_viewport = True
 
-        item = self.item_find(page)
-        item.hide_render = False
-        item.hide_viewport = False
+        old_item = None
+        new_item = None
+
+        for name, item in bpy.data.collections.items():
+            if name == bpy.context.scene.celestine.page:
+                old_item = item
+            if name == page:
+                new_item = item
+
+        old_item.hide_render = True
+        old_item.hide_viewport = True
+
+        new_item.hide_render = False
+        new_item.hide_viewport = False
+
         bpy.context.scene.celestine.page = page
 
     def __enter__(self):

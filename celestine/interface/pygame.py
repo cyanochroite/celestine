@@ -2,7 +2,6 @@
 
 from celestine import load
 from celestine.typed import (
-    A,
     L,
     N,
     R,
