@@ -55,7 +55,7 @@ def get_colors(curses, image):
 class Abstract(Abstract_):
     """"""
 
-    def add_string(self, canvas, x_dot, y_dot, text, *extra):
+    def add_string(self, x_dot, y_dot, text, *extra):
         """
         Curses swaps x and y.
 
@@ -63,22 +63,22 @@ class Abstract(Abstract_):
 
         Text length need be size-1 long.
         """
-        canvas.addstr(y_dot - 1, x_dot - 1, text, *extra)
+        self.canvas.addstr(y_dot - 1, x_dot - 1, text, *extra)
 
-    def render(self, canvas, item, **star):
+    def render(self, item, **star):
         """"""
         text = item
         (x_dot, y_dot) = self.area.origin
-        self.add_string(canvas, x_dot, y_dot, text)
+        self.add_string(x_dot, y_dot, text)
 
 
 class Button(Abstract, Button_):
     """"""
 
-    def draw(self, ring: R, canvas: A, **star):
+    def draw(self, ring: R, **star):
         """"""
         item = f"button:{self.data}"
-        self.render(canvas, item, **star)
+        self.render(item, **star)
 
 
 class Image(Abstract, Image_):
@@ -126,7 +126,7 @@ class Image(Abstract, Image_):
         value = value[0:-1]
         return value.split(LINE_FEED)
 
-    def render(self, ring, /, collection, item, **star):
+    def render(self, ring, item, **star):
         """"""
         curses = ring.package.curses
 
@@ -134,7 +134,6 @@ class Image(Abstract, Image_):
 
         if not ring.package.pillow:
             self.add_string(
-                collection,
                 x_dot,
                 y_dot,
                 item,
@@ -155,7 +154,6 @@ class Image(Abstract, Image_):
                 extra = curses.color_pair(table)
 
                 self.add_string(
-                    collection,
                     x_dot + index_x,
                     y_dot + index_y,
                     col_text,
@@ -166,13 +164,13 @@ class Image(Abstract, Image_):
 
             index_y += 1
 
-    def draw(self, ring: R, canvas: A, **star):
+    def draw(self, ring: R, **star):
         """"""
         curses = ring.package.curses
         pillow = ring.package.pillow
 
         if not pillow:
-            self.render(ring, canvas, self.path.name, **star)
+            self.render(ring, self.path.name, **star)
             return
 
         self.cache = pillow.image_load(self.path)
@@ -207,16 +205,16 @@ class Image(Abstract, Image_):
         get_colors(curses, self.color.image)
 
         item = self.output()
-        self.render(ring, canvas, item, **star)
+        self.render(ring, item, **star)
 
 
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, ring: R, canvas: A, **star):
+    def draw(self, ring: R, **star):
         """"""
         item = f"label:{self.data}"
-        self.render(canvas, item, **star)
+        self.render(item, **star)
 
 
 class Window(window):
@@ -227,16 +225,18 @@ class Window(window):
         curses = self.ring.package.curses
         return curses.window(*self.area.value)
 
-    def draw(self, ring: R, canvas: A, **star):
+    def draw(self, ring: R, **star):
         """"""
         curses = self.ring.package.curses
 
         # Do normal draw stuff.
         # self.setup(self.page)
 
-        canvas = curses.window(*self.area.value)
+        canvas = self.page.canvas
+        canvas.erase()
+        # canvas = curses.window(*self.area.value)
 
-        super().draw(ring, canvas, **star)
+        super().draw(ring, **star)
 
         self.stdscr.noutrefresh()
         self.background.noutrefresh()
@@ -330,10 +330,23 @@ class Window(window):
             "image": Image,
             "label": Label,
         }
-        area = Rectangle(0, 0, 0, 0)
-        super().__init__(ring, element, area, **star)
-        self.background = None
+
+        curses = ring.package.curses
+
+        self.stdscr = curses.initscr()
+        curses.noecho()
+        curses.cbreak()
+        self.stdscr.keypad(1)
+        curses.start_color()
+
+        (size_y, size_x) = self.stdscr.getmaxyx()
+        self.full = Rectangle(0, 0, size_x, size_y)
+
+        self.background = curses.window(0, 0, size_x, size_y)
+        self.background.box()
+
+        area = Rectangle(1, 1, size_x - 2, size_y - 2)
+
+        super().__init__(ring, self.background, element, area, **star)
         self.cord_x = 0.5
         self.cord_y = 0.5
-        self.stdscr = None
-        self.full = None

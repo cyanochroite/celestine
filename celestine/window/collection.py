@@ -8,6 +8,7 @@ from celestine.typed import (
     N,
     S,
     T,
+    A,
     Z,
 )
 
@@ -70,15 +71,16 @@ class Item(Object):
     """"""
 
     area: Rectangle
+    canvas: A
     name: S  # The key to use to find this in the window dictionary.
     hidden: B
 
-    def draw(self, ring, canvas, **star) -> N:
+    def draw(self, ring, **star) -> N:
         """"""
         if self.hidden:
             return
 
-    def make(self, ring, canvas, **star) -> N:
+    def make(self, ring, **star) -> N:
         """"""
 
     def poke(self, x_dot: Z, y_dot: Z, **star) -> B:
@@ -92,9 +94,10 @@ class Item(Object):
         """"""
         raise NotImplementedError(area)
 
-    def __init__(self, name: S, area: Rectangle, **star) -> N:
+    def __init__(self, canvas: A, name: S, area: Rectangle, **star) -> N:
         super().__init__(**star)
         self.area = Rectangle(*area.value)
+        self.canvas = canvas
         self.name = name
         self.hidden = False
 

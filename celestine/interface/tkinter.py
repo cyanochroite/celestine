@@ -16,9 +16,9 @@ from celestine.window.window import Window as Window_
 class Abstract(Abstract_):
     """"""
 
-    def render(self, canvas, item, *, ring, **star):
+    def render(self, item, *, ring, **star):
         """"""
-        self.item = item(canvas, **star)
+        self.item = item(self.canvas, **star)
 
         width, height = self.area.size
         dot_x, dot_y = self.area.origin
@@ -37,20 +37,20 @@ class Button(Abstract, Button_):
         """"""
         self.call(self.action, **self.argument)
 
-    def make(self, ring: R, canvas: A, **star):
+    def make(self, ring: R, **star):
         """"""
         tkinter = ring.package.tkinter
 
         item = tkinter.Button
         star.update(command=self.callback)
         star.update(text=f"button:{self.data}")
-        self.render(canvas, item, ring=ring, **star)
+        self.render(item, ring=ring, **star)
 
 
 class Image(Abstract, Image_):
     """"""
 
-    def make(self, ring: R, canvas: A, **star):
+    def make(self, ring: R, **star):
         """"""
         tkinter = ring.package.tkinter
 
@@ -58,7 +58,7 @@ class Image(Abstract, Image_):
         star.update(image=self.image)
 
         item = tkinter.Label
-        self.render(canvas, item, ring=ring, **star)
+        self.render(item, ring=ring, **star)
 
     def update(self, ring: R, path, **star):
         """"""
@@ -82,7 +82,7 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def make(self, ring: R, canvas: A, **star):
+    def make(self, ring: R, **star):
         """"""
         tkinter = ring.package.tkinter
 
@@ -91,7 +91,7 @@ class Label(Abstract, Label_):
         star.update(height=4)
         star.update(text=f"label:{self.data}")
         star.update(width=100)
-        self.render(canvas, item, ring=ring, **star)
+        self.render(item, ring=ring, **star)
 
 
 class Window(Window_):
@@ -101,7 +101,7 @@ class Window(Window_):
         """"""
         tkinter = self.ring.package.tkinter
 
-        container.canvas = tkinter.Frame(
+        canvas = tkinter.Frame(
             self.canvas,
             padx=5,
             pady=5,
@@ -109,7 +109,8 @@ class Window(Window_):
             width=1920,
             height=1080,
         )
-        container.canvas.place(x=0, y=0)
+        canvas.place(x=0, y=0)
+        return canvas
 
     def extension(self):
         """"""
@@ -129,18 +130,6 @@ class Window(Window_):
         super().turn(page, **star)
         self.page.canvas.tkraise()
 
-    def __enter__(self):
-        tkinter = self.ring.package.tkinter
-
-        super().__enter__()
-        self.canvas = tkinter.Tk()
-        self.canvas.title(self.ring.language.APPLICATION_TITLE)
-        self.canvas.geometry("1920x1080")
-        self.canvas.minsize(640, 480)
-        self.canvas.maxsize(3840, 2160)
-        self.canvas.config(bg="blue")
-        return self
-
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
         self.canvas.mainloop()
@@ -153,4 +142,12 @@ class Window(Window_):
             "label": Label,
         }
         area = Rectangle(0, 0, 1280, 1080)
-        super().__init__(ring, element, area, **star)
+
+        canvas = ring.package.tkinter.Tk()
+        canvas.title(ring.language.APPLICATION_TITLE)
+        canvas.geometry("1920x1080")
+        canvas.minsize(640, 480)
+        canvas.maxsize(3840, 2160)
+        canvas.config(bg="blue")
+
+        super().__init__(ring, canvas, element, area, **star)

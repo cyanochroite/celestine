@@ -30,10 +30,11 @@ class Abstract(Item):
         """"""
         self.area.copy(area)
 
-    def __init__(self, name, **star):
+    def __init__(self, canvas, name, **star):
+        self.canvas = canvas
         self.item = None
         area = Rectangle(0, 0, 0, 0)
-        super().__init__(name, area, **star)
+        super().__init__(canvas, name, area, **star)
 
 
 class Button(Abstract):
@@ -44,12 +45,12 @@ class Button(Abstract):
         if super().poke(x_dot, y_dot):
             self.call(self.action, **self.argument)
 
-    def __init__(self, name, text, *, call, action, argument, **star):
+    def __init__(self, canvas, name, text, *, call, action, argument, **star):
         self.action = action
         self.argument = argument
         self.call = call
         self.data = text
-        super().__init__(name, **star)
+        super().__init__(canvas, name, **star)
 
 
 class Unit:
@@ -129,10 +130,6 @@ class Image(Abstract):
     Keeping it within a byte (256) a nice goal.
     """
 
-    def draw(self, ring, view, **star):
-        """"""
-        raise NotImplementedError(area)
-
     def update(self, ring: R, path, **star):
         """"""
         self.path = path
@@ -170,10 +167,11 @@ class Image(Abstract):
             reducing_gap=None,
         )
 
-    def __init__(self, name, path, **star):
+    def __init__(self, canvas, name, path, **star):
         self.path = path
         self.image = None
-        super().__init__(name, **star)
+
+        super().__init__(canvas, name, **star)
 
         minimum = 2**6
         maximum = 2**16
@@ -231,6 +229,6 @@ class Image(Abstract):
 class Label(Abstract):
     """"""
 
-    def __init__(self, name, text, **star):
+    def __init__(self, canvas, name, text, **star):
         self.data = text
-        super().__init__(name, **star)
+        super().__init__(canvas, name, **star)

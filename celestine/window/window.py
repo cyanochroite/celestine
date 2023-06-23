@@ -67,21 +67,21 @@ class Window(View):
         self.page.hidden = False
 
         self.turn_page = page
-        self.draw(self.ring, self.canvas)
+        self.draw(self.ring)
 
     def work(self, task, **star):
         """"""
         star.update(ring=self.ring)
         caller = self.task.get(task)
         caller(**star)
-        self.draw(self.ring, self.canvas)
+        self.draw(self.ring)
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.spot(self.area)
-        self.make(self.ring, self.canvas)
+        self.make(self.ring)
         if exc_type:
             raise exc_type
         try:
@@ -96,7 +96,7 @@ class Window(View):
             raise RuntimeError(message) from error
         return False
 
-    def __init__(self, ring, element, area, **star):
+    def __init__(self, ring, canvas, element, area, **star):
         self.ring = ring
         self.turn_page = ring.main
         self.page = None
@@ -105,6 +105,7 @@ class Window(View):
 
         super().__init__(
             self.ring,
+            canvas,
             "window",
             self,
             element,

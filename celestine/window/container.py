@@ -43,6 +43,7 @@ class View(Item, Collection):
         """"""
         self.save(
             self._button(
+                self.canvas,
                 name,
                 text,
                 call=self.window.work,
@@ -53,23 +54,24 @@ class View(Item, Collection):
             )
         )
 
-    def draw(self, ring: R, canvas: A, **star) -> N:
+    def draw(self, ring: R, **star) -> N:
         """"""
         if self.hidden:
             return
 
         for _, item in self.item.items():
-            item.draw(ring, canvas, **star)
+            item.draw(ring, **star)
 
-    def make(self, ring: R, canvas: A, **star) -> N:
+    def make(self, ring: R, **star) -> N:
         """"""
         for _, item in self.item.items():
-            item.make(ring, canvas, **star)
+            item.make(ring, **star)
 
     def image(self, name, path, **star) -> N:
         """A thumbnail image of a big picture."""
         self.save(
             self._image(
+                self.canvas,
                 name,
                 path,
                 **star,
@@ -80,6 +82,7 @@ class View(Item, Collection):
         """"""
         self.save(
             self._label(
+                self.canvas,
                 name,
                 text,
                 **star,
@@ -135,6 +138,7 @@ class View(Item, Collection):
     def view(self, name, text, action):
         """"""
         item = self._button(
+            self.canvas,
             name,
             text,
             call=self.turn,
@@ -149,6 +153,7 @@ class View(Item, Collection):
             name,
             View(
                 self.ring,
+                self.canvas,
                 name,
                 self.window,
                 self.element,
@@ -167,6 +172,7 @@ class View(Item, Collection):
     def __init__(
         self,
         ring,
+        canvas,
         name,
         window,
         element,
@@ -190,7 +196,7 @@ class View(Item, Collection):
 
         self.turn = window.turn
 
-        super().__init__(name, area, **star)
+        super().__init__(canvas, name, area, **star)
 
         self.width = col
         self.height = row
@@ -199,4 +205,4 @@ class View(Item, Collection):
         for range_y in range(row):
             for range_x in range(col):
                 name = f"{self.name}_{range_x}-{range_y}"
-                self.item[name] = Item(name, area)
+                self.item[name] = Item(self.canvas, name, area)

@@ -19,37 +19,37 @@ from celestine.window.window import Window as Window_
 class Abstract(Abstract_):
     """"""
 
-    def render(self, canvas, item, **star):
+    def render(self, item, **star):
         """"""
-        canvas.blit(item, self.area.origin)
+        self.canvas.blit(item, self.area.origin)
 
 
 class Button(Abstract, Button_):
     """"""
 
-    def draw(self, ring: R, canvas: A, *, font, **star):
+    def draw(self, ring: R, *, font, **star):
         """"""
 
         text = f"Button{self.data}"
 
         item = font.render(text, True, (255, 255, 255))
-        self.render(canvas, item, **star)
+        self.render(item, **star)
 
 
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, ring: R, canvas: A, *, font, **star):
+    def draw(self, ring: R, *, font, **star):
         """"""
 
         item = font.render(self.data, True, (255, 255, 255))
-        self.render(canvas, item, **star)
+        self.render(item, **star)
 
 
 class Image(Abstract, Image_):
     """"""
 
-    def draw(self, ring: R, canvas: A, *, mode="hi", **star):
+    def draw(self, ring: R, *, mode="hi", **star):
         """"""
 
         pillow = ring.package.pillow
@@ -77,19 +77,19 @@ class Image(Abstract, Image_):
             size = self.resize((image.get_width(), image.get_height()))
             image = pygame.transform.scale(image, size)
 
-        self.render(canvas, image, **star)
+        self.render(image, **star)
 
 
 class Window(Window_):
     """"""
 
-    def draw(self, ring: R, canvas: A, **star):
+    def draw(self, ring: R, **star):
         """"""
         pygame = self.ring.package.pygame
 
         self.canvas.fill((0, 0, 0))
 
-        super().draw(ring, canvas, font=self.font, **star)
+        super().draw(ring, font=self.font, **star)
 
         pygame.display.flip()
 
@@ -140,12 +140,7 @@ class Window(Window_):
             icon = image.convert_alpha()
             pygame.display.set_icon(icon)
 
-        def set_mode():
-            size = self.area.size
-            self.canvas = pygame.display.set_mode(size)
-
         super().__enter__()
-        set_mode()
         set_icon()
         set_caption()
         set_font()
@@ -177,5 +172,6 @@ class Window(Window_):
             "label": Label,
         }
         area = Rectangle(0, 0, 1280, 960)
-        super().__init__(ring, element, area, **star)
+        canvas = ring.package.pygame.display.set_mode(area.size)
+        super().__init__(ring, canvas, element, area, **star)
         self.font = None

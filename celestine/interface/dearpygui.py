@@ -28,11 +28,8 @@ class Button(Abstract, Button_):
         """
         self.call(self.action, **self.argument)
 
-    def draw(self, ring, _, *, make, **star):
+    def make(self, ring, **star):
         """"""
-        if not make:
-            return
-
         dearpygui = ring.package.dearpygui
 
         dearpygui.add_button(
@@ -50,7 +47,7 @@ class Image(Abstract, Image_):
     delete_item(...)
     """
 
-    def draw(self, ring, _, *, make, **star):
+    def make(self, ring, **star):
         """
         Draw the image to screen.
 
@@ -60,9 +57,6 @@ class Image(Abstract, Image_):
         channels = image[2]
         photo = image[3]
         """
-
-        if not make:
-            return
 
         dearpygui = ring.package.dearpygui
 
@@ -105,10 +99,8 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, ring, _, *, make, **star):
+    def make(self, ring, **star):
         """"""
-        if not make:
-            return
 
         dearpygui = ring.package.dearpygui
 
@@ -138,20 +130,19 @@ class Window(Window_):
             ".pnm",
         ]
 
-    def view(self, name, document):
-        dearpygui = self.ring.package.dearpygui
-
-        value = self.zone(name, mode=Zone.DROP)
-        value.data = dearpygui.window(tag=value.name)
-        self._view.set(name, value)
-        with value.data:
-            dearpygui.configure_item(value.name, show=False)
-            document(self.ring, value)
-            value.spot(self.area)
-            value.draw(self.ring, None, make=True)
-
-    def draw(self, **star):
+    def setup(self, container):
         """"""
+        dearpygui = self.ring.package.dearpygui
+        name = container.name
+        canvas = dearpygui.window(tag=name)
+        return canvas
+
+    def make(self, ring, **star):
+        dearpygui = ring.package.dearpygui
+        for name, item in self.item.items():
+            with item.canvas:
+                dearpygui.configure_item(item.name, show=False)
+                item.make(ring)
 
     def turn(self, page, **star):
         dearpygui = self.ring.package.dearpygui
@@ -210,5 +201,6 @@ class Window(Window_):
             "label": Label,
         }
         area = Rectangle(0, 0, 960, 640)
-        super().__init__(ring, element, area, **star)
+        canvas = None
+        super().__init__(ring, canvas, element, area, **star)
         self.tag = "window"

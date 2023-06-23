@@ -198,13 +198,13 @@ class Abstract(Abstract_):
 class Mouse(Abstract):
     """"""
 
-    def __init__(self, mesh) -> N:
+    def __init__(self, collection, mesh) -> N:
         self.mesh = mesh.soul
         self.text = "mouse"
-        super().__init__("mouse")
+        super().__init__(collection, "mouse")
         self.item = mesh
 
-    def draw(self, view: COLLECTION) -> N:
+    def draw(self) -> N:
         """"""
 
         diamond = Diamond()
@@ -216,18 +216,16 @@ class Mouse(Abstract):
 class Button(Abstract, Button_):
     """"""
 
-    def draw(self, ring: R, view: COLLECTION, *, make: B, **star) -> N:
+    def make(self, ring: R, **star) -> N:
         """"""
-        if not make:
-            return
 
         width = len(self.data) / 4
         height = 1 / 20
 
-        plane = quadrilateral.plane(view, self.data)
+        plane = quadrilateral.plane(self.canvas, self.data)
         plane.scale = (width, height, 1)
 
-        text = basic.text(view, self.data, self.data)
+        text = basic.text(self.canvas, self.data, self.data)
         text.scale = (1 / width, 1 / height, 1)
         text.location = (-width / 4, -height, 0.1)
 
@@ -256,14 +254,12 @@ class Image(Abstract, Image_):
         data.image.remove(item)
         cls.default = None
 
-    def draw(self, ring: R, view: COLLECTION, *, make: B, **star) -> N:
+    def make(self, ring: R, **star) -> N:
         """"""
-        if not make:
-            return
 
         image = data.image.load(self.path)
         material = UV.image(self.name, image)
-        plane = basic.image(view, self.name, image.size)
+        plane = basic.image(self.canvas, self.name, image.size)
 
         plane.body.data.materials.append(material)
         self.item = plane
@@ -283,12 +279,9 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, ring: R, view: COLLECTION, *, make: B, **star) -> N:
+    def make(self, ring: R, **star) -> N:
         """"""
-        if not make:
-            return
-
-        self.item = basic.text(view, self.data, self.data)
+        self.item = basic.text(self.canvas, self.data, self.data)
         self.render()
 
 
@@ -299,7 +292,7 @@ class Window(Window_):
         """"""
         collection = data.collection.make(container.name)
         collection.hide()
-        container.canvas = collection
+        return collection
 
     def extension(self):
         """"""
@@ -322,12 +315,6 @@ class Window(Window_):
             ".tiff",
             ".webp",
         ]
-
-    def poke(self, **star):
-        """"""
-        page = bpy.context.scene.celestine.page
-        item = self._view.get(page)
-        item.poke(**star)
 
     def page(self, name, document):
         """"""
@@ -357,12 +344,6 @@ class Window(Window_):
         item.hide_render = False
         item.hide_viewport = False
         bpy.context.scene.celestine.page = page
-
-    def view(self, name, function):
-        """"""
-        super().view(name, function)
-        self.page = self._view.get(name)
-        self.draw(make=True)
 
     def __enter__(self):
         if self.call is None:
@@ -413,8 +394,8 @@ class Window(Window_):
         mesh = data.mesh.make(click, "mouse")
         mesh.location = (0, 0, -1)
 
-        self.mouse = Mouse(mesh)
-        self.mouse.draw(collection)
+        self.mouse = Mouse(collection, mesh)
+        self.mouse.draw()
 
         @classmethod
         def bind(cls, collection, name, soul):
@@ -435,6 +416,12 @@ class Window(Window_):
         if self.call is None:
             pass
         elif self.call != "make":
+            self.spot(self.area)
+
+            page = bpy.context.scene.celestine.page
+            item = self._view.get(page)
+            item.hidden = False
+
             call = getattr(self, self.call)
             call(**self.star)
             return False
@@ -449,7 +436,8 @@ class Window(Window_):
             "label": Label,
         }
         area = Rectangle(0, 0, 20, 20)
-        super().__init__(ring, element, area, **star)
+        canvas = None
+        super().__init__(ring, canvas, element, area, **star)
 
         self.frame = None
         self.mouse = None
