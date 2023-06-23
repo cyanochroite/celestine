@@ -46,21 +46,6 @@ class View(Item, Collection):
 
     item: D[S, Item]
 
-    def call(self, name, text, action, **star) -> N:
-        """"""
-        self.save(
-            self._button(
-                self.canvas,
-                name,
-                text,
-                call=self.window.work,
-                action=action,
-                argument=star,
-                ring=self.ring,
-                **star,
-            )
-        )
-
     def draw(self, ring: R, **star) -> N:
         """"""
         if self.hidden:
@@ -81,17 +66,6 @@ class View(Item, Collection):
                 self.canvas,
                 name,
                 path,
-                **star,
-            )
-        )
-
-    def label(self, name, text, **star) -> N:
-        """"""
-        self.save(
-            self._label(
-                self.canvas,
-                name,
-                text,
                 **star,
             )
         )
@@ -177,18 +151,6 @@ class View(Item, Collection):
 
             rectangle = Rectangle(xmin, ymin, xmax, ymax)
             item.spot(rectangle)
-
-    def view(self, name, text, action):
-        """"""
-        item = self._button(
-            self.canvas,
-            name,
-            text,
-            call=self.turn,
-            action=action,
-            argument={},
-        )
-        return self.save(item)
 
     def zone(self, name: S, *, mode=Zone.SPAN, **star):
         """"""

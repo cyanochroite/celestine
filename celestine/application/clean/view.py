@@ -1,15 +1,17 @@
 """"""
 
-from celestine.session.session import Session
-from celestine.typed import N
+from celestine.typed import (
+    N,
+    R,
+)
 from celestine.window.container import View
 
 
-def main(ring: Session, view: View) -> N:
+def main(ring: R, view: View) -> N:
     """"""
     language = view.ring.language
     with view.zone("main_head") as line:
-        line.label("main_title", language.DEMO_MAIN_TITLE)
-        line.call("main_action", "Greet Cow", "clean")
+        line.text("main_title", language.DEMO_MAIN_TITLE)
+        line.text("main_action", "Greet Cow", call="clean")
     with view.zone("main_body") as line:
-        line.call("main_licence", "Clean licence files.", "licence")
+        line.text("main_licence", "Clean licence files", call="licence")

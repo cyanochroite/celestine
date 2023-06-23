@@ -1,35 +1,30 @@
 """The View page."""
 
 
-from celestine.session.session import Session
-from celestine.typed import N
-from celestine.window.container import Container as View
+from celestine.typed import N, R
+from celestine.window.container import View
 
 
-def main(ring: Session, view: View) -> N:
+def main(ring: R, view: View) -> N:
     """"""
     with view.zone("main") as line:
-        line.call(
-            "main_action",
-            "Translate Files",
-            "translate",
-        )
+        line.text("main_action", "Translate Files", call="translate")
 
 
 # TODO:figure out how to make actions not trigger on function load
-def report(ring: Session, view: View) -> N:
+def report(ring: R, view: View) -> N:
     """"""
     with view.zone("head") as line:
-        line.label("title", "Page main")
+        line.text("title", "Page main")
     train = {}
 
-    line.call(
+    line.text(
         "main_action",
         "Translate Files",
-        "train",
+        call="train",
         page=ring,
     )
 
     for tag, text in train.items():
         with view.zone("body") as line:
-            line.label(tag, text)
+            line.text(tag, text)
