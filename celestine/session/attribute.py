@@ -9,10 +9,10 @@ from celestine.session.data import (
     VERSION,
 )
 from celestine.typed import (
+    LS,
     TA,
     A,
     D,
-    L,
     N,
     S,
 )
@@ -52,7 +52,7 @@ class Choices(Attribute):
         """"""
         return super().dictionary() | {CHOICES: self.choices}
 
-    def __init__(self, *, choices: L[S], **star) -> N:
+    def __init__(self, *, choices: LS, **star) -> N:
         """"""
         self.choices = choices
         super().__init__(**star)

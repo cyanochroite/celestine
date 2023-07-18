@@ -9,10 +9,10 @@ from celestine.file.data import (
     WRITE_TEXT,
 )
 from celestine.typed import (
+    LS,
     MT,
     OS,
     A,
-    L,
     N,
     R,
     S,
@@ -34,7 +34,7 @@ class Abstract:
         sys.argv.append(path)
         package.main()
 
-    def module(self) -> L[S]:
+    def module(self) -> LS:
         """The 'import PACKAGE.MODULE' name."""
         return []
 

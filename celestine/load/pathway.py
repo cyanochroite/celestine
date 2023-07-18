@@ -6,7 +6,7 @@ import sys
 
 from celestine.data import CELESTINE
 from celestine.typed import (
-    L,
+    LS,
     P,
     S,
 )
@@ -38,7 +38,7 @@ def python(*path: S) -> P:
     return pathlib.Path(join)
 
 
-def argument(*path: S) -> L[S]:
+def argument(*path: S) -> LS:
     """
     Build a path to the selected package.
 

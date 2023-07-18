@@ -49,7 +49,7 @@ class Ring:
     """"""
 
     application: MT
-    attribute: L[S]
+    attribute: LS
     code: MT
     interface: MT
     language: MT

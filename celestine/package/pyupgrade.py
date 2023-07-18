@@ -2,8 +2,8 @@
 
 from celestine import load
 from celestine.typed import (
+    LS,
     MT,
-    L,
     N,
     S,
 )
@@ -26,6 +26,6 @@ class Package(Abstract):
         argv = [*file, "--py311-plus"]
         package.main(argv)
 
-    def module(self) -> L[S]:
+    def module(self) -> LS:
         """"""
         return ["_main"]
