@@ -8,6 +8,7 @@ from celestine.file.data import (
     UTF_8,
     WRITE_TEXT,
 )
+from celestine.load import pathway
 from celestine.typed import (
     LS,
     MT,
@@ -46,10 +47,8 @@ class Abstract:
 
         argv = sys.argv
 
-        root = sys.path[0]
-        path = os.path.join(root, CELESTINE)
-        sys.argv = [root, path]
-
+        path = str(pathway.pathfinder())
+        sys.argv = [path, path]
         try:
             module = load.package(self.name, *self.module())
             self.main(module, path)
@@ -73,16 +72,18 @@ class Abstract:
         # so this here to hide any messages a package may print
         # when being imported
         sys_stdout = sys.stdout
-        sys.stdout = open(os.devnull, WRITE_TEXT, encoding=UTF_8)
-        try:
-            self.package = load.package(self.pypi)
-        except ModuleNotFoundError:
-            self.package = None
-            # found = f"Package '{self.name}' not found."
-            # install = f"Install with 'pip install {self.pypi}'."
-            # message = f"{found} {install}"
-            # logging.warning(message)
-        sys.stdout.close()
+
+        with open(os.devnull, WRITE_TEXT, encoding=UTF_8) as stdout:
+            sys.stdout = stdout  # as TextIO
+            try:
+                self.package = load.package(self.pypi)
+            except ModuleNotFoundError:
+                self.package = None
+                # found = f"Package '{self.name}' not found."
+                # install = f"Install with 'pip install {self.pypi}'."
+                # message = f"{found} {install}"
+                # logging.warning(message)
+
         sys.stdout = sys_stdout
 
 

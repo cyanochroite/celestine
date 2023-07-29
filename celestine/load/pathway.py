@@ -15,6 +15,16 @@ from celestine.unicode import NONE
 from .data import PYTHON_EXTENSION
 
 
+def pathroot() -> P:
+    """When running as a package, sys.path[0] is wrong."""
+    for path in sys.path:
+        directory = pathlib.Path(path, CELESTINE)
+        if directory.is_dir():
+            return path
+    directory = pathlib.Path(os.curdir)
+    return directory
+
+
 def pathfinder() -> P:
     """When running as a package, sys.path[0] is wrong."""
     for path in sys.path:
@@ -23,6 +33,27 @@ def pathfinder() -> P:
             return directory
     directory = pathlib.Path(os.curdir)
     return directory
+
+
+def safe_path(*path: S) -> P:
+    """Might not be right be good for input from user."""
+    root = pathfinder()
+
+    path = os.path.join(root, *path)
+    path = os.path.normcase(path)
+    path = os.path.normpath(path)
+    path = os.path.realpath(path, strict=True)
+
+    safe = os.path.commonpath(root, path)
+
+    if not os.path.samefile(root, safe):
+        raise RuntimeError()
+
+    #        return False
+
+    #     os.path.exists(path)
+
+    return pathlib.Path(path)
 
 
 def pathway(*path: S) -> P:

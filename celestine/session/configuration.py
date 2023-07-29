@@ -5,11 +5,9 @@ import os
 
 from celestine import load
 from celestine.data import CELESTINE
-from celestine.data.directory import APPLICATION
 from celestine.file import text_save
 from celestine.file.data import UTF_8
 from celestine.typed import (
-    B,
     N,
     S,
 )
@@ -27,23 +25,7 @@ class Configuration:
 
     def get(self, section: S, option: S) -> S:
         """"""
-        if self.has_section(section, option):
-            if self.configuration.has_option(section, option):
-                return self.configuration[section][option]
-
-        return NONE
-
-    def has_section(self, section: S, option: S) -> B:
-        """Also checks if using default section name."""
-        has_section = self.configuration.has_section(section)
-
-        if option == APPLICATION:
-            section = APPLICATION
-
-        if section == APPLICATION:
-            has_section = True
-
-        return has_section
+        return self.configuration.get(section, option, fallback=NONE)
 
     def load(self) -> N:
         """Load the configuration file."""
@@ -60,7 +42,7 @@ class Configuration:
 
     def set(self, section: S, option: S, value: S) -> N:
         """"""
-        if not self.has_section(section, option):
+        if not self.configuration.has_section(section):
             self.configuration.add_section(section)
 
         self.configuration[section][option] = value
