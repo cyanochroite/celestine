@@ -20,7 +20,7 @@ def pathroot() -> P:
     for path in sys.path:
         directory = pathlib.Path(path, CELESTINE)
         if directory.is_dir():
-            return path
+            return pathlib.Path(path)
     directory = pathlib.Path(os.curdir)
     return directory
 
