@@ -1,102 +1,20 @@
 import itertools
 
-from pdf417gen import encode, render_image, render_svg
 
-# Some data to encode
-text = """
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-Beautiful is better than ugly. Explicit is better than implicit. Simp is better.
-"""
-
-text = """Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. Explicit is better than implicit. Simp is better.Beautiful is better than ugly. is 42eu."""
-
-import PIL
+import more_itertools
+import random
+import base64
+import PIL.Image
 
 from pylibdmtx.pylibdmtx import encode, decode
 
 path = "D:\\OneDrive\\Pictures\\Doom\\Doom Screenshot 2020.01.16 - 09.52.58.59.png"
-path = "D:\\file\\color.png"
+# path = "D:\\file\\color.png"
 # path = "D:\\file\\null.jpg"
 image = PIL.Image.open(path)
 
 
-
-text1 = """
-Beautiful is better than ugly.
-Explicit is better than implicit.
-Simple is better than complex.
-Complex is better than complicated.
-Beautiful is better than ugly.
-Explicit is better than implicit.
-Simple is better than complex.
-C"""
-
-text = bytes(itertools.chain.from_iterable(image.getdata()))
-
-
-text = ['0', 'F', 'F', 'A', '5', '4']
-text = "ABCDEF"
-
-
-count = 0
-text = []
-for index in range(32, 127):
-    count += 1
-    text.append(chr(index))
-    text.append(str(index))
-text = "".join(text)
-print(text)
-print(count)
-
-import base64
-import random
-text = "Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure."
-text = text.encode("utf8")
-cat = base64.a85encode(text)
-print(cat)
-data = text
-scheme = "Base2561"
-size = "144x144"
-
-
-
-def convert(self, mode):
+def convert(image):
     """"""
     mode = "RGBA"
     matrix = None
@@ -105,28 +23,64 @@ def convert(self, mode):
     colors = 256
     return image.convert(mode, matrix, dither, palette, colors)
 
+def _encode(iterable):
+    """"""
+    data = base64.a85encode(bytes(iterable))
+    scheme = "Ascii"
+    size = "144x144"
+    size = None
+    return encode(data, scheme, size)
 
-scheme = None
-size = None
+import bz2
+import zlib
+import gzip
+import lzma
+import pickle
 
-text = random.randbytes(1244)
-# text = text.encode("utf8")
-data = base64.a85encode(text, pad=True)
 
-encoded = encode(data, scheme, size)
 
-img = PIL.Image.frombytes(
-    'RGB', (encoded.width, encoded.height), encoded.pixels)
 
-img.save('dmtx.png')
 
+image = convert(image)
+data = image.getdata()
+flat = itertools.chain.from_iterable(data)
+data = bytes(flat)
+
+with open('no_compression.pickle', 'wb') as f:
+    pickle.dump(data, f)
+
+with gzip.open("gzip_test.gz", "wb") as f:
+    pickle.dump(data, f)
+
+with bz2.BZ2File('bz2_test.pbz2', 'wb') as f:
+    pickle.dump(data, f)
+
+with lzma.open("lzma_test.xz", "wb") as f:
+    pickle.dump(data, f)
+
+
+
+
+image = convert(image)
+data = image.getdata()
+flat = itertools.chain.from_iterable(data)
+split = more_itertools.chunked(flat, 1244)
+count = 0
+for item in split:
+    encoded = _encode(item)
+
+    img = PIL.Image.frombytes(
+        'RGB', (encoded.width, encoded.height), encoded.pixels)
+
+    img.save(f"dmtx{count}.png")
+    count += 1
 
 print(decode(PIL.Image.open('dmtx.png')))
 
 
 from pylibdmtx.pylibdmtx import decode
 from PIL import Image
-carwash = decode(Image.open('dmtx.png'))
+carwash = decode(Image.open('dmtx0.png'))
 print(carwash)
 print(carwash[0][0])
 print(carwash[0][1])
