@@ -1,17 +1,20 @@
 import itertools
 
 
+import hashlib
+from file import lzma
 import more_itertools
 import random
 import base64
 import PIL.Image
 
-from pylibdmtx.pylibdmtx import encode, decode
 
 path = "D:\\OneDrive\\Pictures\\Doom\\Doom Screenshot 2020.01.16 - 09.52.58.59.png"
 # path = "D:\\file\\color.png"
-# path = "D:\\file\\null.jpg"
+path = "D:\\file\\test0.jpg"
 image = PIL.Image.open(path)
+
+
 
 
 def convert(image):
@@ -31,58 +34,45 @@ def _encode(iterable):
     size = None
     return encode(data, scheme, size)
 
-import bz2
-import zlib
-import gzip
-import lzma
-import pickle
 
+text = []
+for index in range(0x2800, 0x2900):
+    text.append(chr(index))
 
-
-
+text = "".join(text)
+print(text)
 
 image = convert(image)
 data = image.getdata()
 flat = itertools.chain.from_iterable(data)
-data = bytes(flat)
 
-with open('no_compression.pickle', 'wb') as f:
-    pickle.dump(data, f)
+lzma.save_data("celestine.temp", flat)
+data = lzma.load_data("celestine.temp")
 
-with gzip.open("gzip_test.gz", "wb") as f:
-    pickle.dump(data, f)
+can = PIL.Image.frombytes("RGBA", image.size, data)
+can.show()
 
-with bz2.BZ2File('bz2_test.pbz2', 'wb') as f:
-    pickle.dump(data, f)
-
-with lzma.open("lzma_test.xz", "wb") as f:
-    pickle.dump(data, f)
+# print(decode(PIL.Image.open('dmtx.png')))
 
 
 
 
-image = convert(image)
-data = image.getdata()
-flat = itertools.chain.from_iterable(data)
-split = more_itertools.chunked(flat, 1244)
-count = 0
-for item in split:
-    encoded = _encode(item)
+mport sys
+import hashlib
 
-    img = PIL.Image.frombytes(
-        'RGB', (encoded.width, encoded.height), encoded.pixels)
+# BUF_SIZE is totally arbitrary, change for your app!
+BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
 
-    img.save(f"dmtx{count}.png")
-    count += 1
+md5 = hashlib.md5()
+sha1 = hashlib.sha1()
 
-print(decode(PIL.Image.open('dmtx.png')))
+with open(sys.argv[1], 'rb') as f:
+    while True:
+        data = f.read(BUF_SIZE)
+        if not data:
+            break
+        md5.update(data)
+        sha1.update(data)
 
-
-from pylibdmtx.pylibdmtx import decode
-from PIL import Image
-carwash = decode(Image.open('dmtx0.png'))
-print(carwash)
-print(carwash[0][0])
-print(carwash[0][1])
-cat = 0
-
+print("MD5: {0}".format(md5.hexdigest()))
+print("SHA1: {0}".format(sha1.hexdigest()))
