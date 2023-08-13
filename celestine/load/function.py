@@ -4,9 +4,9 @@ from typing import TypeAlias as TA
 
 from celestine.typed import (
     CA,
+    LS,
     MT,
     D,
-    L,
     N,
     S,
 )
@@ -27,7 +27,7 @@ def load(module: MT) -> D[S, FN]:
     return iterable
 
 
-def function_page(module: MT) -> L[S]:
+def function_page(module: MT) -> LS:
     """Load from module all functions and turn them into dictionary."""
 
     dictionary = load(module)

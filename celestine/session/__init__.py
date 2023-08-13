@@ -9,16 +9,15 @@ from celestine.data.directory import (
 )
 from celestine.package import Package
 from celestine.typed import (
+    LS,
     B,
-    L,
     Ring,
-    S,
 )
 
 from .magic import Magic
 
 
-def begin_session(argument_list: L[S], exit_on_error: B) -> Ring:
+def begin_session(argument_list: LS, exit_on_error: B) -> Ring:
     """"""
 
     magic = Magic(argument_list, exit_on_error)

@@ -15,6 +15,7 @@ from celestine.session.argument import (
 )
 from celestine.session.data import CONFIGURATION
 from celestine.typed import (
+    LS,
     MT,
     TA,
     A,
@@ -22,7 +23,6 @@ from celestine.typed import (
     D,
     L,
     N,
-    S,
 )
 from celestine.unicode import NONE
 
@@ -61,7 +61,7 @@ class Magic:
     args: argparse.Namespace
     parser: argparse.ArgumentParser
 
-    argument_list: L[S]
+    argument_list: LS
     configuration: Configuration
     exit_on_error: B
 
@@ -195,7 +195,7 @@ class Magic:
             self.configuration.save()
         return False
 
-    def __init__(self, argument_list: L[S], exit_on_error: B) -> N:
+    def __init__(self, argument_list: LS, exit_on_error: B) -> N:
         self.args = argparse.Namespace()
         self.parser = argparse.ArgumentParser()
 

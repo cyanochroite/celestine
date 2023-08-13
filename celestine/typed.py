@@ -5,6 +5,8 @@ Generator[YieldType, SendType, ReturnType]
 """
 
 import pathlib
+import lzma
+
 from collections.abc import (  # noqa: F401 pylint: disable=W0611
     Callable as CA,
 )
@@ -24,6 +26,7 @@ from typing import Tuple as T  # noqa: F401 pylint: disable=W0611
 from typing import Type as TY  # noqa: F401 pylint: disable=W0611
 from typing import TypeAlias as TA
 from typing import Union as U  # noqa: F401 pylint: disable=W0611
+from typing import TextIO
 
 P: TA = pathlib.Path
 N: TA = None
@@ -49,7 +52,7 @@ class Ring:
     """"""
 
     application: MT
-    attribute: L[S]
+    attribute: LS
     code: MT
     interface: MT
     language: MT
@@ -59,3 +62,6 @@ class Ring:
 
 
 R = Ring  # noqa: F401 pylint: disable=W0611
+
+FILE: TA = IO[A]
+LZMA: TA = U[lzma.LZMAFile, TextIO]

@@ -3,10 +3,7 @@
 import math
 
 from celestine import load
-from celestine.typed import (
-    L,
-    S,
-)
+from celestine.typed import LS
 
 from . import Abstract
 
@@ -201,7 +198,7 @@ class Package(Abstract):
         new = Image(self.ring, image)
         return new
 
-    def extension(self) -> L[S]:
+    def extension(self) -> LS:
         """"""
         pillow = self.ring.package.pillow
 

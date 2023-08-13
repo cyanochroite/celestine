@@ -9,10 +9,9 @@ from celestine.data import (
 )
 from celestine.session import begin_session
 from celestine.typed import (
+    LS,
     B,
-    L,
     N,
-    S,
 )
 
 bl_info = {
@@ -30,7 +29,7 @@ bl_info = {
 }
 
 
-def main(argument_list: L[S], exit_on_error: B, **star) -> N:
+def main(argument_list: LS, exit_on_error: B, **star) -> N:
     """Run the main program."""
 
     session = begin_session(argument_list, exit_on_error)

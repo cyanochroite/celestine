@@ -2,10 +2,9 @@
 
 from celestine import load
 from celestine.typed import (
-    L,
+    LS,
     N,
     R,
-    S,
 )
 from celestine.window.collection import Rectangle
 from celestine.window.element import Abstract as Abstract_
@@ -92,7 +91,7 @@ class Window(Window_):
 
         pygame.display.flip()
 
-    def extension(self) -> L[S]:
+    def extension(self) -> LS:
         return [
             ".bmp",
             ".sgi",

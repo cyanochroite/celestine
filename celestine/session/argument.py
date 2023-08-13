@@ -1,8 +1,8 @@
 """"""
 
 from celestine.typed import (
+    LS,
     B,
-    L,
     N,
     S,
 )
@@ -40,7 +40,7 @@ class Argument(HashClass, Attribute):
         self.attribute = attribute
         self.fallback = fallback
 
-    def key(self, _: S) -> L[S]:
+    def key(self, _: S) -> LS:
         """"""
         return []
 
@@ -48,7 +48,7 @@ class Argument(HashClass, Attribute):
 class Flag(Argument):
     """"""
 
-    def key(self, name: S) -> L[S]:
+    def key(self, name: S) -> LS:
         """"""
         return [
             NONE.join((HYPHEN_MINUS, name[0])),
@@ -59,7 +59,7 @@ class Flag(Argument):
 class Name(Argument):
     """"""
 
-    def key(self, name: S) -> L[S]:
+    def key(self, name: S) -> LS:
         """"""
         return [name]
 
@@ -82,7 +82,7 @@ class Customization(Flag, Help, Choices):
     """"""
 
     # pylint: disable-next=redefined-builtin
-    def __init__(self, fallback: S, help: S, choices: L[S]) -> N:
+    def __init__(self, fallback: S, help: S, choices: LS) -> N:
         """"""
         super().__init__(
             argument=bool(choices),
@@ -97,7 +97,7 @@ class Positional(Name, Help, Choices, Nargs):
     """"""
 
     # pylint: disable-next=redefined-builtin
-    def __init__(self, fallback: S, help: S, choices: L[S]) -> N:
+    def __init__(self, fallback: S, help: S, choices: LS) -> N:
         """"""
         super().__init__(
             argument=True,

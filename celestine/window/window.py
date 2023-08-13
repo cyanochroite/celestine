@@ -1,9 +1,8 @@
 """"""
 
 from celestine.typed import (
+    LS,
     A,
-    L,
-    S,
 )
 
 from .collection import Collection2
@@ -32,7 +31,7 @@ class Window(View):
         function(self.ring, container)
         self._view.set(name, container)
 
-    def extension(self) -> L[S]:
+    def extension(self) -> LS:
         """"""
         return [
             ".bmp",

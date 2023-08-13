@@ -1,9 +1,6 @@
 """A Python utility / library to sort Python imports."""
 
-from celestine.typed import (
-    L,
-    S,
-)
+from celestine.typed import LS
 
 from . import Abstract
 
@@ -11,6 +8,6 @@ from . import Abstract
 class Package(Abstract):
     """"""
 
-    def module(self) -> L[S]:
+    def module(self) -> LS:
         """"""
         return ["main"]

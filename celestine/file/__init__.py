@@ -4,34 +4,34 @@
 from celestine import load
 from celestine.typed import (
     GE,
-    IO,
-    A,
-    N,
     P,
     S,
+    OS,
+    N,
+    FILE,
 )
 
 from . import data as stream
 
 
-def binary(file: P, mode: S) -> IO[A]:
+def binary(file: P, mode: S) -> FILE:
     """Does all file opperations."""
     encoding = None  # Binary mode doesn't take an encoding argument.
     errors = None  #: Binary mode doesn't take an errors argument
     return raw(file, mode, encoding, errors)
 
 
-def binary_load(file: P) -> IO[A]:
+def binary_load(file: P) -> FILE:
     """"""
     return binary(file, stream.READ_BINARY)
 
 
-def binary_save(file: P) -> IO[A]:
+def binary_save(file: P) -> FILE:
     """"""
     return binary(file, stream.WRITE_BINARY)
 
 
-def raw(file: P, mode: S, encoding: S | N, errors: S | N) -> IO[A]:
+def raw(file: P, mode: S, encoding: OS, errors: OS) -> FILE:
     """Does all file opperations."""
     buffering = 1  # Use line buffering.
     newline = stream.UNIVERSAL  # Universal newlines mode.
@@ -49,19 +49,19 @@ def raw(file: P, mode: S, encoding: S | N, errors: S | N) -> IO[A]:
     )
 
 
-def text(file: P, mode: S) -> IO[A]:
+def text(file: P, mode: S) -> FILE:
     """Does all file opperations."""
     encoding = stream.UTF_8  # Use UTF 8 encoding.
     errors = stream.STRICT  # Raise a ValueError exception on error.
     return raw(file, mode, encoding, errors)
 
 
-def text_load(file: P) -> IO[A]:
+def text_load(file: P) -> FILE:
     """"""
     return text(file, stream.READ_TEXT)
 
 
-def text_save(file: P) -> IO[A]:
+def text_save(file: P) -> FILE:
     """"""
     return text(file, stream.WRITE_TEXT)
 
