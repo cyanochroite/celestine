@@ -414,6 +414,8 @@ class Window(Window_):
 
             call = getattr(self, self.call)
             call(self.ring, **self.star)
+
+            self.ring.event.work()
             return False
 
         super().__exit__(exc_type, exc_value, traceback)

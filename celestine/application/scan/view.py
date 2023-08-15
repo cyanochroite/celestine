@@ -12,4 +12,4 @@ def main(ring: R, view: View) -> N:
     language = view.ring.language
     with view.zone("main_head") as line:
         line.new("main_title", text=language.DEMO_MAIN_TITLE)
-        line.new("main_A", text="Greet Cow", call="cow", say="Hello!")
+        line.new("main_A", text="Greet Cow", code="cow", say="Hello!")

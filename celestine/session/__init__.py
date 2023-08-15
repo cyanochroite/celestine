@@ -9,18 +9,24 @@ from celestine.data.directory import (
 )
 from celestine.package import Package
 from celestine.typed import (
+    CA,
     LS,
+    A,
     B,
-    Ring,
-    R,
+    L,
     N,
+    R,
+    Ring,
+    T,
 )
 
 from .magic import Magic
 
 
 class Event:
+    """"""
 
+    event: L[T[CA, A, A]]
 
     def new(self, call, action, argument):
         """Add to event que and call function at end of update."""
@@ -107,6 +113,5 @@ Error messages will assume this version.
 
 if you have more then 1 language you must use language/__init__.py
 """
-
 
 """Configuration information will show your saved stuff."""

@@ -3,12 +3,12 @@
 
 from celestine import load
 from celestine.typed import (
+    FILE,
     GE,
-    P,
-    S,
     OS,
     N,
-    FILE,
+    P,
+    S,
 )
 
 from . import data as stream

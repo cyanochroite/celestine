@@ -8,6 +8,7 @@ from celestine.typed import (
     P,
     S,
 )
+
 from . import data as stream
 
 
@@ -30,6 +31,7 @@ def save(filename: P) -> LZMA:
         filters=None,
     )
 
+
 def load_data(filename: P) -> S:
     """"""
     data = None
@@ -42,4 +44,3 @@ def save_data(filename: P, data: S) -> N:
     """"""
     with save(filename) as file:
         file.write(bytes(data))
-

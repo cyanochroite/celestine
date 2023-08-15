@@ -59,7 +59,9 @@ class View(Item, Collection):
         for _, item in self.item.items():
             item.make(ring, **star)
 
-    def new(self, name, *, text="", path="", code="", view="", **star) -> N:
+    def new(
+        self, name, *, text="", path="", code="", view="", **star
+    ) -> N:
         """"""
         if text != "" and path != "":
             raise AttributeError("text and path can't both be set")
