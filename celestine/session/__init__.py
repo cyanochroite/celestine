@@ -12,12 +12,40 @@ from celestine.typed import (
     LS,
     B,
     Ring,
+    R,
+    N,
 )
 
 from .magic import Magic
 
 
-def begin_session(argument_list: LS, exit_on_error: B) -> Ring:
+class Event:
+
+
+    def new(self, call, action, argument):
+        """Add to event que and call function at end of update."""
+        hold = (call, action, argument)
+        self.event.append(hold)
+
+    def work(self) -> N:
+        """"""
+        if not self.event:
+            return
+
+        for event in self.event:
+            call = event[0]
+            one = event[1]
+            two = event[2]
+            call(one, **two)
+
+        self.event = []
+
+    def __init__(self, ring):
+        self.ring = ring
+        self.event = []
+
+
+def begin_session(argument_list: LS, exit_on_error: B) -> R:
     """"""
 
     magic = Magic(argument_list, exit_on_error)
@@ -56,7 +84,7 @@ def begin_session(argument_list: LS, exit_on_error: B) -> Ring:
 
     session.window = None
 
-    session.event = []
+    session.event = Event(session)
 
     view = load.module(APPLICATION, application, "view")
     session.view = load.functions(view)

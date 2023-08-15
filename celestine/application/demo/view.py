@@ -12,10 +12,10 @@ def one(ring: R, view: View) -> N:
     language = view.ring.language
     with view.zone("one_head") as line:
         line.new("one_title", text=language.DEMO_ONE_TITLE)
-        line.new("one_A", text="Feed Cow", call="cow", say="I eat you")
+        line.new("one_A", text="Feed Cow", code="cow", say="I eat you")
     with view.zone("one_body") as line:
-        line.new("one_past", text=language.DEMO_ONE_PAST, call="main")
-        line.new("one_next", text=language.DEMO_ONE_NEXT, call="two")
+        line.new("one_past", text=language.DEMO_ONE_PAST, view="main")
+        line.new("one_next", text=language.DEMO_ONE_NEXT, view="two")
 
 
 def two(ring: R, view: View) -> N:
@@ -23,10 +23,10 @@ def two(ring: R, view: View) -> N:
     language = view.ring.language
     with view.zone("two_head") as line:
         line.new("two_title", text=language.DEMO_TWO_TITLE)
-        line.new("two_A", text="Wave Cow", call="cow", say="Good Bye!")
+        line.new("two_A", text="Wave Cow", code="cow", say="Good Bye!")
     with view.zone("two_body") as line:
-        line.new("two_past", text=language.DEMO_TWO_PAST, call="one")
-        line.new("two_next", text=language.DEMO_TWO_NEXT, call="main")
+        line.new("two_past", text=language.DEMO_TWO_PAST, view="one")
+        line.new("two_next", text=language.DEMO_TWO_NEXT, view="main")
 
 
 def main(ring: R, view: View) -> N:
@@ -34,7 +34,7 @@ def main(ring: R, view: View) -> N:
     language = view.ring.language
     with view.zone("main_head") as line:
         line.new("main_title", text=language.DEMO_MAIN_TITLE)
-        line.new("main_A", text="Greet Cow", call="cow", say="Hello!")
+        line.new("main_A", text="Greet Cow", code="cow", say="Hello!")
     with view.zone("main_body") as line:
-        line.new("main_past", text=language.DEMO_MAIN_PAST, call="one")
-        line.new("main_next", text=language.DEMO_MAIN_NEXT, call="two")
+        line.new("main_past", text=language.DEMO_MAIN_PAST, view="one")
+        line.new("main_next", text=language.DEMO_MAIN_NEXT, view="two")

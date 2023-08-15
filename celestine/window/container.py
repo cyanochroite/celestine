@@ -59,19 +59,25 @@ class View(Item, Collection):
         for _, item in self.item.items():
             item.make(ring, **star)
 
-    def new(self, name, *, text="", path="", call="", **star) -> N:
+    def new(self, name, *, text="", path="", code="", view="", **star) -> N:
         """"""
         if text != "" and path != "":
             raise AttributeError("text and path can't both be set")
 
+        if code != "" and view != "":
+            raise AttributeError("call and view path can't both be set")
+
+        call = None
         action = Call.NONE
         work = None
 
-        if call in self.window._view.item:
+        if view:
+            call = view
             action = Call.VIEW
             work = self.window.turn
 
-        if call in self.window.task.item:
+        if code:
+            call = code
             action = Call.WORK
             work = self.window.work
 

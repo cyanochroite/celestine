@@ -44,7 +44,7 @@ class Button(Abstract):
     def poke(self, ring: R, x_dot: Z, y_dot: Z, **star) -> N:
         """"""
         if super().poke(ring, x_dot, y_dot, **star):
-            self.call(self.action, **self.argument)
+            ring.event.new(self.call, self.action, self.argument)
 
     def __init__(
         self, canvas, name, text, *, call, action, argument, **star
