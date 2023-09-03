@@ -60,6 +60,7 @@ def text_load(file: P) -> FILE:
     """"""
     return text(file, stream.READ_TEXT)
 
+
 def text_save(file: P) -> FILE:
     """"""
     return text(file, stream.WRITE_TEXT)
@@ -70,12 +71,11 @@ def text_read(file: P) -> FILE:
     with text_load(file) as book:
         return book.read()
 
+
 def text_write(file: P, string: S) -> FILE:
     """"""
     with text_save(file) as book:
         book.write(string)
-
-
 
 
 ########################################################################

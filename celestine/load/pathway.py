@@ -62,6 +62,12 @@ def pathway(*path: S) -> P:
     return pathlib.Path(_package, *path)
 
 
+def pathway_root(*path: S) -> P:
+    """"""
+    _package = pathroot()
+    return pathlib.Path(_package, *path)
+
+
 def python(*path: S) -> P:
     """"""
     base = pathway(*path)

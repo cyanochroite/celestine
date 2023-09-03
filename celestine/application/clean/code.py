@@ -1,5 +1,6 @@
 """Run a bunch of auto formaters."""
 
+import datetime
 import io
 import re
 
@@ -7,9 +8,9 @@ from celestine import load
 from celestine.file import (
     normalize,
     text_load,
+    text_read,
     text_save,
     text_write,
-    text_read,
 )
 from celestine.typed import (
     N,
@@ -18,6 +19,57 @@ from celestine.typed import (
 )
 
 PACKAGE = "package"
+
+
+array = [
+    (
+        [
+            "pyproject.toml",
+        ],
+        [
+            'version = "YYYY.MM.DD"',
+        ],
+    ),
+    (
+        [
+            "CITATION.cff",
+        ],
+        [
+            "version: YYYY.MM.DD",
+            "date-released: 'YYYY-MM-DD'",
+        ],
+    ),
+    (
+        [
+            "documentation",
+            "conf.py",
+        ],
+        [
+            'copyright = "YYYY, mem_dixy"',
+            'release = "YYYY.MM.DD"',
+            'version = "YYYY.MM.DD"',
+        ],
+    ),
+    (
+        [
+            "celestine",
+            "data",
+            "__init__.py",
+        ],
+        [
+            'VERSION_NUMBER = "YYYY.MM.DD"',
+        ],
+    ),
+    (
+        [
+            "celestine",
+            "__init__.py",
+        ],
+        [
+            '"version": (YYYY, MM, DD),',
+        ],
+    ),
+]
 
 
 def run(name: S) -> N:
@@ -55,108 +107,6 @@ def licence(**star):
                 document.write(line)
 
 
-array2 = {
-    "../pyproject.toml": ["version = \"YYYY.MM.DD\""],
-
-    "../CITATION.cff": [
-        "version: YYYY.MM.DD",
-        "date-released: 'YYYY-MM-DD'",
-    ],
-
-    "../documentation/conf.py": [
-        "copyright = \"YYYY, mem_dixy\""
-        "release = \"YYYY.MM.DD\"",
-        "version = \"YYYY.MM.DD\"",
-    ],
-    "/data/__init__.py": ["VERSION_NUMBER = \"YYYY.MM.DD\""],
-
-}
-
-array1 = [
-    (["pyproject.toml"], ["version = \"YYYY.MM.DD\""]),
-
-    (["CITATION.cff"], [
-        "version: YYYY.MM.DD",
-        "date-released: 'YYYY-MM-DD'",
-    ]),
-
-    (["documentation", "conf.py"], [
-        "copyright = \"YYYY, mem_dixy\""
-        "release = \"YYYY.MM.DD\"",
-        "version = \"YYYY.MM.DD\"",
-    ]),
-
-    (["/data/__init__.py"], ["VERSION_NUMBER = \"YYYY.MM.DD\""]),
-
-]
-
-array3 = [
-    (
-        ["pyproject.toml"],
-        ["version = \"YYYY.MM.DD\""],
-    ),
-    (
-        ["CITATION.cff"], [
-            "version: YYYY.MM.DD",
-            "date-released: 'YYYY-MM-DD'",
-        ],
-    ),
-    (
-        ["documentation", "conf.py"],
-        [
-            "copyright = \"YYYY, mem_dixy\""
-            "release = \"YYYY.MM.DD\"",
-            "version = \"YYYY.MM.DD\"",
-        ],
-    ),
-    (
-        ["/data/__init__.py"],
-        ["VERSION_NUMBER = \"YYYY.MM.DD\""],
-    ),
-]
-
-array = [
-    (
-        [
-            "pyproject.toml",
-        ],
-        [
-            "version = \"YYYY.MM.DD\"",
-        ],
-    ),
-    (
-        [
-            "CITATION.cff",
-        ],
-        [
-            "version: YYYY.MM.DD",
-            "date-released: 'YYYY-MM-DD'",
-        ],
-    ),
-    (
-        [
-            "documentation",
-            "conf.py",
-        ],
-        [
-            "copyright = \"YYYY, mem_dixy\"",
-            "release = \"YYYY.MM.DD\"",
-            "version = \"YYYY.MM.DD\"",
-        ],
-    ),
-    (
-        [
-            "celestine",
-            "data",
-            "__init__.py",
-        ],
-        [
-            "VERSION_NUMBER = \"YYYY.MM.DD\"",
-        ],
-    ),
-]
-
-
 def version(**star):
     """"""
 
@@ -176,13 +126,35 @@ def version(**star):
         repl = find.replace("*", now)
         return re.sub(pattern, repl, string, count, flags)
 
-    location = load.pathway.pathway("licence")
-    print(location)
+    date = datetime.datetime.now(datetime.UTC)
 
-    file = load.pathway.pathway("../pyproject.toml")
-    text = text_read(file)
-    # text = re.sub(r"(version)", "1234-56-78", text)
-    text = sub(text)
-    print(text)
-    text_write(file, text)
+    year = str(date.year).zfill(4)
+    month = str(date.month).zfill(2)
+    day = str(date.day).zfill(2)
 
+    for item in array:
+        path, keys = item
+
+        file = load.pathway.pathway_root(*path)
+        text = text_read(file)
+
+        for key in keys:
+            pattern = key
+            pattern = pattern.replace("YY", r"\d\d")
+            pattern = pattern.replace("MM", r"\d\d")
+            pattern = pattern.replace("DD", r"\d\d")
+
+            pattern = pattern.replace("(", r"\(")
+            pattern = pattern.replace(")", r"\)")
+
+            repl = key
+            repl = repl.replace("YYYY", year)
+            repl = repl.replace("MM", month)
+            repl = repl.replace("DD", day)
+
+            string = text
+            count = 1
+            flags = 0
+
+            text = re.sub(pattern, repl, string, count, flags)
+            text_write(file, text)
