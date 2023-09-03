@@ -1,0 +1,14 @@
+/CITATION.cff
+version
+date-released
+
+/pyproject.toml
+version
+
+/documentation/conf.py
+copyright
+release
+version
+
+/data/__init__.py
+VERSION_NUMBER

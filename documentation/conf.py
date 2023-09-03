@@ -3,5 +3,5 @@ copyright = "2023, mem_dixy"
 html_theme = 'alabaster'
 keep_warnings = True
 project = "celestine"
-release = "0.4.0"
-version = "0.4.0"
+release = "2023.09.02"
+version = "2023.09.02"

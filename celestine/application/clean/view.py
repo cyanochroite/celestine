@@ -14,4 +14,5 @@ def main(ring: R, view: View) -> N:
         line.new("main_title", text=language.DEMO_MAIN_TITLE)
         line.new("main_action", text="Greet Cow", code="clean")
     with view.zone("main_body") as line:
-        line.new("main_L", text="Clean licence files", code="licence")
+        line.new("main_L", text="Set Version", code="version")
+        line.new("main_R", text="Clean licence files", code="licence")

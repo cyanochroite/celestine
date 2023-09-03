@@ -5,6 +5,22 @@ celestine
    :target: https://celestine.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
+.. image:: https://img.shields.io/github/repo-size/mem-dixy/celestine
+:   alt: GitHub repo size
+
+.. image:: https://img.shields.io/pypi/v/celestine
+:   alt: PyPI - Version
+:   target: https://pypi.org/project/celestine/
+
+.. image:: https://img.shields.io/pypi/l/celestine
+:   alt: PyPI - License
+:   target: https://eupl.eu/
+
+.. image:: https://img.shields.io/badge/calver-YYYY.0M.0D-22bfda.svg
+:   alt: Calendar Versioning
+:   target: https://calver.org/
+
+
 About
 *****
 A python framework for desktop applications.
