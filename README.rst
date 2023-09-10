@@ -16,7 +16,7 @@ celestine
 :   alt: PyPI - License
 :   target: https://eupl.eu/
 
-.. image:: https://img.shields.io/badge/calver-YYYY.0M.0D-22bfda.svg
+.. image:: https://img.shields.io/badge/calver-YYYY.MM.DD-22bfda.svg
 :   alt: Calendar Versioning
 :   target: https://calver.org/
 
