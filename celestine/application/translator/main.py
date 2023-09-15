@@ -51,7 +51,6 @@ def parser_magic(ring, source):
 
     source_list = load.dictionary(LANGUAGE, source)
     for name, value in source_list.items():
-        continue  # disable post
         items = post(ring, dest_code, value)
         for item in items:
             translations = item[TRANSLATIONS]

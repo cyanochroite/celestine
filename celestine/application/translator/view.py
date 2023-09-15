@@ -18,7 +18,7 @@ def main(ring: R, view: View) -> N:
         )
 
 
-# TODO:figure out how to make actions not trigger on function load
+# TODO: Add report functionality back in, and make it better.
 def report(ring: R, view: View) -> N:
     """"""
     with view.zone("head") as line:

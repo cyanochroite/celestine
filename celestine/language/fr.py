@@ -52,23 +52,45 @@ Sélectionnez la version de Python que vous utilisez."
 
 ARGUMENT_VERSION_HELP = "Affiche la version actuelle."
 
+CLEAN_MAIN_CLEAN = "Formatez tous les fichiers de code python."
+
+CLEAN_MAIN_LICENCE = "Nettoyez les fichiers de licence."
+
+CLEAN_MAIN_TITLE = "Scripts pour préparer le projet à la publication."
+
+CLEAN_MAIN_VERSION = "Numéro de version de la mise à jour."
+
 CURSES_EXIT = "Appuyez sur la touche ÉCHAP pour quitter."
+
+DEMO_COW_TALK = "Je suis une vache qui parle."
+
+DEMO_MAIN_ACTION = "Saluez la vache."
 
 DEMO_MAIN_NEXT = "Allez à la page deux."
 
 DEMO_MAIN_PAST = "Passez à la première page."
 
+DEMO_MAIN_SAY = "Bonjour humain."
+
 DEMO_MAIN_TITLE = "Page principale."
+
+DEMO_ONE_ACTION = "Nourrissez la vache."
 
 DEMO_ONE_NEXT = "Allez à la page deux."
 
 DEMO_ONE_PAST = "Aller à la page principale."
 
+DEMO_ONE_SAY = "La nourriture a bon goût."
+
 DEMO_ONE_TITLE = "Première page."
+
+DEMO_TWO_ACTION = "Faites signe à la vache."
 
 DEMO_TWO_NEXT = "Aller à la page principale."
 
 DEMO_TWO_PAST = "Passez à la première page."
+
+DEMO_TWO_SAY = "Adieu humain."
 
 DEMO_TWO_TITLE = "Page deux."
 
@@ -79,15 +101,33 @@ finnois, français, grec, hongrois, irlandais, italien, letton, \
 lituanien, maltais, néerlandais, polonais, portugais, roumain, \
 slovaque, slovène, suédois et tchèque."
 
-LANGUAGE_NAME_ENGLISH = "French"
+LANGUAGE_NAME_ENGLISH = "Anglais"
 
-LANGUAGE_NAME_NATIVE = "français"
+LANGUAGE_NAME_NATIVE = "Anglais"
 
-LANGUAGE_TAG_AZURE = "fr"
+LANGUAGE_TAG_AZURE = "en"
 
-LANGUAGE_TAG_ISO = "fr"
+LANGUAGE_TAG_ISO = "en"
+
+SCAN_MAIN_BUTTON = "Ce bouton ne fait rien."
+
+SCAN_MAIN_TITLE = "Projet futur d’analyse de sécurité"
+
+SESSION_PARSER_CHOICE = "Choix non valide"
+
+SESSION_PARSER_CHOOSE = "Choisissez parmi"
+
+SESSION_PARSER_ERROR = "erreur"
+
+SESSION_PARSER_UNRECOGNIZED = "Arguments non reconnus"
+
+SESSION_PARSER_USAGE = "usage"
 
 TRANSLATOR_FILE_ERROR_OVERFLOW = "Nous avons débordé."
+
+TRANSLATOR_MAIN_BUTTON = "Traduire des fichiers"
+
+TRANSLATOR_REPORT_BUTTON = "Rapport sur les dossiers."
 
 TRANSLATOR_SESSION_KEY = "\
 Votre clé de service Traducteur à partir du portail Azure."
@@ -97,8 +137,12 @@ Région dans laquelle votre ressource a été créée."
 
 TRANSLATOR_SESSION_URL = "L’emplacement du service de traduction."
 
+VIEWER_MAIN_BUTTON = "Charger les images dans le répertoire."
+
 VIEWER_SESSION_DIRECTORY = "\
 Chemin d’accès à un répertoire contenant des images."
+
+name = "en"
 
 ########################################################################
 

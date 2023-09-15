@@ -9,7 +9,7 @@ try:
 
     appname = "celestine"
     appauthor = "celestine"
-    version = "0.4"
+    version = None
     roaming = False
     multipath = False
     opinion = False

@@ -3,10 +3,10 @@
 APPLICATION_TITLE = "Celestine Bildbetrachter"
 
 ARGUMENT_APPLICATION_DESCRIPTION = "\
-Ihre Programmwerte finden Sie hier. Yay."
+Ihre Programmwerte gehen Sie hierher. Yay."
 
 ARGUMENT_APPLICATION_HELP = "\
-Wählen Sie eine auszuführende Anwendung aus."
+Wählen Sie eine Anwendung aus, die ausgeführt werden soll."
 
 ARGUMENT_APPLICATION_TITLE = "Anwendung"
 
@@ -27,12 +27,12 @@ ARGUMENT_INFORMATION_TITLE = "Information"
 ARGUMENT_INTERFACE_HELP = "Welche GUI möchten Sie verwenden?"
 
 ARGUMENT_LANGUAGE_HELP = "\
-Die EU hat 24 Amtssprachen: \
+Die EU verfügt über 24 Amtssprachen: \
 Bulgarisch, Dänisch, Deutsch, Englisch, Estnisch, Finnisch, \
-Französisch, Griechisch, Irisch, Italienisch, Lettisch, Litauisch, \
-Maltesisch, Niederländisch, Polnisch, Portugiesisch, Rumänisch, \
-Schwedisch, Slowakisch, Slowenisch, Spanisch, \
-Tschechisch und Ungarisch."
+Französisch, Griechisch, Irisch, Italienisch, Kroatisch, Lettisch, \
+Litauisch, Maltesisch, Niederländisch, Polnisch, Portugiesisch, \
+Rumänisch, Schwedisch, Slowakisch, Slowenisch, \
+Spanisch und Ungarisch."
 
 ARGUMENT_MODIFICATION_DESCRIPTION = "Konfigurieren von Flags"
 
@@ -53,54 +53,99 @@ Wählen Sie aus, welche Version von Python Sie verwenden."
 
 ARGUMENT_VERSION_HELP = "Zeigt die aktuelle Version an."
 
-CURSES_EXIT = "Drücken Sie zum Beenden die ESC-Taste."
+CLEAN_MAIN_CLEAN = "Formatieren Sie alle Python-Codedateien."
+
+CLEAN_MAIN_LICENCE = "Bereinigen Sie die Lizenzdateien."
+
+CLEAN_MAIN_TITLE = "\
+Skripte, um das Projekt für die Veröffentlichung vorzubereiten."
+
+CLEAN_MAIN_VERSION = "Aktualisieren Sie die Versionsnummer."
+
+CURSES_EXIT = "Drücken Sie die ESC-Taste, um den Vorgang zu beenden."
+
+DEMO_COW_TALK = "Ich bin eine sprechende Kuh."
+
+DEMO_MAIN_ACTION = "Grüße die Kuh."
 
 DEMO_MAIN_NEXT = "Gehen Sie zu Seite zwei."
 
 DEMO_MAIN_PAST = "Gehen Sie zu Seite eins."
 
-DEMO_MAIN_TITLE = "Seite Hauptseite."
+DEMO_MAIN_SAY = "Hallo Mensch."
+
+DEMO_MAIN_TITLE = "Hauptseite der Seite."
+
+DEMO_ONE_ACTION = "Füttere die Kuh."
 
 DEMO_ONE_NEXT = "Gehen Sie zu Seite zwei."
 
 DEMO_ONE_PAST = "Gehen Sie zur Hauptseite der Seite."
 
+DEMO_ONE_SAY = "Das Essen schmeckt gut."
+
 DEMO_ONE_TITLE = "Seite eins."
+
+DEMO_TWO_ACTION = "Winke der Kuh zu."
 
 DEMO_TWO_NEXT = "Gehen Sie zur Hauptseite der Seite."
 
 DEMO_TWO_PAST = "Gehen Sie zu Seite eins."
 
+DEMO_TWO_SAY = "Auf Wiedersehen, Mensch."
+
 DEMO_TWO_TITLE = "Seite zwei."
 
 LANGUAGE = "\
-Die EU hat 24 Amtssprachen: \
+Die EU verfügt über 24 Amtssprachen: \
 Bulgarisch, Dänisch, Deutsch, Englisch, Estnisch, Finnisch, \
 Französisch, Griechisch, Irisch, Italienisch, Kroatisch, Lettisch, \
 Litauisch, Maltesisch, Niederländisch, Polnisch, Portugiesisch, \
-Rumänisch, Schwedisch, Slowakisch, Slowenisch, Spanisch, \
-Tschechisch und Ungarisch."
+Rumänisch, Schwedisch, Slowakisch, Slowenisch, \
+Spanisch und Ungarisch."
 
-LANGUAGE_NAME_ENGLISH = "German"
+LANGUAGE_NAME_ENGLISH = "Englisch"
 
-LANGUAGE_NAME_NATIVE = "Deutsch"
+LANGUAGE_NAME_NATIVE = "Englisch"
 
-LANGUAGE_TAG_AZURE = "de"
+LANGUAGE_TAG_AZURE = "De"
 
-LANGUAGE_TAG_ISO = "de"
+LANGUAGE_TAG_ISO = "De"
 
-TRANSLATOR_FILE_ERROR_OVERFLOW = "Wir haben übergelaufen."
+SCAN_MAIN_BUTTON = "Diese Schaltfläche bewirkt nichts."
+
+SCAN_MAIN_TITLE = "Future Security Scan-Projekt"
+
+SESSION_PARSER_CHOICE = "Ungültige Auswahl"
+
+SESSION_PARSER_CHOOSE = "Wählen Sie aus"
+
+SESSION_PARSER_ERROR = "Fehler"
+
+SESSION_PARSER_UNRECOGNIZED = "Nicht erkannte Argumente"
+
+SESSION_PARSER_USAGE = "Verwendung"
+
+TRANSLATOR_FILE_ERROR_OVERFLOW = "Wir sind übergelaufen."
+
+TRANSLATOR_MAIN_BUTTON = "Dateien übersetzen"
+
+TRANSLATOR_REPORT_BUTTON = "Berichten Sie über Dateien."
 
 TRANSLATOR_SESSION_KEY = "\
-Ihr Übersetzerdienstschlüssel aus dem Azure-Portal."
+Ihr Translator-Dienstschlüssel aus dem Azure-Portal."
 
 TRANSLATOR_SESSION_REGION = "\
 Die Region, in der Ihre Ressource erstellt wurde."
 
 TRANSLATOR_SESSION_URL = "Der Standort des Übersetzungsdienstes."
 
+VIEWER_MAIN_BUTTON = "Laden Sie Bilder in das Verzeichnis."
+
 VIEWER_SESSION_DIRECTORY = "\
 Ein Pfad zu einem Verzeichnis, das Bilder enthält."
+
+name = "De"
 
 ########################################################################
 

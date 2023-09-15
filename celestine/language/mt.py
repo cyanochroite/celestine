@@ -50,42 +50,84 @@ ARGUMENT_PYTHON_HELP = "Agħżel liema verżjoni ta' Python qed tuża."
 
 ARGUMENT_VERSION_HELP = "Juri l-verżjoni attwali."
 
+CLEAN_MAIN_CLEAN = "Ifformattja l-fajls kollha tal-kodiċi python."
+
+CLEAN_MAIN_LICENCE = "Naddaf il-fajls tal-liċenzja."
+
+CLEAN_MAIN_TITLE = "\
+Skripts biex il-proġett ikun lest għall-pubblikazzjoni."
+
+CLEAN_MAIN_VERSION = "Aġġorna n-numru tal-verżjoni."
+
 CURSES_EXIT = "Agħfas il-buttuna ESC biex toħroġ."
+
+DEMO_COW_TALK = "Jiena baqra li titkellem."
+
+DEMO_MAIN_ACTION = "Insellem lill-baqra."
 
 DEMO_MAIN_NEXT = "Mur fit-tieni paġna."
 
 DEMO_MAIN_PAST = "Mur fl-ewwel paġna."
 
+DEMO_MAIN_SAY = "Hello bniedem."
+
 DEMO_MAIN_TITLE = "Prinċipali tal-paġna."
+
+DEMO_ONE_ACTION = "Itma' l-baqra."
 
 DEMO_ONE_NEXT = "Mur fit-tieni paġna."
 
 DEMO_ONE_PAST = "Mur fil-paġna prinċipali."
 
+DEMO_ONE_SAY = "It-togħma tal-ikel tajba."
+
 DEMO_ONE_TITLE = "L-ewwel paġna."
+
+DEMO_TWO_ACTION = "Mewġa fil-baqra."
 
 DEMO_TWO_NEXT = "Mur fil-paġna prinċipali."
 
 DEMO_TWO_PAST = "Mur fl-ewwel paġna."
 
+DEMO_TWO_SAY = "Addiju uman."
+
 DEMO_TWO_TITLE = "It-tieni paġna."
 
 LANGUAGE = "\
 L-UE għandha 24 lingwa uffiċjali: \
-Il-Bulgaru, iċ-Ċek, id-Daniż, l-Estonjan, il-Finlandiż, il-Franċiż, \
-il-Ġermaniż, il-Grieg, l-Ingliż, l-Irlandiż, il-Kroat, il-Latvjan, \
-il-Litwan, il-Malti, l-Olandiż, il-Pollakk, il-Portugiż, ir-Rumen, \
-is-Slovakk, is-Sloven, l-Ispanjol, it-Taljan, l-Ungeriż u l-Iżvediż."
+il-Bulgaru, il-Kroat, iċ-Ċek, id-Daniż, l-Olandiż, l-Ingliż, \
+l-Estonjan, il-Finlandiż, il-Franċiż, il-Ġermaniż, il-Grieg, \
+l-Ungeriż, l-Irlandiż, it-Taljan, il-Latvjan, il-Litwan, il-Malti, \
+il-Pollakk, il-Portugiż, ir-Rumen, is-Slovakk, is-Sloven, \
+l-Ispanjol u l-Iżvediż."
 
-LANGUAGE_NAME_ENGLISH = "Maltese"
+LANGUAGE_NAME_ENGLISH = "Ingliż"
 
-LANGUAGE_NAME_NATIVE = "Malti"
+LANGUAGE_NAME_NATIVE = "Ingliż"
 
-LANGUAGE_TAG_AZURE = "mt"
+LANGUAGE_TAG_AZURE = "En"
 
-LANGUAGE_TAG_ISO = "mt"
+LANGUAGE_TAG_ISO = "En"
+
+SCAN_MAIN_BUTTON = "Din il-buttuna ma tagħmel xejn."
+
+SCAN_MAIN_TITLE = "Proġett futur tal-Iskennjar tas-Sigurtà"
+
+SESSION_PARSER_CHOICE = "Għażla invalida"
+
+SESSION_PARSER_CHOOSE = "jagħżlu minn"
+
+SESSION_PARSER_ERROR = "Żball"
+
+SESSION_PARSER_UNRECOGNIZED = "argumenti mhux rikonoxxuti"
+
+SESSION_PARSER_USAGE = "Użu"
 
 TRANSLATOR_FILE_ERROR_OVERFLOW = "Għamilna overflow."
+
+TRANSLATOR_MAIN_BUTTON = "Ittraduċi l-Fajls"
+
+TRANSLATOR_REPORT_BUTTON = "Rapport dwar il-fajls."
 
 TRANSLATOR_SESSION_KEY = "\
 Iċ-ċavetta tas-servizz tat-Traduttur tiegħek mill-portal Azure."
@@ -95,7 +137,11 @@ Ir-reġjun fejn inħolqot ir-riżorsa tiegħek."
 
 TRANSLATOR_SESSION_URL = "Il-post tas-servizz tat-traduzzjoni."
 
+VIEWER_MAIN_BUTTON = "Immaġnijiet tat-tagħbija fid-direttorju."
+
 VIEWER_SESSION_DIRECTORY = "Mogħdija għal direttorju li fih immaġini."
+
+name = "En"
 
 ########################################################################
 
