@@ -82,6 +82,10 @@ DEMO_TWO_TITLE = "Page two."
 
 TRANSLATOR_FILE_ERROR_OVERFLOW = "We did overflow."
 
+TRANSLATOR_MAIN_BUTTON = "Translate Files"
+
+TRANSLATOR_REPORT_BUTTON = "Report on files."
+
 TRANSLATOR_SESSION_KEY = "\
 Your Translator service key from the Azure portal."
 
@@ -91,6 +95,24 @@ The region where your resource was created."
 TRANSLATOR_SESSION_URL = "The location of the translation service."
 
 VIEWER_SESSION_DIRECTORY = "A path to a directory containing images."
+
+VIEWER_MAIN_BUTTON = "Load images in directory."
+
+SCAN_MAIN_TITLE = "Future Security Scan Project"
+SCAN_MAIN_BUTTON = "This button does nothing."
+
+CLEAN_MAIN_TITLE = "Scripts to get project ready for publishing."
+CLEAN_MAIN_CLEAN = "Format all python code files."
+CLEAN_MAIN_VERSION = "Update version number."
+CLEAN_MAIN_LICENCE = "Clean the licence files."
+
+DEMO_ONE_ACTION = "Feed the cow."
+DEMO_TWO_ACTION = "Wave at the cow."
+DEMO_MAIN_ACTION = "Greet the cow."
+DEMO_ONE_SAY = "Food taste good."
+DEMO_TWO_SAY = "Goodbye human."
+DEMO_MAIN_SAY = "Hello human."
+DEMO_COW_TALK = "I am a talking cow."
 
 ########################################################################
 

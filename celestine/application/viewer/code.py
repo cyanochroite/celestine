@@ -20,7 +20,6 @@ def find_image(ring: R, directory: S) -> LS:
 
 def setup(*, ring: R, window: A, **star) -> N:
     """"""
-    print("cow")
     directory = ring.attribute.directory
     images = find_image(ring, directory)
     images = iter(images)

@@ -1,6 +1,7 @@
 """"""
 
 
-def cow(*, say, **star):
+def cow(*, say, ring, **star):
     """"""
-    print("I am a talking cow.", say)
+    talk = ring.language.DEMO_COW_TALK
+    print(talk, say)

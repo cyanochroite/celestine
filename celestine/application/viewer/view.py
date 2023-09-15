@@ -23,7 +23,12 @@ def picture(ring: R, view: View) -> N:
 
 def main(ring: R, view: View) -> N:
     """"""
-    view.new("load", text="Load image.", code="setup", window=view)
+    view.new(
+        "load",
+        text=ring.language.VIEWER_MAIN_BUTTON,
+        code="setup",
+        window=view,
+    )
     with view.zone("grid", row=2, col=4, mode=Zone.GRID) as grid:
         for name, _ in grid:
             grid.new(name, path=NULL, mode=Image.FILL)

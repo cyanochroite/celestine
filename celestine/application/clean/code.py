@@ -81,13 +81,11 @@ def run(name: S) -> N:
 
 def clean(*, ring: R, **star) -> N:
     """"""
-    print("clean begin")
     ring.package.pyupgrade.run()
     ring.package.pydocstringformatter.run()
     ring.package.autoflake.run()
     ring.package.isort.run()
     ring.package.black.run()
-    print("clean finish")
 
 
 def licence(**star):
