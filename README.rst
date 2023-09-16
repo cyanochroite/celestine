@@ -6,19 +6,19 @@ celestine
    :alt: Documentation Status
 
 .. image:: https://img.shields.io/github/repo-size/mem-dixy/celestine
-:   alt: GitHub repo size
+   :alt: GitHub repo size
 
 .. image:: https://img.shields.io/pypi/v/celestine
-:   alt: PyPI - Version
-:   target: https://pypi.org/project/celestine/
+   :alt: PyPI - Version
+   :target: https://pypi.org/project/celestine/
 
 .. image:: https://img.shields.io/pypi/l/celestine
-:   alt: PyPI - License
-:   target: https://eupl.eu/
+   :alt: PyPI - License
+   :target: https://eupl.eu/
 
 .. image:: https://img.shields.io/badge/calver-YYYY.MM.DD-22bfda.svg
-:   alt: Calendar Versioning
-:   target: https://calver.org/
+   :alt: Calendar Versioning
+   :target: https://calver.org/
 
 
 About
@@ -225,10 +225,10 @@ Windows
 Licences
 ********
 
-The licence for :program:`Cascadia Code` is the
+The licence for :code:`Cascadia Code` is the
 `SIL Open Font License <https://scripts.sil.org/OFL>`_.
 
-The licence for :program:`celestine` is the
+The licence for :code:`celestine` is the
 `European Union Public Licence <https://eupl.eu/>`_.
 
 
