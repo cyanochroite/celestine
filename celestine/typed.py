@@ -20,7 +20,7 @@ from typing import IO  # noqa: F401 pylint: disable=W0611
 from typing import Any as A  # noqa: F401 pylint: disable=W0611
 from typing import Dict as D  # noqa: F401 pylint: disable=W0611
 from typing import List as L  # noqa: F401 pylint: disable=W0611
-from typing import Optional as O
+from typing import Optional as OPT
 from typing import TextIO
 from typing import Tuple as T  # noqa: F401 pylint: disable=W0611
 from typing import Type as TY  # noqa: F401 pylint: disable=W0611
@@ -36,11 +36,11 @@ P: TA = pathlib.Path
 S: TA = str
 Z: TA = int
 
-OB: TA = O[B]
-OF: TA = O[F]
-OP: TA = O[P]
-OS: TA = O[S]
-OZ: TA = O[Z]
+OB: TA = OPT[B]
+OF: TA = OPT[F]
+OP: TA = OPT[P]
+OS: TA = OPT[S]
+OZ: TA = OPT[Z]
 
 LB: TA = L[B]
 LF: TA = L[F]
@@ -60,6 +60,7 @@ class Ring:
     main: S
     package: MT
     view: MT
+    window: MT
 
 
 R = Ring  # noqa: F401 pylint: disable=W0611

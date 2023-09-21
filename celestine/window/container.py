@@ -4,6 +4,7 @@ import enum
 import math
 
 from celestine.typed import (
+    B,
     D,
     N,
     R,
@@ -181,7 +182,7 @@ class View(Item, Collection):
     def __enter__(self):
         return self
 
-    def __exit__(self, *_):
+    def __exit__(self, exc_type, exc_value, traceback) -> B:
         return False
 
     def __init__(
@@ -208,8 +209,6 @@ class View(Item, Collection):
         self._button = element["button"]
         self._image = element["image"]
         self._label = element["label"]
-
-        self.turn = window.turn
 
         super().__init__(canvas, name, area, **star)
 

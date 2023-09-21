@@ -8,6 +8,7 @@ from celestine.typed import (
     N,
     P,
     R,
+    S,
     T,
     Z,
 )
@@ -27,11 +28,11 @@ class Abstract(Item):
 
     # TODO combine abstract and container into item clas
 
-    def spot(self, area: Rectangle):
+    def spot(self, area: Rectangle) -> N:
         """"""
         self.area.copy(area)
 
-    def __init__(self, canvas, name, **star):
+    def __init__(self, canvas: A, name: S, **star) -> N:
         self.canvas = canvas
         self.item = None
         area = Rectangle(0, 0, 0, 0)
@@ -110,6 +111,8 @@ class Picture:
 
 
 class Image(Abstract):
+    """"""
+
     path: P  # The location of the image on disk.
     image: A  # The image object after being loaded from disk.
 
@@ -133,7 +136,7 @@ class Image(Abstract):
     Keeping it within a byte (256) a nice goal.
     """
 
-    def update(self, ring: R, path, **star):
+    def update(self, ring: R, path: P, **star) -> N:
         """"""
         self.path = path
 

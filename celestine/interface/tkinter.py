@@ -1,8 +1,12 @@
 """"""
 
+
 from celestine.typed import (
+    CA,
     N,
+    P,
     R,
+    S,
 )
 from celestine.window.collection import Rectangle
 from celestine.window.element import Abstract as Abstract_
@@ -15,7 +19,7 @@ from celestine.window.window import Window as Window_
 class Abstract(Abstract_):
     """"""
 
-    def render(self, item, *, ring, **star):
+    def render(self, item: CA, *, ring: R, **star) -> N:
         """"""
         self.item = item(self.canvas, **star)
 
@@ -32,11 +36,11 @@ class Abstract(Abstract_):
 class Button(Abstract, Button_):
     """"""
 
-    def callback(self):
+    def callback(self) -> N:
         """"""
         self.call(self.action, **self.argument)
 
-    def make(self, ring: R, **star):
+    def make(self, ring: R, **star) -> N:
         """"""
         tkinter = ring.package.tkinter
 
@@ -49,7 +53,7 @@ class Button(Abstract, Button_):
 class Image(Abstract, Image_):
     """"""
 
-    def make(self, ring: R, **star):
+    def make(self, ring: R, **star) -> N:
         """"""
         tkinter = ring.package.tkinter
 
@@ -59,7 +63,7 @@ class Image(Abstract, Image_):
         item = tkinter.Label
         self.render(item, ring=ring, **star)
 
-    def update(self, ring: R, path, **star):
+    def update(self, ring: R, path: P, **star) -> N:
         """"""
         super().update(ring, path)
         tkinter = ring.package.tkinter
@@ -75,13 +79,12 @@ class Image(Abstract, Image_):
 
         self.item.configure(image=self.image)
         self.item.image = self.image
-        return True
 
 
 class Label(Abstract, Label_):
     """"""
 
-    def make(self, ring: R, **star):
+    def make(self, ring: R, **star) -> N:
         """"""
         tkinter = ring.package.tkinter
 
@@ -110,7 +113,7 @@ class Window(Window_):
             ".png",
         ]
 
-    def setup(self, name):
+    def setup(self, name: S) -> N:
         """"""
         tkinter = self.ring.package.tkinter
 

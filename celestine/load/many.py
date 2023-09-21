@@ -30,18 +30,18 @@ def file(top: P, include: LS, exclude: LS) -> GE[P, N, N]:
     Item 'suffix_include': a list of file name suffix to include
     if none, it ignores it.
     """
-    include = set(include)
-    exclude = set(exclude)
+    included = set(include)
+    excluded = set(exclude)
 
     for dirpath, dirnames, filenames in walk(top):
         for dirname in dirnames:
-            if dirname in exclude:
+            if dirname in excluded:
                 dirnames.remove(dirname)
 
         for filename in filenames:
             path = pathlib.Path(dirpath, filename)
             suffix = path.suffix.lower()
-            if not include or suffix in include:
+            if not included or suffix in included:
                 yield path
 
 

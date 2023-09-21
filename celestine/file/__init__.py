@@ -72,7 +72,7 @@ def text_read(file: P) -> FILE:
         return book.read()
 
 
-def text_write(file: P, string: S) -> FILE:
+def text_write(file: P, string: S) -> N:
     """"""
     with text_save(file) as book:
         book.write(string)

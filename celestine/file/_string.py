@@ -1,5 +1,7 @@
 """"""
 
+import io
+
 from celestine.typed import (
     N,
     S,
