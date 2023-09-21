@@ -9,7 +9,7 @@ from celestine.typed import (
     S,
 )
 
-from . import data as stream
+from celestine.file import data as stream
 
 
 def load(filename: P) -> LZMA:
@@ -34,10 +34,8 @@ def save(filename: P) -> LZMA:
 
 def load_data(filename: P) -> S:
     """"""
-    data = None
     with load(filename) as file:
-        data = file.read()
-    return data
+        return file.read()
 
 
 def save_data(filename: P, data: S) -> N:

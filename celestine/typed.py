@@ -27,22 +27,24 @@ from typing import Type as TY  # noqa: F401 pylint: disable=W0611
 from typing import TypeAlias as TA
 from typing import Union as U  # noqa: F401 pylint: disable=W0611
 
-P: TA = pathlib.Path
 N: TA = None
 OBJ: TA = object
 
 B: TA = bool
 F: TA = float
+P: TA = pathlib.Path
 S: TA = str
 Z: TA = int
 
 OB: TA = O[B]
 OF: TA = O[F]
+OP: TA = O[P]
 OS: TA = O[S]
 OZ: TA = O[Z]
 
 LB: TA = L[B]
 LF: TA = L[F]
+LP: TA = L[P]
 LS: TA = L[S]
 LZ: TA = L[Z]
 

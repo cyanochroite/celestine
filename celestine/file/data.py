@@ -4,9 +4,6 @@ MAXIMUM_LINE_LENGTH = 72
 SECTION_BREAK = "######################################################\
 ##################"
 
-
-""""""
-
 # encoding
 ASCII = "ascii"
 ISO_8859_1 = "iso_8859_1"
@@ -26,7 +23,7 @@ SURROGATEESCAPE = "surrogateescape"
 XMLCHARREFREPLACE = "xmlcharrefreplace"
 
 # mode
-APPEND_BINARY = "bt"
+APPEND_BINARY = "ab"
 APPEND_TEXT = "at"
 EXCLUSIVE_BINARY = "xb"
 EXCLUSIVE_TEXT = "xt"
