@@ -2,6 +2,7 @@
 
 from celestine.typed import (
     GE,
+    SELF,
     TA,
     A,
     B,
@@ -11,7 +12,6 @@ from celestine.typed import (
     S,
     T,
     Z,
-    SELF,
 )
 
 AXIS: TA = GE[T[Z, Z], N, N]

@@ -15,12 +15,16 @@ from typing import Any as A
 from typing import Dict as D
 from typing import List as L
 from typing import Optional as OPT
-from typing import Self as SELF
 from typing import TextIO
 from typing import Tuple as T
 from typing import Type as TY
 from typing import TypeAlias as TA
 from typing import Union as U
+
+try:  # Fix for Python 3.10 not having Self.
+    from typing import Self as SELF
+except ImportError:
+    SELF: TA = A
 
 N: TA = None
 OBJ: TA = object
@@ -42,6 +46,18 @@ LF: TA = L[F]
 LP: TA = L[P]
 LS: TA = L[S]
 LZ: TA = L[Z]
+
+class Ignore:
+    """"""
+
+    _callable: CA
+    _generator: GE
+    _iterable: IT
+    _dict: D
+    _self: SELF
+    _tuple: T
+    _type: TY
+
 
 
 class Ring:

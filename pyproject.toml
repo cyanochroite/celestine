@@ -192,11 +192,9 @@ ignored-argument-names = "_|cls|ring|star|self"
 
 
 [tool.pylint.format]
-#expected-line-ending-format = "CRLF"
-expected-line-ending-format = "LF"
+expected-line-ending-format = "CRLF"
 max-line-length = 72
 
 
 [tool.pyright]
-# typeCheckingMode = "strict"
-typeCheckingMode = "basic"
+typeCheckingMode = "strict"

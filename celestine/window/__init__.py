@@ -9,8 +9,8 @@ from abc import (
 from celestine.typed import (
     LS,
     A,
-    S,
     N,
+    S,
 )
 
 from .collection import Collection2

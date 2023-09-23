@@ -9,12 +9,12 @@ from celestine.typed import (
 )
 from celestine.unicode import LINE_FEED
 from celestine.unicode.notational_systems import BRAILLE_PATTERNS
+from celestine.window import Window as window
 from celestine.window.collection import Rectangle
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
-from celestine.window import Window as window
 
 color_index = 8  # skip the 8 reserved colors
 color_table = {}
