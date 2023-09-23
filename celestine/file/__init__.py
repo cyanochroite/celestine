@@ -66,7 +66,7 @@ def text_save(file: P) -> FILE:
     return text(file, stream.WRITE_TEXT)
 
 
-def text_read(file: P) -> FILE:
+def text_read(file: P) -> S:
     """"""
     with text_load(file) as book:
         return book.read()

@@ -11,6 +11,7 @@ from celestine.typed import (
     S,
     T,
     Z,
+    SELF,
 )
 
 AXIS: TA = GE[T[Z, Z], N, N]
@@ -32,7 +33,7 @@ class Rectangle:
     right: Z
     lower: Z
 
-    def copy(self, other):
+    def copy(self, other: SELF) -> N:
         """Copy the values from another object."""
         self.left = other.left
         self.upper = other.upper

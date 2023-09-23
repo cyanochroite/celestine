@@ -6,26 +6,21 @@ Generator[YieldType, SendType, ReturnType]
 
 import lzma
 import pathlib
-from collections.abc import (  # noqa: F401 pylint: disable=W0611
-    Callable as CA,
-)
-from collections.abc import (  # noqa: F401 pylint: disable=W0611
-    Generator as GE,
-)
-from collections.abc import (  # noqa: F401 pylint: disable=W0611
-    Iterable as IT,
-)
-from types import ModuleType as MT  # noqa: F401 pylint: disable=W0611
-from typing import IO  # noqa: F401 pylint: disable=W0611
-from typing import Any as A  # noqa: F401 pylint: disable=W0611
-from typing import Dict as D  # noqa: F401 pylint: disable=W0611
-from typing import List as L  # noqa: F401 pylint: disable=W0611
+from collections.abc import Callable as CA
+from collections.abc import Generator as GE
+from collections.abc import Iterable as IT
+from types import ModuleType as MT
+from typing import IO
+from typing import Any as A
+from typing import Dict as D
+from typing import List as L
 from typing import Optional as OPT
+from typing import Self as SELF
 from typing import TextIO
-from typing import Tuple as T  # noqa: F401 pylint: disable=W0611
-from typing import Type as TY  # noqa: F401 pylint: disable=W0611
+from typing import Tuple as T
+from typing import Type as TY
 from typing import TypeAlias as TA
-from typing import Union as U  # noqa: F401 pylint: disable=W0611
+from typing import Union as U
 
 N: TA = None
 OBJ: TA = object
