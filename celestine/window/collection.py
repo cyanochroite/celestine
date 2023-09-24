@@ -24,6 +24,15 @@ class Object:
         """Make sure object does not get the star parameter."""
         super().__init__()
 
+class Point:
+    """Screen cordinates."""
+
+    point_x: Z
+    point_y: Z
+
+    def __init__(self, point_x: Z, point_y: Z) -> N:
+        self.point_x = abs(point_x)
+        self.point_y = abs(point_y)
 
 class Rectangle:
     """"""
@@ -40,7 +49,7 @@ class Rectangle:
         self.right = other.right
         self.lower = other.lower
 
-    def within(self, dox_x: Z, dot_y: Z) -> B:
+    def within(self, x: Z, y: Z) -> B:
         """Test that click inside us."""
         test_x = self.left <= dox_x <= self.right
         test_y = self.upper <= dot_y <= self.lower

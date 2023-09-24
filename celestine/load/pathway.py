@@ -39,21 +39,17 @@ def safe_path(*path: S) -> P:
     """Might not be right be good for input from user."""
     root = pathfinder()
 
-    path = os.path.join(root, *path)
-    path = os.path.normcase(path)
-    path = os.path.normpath(path)
-    path = os.path.realpath(path, strict=True)
+    join = os.path.join(root, *path)
+    normcase = os.path.normcase(join)
+    normpath = os.path.normpath(normcase)
+    realpath = os.path.realpath(normpath, strict=True)
 
-    safe = os.path.commonpath(root, path)
+    safe = os.path.commonpath((root, realpath))
 
     if not os.path.samefile(root, safe):
         raise RuntimeError()
 
-    #        return False
-
-    #     os.path.exists(path)
-
-    return pathlib.Path(path)
+    return pathlib.Path(realpath)
 
 
 def pathway(*path: S) -> P:
