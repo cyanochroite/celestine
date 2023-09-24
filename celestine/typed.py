@@ -47,6 +47,7 @@ LP: TA = L[P]
 LS: TA = L[S]
 LZ: TA = L[Z]
 
+
 class Ignore:
     """"""
 
@@ -57,7 +58,6 @@ class Ignore:
     _self: SELF
     _tuple: T
     _type: TY
-
 
 
 class Ring:

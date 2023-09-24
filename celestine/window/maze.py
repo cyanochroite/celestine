@@ -1,8 +1,18 @@
 """"""
 
-import io
 import enum
-import typing
+import io
+
+from celestine.typed import (
+    LS,
+    LZ,
+    SELF,
+    B,
+    L,
+    N,
+    S,
+    Z,
+)
 
 
 class Direction(enum.Enum):
@@ -16,229 +26,142 @@ class Direction(enum.Enum):
     SOUTHWEST = enum.auto()
     WEST = enum.auto()
     NORTHWEST = enum.auto()
+    NONE = enum.auto()
 
 
-class Axis():
+class Axis:
     """"""
 
-    point: int
-    size: int
+    point: Z
+    size: Z
 
-    def clone(
-        self,
-    ) -> typing.Self:
+    def clone(self) -> SELF:
         """"""
-
         return Axis(self.point, self.size)
 
     @classmethod
-    def copy(
-        cls,
-        axis: typing.Self,
-    ) -> typing.Self:
+    def copy(cls, axis: SELF) -> SELF:
         """"""
-
         return cls(axis.point, axis.size)
 
-    def index(
-        self,
-    ) -> int:
+    def index(self) -> Z:
         """"""
-
         return self.point
 
-    def move(
-        self,
-        point: int,
-    ) -> None:
+    def move(self, point: Z) -> N:
         """"""
-
         self.point += point
 
-    def valid(
-        self,
-    ) -> bool:
+    def valid(self) -> B:
         """"""
-
         return 0 <= self.point < self.size
 
-    def __eq__(
-        self,
-        other: typing.Self,
-    ) -> bool:
+    def __eq__(self, other: SELF) -> B:
         """"""
-
         point = self.point == other.point
         size = self.size == other.size
         return point and size
 
-    def __init__(
-        self,
-        point: int,
-        size: int,
-    ) -> None:
+    def __init__(self, point: Z, size: Z) -> N:
         """"""
-
         self.point = point
         self.size = size
 
 
-class Grid():
+class Grid:
     """"""
 
     axis_x: Axis
     axis_y: Axis
-    size: int
+    size: Z
 
-    def clone(
-        self,
-    ) -> typing.Self:
+    def clone(self) -> SELF:
         """"""
-
         return Grid(self.axis_x.clone(), self.axis_y.clone())
 
     @classmethod
-    def copy(
-        cls,
-        grid: typing.Self,
-    ) -> typing.Self:
+    def copy(cls, grid: SELF) -> SELF:
         """"""
-
         return cls(Axis.copy(grid.axis_x), Axis.copy(grid.axis_y))
 
-    def index(
-        self,
-    ) -> int:
+    def index(self) -> Z:
         """"""
-
         return self.axis_y.point * self.axis_x.size + self.axis_x.point
 
-    def move(
-        self,
-        direction: Direction,
-    ) -> None:
+    def move(self, direction: Direction) -> N:
         """"""
-
         match direction:
-            case Direction.NORTH:
-                self.axis_y.move(-1)
+            case Direction.EAST:
+                self.axis_x.move(+1)
             case Direction.NORTHEAST:
                 self.axis_x.move(+1)
                 self.axis_y.move(-1)
-            case Direction.EAST:
-                self.axis_x.move(+1)
-            case Direction.SOUTHEAST:
-                self.axis_x.move(+1)
-                self.axis_y.move(+1)
-            case Direction.SOUTH:
-                self.axis_y.move(+1)
-            case Direction.SOUTHWEST:
-                self.axis_x.move(-1)
-                self.axis_y.move(+1)
-            case Direction.WEST:
-                self.axis_x.move(-1)
+            case Direction.NORTH:
+                self.axis_y.move(-1)
             case Direction.NORTHWEST:
                 self.axis_x.move(-1)
                 self.axis_y.move(-1)
+            case Direction.WEST:
+                self.axis_x.move(-1)
+            case Direction.SOUTHWEST:
+                self.axis_x.move(-1)
+                self.axis_y.move(+1)
+            case Direction.SOUTH:
+                self.axis_y.move(+1)
+            case Direction.SOUTHEAST:
+                self.axis_x.move(+1)
+                self.axis_y.move(+1)
+            case Direction.NONE:
+                pass
 
-    def valid(
-        self,
-    ) -> bool:
+    def valid(self) -> B:
         """"""
-
         return self.axis_x.valid() and self.axis_y.valid()
 
-    def __eq__(
-        self,
-        other: typing.Self,
-    ) -> bool:
+    def __eq__(self, other: SELF) -> B:
         """"""
-
         axis_x = self.axis_x == other.axis_x
         axis_y = self.axis_y == other.axis_y
         return axis_x and axis_y
 
-    def __init__(
-        self,
-        axis_x: Axis,
-        axis_y: Axis,
-    ) -> None:
+    def __init__(self, axis_x: Axis, axis_y: Axis) -> N:
         """"""
-
         self.axis_x = axis_x
         self.axis_y = axis_y
         self.size = axis_x.size * axis_y.size
 
 
-class Cell():
+class Cell:
     """"""
 
-    def clone(
-        self,
-    ) -> typing.Self:
-        """"""
+    grid: Grid
 
+    def clone(self) -> SELF:
+        """"""
         return Cell(self.grid.clone())
 
     @classmethod
-    def copy(
-        cls,
-        cell: typing.Self,
-    ) -> typing.Self:
+    def copy(cls, cell: SELF) -> SELF:
         """"""
-
         return cls(Grid.copy(cell.grid))
 
-    def index(
-        self,
-    ) -> int:
+    def index(self) -> Z:
         """"""
-
         return self.grid.index()
 
-    def move(
-        self,
-        direction: Direction,
-    ) -> None:
+    def move(self, direction: Direction) -> N:
         """"""
-
         self.grid.move(direction)
 
-    def valid(
-        self,
-    ) -> bool:
+    def valid(self) -> B:
         """"""
-
         return self.grid.valid()
 
-    def __eq__(
-        self,
-        other: typing.Self,
-    ) -> bool:
-        """"""
-
-        return self.grid == other.grid
-
-    def __init__(self, grid):
-        self.grid = grid.clone()
-
-    def __str__(
-        self,
-    ) -> str:
-        """"""
-
-        index_x = self.grid.axis_x.point
-        index_y = self.grid.axis_y.point
-        return F"({index_x}, {index_y})"
+    ######
 
     @classmethod
-    def from_index(
-        cls,
-        grid: Grid,
-        index: int,
-    ):
+    def from_index(cls, grid: Grid, index: Z) -> SELF:
         """"""
-
         width = grid.axis_x.size
         height = grid.axis_y.size
         index_x = index % width
@@ -250,10 +173,7 @@ class Cell():
             )
         )
 
-    def face(
-        self,
-        cell: typing.Self,
-    ) -> Direction:
+    def face(self, cell: SELF) -> Direction:
         """"""
 
         if self.grid.axis_x.point < cell.grid.axis_x.point:
@@ -265,12 +185,9 @@ class Cell():
         if self.grid.axis_x.point > cell.grid.axis_x.point:
             return Direction.WEST
 
-        return None
+        return Direction.NONE
 
-    def face_any(
-        self,
-        cell: typing.Self,
-    ) -> Direction:
+    def face_any(self, cell: SELF) -> Direction:
         """"""
 
         north = self.grid.axis_y.point > cell.grid.axis_y.point
@@ -300,17 +217,11 @@ class Cell():
         elif west:
             return Direction.WEST
 
-        return None
+        return Direction.NONE
 
     @classmethod
-    @classmethod
-    def from_raw(
-        cls,
-        grid: Grid,
-        index: int,
-    ):
+    def from_raw(cls, grid: Grid, index: Z) -> SELF:
         """"""
-
         width = grid.axis_x.size
         height = grid.axis_y.size
         index_x = index % width
@@ -322,50 +233,52 @@ class Cell():
             )
         )
 
-    def goto(
-        self,
-        point_x: int,
-        point_y: int,
-    ) -> None:
+    def goto(self, point_x: Z, point_y: Z) -> N:
         """"""
-
         self.grid.axis_x.point = point_x
         self.grid.axis_y.point = point_y
 
-    def neighbor(
-        self,
-    ) -> list[typing.Self]:
+    def neighbor(self) -> L[SELF]:
         """"""
+        array: L[SELF] = []
 
-        cell = []
-        cell.append(self.step(Direction.EAST))
-        cell.append(self.step(Direction.NORTH))
-        cell.append(self.step(Direction.SOUTH))
-        cell.append(self.step(Direction.WEST))
-        return list(filter(None, cell))
+        def append(direction: Direction) -> N:
+            """"""
+            cell: SELF = self.clone()
+            cell.move(direction)
+            if cell.grid.valid():
+                array.append(cell)
 
-    def step(
-        self,
-        direction: Direction,
-    ) -> typing.Self:
+        append(Direction.EAST)
+        append(Direction.NORTH)
+        append(Direction.SOUTH)
+        append(Direction.WEST)
+        return array
+
+    def __eq__(self, other: SELF) -> B:
         """"""
+        return self.grid == other.grid
 
-        cell = self.clone()
-        cell.move(direction)
-        return cell if cell.grid.valid() else None
+    def __init__(self, grid: Grid) -> N:
+        self.grid = grid.clone()
+
+    def __str__(self) -> S:
+        """"""
+        index_x = self.grid.axis_x.point
+        index_y = self.grid.axis_y.point
+        return f"({index_x}, {index_y})"
 
 
-class Maze():
+class Maze:
     """"""
 
-    def __init__(
-        self,
-        width: int,
-        height: int,
-    ) -> None:
-        """"""
+    data: LZ
+    draw: LS
+    grid: Grid
 
-        self.size = width * height
+    def __init__(self, width: Z, height: Z) -> N:
+        """"""
+        self.size: Z = width * height
 
         axis_x = Axis(0, width)
         axis_y = Axis(0, height)
@@ -375,17 +288,14 @@ class Maze():
         self.data = [0] * self.size
         self.draw = [""] * self.size
 
-    def __str__(
-        self,
-    ) -> str:
+    def __str__(self) -> S:
         """"""
-
-        cell = Cell.from_index(self.grid, 0)
+        cell: Cell = Cell.from_index(self.grid, 0)
         string = io.StringIO()
         for index_y in range(self.grid.axis_y.size):
             for index_x in range(self.grid.axis_x.size):
                 cell.goto(index_x, index_y)
-                index = cell.grid.index()
+                index: Z = cell.grid.index()
                 draw = self.draw[index]
                 string.write(draw)
             string.write("\n")

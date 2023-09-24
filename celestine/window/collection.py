@@ -24,6 +24,7 @@ class Object:
         """Make sure object does not get the star parameter."""
         super().__init__()
 
+
 class Point:
     """Screen cordinates."""
 
@@ -33,6 +34,7 @@ class Point:
     def __init__(self, point_x: Z, point_y: Z) -> N:
         self.point_x = abs(point_x)
         self.point_y = abs(point_y)
+
 
 class Rectangle:
     """"""
