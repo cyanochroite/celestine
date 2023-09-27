@@ -140,6 +140,7 @@ class Magic:
         arguments = self._make_argument_group()
 
         for session in sessions:
+            # TODO: Make class instance for less weird classmethods
             for name, argument in session.items(self.core):
                 if not argument.argument:
                     continue

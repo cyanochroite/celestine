@@ -21,19 +21,20 @@ class Session(SuperSession):
 
     directory: S
 
-    def dictionary(self) -> AD:
+    @classmethod
+    def dictionary(cls, core) -> AD:
         """"""
         return {
             KEY: Optional(
                 NONE,
-                self.language.TRANSLATOR_SESSION_KEY,
+                core.language.TRANSLATOR_SESSION_KEY,
             ),
             REGION: Optional(
                 NONE,
-                self.language.TRANSLATOR_SESSION_REGION,
+                core.language.TRANSLATOR_SESSION_REGION,
             ),
             URL: Optional(
                 NONE,
-                self.language.TRANSLATOR_SESSION_URL,
+                core.language.TRANSLATOR_SESSION_URL,
             ),
         }

@@ -78,3 +78,4 @@ R = Ring  # noqa: F401 pylint: disable=W0611
 
 FILE: TA = IO[A]
 LZMA: TA = U[lzma.LZMAFile, TextIO]
+TEXT: TA = GE[S, N, N]
