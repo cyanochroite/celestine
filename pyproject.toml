@@ -53,10 +53,8 @@ dependencies = [
     "platformdirs >= 3.0.0",
 ]
 description = "A simple image viewer."
-dynamic = []
-license = {file = "LICENCE.txt"}
 maintainers = [
-    {name = "mem_dixy", email = "celestine@mem-dixy.ch"},
+    {name = "mem_dixy", email = "mem_dixy@pm.me"},
 ]
 name = "celestine"
 keywords = [
@@ -73,7 +71,7 @@ keywords = [
 ]
 readme = "README.rst"
 requires-python = ">=3.10"
-version = "2023.9.15"
+version = "2023.9.30"
 
 
 # [project.entry-points."spam.magical"]
@@ -121,16 +119,12 @@ Windows = [
 ]
 
 
-# [project.scripts]
-# spam-cli = "spam:main_cli"
-
-
 [project.urls]
 Discord = "https://discord.gg/aNmDWPXd7B"
 Documentation = "https://celestine.readthedocs.io/"
-# Homepage = "https://mem-dixy.ch"
 Source = "https://github.com/mem-dixy/celestine"
 Tracker = "https://github.com/mem-dixy/celestine/issues"
+
 
 
 [tool.autoflake]

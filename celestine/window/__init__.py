@@ -1,10 +1,5 @@
 """"""
 
-from abc import (
-    ABC,
-    abstractmethod,
-)
-
 from celestine.typed import (
     LS,
     A,
@@ -19,12 +14,12 @@ from .container import (
 )
 
 
-class Window(ABC, View):
+class Window(View):
     """"""
 
-    @abstractmethod
     def setup(self, name: S) -> A:
-        ...
+        """"""
+        return self.canvas
 
     def code(self, name, function) -> N:
         """"""

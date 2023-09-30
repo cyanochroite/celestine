@@ -51,9 +51,9 @@ class Rectangle:
         self.right = other.right
         self.lower = other.lower
 
-    def within(self, x: Z, y: Z) -> B:
+    def within(self, dot_x: Z, dot_y: Z) -> B:
         """Test that click inside us."""
-        test_x = self.left <= dox_x <= self.right
+        test_x = self.left <= dot_x <= self.right
         test_y = self.upper <= dot_y <= self.lower
         return test_x and test_y
 
