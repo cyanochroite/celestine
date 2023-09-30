@@ -1,6 +1,4 @@
 build:
-    apt_packages: []
-    jobs: {}
     os: ubuntu-22.04
     tools:
         python: "3.11"
@@ -8,13 +6,12 @@ build:
 formats: []
 
 python:
-    system_packages: true
     install:
         - requirements: requirements.txt
 
 sphinx:
     builder: dirhtml
-    configuration: documentation/conf.py
+    configuration: documentation/configuration.py
     fail_on_warning: true
 
 version: 2
