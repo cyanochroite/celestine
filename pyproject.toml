@@ -1,14 +1,11 @@
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = [
-    "setuptools >= 40.9.0",
-    "wheel",
-]
+requires = ["setuptools >= 61.0.0"]
 
 
 [project]
 authors = [
-    {name = "mem_dixy", email = "celestine@mem-dixy.ch"},
+    {name = "mem_dixy", email = "mem_dixy@pm.me"},
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -43,6 +40,7 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
     "Topic :: Multimedia :: Graphics :: Viewers",
     "Typing :: Typed",
@@ -52,7 +50,7 @@ dependencies = [
     "Pillow >= 9.0.0",
     "platformdirs >= 3.0.0",
 ]
-description = "A simple image viewer."
+description = "A modular framework for desktop applications."
 maintainers = [
     {name = "mem_dixy", email = "mem_dixy@pm.me"},
 ]
@@ -71,55 +69,41 @@ keywords = [
 ]
 readme = "README.rst"
 requires-python = ">=3.10"
-version = "2023.9.30"
-
-
-# [project.entry-points."spam.magical"]
-# tomatoes = "spam:main_tomatoes"
-
-
-# [project.gui-scripts]
-# spam-gui = "spam:main_gui"
+version = "2023.10.7"
 
 
 [project.optional-dependencies]
-application = [
-    "requests",
-]
-distribution = [
-    "build",
-    "pip",
-    "twine",
-]
-documentation = [
-    "Sphinx",
-]
-macOS = [
-    "dearpygui",
-    "pygame",
-]
-stubs = [
+build = [
     "blender-stubs",
-    "types-requests",
-]
-validation = [
-    "black",
+    "build",
     "coverage",
     "flake8",
-    "isort",
     "mypy",
+    "pip",
     "pycodestyle",
     "pylint",
     "pyright",
+    "Sphinx",
+    "twine",
+    "types-requests",
 ]
-Windows = [
+clean = [
+    "autoflake",
+    "black",
+    "isort",
+    "pydocstringformatter",
+    "pyupgrade",
+    "request",
+]
+gui = [
     "dearpygui",
     "pygame",
-    "windows-curses",
+    "windows-curses; platform_system=='Windows'",
 ]
 
 
 [project.urls]
+Changelog = "https://github.com/mem-dixy/celestine/blob/main/changelog.rst"
 Discord = "https://discord.gg/aNmDWPXd7B"
 Documentation = "https://celestine.readthedocs.io/"
 Source = "https://github.com/mem-dixy/celestine"
@@ -192,3 +176,9 @@ max-line-length = 72
 
 [tool.pyright]
 typeCheckingMode = "strict"
+
+
+[tool.setuptools.package-data]
+celestine = ["py.typed"]
+"celestine.data" = ["*.gif", "*.jpg", "*.otf", "*.png"]
+"celestine.licence" = ["*.txt"]

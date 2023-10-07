@@ -3,6 +3,7 @@
 import os
 import pathlib
 import sys
+from importlib.resources import files
 
 from celestine.data import CELESTINE
 from celestine.typed import (
@@ -96,6 +97,9 @@ def argument(*path: S) -> LS:
 #########
 
 
-def asset(item: S) -> P:
+def asset(file: S) -> P:
     """"""
-    return pathway("data", item)
+    # TODO: check if other path witchcraft needs replacing with this:
+    data = "celestine.data"
+    item = files(data).joinpath(file)
+    return item
