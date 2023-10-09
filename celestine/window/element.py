@@ -33,10 +33,9 @@ class Abstract(Item):
         self.area.copy(area)
 
     def __init__(self, canvas: A, name: S, **star) -> N:
-        self.canvas = canvas
-        self.item = None
         area = Rectangle(0, 0, 0, 0)
         super().__init__(canvas, name, area, **star)
+        self.item = None
 
 
 class Button(Abstract):
@@ -115,6 +114,7 @@ class Image(Abstract):
 
     path: P  # The location of the image on disk.
     image: A  # The image object after being loaded from disk.
+    size: T[Z, Z]  # The width and height of the image.
 
     """
     A small version of an image.
@@ -155,8 +155,6 @@ class Image(Abstract):
 
     def scale_to_fit(self, area):
         """"""
-        pillow = self.ring.package.pillow
-
         (size_x, size_y) = self.size
         (area_x, area_y) = area
 
@@ -166,12 +164,7 @@ class Image(Abstract):
         best_x = min(area_x, down_x)
         best_y = min(area_y, down_y)
 
-        self.image = self.image.resize(
-            size=(best_x, best_y),
-            resample=pillow.Image.Resampling.LANCZOS,
-            box=None,
-            reducing_gap=None,
-        )
+        return (best_x, best_y)
 
     def __init__(self, canvas, name, path, **star):
         self.path = path

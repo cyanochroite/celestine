@@ -70,7 +70,7 @@ class Image(Abstract, Image_):
         pillow = ring.package.pillow
 
         if pillow:
-            image = pillow.image_load(self.path)
+            image = pillow.open(self.path)
             size = self.resize(image.size)
             image.resize(size)
             self.image = pillow.ImageTk.PhotoImage(image=image.image)

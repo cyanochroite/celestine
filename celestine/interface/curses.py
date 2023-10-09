@@ -172,8 +172,8 @@ class Image(Abstract, Image_):
             self.render(ring, self.path.name, **star)
             return
 
-        self.cache = pillow.image_load(self.path)
-        self.color = pillow.image_clone(self.cache)
+        self.cache = pillow.open(self.path)
+        self.color = self.cache.copy()
 
         # Crop box.
         source_length_x = self.cache.image.width

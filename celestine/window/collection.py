@@ -21,7 +21,7 @@ class Object:
     """"""
 
     def __init__(self, **star) -> N:
-        """Make sure object does not get the star parameter."""
+        """This does not pass the star parameter to the real object."""
         super().__init__()
 
 

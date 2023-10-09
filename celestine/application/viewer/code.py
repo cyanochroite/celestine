@@ -26,6 +26,10 @@ def setup(*, ring: R, window: A, **star) -> N:
     images = iter(find)
 
     grid = window.load("grid")
-    for _, item in grid.item.items():
-        image = next(images)
-        item.update(ring, image)
+    try:
+        for _, item in grid.item.items():
+            image = next(images)
+            item.update(ring, image)
+    except StopIteration:
+        pass
+

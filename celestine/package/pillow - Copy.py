@@ -11,20 +11,21 @@ from celestine.typed import (
     S,
     R,
     TA,
-    SELF,
     A,
 )
 
 from . import Abstract
 
 ########################################################################
-
 COLORS = 15  # int(255 - 8 / 16)
-IMAGE: TA = A
 
+try:
+    import PIL
+    IMAGE: TA = PIL.Image
+except ModuleNotFoundError:
+    IMAGE: TA = A
 
 class Image:
-    """"""
 
     ring: R
     image: IMAGE
@@ -50,12 +51,6 @@ class Image:
 
         self.image = pillow.Image.merge("HSV", bands).convert("RGB")
 
-    @classmethod
-    def clone(cls, self) -> SELF:
-        ring = self.ring
-        image = self.image.copy()
-        return cls(ring, image)
-
     def convert(self, mode: S) -> N:
         """"""
         pillow = self.ring.package.pillow
@@ -80,8 +75,10 @@ class Image:
         """"""
         self.convert("1")
 
-    def copy(self) -> SELF:
-        return self.clone(self)
+    def copy(self) -> N:
+        return self.item.copy()
+        new = Image(self.ring, image)
+        return new
 
     def getdata(self):
         return self.image.getdata()
@@ -126,11 +123,11 @@ class Image:
         (size_x, size_y) = self.size
         (area_x, area_y) = area
 
-        scale_x = math.floor(area_y * size_x / size_y)
-        scale_y = math.floor(area_x * size_y / size_x)
+        down_x = math.floor(area_y * size_x / size_y)
+        down_y = math.floor(area_x * size_y / size_x)
 
-        best_x = min(area_x, scale_x)
-        best_y = min(area_y, scale_y)
+        best_x = min(area_x, down_x)
+        best_y = min(area_y, down_y)
 
         self.image = self.image.resize(
             size=(best_x, best_y),
@@ -189,7 +186,7 @@ class Image:
             colors, method, kmeans, palette, dither
         )
 
-    def __init__(self, ring: R, /, image: IMAGE, **star):
+    def __init__(self, ring, /, image, **star):
         self.ring = ring
         self.image = image
 
@@ -197,17 +194,26 @@ class Image:
 class Package(Abstract):
     """"""
 
-    def open(self, path: P) -> Image:
+    def open(self) -> N:
+        pass
+
+    def image_clone(self, item: Image) -> Image:
+        """"""
+        image = item.image.copy()
+        new = Image(self.ring, image)
+        return new
+
+    def image_load(self, path: P) -> Image:
         """"""
         pillow = self.ring.package.pillow
 
-        file = pillow.Image.open(
+        image = pillow.Image.open(
             fp=path,
             mode="r",
             formats=None,
         )
 
-        image = file.convert(
+        convert = image.convert(
             mode="RGBA",
             matrix=None,
             dither=pillow.Image.Dither.NONE,
@@ -215,8 +221,8 @@ class Package(Abstract):
             colors=256,
         )
 
-        item = Image(self.ring, image)
-        return item
+        new = Image(self.ring, image=convert)
+        return new
 
     def extension(self) -> LS:
         """"""
@@ -229,7 +235,7 @@ class Package(Abstract):
         result.sort()
         return result
 
-    def __init__(self, ring: R, /, name: S, **star) -> N:
+    def __init__(self, ring, /, name, **star) -> N:
         super().__init__(ring, name, pypi="PIL")
         if self.package:
             setattr(self, "ImageTk", load.package("PIL", "ImageTk"))

@@ -60,10 +60,16 @@ class Image(Abstract, Image_):
         if mode == "one":
             pass
 
+        #  TODO explore how to resize
+        # resize = self.scale_to_fit(self.area.size)
+
+
         if pillow:
-            image = pillow.image_load(self.path)
-            # image.scale_to_fit(self.area.size)
-            image.scale_to_fill(self.area.size)
+            image = pillow.open(self.path)
+
+            image.scale_to_fit(self.area.size)
+            # image.scale_to_fill(self.area.size)
+
             image = pygame.image.fromstring(
                 image.image.tobytes(),
                 image.image.size,
