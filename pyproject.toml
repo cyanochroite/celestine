@@ -83,6 +83,7 @@ build = [
     "pycodestyle",
     "pylint",
     "pyright",
+    "ruff",
     "Sphinx",
     "twine",
     "types-requests",
@@ -93,7 +94,7 @@ clean = [
     "isort",
     "pydocstringformatter",
     "pyupgrade",
-    "request",
+    "requests",
 ]
 gui = [
     "dearpygui",

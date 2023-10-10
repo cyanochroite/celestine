@@ -32,4 +32,3 @@ def setup(*, ring: R, window: A, **star) -> N:
             item.update(ring, image)
     except StopIteration:
         pass
-

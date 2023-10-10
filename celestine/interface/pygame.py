@@ -63,7 +63,6 @@ class Image(Abstract, Image_):
         #  TODO explore how to resize
         # resize = self.scale_to_fit(self.area.size)
 
-
         if pillow:
             image = pillow.open(self.path)
 

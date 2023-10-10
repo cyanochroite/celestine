@@ -5,14 +5,13 @@ import math
 from celestine import load
 from celestine.typed import (
     LS,
+    SELF,
+    TA,
+    A,
     N,
     P,
-    MT,
-    S,
     R,
-    TA,
-    SELF,
-    A,
+    S,
 )
 
 from . import Abstract

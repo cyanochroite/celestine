@@ -2,6 +2,7 @@
 
 
 from celestine.typed import (
+    OBJ,
     SELF,
     B,
     N,
@@ -32,9 +33,14 @@ class Axis:
     point: Z
     size: Z
 
-    def clone(self) -> SELF:
+    @classmethod
+    def clone(cls, self: SELF) -> SELF:
         """"""
-        return Axis(self.point, self.size)
+        return cls(self.point, self.size)
+
+    def copy(self) -> SELF:
+        """"""
+        return self.clone(self)
 
     @classmethod
     def copy(cls, axis: SELF) -> SELF:
@@ -53,8 +59,11 @@ class Axis:
         """"""
         return 0 <= self.point < self.size
 
-    def __eq__(self, other: SELF) -> B:
+    def __eq__(self, other: OBJ) -> B:
         """"""
+        if not isinstance(other, Axis):
+            return False
+
         point = self.point == other.point
         size = self.size == other.size
         return point and size
@@ -72,14 +81,14 @@ class Grid:
     axis_y: Axis
     size: Z
 
-    def clone(self) -> SELF:
-        """"""
-        return Grid(self.axis_x.clone(), self.axis_y.clone())
-
     @classmethod
-    def copy(cls, grid: SELF) -> SELF:
+    def clone(cls, self: SELF) -> SELF:
         """"""
-        return cls(Axis.copy(grid.axis_x), Axis.copy(grid.axis_y))
+        return cls(self.axis_x.clone(), self.axis_y.clone())
+
+    def copy(self) -> SELF:
+        """"""
+        return self.clone(self)
 
     def index(self) -> Z:
         """"""
@@ -89,8 +98,11 @@ class Grid:
         """"""
         return self.axis_x.valid() and self.axis_y.valid()
 
-    def __eq__(self, other: SELF) -> B:
+    def __eq__(self, other: OBJ) -> B:
         """"""
+        if not isinstance(other, Grid):
+            return False
+
         axis_x = self.axis_x == other.axis_x
         axis_y = self.axis_y == other.axis_y
         return axis_x and axis_y

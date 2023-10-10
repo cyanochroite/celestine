@@ -4,21 +4,42 @@ Wing Pro Preferences
 Code Warnings
 *************
 
-Configuration Defaults
-^^^^^^^^^^^^^^^^^^^^^^
+Configuration: Defaults
+^^^^^^^^^^^^^^^^^^^^^^^
+
+General
+~~~~~~~
+Show Import Not Found Warnings = True
+Show Indent Warnings = True
+
+Undefined Symbols
+~~~~~~~~~~~~~~~~~
+Show Undefined Name Warnings = True
+Show Undefined Attribute Warnings = True
+
 
 Unused Symbols
 ~~~~~~~~~~~~~~
+Show Import Not Used Warnings = True
+Show Variable Not Used Warnings = True
+Show Argument Not Used Warnings = True
 
 Variables Not Used Configuration
 """"""""""""""""""""""""""""""""
-Always Show Globals Not Used in File = False
-Show Extra Unpacked Variables Not Used
+Always Show Globals Not Used in File = True
+Show Extra Unpacked Variables Not Used = True
 Use Regular Expressions to Identify Variables Intentionally Not Used = True
-Values = ["_"]
+Values
+''''''
+_
+cls
+ring
+self
+star
 
 External Checkers
 ~~~~~~~~~~~~~~~~~
+Enable External Checkers = True
 
 External Code Checkers Configuration
 """"""""""""""""""""""""""""""""""""
@@ -31,7 +52,7 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 1500
+Maximum File Size (KB) = 10000
 
 Command Line = ${WING:PYTHON} -m flake8
 
@@ -47,7 +68,7 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 1500
+Maximum File Size (KB) = 10000
 
 Command Line = ${WING:PYTHON} -m mypy --show-column-numbers
 
@@ -59,10 +80,9 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 1500
+Maximum File Size (KB) = 10000
 
 Command Line = ${WING:PYTHON} -m pycodestyle
-
 
 Pylint
 ''''''
@@ -72,7 +92,7 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 1500
+Maximum File Size (KB) = 10000
 
 Command Line = ${WING:PYTHON} -m pylint --msg-template="{path}:{line}:{column}: {msg_id} {msg} ({symbol})" --ignored-argument-names="_|cls|ring|star|self"
 
@@ -82,14 +102,31 @@ Include Pylint Warnings = True
 
 Include Pylint Info = True
 
-Project Properties
-******************
-Python Path = A;B;C;D
+Ruff
+''''
+Enabled = True
 
-A = C:/Users/USER/AppData/Local/Programs/Python/Python310/DLLs
+Run after save = True
 
-B = C:/Users/USER/AppData/Local/Programs/Python/Python310/Lib
+Run after opening file = True
 
-C = C:/Users/USER/AppData/Local/Programs/Python/Python310/Lib/site-packages
+Maximum File Size (KB) = 10000
 
-D = C:/Users/USER/celestine/source
+Command Line = ${WING:PYTHON} -m ruff
+
+
+Project Properties...
+*********************
+Python Path = A;B;C;D;E;F;
+
+A = C:/Users/USER/FOLDER
+
+B = C:/Program Files/Python312/Lib
+
+C = C:/Program Files/Python312/DLLs
+
+D = C:/Users/USER/AppData/Roaming/Python/Python312/site-packages
+
+E = C:/Program Files/Python312
+
+F = C:/Program Files/Python312/Lib/site-packages
