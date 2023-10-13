@@ -20,14 +20,58 @@ AXIS: TA = GE[T[Z, Z], N, N]
 class Object:
     """"""
 
+    @classmethod
+    def clone(cls, self: SELF) -> SELF:
+        """"""
+        return cls()
+
+    def copy(self) -> SELF:
+        """"""
+        return self.clone(self)
+
     def __init__(self, **star) -> N:
         """This does not pass the star parameter to the real object."""
         super().__init__()
 
 
-class Point:
+# TODO install windows-curses for python 3.12
+
+
+class Point(Object):
     """Screen cordinates."""
 
+    point_x: Z
+    point_y: Z
+
+    def __init__(self, point_x: Z, point_y: Z):
+        self.point_x = point_x
+        self.index_y = point_y
+
+    def __repr__(self):
+        return f"Point({self.point_x}, {self.point_y})"
+
+    def __str__(self):
+        return f"({self.point_x}, {self.point_y})"
+
+
+class Pixel(Object):
+    """Screen cordinates."""
+
+    point_x: Z
+    point_y: Z
+
+    def __init__(self, point_x: Z, point_y: Z):
+        self.point_x = point_x
+        self.index_y = point_y
+
+    def __repr__(self):
+        return f"Pixel({self.point_x}, {self.point_y})"
+
+    def __str__(self):
+        return f"({self.point_x}, {self.point_y})"
+
+
+class Point:
     point_x: Z
     point_y: Z
 

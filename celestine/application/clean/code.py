@@ -81,7 +81,8 @@ def run(name: S) -> N:
 
 def clean(*, ring: R, **star) -> N:
     """"""
-    ring.package.pyupgrade.run()
+    # TODO: This is breaking the language files. Find out why.
+    # ring.package.pyupgrade.run()
     ring.package.pydocstringformatter.run()
     ring.package.autoflake.run()
     ring.package.isort.run()
