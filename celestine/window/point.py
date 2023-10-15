@@ -72,6 +72,11 @@ class Line:
     def midpoint(self) -> F:
         return (self.minimum + self.maximum) / 2
 
+    def __add__(self, other: F) -> SELF:
+        one = self.minimum + other
+        two = self.maximum + other
+        return type(self)(one, two)
+
     def __contains__(self, item: F) -> B:
         return self.minimum <= item <= self.maximum
 
@@ -88,6 +93,11 @@ class Line:
     def __init__(self, minimum: F, maximum: F) -> N:
         self.minimum = min(minimum, maximum)
         self.maximum = max(minimum, maximum)
+
+    def __mul__(self, other: F) -> SELF:
+        one = self.minimum * other
+        two = self.maximum * other
+        return type(self)(one, two)
 
     def __repr__(self):
         return f"Line({self.minimum}, {self.maximum})"
@@ -107,22 +117,29 @@ class Plane:
 
     @property
     def centroid(self) -> Point:
-        return Point(self.two.midpoint, self.two.midpoint)
+        return Point(self.one.midpoint, self.two.midpoint)
 
     @classmethod
     def clone(cls, self: SELF) -> SELF:
         """"""
-        x0 = self.one.minimum
-        y0 = self.two.minimum
-        x1 = self.one.maximum
-        y1 = self.two.maximum
-        return cls(x0, y0, x1, y1)
+        one = self.one.copy()
+        two = self.two.copy()
+        return cls(one, two)
 
     def copy(self) -> SELF:
         """"""
         return self.clone(self)
 
+    @classmethod
+    def make(cls, width: F, height: F) -> SELF:
+        """"""
+        one = Line(0, width)
+        two = Line(0, height)
+        return cls(one, two)
+
     def scale_to_max(self, other: SELF) -> N:
+        print(str(other), repr(other))
+        print(str(self), repr(self))
         self *= max(other.size / self.size)
 
     def scale_to_min(self, other: SELF) -> N:
@@ -131,6 +148,11 @@ class Plane:
     @property
     def size(self) -> Point:
         return Point(self.one.length, self.two.length)
+
+    def __add__(self, other: Point) -> SELF:
+        one = self.one + other.one
+        two = self.two + other.two
+        return type(self)(one, two)
 
     def __contains__(self, item: Point) -> B:
         one = item.one in self.one
@@ -147,21 +169,21 @@ class Plane:
         self.two *= other
         return self
 
-    def __init__(self, x0: F, y0: F, x1: F, y1: F) -> N:
-        """"""
-        self.one = Line(x0, x1)
-        self.two = Line(y0, y1)
+    def __init__(self, one: Line, two: Line) -> N:
+        self.one = one.copy()
+        self.two = two.copy()
+
+    def __mul__(self, other: F) -> SELF:
+        one = self.one * other
+        two = self.two * other
+        return type(self)(one, two)
 
     def __repr__(self):
-        x0 = self.one.minimum
-        y0 = self.two.minimum
-        x1 = self.one.maximum
-        y1 = self.two.maximum
-        return f"Plane({x0}, {y0}, {x1}, {y1})"
+        one = repr(self.one)
+        two = repr(self.two)
+        return f"Plane({one}, {two})"
 
     def __str__(self):
-        x0 = self.one.minimum
-        y0 = self.two.minimum
-        x1 = self.one.maximum
-        y1 = self.two.maximum
-        return f"({x0}, {y0}, {x1}, {y1})"
+        one = str(self.one)
+        two = str(self.two)
+        return f"({one}, {two})"

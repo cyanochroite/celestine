@@ -63,3 +63,17 @@ def unregister() -> N:
     this is called when the add-on is disabled.
     """
     load.redirect(INTERFACE, BLENDER, UNREGISTER)
+
+
+
+from celestine.window.point import Plane, Point, Line
+
+def main2(argument_list: LS, exit_on_error: B, **star) -> N:
+    """Run the main program."""
+
+    car = Plane.make(64, 64)
+    cat = Plane(Line(16, 32), Line(16, 96))
+    car.scale_to_max(cat)
+    print(car)
+    car.center(cat)
+    print(car)

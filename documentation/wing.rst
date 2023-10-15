@@ -26,7 +26,7 @@ Show Argument Not Used Warnings = True
 
 Variables Not Used Configuration
 """"""""""""""""""""""""""""""""
-Always Show Globals Not Used in File = True
+Always Show Globals Not Used in File = False
 Show Extra Unpacked Variables Not Used = True
 Use Regular Expressions to Identify Variables Intentionally Not Used = True
 Values
