@@ -48,5 +48,10 @@ def file(top: P, include: LS, exclude: LS) -> GE[P, N, N]:
 def python(top: P, include: LS, exclude: LS) -> L[P]:
     """"""
     include = [".py", *include]
-    exclude = [".mypy_cache", "__pycache__", *exclude]
+    exclude = [
+        ".mypy_cache",
+        ".ruff_cache",
+        "__pycache__",
+        *exclude,
+    ]
     return file(top, include, exclude)

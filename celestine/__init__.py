@@ -65,8 +65,11 @@ def unregister() -> N:
     load.redirect(INTERFACE, BLENDER, UNREGISTER)
 
 
+from celestine.window.point import (
+    Line,
+    Plane,
+)
 
-from celestine.window.point import Plane, Point, Line
 
 def main2(argument_list: LS, exit_on_error: B, **star) -> N:
     """Run the main program."""
