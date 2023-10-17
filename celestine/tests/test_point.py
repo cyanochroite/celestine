@@ -3,8 +3,9 @@
 import unittest
 
 from celestine.window.point import (
-    Point,
     Line,
+    Plane,
+    Point,
 )
 
 
@@ -44,13 +45,13 @@ class TestPoint(unittest.TestCase):
         """"""
         point = Point(-3, -4)
         string = repr(point)
-        self.assertEqual(string, "Point(-3, -4)")
+        self.assertEqual(string, "Point(-3.0, -4.0)")
 
     def test_str(self):
         """"""
         point = Point(-3, -4)
         string = str(point)
-        self.assertEqual(string, "(-3, -4)")
+        self.assertEqual(string, "(-3.0, -4.0)")
 
     def test_sub(self):
         """"""
@@ -159,10 +160,162 @@ class TestLine(unittest.TestCase):
         """"""
         line = Line(3, 4)
         string = repr(line)
-        self.assertEqual(string, "Line(3, 4)")
+        self.assertEqual(string, "Line(3.0, 4.0)")
 
     def test_str(self):
         """"""
         line = Line(3, 4)
         string = str(line)
-        self.assertEqual(string, "[3, 4]")
+        self.assertEqual(string, "[3.0, 4.0]")
+
+
+class TestPlane(unittest.TestCase):
+    """"""
+
+    def test_center(self):
+        """"""
+        one = Plane.make(32, 64)
+        plane = Plane.make(16, 16)
+        plane.center(one)
+
+        self.assertEqual(plane.one.minimum, 8.0)
+        self.assertEqual(plane.one.maximum, 24.0)
+        self.assertEqual(plane.two.minimum, 24.0)
+        self.assertEqual(plane.two.maximum, 40.0)
+
+    def test_centroid(self):
+        """"""
+        plane = Plane(Line(5, 15), Line(15, 25))
+        centroid = plane.centroid
+
+        point = Point(10.0, 20.0)
+        self.assertEqual(str(point), str(centroid))
+
+    def test_clone(self):
+        """"""
+        one = Plane(Line(1, 2), Line(3, 4))
+        two = Plane.clone(one)
+
+        self.assertEqual(str(one), str(two))
+
+    def test_copy(self):
+        """"""
+        one = Plane(Line(1, 2), Line(3, 4))
+        two = one.copy()
+
+        self.assertEqual(str(one), str(two))
+
+    def test_make(self):
+        """"""
+        plane = Plane.make(4, 5)
+
+        self.assertEqual(plane.one.minimum, 0)
+        self.assertEqual(plane.one.maximum, 4)
+        self.assertEqual(plane.two.minimum, 0)
+        self.assertEqual(plane.two.maximum, 5)
+
+    def test_scale_to_max(self):
+        """"""
+        one = Plane.make(32, 64)
+        plane = Plane.make(16, 16)
+        plane.scale_to_max(one)
+
+        self.assertEqual(plane.one.minimum, 0)
+        self.assertEqual(plane.one.maximum, 64)
+        self.assertEqual(plane.two.minimum, 0)
+        self.assertEqual(plane.two.maximum, 64)
+
+    def test_scale_to_min(self):
+        """"""
+        one = Plane.make(32, 64)
+        plane = Plane.make(16, 16)
+        plane.scale_to_min(one)
+
+        self.assertEqual(plane.one.minimum, 0)
+        self.assertEqual(plane.one.maximum, 32)
+        self.assertEqual(plane.two.minimum, 0)
+        self.assertEqual(plane.two.maximum, 32)
+
+    def test_size(self):
+        """"""
+        plane = Plane(Line(1, 2), Line(3, 4))
+        size = plane.size
+        point = Point(1, 1)
+
+        self.assertEqual(str(point), str(size))
+
+    def test_add(self):
+        """"""
+        one = Plane(Line(1, 2), Line(3, 4))
+        plane = one + Point(2, 4)
+
+        self.assertEqual(plane.one.minimum, 3)
+        self.assertEqual(plane.one.maximum, 4)
+        self.assertEqual(plane.two.minimum, 7)
+        self.assertEqual(plane.two.maximum, 8)
+
+    def test_contains(self):
+        """"""
+        one = Line(1, 3)
+        two = 2
+        line = two in one
+
+        self.assertTrue(line)
+
+        one = Plane(Line(2, 4), Line(6, 8))
+        two = Point(3, 7)
+        contains = two in one
+
+        self.assertTrue(contains)
+
+    def test_iadd(self):
+        """"""
+        plane = Plane(Line(1, 2), Line(3, 4))
+        plane += Point(2, 4)
+
+        self.assertEqual(plane.one.minimum, 3)
+        self.assertEqual(plane.one.maximum, 4)
+        self.assertEqual(plane.two.minimum, 7)
+        self.assertEqual(plane.two.maximum, 8)
+
+    def test_imul(self):
+        """"""
+        plane = Plane(Line(1, 2), Line(3, 4))
+        plane *= 4
+
+        self.assertEqual(plane.one.minimum, 4)
+        self.assertEqual(plane.one.maximum, 8)
+        self.assertEqual(plane.two.minimum, 12)
+        self.assertEqual(plane.two.maximum, 16)
+
+    def test_init(self):
+        """"""
+        plane = Plane(Line(1, 2), Line(3, 4))
+
+        self.assertEqual(plane.one.minimum, 1)
+        self.assertEqual(plane.one.maximum, 2)
+        self.assertEqual(plane.two.minimum, 3)
+        self.assertEqual(plane.two.maximum, 4)
+
+    def test_mul(self):
+        """"""
+        one = Plane(Line(1, 2), Line(3, 4))
+        two = one * 4
+        plane = two
+
+        self.assertEqual(plane.one.minimum, 4)
+        self.assertEqual(plane.one.maximum, 8)
+        self.assertEqual(plane.two.minimum, 12)
+        self.assertEqual(plane.two.maximum, 16)
+
+    def test_repr(self):
+        """"""
+        plane = Plane(Line(1, 2), Line(3, 4))
+        string = "Plane(Line(1.0, 2.0), Line(3.0, 4.0))"
+        self.assertEqual(string, repr(plane))
+
+    def test_str(self):
+        """"""
+        plane = Plane(Line(1, 2), Line(3, 4))
+        string = str(plane)
+        self.assertEqual(string, "([1.0, 2.0], [3.0, 4.0])")

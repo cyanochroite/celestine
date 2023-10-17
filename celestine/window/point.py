@@ -25,8 +25,8 @@ class Point:
         return self.clone(self)
 
     def __init__(self, one: F, two: F) -> N:
-        self.one = one
-        self.two = two
+        self.one = float(one)
+        self.two = float(two)
 
     def __iter__(self) -> GE[F, N, N]:
         yield self.one
@@ -91,8 +91,8 @@ class Line:
         return self
 
     def __init__(self, minimum: F, maximum: F) -> N:
-        self.minimum = min(minimum, maximum)
-        self.maximum = max(minimum, maximum)
+        self.minimum = float(min(minimum, maximum))
+        self.maximum = float(max(minimum, maximum))
 
     def __mul__(self, other: F) -> SELF:
         one = self.minimum * other

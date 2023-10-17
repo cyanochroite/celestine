@@ -66,9 +66,9 @@ def unregister() -> N:
 
 
 from celestine.window.point import (
-    Point,
     Line,
     Plane,
+    Point,
 )
 
 

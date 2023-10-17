@@ -16,6 +16,7 @@ pydocstringformatter
 pygame
 pylint
 pyright
+pytest
 pyupgrade
 requests
 ruff

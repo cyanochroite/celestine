@@ -83,6 +83,7 @@ build = [
     "pycodestyle",
     "pylint",
     "pyright",
+    "pytest",
     "ruff",
     "Sphinx",
     "twine",

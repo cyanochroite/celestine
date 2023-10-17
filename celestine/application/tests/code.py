@@ -3,9 +3,9 @@
 import unittest
 
 from celestine import load
-from celestine.load import pathway
 from celestine.data import CELESTINE
 from celestine.data.directory import APPLICATION
+from celestine.load import pathway
 from celestine.load.many import python
 from celestine.typed import (
     N,
