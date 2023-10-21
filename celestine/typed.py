@@ -15,17 +15,13 @@ from typing import Any as A
 from typing import Dict as D
 from typing import List as L
 from typing import Optional as OPT
+from typing import Self as SELF
 from typing import TextIO
 from typing import Tuple as T
 from typing import Type as TY
 from typing import TypeAlias as TA
 from typing import Union as U
 from typing import override
-
-try:  # Fix for Python 3.10 not having Self.
-    from typing import Self as SELF
-except ImportError:
-    SELF: TA = A
 
 N: TA = None
 OBJ: TA = object
@@ -73,6 +69,10 @@ class Ring:
     package: MT
     view: MT
     window: MT
+
+    @override
+    def ignore(self):
+        pass
 
 
 R = Ring  # noqa: F401 pylint: disable=W0611

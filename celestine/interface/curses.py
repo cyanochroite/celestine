@@ -6,6 +6,7 @@ import math
 from celestine.typed import (
     N,
     R,
+    override,
 )
 from celestine.unicode import LINE_FEED
 from celestine.unicode.notational_systems import BRAILLE_PATTERNS
@@ -219,6 +220,7 @@ class Label(Abstract, Label_):
 class Window(window):
     """"""
 
+    @override
     def draw(self, ring: R, **star):
         """"""
         curses = self.ring.package.curses
@@ -243,6 +245,7 @@ class Window(window):
         color_index = 8
         color_table = {}
 
+    @override
     def extension(self):
         """"""
         if self.ring.package.pillow:
@@ -250,11 +253,13 @@ class Window(window):
 
         return []
 
+    @override
     def setup(self, name):
         """"""
         curses = self.ring.package.curses
         return curses.window(*self.area.value)
 
+    @override
     def __enter__(self):
         super().__enter__()
 
@@ -286,6 +291,7 @@ class Window(window):
 
         return self
 
+    @override
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
 
@@ -324,6 +330,7 @@ class Window(window):
         curses.endwin()
         return False
 
+    @override
     def __init__(self, ring: R, **star) -> N:
         element = {
             "button": Button,

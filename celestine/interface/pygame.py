@@ -5,6 +5,7 @@ from celestine.typed import (
     LS,
     N,
     R,
+    override,
 )
 from celestine.window import Window as Window_
 from celestine.window.collection import Rectangle
@@ -86,6 +87,7 @@ class Image(Abstract, Image_):
 class Window(Window_):
     """"""
 
+    @override
     def draw(self, ring: R, **star):
         """"""
         pygame = self.ring.package.pygame
@@ -96,6 +98,7 @@ class Window(Window_):
 
         pygame.display.flip()
 
+    @override
     def extension(self) -> LS:
         return [
             ".bmp",
@@ -123,6 +126,7 @@ class Window(Window_):
             ".png",
         ]
 
+    @override
     def __enter__(self):
         pygame = self.ring.package.pygame
 
@@ -149,6 +153,7 @@ class Window(Window_):
         set_font()
         return self
 
+    @override
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
 
@@ -169,6 +174,7 @@ class Window(Window_):
         pygame.quit()
         return False
 
+    @override
     def __init__(self, ring: R, **star) -> N:
         element = {
             "button": Button,

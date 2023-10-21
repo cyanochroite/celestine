@@ -115,6 +115,7 @@ class Window(Window_):
             ".png",
         ]
 
+    @override
     def setup(self, name: S) -> N:
         """"""
         tkinter = self.ring.package.tkinter
@@ -130,15 +131,18 @@ class Window(Window_):
         canvas.place(x=0, y=0)
         return canvas
 
+    @override
     def turn(self, page, **star):
         super().turn(page, **star)
         self.page.canvas.tkraise()
 
+    @override
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
         self.canvas.mainloop()
         return False
 
+    @override
     def __init__(self, ring: R, **star) -> N:
         element = {
             "button": Button,

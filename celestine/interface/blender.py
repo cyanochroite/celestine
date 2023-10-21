@@ -22,6 +22,7 @@ from celestine.typed import (
     R,
     S,
     T,
+    override,
 )
 from celestine.window import Window as Window_
 from celestine.window.collection import Rectangle
@@ -287,6 +288,7 @@ class Label(Abstract, Label_):
 class Window(Window_):
     """"""
 
+    @override
     def extension(self):
         """"""
         return [
@@ -309,12 +311,14 @@ class Window(Window_):
             ".webp",
         ]
 
+    @override
     def setup(self, name):
         """"""
         collection = data.collection.make(name)
         collection.hide()
         return collection
 
+    @override
     def turn(self, page, **star):
         """"""
 
@@ -335,6 +339,7 @@ class Window(Window_):
 
         bpy.context.scene.celestine.page = page
 
+    @override
     def __enter__(self):
         if self.call is None:
             print("THIS IS BEST RUN AS A BLENDER ADD-ONS")
@@ -402,6 +407,7 @@ class Window(Window_):
 
         return self
 
+    @override
     def __exit__(self, exc_type, exc_value, traceback):
         if self.call is None:
             pass
@@ -421,6 +427,7 @@ class Window(Window_):
         super().__exit__(exc_type, exc_value, traceback)
         return False
 
+    @override
     def __init__(self, ring: R, *, call=None, **star) -> N:
         element = {
             "button": Button,

@@ -3,6 +3,7 @@
 from celestine.typed import (
     N,
     R,
+    override,
 )
 from celestine.window import Window as Window_
 from celestine.window.collection import Rectangle
@@ -113,6 +114,7 @@ class Label(Abstract, Label_):
 class Window(Window_):
     """"""
 
+    @override
     def extension(self):
         """"""
         return [
@@ -129,6 +131,7 @@ class Window(Window_):
             ".pnm",
         ]
 
+    @override
     def make(self, ring, **star):
         dearpygui = ring.package.dearpygui
         for name, item in self.item.items():
@@ -136,12 +139,14 @@ class Window(Window_):
                 dearpygui.configure_item(item.name, show=False)
                 item.make(ring)
 
+    @override
     def setup(self, name):
         """"""
         dearpygui = self.ring.package.dearpygui
         canvas = dearpygui.window(tag=name)
         return canvas
 
+    @override
     def turn(self, page, **star):
         """"""
         dearpygui = self.ring.package.dearpygui
@@ -154,6 +159,7 @@ class Window(Window_):
         dearpygui.show_item(tag)
         dearpygui.set_primary_window(tag, True)
 
+    @override
     def __enter__(self):
         super().__enter__()
 
@@ -182,6 +188,7 @@ class Window(Window_):
         )
         return self
 
+    @override
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
         dearpygui = self.ring.package.dearpygui
@@ -192,6 +199,7 @@ class Window(Window_):
         dearpygui.destroy_context()
         return False
 
+    @override
     def __init__(self, ring: R, **star) -> N:
         element = {
             "button": Button,
