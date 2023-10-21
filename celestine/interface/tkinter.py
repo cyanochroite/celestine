@@ -7,6 +7,7 @@ from celestine.typed import (
     P,
     R,
     S,
+    override,
 )
 from celestine.window import Window as Window_
 from celestine.window.collection import Rectangle
@@ -99,6 +100,7 @@ class Label(Abstract, Label_):
 class Window(Window_):
     """"""
 
+    @override
     def extension(self):
         """"""
         if self.ring.package.pillow:

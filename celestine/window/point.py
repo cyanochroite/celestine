@@ -138,8 +138,6 @@ class Plane:
         return cls(one, two)
 
     def scale_to_max(self, other: SELF) -> N:
-        print(str(other), repr(other))
-        print(str(self), repr(self))
         self *= max(other.size / self.size)
 
     def scale_to_min(self, other: SELF) -> N:

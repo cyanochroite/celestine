@@ -20,6 +20,7 @@ from typing import Tuple as T
 from typing import Type as TY
 from typing import TypeAlias as TA
 from typing import Union as U
+from typing import override
 
 try:  # Fix for Python 3.10 not having Self.
     from typing import Self as SELF
