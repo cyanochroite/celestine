@@ -2,7 +2,7 @@
 
 import unittest
 
-from celestine.window.point import (
+from celestine.window.collection import (
     Grid,
     Line,
     Plane,
