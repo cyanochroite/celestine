@@ -2,12 +2,12 @@
 
 import argparse
 import io
+import typing
 
 from celestine.data import CELESTINE
 from celestine.typed import (
     B,
     M,
-    Y,
 )
 from celestine.unicode import (
     APOSTROPHE,
@@ -22,6 +22,8 @@ from celestine.unicode import (
 )
 
 from .data import ERROR
+
+type TYPE[X] = typing.Type
 
 
 def parser(language: M, exit_on_error: B) -> argparse.ArgumentParser:
@@ -44,7 +46,7 @@ def parser(language: M, exit_on_error: B) -> argparse.ArgumentParser:
     )
 
 
-def _argument_error(_: M) -> Y[argparse.ArgumentError]:
+def _argument_error(_: M) -> TYPE[argparse.ArgumentError]:
     """A basic parser with overloaded functions for text translation."""
 
     class ArgumentError(argparse.ArgumentError):
@@ -70,7 +72,7 @@ def _argument_error(_: M) -> Y[argparse.ArgumentError]:
     return ArgumentError
 
 
-def _help_formatter(language: M) -> Y[argparse.HelpFormatter]:
+def _help_formatter(language: M) -> TYPE[argparse.HelpFormatter]:
     """A basic parser with overloaded functions for text translation."""
 
     class HelpFormatter(argparse.HelpFormatter):
@@ -96,7 +98,7 @@ def _help_formatter(language: M) -> Y[argparse.HelpFormatter]:
     return HelpFormatter
 
 
-def _parser(language: M) -> Y[argparse.ArgumentParser]:
+def _parser(language: M) -> TYPE[argparse.ArgumentParser]:
     """A basic parser with overloaded functions for text translation."""
 
     class Parser(argparse.ArgumentParser):

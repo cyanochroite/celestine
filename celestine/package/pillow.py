@@ -5,8 +5,8 @@ import math
 from celestine import load
 from celestine.typed import (
     LS,
-    SELF,
     A,
+    K,
     N,
     P,
     R,
@@ -49,7 +49,7 @@ class Image:
         self.image = pillow.Image.merge("HSV", bands).convert("RGB")
 
     @classmethod
-    def clone(cls, self) -> SELF:
+    def clone(cls, self) -> K:
         ring = self.ring
         image = self.image.copy()
         return cls(ring, image)
@@ -78,7 +78,7 @@ class Image:
         """"""
         self.convert("1")
 
-    def copy(self) -> SELF:
+    def copy(self) -> K:
         return self.clone(self)
 
     def getdata(self):

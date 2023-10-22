@@ -1,12 +1,12 @@
 """"""
 
 from celestine.typed import (
-    SELF,
     A,
     B,
     D,
     G,
     I,
+    K,
     N,
     R,
     S,
@@ -20,11 +20,11 @@ class Object:
     """"""
 
     @classmethod
-    def clone(cls, self: SELF) -> SELF:
+    def clone(cls, self: K) -> K:
         """"""
         return cls()
 
-    def copy(self) -> SELF:
+    def copy(self) -> K:
         """"""
         return self.clone(self)
 
@@ -87,7 +87,7 @@ class Rectangle:
     right: I
     lower: I
 
-    def copy(self, other: SELF) -> N:
+    def copy(self, other: K) -> N:
         """Copy the values from another object."""
         self.left = other.left
         self.upper = other.upper

@@ -2,10 +2,10 @@
 
 
 from celestine.typed import (
-    OBJ,
-    SELF,
     B,
     I,
+    J,
+    K,
     N,
 )
 
@@ -34,16 +34,16 @@ class Axis:
     size: I
 
     @classmethod
-    def clone(cls, self: SELF) -> SELF:
+    def clone(cls, self: K) -> K:
         """"""
         return cls(self.point, self.size)
 
-    def copy(self) -> SELF:
+    def copy(self) -> K:
         """"""
         return self.clone(self)
 
     @classmethod
-    def copy(cls, axis: SELF) -> SELF:
+    def copy(cls, axis: K) -> K:
         """"""
         return cls(axis.point, axis.size)
 
@@ -59,7 +59,7 @@ class Axis:
         """"""
         return 0 <= self.point < self.size
 
-    def __eq__(self, other: OBJ) -> B:
+    def __eq__(self, other: J) -> B:
         """"""
         if not isinstance(other, Axis):
             return False
@@ -82,11 +82,11 @@ class Grid:
     size: I
 
     @classmethod
-    def clone(cls, self: SELF) -> SELF:
+    def clone(cls, self: K) -> K:
         """"""
         return cls(self.axis_x.clone(), self.axis_y.clone())
 
-    def copy(self) -> SELF:
+    def copy(self) -> K:
         """"""
         return self.clone(self)
 
@@ -98,7 +98,7 @@ class Grid:
         """"""
         return self.axis_x.valid() and self.axis_y.valid()
 
-    def __eq__(self, other: OBJ) -> B:
+    def __eq__(self, other: J) -> B:
         """"""
         if not isinstance(other, Grid):
             return False

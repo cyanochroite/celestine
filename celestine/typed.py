@@ -8,41 +8,37 @@ import collections.abc
 import pathlib
 import types
 import typing
+from typing import Self as K
 from typing import override
 
-type OBJ = object
-type hd = D[S, A]
-
+type X = typing.Any
+type Y = typing.Any
+type Z = typing.Any
 
 type A = typing.Any
 type B = bool
-type C[X] = collections.abc.Callable
-type D[X] = typing.Dict
+type C[X] = collections.abc.Callable[..., X]
+type D[X, Y] = typing.Dict[X, Y]
 # type E = 0 enum?
 type F = float
-type G[X] = collections.abc.Generator
+type G[X, Y, Z] = collections.abc.Generator[X, Y, Z]
 # type H = 0 hash?
-type I = int  # Ambiguous variable name.
-# type J = 0
-# type K = 0
-type L[X] = typing.List
+type I = int
+type J = object
+# type K = typing.Self  # "Self" is not valid in this context.
+type L[X] = typing.List[X]
 type M = types.ModuleType
 type N = None
-type O = typing.Optional  # Ambiguous variable name.
+type O[X] = typing.Optional[X]
 type P = pathlib.Path
 # type Q = 0
 # type R = 0
 type S = str
-type T[X] = typing.Tuple
+type T[X] = typing.Tuple[X]
 # type U = 0
 # type V = 0
 # type W = 0
-# type X = 0
-type Y[X] = typing.Type
-# type Z = 0
 
-type A = typing.Any
-type M = types.ModuleType
 
 type GB = G[B, N, N]
 type GF = G[F, N, N]
@@ -79,12 +75,20 @@ class Ring:
 
 R = Ring  # noqa: F401 pylint: disable=W0611
 
-type SELF = typing.Self
+
+class Fix:
+    """"""
+
+    def override(self) -> N:
+        pass
 
 
-class ImportNotUsedFix:
+class ImportNotUsed(Fix):
     """"""
 
     @override
-    def override(self):
+    def override(self) -> N:
         pass
+
+    def self(self) -> K:
+        return self
