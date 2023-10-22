@@ -6,17 +6,17 @@ from celestine.typed import (
     SELF,
     B,
     N,
-    Z,
+    I,
 )
 
 
 class Point:
     """"""
 
-    point_x: Z
-    point_y: Z
+    point_x: I
+    point_y: I
 
-    def __init__(self, point_x: Z, point_y: Z):
+    def __init__(self, point_x: I, point_y: I):
         self.point_x = point_x
         self.index_y = point_y
 
@@ -30,8 +30,8 @@ class Point:
 class Axis:
     """"""
 
-    point: Z
-    size: Z
+    point: I
+    size: I
 
     @classmethod
     def clone(cls, self: SELF) -> SELF:
@@ -47,11 +47,11 @@ class Axis:
         """"""
         return cls(axis.point, axis.size)
 
-    def index(self) -> Z:
+    def index(self) -> I:
         """"""
         return self.point
 
-    def move(self, point: Z) -> N:
+    def move(self, point: I) -> N:
         """"""
         self.point += point
 
@@ -68,7 +68,7 @@ class Axis:
         size = self.size == other.size
         return point and size
 
-    def __init__(self, point: Z, size: Z) -> N:
+    def __init__(self, point: I, size: I) -> N:
         """"""
         self.point = point
         self.size = size
@@ -79,7 +79,7 @@ class Grid:
 
     axis_x: Axis
     axis_y: Axis
-    size: Z
+    size: I
 
     @classmethod
     def clone(cls, self: SELF) -> SELF:
@@ -90,7 +90,7 @@ class Grid:
         """"""
         return self.clone(self)
 
-    def index(self) -> Z:
+    def index(self) -> I:
         """"""
         return self.axis_y.point * self.axis_x.size + self.axis_x.point
 

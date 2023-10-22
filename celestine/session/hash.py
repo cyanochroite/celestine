@@ -20,7 +20,7 @@ from celestine.typed import (
     OBJ,
     B,
     S,
-    Z,
+    I,
 )
 from celestine.unicode import (
     APOSTROPHE,
@@ -35,7 +35,7 @@ class HashMetaClass(type):
     def __eq__(cls, other: OBJ) -> B:
         return str(cls) == str(other)
 
-    def __hash__(cls) -> Z:
+    def __hash__(cls) -> I:
         """"""
         return hash(str(cls))
 
@@ -54,7 +54,7 @@ class HashMetaClass(type):
 class HashClass(metaclass=HashMetaClass):
     """"""
 
-    def __hash__(self) -> Z:
+    def __hash__(self) -> I:
         """"""
         return hash(str(self))
 

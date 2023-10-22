@@ -11,10 +11,10 @@ from celestine.typed import (
     R,
     S,
     T,
-    Z,
+    I,
 )
 
-AXIS: TA = GE[T[Z, Z], N, N]
+AXIS: TA = GE[T[I, I], N, N]
 
 
 class Object:
@@ -40,10 +40,10 @@ class Object:
 class Point(Object):
     """Screen cordinates."""
 
-    point_x: Z
-    point_y: Z
+    point_x: I
+    point_y: I
 
-    def __init__(self, point_x: Z, point_y: Z):
+    def __init__(self, point_x: I, point_y: I):
         self.point_x = point_x
         self.index_y = point_y
 
@@ -57,10 +57,10 @@ class Point(Object):
 class Pixel(Object):
     """Screen cordinates."""
 
-    point_x: Z
-    point_y: Z
+    point_x: I
+    point_y: I
 
-    def __init__(self, point_x: Z, point_y: Z):
+    def __init__(self, point_x: I, point_y: I):
         self.point_x = point_x
         self.index_y = point_y
 
@@ -72,10 +72,10 @@ class Pixel(Object):
 
 
 class Point:
-    point_x: Z
-    point_y: Z
+    point_x: I
+    point_y: I
 
-    def __init__(self, point_x: Z, point_y: Z) -> N:
+    def __init__(self, point_x: I, point_y: I) -> N:
         self.point_x = abs(point_x)
         self.point_y = abs(point_y)
 
@@ -83,10 +83,10 @@ class Point:
 class Rectangle:
     """"""
 
-    left: Z
-    upper: Z
-    right: Z
-    lower: Z
+    left: I
+    upper: I
+    right: I
+    lower: I
 
     def copy(self, other: SELF) -> N:
         """Copy the values from another object."""
@@ -95,28 +95,28 @@ class Rectangle:
         self.right = other.right
         self.lower = other.lower
 
-    def within(self, dot_x: Z, dot_y: Z) -> B:
+    def within(self, dot_x: I, dot_y: I) -> B:
         """Test that click inside us."""
         test_x = self.left <= dot_x <= self.right
         test_y = self.upper <= dot_y <= self.lower
         return test_x and test_y
 
     @property
-    def origin(self) -> T[Z, Z]:
+    def origin(self) -> T[I, I]:
         """"""
         return (self.left, self.upper)
 
     @property
-    def size(self) -> T[Z, Z]:
+    def size(self) -> T[I, I]:
         """"""
         return (self.right - self.left, self.lower - self.upper)
 
     @property
-    def value(self) -> T[Z, Z, Z, Z]:
+    def value(self) -> T[I, I, I, I]:
         """"""
         return (self.left, self.upper, self.right, self.lower)
 
-    def __init__(self, left: Z, upper: Z, right: Z, lower: Z) -> N:
+    def __init__(self, left: I, upper: I, right: I, lower: I) -> N:
         """"""
         self.left = left
         self.upper = upper
@@ -140,7 +140,7 @@ class Item(Object):
     def make(self, ring, **star) -> N:
         """"""
 
-    def poke(self, ring: R, x_dot: Z, y_dot: Z, **star) -> N:
+    def poke(self, ring: R, x_dot: I, y_dot: I, **star) -> N:
         """"""
         if self.hidden:
             return False

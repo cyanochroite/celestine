@@ -9,7 +9,7 @@ from celestine.typed import (
     N,
     R,
     S,
-    Z,
+    I,
 )
 from celestine.window.collection import (
     Collection,
@@ -117,7 +117,7 @@ class View(Item, Collection):
                 )
             )
 
-    def poke(self, ring: R, x_dot: Z, y_dot: Z, **star) -> N:
+    def poke(self, ring: R, x_dot: I, y_dot: I, **star) -> N:
         """"""
         if self.hidden:
             return False

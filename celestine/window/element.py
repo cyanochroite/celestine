@@ -10,15 +10,15 @@ from celestine.typed import (
     R,
     S,
     T,
-    Z,
+    I,
 )
 from celestine.window.collection import (
     Item,
     Rectangle,
 )
 
-BOX: TA = T[Z, Z, Z, Z]
-PAIR: TA = T[Z, Z]
+BOX: TA = T[I, I, I, I]
+PAIR: TA = T[I, I]
 
 
 class Abstract(Item):
@@ -41,7 +41,7 @@ class Abstract(Item):
 class Button(Abstract):
     """"""
 
-    def poke(self, ring: R, x_dot: Z, y_dot: Z, **star) -> N:
+    def poke(self, ring: R, x_dot: I, y_dot: I, **star) -> N:
         """"""
         if super().poke(ring, x_dot, y_dot, **star):
             ring.event.new(self.call, self.action, self.argument)
@@ -114,7 +114,7 @@ class Image(Abstract):
 
     path: P  # The location of the image on disk.
     image: A  # The image object after being loaded from disk.
-    size: T[Z, Z]  # The width and height of the image.
+    size: T[I, I]  # The width and height of the image.
 
     """
     A small version of an image.
