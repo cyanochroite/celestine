@@ -3,6 +3,7 @@
 import unittest
 
 from celestine.window.point import (
+    Grid,
     Line,
     Plane,
     Point,
@@ -27,6 +28,14 @@ class TestPoint(unittest.TestCase):
 
         self.assertEqual(point.one, 4)
         self.assertEqual(point.two, 3)
+
+    def test_quantize(self):
+        """"""
+        point = Point(3.4, 3.5)
+        point.quantize()
+
+        self.assertEqual(point.one, 3)
+        self.assertEqual(point.two, 4)
 
     def test_init(self):
         """"""
@@ -87,6 +96,14 @@ class TestLine(unittest.TestCase):
         """"""
         one = Line(4, 3)
         line = one.copy()
+
+        self.assertEqual(line.minimum, 3)
+        self.assertEqual(line.maximum, 4)
+
+    def test_quantize(self):
+        """"""
+        line = Line(3.4, 3.5)
+        line.quantize()
 
         self.assertEqual(line.minimum, 3)
         self.assertEqual(line.maximum, 4)
@@ -236,6 +253,18 @@ class TestPlane(unittest.TestCase):
         self.assertEqual(plane.two.minimum, 0)
         self.assertEqual(plane.two.maximum, 32)
 
+    def test_quantize(self):
+        """"""
+        one = Line(-3.6, -3.4)
+        two = Line(+3.4, +3.6)
+        plane = Plane(one, two)
+        plane.quantize()
+
+        self.assertEqual(plane.one.minimum, -4)
+        self.assertEqual(plane.one.maximum, -3)
+        self.assertEqual(plane.two.minimum, +3)
+        self.assertEqual(plane.two.maximum, +4)
+
     def test_size(self):
         """"""
         plane = Plane(Line(1, 2), Line(3, 4))
@@ -319,3 +348,48 @@ class TestPlane(unittest.TestCase):
         plane = Plane(Line(1, 2), Line(3, 4))
         string = str(plane)
         self.assertEqual(string, "([1.0, 2.0], [3.0, 4.0])")
+
+
+class TestGrid(unittest.TestCase):
+    """"""
+
+    def test_centroid(self):
+        """"""
+        grid = Grid(Line(1.0, 2.0), Line(1.0, 3.0))
+
+        point = Point(2, 2)
+        point.quantize()
+        centroid = grid.centroid
+
+        self.assertEqual(str(point), str(centroid))
+
+    def test_scale_to_max(self):
+        """"""
+        plane = Plane.make(33.33, 66.66)
+        grid = Grid.make(16, 16)
+        grid.scale_to_max(plane)
+
+        self.assertEqual(grid.one.minimum, 0)
+        self.assertEqual(grid.one.maximum, 67)
+        self.assertEqual(grid.two.minimum, 0)
+        self.assertEqual(grid.two.maximum, 67)
+
+    def test_scale_to_min(self):
+        """"""
+        plane = Plane.make(33.33, 66.66)
+        grid = Grid.make(16, 16)
+        grid.scale_to_min(plane)
+
+        self.assertEqual(grid.one.minimum, 0)
+        self.assertEqual(grid.one.maximum, 33)
+        self.assertEqual(grid.two.minimum, 0)
+        self.assertEqual(grid.two.maximum, 33)
+
+    def test_init(self):
+        """"""
+        grid = Grid(Line(1.0, 2.49), Line(2.51, 4.0))
+
+        self.assertEqual(grid.one.minimum, 1)
+        self.assertEqual(grid.one.maximum, 2)
+        self.assertEqual(grid.two.minimum, 3)
+        self.assertEqual(grid.two.maximum, 4)

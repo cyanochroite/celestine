@@ -7,6 +7,7 @@ from celestine.typed import (
     K,
     N,
     S,
+    override,
 )
 
 
@@ -24,6 +25,11 @@ class Point:
     def copy(self) -> K:
         """"""
         return self.clone(self)
+
+    def quantize(self) -> K:
+        self.one = round(self.one)
+        self.two = round(self.two)
+        return self
 
     def __init__(self, one: F, two: F) -> N:
         self.one = float(one)
@@ -73,6 +79,11 @@ class Line:
     def midpoint(self) -> F:
         return (self.minimum + self.maximum) / 2
 
+    def quantize(self) -> K:
+        self.minimum = round(self.minimum)
+        self.maximum = round(self.maximum)
+        return self
+
     def __add__(self, other: F) -> K:
         one = self.minimum + other
         two = self.maximum + other
@@ -118,7 +129,9 @@ class Plane:
 
     @property
     def centroid(self) -> Point:
-        return Point(self.one.midpoint, self.two.midpoint)
+        one = self.one.midpoint
+        two = self.two.midpoint
+        return Point(one, two)
 
     @classmethod
     def clone(cls, self: K) -> K:
@@ -138,11 +151,18 @@ class Plane:
         two = Line(0, height)
         return cls(one, two)
 
-    def scale_to_max(self, other: K) -> N:
+    def scale_to_max(self, other: K) -> K:
         self *= max(other.size / self.size)
+        return self
 
-    def scale_to_min(self, other: K) -> N:
+    def scale_to_min(self, other: K) -> K:
         self *= min(other.size / self.size)
+        return self
+
+    def quantize(self) -> K:
+        self.one.quantize()
+        self.two.quantize()
+        return self
 
     @property
     def size(self) -> Point:
@@ -186,3 +206,24 @@ class Plane:
         one = str(self.one)
         two = str(self.two)
         return f"({one}, {two})"
+
+
+class Grid(Plane):
+    """"""
+
+    @override
+    @property
+    def centroid(self) -> Point:
+        return super().centroid.quantize()
+
+    @override
+    def scale_to_max(self, other: K) -> K:
+        return super().scale_to_max(other).quantize()
+
+    @override
+    def scale_to_min(self, other: K) -> K:
+        return super().scale_to_min(other).quantize()
+
+    @override
+    def __init__(self, one: Line, two: Line) -> N:
+        return super().__init__(one.quantize(), two.quantize())

@@ -258,4 +258,3 @@ BRAILLE_PATTERNS = {
     0b01111111: chr(0x28FE),
     0b11111111: chr(0x28FF),
 }
-
