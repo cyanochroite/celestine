@@ -3,7 +3,7 @@
 from celestine import load
 from celestine.typed import (
     LS,
-    MT,
+    M,
     N,
     S,
 )
@@ -14,7 +14,7 @@ from . import Abstract
 class Package(Abstract):
     """"""
 
-    def main(self, package: MT, path: S) -> N:
+    def main(self, package: M, path: S) -> N:
         """
         This package has no configuration file options.
 

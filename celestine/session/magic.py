@@ -16,7 +16,7 @@ from celestine.session.argument import (
 from celestine.session.data import CONFIGURATION
 from celestine.typed import (
     LS,
-    MT,
+    M,
     TA,
     A,
     B,
@@ -48,9 +48,9 @@ class Magic:
     class Core:
         """"""
 
-        application: MT
-        interface: MT
-        language: MT
+        application: M
+        interface: M
+        language: M
 
         def __setattr__(self, name, value):
             module = load.module(name, value)

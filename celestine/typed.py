@@ -5,15 +5,14 @@ Generator[YieldType, SendType, ReturnType]
 """
 
 import typing
+import types
 import collections.abc
 import lzma
 import pathlib
 from collections.abc import Iterable as IT
-from types import ModuleType as MT
 from typing import IO
 from typing import Self as SELF
 from typing import TextIO
-from typing import Type as TY
 from typing import TypeAlias as TA
 from typing import override
 
@@ -37,7 +36,7 @@ type I = int  # Ambiguous variable name.
 # type J = 0
 # type K = 0
 type L[X] = typing.List
-# type M = 0 map? module?
+type M = types.ModuleType
 type N = None
 type O = typing.Optional  # Ambiguous variable name.
 type P = pathlib.Path
@@ -49,7 +48,7 @@ type T[X] = typing.Tuple
 # type V = 0
 # type W = 0
 # type X = 0
-# type Y = 0 type?
+type Y[X] = typing.Type
 # type Z = 0
 
 
@@ -74,21 +73,21 @@ class Ignore:
     _dict: D
     _self: SELF
     _tuple: T
-    _type: TY
+    _type: Y
 
 
 class Ring:
     """"""
 
-    application: MT
+    application: M
     attribute: LS
-    code: MT
-    interface: MT
-    language: MT
+    code: M
+    interface: M
+    language: M
     main: S
-    package: MT
-    view: MT
-    window: MT
+    package: M
+    view: M
+    window: M
 
     @override
     def ignore(self):

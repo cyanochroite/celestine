@@ -6,7 +6,7 @@ import importlib
 from celestine.data import CELESTINE
 from celestine.typed import (
     C,
-    MT,
+    M,
     TA,
     A,
     B,
@@ -33,7 +33,7 @@ many = _many
 ########################################################################
 
 
-def package(base: S, *path: S) -> MT:
+def package(base: S, *path: S) -> M:
     """Load an external package from the system path."""
     iterable = [base, *path]
     name = FULL_STOP.join(iterable)
@@ -45,7 +45,7 @@ def package(base: S, *path: S) -> MT:
     return file
 
 
-def module(*path: S) -> MT:
+def module(*path: S) -> M:
     """Load an internal module from anywhere in the application."""
     return package(CELESTINE, *path)
 
@@ -72,7 +72,7 @@ def redirect(*path: S) -> N:
 ########################################################################
 
 
-def package(base: S, *path: S) -> MT:
+def package(base: S, *path: S) -> M:
     """Load an external package from the system path."""
     iterable = [base, *path]
     name = FULL_STOP.join(iterable)
@@ -81,7 +81,7 @@ def package(base: S, *path: S) -> MT:
     return _module
 
 
-def module(*path: S) -> MT:
+def module(*path: S) -> M:
     """Load an internal module from anywhere in the application."""
     return package(CELESTINE, *path)
 
@@ -108,7 +108,7 @@ def redirect(*path: S) -> N:
 ########################################################################
 
 
-def functions(_module: MT) -> D[S, FN]:
+def functions(_module: M) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
     _dictionary = vars(_module)
     items = _dictionary.items()
@@ -130,7 +130,7 @@ def attempt(*path: S) -> B:
     return False
 
 
-def module_fallback(*path: S) -> MT:
+def module_fallback(*path: S) -> M:
     """
     Load an internal module from anywhere in the application.
 
@@ -154,7 +154,7 @@ def dictionary(*path: S) -> D[S, S]:
     return mapping
 
 
-def module_to_name(_module: MT) -> S:
+def module_to_name(_module: M) -> S:
     """"""
     string = repr(_module)
     array = string.split("'")
@@ -175,7 +175,7 @@ def method(name: S, *path: S):
 ####
 
 
-def package_dependency(name: S, fail) -> MT:
+def package_dependency(name: S, fail) -> M:
     """Attempt to make loading packages easier."""
     try:
         flag = package(CELESTINE, PACKAGE, name)

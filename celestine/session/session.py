@@ -18,7 +18,7 @@ from celestine.session.argument import (
 )
 from celestine.typed import (
     IT,
-    MT,
+    M,
     D,
     S,
     T,
@@ -78,7 +78,7 @@ class Dictionary(SuperSession):
 class Application(Dictionary):
     """"""
 
-    application: MT
+    application: M
 
     @classmethod
     def dictionary(cls, core) -> AD:
@@ -95,7 +95,7 @@ class Application(Dictionary):
 class Interface(Dictionary):
     """"""
 
-    interface: MT
+    interface: M
 
     @classmethod
     def dictionary(cls, core) -> AD:
@@ -112,7 +112,7 @@ class Interface(Dictionary):
 class Language(Dictionary):
     """"""
 
-    language: MT
+    language: M
 
     @classmethod
     def dictionary(cls, core) -> AD:

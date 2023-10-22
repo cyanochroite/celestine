@@ -5,8 +5,8 @@ import io
 
 from celestine.data import CELESTINE
 from celestine.typed import (
-    MT,
-    TY,
+    M,
+    Y,
     B,
 )
 from celestine.unicode import (
@@ -24,7 +24,7 @@ from celestine.unicode import (
 from .data import ERROR
 
 
-def parser(language: MT, exit_on_error: B) -> argparse.ArgumentParser:
+def parser(language: M, exit_on_error: B) -> argparse.ArgumentParser:
     """A basic parser with overloaded functions for text translation."""
 
     return _parser(language)(
@@ -44,7 +44,7 @@ def parser(language: MT, exit_on_error: B) -> argparse.ArgumentParser:
     )
 
 
-def _argument_error(_: MT) -> TY[argparse.ArgumentError]:
+def _argument_error(_: M) -> Y[argparse.ArgumentError]:
     """A basic parser with overloaded functions for text translation."""
 
     class ArgumentError(argparse.ArgumentError):
@@ -70,7 +70,7 @@ def _argument_error(_: MT) -> TY[argparse.ArgumentError]:
     return ArgumentError
 
 
-def _help_formatter(language: MT) -> TY[argparse.HelpFormatter]:
+def _help_formatter(language: M) -> Y[argparse.HelpFormatter]:
     """A basic parser with overloaded functions for text translation."""
 
     class HelpFormatter(argparse.HelpFormatter):
@@ -96,7 +96,7 @@ def _help_formatter(language: MT) -> TY[argparse.HelpFormatter]:
     return HelpFormatter
 
 
-def _parser(language: MT) -> TY[argparse.ArgumentParser]:
+def _parser(language: M) -> Y[argparse.ArgumentParser]:
     """A basic parser with overloaded functions for text translation."""
 
     class Parser(argparse.ArgumentParser):

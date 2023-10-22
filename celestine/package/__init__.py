@@ -11,7 +11,7 @@ from celestine.file.data import (
 from celestine.load import pathway
 from celestine.typed import (
     LS,
-    MT,
+    M,
     OS,
     A,
     N,
@@ -28,9 +28,9 @@ class Abstract:
 
     ring: A
     name: S
-    package: MT | N
+    package: M | N
 
-    def main(self, package: MT, path: S) -> N:
+    def main(self, package: M, path: S) -> N:
         """"""
         sys.argv.append(path)
         package.main()
