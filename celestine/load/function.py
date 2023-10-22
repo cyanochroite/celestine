@@ -3,7 +3,7 @@
 from typing import TypeAlias as TA
 
 from celestine.typed import (
-    CA,
+    C,
     LS,
     MT,
     D,
@@ -13,7 +13,7 @@ from celestine.typed import (
 
 from .data import FUNCTION
 
-FN: TA = CA[[N], N]
+FN: TA = C[[N], N]
 
 
 def load(module: MT) -> D[S, FN]:

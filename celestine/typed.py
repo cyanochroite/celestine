@@ -5,10 +5,9 @@ Generator[YieldType, SendType, ReturnType]
 """
 
 import typing
+import collections.abc
 import lzma
 import pathlib
-from collections.abc import Callable as CA
-from collections.abc import Generator as GE
 from collections.abc import Iterable as IT
 from types import ModuleType as MT
 from typing import IO
@@ -28,17 +27,17 @@ type hd = D[S, A]
 
 type A = typing.Any
 type B = bool
-# type C = 0 callable
+type C[X] = collections.abc.Callable
 type D[X] = typing.Dict
-# type E = 0
+# type E = 0 enum?
 type F = float
-# type G = 0generator
-# type H = 0
+type G[X] = collections.abc.Generator
+# type H = 0 hash?
 type I = int  # Ambiguous variable name.
 # type J = 0
 # type K = 0
 type L[X] = typing.List
-# type M = 0
+# type M = 0 map? module?
 type N = None
 type O = typing.Optional  # Ambiguous variable name.
 type P = pathlib.Path
@@ -50,7 +49,7 @@ type T[X] = typing.Tuple
 # type V = 0
 # type W = 0
 # type X = 0
-# type Y = 0
+# type Y = 0 type?
 # type Z = 0
 
 
@@ -69,8 +68,8 @@ type LI = L[I]
 class Ignore:
     """"""
 
-    _callable: CA
-    _generator: GE
+    _callable: C
+    _generator: G
     _iterable: IT
     _dict: D
     _self: SELF
@@ -100,7 +99,7 @@ R = Ring  # noqa: F401 pylint: disable=W0611
 
 type FILE = IO[A]
 type LZMA = lzma.LZMAFile | TextIO
-type TEXT = GE[S, N, N]
+type TEXT = G[S, N, N]
 
 
 

@@ -4,7 +4,7 @@ import os
 import pathlib
 
 from celestine.typed import (
-    GE,
+    G,
     LS,
     L,
     N,
@@ -14,7 +14,7 @@ from celestine.typed import (
 )
 
 
-def walk(*path: S) -> GE[T[S, LS, LS], N, N]:
+def walk(*path: S) -> G[T[S, LS, LS], N, N]:
     """Yields a 3-tuple (dirpath, dirnames, filenames)."""
     top = pathlib.Path(*path)
     topdown = True
@@ -23,7 +23,7 @@ def walk(*path: S) -> GE[T[S, LS, LS], N, N]:
     return os.walk(top, topdown, onerror, followlinks)
 
 
-def file(top: P, include: LS, exclude: LS) -> GE[P, N, N]:
+def file(top: P, include: LS, exclude: LS) -> G[P, N, N]:
     """
     Item 'name_exclude': a list of directory names to exclude.
 

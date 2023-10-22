@@ -4,7 +4,7 @@
 from celestine import load
 from celestine.typed import (
     FILE,
-    GE,
+    G,
     OS,
     N,
     P,
@@ -81,7 +81,7 @@ def text_write(file: P, string: S) -> N:
 ########################################################################
 
 
-def module_open(*path: S) -> GE[S, N, N]:
+def module_open(*path: S) -> G[S, N, N]:
     """"""
     file = load.pathway.python(*path)
     with text_load(file) as document:

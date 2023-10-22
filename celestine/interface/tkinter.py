@@ -2,7 +2,7 @@
 
 
 from celestine.typed import (
-    CA,
+    C,
     N,
     P,
     R,
@@ -20,7 +20,7 @@ from celestine.window.element import Label as Label_
 class Abstract(Abstract_):
     """"""
 
-    def render(self, item: CA, *, ring: R, **star) -> N:
+    def render(self, item: C, *, ring: R, **star) -> N:
         """"""
         self.item = item(self.canvas, **star)
 

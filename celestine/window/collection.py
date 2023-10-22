@@ -1,7 +1,7 @@
 """"""
 
 from celestine.typed import (
-    GE,
+    G,
     SELF,
     TA,
     A,
@@ -14,7 +14,7 @@ from celestine.typed import (
     I,
 )
 
-AXIS: TA = GE[T[I, I], N, N]
+AXIS: TA = G[T[I, I], N, N]
 
 
 class Object:
@@ -187,7 +187,7 @@ class Collection(Object):
         self.item = {}
         super().__init__(**star)
 
-    def __iter__(self) -> GE[T[S, Item], N, N]:
+    def __iter__(self) -> G[T[S, Item], N, N]:
         """"""
         yield from self.item.items()
 
@@ -197,7 +197,7 @@ class Collection2:
 
     item: D[S, Item]
 
-    def children(self) -> GE[Item, N, N]:
+    def children(self) -> G[Item, N, N]:
         """"""
         for _, item in self.item.items():
             yield item

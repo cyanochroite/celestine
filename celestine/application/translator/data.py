@@ -1,7 +1,7 @@
 """Keywords used throughout the translator application."""
 
 from celestine.typed import (
-    GE,
+    G,
     TA,
     D,
     N,
@@ -22,4 +22,4 @@ TEXT = "text"
 TO = "to"
 TRANSLATIONS = "translations"
 URL = "url"
-YIELD_TEXT: TA = GE[S, N, N]
+YIELD_TEXT: TA = G[S, N, N]

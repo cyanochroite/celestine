@@ -9,7 +9,7 @@ from celestine.data.directory import (
 )
 from celestine.package import Package
 from celestine.typed import (
-    CA,
+    C,
     LS,
     A,
     B,
@@ -26,7 +26,7 @@ from .magic import Magic
 class Event:
     """"""
 
-    event: L[T[CA, A, A]]
+    event: L[T[C, A, A]]
 
     def new(self, call, action, argument):
         """Add to event que and call function at end of update."""
