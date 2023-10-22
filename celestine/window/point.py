@@ -1,10 +1,10 @@
 """"""
 
 from celestine.typed import (
-    G,
     SELF,
     B,
     F,
+    G,
     N,
 )
 

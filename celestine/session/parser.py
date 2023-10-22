@@ -5,9 +5,9 @@ import io
 
 from celestine.data import CELESTINE
 from celestine.typed import (
+    B,
     M,
     Y,
-    B,
 )
 from celestine.unicode import (
     APOSTROPHE,

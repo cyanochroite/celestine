@@ -5,8 +5,8 @@ from celestine.typed import (
     OBJ,
     SELF,
     B,
-    N,
     I,
+    N,
 )
 
 

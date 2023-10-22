@@ -1,20 +1,19 @@
 """"""
 
 from celestine.typed import (
-    G,
     SELF,
-    TA,
     A,
     B,
     D,
+    G,
+    I,
     N,
     R,
     S,
     T,
-    I,
 )
 
-AXIS: TA = G[T[I, I], N, N]
+type AXIS = G[T[I, I], N, N]
 
 
 class Object:

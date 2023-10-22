@@ -4,8 +4,8 @@ import os
 import pathlib
 
 from celestine.typed import (
-    G,
     LS,
+    G,
     L,
     N,
     P,

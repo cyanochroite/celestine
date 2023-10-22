@@ -11,9 +11,9 @@ from celestine.file.data import (
 from celestine.load import pathway
 from celestine.typed import (
     LS,
-    M,
     OS,
     A,
+    M,
     N,
     R,
     S,

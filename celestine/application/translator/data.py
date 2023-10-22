@@ -1,9 +1,8 @@
 """Keywords used throughout the translator application."""
 
 from celestine.typed import (
-    G,
-    TA,
     D,
+    G,
     N,
     S,
 )
@@ -17,9 +16,9 @@ LANGUAGE_TAG_ISO = "LANGUAGE_TAG_ISO"
 LANGUAGE_NAME_NATIVE = "LANGUAGE_NAME_NATIVE"
 REGION = "region"
 SESSION = "session"
-TABLE: TA = D[S, S]
+type TABLE = D[S, S]
 TEXT = "text"
 TO = "to"
 TRANSLATIONS = "translations"
 URL = "url"
-YIELD_TEXT: TA = G[S, N, N]
+type YIELD_TEXT = G[S, N, N]

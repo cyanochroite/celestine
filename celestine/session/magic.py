@@ -16,12 +16,11 @@ from celestine.session.argument import (
 from celestine.session.data import CONFIGURATION
 from celestine.typed import (
     LS,
-    M,
-    TA,
     A,
     B,
     D,
     L,
+    M,
     N,
 )
 from celestine.unicode import NONE
@@ -38,7 +37,7 @@ TRANSLATE_THIS = "unrecognized arguments"
 
 # ADI: typing.TypeAlias = typing.Iterable[typing.Tuple[str, Argument]]
 # APD: TA = D[U[Argument, T[Argument]], U[AP, AG]]
-APD: TA = D[A, A]
+type APD = D[A, A]
 
 
 class Magic:

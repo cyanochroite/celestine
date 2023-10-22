@@ -15,10 +15,13 @@ from typing import Self as SELF
 from typing import TextIO
 from typing import TypeAlias as TA
 from typing import override
-
-
-
-
+import types
+import typing
+from typing import (
+    IO,
+    TextIO,
+    override,
+)
 
 type OBJ = object
 type hd = D[S, A]
@@ -99,9 +102,3 @@ R = Ring  # noqa: F401 pylint: disable=W0611
 type FILE = IO[A]
 type LZMA = lzma.LZMAFile | TextIO
 type TEXT = G[S, N, N]
-
-
-
-
-
-

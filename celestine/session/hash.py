@@ -19,8 +19,8 @@ print(dictionary[Test]) -> "test"
 from celestine.typed import (
     OBJ,
     B,
-    S,
     I,
+    S,
 )
 from celestine.unicode import (
     APOSTROPHE,

@@ -4,8 +4,8 @@
 from celestine import load
 from celestine.typed import (
     FILE,
-    G,
     OS,
+    G,
     N,
     P,
     S,

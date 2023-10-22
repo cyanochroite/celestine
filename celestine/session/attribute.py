@@ -10,14 +10,13 @@ from celestine.session.data import (
 )
 from celestine.typed import (
     LS,
-    TA,
     A,
     D,
     N,
     S,
 )
 
-AT: TA = D[S, A]
+type AT = D[S, A]
 
 
 class Attribute:

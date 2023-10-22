@@ -3,22 +3,21 @@
 import math
 
 from celestine.typed import (
-    TA,
     A,
+    I,
     N,
     P,
     R,
     S,
     T,
-    I,
 )
 from celestine.window.collection import (
     Item,
     Rectangle,
 )
 
-BOX: TA = T[I, I, I, I]
-PAIR: TA = T[I, I]
+type BOX = T[I, I, I, I]
+type PAIR = T[I, I]
 
 
 class Abstract(Item):

@@ -9,10 +9,10 @@ from celestine.data.directory import (
 )
 from celestine.package import Package
 from celestine.typed import (
-    C,
     LS,
     A,
     B,
+    C,
     L,
     N,
     R,

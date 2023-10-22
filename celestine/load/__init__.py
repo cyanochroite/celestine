@@ -5,12 +5,11 @@ import importlib
 
 from celestine.data import CELESTINE
 from celestine.typed import (
-    C,
-    M,
-    TA,
     A,
     B,
+    C,
     D,
+    M,
     N,
     S,
 )
@@ -22,7 +21,7 @@ from celestine.unicode import (
 from . import many as _many
 from . import pathway as _pathway
 
-FN: TA = C[[N], N]
+type FN = C[[N], N]
 
 FUNCTION = "<function"
 PACKAGE = "package"

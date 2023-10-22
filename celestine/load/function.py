@@ -3,10 +3,10 @@
 from typing import TypeAlias as TA
 
 from celestine.typed import (
-    C,
     LS,
-    M,
+    C,
     D,
+    M,
     N,
     S,
 )

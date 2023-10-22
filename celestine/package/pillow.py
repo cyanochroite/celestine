@@ -6,7 +6,6 @@ from celestine import load
 from celestine.typed import (
     LS,
     SELF,
-    TA,
     A,
     N,
     P,
@@ -19,7 +18,7 @@ from . import Abstract
 ########################################################################
 
 COLORS = 15  # int(255 - 8 / 16)
-IMAGE: TA = A
+type IMAGE = A
 
 
 class Image:

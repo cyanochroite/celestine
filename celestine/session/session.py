@@ -18,8 +18,8 @@ from celestine.session.argument import (
 )
 from celestine.typed import (
     IT,
-    M,
     D,
+    M,
     S,
     T,
 )

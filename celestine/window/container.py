@@ -6,10 +6,10 @@ import math
 from celestine.typed import (
     B,
     D,
+    I,
     N,
     R,
     S,
-    I,
 )
 from celestine.window.collection import (
     Collection,
