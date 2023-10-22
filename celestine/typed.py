@@ -3,6 +3,7 @@ Define types here.
 
 Generator[YieldType, SendType, ReturnType]
 """
+# TODO: pylint 3.0.1: On update, see if this file still causes crash.
 
 import collections.abc
 import pathlib
@@ -11,6 +12,7 @@ import typing
 from typing import Self as K
 from typing import override
 
+# TODO: pylint 3.0.1: On update, see if we can move this back down.
 type X = typing.Any
 type Y = typing.Any
 type Z = typing.Any
@@ -38,6 +40,9 @@ type T[X] = typing.Tuple[X]
 # type U = 0
 # type V = 0
 # type W = 0
+# type X = typing.Any  # Using variable "X" before assignment.
+# type Y = typing.Any  # Using variable "Y" before assignment.
+# type Z = typing.Any  # Using variable "Z" before assignment.
 
 
 type GB = G[B, N, N]
