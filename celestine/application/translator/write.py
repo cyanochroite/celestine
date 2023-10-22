@@ -8,6 +8,7 @@ from celestine.file import (
     normalize,
 )
 from celestine.typed import (
+    GS,
     N,
     S,
 )
@@ -29,11 +30,10 @@ from .data import (
     LANGUAGE_NAME_NATIVE,
     LANGUAGE_TAG_ISO,
     TABLE,
-    YIELD_TEXT,
 )
 
 
-def dictionary_to_string(dictionary: TABLE) -> YIELD_TEXT:
+def dictionary_to_string(dictionary: TABLE) -> GS:
     """Prepares the dictionary to be written to a file."""
     dictionary_items = dictionary.items()
     sorted_items = sorted(dictionary_items)
@@ -66,7 +66,7 @@ def dictionary_to_string(dictionary: TABLE) -> YIELD_TEXT:
         yield from LINE_SEPARATOR
 
 
-def language_file(translation: TABLE, overridden: TABLE) -> YIELD_TEXT:
+def language_file(translation: TABLE, overridden: TABLE) -> GS:
     """Print translations first then print overridden values."""
     lookup = translation | overridden
     yield from QUOTATION_MARK

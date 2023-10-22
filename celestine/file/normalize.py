@@ -3,7 +3,7 @@
 import io
 
 from celestine.typed import (
-    TEXT,
+    GS,
     S,
 )
 from celestine.unicode import (
@@ -36,7 +36,7 @@ from .data import (
 )
 
 
-def wrap(string: S) -> TEXT:
+def wrap(string: S) -> GS:
     """
     Wrap long lines by breaking on punctiation or spaces.
 
@@ -152,7 +152,7 @@ def wrap(string: S) -> TEXT:
     yield from buffer.read(count)
 
 
-def wrap_text(string: S) -> TEXT:
+def wrap_text(string: S) -> GS:
     """"""
     buffer = io.StringIO()
 
@@ -201,7 +201,7 @@ def wrap_text(string: S) -> TEXT:
     yield from buffer.read(count)
 
 
-def character(string: S) -> TEXT:
+def character(string: S) -> GS:
     """Remove all invalid characters."""
     for character in string:
         if character not in UNICODE:
@@ -213,7 +213,7 @@ def character(string: S) -> TEXT:
         yield from character
 
 
-def newline(string: S) -> TEXT:
+def newline(string: S) -> GS:
     """Remove all newline characters."""
     for character in string:
         if character in unicode_newline:
@@ -222,7 +222,7 @@ def newline(string: S) -> TEXT:
             yield from character
 
 
-def whitespace(string: S) -> TEXT:
+def whitespace(string: S) -> GS:
     """
     Remove (ignore) all whitespace from the front and end of the string.
 
@@ -257,7 +257,7 @@ def whitespace(string: S) -> TEXT:
             previous = character
 
 
-def quotation(string: S) -> TEXT:
+def quotation(string: S) -> GS:
     """"""
     for character in string:
         if character == QUOTATION_MARK:
@@ -266,7 +266,7 @@ def quotation(string: S) -> TEXT:
             yield from character
 
 
-def punctuation(string: S) -> TEXT:
+def punctuation(string: S) -> GS:
     """Remove duplicate punctiation symbols."""
 
     previous = None

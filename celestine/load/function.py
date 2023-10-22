@@ -1,7 +1,5 @@
 """Central place for loading and importing external files."""
 
-from typing import TypeAlias as TA
-
 from celestine.typed import (
     LS,
     C,
@@ -13,7 +11,7 @@ from celestine.typed import (
 
 from .data import FUNCTION
 
-FN: TA = C[[N], N]
+type FN = C[[N], N]
 
 
 def load(module: M) -> D[S, FN]:

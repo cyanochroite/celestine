@@ -4,24 +4,11 @@ Define types here.
 Generator[YieldType, SendType, ReturnType]
 """
 
-import typing
-import types
 import collections.abc
-import lzma
 import pathlib
-from collections.abc import Iterable as IT
-from typing import IO
-from typing import Self as SELF
-from typing import TextIO
-from typing import TypeAlias as TA
-from typing import override
 import types
 import typing
-from typing import (
-    IO,
-    TextIO,
-    override,
-)
+from typing import override
 
 type OBJ = object
 type hd = D[S, A]
@@ -54,29 +41,26 @@ type T[X] = typing.Tuple
 type Y[X] = typing.Type
 # type Z = 0
 
+type A = typing.Any
+type M = types.ModuleType
+
+type GB = G[B, N, N]
+type GF = G[F, N, N]
+type GI = G[I, N, N]
+type GP = G[P, N, N]
+type GS = G[S, N, N]
 
 type OB = O[B]
 type OF = O[F]
+type OI = O[I]
 type OP = O[P]
 type OS = O[S]
-type OI = O[I]
 
 type LB = L[B]
 type LF = L[F]
+type LI = L[I]
 type LP = L[P]
 type LS = L[S]
-type LI = L[I]
-
-class Ignore:
-    """"""
-
-    _callable: C
-    _generator: G
-    _iterable: IT
-    _dict: D
-    _self: SELF
-    _tuple: T
-    _type: Y
 
 
 class Ring:
@@ -92,13 +76,15 @@ class Ring:
     view: M
     window: M
 
-    @override
-    def ignore(self):
-        pass
-
 
 R = Ring  # noqa: F401 pylint: disable=W0611
 
-type FILE = IO[A]
-type LZMA = lzma.LZMAFile | TextIO
-type TEXT = G[S, N, N]
+type SELF = typing.Self
+
+
+class ImportNotUsedFix:
+    """"""
+
+    @override
+    def override(self):
+        pass

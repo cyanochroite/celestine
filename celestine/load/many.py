@@ -4,9 +4,10 @@ import os
 import pathlib
 
 from celestine.typed import (
+    GP,
+    LP,
     LS,
     G,
-    L,
     N,
     P,
     S,
@@ -23,7 +24,7 @@ def walk(*path: S) -> G[T[S, LS, LS], N, N]:
     return os.walk(top, topdown, onerror, followlinks)
 
 
-def file(top: P, include: LS, exclude: LS) -> G[P, N, N]:
+def file(top: P, include: LS, exclude: LS) -> GP:
     """
     Item 'name_exclude': a list of directory names to exclude.
 
@@ -45,7 +46,7 @@ def file(top: P, include: LS, exclude: LS) -> G[P, N, N]:
                 yield path
 
 
-def python(top: P, include: LS, exclude: LS) -> L[P]:
+def python(top: P, include: LS, exclude: LS) -> LP:
     """"""
     include = [".py", *include]
     exclude = [

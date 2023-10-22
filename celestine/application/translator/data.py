@@ -2,8 +2,6 @@
 
 from celestine.typed import (
     D,
-    G,
-    N,
     S,
 )
 
@@ -21,4 +19,3 @@ TEXT = "text"
 TO = "to"
 TRANSLATIONS = "translations"
 URL = "url"
-type YIELD_TEXT = G[S, N, N]

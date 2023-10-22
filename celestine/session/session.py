@@ -1,6 +1,6 @@
 """"""
 
-from typing import TypeAlias as TA
+import collections.abc
 
 from celestine import load
 from celestine.data.directory import (
@@ -17,7 +17,6 @@ from celestine.session.argument import (
     Positional,
 )
 from celestine.typed import (
-    IT,
     D,
     M,
     S,
@@ -33,8 +32,8 @@ from .data import (
     VERSION,
 )
 
-AD: TA = D[S, Argument]
-AI: TA = IT[T[S, Argument]]
+type AD = D[S, Argument]
+type AI = collections.abc.Iterable[T[S, Argument]]
 
 
 class SuperSession:

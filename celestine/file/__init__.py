@@ -1,17 +1,20 @@
 """Central place for loading and importing external files."""
 
+import typing
 
 from celestine import load
 from celestine.typed import (
-    FILE,
+    GS,
     OS,
-    G,
+    A,
     N,
     P,
     S,
 )
 
 from . import data as stream
+
+type FILE = typing.IO[A]
 
 
 def binary(file: P, mode: S) -> FILE:
@@ -81,7 +84,7 @@ def text_write(file: P, string: S) -> N:
 ########################################################################
 
 
-def module_open(*path: S) -> G[S, N, N]:
+def module_open(*path: S) -> GS:
     """"""
     file = load.pathway.python(*path)
     with text_load(file) as document:

@@ -1,10 +1,10 @@
 """"""
 
 from celestine.typed import (
+    GF,
     SELF,
     B,
     F,
-    G,
     N,
 )
 
@@ -28,7 +28,7 @@ class Point:
         self.one = float(one)
         self.two = float(two)
 
-    def __iter__(self) -> G[F, N, N]:
+    def __iter__(self) -> GF:
         yield self.one
         yield self.two
 

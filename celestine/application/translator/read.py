@@ -4,17 +4,18 @@ import io
 
 from celestine.file import module_open
 from celestine.file.data import SECTION_BREAK
-from celestine.typed import S
+from celestine.typed import (
+    GS,
+    S,
+)
 from celestine.unicode import (
     LINE_FEED,
     REVERSE_SOLIDUS,
 )
 from celestine.unicode.alphabet2 import UNICODE
 
-from .data import YIELD_TEXT
 
-
-def fix_line_split(*path: S) -> YIELD_TEXT:
+def fix_line_split(*path: S) -> GS:
     """"""
     skip = False
 
@@ -74,7 +75,7 @@ def open_language(*path):
     return (head, body)
 
 
-def read_new_lines(string: S) -> YIELD_TEXT:
+def read_new_lines(string: S) -> GS:
     """"""
 
     buffer = io.StringIO()
