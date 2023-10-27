@@ -1,13 +1,11 @@
 """Central place for loading and importing external files."""
 
 from celestine.typed import (
+    FN,
     LS,
-    C,
     D,
     M,
-    N,
     S,
-    FN,
 )
 
 from .data import FUNCTION

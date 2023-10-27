@@ -9,9 +9,9 @@ from celestine.file import (
 )
 from celestine.typed import (
     GS,
+    TABLE,
     N,
     S,
-    TABLE,
 )
 from celestine.unicode import (
     EQUALS_SIGN,

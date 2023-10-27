@@ -8,10 +8,7 @@ from celestine.typed import (
 )
 
 from .collection import Collection2
-from .container import (
-    View,
-    Zone,
-)
+from .container import View
 
 
 class Window(View):

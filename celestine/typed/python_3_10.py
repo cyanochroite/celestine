@@ -9,7 +9,6 @@ import lzma
 import pathlib
 import types
 import typing
-from typing import Self as K
 from typing import TypeAlias as TA
 
 A: TA = typing.Any
@@ -22,7 +21,7 @@ G: TA = collections.abc.Generator
 H: TA = 0
 I: TA = int
 J: TA = object
-# K: TA = typing.Self  # "Self" is not valid in this context.
+K: TA = typing.Any  # Python 3.10 fix.
 L: TA = typing.List
 M: TA = types.ModuleType
 N: TA = None

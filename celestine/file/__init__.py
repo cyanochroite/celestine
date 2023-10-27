@@ -1,16 +1,14 @@
 """Central place for loading and importing external files."""
 
-import typing
 
 from celestine import load
 from celestine.typed import (
+    FILE,
     GS,
     OS,
-    A,
     N,
     P,
     S,
-    FILE,
 )
 
 from . import data as stream

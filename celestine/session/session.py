@@ -1,7 +1,5 @@
 """"""
 
-import sys
-import collections.abc
 
 from celestine import load
 from celestine.data.directory import (
@@ -18,17 +16,13 @@ from celestine.session.argument import (
     Positional,
 )
 from celestine.typed import (
-    D,
-    M,
-    S,
-    T,
-    TA,
     AD,
     AI,
+    M,
+    S,
 )
 
 from . import default
-from .argument import Argument
 from .data import (
     CONFIGURATION,
     HELP,

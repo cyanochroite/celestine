@@ -15,14 +15,12 @@ from celestine.session.argument import (
 )
 from celestine.session.data import CONFIGURATION
 from celestine.typed import (
+    APD,
     LS,
-    A,
     B,
-    D,
     L,
     M,
     N,
-    APD,
 )
 from celestine.unicode import NONE
 

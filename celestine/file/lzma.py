@@ -4,13 +4,11 @@ import lzma
 
 from celestine.file import data as stream
 from celestine.typed import (
+    LZMA,
     N,
     P,
     S,
-    LZMA,
 )
-
-
 
 
 def load(filename: P) -> LZMA:

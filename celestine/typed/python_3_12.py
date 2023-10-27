@@ -12,7 +12,6 @@ import typing
 from typing import Self as K
 from typing import override
 
-
 type A = typing.Any
 type B = bool
 type C[X] = collections.abc.Callable[..., X]
@@ -73,6 +72,7 @@ type BOX = T[I, I, I, I]
 type PAIR = T[I, I]
 type AD = D[S, Argument]  # session.argument
 type AI = collections.abc.Iterable[T[S, Argument]]  # session.argument
+
 
 class Ring:
     """"""

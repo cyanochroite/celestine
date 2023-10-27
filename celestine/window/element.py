@@ -3,6 +3,8 @@
 import math
 
 from celestine.typed import (
+    BOX,
+    PAIR,
     A,
     I,
     N,
@@ -10,8 +12,6 @@ from celestine.typed import (
     R,
     S,
     T,
-    BOX,
-    PAIR,
 )
 from celestine.window.collection import (
     Item,

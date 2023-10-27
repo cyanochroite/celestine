@@ -5,14 +5,13 @@ import importlib
 
 from celestine.data import CELESTINE
 from celestine.typed import (
+    FN,
     A,
     B,
-    C,
     D,
     M,
     N,
     S,
-    FN,
 )
 from celestine.unicode import (
     FULL_STOP,
@@ -21,8 +20,6 @@ from celestine.unicode import (
 
 from . import many as _many
 from . import pathway as _pathway
-
-
 
 FUNCTION = "<function"
 PACKAGE = "package"

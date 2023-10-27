@@ -1,9 +1,5 @@
 """Keywords used throughout the translator application."""
 
-from celestine.typed import (
-    D,
-    S,
-)
 
 INIT = "__init__"
 KEY = "key"

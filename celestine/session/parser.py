@@ -2,13 +2,12 @@
 
 import argparse
 import io
-import typing
 
 from celestine.data import CELESTINE
 from celestine.typed import (
+    TYPE,
     B,
     M,
-    TYPE,
 )
 from celestine.unicode import (
     APOSTROPHE,
@@ -23,8 +22,6 @@ from celestine.unicode import (
 )
 
 from .data import ERROR
-
-
 
 
 def parser(language: M, exit_on_error: B) -> argparse.ArgumentParser:

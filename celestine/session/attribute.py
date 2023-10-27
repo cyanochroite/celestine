@@ -9,12 +9,10 @@ from celestine.session.data import (
     VERSION,
 )
 from celestine.typed import (
+    AT,
     LS,
-    A,
-    D,
     N,
     S,
-    AT,
 )
 
 

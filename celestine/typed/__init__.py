@@ -1,9 +1,7 @@
 """"""
 
-import sys
 import importlib
-
-from typing import TypeAlias as TA
+import sys
 
 _version = sys.version.split(".")
 _major = _version[0]

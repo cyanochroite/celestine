@@ -4,14 +4,13 @@ import math
 
 from celestine import load
 from celestine.typed import (
+    IMAGE,
     LS,
-    A,
     K,
     N,
     P,
     R,
     S,
-    IMAGE,
 )
 
 from . import Abstract

@@ -11,7 +11,6 @@ from celestine.typed import (
     R,
     S,
     T,
-    AXIS,
 )
 
 
