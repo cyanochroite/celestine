@@ -7,11 +7,10 @@ from celestine.typed import (
     M,
     N,
     S,
+    FN,
 )
 
 from .data import FUNCTION
-
-type FN = C[[N], N]
 
 
 def load(module: M) -> D[S, FN]:

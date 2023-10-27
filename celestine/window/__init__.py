@@ -21,18 +21,6 @@ class Window(View):
         """"""
         return self.canvas
 
-    def code(self, name, function) -> N:
-        """"""
-        self.task.set(name, function)
-
-    def view(self, name, function) -> N:
-        """"""
-        container = self.zone(name, mode=Zone.DROP)
-        container.canvas = self.setup(name)
-        container.hidden = True
-        function(self.ring, container)
-        self._view.set(name, container)
-
     def extension(self) -> LS:
         """"""
         return [
@@ -66,8 +54,6 @@ class Window(View):
         self.page.hidden = True
         self.page = self._view.get(page)
         self.page.hidden = False
-
-        self.turn_page = page
         self.draw(self.ring, **star)
 
     def work(self, task, **star):
@@ -85,20 +71,19 @@ class Window(View):
         if exc_type:
             raise exc_type
         try:
-            self.page = self._view.get(self.turn_page)
-            self.turn(self.turn_page)
+            turn_page = self.ring.main
+            self.page = self._view.get(turn_page)
+            self.turn(turn_page)
         except AttributeError as error:
             message = "Application has no functions whatsoever."
             raise RuntimeError(message) from error
         except KeyError as error:
-            page = self.turn_page
-            message = f"Missing function called {page}."
+            message = "Missing 'main' function."
             raise RuntimeError(message) from error
         return False
 
     def __init__(self, ring, canvas, element, area, **star):
         self.ring = ring
-        self.turn_page = ring.main
         self.page = None
         self.task = Collection2()
         self._view = Collection2()

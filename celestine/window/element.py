@@ -10,14 +10,13 @@ from celestine.typed import (
     R,
     S,
     T,
+    BOX,
+    PAIR,
 )
 from celestine.window.collection import (
     Item,
     Rectangle,
 )
-
-type BOX = T[I, I, I, I]
-type PAIR = T[I, I]
 
 
 class Abstract(Item):

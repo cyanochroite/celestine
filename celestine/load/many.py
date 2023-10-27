@@ -56,3 +56,16 @@ def python(top: P, include: LS, exclude: LS) -> LP:
         *exclude,
     ]
     return file(top, include, exclude)
+
+
+def remove_empty_directories(path: P) -> N:
+    """"""
+    empty = True
+    for content in path.iterdir():
+        if content.is_dir():
+            empty &= remove_empty_directories(content)
+        else:
+            empty = False
+    if empty:
+        os.rmdir(path)
+    return empty

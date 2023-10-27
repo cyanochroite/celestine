@@ -14,7 +14,7 @@ LANGUAGE_TAG_ISO = "LANGUAGE_TAG_ISO"
 LANGUAGE_NAME_NATIVE = "LANGUAGE_NAME_NATIVE"
 REGION = "region"
 SESSION = "session"
-type TABLE = D[S, S]
+
 TEXT = "text"
 TO = "to"
 TRANSLATIONS = "translations"

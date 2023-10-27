@@ -11,9 +11,8 @@ from celestine.typed import (
     R,
     S,
     T,
+    AXIS,
 )
-
-type AXIS = G[T[I, I], N, N]
 
 
 class Object:

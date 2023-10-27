@@ -10,11 +10,10 @@ from celestine.typed import (
     N,
     P,
     S,
+    FILE,
 )
 
 from . import data as stream
-
-type FILE = typing.IO[A]
 
 
 def binary(file: P, mode: S) -> FILE:

@@ -12,6 +12,7 @@ from celestine.typed import (
     M,
     N,
     S,
+    FN,
 )
 from celestine.unicode import (
     FULL_STOP,
@@ -21,7 +22,7 @@ from celestine.unicode import (
 from . import many as _many
 from . import pathway as _pathway
 
-type FN = C[[N], N]
+
 
 FUNCTION = "<function"
 PACKAGE = "package"

@@ -7,9 +7,10 @@ from celestine.typed import (
     N,
     P,
     S,
+    LZMA,
 )
 
-type LZMA = lzma.LZMAFile
+
 
 
 def load(filename: P) -> LZMA:

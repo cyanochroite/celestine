@@ -14,9 +14,8 @@ from celestine.typed import (
     D,
     N,
     S,
+    AT,
 )
-
-type AT = D[S, A]
 
 
 class Attribute:

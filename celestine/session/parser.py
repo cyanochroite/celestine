@@ -8,6 +8,7 @@ from celestine.data import CELESTINE
 from celestine.typed import (
     B,
     M,
+    TYPE,
 )
 from celestine.unicode import (
     APOSTROPHE,
@@ -23,7 +24,7 @@ from celestine.unicode import (
 
 from .data import ERROR
 
-type TYPE[X] = typing.Type
+
 
 
 def parser(language: M, exit_on_error: B) -> argparse.ArgumentParser:

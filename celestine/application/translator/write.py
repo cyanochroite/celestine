@@ -11,6 +11,7 @@ from celestine.typed import (
     GS,
     N,
     S,
+    TABLE,
 )
 from celestine.unicode import (
     EQUALS_SIGN,
@@ -29,7 +30,6 @@ from .data import (
     LANGUAGE_NAME_ENGLISH,
     LANGUAGE_NAME_NATIVE,
     LANGUAGE_TAG_ISO,
-    TABLE,
 )
 
 

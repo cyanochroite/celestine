@@ -1,5 +1,6 @@
 """"""
 
+import sys
 import collections.abc
 
 from celestine import load
@@ -21,6 +22,9 @@ from celestine.typed import (
     M,
     S,
     T,
+    TA,
+    AD,
+    AI,
 )
 
 from . import default
@@ -31,9 +35,6 @@ from .data import (
     MAIN,
     VERSION,
 )
-
-type AD = D[S, Argument]
-type AI = collections.abc.Iterable[T[S, Argument]]
 
 
 class SuperSession:

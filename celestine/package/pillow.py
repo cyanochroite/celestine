@@ -11,6 +11,7 @@ from celestine.typed import (
     P,
     R,
     S,
+    IMAGE,
 )
 
 from . import Abstract
@@ -18,7 +19,6 @@ from . import Abstract
 ########################################################################
 
 COLORS = 15  # int(255 - 8 / 16)
-type IMAGE = A
 
 
 class Image:
