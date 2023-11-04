@@ -3,16 +3,25 @@
 from celestine.typed import (
     LS,
     A,
+    D,
     N,
+    R,
     S,
 )
 
-from .collection import Collection2
-from .container import View
+from .container import (
+    View,
+    Zone,
+)
 
 
 class Window(View):
     """"""
+
+    ring: R
+    page: View
+    code: D[S, A]  # function
+    view: D[S, View]
 
     def setup(self, name: S) -> A:
         """"""
@@ -46,16 +55,16 @@ class Window(View):
             ".png",
         ]
 
-    def turn(self, page, **star) -> N:
+    def turn(self, page: S, **star) -> N:
         """"""
         self.page.hidden = True
-        self.page = self._view.get(page)
+        self.page = self.view.get(page)
         self.page.hidden = False
         self.draw(self.ring, **star)
 
-    def work(self, task, **star):
+    def work(self, code, **star):
         """"""
-        caller = self.task.get(task)
+        caller = self.code.get(code)
         caller(ring=self.ring, **star)
         self.draw(self.ring, **star)
 
@@ -69,7 +78,7 @@ class Window(View):
             raise exc_type
         try:
             turn_page = self.ring.main
-            self.page = self._view.get(turn_page)
+            self.page = self.view.get(turn_page)
             self.turn(turn_page)
         except AttributeError as error:
             message = "Application has no functions whatsoever."
@@ -79,11 +88,14 @@ class Window(View):
             raise RuntimeError(message) from error
         return False
 
+    def __getitem__(self, key: S):
+        return self.view[key]
+
     def __init__(self, ring, canvas, element, area, **star):
         self.ring = ring
         self.page = None
-        self.task = Collection2()
-        self._view = Collection2()
+        self.code = {}
+        self.view = {}
 
         super().__init__(
             self.ring,
@@ -92,6 +104,11 @@ class Window(View):
             self,
             element,
             area,
-            offset_x=0,
-            offset_y=0,
         )
+
+    def __setitem__(self, key: S, value: A):
+        container = self.zone(key, mode=Zone.DROP)
+        container.canvas = self.setup(key)
+        container.hidden = True
+        value(self.ring, container)
+        self.view[key] = container

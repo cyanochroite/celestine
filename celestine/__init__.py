@@ -13,7 +13,6 @@ from celestine.typed import (
     B,
     N,
 )
-from celestine.window.container import Zone
 
 bl_info = {
     "name": "celestine",
@@ -40,14 +39,10 @@ def main(argument_list: LS, exit_on_error: B, **star) -> N:
 
     with window:
         for name, function in session.code.items():
-            window.task.set(name, function)
+            window.code[name] = function
 
         for name, function in session.view.items():
-            container = window.zone(name, mode=Zone.DROP)
-            container.canvas = window.setup(name)
-            container.hidden = True
-            function(window.ring, container)
-            window._view.set(name, container)
+            window[name] = function
 
 
 def register() -> N:

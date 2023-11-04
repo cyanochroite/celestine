@@ -1,38 +1,85 @@
 """Central place for loading and importing external files."""
 
 
+import lzma
+
 from celestine import load
+from celestine.file import data as stream
 from celestine.typed import (
     FILE,
     GS,
+    LZMA,
     OS,
     N,
     P,
     S,
 )
 
-from . import data as stream
 
-
-def binary(file: P, mode: S) -> FILE:
+def binary(path: P, mode: S) -> FILE:
     """Does all file opperations."""
-    encoding = None  # Binary mode doesn't take an encoding argument.
-    errors = None  #: Binary mode doesn't take an errors argument
-    return raw(file, mode, encoding, errors)
+    encoding = None  # Binary mode doesn't take an 'encoding' argument.
+    errors = None  #: Binary mode doesn't take an 'errors' argument
+    return raw(path, mode, encoding, errors)
 
 
-def binary_load(file: P) -> FILE:
+def binary_load(path: P) -> FILE:
     """"""
-    return binary(file, stream.READ_BINARY)
+    return binary(path, stream.READ_BINARY)
 
 
-def binary_save(file: P) -> FILE:
+def binary_read(path: P) -> S:
     """"""
-    return binary(file, stream.WRITE_BINARY)
+    with binary_load(path) as file:
+        return file.read()
 
 
-def raw(file: P, mode: S, encoding: OS, errors: OS) -> FILE:
+def binary_save(path: P) -> FILE:
+    """"""
+    return binary(path, stream.WRITE_BINARY)
+
+
+def binary_write(path: P, data: S) -> N:
+    """"""
+    with binary_save(path) as file:
+        file.write(data)
+
+
+def lzma_load(path: P) -> LZMA:
+    """"""
+    return lzma.open(
+        path,
+        mode=stream.READ_BINARY,
+    )
+
+
+def lzma_read(path: P) -> S:
+    """"""
+    with lzma_load(path) as file:
+        return file.read()
+
+
+def lzma_save(path: P) -> LZMA:
+    """"""
+    return lzma.open(
+        path,
+        mode=stream.WRITE_BINARY,
+        format=lzma.FORMAT_XZ,
+        check=lzma.CHECK_SHA256,
+        preset=9,
+        filters=None,
+    )
+
+
+def lzma_write(path: P, data: S) -> N:
+    """"""
+    with lzma_save(path) as file:
+        file.write(bytes(data))
+
+
+def raw(path: P, mode: S, encoding: OS, errors: OS) -> FILE:
     """Does all file opperations."""
+    file = path
     buffering = 1  # Use line buffering.
     newline = stream.UNIVERSAL  # Universal newlines mode.
     closefd = True  # The close file descriptor must be True.
@@ -49,33 +96,33 @@ def raw(file: P, mode: S, encoding: OS, errors: OS) -> FILE:
     )
 
 
-def text(file: P, mode: S) -> FILE:
+def text(path: P, mode: S) -> FILE:
     """Does all file opperations."""
     encoding = stream.UTF_8  # Use UTF 8 encoding.
     errors = stream.STRICT  # Raise a ValueError exception on error.
-    return raw(file, mode, encoding, errors)
+    return raw(path, mode, encoding, errors)
 
 
-def text_load(file: P) -> FILE:
+def text_load(path: P) -> FILE:
     """"""
-    return text(file, stream.READ_TEXT)
+    return text(path, stream.READ_TEXT)
 
 
-def text_save(file: P) -> FILE:
+def text_read(path: P) -> S:
     """"""
-    return text(file, stream.WRITE_TEXT)
+    with text_load(path) as file:
+        return file.read()
 
 
-def text_read(file: P) -> S:
+def text_save(path: P) -> FILE:
     """"""
-    with text_load(file) as book:
-        return book.read()
+    return text(path, stream.WRITE_TEXT)
 
 
-def text_write(file: P, string: S) -> N:
+def text_write(path: P, data: S) -> N:
     """"""
-    with text_save(file) as book:
-        book.write(string)
+    with text_save(path) as file:
+        file.write(data)
 
 
 ########################################################################

@@ -415,7 +415,7 @@ class Window(Window_):
             self.spot(self.area)
 
             page = bpy.context.scene.celestine.page
-            item = self._view.get(page)
+            item = self.view.get(page)
             item.hidden = False
 
             call = getattr(self, self.call)

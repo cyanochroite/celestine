@@ -1,5 +1,7 @@
 """"""
 
+from typing import TypeAlias as TA
+
 from celestine.typed import (
     A,
     B,
@@ -12,6 +14,8 @@ from celestine.typed import (
     S,
     T,
 )
+
+N: TA = None
 
 
 class Object:
@@ -245,8 +249,8 @@ class Plane:
 class Grid(Plane):
     """"""
 
-    @override
     @property
+    @override
     def centroid(self) -> Point:
         return super().centroid.quantize()
 
@@ -373,26 +377,3 @@ class Collection(Object):
     def __iter__(self) -> G[T[S, Item], N, N]:
         """"""
         yield from self.item.items()
-
-
-class Collection2:
-    """"""
-
-    item: D[S, Item]
-
-    def children(self) -> G[Item, N, N]:
-        """"""
-        for _, item in self.item.items():
-            yield item
-
-    def get(self, name: S) -> Item:
-        """"""
-        return self.item[name]
-
-    def set(self, name: S, item: Item) -> Item:
-        """"""
-        self.item[name] = item
-        return item
-
-    def __init__(self) -> N:
-        self.item = {}

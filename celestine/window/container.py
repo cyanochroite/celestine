@@ -68,7 +68,7 @@ class View(Item, Collection):
             raise AttributeError("text and path can't both be set")
 
         if code != "" and view != "":
-            raise AttributeError("call and view path can't both be set")
+            raise AttributeError("code and view path can't both be set")
 
         call = None
         action = Call.NONE
@@ -128,17 +128,18 @@ class View(Item, Collection):
     def spot(self, area: Rectangle, **star) -> N:
         """"""
         self.area.copy(area)
+        length = max(1, len(self.item))
 
         match self.mode:
             case Zone.DROP:
                 partition_x = 1
-                partition_y = len(self.item)
+                partition_y = length
             case Zone.SPAN:
-                partition_x = len(self.item)
+                partition_x = length
                 partition_y = 1
             case Zone.GRID:
                 partition_x = self.width
-                partition_y = math.ceil(len(self.item) / self.width)
+                partition_y = math.ceil(length / self.width)
             case Zone.NONE:
                 partition_x = 1
                 partition_y = 1
