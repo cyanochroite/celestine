@@ -110,5 +110,5 @@ class Window(View):
         container = self.zone(key, mode=Zone.DROP)
         container.canvas = self.setup(key)
         container.hidden = True
-        value(self.ring, container)
+        value(container)
         self.view[key] = container

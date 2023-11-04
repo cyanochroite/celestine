@@ -1,13 +1,10 @@
 """"""
 
-from celestine.typed import (
-    N,
-    R,
-)
+from celestine.typed import N
 from celestine.window.container import View
 
 
-def one(ring: R, view: View) -> N:
+def one(view: View) -> N:
     """"""
     language = view.ring.language
     with view.zone("one_head") as line:
@@ -23,7 +20,7 @@ def one(ring: R, view: View) -> N:
         line.new("one_next", text=language.DEMO_ONE_NEXT, view="two")
 
 
-def two(ring: R, view: View) -> N:
+def two(view: View) -> N:
     """"""
     language = view.ring.language
     with view.zone("two_head") as line:
@@ -39,7 +36,7 @@ def two(ring: R, view: View) -> N:
         line.new("two_next", text=language.DEMO_TWO_NEXT, view="main")
 
 
-def main(ring: R, view: View) -> N:
+def main(view: View) -> N:
     """"""
     language = view.ring.language
     with view.zone("main_head") as line:

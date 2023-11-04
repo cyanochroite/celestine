@@ -2,10 +2,7 @@
 
 
 from celestine import load
-from celestine.typed import (
-    N,
-    R,
-)
+from celestine.typed import N
 from celestine.window.container import (
     Image,
     View,
@@ -16,16 +13,16 @@ NULL = load.pathway.asset("null.png")
 NULL = load.pathway.asset("32.png")
 
 
-def picture(ring: R, view: View) -> N:
+def picture(view: View) -> N:
     """"""
     view.new("photo", path=NULL, mode=Image.FULL)
 
 
-def main(ring: R, view: View) -> N:
+def main(view: View) -> N:
     """"""
     view.new(
         "load",
-        text=ring.language.VIEWER_MAIN_BUTTON,
+        text=view.ring.language.VIEWER_MAIN_BUTTON,
         code="setup",
         window=view,
     )
