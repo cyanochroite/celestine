@@ -18,7 +18,7 @@ from celestine.window.element import Label as Label_
 class Abstract(Abstract_):
     """"""
 
-    def render(self, item, **star):
+    def render(self, item):
         """"""
         self.canvas.blit(item, self.area.origin)
 
@@ -32,7 +32,7 @@ class Button(Abstract, Button_):
         text = f"Button{self.data}"
 
         item = font.render(text, True, (255, 255, 255))
-        self.render(item, **star)
+        self.render(item)
 
 
 class Label(Abstract, Label_):
@@ -42,7 +42,7 @@ class Label(Abstract, Label_):
         """"""
 
         item = font.render(self.data, True, (255, 255, 255))
-        self.render(item, **star)
+        self.render(item)
 
 
 class Image(Abstract, Image_):
@@ -81,14 +81,14 @@ class Image(Abstract, Image_):
             size = self.resize((image.get_width(), image.get_height()))
             image = pygame.transform.scale(image, size)
 
-        self.render(image, **star)
+        self.render(image)
 
 
 class Window(Window_):
     """"""
 
     @override
-    def draw(self, **star):
+    def draw(self, **star) -> N:
         """"""
         pygame = self.ring.package.pygame
 

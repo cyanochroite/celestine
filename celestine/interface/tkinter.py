@@ -41,28 +41,32 @@ class Button(Abstract, Button_):
         """"""
         self.call(self.action, **self.argument)
 
-    def make(self, **star) -> N:
+    def make(self) -> N:
         """"""
         tkinter = self.ring.package.tkinter
 
         item = tkinter.Button
-        star.update(command=self.callback)
-        star.update(text=f"button:{self.data}")
-        self.render(item, **star)
+        self.render(
+            item,
+            command=self.callback,
+            text=f"button: {self.data}",
+        )
 
 
 class Image(Abstract, Image_):
     """"""
 
-    def make(self, **star) -> N:
+    def make(self) -> N:
         """"""
         tkinter = self.ring.package.tkinter
 
         self.image = tkinter.PhotoImage(file=self.path)
-        star.update(image=self.image)
 
         item = tkinter.Label
-        self.render(item, **star)
+        self.render(
+            item,
+            image=self.image,
+        )
 
     def update(self, path: P, **star) -> N:
         """"""
@@ -85,16 +89,18 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def make(self, **star) -> N:
+    def make(self) -> N:
         """"""
         tkinter = self.ring.package.tkinter
 
         item = tkinter.Label
-        star.update(fg="blue")
-        star.update(height=4)
-        star.update(text=f"label:{self.data}")
-        star.update(width=100)
-        self.render(item, **star)
+        self.render(
+            item,
+            fg="blue",
+            height=4,
+            text=f"label:{self.data}",
+            width=100,
+        )
 
 
 class Window(Window_):
@@ -132,8 +138,8 @@ class Window(Window_):
         return canvas
 
     @override
-    def turn(self, page, **star):
-        super().turn(page, **star)
+    def turn(self, page):
+        super().turn(page)
         self.page.canvas.tkraise()
 
     @override

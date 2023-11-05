@@ -55,12 +55,12 @@ class Window(View):
             ".png",
         ]
 
-    def turn(self, page: S, **star) -> N:
+    def turn(self, page: S) -> N:
         """"""
         self.page.hidden = True
         self.page = self.view.get(page)
         self.page.hidden = False
-        self.draw(**star)
+        self.draw()
 
     def work(self, code, **star):
         """"""

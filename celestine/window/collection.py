@@ -325,7 +325,7 @@ class Item(Object):
         if self.hidden:
             return
 
-    def make(self, **star) -> N:
+    def make(self) -> N:
         """"""
 
     def poke(self, x_dot: I, y_dot: I, **star) -> B:

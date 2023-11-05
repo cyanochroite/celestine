@@ -28,7 +28,7 @@ class Button(Abstract, Button_):
         """
         self.call(self.action, **self.argument)
 
-    def make(self, **star):
+    def make(self):
         """"""
         dearpygui = self.ring.package.dearpygui
 
@@ -47,7 +47,7 @@ class Image(Abstract, Image_):
     delete_item(...)
     """
 
-    def make(self, **star):
+    def make(self):
         """
         Draw the image to screen.
 
@@ -99,7 +99,7 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def make(self, **star):
+    def make(self):
         """"""
 
         dearpygui = self.ring.package.dearpygui
@@ -132,7 +132,7 @@ class Window(Window_):
         ]
 
     @override
-    def make(self, **star):
+    def make(self):
         dearpygui = self.ring.package.dearpygui
         for name, item in self.item.items():
             with item.canvas:
@@ -147,13 +147,13 @@ class Window(Window_):
         return canvas
 
     @override
-    def turn(self, page, **star):
+    def turn(self, page):
         """"""
         dearpygui = self.ring.package.dearpygui
 
         dearpygui.hide_item(self.page.name)
 
-        super().turn(page, **star)
+        super().turn(page)
 
         tag = self.page.name
         dearpygui.show_item(tag)

@@ -216,7 +216,7 @@ class Mouse(Abstract):
 class Button(Abstract, Button_):
     """"""
 
-    def make(self, **star) -> N:
+    def make(self) -> N:
         """"""
 
         width = len(self.data) / 4
@@ -254,7 +254,7 @@ class Image(Abstract, Image_):
         data.image.remove(item)
         cls.default = None
 
-    def make(self, **star) -> N:
+    def make(self) -> N:
         """"""
 
         image = data.image.load(self.path)
@@ -279,7 +279,7 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def make(self, **star) -> N:
+    def make(self) -> N:
         """"""
         self.item = basic.text(self.canvas, self.data, self.data)
         self.render()
@@ -319,7 +319,7 @@ class Window(Window_):
         return collection
 
     @override
-    def turn(self, page, **star):
+    def turn(self, page):
         """"""
 
         old_item = None

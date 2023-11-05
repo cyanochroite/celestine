@@ -9,7 +9,6 @@ from celestine.typed import (
     I,
     K,
     N,
-    R,
     S,
 )
 from celestine.window.collection import (
@@ -56,10 +55,10 @@ class View(Item, Collection):
         for _, item in self.item.items():
             item.draw(**star)
 
-    def make(self, **star) -> N:
+    def make(self) -> N:
         """"""
         for _, item in self.item.items():
-            item.make(**star)
+            item.make()
 
     def new(
         self, name, *, text="", path="", code="", view="", **star

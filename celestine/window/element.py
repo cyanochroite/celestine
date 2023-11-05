@@ -48,7 +48,16 @@ class Button(Abstract):
         return False
 
     def __init__(
-        self, ring: R, canvas, name, text, *, call, action, argument, **star
+        self,
+        ring: R,
+        canvas,
+        name,
+        text,
+        *,
+        call,
+        action,
+        argument,
+        **star,
     ):
         self.action = action
         self.argument = argument
