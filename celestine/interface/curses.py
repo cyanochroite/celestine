@@ -298,7 +298,7 @@ class Window(window):
         curses = self.ring.package.curses
 
         while True:
-            self.ring.event.work()
+            self.ring.dequeue()
             event = self.stdscr.getch()
             match event:
                 case 258 | 259 | 260 | 261 as key:

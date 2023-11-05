@@ -92,6 +92,21 @@ class Ring:
     view: M
     window: M
 
+    _queue: L[T[C[N], A, A]]
+
+    def queue(self, call: C[N], action: A, argument: A) -> N:
+        """Add to event queue and call function at end of update."""
+        self._queue.append((call, action, argument))
+
+    def dequeue(self) -> N:
+        """"""
+        for call, action, argument in self._queue:
+            call(action, **argument)
+        self._queue = []
+
+    def __init__(self) -> N:
+        self._queue = []
+
 
 R = Ring  # noqa: F401 pylint: disable=W0611
 

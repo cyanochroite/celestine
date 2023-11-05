@@ -10,45 +10,12 @@ from celestine.data.directory import (
 from celestine.package import Package
 from celestine.typed import (
     LS,
-    A,
     B,
-    C,
-    L,
-    N,
     R,
     Ring,
-    T,
 )
 
 from .magic import Magic
-
-
-class Event:
-    """"""
-
-    event: L[T[C, A, A]]
-
-    def new(self, call, action, argument):
-        """Add to event que and call function at end of update."""
-        hold = (call, action, argument)
-        self.event.append(hold)
-
-    def work(self) -> N:
-        """"""
-        if not self.event:
-            return
-
-        for event in self.event:
-            call = event[0]
-            one = event[1]
-            two = event[2]
-            call(one, **two)
-
-        self.event = []
-
-    def __init__(self, ring):
-        self.ring = ring
-        self.event = []
 
 
 def begin_session(argument_list: LS, exit_on_error: B) -> R:
@@ -89,8 +56,6 @@ def begin_session(argument_list: LS, exit_on_error: B) -> R:
     session.package = Package(session)
 
     session.window = None
-
-    session.event = Event(session)
 
     view = load.module(APPLICATION, application, "view")
     session.view = load.functions(view)

@@ -160,7 +160,7 @@ class Window(Window_):
         pygame = self.ring.package.pygame
 
         while True:
-            self.ring.event.work()
+            self.ring.dequeue()
             event = pygame.event.wait()
             match event.type:
                 case pygame.QUIT:

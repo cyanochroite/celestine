@@ -10,17 +10,18 @@ import pathlib
 import types
 import typing
 from typing import Self as K
+from typing import Tuple as T
 from typing import override
 
 type A = typing.Any
 type B = bool
 type C[X] = collections.abc.Callable[..., X]
 type D[X, Y] = typing.Dict[X, Y]
-type E = 0
+type E = 0  # ENUM
 type F = float
 # Generator[YieldType, SendType, ReturnType]
 type G[X, Y, Z] = collections.abc.Generator[X, Y, Z]
-type H = 0
+type H = 0  # HASH
 type I = int
 type J = object
 # type K = typing.Self  # "Self" is not valid in this context.
@@ -29,10 +30,10 @@ type M = types.ModuleType
 type N = None
 type O[X] = typing.Optional[X]
 type P = pathlib.Path
-type Q = 0
-type R = 0
+type Q = 0  # Queue
+type R = 0  # **star
 type S = str
-type T[X] = typing.Tuple[X]
+# type T = typing.Tuple  # "Tuple[Unknown, ...]" is already specialized.
 type U = 0
 type V = 0
 type W = 0
@@ -79,7 +80,6 @@ class Ring:
 
     application: M
     attribute: LS
-    # event: Event
     code: M
     interface: M
     language: M
@@ -87,6 +87,21 @@ class Ring:
     package: M
     view: M
     window: M
+
+    _queue: L[T[C[N], A, A]]
+
+    def queue(self, call: C[N], action: A, argument: A) -> N:
+        """Add to event queue and call function at end of update."""
+        self._queue.append((call, action, argument))
+
+    def dequeue(self) -> N:
+        """"""
+        for call, action, argument in self._queue:
+            call(action, **argument)
+        self._queue = []
+
+    def __init__(self) -> N:
+        self._queue = []
 
 
 R = Ring  # noqa: F401 pylint: disable=W0611

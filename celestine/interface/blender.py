@@ -421,7 +421,7 @@ class Window(Window_):
             call = getattr(self, self.call)
             call(**self.star)
 
-            self.ring.event.work()
+            self.ring.dequeue()
             return False
 
         super().__exit__(exc_type, exc_value, traceback)

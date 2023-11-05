@@ -43,7 +43,7 @@ class Button(Abstract):
     def poke(self, x_dot: I, y_dot: I, **star) -> B:
         """"""
         if super().poke(x_dot, y_dot, **star):
-            self.ring.event.new(self.call, self.action, self.argument)
+            self.ring.queue(self.call, self.action, self.argument)
             return True
         return False
 
