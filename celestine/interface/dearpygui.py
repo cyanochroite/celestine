@@ -28,9 +28,9 @@ class Button(Abstract, Button_):
         """
         self.call(self.action, **self.argument)
 
-    def make(self, ring, **star):
+    def make(self, **star):
         """"""
-        dearpygui = ring.package.dearpygui
+        dearpygui = self.ring.package.dearpygui
 
         dearpygui.add_button(
             callback=self.callback,
@@ -47,7 +47,7 @@ class Image(Abstract, Image_):
     delete_item(...)
     """
 
-    def make(self, ring, **star):
+    def make(self, **star):
         """
         Draw the image to screen.
 
@@ -58,7 +58,7 @@ class Image(Abstract, Image_):
         photo = image[3]
         """
 
-        dearpygui = ring.package.dearpygui
+        dearpygui = self.ring.package.dearpygui
 
         path = str(self.path)
         image = dearpygui.load_image(path)
@@ -81,10 +81,10 @@ class Image(Abstract, Image_):
             pos=self.area.origin,
         )
 
-    def update(self, ring: R, image, **star):
+    def update(self, image, **star):
         """"""
-        dearpygui = ring.package.dearpygui
-        super().update(ring, image, **star)
+        dearpygui = self.ring.package.dearpygui
+        super().update(image, **star)
 
         path = str(self.path)
         image = dearpygui.load_image(path)
@@ -99,10 +99,10 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def make(self, ring, **star):
+    def make(self, **star):
         """"""
 
-        dearpygui = ring.package.dearpygui
+        dearpygui = self.ring.package.dearpygui
 
         dearpygui.add_text(
             f" {self.data}",  # extra space hack to fix margin error
@@ -132,12 +132,12 @@ class Window(Window_):
         ]
 
     @override
-    def make(self, ring, **star):
-        dearpygui = ring.package.dearpygui
+    def make(self, **star):
+        dearpygui = self.ring.package.dearpygui
         for name, item in self.item.items():
             with item.canvas:
                 dearpygui.configure_item(item.name, show=False)
-                item.make(ring)
+                item.make()
 
     @override
     def setup(self, name):

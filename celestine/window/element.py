@@ -6,6 +6,7 @@ from celestine.typed import (
     BOX,
     PAIR,
     A,
+    B,
     I,
     N,
     P,
@@ -30,28 +31,30 @@ class Abstract(Item):
         """"""
         self.area.copy(area)
 
-    def __init__(self, canvas: A, name: S, **star) -> N:
+    def __init__(self, ring: R, canvas: A, name: S, **star) -> N:
         area = Rectangle(0, 0, 0, 0)
-        super().__init__(canvas, name, area, **star)
+        super().__init__(ring, canvas, name, area, **star)
         self.item = None
 
 
 class Button(Abstract):
     """"""
 
-    def poke(self, ring: R, x_dot: I, y_dot: I, **star) -> N:
+    def poke(self, x_dot: I, y_dot: I, **star) -> B:
         """"""
-        if super().poke(ring, x_dot, y_dot, **star):
-            ring.event.new(self.call, self.action, self.argument)
+        if super().poke(x_dot, y_dot, **star):
+            self.ring.event.new(self.call, self.action, self.argument)
+            return True
+        return False
 
     def __init__(
-        self, canvas, name, text, *, call, action, argument, **star
+        self, ring: R, canvas, name, text, *, call, action, argument, **star
     ):
         self.action = action
         self.argument = argument
         self.call = call
         self.data = text
-        super().__init__(canvas, name, **star)
+        super().__init__(ring, canvas, name, **star)
 
 
 class Unit:
@@ -134,7 +137,7 @@ class Image(Abstract):
     Keeping it within a byte (256) a nice goal.
     """
 
-    def update(self, ring: R, path: P, **star) -> N:
+    def update(self, path: P, **star) -> N:
         """"""
         self.path = path
 
@@ -164,11 +167,11 @@ class Image(Abstract):
 
         return (best_x, best_y)
 
-    def __init__(self, canvas, name, path, **star):
+    def __init__(self, ring: R, canvas, name, path, **star):
         self.path = path
         self.image = None
 
-        super().__init__(canvas, name, **star)
+        super().__init__(ring, canvas, name, **star)
 
         minimum = 2**6
         maximum = 2**16
@@ -226,6 +229,6 @@ class Image(Abstract):
 class Label(Abstract):
     """"""
 
-    def __init__(self, canvas, name, text, **star):
+    def __init__(self, ring: R, canvas, name, text, **star):
         self.data = text
-        super().__init__(canvas, name, **star)
+        super().__init__(ring, canvas, name, **star)

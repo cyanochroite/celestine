@@ -316,18 +316,19 @@ class Item(Object):
 
     area: Rectangle
     canvas: A
-    name: S  # The key to use to find this in the window dictionary.
     hidden: B
+    ring: R
+    name: S  # The key to use to find this in the window dictionary.
 
-    def draw(self, ring, **star) -> N:
+    def draw(self, **star) -> N:
         """"""
         if self.hidden:
             return
 
-    def make(self, ring, **star) -> N:
+    def make(self, **star) -> N:
         """"""
 
-    def poke(self, ring: R, x_dot: I, y_dot: I, **star) -> N:
+    def poke(self, x_dot: I, y_dot: I, **star) -> B:
         """"""
         if self.hidden:
             return False
@@ -339,13 +340,14 @@ class Item(Object):
         raise NotImplementedError(area)
 
     def __init__(
-        self, canvas: A, name: S, area: Rectangle, **star
+        self, ring: R, canvas: A, name: S, area: Rectangle, **star
     ) -> N:
         super().__init__(**star)
         self.area = Rectangle(*area.value)
         self.canvas = canvas
-        self.name = name
         self.hidden = False
+        self.ring = ring
+        self.name = name
 
 
 class Collection(Object):

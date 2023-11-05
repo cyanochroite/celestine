@@ -75,7 +75,7 @@ class Abstract(Abstract_):
 class Button(Abstract, Button_):
     """"""
 
-    def draw(self, ring: R, **star):
+    def draw(self, **star):
         """"""
         item = f"button:{self.data}"
         self.render(item, **star)
@@ -126,13 +126,13 @@ class Image(Abstract, Image_):
         value = value[0:-1]
         return value.split(LINE_FEED)
 
-    def render(self, ring, item, **star):
+    def render(self, item, **star):
         """"""
-        curses = ring.package.curses
+        curses = self.ring.package.curses
 
         (x_dot, y_dot) = self.area.origin
 
-        if not ring.package.pillow:
+        if not self.ring.package.pillow:
             self.add_string(
                 x_dot,
                 y_dot,
@@ -164,13 +164,13 @@ class Image(Abstract, Image_):
 
             index_y += 1
 
-    def draw(self, ring: R, **star):
+    def draw(self, **star):
         """"""
-        curses = ring.package.curses
-        pillow = ring.package.pillow
+        curses = self.ring.package.curses
+        pillow = self.ring.package.pillow
 
         if not pillow:
-            self.render(ring, self.path.name, **star)
+            self.render(self.path.name, **star)
             return
 
         self.cache = pillow.open(self.path)
@@ -205,13 +205,13 @@ class Image(Abstract, Image_):
         get_colors(curses, self.color.image)
 
         item = self.output()
-        self.render(ring, item, **star)
+        self.render(item, **star)
 
 
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, ring: R, **star):
+    def draw(self, **star):
         """"""
         item = f"label:{self.data}"
         self.render(item, **star)
@@ -221,7 +221,7 @@ class Window(window):
     """"""
 
     @override
-    def draw(self, ring: R, **star):
+    def draw(self, **star):
         """"""
         curses = self.ring.package.curses
 
@@ -232,7 +232,7 @@ class Window(window):
         canvas.erase()
         # canvas = curses.window(*self.area.value)
 
-        super().draw(ring, **star)
+        super().draw(**star)
 
         self.stdscr.noutrefresh()
         self.background.noutrefresh()
@@ -322,7 +322,7 @@ class Window(window):
                 case curses.KEY_EXIT:
                     break
                 case curses.KEY_CLICK:
-                    self.page.poke(self.ring, self.cord_x, self.cord_y)
+                    self.page.poke(self.cord_x, self.cord_y)
 
         self.stdscr.keypad(0)
         curses.echo()

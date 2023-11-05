@@ -29,6 +29,6 @@ def setup(*, ring: R, window: A, **star) -> N:
     try:
         for _, item in grid.item.items():
             image = next(images)
-            item.update(ring, image)
+            item.update(image)
     except StopIteration:
         pass

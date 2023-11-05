@@ -26,7 +26,7 @@ class Abstract(Abstract_):
 class Button(Abstract, Button_):
     """"""
 
-    def draw(self, ring: R, *, font, **star):
+    def draw(self, *, font, **star):
         """"""
 
         text = f"Button{self.data}"
@@ -38,7 +38,7 @@ class Button(Abstract, Button_):
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, ring: R, *, font, **star):
+    def draw(self, *, font, **star):
         """"""
 
         item = font.render(self.data, True, (255, 255, 255))
@@ -48,11 +48,11 @@ class Label(Abstract, Label_):
 class Image(Abstract, Image_):
     """"""
 
-    def draw(self, ring: R, *, mode="hi", **star):
+    def draw(self, *, mode="hi", **star):
         """"""
 
-        pillow = ring.package.pillow
-        pygame = ring.package.pygame
+        pillow = self.ring.package.pillow
+        pygame = self.ring.package.pygame
 
         # do we call parent or some other function to get this right?
         # maybe call super, which does nothing but set name
@@ -88,13 +88,13 @@ class Window(Window_):
     """"""
 
     @override
-    def draw(self, ring: R, **star):
+    def draw(self, **star):
         """"""
         pygame = self.ring.package.pygame
 
         self.canvas.fill((0, 0, 0))
 
-        super().draw(ring, font=self.font, **star)
+        super().draw(font=self.font, **star)
 
         pygame.display.flip()
 
@@ -169,7 +169,7 @@ class Window(Window_):
                     # TODO: This triggers on all mouse buttons
                     # including scroll wheel! That is bad.
                     (x_dot, y_dot) = pygame.mouse.get_pos()
-                    self.poke(self.ring, x_dot, y_dot)
+                    self.poke(x_dot, y_dot)
 
         pygame.quit()
         return False

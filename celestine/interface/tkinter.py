@@ -20,7 +20,7 @@ from celestine.window.element import Label as Label_
 class Abstract(Abstract_):
     """"""
 
-    def render(self, item: C, *, ring: R, **star) -> N:
+    def render(self, item: C, **star) -> N:
         """"""
         self.item = item(self.canvas, **star)
 
@@ -41,34 +41,34 @@ class Button(Abstract, Button_):
         """"""
         self.call(self.action, **self.argument)
 
-    def make(self, ring: R, **star) -> N:
+    def make(self, **star) -> N:
         """"""
-        tkinter = ring.package.tkinter
+        tkinter = self.ring.package.tkinter
 
         item = tkinter.Button
         star.update(command=self.callback)
         star.update(text=f"button:{self.data}")
-        self.render(item, ring=ring, **star)
+        self.render(item, **star)
 
 
 class Image(Abstract, Image_):
     """"""
 
-    def make(self, ring: R, **star) -> N:
+    def make(self, **star) -> N:
         """"""
-        tkinter = ring.package.tkinter
+        tkinter = self.ring.package.tkinter
 
         self.image = tkinter.PhotoImage(file=self.path)
         star.update(image=self.image)
 
         item = tkinter.Label
-        self.render(item, ring=ring, **star)
+        self.render(item, **star)
 
-    def update(self, ring: R, path: P, **star) -> N:
+    def update(self, path: P, **star) -> N:
         """"""
-        super().update(ring, path)
-        tkinter = ring.package.tkinter
-        pillow = ring.package.pillow
+        super().update(path)
+        tkinter = self.ring.package.tkinter
+        pillow = self.ring.package.pillow
 
         if pillow:
             image = pillow.open(self.path)
@@ -85,16 +85,16 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def make(self, ring: R, **star) -> N:
+    def make(self, **star) -> N:
         """"""
-        tkinter = ring.package.tkinter
+        tkinter = self.ring.package.tkinter
 
         item = tkinter.Label
         star.update(fg="blue")
         star.update(height=4)
         star.update(text=f"label:{self.data}")
         star.update(width=100)
-        self.render(item, ring=ring, **star)
+        self.render(item, **star)
 
 
 class Window(Window_):

@@ -198,10 +198,10 @@ class Abstract(Abstract_):
 class Mouse(Abstract):
     """"""
 
-    def __init__(self, collection, mesh) -> N:
+    def __init__(self, ring: R, collection, mesh) -> N:
         self.mesh = mesh.soul
         self.text = "mouse"
-        super().__init__(collection, "mouse")
+        super().__init__(ring, collection, "mouse")
         self.item = mesh
 
     def draw(self) -> N:
@@ -216,7 +216,7 @@ class Mouse(Abstract):
 class Button(Abstract, Button_):
     """"""
 
-    def make(self, ring: R, **star) -> N:
+    def make(self, **star) -> N:
         """"""
 
         width = len(self.data) / 4
@@ -254,7 +254,7 @@ class Image(Abstract, Image_):
         data.image.remove(item)
         cls.default = None
 
-    def make(self, ring: R, **star) -> N:
+    def make(self, **star) -> N:
         """"""
 
         image = data.image.load(self.path)
@@ -265,9 +265,9 @@ class Image(Abstract, Image_):
         self.item = plane
         self.render()
 
-    def update(self, ring: R, image: S, **star) -> B:
+    def update(self, image: S, **star) -> B:
         """"""
-        super().update(ring, image, **star)
+        super().update(image, **star)
 
         material = bpy.data.materials[self.name]
         node = material.node_tree.nodes["Image Texture"]
@@ -279,7 +279,7 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def make(self, ring: R, **star) -> N:
+    def make(self, **star) -> N:
         """"""
         self.item = basic.text(self.canvas, self.data, self.data)
         self.render()
@@ -389,7 +389,7 @@ class Window(Window_):
         mesh = data.mesh.make(click, "mouse")
         mesh.location = (0, 0, -1)
 
-        self.mouse = Mouse(collection, mesh)
+        self.mouse = Mouse(self.ring, collection, mesh)
         self.mouse.draw()
 
         @classmethod
@@ -419,7 +419,7 @@ class Window(Window_):
             item.hidden = False
 
             call = getattr(self, self.call)
-            call(self.ring, **self.star)
+            call(**self.star)
 
             self.ring.event.work()
             return False

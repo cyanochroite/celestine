@@ -73,3 +73,20 @@ AI = _module.AI
 override = _module.override
 Ring = _module.Ring
 R = _module.R
+
+
+class Ring:
+    """"""
+
+    application: M
+    attribute: LS
+    code: M
+    interface: M
+    language: M
+    main: S
+    package: M
+    view: M
+    window: M
+
+
+R = Ring

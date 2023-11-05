@@ -79,6 +79,7 @@ class Ring:
 
     application: M
     attribute: LS
+    # event: Event
     code: M
     interface: M
     language: M

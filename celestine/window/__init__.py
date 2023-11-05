@@ -60,20 +60,20 @@ class Window(View):
         self.page.hidden = True
         self.page = self.view.get(page)
         self.page.hidden = False
-        self.draw(self.ring, **star)
+        self.draw(**star)
 
     def work(self, code, **star):
         """"""
         caller = self.code.get(code)
         caller(ring=self.ring, **star)
-        self.draw(self.ring, **star)
+        self.draw(**star)
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.spot(self.area)
-        self.make(self.ring)
+        self.make()
         if exc_type:
             raise exc_type
         try:

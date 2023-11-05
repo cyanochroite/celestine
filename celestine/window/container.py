@@ -7,6 +7,7 @@ from celestine.typed import (
     B,
     D,
     I,
+    K,
     N,
     R,
     S,
@@ -47,18 +48,18 @@ class View(Item, Collection):
 
     item: D[S, Item]
 
-    def draw(self, ring: R, **star) -> N:
+    def draw(self, **star) -> N:
         """"""
         if self.hidden:
             return
 
         for _, item in self.item.items():
-            item.draw(ring, **star)
+            item.draw(**star)
 
-    def make(self, ring: R, **star) -> N:
+    def make(self, **star) -> N:
         """"""
         for _, item in self.item.items():
-            item.make(ring, **star)
+            item.make(**star)
 
     def new(
         self, name, *, text="", path="", code="", view="", **star
@@ -88,6 +89,7 @@ class View(Item, Collection):
             if path:
                 self.save(
                     self._image(
+                        self.ring,
                         self.canvas,
                         name,
                         path,
@@ -97,6 +99,7 @@ class View(Item, Collection):
             else:
                 self.save(
                     self._label(
+                        self.ring,
                         self.canvas,
                         name,
                         text,
@@ -106,24 +109,26 @@ class View(Item, Collection):
         else:
             self.save(
                 self._button(
+                    self.ring,
                     self.canvas,
                     name,
                     text,
                     call=work,  # the window function to call
                     action=call,  # the name of the user function
                     argument=star,
-                    ring=self.ring,
                     **star,
                 )
             )
 
-    def poke(self, ring: R, x_dot: I, y_dot: I, **star) -> N:
+    def poke(self, x_dot: I, y_dot: I, **star) -> B:
         """"""
         if self.hidden:
             return False
 
+        result = False
         for _, item in self.item.items():
-            item.poke(ring, x_dot, y_dot, **star)
+            result |= item.poke(x_dot, y_dot, **star)
+        return result
 
     def spot(self, area: Rectangle, **star) -> N:
         """"""
@@ -164,7 +169,7 @@ class View(Item, Collection):
             rectangle = Rectangle(xmin, ymin, xmax, ymax)
             item.spot(rectangle)
 
-    def zone(self, name: S, *, mode=Zone.SPAN, **star):
+    def zone(self, name: S, *, mode=Zone.SPAN, **star) -> K:
         """"""
         return self.item_set(
             name,
@@ -180,7 +185,7 @@ class View(Item, Collection):
             ),
         )
 
-    def __enter__(self):
+    def __enter__(self) -> N:
         return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> B:
@@ -200,8 +205,6 @@ class View(Item, Collection):
         col=0,
         **star,
     ) -> N:
-        self.ring = ring
-
         self.window = window
 
         self.canvas = None
@@ -211,7 +214,7 @@ class View(Item, Collection):
         self._image = element["image"]
         self._label = element["label"]
 
-        super().__init__(canvas, name, area, **star)
+        super().__init__(ring, canvas, name, area, **star)
 
         self.width = col
         self.height = row
@@ -220,4 +223,4 @@ class View(Item, Collection):
         for range_y in range(row):
             for range_x in range(col):
                 name = f"{self.name}_{range_x}-{range_y}"
-                self.item[name] = Item(self.canvas, name, area)
+                self.item[name] = Item(ring, self.canvas, name, area)
