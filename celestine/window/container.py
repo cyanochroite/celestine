@@ -47,7 +47,7 @@ class View(Item, Collection):
 
     item: D[S, Item]
 
-    def draw(self, **star) -> N:
+    def draw(self, **star: R) -> N:
         """"""
         if self.hidden:
             return
@@ -61,7 +61,7 @@ class View(Item, Collection):
             item.make()
 
     def new(
-        self, name, *, text="", path="", code="", view="", **star
+        self, name, *, text="", path="", code="", view="", **star: R
     ) -> N:
         """"""
         if text != "" and path != "":
@@ -92,7 +92,7 @@ class View(Item, Collection):
                         self.canvas,
                         name,
                         path,
-                        **star,
+                        **star: R,
                     )
                 )
             else:
@@ -102,7 +102,7 @@ class View(Item, Collection):
                         self.canvas,
                         name,
                         text,
-                        **star,
+                        **star: R,
                     )
                 )
         else:
@@ -119,7 +119,7 @@ class View(Item, Collection):
                 )
             )
 
-    def poke(self, x_dot: I, y_dot: I, **star) -> B:
+    def poke(self, x_dot: I, y_dot: I, **star: R) -> B:
         """"""
         if self.hidden:
             return False
@@ -129,7 +129,7 @@ class View(Item, Collection):
             result |= item.poke(x_dot, y_dot, **star)
         return result
 
-    def spot(self, area: Rectangle, **star) -> N:
+    def spot(self, area: Rectangle, **star: R) -> N:
         """"""
         self.area.copy(area)
         length = max(1, len(self.item))
@@ -168,7 +168,7 @@ class View(Item, Collection):
             rectangle = Rectangle(xmin, ymin, xmax, ymax)
             item.spot(rectangle)
 
-    def zone(self, name: S, *, mode=Zone.SPAN, **star) -> K:
+    def zone(self, name: S, *, mode=Zone.SPAN, **star: R) -> K:
         """"""
         return self.item_set(
             name,
@@ -202,7 +202,7 @@ class View(Item, Collection):
         mode=Zone.NONE,
         row=0,
         col=0,
-        **star,
+        **star: R,
     ) -> N:
         self.window = window
 

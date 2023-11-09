@@ -1,6 +1,6 @@
 """"""
 
 
-def cow(*, say, **star):
+def cow(*, say, **star: R):
     """"""
     print(say)

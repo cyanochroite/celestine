@@ -65,7 +65,7 @@ class Abstract(Abstract_):
         """
         self.canvas.addstr(y_dot - 1, x_dot - 1, text, *extra)
 
-    def render(self, item, **star):
+    def render(self, item, **star: R):
         """"""
         text = item
         (x_dot, y_dot) = self.area.origin
@@ -75,7 +75,7 @@ class Abstract(Abstract_):
 class Button(Abstract, Button_):
     """"""
 
-    def draw(self, **star):
+    def draw(self, **star: R):
         """"""
         item = f"button:{self.data}"
         self.render(item, **star)
@@ -126,7 +126,7 @@ class Image(Abstract, Image_):
         value = value[0:-1]
         return value.split(LINE_FEED)
 
-    def render(self, item, **star):
+    def render(self, item, **star: R):
         """"""
         curses = self.hold.package.curses
 
@@ -164,7 +164,7 @@ class Image(Abstract, Image_):
 
             index_y += 1
 
-    def draw(self, **star):
+    def draw(self, **star: R):
         """"""
         curses = self.hold.package.curses
         pillow = self.hold.package.pillow
@@ -211,7 +211,7 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, **star):
+    def draw(self, **star: R):
         """"""
         item = f"label:{self.data}"
         self.render(item, **star)
@@ -221,7 +221,7 @@ class Window(window):
     """"""
 
     @override
-    def draw(self, **star):
+    def draw(self, **star: R):
         """"""
         curses = self.hold.package.curses
 
@@ -331,7 +331,7 @@ class Window(window):
         return False
 
     @override
-    def __init__(self, hold: R, **star) -> N:
+    def __init__(self, hold: R, **star: R) -> N:
         element = {
             "button": Button,
             "image": Image,

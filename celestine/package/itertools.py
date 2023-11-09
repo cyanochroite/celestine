@@ -41,5 +41,5 @@ class Package(Abstract):
         """Return the first True value."""
         return next(filter(pred, iterable), default)
 
-    def __init__(self, hold, /, name, **star):
+    def __init__(self, hold, /, name, **star: R):
         super().__init__(hold, name, pypi="more_itertools")

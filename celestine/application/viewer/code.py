@@ -19,7 +19,7 @@ def find_image(hold: R, directory: P) -> LP:
     return files
 
 
-def setup(*, hold: R, window: A, **star) -> N:
+def setup(*, hold: R, window: A, **star: R) -> N:
     """"""
     directory = hold.attribute.directory
     find = find_image(hold, directory)

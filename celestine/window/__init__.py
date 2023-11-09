@@ -62,7 +62,7 @@ class Window(View):
         self.page.hidden = False
         self.draw()
 
-    def work(self, code, **star):
+    def work(self, code, **star: R):
         """"""
         caller = self.code.get(code)
         caller(hold=self.hold, **star)
@@ -91,7 +91,7 @@ class Window(View):
     def __getitem__(self, key: S):
         return self.view[key]
 
-    def __init__(self, hold, canvas, element, area, **star):
+    def __init__(self, hold, canvas, element, area, **star: R):
         self.hold = hold
         self.page = None
         self.code = {}

@@ -18,7 +18,7 @@ from .data import (
 )
 
 
-def main(*, hold: R, **star) -> N:
+def main(*, hold: R, **star: R) -> N:
     """Run the unittest library."""
     module = load.module(APPLICATION, TESTS)
     top = pathway.pathway()

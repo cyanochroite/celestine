@@ -81,7 +81,7 @@ class Image(Abstract, Image_):
             pos=self.area.origin,
         )
 
-    def update(self, image, **star):
+    def update(self, image, **star: R):
         """"""
         dearpygui = self.hold.package.dearpygui
         super().update(image, **star)
@@ -200,7 +200,7 @@ class Window(Window_):
         return False
 
     @override
-    def __init__(self, hold: R, **star) -> N:
+    def __init__(self, hold: R, **star: R) -> N:
         element = {
             "button": Button,
             "image": Image,

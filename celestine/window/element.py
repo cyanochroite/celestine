@@ -31,7 +31,7 @@ class Abstract(Item):
         """"""
         self.area.copy(area)
 
-    def __init__(self, hold: R, canvas: A, name: S, **star) -> N:
+    def __init__(self, hold: R, canvas: A, name: S, **star: R) -> N:
         area = Rectangle(0, 0, 0, 0)
         super().__init__(hold, canvas, name, area, **star)
         self.item = None
@@ -40,7 +40,7 @@ class Abstract(Item):
 class Button(Abstract):
     """"""
 
-    def poke(self, x_dot: I, y_dot: I, **star) -> B:
+    def poke(self, x_dot: I, y_dot: I, **star: R) -> B:
         """"""
         if super().poke(x_dot, y_dot, **star):
             self.hold.queue(self.call, self.action, self.argument)
@@ -57,7 +57,7 @@ class Button(Abstract):
         call,
         action,
         argument,
-        **star,
+        **star: R,
     ):
         self.action = action
         self.argument = argument
@@ -146,7 +146,7 @@ class Image(Abstract):
     Keeping it within a byte (256) a nice goal.
     """
 
-    def update(self, path: P, **star) -> N:
+    def update(self, path: P, **star: R) -> N:
         """"""
         self.path = path
 
@@ -176,7 +176,7 @@ class Image(Abstract):
 
         return (best_x, best_y)
 
-    def __init__(self, hold: R, canvas, name, path, **star):
+    def __init__(self, hold: R, canvas, name, path, **star: R):
         self.path = path
         self.image = None
 
@@ -238,6 +238,6 @@ class Image(Abstract):
 class Label(Abstract):
     """"""
 
-    def __init__(self, hold: R, canvas, name, text, **star):
+    def __init__(self, hold: R, canvas, name, text, **star: R):
         self.data = text
         super().__init__(hold, canvas, name, **star)

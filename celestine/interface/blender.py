@@ -40,7 +40,7 @@ PACKAGE = "package"
 PREFERENCES = "preferences"
 
 
-def main(call: B, **star) -> N:
+def main(call: B, **star: R) -> N:
     """Run the main program."""
     content = preferences.content()
     argument = f"-i blender {content.argument}"
@@ -265,7 +265,7 @@ class Image(Abstract, Image_):
         self.item = plane
         self.render()
 
-    def update(self, image: S, **star) -> B:
+    def update(self, image: S, **star: R) -> B:
         """"""
         super().update(image, **star)
 
@@ -428,7 +428,7 @@ class Window(Window_):
         return False
 
     @override
-    def __init__(self, hold: R, *, call=None, **star) -> N:
+    def __init__(self, hold: R, *, call=None, **star: R) -> N:
         element = {
             "button": Button,
             "image": Image,

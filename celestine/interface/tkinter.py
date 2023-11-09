@@ -20,7 +20,7 @@ from celestine.window.element import Label as Label_
 class Abstract(Abstract_):
     """"""
 
-    def render(self, item: C, **star) -> N:
+    def render(self, item: C, **star: R) -> N:
         """"""
         self.item = item(self.canvas, **star)
 
@@ -68,7 +68,7 @@ class Image(Abstract, Image_):
             image=self.image,
         )
 
-    def update(self, path: P, **star) -> N:
+    def update(self, path: P, **star: R) -> N:
         """"""
         super().update(path)
         tkinter = self.hold.package.tkinter
@@ -149,7 +149,7 @@ class Window(Window_):
         return False
 
     @override
-    def __init__(self, hold: R, **star) -> N:
+    def __init__(self, hold: R, **star: R) -> N:
         element = {
             "button": Button,
             "image": Image,

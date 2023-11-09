@@ -30,7 +30,7 @@ class Object:
         """"""
         return self.clone(self)
 
-    def __init__(self, **star) -> N:
+    def __init__(self, **star: R) -> N:
         """This does not pass the star parameter to the real object."""
         super().__init__()
 
@@ -320,7 +320,7 @@ class Item(Object):
     hold: R
     name: S  # The key to use to find this in the window dictionary.
 
-    def draw(self, **star) -> N:
+    def draw(self, **star: R) -> N:
         """"""
         if self.hidden:
             return
@@ -328,7 +328,7 @@ class Item(Object):
     def make(self) -> N:
         """"""
 
-    def poke(self, x_dot: I, y_dot: I, **star) -> B:
+    def poke(self, x_dot: I, y_dot: I, **star: R) -> B:
         """"""
         if self.hidden:
             return False
@@ -340,7 +340,7 @@ class Item(Object):
         raise NotImplementedError(area)
 
     def __init__(
-        self, hold: R, canvas: A, name: S, area: Rectangle, **star
+        self, hold: R, canvas: A, name: S, area: Rectangle, **star: R
     ) -> N:
         super().__init__(**star)
         self.area = Rectangle(*area.value)
@@ -372,7 +372,7 @@ class Collection(Object):
         """"""
         self.item[item.name] = item
 
-    def __init__(self, **star) -> N:
+    def __init__(self, **star: R) -> N:
         self.item = {}
         super().__init__(**star)
 

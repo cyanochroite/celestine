@@ -63,7 +63,7 @@ class Abstract:
     def __getattr__(self, name):
         return getattr(self.package, name)
 
-    def __init__(self, hold: R, name: S, pypi: OS = None, **star) -> N:
+    def __init__(self, hold: R, name: S, pypi: OS = None, **star: R) -> N:
         self.hold = hold
         self.name = name
         self.pypi = pypi or name
@@ -98,7 +98,7 @@ class Package:
             message = f"'{PACKAGE}' object has no attribute '{name}'"
             raise AttributeError(message) from error
 
-    def __init__(self, hold: R, **star):
+    def __init__(self, hold: R, **star: R):
         self.dictionary = {}
         argument = load.pathway.argument(PACKAGE)
         for name in argument:

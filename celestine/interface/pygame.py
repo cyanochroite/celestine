@@ -26,7 +26,7 @@ class Abstract(Abstract_):
 class Button(Abstract, Button_):
     """"""
 
-    def draw(self, *, font, **star):
+    def draw(self, *, font, **star: R):
         """"""
 
         text = f"Button{self.data}"
@@ -38,7 +38,7 @@ class Button(Abstract, Button_):
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, *, font, **star):
+    def draw(self, *, font, **star: R):
         """"""
 
         item = font.render(self.data, True, (255, 255, 255))
@@ -48,7 +48,7 @@ class Label(Abstract, Label_):
 class Image(Abstract, Image_):
     """"""
 
-    def draw(self, *, mode="hi", **star):
+    def draw(self, *, mode="hi", **star: R):
         """"""
 
         pillow = self.hold.package.pillow
@@ -88,13 +88,13 @@ class Window(Window_):
     """"""
 
     @override
-    def draw(self, **star) -> N:
+    def draw(self, **star: R) -> N:
         """"""
         pygame = self.hold.package.pygame
 
         self.canvas.fill((0, 0, 0))
 
-        super().draw(font=self.font, **star)
+        super().draw(font=self.font, **star: R)
 
         pygame.display.flip()
 
@@ -175,7 +175,7 @@ class Window(Window_):
         return False
 
     @override
-    def __init__(self, hold: R, **star) -> N:
+    def __init__(self, hold: R, **star: R) -> N:
         element = {
             "button": Button,
             "image": Image,

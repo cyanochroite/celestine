@@ -79,7 +79,7 @@ def run(name: S) -> N:
     package.run()
 
 
-def clean(*, hold: R, **star) -> N:
+def clean(*, hold: R, **star: R) -> N:
     """"""
     # TODO: This is breaking the language files. Find out why.
     # hold.package.pyupgrade.run()
@@ -89,7 +89,7 @@ def clean(*, hold: R, **star) -> N:
     hold.package.black.run()
 
 
-def licence(**star):
+def licence(**star: R):
     """"""
     location = load.pathway.pathway("licence")
     files = load.many.file(location, [], [])
@@ -106,7 +106,7 @@ def licence(**star):
                 document.write(line)
 
 
-def version(**star):
+def version(**star: R):
     """"""
     date = datetime.datetime.now(datetime.UTC)
 

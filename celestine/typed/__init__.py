@@ -1,6 +1,7 @@
 """"""
 
 import importlib
+import typing
 import sys
 from typing import TypeAlias as TA
 
@@ -73,6 +74,11 @@ AI = _module.AI
 override = _module.override
 
 
+class Star(typing.TypedDict):
+    """"""
+
+R = Star
+
 class Hold:
     """"""
 
@@ -103,3 +109,4 @@ class Hold:
 
 
 H = Hold
+T = int

@@ -9,7 +9,7 @@ from celestine.typed import (
 from .main import do_translate
 
 
-def translate(*, hold: R, **star) -> N:
+def translate(*, hold: R, **star: R) -> N:
     """Translate the language files."""
 
     do_translate(hold)

@@ -186,7 +186,7 @@ class Image:
             colors, method, kmeans, palette, dither
         )
 
-    def __init__(self, hold: R, /, image: IMAGE, **star):
+    def __init__(self, hold: R, /, image: IMAGE, **star: R):
         self.hold = hold
         self.image = image
 
@@ -226,7 +226,7 @@ class Package(Abstract):
         result.sort()
         return result
 
-    def __init__(self, hold: R, /, name: S, **star) -> N:
+    def __init__(self, hold: R, /, name: S, **star: R) -> N:
         super().__init__(hold, name, pypi="PIL")
         if self.package:
             setattr(self, "ImageTk", load.package("PIL", "ImageTk"))
