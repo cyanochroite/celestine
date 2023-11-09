@@ -10,19 +10,19 @@ from celestine.typed import (
 )
 
 
-def find_image(ring: R, directory: P) -> LP:
+def find_image(hold: R, directory: P) -> LP:
     """"""
     path = directory
-    include = ring.window.extension()
+    include = hold.window.extension()
     exclude: LS = []
     files = list(file(path, include, exclude))
     return files
 
 
-def setup(*, ring: R, window: A, **star) -> N:
+def setup(*, hold: R, window: A, **star) -> N:
     """"""
-    directory = ring.attribute.directory
-    find = find_image(ring, directory)
+    directory = hold.attribute.directory
+    find = find_image(hold, directory)
     images = iter(find)
 
     grid = window.load("grid")

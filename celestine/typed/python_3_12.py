@@ -1,8 +1,4 @@
-"""
-Define types here.
-
-Generator[YieldType, SendType, ReturnType]
-"""
+""""""
 
 import collections.abc
 import lzma
@@ -17,11 +13,11 @@ type A = typing.Any
 type B = bool
 type C[X] = collections.abc.Callable[..., X]
 type D[X, Y] = typing.Dict[X, Y]
-type E = 0  # ENUM
+type E = 0  # ENUM?
 type F = float
 # Generator[YieldType, SendType, ReturnType]
 type G[X, Y, Z] = collections.abc.Generator[X, Y, Z]
-type H = 0  # HASH
+type H = 0  # HASH?
 type I = int
 type J = object
 # type K = typing.Self  # "Self" is not valid in this context.

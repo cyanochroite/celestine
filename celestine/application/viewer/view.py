@@ -22,7 +22,7 @@ def main(view: View) -> N:
     """"""
     view.new(
         "load",
-        text=view.ring.language.VIEWER_MAIN_BUTTON,
+        text=view.hold.language.VIEWER_MAIN_BUTTON,
         code="setup",
         window=view,
     )

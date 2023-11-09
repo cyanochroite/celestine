@@ -23,7 +23,7 @@ COLORS = 15  # int(255 - 8 / 16)
 class Image:
     """"""
 
-    ring: R
+    hold: R
     image: IMAGE
 
     def brightwing(self):
@@ -32,7 +32,7 @@ class Image:
 
         Make image bright.
         """
-        pillow = self.ring.package.pillow
+        pillow = self.hold.package.pillow
 
         def brighter(pixel):
             invert = (255 - pixel) / 255
@@ -49,13 +49,13 @@ class Image:
 
     @classmethod
     def clone(cls, self) -> K:
-        ring = self.ring
+        hold = self.hold
         image = self.image.copy()
-        return cls(ring, image)
+        return cls(hold, image)
 
     def convert(self, mode: S) -> N:
         """"""
-        pillow = self.ring.package.pillow
+        pillow = self.hold.package.pillow
 
         matrix = None  # Unused default.
         dither = pillow.Image.Dither.FLOYDSTEINBERG
@@ -85,7 +85,7 @@ class Image:
 
     def resize(self, size, box=None):
         """"""
-        pillow = self.ring.package.pillow
+        pillow = self.hold.package.pillow
 
         size_x, size_y = size
 
@@ -118,7 +118,7 @@ class Image:
 
     def scale_to_fit(self, area):
         """"""
-        pillow = self.ring.package.pillow
+        pillow = self.hold.package.pillow
 
         (size_x, size_y) = self.size
         (area_x, area_y) = area
@@ -138,7 +138,7 @@ class Image:
 
     def scale_to_fill(self, area):
         """"""
-        pillow = self.ring.package.pillow
+        pillow = self.hold.package.pillow
 
         (size_x, size_y) = self.size
         (area_x, area_y) = area
@@ -171,7 +171,7 @@ class Image:
 
     def quantize(self):
         """"""
-        pillow = self.ring.package.pillow
+        pillow = self.hold.package.pillow
 
         # Median Cut only works in RGB mode.
         self.convert_to_color()
@@ -186,8 +186,8 @@ class Image:
             colors, method, kmeans, palette, dither
         )
 
-    def __init__(self, ring: R, /, image: IMAGE, **star):
-        self.ring = ring
+    def __init__(self, hold: R, /, image: IMAGE, **star):
+        self.hold = hold
         self.image = image
 
 
@@ -196,7 +196,7 @@ class Package(Abstract):
 
     def open(self, path: P) -> Image:
         """"""
-        pillow = self.ring.package.pillow
+        pillow = self.hold.package.pillow
 
         file = pillow.Image.open(
             fp=path,
@@ -212,12 +212,12 @@ class Package(Abstract):
             colors=256,
         )
 
-        item = Image(self.ring, image)
+        item = Image(self.hold, image)
         return item
 
     def extension(self) -> LS:
         """"""
-        pillow = self.ring.package.pillow
+        pillow = self.hold.package.pillow
 
         dictionary = pillow.Image.registered_extensions()
         items = dictionary.items()
@@ -226,7 +226,7 @@ class Package(Abstract):
         result.sort()
         return result
 
-    def __init__(self, ring: R, /, name: S, **star) -> N:
-        super().__init__(ring, name, pypi="PIL")
+    def __init__(self, hold: R, /, name: S, **star) -> N:
+        super().__init__(hold, name, pypi="PIL")
         if self.package:
             setattr(self, "ImageTk", load.package("PIL", "ImageTk"))

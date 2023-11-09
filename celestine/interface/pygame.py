@@ -51,8 +51,8 @@ class Image(Abstract, Image_):
     def draw(self, *, mode="hi", **star):
         """"""
 
-        pillow = self.ring.package.pillow
-        pygame = self.ring.package.pygame
+        pillow = self.hold.package.pillow
+        pygame = self.hold.package.pygame
 
         # do we call parent or some other function to get this right?
         # maybe call super, which does nothing but set name
@@ -90,7 +90,7 @@ class Window(Window_):
     @override
     def draw(self, **star) -> N:
         """"""
-        pygame = self.ring.package.pygame
+        pygame = self.hold.package.pygame
 
         self.canvas.fill((0, 0, 0))
 
@@ -128,10 +128,10 @@ class Window(Window_):
 
     @override
     def __enter__(self):
-        pygame = self.ring.package.pygame
+        pygame = self.hold.package.pygame
 
         def set_caption():
-            caption = self.ring.language.APPLICATION_TITLE
+            caption = self.hold.language.APPLICATION_TITLE
             pygame.display.set_caption(caption)
 
         def set_font():
@@ -157,10 +157,10 @@ class Window(Window_):
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
 
-        pygame = self.ring.package.pygame
+        pygame = self.hold.package.pygame
 
         while True:
-            self.ring.dequeue()
+            self.hold.dequeue()
             event = pygame.event.wait()
             match event.type:
                 case pygame.QUIT:
@@ -175,13 +175,13 @@ class Window(Window_):
         return False
 
     @override
-    def __init__(self, ring: R, **star) -> N:
+    def __init__(self, hold: R, **star) -> N:
         element = {
             "button": Button,
             "image": Image,
             "label": Label,
         }
         area = Rectangle(0, 0, 1280, 960)
-        canvas = ring.package.pygame.display.set_mode(area.size)
-        super().__init__(ring, canvas, element, area, **star)
+        canvas = hold.package.pygame.display.set_mode(area.size)
+        super().__init__(hold, canvas, element, area, **star)
         self.font = None

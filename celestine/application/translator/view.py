@@ -10,7 +10,7 @@ def main(view: View) -> N:
     with view.zone("main") as line:
         line.new(
             "main_A",
-            text=view.ring.language.TRANSLATOR_MAIN_BUTTON,
+            text=view.hold.language.TRANSLATOR_MAIN_BUTTON,
             code="translate",
         )
 
@@ -24,9 +24,9 @@ def report(view: View) -> N:
 
     line.new(
         "main_action",
-        text=view.ring.language.TRANSLATOR_REPORT_BUTTON,
+        text=view.hold.language.TRANSLATOR_REPORT_BUTTON,
         code="train",
-        page=view.ring,
+        page=view.hold,
     )
 
     for tag, text in train.items():

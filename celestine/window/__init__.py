@@ -18,7 +18,7 @@ from .container import (
 class Window(View):
     """"""
 
-    ring: R
+    hold: R
     page: View
     code: D[S, A]  # function
     view: D[S, View]
@@ -65,7 +65,7 @@ class Window(View):
     def work(self, code, **star):
         """"""
         caller = self.code.get(code)
-        caller(ring=self.ring, **star)
+        caller(hold=self.hold, **star)
         self.draw(**star)
 
     def __enter__(self):
@@ -77,7 +77,7 @@ class Window(View):
         if exc_type:
             raise exc_type
         try:
-            turn_page = self.ring.main
+            turn_page = self.hold.main
             self.page = self.view.get(turn_page)
             self.turn(turn_page)
         except AttributeError as error:
@@ -91,14 +91,14 @@ class Window(View):
     def __getitem__(self, key: S):
         return self.view[key]
 
-    def __init__(self, ring, canvas, element, area, **star):
-        self.ring = ring
+    def __init__(self, hold, canvas, element, area, **star):
+        self.hold = hold
         self.page = None
         self.code = {}
         self.view = {}
 
         super().__init__(
-            self.ring,
+            self.hold,
             canvas,
             "window",
             self,

@@ -43,7 +43,7 @@ class Button(Abstract, Button_):
 
     def make(self) -> N:
         """"""
-        tkinter = self.ring.package.tkinter
+        tkinter = self.hold.package.tkinter
 
         item = tkinter.Button
         self.render(
@@ -58,7 +58,7 @@ class Image(Abstract, Image_):
 
     def make(self) -> N:
         """"""
-        tkinter = self.ring.package.tkinter
+        tkinter = self.hold.package.tkinter
 
         self.image = tkinter.PhotoImage(file=self.path)
 
@@ -71,8 +71,8 @@ class Image(Abstract, Image_):
     def update(self, path: P, **star) -> N:
         """"""
         super().update(path)
-        tkinter = self.ring.package.tkinter
-        pillow = self.ring.package.pillow
+        tkinter = self.hold.package.tkinter
+        pillow = self.hold.package.pillow
 
         if pillow:
             image = pillow.open(self.path)
@@ -91,7 +91,7 @@ class Label(Abstract, Label_):
 
     def make(self) -> N:
         """"""
-        tkinter = self.ring.package.tkinter
+        tkinter = self.hold.package.tkinter
 
         item = tkinter.Label
         self.render(
@@ -109,8 +109,8 @@ class Window(Window_):
     @override
     def extension(self):
         """"""
-        if self.ring.package.pillow:
-            return self.ring.package.pillow.extension()
+        if self.hold.package.pillow:
+            return self.hold.package.pillow.extension()
 
         return [
             ".pbm",
@@ -124,7 +124,7 @@ class Window(Window_):
     @override
     def setup(self, name: S) -> N:
         """"""
-        tkinter = self.ring.package.tkinter
+        tkinter = self.hold.package.tkinter
 
         canvas = tkinter.Frame(
             self.canvas,
@@ -149,7 +149,7 @@ class Window(Window_):
         return False
 
     @override
-    def __init__(self, ring: R, **star) -> N:
+    def __init__(self, hold: R, **star) -> N:
         element = {
             "button": Button,
             "image": Image,
@@ -157,11 +157,11 @@ class Window(Window_):
         }
         area = Rectangle(0, 0, 1280, 1080)
 
-        canvas = ring.package.tkinter.Tk()
-        canvas.title(ring.language.APPLICATION_TITLE)
+        canvas = hold.package.tkinter.Tk()
+        canvas.title(hold.language.APPLICATION_TITLE)
         canvas.geometry("1920x1080")
         canvas.minsize(640, 480)
         canvas.maxsize(3840, 2160)
         canvas.config(bg="blue")
 
-        super().__init__(ring, canvas, element, area, **star)
+        super().__init__(hold, canvas, element, area, **star)

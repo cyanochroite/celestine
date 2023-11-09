@@ -30,7 +30,7 @@ class Button(Abstract, Button_):
 
     def make(self):
         """"""
-        dearpygui = self.ring.package.dearpygui
+        dearpygui = self.hold.package.dearpygui
 
         dearpygui.add_button(
             callback=self.callback,
@@ -58,7 +58,7 @@ class Image(Abstract, Image_):
         photo = image[3]
         """
 
-        dearpygui = self.ring.package.dearpygui
+        dearpygui = self.hold.package.dearpygui
 
         path = str(self.path)
         image = dearpygui.load_image(path)
@@ -83,7 +83,7 @@ class Image(Abstract, Image_):
 
     def update(self, image, **star):
         """"""
-        dearpygui = self.ring.package.dearpygui
+        dearpygui = self.hold.package.dearpygui
         super().update(image, **star)
 
         path = str(self.path)
@@ -102,7 +102,7 @@ class Label(Abstract, Label_):
     def make(self):
         """"""
 
-        dearpygui = self.ring.package.dearpygui
+        dearpygui = self.hold.package.dearpygui
 
         dearpygui.add_text(
             f" {self.data}",  # extra space hack to fix margin error
@@ -133,7 +133,7 @@ class Window(Window_):
 
     @override
     def make(self):
-        dearpygui = self.ring.package.dearpygui
+        dearpygui = self.hold.package.dearpygui
         for name, item in self.item.items():
             with item.canvas:
                 dearpygui.configure_item(item.name, show=False)
@@ -142,14 +142,14 @@ class Window(Window_):
     @override
     def setup(self, name):
         """"""
-        dearpygui = self.ring.package.dearpygui
+        dearpygui = self.hold.package.dearpygui
         canvas = dearpygui.window(tag=name)
         return canvas
 
     @override
     def turn(self, page):
         """"""
-        dearpygui = self.ring.package.dearpygui
+        dearpygui = self.hold.package.dearpygui
 
         dearpygui.hide_item(self.page.name)
 
@@ -163,9 +163,9 @@ class Window(Window_):
     def __enter__(self):
         super().__enter__()
 
-        dearpygui = self.ring.package.dearpygui
+        dearpygui = self.hold.package.dearpygui
 
-        title = self.ring.language.APPLICATION_TITLE
+        title = self.hold.language.APPLICATION_TITLE
         dearpygui.create_context()
         width, height = self.area.origin
         dearpygui.create_viewport(
@@ -191,7 +191,7 @@ class Window(Window_):
     @override
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-        dearpygui = self.ring.package.dearpygui
+        dearpygui = self.hold.package.dearpygui
 
         dearpygui.setup_dearpygui()
         dearpygui.show_viewport(minimized=False, maximized=False)
@@ -200,7 +200,7 @@ class Window(Window_):
         return False
 
     @override
-    def __init__(self, ring: R, **star) -> N:
+    def __init__(self, hold: R, **star) -> N:
         element = {
             "button": Button,
             "image": Image,
@@ -208,5 +208,5 @@ class Window(Window_):
         }
         area = Rectangle(0, 0, 960, 640)
         canvas = None
-        super().__init__(ring, canvas, element, area, **star)
+        super().__init__(hold, canvas, element, area, **star)
         self.tag = "window"

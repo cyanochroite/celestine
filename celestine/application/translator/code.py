@@ -9,10 +9,10 @@ from celestine.typed import (
 from .main import do_translate
 
 
-def translate(*, ring: R, **star) -> N:
+def translate(*, hold: R, **star) -> N:
     """Translate the language files."""
 
-    do_translate(ring)
+    do_translate(hold)
 
 
 def train() -> N:

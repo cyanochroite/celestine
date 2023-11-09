@@ -79,14 +79,14 @@ def run(name: S) -> N:
     package.run()
 
 
-def clean(*, ring: R, **star) -> N:
+def clean(*, hold: R, **star) -> N:
     """"""
     # TODO: This is breaking the language files. Find out why.
-    # ring.package.pyupgrade.run()
-    ring.package.pydocstringformatter.run()
-    ring.package.autoflake.run()
-    ring.package.isort.run()
-    ring.package.black.run()
+    # hold.package.pyupgrade.run()
+    hold.package.pydocstholdformatter.run()
+    hold.package.autoflake.run()
+    hold.package.isort.run()
+    hold.package.black.run()
 
 
 def licence(**star):

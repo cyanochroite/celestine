@@ -6,7 +6,7 @@ from celestine.window.container import View
 
 def one(view: View) -> N:
     """"""
-    language = view.ring.language
+    language = view.hold.language
     with view.zone("one_head") as line:
         line.new("one_title", text=language.DEMO_ONE_TITLE)
         line.new(
@@ -22,7 +22,7 @@ def one(view: View) -> N:
 
 def two(view: View) -> N:
     """"""
-    language = view.ring.language
+    language = view.hold.language
     with view.zone("two_head") as line:
         line.new("two_title", text=language.DEMO_TWO_TITLE)
         line.new(
@@ -38,7 +38,7 @@ def two(view: View) -> N:
 
 def main(view: View) -> N:
     """"""
-    language = view.ring.language
+    language = view.hold.language
     with view.zone("main_head") as line:
         line.new("main_title", text=language.DEMO_MAIN_TITLE)
         line.new(

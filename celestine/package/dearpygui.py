@@ -18,5 +18,5 @@ class Package(Abstract):
         combine = f"{root}"
         return combine
 
-    def __init__(self, ring: R, name: S, **star):
-        super().__init__(ring, name, pypi="dearpygui.dearpygui")
+    def __init__(self, hold: R, name: S, **star):
+        super().__init__(hold, name, pypi="dearpygui.dearpygui")

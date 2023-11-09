@@ -198,10 +198,10 @@ class Abstract(Abstract_):
 class Mouse(Abstract):
     """"""
 
-    def __init__(self, ring: R, collection, mesh) -> N:
+    def __init__(self, hold: R, collection, mesh) -> N:
         self.mesh = mesh.soul
         self.text = "mouse"
-        super().__init__(ring, collection, "mouse")
+        super().__init__(hold, collection, "mouse")
         self.item = mesh
 
     def draw(self) -> N:
@@ -389,7 +389,7 @@ class Window(Window_):
         mesh = data.mesh.make(click, "mouse")
         mesh.location = (0, 0, -1)
 
-        self.mouse = Mouse(self.ring, collection, mesh)
+        self.mouse = Mouse(self.hold, collection, mesh)
         self.mouse.draw()
 
         @classmethod
@@ -421,14 +421,14 @@ class Window(Window_):
             call = getattr(self, self.call)
             call(**self.star)
 
-            self.ring.dequeue()
+            self.hold.dequeue()
             return False
 
         super().__exit__(exc_type, exc_value, traceback)
         return False
 
     @override
-    def __init__(self, ring: R, *, call=None, **star) -> N:
+    def __init__(self, hold: R, *, call=None, **star) -> N:
         element = {
             "button": Button,
             "image": Image,
@@ -436,7 +436,7 @@ class Window(Window_):
         }
         area = Rectangle(0, 0, 20, 20)
         canvas = None
-        super().__init__(ring, canvas, element, area, **star)
+        super().__init__(hold, canvas, element, area, **star)
 
         self.frame = None
         self.mouse = None

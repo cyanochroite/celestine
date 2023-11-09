@@ -26,7 +26,7 @@ PACKAGE = "package"
 class Abstract:
     """"""
 
-    ring: A
+    hold: A
     name: S
     package: M | N
 
@@ -63,8 +63,8 @@ class Abstract:
     def __getattr__(self, name):
         return getattr(self.package, name)
 
-    def __init__(self, ring: R, name: S, pypi: OS = None, **star) -> N:
-        self.ring = ring
+    def __init__(self, hold: R, name: S, pypi: OS = None, **star) -> N:
+        self.hold = hold
         self.name = name
         self.pypi = pypi or name
 
@@ -98,10 +98,10 @@ class Package:
             message = f"'{PACKAGE}' object has no attribute '{name}'"
             raise AttributeError(message) from error
 
-    def __init__(self, ring: R, **star):
+    def __init__(self, hold: R, **star):
         self.dictionary = {}
         argument = load.pathway.argument(PACKAGE)
         for name in argument:
             attribute = load.attribute(PACKAGE, name, "Package")
-            package = attribute(ring, name)
+            package = attribute(hold, name)
             self.dictionary[name] = package

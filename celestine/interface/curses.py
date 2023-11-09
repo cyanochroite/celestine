@@ -128,12 +128,12 @@ class Image(Abstract, Image_):
 
     def render(self, item, **star):
         """"""
-        curses = self.ring.package.curses
+        curses = self.hold.package.curses
 
         (x_dot, y_dot) = self.area.origin
 
-        if not self.ring.package.pillow:
             self.add_string(
+        if not self.hold.package.pillow:
                 x_dot,
                 y_dot,
                 item,
@@ -166,8 +166,8 @@ class Image(Abstract, Image_):
 
     def draw(self, **star):
         """"""
-        curses = self.ring.package.curses
-        pillow = self.ring.package.pillow
+        curses = self.hold.package.curses
+        pillow = self.hold.package.pillow
 
         if not pillow:
             self.render(self.path.name, **star)
@@ -223,7 +223,7 @@ class Window(window):
     @override
     def draw(self, **star):
         """"""
-        curses = self.ring.package.curses
+        curses = self.hold.package.curses
 
         # Do normal draw stuff.
         # self.setup(self.page)
@@ -248,22 +248,22 @@ class Window(window):
     @override
     def extension(self):
         """"""
-        if self.ring.package.pillow:
-            return self.ring.package.pillow.extension()
+        if self.hold.package.pillow:
+            return self.hold.package.pillow.extension()
 
         return []
 
     @override
     def setup(self, name):
         """"""
-        curses = self.ring.package.curses
+        curses = self.hold.package.curses
         return curses.window(*self.area.value)
 
     @override
     def __enter__(self):
         super().__enter__()
 
-        curses = self.ring.package.curses
+        curses = self.hold.package.curses
 
         self.stdscr = curses.initscr()
         curses.noecho()
@@ -279,11 +279,11 @@ class Window(window):
 
         header_box = (0, 0, size_x, 1)
         header = curses.subwindow(self.background, *header_box)
-        header.addstr(0, 1, self.ring.language.APPLICATION_TITLE)
+        header.addstr(0, 1, self.hold.language.APPLICATION_TITLE)
 
         footer_box = (0, size_y - 1, size_x, 1)
         footer = curses.subwindow(self.background, *footer_box)
-        footer.addstr(0, 1, self.ring.language.CURSES_EXIT)
+        footer.addstr(0, 1, self.hold.language.CURSES_EXIT)
 
         #
         area = Rectangle(1, 1, size_x - 2, size_y - 2)
@@ -295,10 +295,10 @@ class Window(window):
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
 
-        curses = self.ring.package.curses
+        curses = self.hold.package.curses
 
         while True:
-            self.ring.dequeue()
+            self.hold.dequeue()
             event = self.stdscr.getch()
             match event:
                 case 258 | 259 | 260 | 261 as key:
@@ -331,14 +331,14 @@ class Window(window):
         return False
 
     @override
-    def __init__(self, ring: R, **star) -> N:
+    def __init__(self, hold: R, **star) -> N:
         element = {
             "button": Button,
             "image": Image,
             "label": Label,
         }
 
-        curses = ring.package.curses
+        curses = hold.package.curses
 
         self.stdscr = curses.initscr()
         curses.noecho()
@@ -354,6 +354,6 @@ class Window(window):
 
         area = Rectangle(1, 1, size_x - 2, size_y - 2)
 
-        super().__init__(ring, self.background, element, area, **star)
+        super().__init__(hold, self.background, element, area, **star)
         self.cord_x = 0.5
         self.cord_y = 0.5

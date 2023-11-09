@@ -317,7 +317,7 @@ class Item(Object):
     area: Rectangle
     canvas: A
     hidden: B
-    ring: R
+    hold: R
     name: S  # The key to use to find this in the window dictionary.
 
     def draw(self, **star) -> N:
@@ -340,13 +340,13 @@ class Item(Object):
         raise NotImplementedError(area)
 
     def __init__(
-        self, ring: R, canvas: A, name: S, area: Rectangle, **star
+        self, hold: R, canvas: A, name: S, area: Rectangle, **star
     ) -> N:
         super().__init__(**star)
         self.area = Rectangle(*area.value)
         self.canvas = canvas
         self.hidden = False
-        self.ring = ring
+        self.hold = hold
         self.name = name
 
 

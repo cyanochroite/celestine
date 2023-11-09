@@ -31,9 +31,9 @@ class Abstract(Item):
         """"""
         self.area.copy(area)
 
-    def __init__(self, ring: R, canvas: A, name: S, **star) -> N:
+    def __init__(self, hold: R, canvas: A, name: S, **star) -> N:
         area = Rectangle(0, 0, 0, 0)
-        super().__init__(ring, canvas, name, area, **star)
+        super().__init__(hold, canvas, name, area, **star)
         self.item = None
 
 
@@ -43,13 +43,13 @@ class Button(Abstract):
     def poke(self, x_dot: I, y_dot: I, **star) -> B:
         """"""
         if super().poke(x_dot, y_dot, **star):
-            self.ring.queue(self.call, self.action, self.argument)
+            self.hold.queue(self.call, self.action, self.argument)
             return True
         return False
 
     def __init__(
         self,
-        ring: R,
+        hold: R,
         canvas,
         name,
         text,
@@ -63,7 +63,7 @@ class Button(Abstract):
         self.argument = argument
         self.call = call
         self.data = text
-        super().__init__(ring, canvas, name, **star)
+        super().__init__(hold, canvas, name, **star)
 
 
 class Unit:
@@ -176,11 +176,11 @@ class Image(Abstract):
 
         return (best_x, best_y)
 
-    def __init__(self, ring: R, canvas, name, path, **star):
+    def __init__(self, hold: R, canvas, name, path, **star):
         self.path = path
         self.image = None
 
-        super().__init__(ring, canvas, name, **star)
+        super().__init__(hold, canvas, name, **star)
 
         minimum = 2**6
         maximum = 2**16
@@ -238,6 +238,6 @@ class Image(Abstract):
 class Label(Abstract):
     """"""
 
-    def __init__(self, ring: R, canvas, name, text, **star):
+    def __init__(self, hold: R, canvas, name, text, **star):
         self.data = text
-        super().__init__(ring, canvas, name, **star)
+        super().__init__(hold, canvas, name, **star)
