@@ -63,7 +63,9 @@ class Abstract:
     def __getattr__(self, name):
         return getattr(self.package, name)
 
-    def __init__(self, hold: R, name: S, pypi: OS = None, **star: R) -> N:
+    def __init__(
+        self, hold: R, name: S, pypi: OS = None, **star: R
+    ) -> N:
         self.hold = hold
         self.name = name
         self.pypi = pypi or name

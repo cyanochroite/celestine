@@ -94,7 +94,7 @@ class Window(Window_):
 
         self.canvas.fill((0, 0, 0))
 
-        super().draw(font=self.font, **star: R)
+        super().draw(font=self.font, **star)
 
         pygame.display.flip()
 

@@ -1,5 +1,7 @@
 """"""
 
+from celestine.typed import R
+
 
 def cow(*, say, hold, **star: R):
     """"""

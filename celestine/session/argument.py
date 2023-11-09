@@ -4,6 +4,7 @@ from celestine.typed import (
     LS,
     B,
     N,
+    R,
     S,
 )
 from celestine.unicode import (

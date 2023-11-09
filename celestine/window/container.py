@@ -9,6 +9,7 @@ from celestine.typed import (
     I,
     K,
     N,
+    R,
     S,
 )
 from celestine.window.collection import (
@@ -92,7 +93,7 @@ class View(Item, Collection):
                         self.canvas,
                         name,
                         path,
-                        **star: R,
+                        **star,
                     )
                 )
             else:
@@ -102,7 +103,7 @@ class View(Item, Collection):
                         self.canvas,
                         name,
                         text,
-                        **star: R,
+                        **star,
                     )
                 )
         else:

@@ -1,7 +1,7 @@
 """"""
 
-
 from celestine.package import Abstract
+from celestine.typed import R
 
 
 class Package(Abstract):

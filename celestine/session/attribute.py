@@ -12,6 +12,7 @@ from celestine.typed import (
     AT,
     LS,
     N,
+    R,
     S,
 )
 

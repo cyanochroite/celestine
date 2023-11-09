@@ -1,5 +1,7 @@
 """More routines for operating on iterables, beyond itertools."""
 
+from celestine.typed import R
+
 from . import Abstract
 
 
