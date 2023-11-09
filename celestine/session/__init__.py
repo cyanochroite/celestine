@@ -11,8 +11,8 @@ from celestine.package import Package
 from celestine.typed import (
     LS,
     B,
+    Hold,
     R,
-    Ring,
 )
 
 from .magic import Magic
@@ -38,7 +38,7 @@ def begin_session(argument_list: LS, exit_on_error: B) -> R:
 
     # Save values to session object.
     application = magic.core.application.name
-    session = Ring()
+    session = Hold()
 
     session.application = load.module(APPLICATION, session1.application)
 

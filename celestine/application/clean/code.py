@@ -83,7 +83,7 @@ def clean(*, hold: R, **star) -> N:
     """"""
     # TODO: This is breaking the language files. Find out why.
     # hold.package.pyupgrade.run()
-    hold.package.pydocstholdformatter.run()
+    hold.package.pydocstringformatter.run()
     hold.package.autoflake.run()
     hold.package.isort.run()
     hold.package.black.run()

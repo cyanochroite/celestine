@@ -5,37 +5,45 @@ import lzma
 import pathlib
 import types
 import typing
+from collections.abc import Callable as C
+from collections.abc import Generator as G
+from typing import Dict as D
+from typing import List as L
+from typing import Optional as O
 from typing import Self as K
 from typing import Tuple as T
+from typing import Type as TYPE
 from typing import override
+
+type Argument = typing.Any  # Import the real one.
 
 type A = typing.Any
 type B = bool
-type C[X] = collections.abc.Callable[..., X]
-type D[X, Y] = typing.Dict[X, Y]
-type E = 0  # ENUM?
+# type C = collections.abc.Callable
+# type D = typing.Dict
+type E = typing.Any  # Unused.  # ENUM?
 type F = float
 # Generator[YieldType, SendType, ReturnType]
-type G[X, Y, Z] = collections.abc.Generator[X, Y, Z]
-type H = 0  # HASH?
+# type G = collections.abc.Generator
+# type H = Hold
 type I = int
 type J = object
-# type K = typing.Self  # "Self" is not valid in this context.
-type L[X] = typing.List[X]
+# type K = typing.Self
+# type L = typing.List
 type M = types.ModuleType
 type N = None
-type O[X] = typing.Optional[X]
+# type O = typing.Optional
 type P = pathlib.Path
-type Q = 0  # Queue
-type R = 0  # **star
+type Q = typing.Any  # Unused.  # Queue?
+type R = typing.Any  # **star
 type S = str
-# type T = typing.Tuple  # "Tuple[Unknown, ...]" is already specialized.
-type U = 0
-type V = 0
-type W = 0
-type X = typing.Any  # Using variable "X" before assignment.
-type Y = typing.Any  # Using variable "Y" before assignment.
-type Z = typing.Any  # Using variable "Z" before assignment.
+# type T = typing.Tuple
+type U = typing.Any  # Unused.
+type V = typing.Any  # Unused.
+type W = typing.Any  # Unused.
+type X = typing.Any  # Unused.
+type Y = typing.Any  # Unused.
+type Z = typing.Any  # Unused.
 
 type GB = G[B, N, N]
 type GF = G[F, N, N]
@@ -60,7 +68,7 @@ type FN = C[[N], N]
 type AXIS = G[T[I, I], N, N]
 type FILE = typing.IO[A]
 type AT = D[S, A]
-type TYPE[X] = typing.Type
+# type TYPE[X] = typing.Type
 type IMAGE = A
 type APD = D[A, A]
 type LZMA = lzma.LZMAFile
@@ -71,7 +79,7 @@ type AD = D[S, Argument]  # session.argument
 type AI = collections.abc.Iterable[T[S, Argument]]  # session.argument
 
 
-class Ring:
+class Hold:
     """"""
 
     application: M
@@ -84,9 +92,9 @@ class Ring:
     view: M
     window: M
 
-    _queue: L[T[C[N], A, A]]
+    _queue: L[T[C[..., N], A, A]]
 
-    def queue(self, call: C[N], action: A, argument: A) -> N:
+    def queue(self, call: C[..., N], action: A, argument: A) -> N:
         """Add to event queue and call function at end of update."""
         self._queue.append((call, action, argument))
 
@@ -100,7 +108,7 @@ class Ring:
         self._queue = []
 
 
-R = Ring  # noqa: F401 pylint: disable=W0611
+H = Hold  # noqa: F401 pylint: disable=W0611
 
 
 class Fix:
@@ -115,7 +123,10 @@ class ImportNotUsed(Fix):
 
     @override
     def override(self) -> N:
-        return override
+        print(override)
 
     def self(self) -> K:
         return self
+
+    def type_(self) -> TYPE[int]:
+        return type(0)

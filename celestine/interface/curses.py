@@ -132,8 +132,8 @@ class Image(Abstract, Image_):
 
         (x_dot, y_dot) = self.area.origin
 
-            self.add_string(
         if not self.hold.package.pillow:
+            self.add_string(
                 x_dot,
                 y_dot,
                 item,

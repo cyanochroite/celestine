@@ -71,11 +71,9 @@ AD = _module.AD
 AI = _module.AI
 
 override = _module.override
-Ring = _module.Ring
-R = _module.R
 
 
-class Ring:
+class Hold:
     """"""
 
     application: M
@@ -88,9 +86,9 @@ class Ring:
     view: M
     window: M
 
-    _queue: L[T[C[N], A, A]]
+    _queue: L[T[C[..., N], A, A]]
 
-    def queue(self, call: C[N], action: A, argument: A) -> N:
+    def queue(self, call: C[..., N], action: A, argument: A) -> N:
         """Add to event queue and call function at end of update."""
         self._queue.append((call, action, argument))
 
@@ -104,4 +102,4 @@ class Ring:
         self._queue = []
 
 
-R = Ring
+H = Hold

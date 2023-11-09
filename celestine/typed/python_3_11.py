@@ -9,32 +9,39 @@ import lzma
 import pathlib
 import types
 import typing
+from collections.abc import Callable as C
+from collections.abc import Generator as G
+from typing import Dict as D
+from typing import List as L
+from typing import Optional as O
 from typing import Self as K
+from typing import Tuple as T
+from typing import Type as TYPE
 from typing import TypeAlias as TA
 
 A: TA = typing.Any
 B: TA = bool
-C: TA = collections.abc.Callable
-D: TA = typing.Dict
-E: TA = 0
+# C: TA = collections.abc.Callable
+# D: TA = typing.Dict
+E: TA = typing.Any
 F: TA = float
-G: TA = collections.abc.Generator
-H: TA = 0
+# G: TA = collections.abc.Generator
+# H: TA = Hold
 I: TA = int
 J: TA = object
 # K: TA = typing.Self  # "Self" is not valid in this context.
-L: TA = typing.List
+# L: TA = typing.List
 M: TA = types.ModuleType
 N: TA = None
-O: TA = typing.Optional
+# O: TA = typing.Optional
 P: TA = pathlib.Path
-Q: TA = 0
-R: TA = 0
+Q: TA = typing.Any
+R: TA = typing.Any
 S: TA = str
-T: TA = typing.Tuple
-U: TA = 0
-V: TA = 0
-W: TA = 0
+# T: TA = typing.Tuple
+U: TA = typing.Any
+V: TA = typing.Any
+W: TA = typing.Any
 X: TA = typing.Any
 Y: TA = typing.Any
 Z: TA = typing.Any
@@ -62,7 +69,7 @@ FN: TA = C[[N], N]
 AXIS: TA = G[T[I, I], N, N]
 FILE: TA = typing.IO[A]
 AT: TA = D[S, A]
-TYPE: TA = typing.Type
+# TYPE: TA = typing.Type
 IMAGE: TA = A
 APD: TA = D[A, A]
 LZMA: TA = lzma.LZMAFile
@@ -73,14 +80,11 @@ AD: TA = D[S, A]
 AI: TA = collections.abc.Iterable[T[S, A]]
 
 
-def override(function):
+def override(function: A) -> A:
     return function
 
 
-SELF: TA = A
-
-
-class Ring:
+class Hold:
     """"""
 
     application: M
@@ -93,9 +97,9 @@ class Ring:
     view: M
     window: M
 
-    _queue: L[T[C[N], A, A]]
+    _queue: L[T[C[..., N], A, A]]
 
-    def queue(self, call: C[N], action: A, argument: A) -> N:
+    def queue(self, call: C[..., N], action: A, argument: A) -> N:
         """Add to event queue and call function at end of update."""
         self._queue.append((call, action, argument))
 
@@ -109,7 +113,7 @@ class Ring:
         self._queue = []
 
 
-R = Ring  # noqa: F401 pylint: disable=W0611
+H = Hold  # noqa: F401 pylint: disable=W0611
 
 
 class ImportNotUsed:
@@ -117,3 +121,6 @@ class ImportNotUsed:
 
     def self(self) -> K:
         return self
+
+    def type_(self) -> TYPE[int]:
+        return type(0)
