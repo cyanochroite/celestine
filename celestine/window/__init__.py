@@ -8,8 +8,7 @@ from celestine.typed import (
     R,
     S,
 )
-
-from .container import (
+from celestine.window.container import (
     View,
     Zone,
 )

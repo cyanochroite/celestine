@@ -1,11 +1,12 @@
 """"""
 
-from typing import TypeAlias as TA
 
 from celestine.typed import (
+    GF,
     A,
     B,
     D,
+    F,
     G,
     I,
     K,
@@ -13,9 +14,8 @@ from celestine.typed import (
     R,
     S,
     T,
+    override,
 )
-
-N: TA = None
 
 
 class Object:
@@ -33,20 +33,6 @@ class Object:
     def __init__(self, **star: R) -> N:
         """This does not pass the star parameter to the real object."""
         super().__init__()
-
-
-# TODO install windows-curses for python 3.12
-
-
-from celestine.typed import (
-    GF,
-    B,
-    F,
-    K,
-    N,
-    S,
-    override,
-)
 
 
 class Point:
@@ -264,7 +250,7 @@ class Grid(Plane):
 
     @override
     def __init__(self, one: Line, two: Line) -> N:
-        return super().__init__(one.quantize(), two.quantize())
+        super().__init__(one.quantize(), two.quantize())
 
 
 class Rectangle:

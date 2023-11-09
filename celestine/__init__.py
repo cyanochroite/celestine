@@ -64,3 +64,9 @@ def unregister() -> N:
     this is called when the add-on is disabled.
     """
     load.redirect(INTERFACE, BLENDER, UNREGISTER)
+
+
+# TODO
+# install windows-curses for python 3.12
+# make language of hold an official type
+# split up pyproject.toml so flake8 and friends have config files

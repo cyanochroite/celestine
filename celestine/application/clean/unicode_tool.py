@@ -7,14 +7,13 @@ Was run from the project root.
 import os
 import sys
 
-sys.path[0] = os.path.dirname(sys.path[0])
-
-
 from celestine import load
 from celestine.file import (
     module_save,
     text_load,
 )
+
+sys.path[0] = os.path.dirname(sys.path[0])
 
 
 def work(document):
