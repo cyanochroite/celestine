@@ -7,17 +7,20 @@ from celestine.typed import (
     N,
     R,
     S,
+    K,
+    H,
 )
 from celestine.window.container import (
     View,
     Zone,
+    Rectangle,
 )
 
 
 class Window(View):
     """"""
 
-    hold: R
+    hold: H
     page: View
     code: D[S, A]  # function
     view: D[S, View]
@@ -67,7 +70,7 @@ class Window(View):
         caller(hold=self.hold, **star)
         self.draw(**star)
 
-    def __enter__(self):
+    def __enter__(self) -> K:
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -90,9 +93,9 @@ class Window(View):
     def __getitem__(self, key: S):
         return self.view[key]
 
-    def __init__(self, hold, canvas, element, area, **star: R):
+    def __init__(self, hold: H, canvas, element, area: Rectangle, **star: R):
         self.hold = hold
-        self.page = None
+        self.page = self
         self.code = {}
         self.view = {}
 

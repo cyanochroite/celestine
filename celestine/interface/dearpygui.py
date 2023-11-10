@@ -95,6 +95,50 @@ class Image(Abstract, Image_):
 
         dearpygui.set_value(self.name, photo)
 
+    def update(self, image, **star: R):
+        """"""
+        super().update(image, **star)
+
+        dearpygui = self.hold.package.dearpygui
+        pillow = self.hold.package.pillow
+
+        import more_itertools
+        photo: list[float] = []
+
+        if pillow:
+            image = pillow.open(self.path)
+            # size = self.resize(image.size)
+            image.resize(self.area.size)
+
+            image.resize((128, 128))
+            print(image.size)
+            photo = image.getdata()
+            photo = more_itertools.flatten(photo)
+            photo = list(map(lambda pixel: float(pixel / 255), photo))
+            for item in photo:
+                pass
+
+        else:
+            path = str(self.path)
+            image = dearpygui.load_image(path)
+            # width = image[0]
+            # height = image[1]
+            # channels = image[2]
+            photo = image[3]
+            # Unable to figure out how to avoid crashing application.
+            # So just paint a boring blue image instead.
+            photo = []
+            width, height = self.area.size
+            length = width * height
+            for _ in range(length):
+                photo.append(0)
+                photo.append(0.25)
+                photo.append(0.5)
+                photo.append(1)
+
+        dearpygui.set_value(self.name, photo)
+
+
 
 class Label(Abstract, Label_):
     """"""
@@ -167,7 +211,7 @@ class Window(Window_):
 
         title = self.hold.language.APPLICATION_TITLE
         dearpygui.create_context()
-        width, height = self.area.origin
+        width, height = self.area.size
         dearpygui.create_viewport(
             title=title,
             small_icon="celestine_small.ico",
@@ -206,7 +250,7 @@ class Window(Window_):
             "image": Image,
             "label": Label,
         }
-        area = Rectangle(0, 0, 960, 640)
+        area = Rectangle(0, 0, 1920, 1080)
         canvas = None
         super().__init__(hold, canvas, element, area, **star)
         self.tag = "window"

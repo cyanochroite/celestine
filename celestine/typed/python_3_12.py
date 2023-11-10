@@ -111,6 +111,10 @@ class Hold:
 H = Hold  # noqa: F401 pylint: disable=W0611
 
 
+class Star(typing.TypedDict):
+    """"""
+
+
 class Fix:
     """"""
 

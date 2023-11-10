@@ -2,7 +2,6 @@
 
 import importlib
 import sys
-import typing
 from typing import TypeAlias as TA
 
 _version = sys.version.split(".")
@@ -73,41 +72,4 @@ AI = _module.AI
 
 override = _module.override
 
-
-class Star(typing.TypedDict):
-    """"""
-
-
-R = Star
-
-
-class Hold:
-    """"""
-
-    application: M
-    attribute: LS
-    code: M
-    interface: M
-    language: M
-    main: S
-    package: M
-    view: M
-    window: M
-
-    _queue: L[T[C[..., N], A, A]]
-
-    def queue(self, call: C[..., N], action: A, argument: A) -> N:
-        """Add to event queue and call function at end of update."""
-        self._queue.append((call, action, argument))
-
-    def dequeue(self) -> N:
-        """"""
-        for call, action, argument in self._queue:
-            call(action, **argument)
-        self._queue = []
-
-    def __init__(self) -> N:
-        self._queue = []
-
-
-H = Hold
+Hold = _module.Hold

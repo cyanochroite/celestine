@@ -185,7 +185,7 @@ class View(Item, Collection):
             ),
         )
 
-    def __enter__(self) -> N:
+    def __enter__(self) -> K:
         return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> B:
