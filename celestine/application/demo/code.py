@@ -1,6 +1,11 @@
 """"""
 
-from celestine.typed import S, H, R, N
+from celestine.typed import (
+    H,
+    N,
+    R,
+    S,
+)
 
 
 def cow(*, say: S, hold: H, **star: R) -> N:

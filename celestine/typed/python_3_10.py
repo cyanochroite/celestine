@@ -86,7 +86,6 @@ def override(function: A) -> A:
 SELF: TA = A
 
 
-
 class Star(typing.TypedDict):
     """"""
 

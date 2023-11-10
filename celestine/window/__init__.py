@@ -4,16 +4,16 @@ from celestine.typed import (
     LS,
     A,
     D,
+    H,
+    K,
     N,
     R,
     S,
-    K,
-    H,
 )
 from celestine.window.container import (
+    Rectangle,
     View,
     Zone,
-    Rectangle,
 )
 
 
@@ -93,7 +93,9 @@ class Window(View):
     def __getitem__(self, key: S):
         return self.view[key]
 
-    def __init__(self, hold: H, canvas, element, area: Rectangle, **star: R):
+    def __init__(
+        self, hold: H, canvas, element, area: Rectangle, **star: R
+    ):
         self.hold = hold
         self.page = self
         self.code = {}

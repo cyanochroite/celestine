@@ -1,7 +1,9 @@
 """"""
 
 from celestine.typed import (
+    LF,
     N,
+    P,
     R,
     override,
 )
@@ -60,12 +62,8 @@ class Image(Abstract, Image_):
 
         dearpygui = self.hold.package.dearpygui
 
-        path = str(self.path)
-        image = dearpygui.load_image(path)
-        width = image[0]
-        height = image[1]
-        # channels = image[2]
-        photo = image[3]
+        photo = self.load()
+        width, height = self.area.size
 
         with dearpygui.texture_registry(show=False):
             dearpygui.add_dynamic_texture(
@@ -81,53 +79,28 @@ class Image(Abstract, Image_):
             pos=self.area.origin,
         )
 
-    def update(self, image, **star: R):
+    def load(self) -> LF:
         """"""
         dearpygui = self.hold.package.dearpygui
-        super().update(image, **star)
-
-        path = str(self.path)
-        image = dearpygui.load_image(path)
-        # width = image[0]
-        # height = image[1]
-        # channels = image[2]
-        photo = image[3]
-
-        dearpygui.set_value(self.name, photo)
-
-    def update(self, image, **star: R):
-        """"""
-        super().update(image, **star)
-
-        dearpygui = self.hold.package.dearpygui
+        itertools = self.hold.package.itertools
         pillow = self.hold.package.pillow
 
-        import more_itertools
-        photo: list[float] = []
+        photo: LF = []
 
         if pillow:
             image = pillow.open(self.path)
-            # size = self.resize(image.size)
             image.resize(self.area.size)
-
-            image.resize((128, 128))
-            print(image.size)
-            photo = image.getdata()
-            photo = more_itertools.flatten(photo)
-            photo = list(map(lambda pixel: float(pixel / 255), photo))
-            for item in photo:
-                pass
-
+            data = image.getdata()
+            flat = itertools.flatten(data)
+            photo = list(map(lambda pixel: float(pixel / 255), flat))
         else:
-            path = str(self.path)
-            image = dearpygui.load_image(path)
+            image = dearpygui.load_image(self.path)
             # width = image[0]
             # height = image[1]
             # channels = image[2]
             photo = image[3]
             # Unable to figure out how to avoid crashing application.
             # So just paint a boring blue image instead.
-            photo = []
             width, height = self.area.size
             length = width * height
             for _ in range(length):
@@ -135,9 +108,17 @@ class Image(Abstract, Image_):
                 photo.append(0.25)
                 photo.append(0.5)
                 photo.append(1)
+        return photo
+
+    @override
+    def update(self, path: P, **star: R) -> N:
+        """"""
+        super().update(path, **star)
+
+        dearpygui = self.hold.package.dearpygui
+        photo: list[float] = self.load()
 
         dearpygui.set_value(self.name, photo)
-
 
 
 class Label(Abstract, Label_):
@@ -178,7 +159,7 @@ class Window(Window_):
     @override
     def make(self):
         dearpygui = self.hold.package.dearpygui
-        for name, item in self.item.items():
+        for _, item in self.item.items():
             with item.canvas:
                 dearpygui.configure_item(item.name, show=False)
                 item.make()

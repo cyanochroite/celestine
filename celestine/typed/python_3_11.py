@@ -84,7 +84,6 @@ def override(function: A) -> A:
     return function
 
 
-
 class Star(typing.TypedDict):
     """"""
 

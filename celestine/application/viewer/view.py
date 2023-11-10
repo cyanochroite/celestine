@@ -10,8 +10,6 @@ from celestine.window.container import (
 )
 
 NULL = load.pathway.asset("null.png")
-NULL = load.pathway.asset("32.png")
-NULL = load.pathway.asset("128.png")
 
 
 def picture(view: View) -> N:

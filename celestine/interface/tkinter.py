@@ -68,6 +68,7 @@ class Image(Abstract, Image_):
             image=self.image,
         )
 
+    @override
     def update(self, path: P, **star: R) -> N:
         """"""
         super().update(path)
