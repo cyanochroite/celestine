@@ -179,7 +179,6 @@ class View(Item, Collection):
                 name,
                 self.window,
                 self.element,
-                self.area,
                 mode=mode,
                 **star,
             ),
@@ -198,7 +197,6 @@ class View(Item, Collection):
         name,
         window,
         element,
-        area,
         *,
         mode=Zone.NONE,
         row=0,
@@ -214,7 +212,7 @@ class View(Item, Collection):
         self._image = element["image"]
         self._label = element["label"]
 
-        super().__init__(hold, canvas, name, area, **star)
+        super().__init__(hold, canvas, name, **star)
 
         self.width = col
         self.height = row
@@ -223,4 +221,4 @@ class View(Item, Collection):
         for range_y in range(row):
             for range_x in range(col):
                 name = f"{self.name}_{range_x}-{range_y}"
-                self.item[name] = Item(hold, self.canvas, name, area)
+                self.item[name] = Item(hold, self.canvas, name)

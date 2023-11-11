@@ -183,5 +183,6 @@ class Window(Window_):
         }
         area = Rectangle(0, 0, 1280, 960)
         canvas = hold.package.pygame.display.set_mode(area.size)
-        super().__init__(hold, canvas, element, area, **star)
+        super().__init__(hold, canvas, element, **star)
+        self.area = area
         self.font = None

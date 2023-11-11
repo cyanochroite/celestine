@@ -352,8 +352,7 @@ class Window(window):
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
 
-        area = Rectangle(1, 1, size_x - 2, size_y - 2)
-
-        super().__init__(hold, self.background, element, area, **star)
+        super().__init__(hold, self.background, element, **star)
+        self.area = Rectangle(1, 1, size_x - 2, size_y - 2)
         self.cord_x = 0.5
         self.cord_y = 0.5

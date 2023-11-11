@@ -325,11 +325,9 @@ class Item(Object):
         """"""
         raise NotImplementedError(area)
 
-    def __init__(
-        self, hold: R, canvas: A, name: S, area: Rectangle, **star: R
-    ) -> N:
+    def __init__(self, hold: R, canvas: A, name: S, **star: R) -> N:
         super().__init__(**star)
-        self.area = Rectangle(*area.value)
+        self.area = Rectangle(0, 0, 0, 0)
         self.canvas = canvas
         self.hidden = False
         self.hold = hold

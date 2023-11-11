@@ -32,8 +32,7 @@ class Abstract(Item):
         self.area.copy(area)
 
     def __init__(self, hold: R, canvas: A, name: S, **star: R) -> N:
-        area = Rectangle(0, 0, 0, 0)
-        super().__init__(hold, canvas, name, area, **star)
+        super().__init__(hold, canvas, name, **star)
         self.item = None
 
 

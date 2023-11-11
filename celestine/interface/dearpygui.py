@@ -231,7 +231,7 @@ class Window(Window_):
             "image": Image,
             "label": Label,
         }
-        area = Rectangle(0, 0, 1920, 1080)
         canvas = None
-        super().__init__(hold, canvas, element, area, **star)
+        super().__init__(hold, canvas, element, **star)
+        self.area = Rectangle(0, 0, 1920, 1080)
         self.tag = "window"

@@ -93,9 +93,7 @@ class Window(View):
     def __getitem__(self, key: S):
         return self.view[key]
 
-    def __init__(
-        self, hold: H, canvas, element, area: Rectangle, **star: R
-    ):
+    def __init__(self, hold: H, canvas, element, **star: R) -> N:
         self.hold = hold
         self.page = self
         self.code = {}
@@ -107,7 +105,6 @@ class Window(View):
             "window",
             self,
             element,
-            area,
         )
 
     def __setitem__(self, key: S, value: A):

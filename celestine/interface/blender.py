@@ -434,9 +434,9 @@ class Window(Window_):
             "image": Image,
             "label": Label,
         }
-        area = Rectangle(0, 0, 20, 20)
         canvas = None
-        super().__init__(hold, canvas, element, area, **star)
+        super().__init__(hold, canvas, element, **star)
+        self.area = Rectangle(0, 0, 20, 20)
 
         self.frame = None
         self.mouse = None

@@ -156,7 +156,6 @@ class Window(Window_):
             "image": Image,
             "label": Label,
         }
-        area = Rectangle(0, 0, 1280, 1080)
 
         canvas = hold.package.tkinter.Tk()
         canvas.title(hold.language.APPLICATION_TITLE)
@@ -165,4 +164,5 @@ class Window(Window_):
         canvas.maxsize(3840, 2160)
         canvas.config(bg="blue")
 
-        super().__init__(hold, canvas, element, area, **star)
+        super().__init__(hold, canvas, element, **star)
+        self.area = Rectangle(0, 0, 1280, 1080)
