@@ -16,7 +16,8 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Item,
-    Rectangle,
+    Plane,
+    Point,
 )
 
 
@@ -27,9 +28,9 @@ class Abstract(Item):
 
     # TODO combine abstract and container into item clas
 
-    def spot(self, area: Rectangle) -> N:
+    def spot(self, area: Plane) -> N:
         """"""
-        self.area.copy(area)
+        self.area = area.copy()
 
     def __init__(self, hold: R, canvas: A, name: S, **star: R) -> N:
         super().__init__(hold, canvas, name, **star)
@@ -39,12 +40,9 @@ class Abstract(Item):
 class Button(Abstract):
     """"""
 
-    def poke(self, x_dot: I, y_dot: I, **star: R) -> B:
+    def click_action(self) -> N:
         """"""
-        if super().poke(x_dot, y_dot, **star):
-            self.hold.queue(self.call, self.action, self.argument)
-            return True
-        return False
+        self.hold.queue(self.call, self.action, self.argument)
 
     def __init__(
         self,
@@ -97,7 +95,7 @@ class Unit:
 
 
 class Picture:
-    def scale_to_any(self, frame: Rectangle, crop=False):
+    def scale_to_any(self, frame: Plane, crop=False):
         """"""
         (size_x, size_y) = self.size
         (area_x, area_y) = area

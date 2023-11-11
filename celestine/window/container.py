@@ -15,7 +15,9 @@ from celestine.typed import (
 from celestine.window.collection import (
     Collection,
     Item,
-    Rectangle,
+    Plane,
+    Line,
+    Point,
 )
 
 
@@ -120,19 +122,16 @@ class View(Item, Collection):
                 )
             )
 
-    def poke(self, x_dot: I, y_dot: I, **star: R) -> B:
-        """"""
+    def click(self, point: Point) -> N:
         if self.hidden:
-            return False
+            return
 
-        result = False
         for _, item in self.item.items():
-            result |= item.poke(x_dot, y_dot, **star)
-        return result
+            item.click(point)
 
-    def spot(self, area: Rectangle, **star: R) -> N:
+    def spot(self, area: Plane, **star: R) -> N:
         """"""
-        self.area.copy(area)
+        self.area = area.copy()
         length = max(1, len(self.item))
 
         match self.mode:
@@ -161,12 +160,18 @@ class View(Item, Collection):
             index_y = min(index // partition_x, partition_y - 1)
             index += 1
 
-            ymin = self.area.upper + fragment_y * (index_y + 0)
-            ymax = self.area.upper + fragment_y * (index_y + 1)
-            xmin = self.area.left + fragment_x * (index_x + 0)
-            xmax = self.area.left + fragment_x * (index_x + 1)
+            left = self.area.one.minimum
+            upper = self.area.two.minimum
 
-            rectangle = Rectangle(xmin, ymin, xmax, ymax)
+            ymin = upper + fragment_y * (index_y + 0)
+            ymax = upper + fragment_y * (index_y + 1)
+            xmin = left + fragment_x * (index_x + 0)
+            xmax = left + fragment_x * (index_x + 1)
+
+            one = Line(xmin, xmax)
+            two = Line(ymin, ymax)
+
+            rectangle = Plane(one, two)
             item.spot(rectangle)
 
     def zone(self, name: S, *, mode=Zone.SPAN, **star: R) -> K:

@@ -3,6 +3,7 @@
 import bpy  # pylint: disable=import-error
 
 import celestine
+from celestine.window.collection import Point
 from celestine import load
 from celestine.package.blender import (
     UV,
@@ -25,7 +26,7 @@ from celestine.typed import (
     override,
 )
 from celestine.window import Window as Window_
-from celestine.window.collection import Rectangle
+from celestine.window.collection import Plane
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -64,7 +65,8 @@ class celestine_click(bpy.types.Operator):
 
         x_dot = mouse.location.x
         y_dot = mouse.location.y
-        main("poke", x_dot=x_dot, y_dot=y_dot)
+        point = Point(x_dot, y_dot)
+        main("click", point=point)
 
         return {"FINISHED"}
 
@@ -189,7 +191,7 @@ class Abstract(Abstract_):
 
     def render(self) -> N:
         """"""
-        (x_dot, y_dot) = self.center_float()
+        (x_dot, y_dot) = self.area.centroid.float
         # child sets mesh and then calls this
         self.item.location = (x_dot, y_dot, 0)
         self.item.rotation = (180, 0, 0)
@@ -436,7 +438,7 @@ class Window(Window_):
         }
         canvas = None
         super().__init__(hold, canvas, element, **star)
-        self.area = Rectangle(0, 0, 20, 20)
+        self.area = Plane.make(20, 20)
 
         self.frame = None
         self.mouse = None

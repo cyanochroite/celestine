@@ -8,7 +8,7 @@ from celestine.typed import (
     override,
 )
 from celestine.window import Window as Window_
-from celestine.window.collection import Rectangle
+from celestine.window.collection import Plane
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -38,7 +38,7 @@ class Button(Abstract, Button_):
             callback=self.callback,
             label=self.data,
             tag=self.name,
-            pos=self.area.origin,
+            pos=self.area.origin.int,
         )
 
 
@@ -76,7 +76,7 @@ class Image(Abstract, Image_):
         dearpygui.add_image(
             self.name,
             tag=f"{self.name}-base",
-            pos=self.area.origin,
+            pos=self.area.origin.int,
         )
 
     def load(self) -> LF:
@@ -132,7 +132,7 @@ class Label(Abstract, Label_):
         dearpygui.add_text(
             f" {self.data}",  # extra space hack to fix margin error
             tag=self.name,
-            pos=self.area.origin,
+            pos=self.area.origin.int,
         )
 
 
@@ -192,7 +192,7 @@ class Window(Window_):
 
         title = self.hold.language.APPLICATION_TITLE
         dearpygui.create_context()
-        width, height = self.area.size
+        width, height = self.area.size.int
         dearpygui.create_viewport(
             title=title,
             small_icon="celestine_small.ico",
@@ -233,5 +233,5 @@ class Window(Window_):
         }
         canvas = None
         super().__init__(hold, canvas, element, **star)
-        self.area = Rectangle(0, 0, 1920, 1080)
+        self.area = Plane.make(1920, 1080)
         self.tag = "window"

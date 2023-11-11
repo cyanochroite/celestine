@@ -50,10 +50,13 @@ class Point:
         """"""
         return self.clone(self)
 
-    def quantize(self) -> K:
-        self.one = round(self.one)
-        self.two = round(self.two)
-        return self
+    @property
+    def float(self) -> T[F, F]:
+        return (self.one, self.two)
+
+    @property
+    def int(self) -> T[I, I]:
+        return tuple(map(round, self.float))
 
     def __init__(self, one: F, two: F) -> N:
         self.one = float(one)
@@ -103,10 +106,13 @@ class Line:
     def midpoint(self) -> F:
         return (self.minimum + self.maximum) / 2
 
-    def quantize(self) -> K:
-        self.minimum = round(self.minimum)
-        self.maximum = round(self.maximum)
-        return self
+    @property
+    def float(self) -> T[F, F]:
+        return (self.minimum, self.maximum)
+
+    @property
+    def int(self) -> T[I, I]:
+        return tuple(map(round, self.float))
 
     def __add__(self, other: F) -> K:
         one = self.minimum + other
@@ -168,12 +174,29 @@ class Plane:
         """"""
         return self.clone(self)
 
+    @property
+    def float(self) -> T[F, F, F, F]:
+        xmin = self.one.minimum
+        ymin = self.two.minimum
+        xmax = self.one.maximum
+        ymax = self.two.maximum
+        return (xmin, ymin, xmax, ymax)
+
+    @property
+    def int(self) -> T[I, I, I, I]:
+        return tuple(map(round, self.float))
+
     @classmethod
     def make(cls, width: F, height: F) -> K:
         """"""
         one = Line(0, width)
         two = Line(0, height)
         return cls(one, two)
+
+    @property
+    def origin(self) -> Point:
+        """"""
+        return Point(self.one.minimum, self.two.minimum)
 
     def scale_to_max(self, other: K) -> K:
         self *= max(other.size / self.size)
@@ -232,25 +255,6 @@ class Plane:
         return f"({one}, {two})"
 
 
-class Grid(Plane):
-    """"""
-
-    @property
-    @override
-    def centroid(self) -> Point:
-        return super().centroid.quantize()
-
-    @override
-    def scale_to_max(self, other: K) -> K:
-        return super().scale_to_max(other).quantize()
-
-    @override
-    def scale_to_min(self, other: K) -> K:
-        return super().scale_to_min(other).quantize()
-
-    @override
-    def __init__(self, one: Line, two: Line) -> N:
-        super().__init__(one.quantize(), two.quantize())
 
 
 class Rectangle:
@@ -300,7 +304,7 @@ class Rectangle:
 class Item(Object):
     """"""
 
-    area: Rectangle
+    area: Plane
     canvas: A
     hidden: B
     hold: R
@@ -314,25 +318,28 @@ class Item(Object):
     def make(self) -> N:
         """"""
 
-    def poke(self, x_dot: I, y_dot: I, **star: R) -> B:
+    def click_action(self) -> N:
+        pass
+
+    def click(self, point: Point) -> N:
         """"""
         if self.hidden:
-            return False
+            return
 
-        return self.area.within(x_dot, y_dot)
+        if point in self.area:
+            self.click_action()
 
-    def spot(self, area: Rectangle) -> N:
+    def spot(self, area: Plane) -> N:
         """"""
         raise NotImplementedError(area)
 
     def __init__(self, hold: R, canvas: A, name: S, **star: R) -> N:
         super().__init__(**star)
-        self.area = Rectangle(0, 0, 0, 0)
+        self.area = Plane.make(0, 0)
         self.canvas = canvas
         self.hidden = False
         self.hold = hold
         self.name = name
-
 
 class Collection(Object):
     """"""

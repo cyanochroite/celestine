@@ -8,10 +8,11 @@ from celestine.typed import (
     R,
     override,
 )
+from celestine.window.collection import Point
 from celestine.unicode import LINE_FEED
 from celestine.unicode.notational_systems import BRAILLE_PATTERNS
 from celestine.window import Window as window
-from celestine.window.collection import Rectangle
+from celestine.window.collection import Plane, Line
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -68,7 +69,7 @@ class Abstract(Abstract_):
     def render(self, item, **star: R):
         """"""
         text = item
-        (x_dot, y_dot) = self.area.origin
+        (x_dot, y_dot) = self.area.origin.int
         self.add_string(x_dot, y_dot, text)
 
 
@@ -130,7 +131,7 @@ class Image(Abstract, Image_):
         """"""
         curses = self.hold.package.curses
 
-        (x_dot, y_dot) = self.area.origin
+        (x_dot, y_dot) = self.area.origin.int
 
         if not self.hold.package.pillow:
             self.add_string(
@@ -257,7 +258,7 @@ class Window(window):
     def setup(self, name):
         """"""
         curses = self.hold.package.curses
-        return curses.window(*self.area.value)
+        return curses.window(*self.area.int)
 
     @override
     def __enter__(self):
@@ -272,7 +273,7 @@ class Window(window):
         curses.start_color()
 
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.full = Rectangle(0, 0, size_x, size_y)
+        self.full = Plane.make(size_x, size_y)
 
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
@@ -286,8 +287,10 @@ class Window(window):
         footer.addstr(0, 1, self.hold.language.CURSES_EXIT)
 
         #
-        area = Rectangle(1, 1, size_x - 2, size_y - 2)
-        self.area = area
+        self.area = Plane(
+            Line(1, size_x - 2),
+            Line(1, size_y - 2),
+        )
 
         return self
 
@@ -322,7 +325,7 @@ class Window(window):
                 case curses.KEY_EXIT:
                     break
                 case curses.KEY_CLICK:
-                    self.page.poke(self.cord_x, self.cord_y)
+                    self.page.click(Point(self.cord_x, self.cord_y))
 
         self.stdscr.keypad(0)
         curses.echo()
@@ -347,12 +350,15 @@ class Window(window):
         curses.start_color()
 
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.full = Rectangle(0, 0, size_x, size_y)
+        self.full = Plane.make(size_x, size_y)
 
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
 
         super().__init__(hold, self.background, element, **star)
-        self.area = Rectangle(1, 1, size_x - 2, size_y - 2)
+        self.area = Plane(
+            Line(1, size_x - 2),
+            Line(1, size_y - 2),
+        )
         self.cord_x = 0.5
         self.cord_y = 0.5

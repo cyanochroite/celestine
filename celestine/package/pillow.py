@@ -126,8 +126,8 @@ class Image:
         scale_x = math.floor(area_y * size_x / size_y)
         scale_y = math.floor(area_x * size_y / size_x)
 
-        best_x = min(area_x, scale_x)
-        best_y = min(area_y, scale_y)
+        best_x = round(min(area_x, scale_x))
+        best_y = round(min(area_y, scale_y))
 
         self.image = self.image.resize(
             size=(best_x, best_y),

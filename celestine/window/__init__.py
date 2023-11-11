@@ -11,7 +11,7 @@ from celestine.typed import (
     S,
 )
 from celestine.window.container import (
-    Rectangle,
+    Plane,
     View,
     Zone,
 )
@@ -74,6 +74,7 @@ class Window(View):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        # self.area should be set be interface class by now
         self.spot(self.area)
         self.make()
         if exc_type:

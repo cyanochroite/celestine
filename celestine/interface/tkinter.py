@@ -10,7 +10,7 @@ from celestine.typed import (
     override,
 )
 from celestine.window import Window as Window_
-from celestine.window.collection import Rectangle
+from celestine.window.collection import Plane
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -25,7 +25,7 @@ class Abstract(Abstract_):
         self.item = item(self.canvas, **star)
 
         width, height = self.area.size
-        dot_x, dot_y = self.area.origin
+        dot_x, dot_y = self.area.origin.int
         self.item.place(
             x=dot_x,
             y=dot_y,
@@ -165,4 +165,4 @@ class Window(Window_):
         canvas.config(bg="blue")
 
         super().__init__(hold, canvas, element, **star)
-        self.area = Rectangle(0, 0, 1280, 1080)
+        self.area = Plane.make(1280, 1080)

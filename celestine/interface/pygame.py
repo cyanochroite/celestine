@@ -7,8 +7,9 @@ from celestine.typed import (
     R,
     override,
 )
+from celestine.window.collection import Point
 from celestine.window import Window as Window_
-from celestine.window.collection import Rectangle
+from celestine.window.collection import Plane
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
@@ -20,7 +21,8 @@ class Abstract(Abstract_):
 
     def render(self, item):
         """"""
-        self.canvas.blit(item, self.area.origin)
+        origin = (self.area.one.minimum, self.area.two.minimum)
+        self.canvas.blit(item, origin)
 
 
 class Button(Abstract, Button_):
@@ -168,8 +170,8 @@ class Window(Window_):
                 case pygame.MOUSEBUTTONDOWN:
                     # TODO: This triggers on all mouse buttons
                     # including scroll wheel! That is bad.
-                    (x_dot, y_dot) = pygame.mouse.get_pos()
-                    self.poke(x_dot, y_dot)
+
+                    self.click(Point(*pygame.mouse.get_pos()))
 
         pygame.quit()
         return False
@@ -181,8 +183,8 @@ class Window(Window_):
             "image": Image,
             "label": Label,
         }
-        area = Rectangle(0, 0, 1280, 960)
-        canvas = hold.package.pygame.display.set_mode(area.size)
+        area = Plane.make(1280, 960)
+        canvas = hold.package.pygame.display.set_mode(area.size.int)
         super().__init__(hold, canvas, element, **star)
         self.area = area
         self.font = None
