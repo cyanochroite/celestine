@@ -8,11 +8,14 @@ from celestine.typed import (
     R,
     override,
 )
-from celestine.window.collection import Point
 from celestine.unicode import LINE_FEED
 from celestine.unicode.notational_systems import BRAILLE_PATTERNS
 from celestine.window import Window as window
-from celestine.window.collection import Plane, Line
+from celestine.window.collection import (
+    Line,
+    Plane,
+    Point,
+)
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_

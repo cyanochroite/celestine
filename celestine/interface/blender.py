@@ -3,7 +3,6 @@
 import bpy  # pylint: disable=import-error
 
 import celestine
-from celestine.window.collection import Point
 from celestine import load
 from celestine.package.blender import (
     UV,
@@ -26,7 +25,10 @@ from celestine.typed import (
     override,
 )
 from celestine.window import Window as Window_
-from celestine.window.collection import Plane
+from celestine.window.collection import (
+    Plane,
+    Point,
+)
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_

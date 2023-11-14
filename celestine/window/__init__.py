@@ -11,7 +11,6 @@ from celestine.typed import (
     S,
 )
 from celestine.window.container import (
-    Plane,
     View,
     Zone,
 )
@@ -112,5 +111,8 @@ class Window(View):
         container = self.zone(key, mode=Zone.DROP)
         container.canvas = self.setup(key)
         container.hidden = True
-        value(container)
+        car = value(container)
+        print(car)
+        if car is True:
+            self.hold.main = key
         self.view[key] = container

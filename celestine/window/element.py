@@ -6,7 +6,6 @@ from celestine.typed import (
     BOX,
     PAIR,
     A,
-    B,
     I,
     N,
     P,
@@ -17,7 +16,6 @@ from celestine.typed import (
 from celestine.window.collection import (
     Item,
     Plane,
-    Point,
 )
 
 

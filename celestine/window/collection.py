@@ -14,7 +14,6 @@ from celestine.typed import (
     R,
     S,
     T,
-    override,
 )
 
 
@@ -255,8 +254,6 @@ class Plane:
         return f"({one}, {two})"
 
 
-
-
 class Rectangle:
     """"""
 
@@ -340,6 +337,7 @@ class Item(Object):
         self.hidden = False
         self.hold = hold
         self.name = name
+
 
 class Collection(Object):
     """"""

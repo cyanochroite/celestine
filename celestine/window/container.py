@@ -6,7 +6,6 @@ import math
 from celestine.typed import (
     B,
     D,
-    I,
     K,
     N,
     R,
@@ -15,8 +14,8 @@ from celestine.typed import (
 from celestine.window.collection import (
     Collection,
     Item,
-    Plane,
     Line,
+    Plane,
     Point,
 )
 

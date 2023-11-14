@@ -1,17 +1,22 @@
 """"""
 
-from celestine.typed import N, C
+from celestine.typed import (
+    C,
+    N,
+)
 from celestine.window.container import View
 
 
-def wrap(function) -> C[[View], N]:
+def main(function) -> C[[View], N]:
     def moo(view: View) -> N:
         function(view)
+        return True
+
     return moo
 
 
-@wrap
-def main(view: View) -> N:
+@main
+def zero(view: View) -> N:
     """"""
     language = view.hold.language
     with view.zone("zero_head") as line:
