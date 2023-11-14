@@ -1,22 +1,12 @@
 """"""
 
-from celestine.typed import (
-    C,
-    N,
-)
+from celestine.data import main
+from celestine.typed import OB
 from celestine.window.container import View
 
 
-def main(function) -> C[[View], N]:
-    def moo(view: View) -> N:
-        function(view)
-        return True
-
-    return moo
-
-
 @main
-def zero(view: View) -> N:
+def zero(view: View) -> OB:
     """"""
     language = view.hold.language
     with view.zone("zero_head") as line:
@@ -32,7 +22,7 @@ def zero(view: View) -> N:
         line.new("zero_next", text=language.DEMO_MAIN_NEXT, view="two")
 
 
-def one(view: View) -> N:
+def one(view: View) -> OB:
     """"""
     language = view.hold.language
     with view.zone("one_head") as line:
@@ -48,7 +38,7 @@ def one(view: View) -> N:
         line.new("one_next", text=language.DEMO_ONE_NEXT, view="two")
 
 
-def two(view: View) -> N:
+def two(view: View) -> OB:
     """"""
     language = view.hold.language
     with view.zone("two_head") as line:

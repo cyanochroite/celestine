@@ -73,10 +73,3 @@ AI = _module.AI
 override = _module.override
 
 Hold = _module.Hold
-
-from enum import Enum
-
-
-class State(Enum):
-    CODE = 1
-    VIEW = 2

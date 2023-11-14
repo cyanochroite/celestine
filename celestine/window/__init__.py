@@ -107,12 +107,13 @@ class Window(View):
             element,
         )
 
-    def __setitem__(self, key: S, value: A):
+    def __setitem__(self, key: S, value: A) -> N:
         container = self.zone(key, mode=Zone.DROP)
         container.canvas = self.setup(key)
         container.hidden = True
-        car = value(container)
-        print(car)
-        if car is True:
+        main = value(container)
+        if main is False:
+            return  # This a partial view.
+        if main is True:
             self.hold.main = key
         self.view[key] = container
