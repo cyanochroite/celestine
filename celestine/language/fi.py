@@ -63,15 +63,15 @@ CURSES_EXIT = "Poistu painamalla ESC-näppäintä."
 
 DEMO_COW_TALK = "Olen puhuva lehmä."
 
-DEMO_MAIN_ACTION = "Tervehdi lehmää."
+DEMO_ZERO_ACTION = "Tervehdi lehmää."
 
 DEMO_MAIN_NEXT = "Siirry sivulle kaksi."
 
 DEMO_MAIN_PAST = "Siirry sivulle yksi."
 
-DEMO_MAIN_SAY = "Hei ihminen."
+DEMO_ZERO_SAY = "Hei ihminen."
 
-DEMO_MAIN_TITLE = "Sivun pää."
+DEMO_ZERO_TITLE = "Sivun pää."
 
 DEMO_ONE_ACTION = "Syötä lehmä."
 

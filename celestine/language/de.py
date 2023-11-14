@@ -66,15 +66,15 @@ CURSES_EXIT = "Drücken Sie die ESC-Taste, um den Vorgang zu beenden."
 
 DEMO_COW_TALK = "Ich bin eine sprechende Kuh."
 
-DEMO_MAIN_ACTION = "Grüße die Kuh."
+DEMO_ZERO_ACTION = "Grüße die Kuh."
 
 DEMO_MAIN_NEXT = "Gehen Sie zu Seite zwei."
 
 DEMO_MAIN_PAST = "Gehen Sie zu Seite eins."
 
-DEMO_MAIN_SAY = "Hallo Mensch."
+DEMO_ZERO_SAY = "Hallo Mensch."
 
-DEMO_MAIN_TITLE = "Hauptseite der Seite."
+DEMO_ZERO_TITLE = "Hauptseite der Seite."
 
 DEMO_ONE_ACTION = "Füttere die Kuh."
 

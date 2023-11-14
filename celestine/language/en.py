@@ -61,15 +61,15 @@ CURSES_EXIT = "Press the ESC key to exit."
 
 DEMO_COW_TALK = "I am a talking cow."
 
-DEMO_MAIN_ACTION = "Greet the cow."
+DEMO_ZERO_ACTION = "Greet the cow."
 
 DEMO_MAIN_NEXT = "Go to page two."
 
 DEMO_MAIN_PAST = "Go to page one."
 
-DEMO_MAIN_SAY = "Hello human."
+DEMO_ZERO_SAY = "Hello human."
 
-DEMO_MAIN_TITLE = "Page main."
+DEMO_ZERO_TITLE = "Page main."
 
 DEMO_ONE_ACTION = "Feed the cow."
 

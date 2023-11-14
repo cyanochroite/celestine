@@ -62,15 +62,15 @@ CURSES_EXIT = "Pritisnite tipku ESC da biste izašli."
 
 DEMO_COW_TALK = "Ja sam krava koja govori."
 
-DEMO_MAIN_ACTION = "Pozdravite kravu."
+DEMO_ZERO_ACTION = "Pozdravite kravu."
 
 DEMO_MAIN_NEXT = "Idite na drugu stranicu."
 
 DEMO_MAIN_PAST = "Idite na prvu stranicu."
 
-DEMO_MAIN_SAY = "Pozdrav čovječe."
+DEMO_ZERO_SAY = "Pozdrav čovječe."
 
-DEMO_MAIN_TITLE = "Glavna stranica."
+DEMO_ZERO_TITLE = "Glavna stranica."
 
 DEMO_ONE_ACTION = "Nahranite kravu."
 

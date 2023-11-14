@@ -62,15 +62,15 @@ CURSES_EXIT = "Apăsați tasta ESC pentru a ieși."
 
 DEMO_COW_TALK = "Sunt o vacă vorbitoare."
 
-DEMO_MAIN_ACTION = "Salutați vaca."
+DEMO_ZERO_ACTION = "Salutați vaca."
 
 DEMO_MAIN_NEXT = "Du-te la pagina a doua."
 
 DEMO_MAIN_PAST = "Du-te la pagina unu."
 
-DEMO_MAIN_SAY = "Bună ziua om."
+DEMO_ZERO_SAY = "Bună ziua om."
 
-DEMO_MAIN_TITLE = "Pagina principală."
+DEMO_ZERO_TITLE = "Pagina principală."
 
 DEMO_ONE_ACTION = "Hrăniți vaca."
 

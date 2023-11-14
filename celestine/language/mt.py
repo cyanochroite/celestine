@@ -63,15 +63,15 @@ CURSES_EXIT = "Agħfas il-buttuna ESC biex toħroġ."
 
 DEMO_COW_TALK = "Jiena baqra li titkellem."
 
-DEMO_MAIN_ACTION = "Insellem lill-baqra."
+DEMO_ZERO_ACTION = "Insellem lill-baqra."
 
 DEMO_MAIN_NEXT = "Mur fit-tieni paġna."
 
 DEMO_MAIN_PAST = "Mur fl-ewwel paġna."
 
-DEMO_MAIN_SAY = "Hello bniedem."
+DEMO_ZERO_SAY = "Hello bniedem."
 
-DEMO_MAIN_TITLE = "Prinċipali tal-paġna."
+DEMO_ZERO_TITLE = "Prinċipali tal-paġna."
 
 DEMO_ONE_ACTION = "Itma' l-baqra."
 

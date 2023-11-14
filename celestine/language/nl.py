@@ -64,15 +64,15 @@ CURSES_EXIT = "Druk op de ESC-toets om af te sluiten."
 
 DEMO_COW_TALK = "Ik ben een pratende koe."
 
-DEMO_MAIN_ACTION = "Groet de koe."
+DEMO_ZERO_ACTION = "Groet de koe."
 
 DEMO_MAIN_NEXT = "Ga naar pagina twee."
 
 DEMO_MAIN_PAST = "Ga naar pagina één."
 
-DEMO_MAIN_SAY = "Hallo mens."
+DEMO_ZERO_SAY = "Hallo mens."
 
-DEMO_MAIN_TITLE = "Hoofdpagina hoofd."
+DEMO_ZERO_TITLE = "Hoofdpagina hoofd."
 
 DEMO_ONE_ACTION = "Voer de koe."
 

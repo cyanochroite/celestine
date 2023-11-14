@@ -64,15 +64,15 @@ CURSES_EXIT = "Натиснете клавиша ESC, за да излезете
 
 DEMO_COW_TALK = "Аз съм говореща крава."
 
-DEMO_MAIN_ACTION = "Поздравете кравата."
+DEMO_ZERO_ACTION = "Поздравете кравата."
 
 DEMO_MAIN_NEXT = "Отидете на втора страница."
 
 DEMO_MAIN_PAST = "Отиди на първа страница."
 
-DEMO_MAIN_SAY = "Здравей човеко."
+DEMO_ZERO_SAY = "Здравей човеко."
 
-DEMO_MAIN_TITLE = "Основна страница."
+DEMO_ZERO_TITLE = "Основна страница."
 
 DEMO_ONE_ACTION = "Нахрани кравата."
 
