@@ -8,6 +8,7 @@ from celestine.typed import (
     D,
     F,
     G,
+    H,
     I,
     K,
     N,
@@ -304,7 +305,7 @@ class Item(Object):
     area: Plane
     canvas: A
     hidden: B
-    hold: R
+    hold: H
     name: S  # The key to use to find this in the window dictionary.
 
     def draw(self, **star: R) -> N:
@@ -330,7 +331,7 @@ class Item(Object):
         """"""
         raise NotImplementedError(area)
 
-    def __init__(self, hold: R, canvas: A, name: S, **star: R) -> N:
+    def __init__(self, hold: H, canvas: A, name: S, **star: R) -> N:
         super().__init__(**star)
         self.area = Plane.make(0, 0)
         self.canvas = canvas

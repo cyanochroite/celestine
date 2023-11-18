@@ -4,13 +4,14 @@ from celestine.typed import (
     LP,
     LS,
     A,
+    H,
     N,
     P,
     R,
 )
 
 
-def find_image(hold: R, directory: P) -> LP:
+def find_image(hold: H, directory: P) -> LP:
     """"""
     path = directory
     include = hold.window.extension()
@@ -19,7 +20,7 @@ def find_image(hold: R, directory: P) -> LP:
     return files
 
 
-def setup(*, hold: R, window: A, **star: R) -> N:
+def setup(*, hold: H, window: A, **star: R) -> N:
     """"""
     directory = hold.attribute.directory
     find = find_image(hold, directory)

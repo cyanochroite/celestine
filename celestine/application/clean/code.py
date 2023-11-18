@@ -13,6 +13,7 @@ from celestine.file import (
     text_write,
 )
 from celestine.typed import (
+    H,
     N,
     R,
     S,
@@ -79,7 +80,7 @@ def run(name: S) -> N:
     package.run()
 
 
-def clean(*, hold: R, **star: R) -> N:
+def clean(*, hold: H, **star: R) -> N:
     """"""
     # TODO: This is breaking the language files. Find out why.
     # hold.package.pyupgrade.run()

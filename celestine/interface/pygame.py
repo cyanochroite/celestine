@@ -3,6 +3,7 @@
 from celestine import load
 from celestine.typed import (
     LS,
+    H,
     N,
     R,
     override,
@@ -179,7 +180,7 @@ class Window(Window_):
         return False
 
     @override
-    def __init__(self, hold: R, **star: R) -> N:
+    def __init__(self, hold: H, **star: R) -> N:
         element = {
             "button": Button,
             "image": Image,

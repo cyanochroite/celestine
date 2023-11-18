@@ -18,6 +18,7 @@ from celestine.package.blender.mesh.quadrilateral import Diamond
 from celestine.typed import (
     B,
     F,
+    H,
     N,
     R,
     S,
@@ -202,7 +203,7 @@ class Abstract(Abstract_):
 class Mouse(Abstract):
     """"""
 
-    def __init__(self, hold: R, collection, mesh) -> N:
+    def __init__(self, hold: H, collection, mesh) -> N:
         self.mesh = mesh.soul
         self.text = "mouse"
         super().__init__(hold, collection, "mouse")
@@ -432,7 +433,7 @@ class Window(Window_):
         return False
 
     @override
-    def __init__(self, hold: R, *, call=None, **star: R) -> N:
+    def __init__(self, hold: H, *, call=None, **star: R) -> N:
         element = {
             "button": Button,
             "image": Image,

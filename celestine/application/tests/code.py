@@ -8,6 +8,7 @@ from celestine.data.directory import APPLICATION
 from celestine.load import pathway
 from celestine.load.many import python
 from celestine.typed import (
+    H,
     N,
     R,
 )
@@ -18,7 +19,7 @@ from .data import (
 )
 
 
-def main(*, hold: R, **star: R) -> N:
+def main(*, hold: H, **star: R) -> N:
     """Run the unittest library."""
     module = load.module(APPLICATION, TESTS)
     top = pathway.pathway()

@@ -6,6 +6,7 @@ from celestine.typed import (
     BOX,
     PAIR,
     A,
+    H,
     I,
     N,
     P,
@@ -30,7 +31,7 @@ class Abstract(Item):
         """"""
         self.area = area.copy()
 
-    def __init__(self, hold: R, canvas: A, name: S, **star: R) -> N:
+    def __init__(self, hold: H, canvas: A, name: S, **star: R) -> N:
         super().__init__(hold, canvas, name, **star)
         self.item = None
 
@@ -44,7 +45,7 @@ class Button(Abstract):
 
     def __init__(
         self,
-        hold: R,
+        hold: H,
         canvas,
         name,
         text,
@@ -171,7 +172,7 @@ class Image(Abstract):
 
         return (best_x, best_y)
 
-    def __init__(self, hold: R, canvas, name, path, **star: R):
+    def __init__(self, hold: H, canvas, name, path, **star: R):
         self.path = path
         self.image = None
 
@@ -233,6 +234,6 @@ class Image(Abstract):
 class Label(Abstract):
     """"""
 
-    def __init__(self, hold: R, canvas, name, text, **star: R):
+    def __init__(self, hold: H, canvas, name, text, **star: R):
         self.data = text
         super().__init__(hold, canvas, name, **star)

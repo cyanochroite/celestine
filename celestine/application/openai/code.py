@@ -2,18 +2,17 @@
 
 
 import io
-import requests
+
 import openai
 import PIL.Image
+import requests
 
-from celestine import load
 from celestine.typed import (
+    H,
     N,
     R,
-    H,
     S,
 )
-
 
 
 def image_data(url):

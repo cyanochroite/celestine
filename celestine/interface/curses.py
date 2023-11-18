@@ -4,6 +4,7 @@ import io
 import math
 
 from celestine.typed import (
+    H,
     N,
     R,
     override,
@@ -337,7 +338,7 @@ class Window(window):
         return False
 
     @override
-    def __init__(self, hold: R, **star: R) -> N:
+    def __init__(self, hold: H, **star: R) -> N:
         element = {
             "button": Button,
             "image": Image,

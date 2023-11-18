@@ -2,8 +2,8 @@
 
 from celestine import load
 from celestine.typed import (
-    N,
     H,
+    N,
 )
 
 from .main import do_translate

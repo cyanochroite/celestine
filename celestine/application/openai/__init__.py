@@ -10,8 +10,8 @@ from celestine.typed import S
 from celestine.unicode import NONE
 
 from .data import (
-    KEY,
     GROUP,
+    KEY,
 )
 
 

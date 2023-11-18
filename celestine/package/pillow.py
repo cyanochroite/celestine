@@ -6,6 +6,7 @@ from celestine import load
 from celestine.typed import (
     IMAGE,
     LS,
+    H,
     K,
     N,
     P,
@@ -23,7 +24,7 @@ COLORS = 15  # int(255 - 8 / 16)
 class Image:
     """"""
 
-    hold: R
+    hold: H
     image: IMAGE
 
     def brightwing(self):
@@ -186,7 +187,7 @@ class Image:
             colors, method, kmeans, palette, dither
         )
 
-    def __init__(self, hold: R, /, image: IMAGE, **star: R):
+    def __init__(self, hold: H, /, image: IMAGE, **star: R):
         self.hold = hold
         self.image = image
 
@@ -226,7 +227,7 @@ class Package(Abstract):
         result.sort()
         return result
 
-    def __init__(self, hold: R, /, name: S, **star: R) -> N:
+    def __init__(self, hold: H, /, name: S, **star: R) -> N:
         super().__init__(hold, name, pypi="PIL")
         if self.package:
             setattr(self, "ImageTk", load.package("PIL", "ImageTk"))
