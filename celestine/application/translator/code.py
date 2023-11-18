@@ -3,13 +3,13 @@
 from celestine import load
 from celestine.typed import (
     N,
-    R,
+    H,
 )
 
 from .main import do_translate
 
 
-def translate(*, hold: R, **star: R) -> N:
+def translate(*, hold: H, **star: R) -> N:
     """Translate the language files."""
 
     do_translate(hold)
