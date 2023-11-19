@@ -3,7 +3,6 @@
 from enum import Enum
 
 from celestine.typed import (
-    B,
     C,
     N,
 )
@@ -17,12 +16,15 @@ class State(Enum):
     VIEW = 2
 
 
-def main(function) -> C[[View], N]:
-    def decorator(view: View) -> B:
-        function(view)
-        return True
+def main(function: C[[View], N]) -> C[[View], N]:
+    def decorator(view1: View) -> N:
+        function(view1)
 
     return decorator
+
+
+def view(function: C[[View], N]) -> C[[View], N]:
+    return function
 
 
 CELESTINE = "celestine"

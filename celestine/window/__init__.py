@@ -73,6 +73,7 @@ class Window(View):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        # self.hold.main = key  # lookip
         # self.area should be set be interface class by now
         self.spot(self.area)
         self.make()

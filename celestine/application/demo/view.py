@@ -1,6 +1,9 @@
 """"""
 
-from celestine.data import main
+from celestine.data import (
+    main,
+    view,
+)
 from celestine.typed import OB
 from celestine.window.container import View
 
@@ -22,6 +25,7 @@ def zero(view: View) -> OB:
         line.new("zero_next", text=language.DEMO_MAIN_NEXT, view="two")
 
 
+@view
 def one(view: View) -> OB:
     """"""
     language = view.hold.language
@@ -38,6 +42,7 @@ def one(view: View) -> OB:
         line.new("one_next", text=language.DEMO_ONE_NEXT, view="two")
 
 
+@view
 def two(view: View) -> OB:
     """"""
     language = view.hold.language
