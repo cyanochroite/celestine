@@ -2,6 +2,10 @@
 
 
 from celestine import load
+from celestine.data import (
+    main,
+    scene,
+)
 from celestine.typed import N
 from celestine.window.container import (
     Image,
@@ -12,11 +16,13 @@ from celestine.window.container import (
 NULL = load.pathway.asset("null.png")
 
 
+@scene
 def picture(view: View) -> N:
     """"""
     view.new("photo", path=NULL, mode=Image.FULL)
 
 
+@main
 def main(view: View) -> N:
     """"""
     view.new(

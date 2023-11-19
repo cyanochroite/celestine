@@ -49,6 +49,13 @@ class View(Item, Collection):
 
     item: D[S, Item]
 
+    def click(self, point: Point) -> N:
+        if self.hidden:
+            return
+
+        for _, item in self.item.items():
+            item.click(point)
+
     def draw(self, **star: R) -> N:
         """"""
         if self.hidden:
@@ -56,6 +63,12 @@ class View(Item, Collection):
 
         for _, item in self.item.items():
             item.draw(**star)
+
+    def hide(self) -> N:
+        """"""
+        self.hidden = True
+        for _, item in self.item.items():
+            item.hide()
 
     def make(self) -> N:
         """"""
@@ -121,12 +134,11 @@ class View(Item, Collection):
                 )
             )
 
-    def click(self, point: Point) -> N:
-        if self.hidden:
-            return
-
+    def show(self) -> N:
+        """"""
+        self.hidden = False
         for _, item in self.item.items():
-            item.click(point)
+            item.show()
 
     def spot(self, area: Plane, **star: R) -> N:
         """"""
@@ -173,13 +185,15 @@ class View(Item, Collection):
             rectangle = Plane(one, two)
             item.spot(rectangle)
 
-    def zone(self, name: S, *, mode=Zone.SPAN, **star: R) -> K:
+    def zone(
+        self, name: S, *, mode=Zone.NONE, canvas=None, **star: R
+    ) -> K:
         """"""
         return self.item_set(
             name,
             View(
                 self.hold,
-                self.canvas,
+                canvas if canvas else self.canvas,
                 name,
                 self.window,
                 self.element,
@@ -187,6 +201,14 @@ class View(Item, Collection):
                 **star,
             ),
         )
+
+    def drop(self, name: S, **star: R) -> K:
+        """"""
+        return self.zone(name, mode=Zone.DROP, **star)
+
+    def span(self, name: S, **star: R) -> K:
+        """"""
+        return self.zone(name, mode=Zone.SPAN, **star)
 
     def __enter__(self) -> K:
         return self

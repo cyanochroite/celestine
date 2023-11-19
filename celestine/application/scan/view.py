@@ -1,10 +1,12 @@
 """"""
 
+from celestine.data import main
 from celestine.typed import N
 from celestine.window.container import View
 
 
-def main(view: View) -> N:
+@main
+def run(view: View) -> N:
     """"""
     language = view.hold.language
     with view.zone("main_head") as line:

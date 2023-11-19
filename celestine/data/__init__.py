@@ -19,12 +19,14 @@ class State(Enum):
 def main(function: C[[View], N]) -> C[[View], N]:
     def decorator(view: View) -> N:
         function(view)
+
     return decorator
 
 
 def scene(function: C[[View], N]) -> C[[View], N]:
     def decorator(view: View) -> N:
         function(view)
+
     return decorator
 
 

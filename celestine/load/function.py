@@ -24,7 +24,17 @@ def load(module: M) -> D[S, FN]:
     return iterable
 
 
-def decorator(module: M, name: S) -> D[S, FN]:
+def decorator_name(module: M, name: S) -> S:
+    """Load from module all functions and turn them into dictionary."""
+    dictionary = vars(module)
+    text = string(FUNCTION, name, FULL_STOP)
+    for key, value in dictionary.items():
+        if text in repr(value):
+            return key
+    raise LookupError("No function with '@main' found.")
+
+
+def decorators(module: M, name: S) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
     dictionary = vars(module)
     text = string(FUNCTION, name, FULL_STOP)

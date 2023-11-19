@@ -308,17 +308,6 @@ class Item(Object):
     hold: H
     name: S  # The key to use to find this in the window dictionary.
 
-    def draw(self, **star: R) -> N:
-        """"""
-        if self.hidden:
-            return
-
-    def make(self) -> N:
-        """"""
-
-    def click_action(self) -> N:
-        pass
-
     def click(self, point: Point) -> N:
         """"""
         if self.hidden:
@@ -326,6 +315,25 @@ class Item(Object):
 
         if point in self.area:
             self.click_action()
+
+    def click_action(self) -> N:
+        pass
+
+    def draw(self, **star: R) -> N:
+        """"""
+        if self.hidden:
+            return
+
+    def hide(self) -> N:
+        """"""
+        self.hidden = True
+
+    def make(self) -> N:
+        """"""
+
+    def show(self) -> N:
+        """"""
+        self.hidden = False
 
     def spot(self, area: Plane) -> N:
         """"""

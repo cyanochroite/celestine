@@ -12,7 +12,7 @@ from celestine.window.container import View
 def zero(view: View) -> N:
     """"""
     language = view.hold.language
-    with view.zone("zero_head") as line:
+    with view.span("zero_head") as line:
         line.new("zero_title", text=language.DEMO_ZERO_TITLE)
         line.new(
             "zero_A",
@@ -20,7 +20,7 @@ def zero(view: View) -> N:
             code="cow",
             say=language.DEMO_ZERO_SAY,
         )
-    with view.zone("zero_body") as line:
+    with view.span("zero_body") as line:
         line.new("zero_past", text=language.DEMO_MAIN_PAST, view="one")
         line.new("zero_next", text=language.DEMO_MAIN_NEXT, view="two")
 
@@ -29,7 +29,7 @@ def zero(view: View) -> N:
 def one(view: View) -> N:
     """"""
     language = view.hold.language
-    with view.zone("one_head") as line:
+    with view.span("one_head") as line:
         line.new("one_title", text=language.DEMO_ONE_TITLE)
         line.new(
             "one_A",
@@ -37,7 +37,7 @@ def one(view: View) -> N:
             code="cow",
             say=language.DEMO_ONE_SAY,
         )
-    with view.zone("one_body") as line:
+    with view.span("one_body") as line:
         line.new("one_past", text=language.DEMO_ONE_PAST, view="zero")
         line.new("one_next", text=language.DEMO_ONE_NEXT, view="two")
 
@@ -46,7 +46,7 @@ def one(view: View) -> N:
 def two(view: View) -> N:
     """"""
     language = view.hold.language
-    with view.zone("two_head") as line:
+    with view.span("two_head") as line:
         line.new("two_title", text=language.DEMO_TWO_TITLE)
         line.new(
             "two_A",
@@ -54,6 +54,6 @@ def two(view: View) -> N:
             code="cow",
             say=language.DEMO_TWO_SAY,
         )
-    with view.zone("two_body") as line:
+    with view.span("two_body") as line:
         line.new("two_past", text=language.DEMO_TWO_PAST, view="one")
         line.new("two_next", text=language.DEMO_TWO_NEXT, view="zero")

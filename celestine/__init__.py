@@ -43,10 +43,14 @@ def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
             window.code[name] = function
 
         for name, function in session.view.items():
-            window[name] = function
+            canvas = window.setup(name)
+            container = window.drop(name, canvas=canvas)
+            container.hide()
+            function(container)
+            window.view[name] = container
 
-        for name, function in session.main.items():
-            window[name] = function
+        window.page = window.view[session.main]
+        window.page.show()
 
 
 def register() -> N:

@@ -10,11 +10,7 @@ from celestine.typed import (
     R,
     S,
 )
-from celestine.window.container import (
-    View,
-    Zone,
-)
-from celestine.load.function import decorator
+from celestine.window.container import View
 
 
 class Window(View):
@@ -57,11 +53,17 @@ class Window(View):
             ".png",
         ]
 
+    def hide(self):
+        pass
+
+    def show(self):
+        self.page.show()
+
     def turn(self, page: S) -> N:
         """"""
-        self.page.hidden = True
-        self.page = self.view.get(page)
-        self.page.hidden = False
+        self.page.hide()
+        self.page = self.view[page]
+        self.page.show()
         self.draw()
 
     def work(self, code, **star: R):
@@ -74,10 +76,9 @@ class Window(View):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        self.turn(self.turn_page)
         self.spot(self.area)
         self.make()
-        # self.turn(self.turn_page)
+        self.draw()
         if exc_type:
             raise exc_type
         if exc_value:
@@ -85,9 +86,6 @@ class Window(View):
         if traceback:
             raise traceback
         return False
-
-    def __getitem__(self, key: S):
-        return self.view[key]
 
     def __init__(self, hold: H, canvas, element, **star: R) -> N:
         self.hold = hold
@@ -102,13 +100,3 @@ class Window(View):
             self,
             element,
         )
-
-    def __setitem__(self, key: S, value: A) -> N:
-        container = self.zone(key, mode=Zone.DROP)
-        container.canvas = self.setup(key)
-        container.hidden = True
-        value(container)
-        self.view[key] = container
-
-        self.page = container
-        self.turn_page = key

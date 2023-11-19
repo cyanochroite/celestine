@@ -7,6 +7,10 @@ from celestine.data.directory import (
     INTERFACE,
     LANGUAGE,
 )
+from celestine.load.function import (
+    decorator_name,
+    decorators,
+)
 from celestine.package import Package
 from celestine.typed import (
     LS,
@@ -14,7 +18,6 @@ from celestine.typed import (
     H,
     Hold,
 )
-from celestine.load.function import decorator
 
 from .magic import Magic
 
@@ -45,7 +48,6 @@ def begin_session(argument_list: LS, exit_on_error: B) -> H:
 
     session.attribute = session2
 
-
     session.interface = load.module(INTERFACE, session1.interface)
 
     session.language = load.module(LANGUAGE, session1.language)
@@ -59,8 +61,10 @@ def begin_session(argument_list: LS, exit_on_error: B) -> H:
     code = load.module(APPLICATION, application, "code")
 
     session.code = load.functions(code)
-    session.view = decorator(view, "scene")
-    session.main = decorator(view, "main")
+    session.view = decorators(view, "scene") | decorators(view, "main")
+
+    main = decorator_name(view, "main")
+    session.main = session1.main if session1.main else main
 
     return session
 

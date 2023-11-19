@@ -21,6 +21,7 @@ from celestine.typed import (
     M,
     S,
 )
+from celestine.unicode import NONE
 
 from . import default
 from .data import (
@@ -130,7 +131,7 @@ class Session(Application, Interface, Language):
         """"""
         return super().dictionary(core) | {
             MAIN: Positional(
-                "main",
+                NONE,
                 core.language.ARGUMENT_LANGUAGE_HELP,
                 function.function_page(core.application),
             ),
