@@ -73,3 +73,4 @@ AI = _module.AI
 override = _module.override
 
 Hold = _module.Hold
+string = _module.string

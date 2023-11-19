@@ -45,6 +45,9 @@ def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
         for name, function in session.view.items():
             window[name] = function
 
+        for name, function in session.main.items():
+            window[name] = function
+
 
 def register() -> N:
     """

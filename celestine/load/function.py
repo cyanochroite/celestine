@@ -6,6 +6,7 @@ from celestine.typed import (
     D,
     M,
     S,
+    string,
 )
 from celestine.unicode import FULL_STOP
 
@@ -18,7 +19,7 @@ def load(module: M) -> D[S, FN]:
     iterable = {
         key: value
         for key, value in dictionary.items()
-        if repr(value).startswith(FUNCTION)
+        if FUNCTION in repr(value)
     }
     return iterable
 
@@ -26,12 +27,11 @@ def load(module: M) -> D[S, FN]:
 def decorator(module: M, name: S) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
     dictionary = vars(module)
-    string = f"<function {name}{FULL_STOP}"
-    string = f"<function {name}."
+    text = string(FUNCTION, name, FULL_STOP)
     iterable = {
         key: value
         for key, value in dictionary.items()
-        if string in repr(value)
+        if text in repr(value)
     }
     return iterable
 

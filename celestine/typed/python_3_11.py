@@ -5,6 +5,7 @@ Generator[YieldType, SendType, ReturnType]
 """
 
 import collections.abc
+import io
 import lzma
 import pathlib
 import types
@@ -82,6 +83,15 @@ AI: TA = collections.abc.Iterable[T[S, A]]
 
 def override(function: A) -> A:
     return function
+
+
+def string(*characters: S) -> S:
+    """"""
+    buffer = io.StringIO()
+    for character in characters:
+        buffer.write(character)
+    value = buffer.getvalue()
+    return value
 
 
 class Star(typing.TypedDict):

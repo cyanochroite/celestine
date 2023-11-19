@@ -1,6 +1,6 @@
 """"""
 
-from celestine.file.string import string
+from celestine.typed import string
 from celestine.unicode import (
     FULL_STOP,
     LATIN_SMALL_LETTER_C,

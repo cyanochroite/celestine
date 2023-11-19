@@ -14,6 +14,7 @@ from celestine.typed import (
     H,
     Hold,
 )
+from celestine.load.function import decorator
 
 from .magic import Magic
 
@@ -44,21 +45,22 @@ def begin_session(argument_list: LS, exit_on_error: B) -> H:
 
     session.attribute = session2
 
-    code = load.module(APPLICATION, application, "code")
-    session.code = load.functions(code)
 
     session.interface = load.module(INTERFACE, session1.interface)
 
     session.language = load.module(LANGUAGE, session1.language)
-
-    session.main = session1.main
 
     session.package = Package(session)
 
     session.window = None
 
     view = load.module(APPLICATION, application, "view")
-    session.view = load.functions(view)
+
+    code = load.module(APPLICATION, application, "code")
+
+    session.code = load.functions(code)
+    session.view = decorator(view, "scene")
+    session.main = decorator(view, "main")
 
     return session
 

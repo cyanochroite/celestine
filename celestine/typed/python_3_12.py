@@ -1,6 +1,7 @@
 """"""
 
 import collections.abc
+import io
 import lzma
 import pathlib
 import types
@@ -77,6 +78,15 @@ type BOX = T[I, I, I, I]
 type PAIR = T[I, I]
 type AD = D[S, Argument]  # session.argument
 type AI = collections.abc.Iterable[T[S, Argument]]  # session.argument
+
+
+def string(*characters: S) -> S:
+    """"""
+    buffer = io.StringIO()
+    for character in characters:
+        buffer.write(character)
+    value = buffer.getvalue()
+    return value
 
 
 class Hold:

@@ -2,14 +2,14 @@
 
 from celestine.data import (
     main,
-    view,
+    scene,
 )
-from celestine.typed import OB
+from celestine.typed import N
 from celestine.window.container import View
 
 
 @main
-def zero(view: View) -> OB:
+def zero(view: View) -> N:
     """"""
     language = view.hold.language
     with view.zone("zero_head") as line:
@@ -25,8 +25,8 @@ def zero(view: View) -> OB:
         line.new("zero_next", text=language.DEMO_MAIN_NEXT, view="two")
 
 
-@view
-def one(view: View) -> OB:
+@scene
+def one(view: View) -> N:
     """"""
     language = view.hold.language
     with view.zone("one_head") as line:
@@ -42,8 +42,8 @@ def one(view: View) -> OB:
         line.new("one_next", text=language.DEMO_ONE_NEXT, view="two")
 
 
-@view
-def two(view: View) -> OB:
+@scene
+def two(view: View) -> N:
     """"""
     language = view.hold.language
     with view.zone("two_head") as line:

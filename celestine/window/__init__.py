@@ -14,6 +14,7 @@ from celestine.window.container import (
     View,
     Zone,
 )
+from celestine.load.function import decorator
 
 
 class Window(View):
@@ -73,22 +74,16 @@ class Window(View):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        # self.hold.main = key  # lookip
-        # self.area should be set be interface class by now
+        self.turn(self.turn_page)
         self.spot(self.area)
         self.make()
+        # self.turn(self.turn_page)
         if exc_type:
             raise exc_type
-        try:
-            turn_page = self.hold.main
-            self.page = self.view.get(turn_page)
-            self.turn(turn_page)
-        except AttributeError as error:
-            message = "Application has no functions whatsoever."
-            raise RuntimeError(message) from error
-        except KeyError as error:
-            message = "Missing 'main' function."
-            raise RuntimeError(message) from error
+        if exc_value:
+            raise exc_value
+        if traceback:
+            raise traceback
         return False
 
     def __getitem__(self, key: S):
@@ -112,9 +107,8 @@ class Window(View):
         container = self.zone(key, mode=Zone.DROP)
         container.canvas = self.setup(key)
         container.hidden = True
-        main = value(container)
-        if main is False:
-            return  # This a partial view.
-        if main is True:
-            self.hold.main = key
+        value(container)
         self.view[key] = container
+
+        self.page = container
+        self.turn_page = key
