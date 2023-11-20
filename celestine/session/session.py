@@ -7,7 +7,6 @@ from celestine.data.directory import (
     INTERFACE,
     LANGUAGE,
 )
-from celestine.load import function
 from celestine.session.argument import (
     Customization,
     InformationConfiguration,
@@ -82,7 +81,7 @@ class Application(Dictionary):
             APPLICATION: Customization(
                 default.application(),
                 core.language.ARGUMENT_INTERFACE_HELP,
-                load.pathway.argument(APPLICATION),
+                load.argument(APPLICATION),
             ),
         }
 
@@ -99,7 +98,7 @@ class Interface(Dictionary):
             INTERFACE: Customization(
                 default.interface(),
                 core.language.ARGUMENT_INTERFACE_HELP,
-                load.pathway.argument(INTERFACE),
+                load.argument(INTERFACE),
             ),
         }
 
@@ -116,7 +115,7 @@ class Language(Dictionary):
             LANGUAGE: Customization(
                 default.language(),
                 core.language.ARGUMENT_LANGUAGE_HELP,
-                load.pathway.argument(LANGUAGE),
+                load.argument(LANGUAGE),
             ),
         }
 
@@ -133,6 +132,6 @@ class Session(Application, Interface, Language):
             MAIN: Positional(
                 NONE,
                 core.language.ARGUMENT_LANGUAGE_HELP,
-                function.function_page(core.application),
+                load.function_page(core.application),
             ),
         }

@@ -1,15 +1,12 @@
 """"""
 
 
+import pathlib
 from celestine import load
 from celestine.data.directory import (
     APPLICATION,
     INTERFACE,
     LANGUAGE,
-)
-from celestine.load.function import (
-    decorator_name,
-    decorators,
 )
 from celestine.package import Package
 from celestine.typed import (
@@ -56,16 +53,20 @@ def begin_session(argument_list: LS, exit_on_error: B) -> H:
 
     session.window = None
 
+    # items = load.python(APPLICATION, application)
+    # car = list(items)
+
     view = load.module(APPLICATION, application, "view")
 
     code = load.module(APPLICATION, application, "code")
 
     session.code = load.functions(code)
-    session.view = decorators(view, "scene") | decorators(view, "main")
+    one = load.decorators(view, "scene")
+    two = load.decorators(view, "main")
+    session.view = one | two
 
-    main = decorator_name(view, "main")
+    main = load.decorator_name(view, "main")
     session.main = session1.main if session1.main else main
-
     return session
 
 

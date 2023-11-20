@@ -1,5 +1,5 @@
 """"""
-from celestine.load.many import file
+from celestine import load
 from celestine.typed import (
     LP,
     LS,
@@ -16,7 +16,7 @@ def find_image(hold: H, directory: P) -> LP:
     path = directory
     include = hold.window.extension()
     exclude: LS = []
-    files = list(file(path, include, exclude))
+    files = list(load.file(path, include, exclude))
     return files
 
 

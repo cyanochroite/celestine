@@ -71,3 +71,7 @@ def unregister() -> N:
     this is called when the add-on is disabled.
     """
     load.redirect(INTERFACE, BLENDER, UNREGISTER)
+
+
+
+# Merge Code and View files. Mark Code functions. Scan all files in app.

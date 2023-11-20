@@ -8,6 +8,7 @@ from celestine.data.directory import APPLICATION
 from celestine.session.session import SuperSession
 from celestine.typed import N
 from celestine.window.container import Container as Page
+from celestine.load
 
 ERROR = "error"
 MODULE = "module"

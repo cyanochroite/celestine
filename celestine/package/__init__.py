@@ -103,7 +103,7 @@ class Package:
 
     def __init__(self, hold: H, **star: R):
         self.dictionary = {}
-        argument = load.pathway.argument(PACKAGE)
+        argument = load.argument(PACKAGE)
         for name in argument:
             attribute = load.attribute(PACKAGE, name, "Package")
             package = attribute(hold, name)

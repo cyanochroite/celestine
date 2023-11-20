@@ -30,6 +30,13 @@ def scene(function: C[[View], N]) -> C[[View], N]:
     return decorator
 
 
+def code(function: C[[View], N]) -> C[[View], N]:
+    def decorator(view: View) -> N:
+        function(view)
+
+    return decorator
+
+
 CELESTINE = "celestine"
 VERSION_NUMBER = "2023.10.7"
 INTERFACE = "interface"

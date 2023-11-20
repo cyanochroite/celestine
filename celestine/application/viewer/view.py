@@ -13,7 +13,7 @@ from celestine.window.container import (
     Zone,
 )
 
-NULL = load.pathway.asset("null.png")
+NULL = load.asset("null.png")
 
 
 @scene
