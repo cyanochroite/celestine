@@ -3,7 +3,6 @@
 import unittest
 
 from celestine.window.collection import (
-    Grid,
     Line,
     Plane,
     Point,

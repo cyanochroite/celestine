@@ -1,15 +1,14 @@
-from celestine.application.viewer.data.alphabet import (
+from celestine.unicode.alphabet import (
     Comparison,
     Digit,
     Divider,
     Letter,
     Unary,
 )
-from celestine.application.viewer.data.encoding import encoding
+from celestine.unicode.encoding import encoding
 
 # change to hold.package.itertools
-from celestine.application.viewer.extension.more_itertools import (
-    filter_true,
+from more_itertools import (
     split_when,
 )
 from celestine.application.viewer.parser.operator import (
@@ -63,7 +62,7 @@ class translator:  # translate
 
     @staticmethod
     def translate(string):
-        return filter_true(map(decode, string))
+        return filter(map(decode, string))
 
 
 class tokenizer:

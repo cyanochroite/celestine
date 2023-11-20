@@ -1,5 +1,5 @@
 """"""
-from celestine.application.viewer.data.alphabet import (
+from celestine.unicode.alphabet import (
     Comparison,
     Divider,
     Unary,

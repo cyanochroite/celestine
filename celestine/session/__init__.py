@@ -52,8 +52,12 @@ def begin_session(argument_list: LS, exit_on_error: B) -> H:
 
     session.window = None
 
+    items = load.sub_package_children(APPLICATION, application)
+
     # items = load.python(APPLICATION, application)
     # car = list(items)
+
+    modules = load.modules(APPLICATION, application)
 
     view = load.module(APPLICATION, application, "view")
 

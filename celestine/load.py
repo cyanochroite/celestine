@@ -1,6 +1,19 @@
 """Central place for loading and importing external files."""
 
+import os
+import pathlib
+import itertools
 
+from celestine.typed import (
+    GP,
+    LP,
+    LS,
+    G,
+    N,
+    P,
+    S,
+    T,
+)
 import importlib
 import os
 import pathlib
@@ -15,6 +28,7 @@ from celestine.typed import (
     B,
     D,
     M,
+    L,
     N,
     P,
     S,
@@ -91,6 +105,22 @@ def module(*path: S) -> M:
     """Load an internal module from anywhere in the application."""
     return package(CELESTINE, *path)
 
+def package(base: S, *path: S) -> M:
+    """Load an external package from the system path."""
+    sub_package_children
+    iterable = [base, *path]
+    name = FULL_STOP.join(iterable)
+    result = importlib.import_module(name, package=base)
+    return result
+
+def modules(*path: S) -> L[M]:
+    """Load an internal module from anywhere in the application."""
+    children = sub_package_children(*path)
+    array = []
+    for item in children:
+        array.append(module(*item))
+    return array
+
 
 def attribute(*path: S) -> A:
     """Functions like the 'from package import item' syntax."""
@@ -136,17 +166,6 @@ def module_fallback(*path: S) -> M:
     return fallback
 
 
-def dictionary(*path: S) -> D[S, S]:
-    """Load from module all key value pairs and make it a dictionary."""
-    _module = module(*path)
-    _dictionary = vars(_module)
-    mapping = {
-        key: value
-        for key, value in _dictionary.items()
-        if not key.startswith(LOW_LINE)
-    }
-    return mapping
-
 
 def module_to_name(_module: M) -> S:
     """"""
@@ -178,19 +197,51 @@ def package_dependency(name: S, fail) -> M:
     return flag
 
 
-#######
+########################################################################
+# Dictionary stuff
+
+def _dictionary_items(_module: M) -> T[S, FN]:
+    _dictionary = vars(_module)
+    _items = _dictionary.items()
+    return _items
 
 
-def functions(module: M) -> D[S, FN]:
+def functions(_module: M) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
-    dictionary = vars(module)
+    _dictionary = _dictionary_items(_module)
+    mapping = {
+        key: value
+        for key, value in _dictionary
+        if FUNCTION in repr(value)
+    }
+    return mapping
+
+
+def dictionary(_module: M) -> D[S, FN]:
+    """Load from module all key value pairs and make it a dictionary."""
+    _dictionary = _dictionary_items(_module)
+    mapping = {
+        key: value
+        for key, value in _dictionary
+        if not key.startswith(LOW_LINE)
+    }
+    return mapping
+
+
+
+
+def decorators(_module: M, name: S) -> D[S, FN]:
+    """Load from module all functions and turn them into dictionary."""
+    _dictionary = _dictionary_items(_module)
+    text = string(FUNCTION, name, FULL_STOP)
     iterable = {
         key: value
-        for key, value in dictionary.items()
-        if FUNCTION in repr(value)
+        for key, value in _dictionary
+        if text in repr(value)
     }
     return iterable
 
+########
 
 def decorator_name(module: M, name: S) -> S:
     """Load from module all functions and turn them into dictionary."""
@@ -202,18 +253,6 @@ def decorator_name(module: M, name: S) -> S:
     raise LookupError("No function with '@main' found.")
 
 
-def decorators(module: M, name: S) -> D[S, FN]:
-    """Load from module all functions and turn them into dictionary."""
-    dictionary = vars(module)
-    text = string(FUNCTION, name, FULL_STOP)
-    iterable = {
-        key: value
-        for key, value in dictionary.items()
-        if text in repr(value)
-    }
-    return iterable
-
-
 def function_page(module: M) -> LS:
     """Load from module all functions and turn them into dictionary."""
 
@@ -222,23 +261,8 @@ def function_page(module: M) -> LS:
     return iterable
 
 
-####
+########################################################################
 
-"""Central place for loading and importing external files."""
-
-import os
-import pathlib
-
-from celestine.typed import (
-    GP,
-    LP,
-    LS,
-    G,
-    N,
-    P,
-    S,
-    T,
-)
 
 
 def walk(*path: S) -> G[T[S, LS, LS], N, N]:
@@ -284,8 +308,37 @@ def many_python(top: P, include: LS, exclude: LS) -> LP:
     return many_file(top, include, exclude)
 
 
-# module
 
+def sub_package_children(*path: S) -> LP:
+    """"""
+    def check_me(stuff):
+        for one, two in stuff:
+            if one == "":
+                return True
+            if one == two:
+                continue
+            return False
+        return True
+    def fix_path(stuff):
+        array = []
+        for item in stuff:
+            if "." in item:
+                split = item.split(".")
+                array.append(split[0])
+            else:
+                array.append(item)
+        return array
+
+    done = [*path]
+    files = many_python(".", [], [])
+    array = []
+    for file in files:
+        parts = fix_path(file.parts)
+        car = itertools.zip_longest(done, parts, fillvalue="")
+        car = list(car)
+        if check_me(car):
+            array.append(parts)
+    return array
 
 def remove_empty_directories(path: P) -> N:
     """"""

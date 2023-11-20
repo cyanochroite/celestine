@@ -5,8 +5,6 @@ import unittest
 from celestine import load
 from celestine.data import CELESTINE
 from celestine.data.directory import APPLICATION
-from celestine.load import pathway
-from celestine.load.many import python
 from celestine.typed import (
     H,
     N,
@@ -22,8 +20,8 @@ from .data import (
 def main(*, hold: H, **star: R) -> N:
     """Run the unittest library."""
     module = load.module(APPLICATION, TESTS)
-    top = pathway.pathway()
-    files = python(top, [], [])
+    top = load.pathway()
+    files = load.many_python(top, [], [])
     files = list(files)
     paths = [file for file in files if file.name.startswith("test")]
     for path in paths:
@@ -34,7 +32,8 @@ def main(*, hold: H, **star: R) -> N:
         replace = split[1].replace("\\", "/")
         iterable = replace.split("/")
         done = filter(None, iterable)
-        dictionary = load.dictionary(*done)
+        module = load.module(*done)
+        dictionary = load.dictionary(module)
         for item, value in dictionary.items():
             setattr(module, item, value)
 
