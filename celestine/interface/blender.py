@@ -249,7 +249,7 @@ class Image(Abstract, Image_):
     def begin(cls):
         """"""
         name = "null.png"
-        path = load.pathway.asset(name)
+        path = load.asset(name)
         cls.default = data.image.load(path)
 
     @classmethod

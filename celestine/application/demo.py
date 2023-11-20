@@ -1,32 +1,31 @@
 """"""
 
 
-
-
 from celestine.data import (
+    code,
     main,
     scene,
-    code,
 )
-from celestine.typed import N
-from celestine.window.container import View
+from celestine.session.session import SuperSession
 from celestine.typed import (
     H,
     N,
     R,
     S,
 )
-from celestine.session.session import SuperSession
+from celestine.window.container import View
 
 
 class Session(SuperSession):
     """"""
+
 
 @code
 def cow(*, say: S, hold: H, **star: R) -> N:
     """"""
     talk = hold.language.DEMO_COW_TALK
     print(talk, say)
+
 
 @main
 def zero(view: View) -> N:

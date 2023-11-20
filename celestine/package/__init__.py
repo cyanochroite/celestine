@@ -8,7 +8,6 @@ from celestine.file.data import (
     UTF_8,
     WRITE_TEXT,
 )
-from celestine.load import pathway
 from celestine.typed import (
     LS,
     OS,
@@ -48,7 +47,7 @@ class Abstract:
 
         argv = sys.argv
 
-        path = str(pathway.pathfinder())
+        path = str(load.pathfinder())
         sys.argv = [path, path]
         try:
             module = load.package(self.name, *self.module())

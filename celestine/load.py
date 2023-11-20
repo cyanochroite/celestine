@@ -2,54 +2,6 @@
 
 
 import importlib
-
-
-from celestine.typed import (
-    FN,
-    LS,
-    D,
-    M,
-    S,
-    string,
-)
-from celestine.unicode import FULL_STOP
-from celestine.data import CELESTINE
-from celestine.typed import (
-    FN,
-    A,
-    B,
-    D,
-    M,
-    N,
-    S,
-)
-
-from celestine.typed import string
-from celestine.unicode import (
-    FULL_STOP,
-    LATIN_SMALL_LETTER_C,
-    LATIN_SMALL_LETTER_F,
-    LATIN_SMALL_LETTER_I,
-    LATIN_SMALL_LETTER_N,
-    LATIN_SMALL_LETTER_O,
-    LATIN_SMALL_LETTER_P,
-    LATIN_SMALL_LETTER_T,
-    LATIN_SMALL_LETTER_U,
-    LATIN_SMALL_LETTER_Y,
-    LATIN_SMALL_LETTER_P,
-    LATIN_SMALL_LETTER_A,
-    LATIN_SMALL_LETTER_C,
-    LATIN_SMALL_LETTER_K,
-    LATIN_SMALL_LETTER_A,
-    LATIN_SMALL_LETTER_G,
-    LATIN_SMALL_LETTER_E,
-    LESS_THAN_SIGN,
-    SPACE,
-)
-from celestine.unicode import (
-    FULL_STOP,
-    LOW_LINE,
-)
 import os
 import pathlib
 import sys
@@ -57,13 +9,37 @@ from importlib.resources import files
 
 from celestine.data import CELESTINE
 from celestine.typed import (
+    FN,
     LS,
+    A,
+    B,
+    D,
+    M,
+    N,
     P,
     S,
+    string,
 )
-from celestine.unicode import NONE
-
-
+from celestine.unicode import (
+    FULL_STOP,
+    LATIN_SMALL_LETTER_A,
+    LATIN_SMALL_LETTER_C,
+    LATIN_SMALL_LETTER_E,
+    LATIN_SMALL_LETTER_F,
+    LATIN_SMALL_LETTER_G,
+    LATIN_SMALL_LETTER_I,
+    LATIN_SMALL_LETTER_K,
+    LATIN_SMALL_LETTER_N,
+    LATIN_SMALL_LETTER_O,
+    LATIN_SMALL_LETTER_P,
+    LATIN_SMALL_LETTER_T,
+    LATIN_SMALL_LETTER_U,
+    LATIN_SMALL_LETTER_Y,
+    LESS_THAN_SIGN,
+    LOW_LINE,
+    NONE,
+    SPACE,
+)
 
 FUNCTION = string(
     LESS_THAN_SIGN,
@@ -95,14 +71,13 @@ PYTHON_EXTENSION = string(
 )
 
 
-
 def clamp(minimum, midterm, maximum):
     """The order of the inputs actually don't matter."""
     return sorted((minimum, midterm, maximum))[1]
 
 
-
 ########################################################################
+
 
 def package(base: S, *path: S) -> M:
     """Load an external package from the system path."""
@@ -203,10 +178,6 @@ def package_dependency(name: S, fail) -> M:
     return flag
 
 
-
-
-
-
 #######
 
 
@@ -251,8 +222,6 @@ def function_page(module: M) -> LS:
     return iterable
 
 
-
-
 ####
 
 """Central place for loading and importing external files."""
@@ -281,7 +250,7 @@ def walk(*path: S) -> G[T[S, LS, LS], N, N]:
     return os.walk(top, topdown, onerror, followlinks)
 
 
-def file(top: P, include: LS, exclude: LS) -> GP:
+def many_file(top: P, include: LS, exclude: LS) -> GP:
     """
     Item 'name_exclude': a list of directory names to exclude.
 
@@ -303,7 +272,7 @@ def file(top: P, include: LS, exclude: LS) -> GP:
                 yield path
 
 
-def python(top: P, include: LS, exclude: LS) -> LP:
+def many_python(top: P, include: LS, exclude: LS) -> LP:
     """"""
     include = [".py", *include]
     exclude = [
@@ -312,10 +281,11 @@ def python(top: P, include: LS, exclude: LS) -> LP:
         "__pycache__",
         *exclude,
     ]
-    return file(top, include, exclude)
+    return many_file(top, include, exclude)
 
 
 # module
+
 
 def remove_empty_directories(path: P) -> N:
     """"""
@@ -330,9 +300,8 @@ def remove_empty_directories(path: P) -> N:
     return empty
 
 
-
-
 ########
+
 
 def pathroot() -> P:
     """When running as a package, sys.path[0] is wrong."""

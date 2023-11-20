@@ -16,7 +16,7 @@ def find_image(hold: H, directory: P) -> LP:
     path = directory
     include = hold.window.extension()
     exclude: LS = []
-    files = list(load.file(path, include, exclude))
+    files = list(load.many_file(path, include, exclude))
     return files
 
 

@@ -141,13 +141,13 @@ class Window(Window_):
 
         def set_font():
             pygame.font.init()
-            file_path = load.pathway.asset("cascadia_code_regular.otf")
+            file_path = load.asset("cascadia_code_regular.otf")
             size = 40
             self.font = pygame.font.Font(file_path, size)
 
         def set_icon():
             path = "icon.png"
-            asset = load.pathway.asset(path)
+            asset = load.asset(path)
             image = pygame.image.load(asset)
             icon = image.convert_alpha()
             pygame.display.set_icon(icon)

@@ -27,7 +27,7 @@ class Package(Abstract):
         location = os.getcwd()
         os.chdir(sys.path[0])
 
-        files = load.many.python(path, [], ["unicode"])
+        files = load.many_python(path, [], ["unicode"])
 
         file = map(str, files)
         argv = [*file]

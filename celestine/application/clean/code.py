@@ -92,8 +92,8 @@ def clean(*, hold: H, **star: R) -> N:
 
 def licence(**star: R):
     """"""
-    location = load.pathway.pathway("licence")
-    files = load.many.file(location, [], [])
+    location = load.pathway("licence")
+    files = load.many_file(location, [], [])
     for file in files:
         string = io.StringIO()
         with text_load(file) as lines:
@@ -119,7 +119,7 @@ def version(**star: R):
     day0 = day1.zfill(2)
 
     for path, keys in array:
-        file = load.pathway.pathway_root(*path)
+        file = load.pathway_root(*path)
         text = text_read(file)
 
         for key in keys:
