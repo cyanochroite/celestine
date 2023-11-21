@@ -7,10 +7,12 @@ Was run from the project root.
 import os
 import sys
 
+from celestine import file as fuel
 from celestine import load
-from celestine.file import (
-    module_save,
-    text_load,
+from celestine.file import module_save
+from celestine.typed import (
+    GS,
+    S,
 )
 
 sys.path[0] = os.path.dirname(sys.path[0])
@@ -44,18 +46,19 @@ def work(document):
 
         yield text
 
+        # TODO check indent of stuff below
 
-file = load.pathwayway("UnicodeData.txt")
+        file = load.pathway("UnicodeData.txt")
 
-def read_stream(lines: GE[S, N, N]) -> S:
-    string = io.StringIO()
-    for line in lines:
-        string.write(line)
+        def read_stream(lines: GS) -> S:
+            string = io.StringIO()
+            for line in lines:
+                string.write(line)
 
-    value = string.getvalue()
-    return value
+            value = string.getvalue()
+            return value
 
-with text_load(file) as lines:
-    load = read_stream(lines)
-    text = work(load)
-module_save(text, "unicode")
+        with fuel.text.reader(file) as lines:
+            load = read_stream(lines)
+            text = work(load)
+        module_save(text, "unicode")

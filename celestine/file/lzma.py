@@ -2,11 +2,12 @@
 
 import lzma
 
-from celestine.file import (
+from celestine.file.data import (
     READ_BINARY,
     WRITE_BINARY,
 )
 from celestine.typed import (
+    FILE,
     LZMA,
     N,
     P,
@@ -14,33 +15,66 @@ from celestine.typed import (
 )
 
 
-def lzma_load(path: P) -> LZMA:
+class Funny:
     """"""
-    return lzma.open(
-        path,
-        mode=READ_BINARY,
-    )
+
+    def load(self, path: P) -> S:
+        """"""
+        with self.reader(path) as file:
+            return file.read()
+
+    def reader(self, path: P) -> FILE:
+        """"""
+        return binary(path, READ_BINARY)
+
+    def save(self, path: P, data: S) -> N:
+        """"""
+        with self.writer(path) as file:
+            file.write(data)
+
+    def writer(self, path: P) -> FILE:
+        """"""
+        return binary(path, WRITE_BINARY)
+
+    def __init__(self) -> N:
+        self.encoding = (
+            None  # Binary mode doesn't take an 'encoding' argument.
+        )
+        self.errors = (
+            None  #: Binary mode doesn't take an 'errors' argument
+        )
 
 
-def lzma_read(path: P) -> S:
+class Binary(Funny):
     """"""
-    with lzma_load(path) as file:
-        return file.read()
 
+    def reader(self, path: P) -> LZMA:
+        """"""
+        return lzma.open(
+            path,
+            mode=READ_BINARY,
+        )
 
-def lzma_save(path: P) -> LZMA:
-    """"""
-    return lzma.open(
-        path,
-        mode=WRITE_BINARY,
-        format=lzma.FORMAT_XZ,
-        check=lzma.CHECK_SHA256,
-        preset=9,
-        filters=None,
-    )
+    def save(self, path: P, data: S) -> N:
+        """"""
+        with self.writer(path) as file:
+            file.write(bytes(data))
 
+    def writer(self, path: P) -> LZMA:
+        """"""
+        return lzma.open(
+            path,
+            mode=WRITE_BINARY,
+            format=lzma.FORMAT_XZ,
+            check=lzma.CHECK_SHA256,
+            preset=9,
+            filters=None,
+        )
 
-def lzma_write(path: P, data: S) -> N:
-    """"""
-    with lzma_save(path) as file:
-        file.write(bytes(data))
+    def __init__(self) -> N:
+        self.encoding = (
+            None  # Binary mode doesn't take an 'encoding' argument.
+        )
+        self.errors = (
+            None  #: Binary mode doesn't take an 'errors' argument
+        )

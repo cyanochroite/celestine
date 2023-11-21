@@ -4,14 +4,9 @@ import datetime
 import io
 import re
 
+from celestine import file as fuel
 from celestine import load
 from celestine.data import normalize
-from celestine.file import (
-    text_load,
-    text_read,
-    text_save,
-    text_write,
-)
 from celestine.typed import (
     H,
     N,
@@ -96,13 +91,13 @@ def licence(**star: R):
     files = load.many_file(location, [], [])
     for file in files:
         string = io.StringIO()
-        with text_load(file) as lines:
+        with fuel.text.reader(file) as lines:
             for line in lines:
                 character = normalize.character(line)
                 wrap = normalize.wrap_text(character)
                 for text in wrap:
                     string.write(text)
-        with text_save(file) as document:
+        with fuel.text.writer(file) as document:
             for line in string.getvalue():
                 document.write(line)
 
@@ -120,7 +115,7 @@ def version(**star: R):
 
     for path, keys in array:
         file = load.pathway_root(*path)
-        text = text_read(file)
+        text = fuel.text.load(file)
 
         for key in keys:
             pattern = key
@@ -148,4 +143,4 @@ def version(**star: R):
             flags = 0
 
             text = re.sub(pattern, repl, string, count, flags)
-            text_write(file, text)
+            fuel.text.save(file, text)

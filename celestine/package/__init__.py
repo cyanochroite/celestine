@@ -4,7 +4,7 @@ import os
 import sys
 
 from celestine import load
-from celestine.file import (
+from celestine.file.data import (
     UTF_8,
     WRITE_TEXT,
 )

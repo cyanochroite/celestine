@@ -2,7 +2,7 @@
 
 import io
 
-from celestine.file import (
+from celestine.file.data import (
     MAXIMUM_LINE_LENGTH,
     SECTION_BREAK,
 )

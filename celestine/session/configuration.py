@@ -3,12 +3,12 @@
 import configparser
 import os
 
-from celestine import load
-from celestine.data import CELESTINE
-from celestine.file import (
-    UTF_8,
-    text_save,
+from celestine import (
+    file,
+    load,
 )
+from celestine.data import CELESTINE
+from celestine.file.data import UTF_8
 from celestine.typed import (
     N,
     S,
@@ -38,7 +38,7 @@ class Configuration:
     def save(self) -> N:
         """Save the configuration file."""
         configuration = self.configuration
-        with text_save(self.path) as fileobject:
+        with file.text.writer(self.path) as fileobject:
             space_around_delimiters = True
             configuration.write(fileobject, space_around_delimiters)
 

@@ -7,12 +7,19 @@ from celestine.data import CELESTINE
 from celestine.data.directory import APPLICATION
 from celestine.session.session import SuperSession
 from celestine.typed import N
-from celestine.window.container import Container as Page
+from celestine.window.container import View
 
 ERROR = "error"
 MODULE = "module"
 TARGET = "_test.py"
 TEST = "test"
+
+from celestine.typed import (
+    L,
+    N,
+    S,
+    T,
+)
 
 
 class Session(SuperSession):
@@ -40,7 +47,8 @@ def find(target: S) -> L[T[S, ...]]:
     return array
 
 
-def main(_: Page) -> N:
+# TODO is this code?
+def main(_: View) -> N:
     """Run the unittest library."""
     module = load.module(APPLICATION, TEST)
     paths = find(TARGET)
