@@ -1,20 +1,7 @@
 """Central place for loading and importing external files."""
 
-import os
-import pathlib
-import itertools
-
-from celestine.typed import (
-    GP,
-    LP,
-    LS,
-    G,
-    N,
-    P,
-    S,
-    T,
-)
 import importlib
+import itertools
 import os
 import pathlib
 import sys
@@ -23,15 +10,19 @@ from importlib.resources import files
 from celestine.data import CELESTINE
 from celestine.typed import (
     FN,
+    GP,
+    LP,
     LS,
     A,
     B,
     D,
-    M,
+    G,
     L,
+    M,
     N,
     P,
     S,
+    T,
     string,
 )
 from celestine.unicode import (
@@ -105,6 +96,7 @@ def module(*path: S) -> M:
     """Load an internal module from anywhere in the application."""
     return package(CELESTINE, *path)
 
+
 def package(base: S, *path: S) -> M:
     """Load an external package from the system path."""
     sub_package_children
@@ -112,6 +104,7 @@ def package(base: S, *path: S) -> M:
     name = FULL_STOP.join(iterable)
     result = importlib.import_module(name, package=base)
     return result
+
 
 def modules(*path: S) -> L[M]:
     """Load an internal module from anywhere in the application."""
@@ -166,7 +159,6 @@ def module_fallback(*path: S) -> M:
     return fallback
 
 
-
 def module_to_name(_module: M) -> S:
     """"""
     string = repr(_module)
@@ -200,6 +192,7 @@ def package_dependency(name: S, fail) -> M:
 ########################################################################
 # Dictionary stuff
 
+
 def _dictionary_items(_module: M) -> T[S, FN]:
     _dictionary = vars(_module)
     _items = _dictionary.items()
@@ -228,20 +221,18 @@ def dictionary(_module: M) -> D[S, FN]:
     return mapping
 
 
-
-
 def decorators(_module: M, name: S) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
     _dictionary = _dictionary_items(_module)
     text = string(FUNCTION, name, FULL_STOP)
     iterable = {
-        key: value
-        for key, value in _dictionary
-        if text in repr(value)
+        key: value for key, value in _dictionary if text in repr(value)
     }
     return iterable
 
+
 ########
+
 
 def decorator_name(module: M, name: S) -> S:
     """Load from module all functions and turn them into dictionary."""
@@ -262,7 +253,6 @@ def function_page(module: M) -> LS:
 
 
 ########################################################################
-
 
 
 def walk(*path: S) -> G[T[S, LS, LS], N, N]:
@@ -308,9 +298,9 @@ def many_python(top: P, include: LS, exclude: LS) -> LP:
     return many_file(top, include, exclude)
 
 
-
 def sub_package_children(*path: S) -> LP:
     """"""
+
     def check_me(stuff):
         for one, two in stuff:
             if one == "":
@@ -319,6 +309,7 @@ def sub_package_children(*path: S) -> LP:
                 continue
             return False
         return True
+
     def fix_path(stuff):
         array = []
         for item in stuff:
@@ -339,6 +330,7 @@ def sub_package_children(*path: S) -> LP:
         if check_me(car):
             array.append(parts)
     return array
+
 
 def remove_empty_directories(path: P) -> N:
     """"""

@@ -2,6 +2,10 @@
 
 import io
 
+from celestine.file import (
+    MAXIMUM_LINE_LENGTH,
+    SECTION_BREAK,
+)
 from celestine.typed import (
     GS,
     S,
@@ -28,11 +32,6 @@ from celestine.unicode.alphabet2 import (
     unicode_newline,
     unicode_punctuation,
     unicode_whitespace,
-)
-
-from .data import (
-    MAXIMUM_LINE_LENGTH,
-    SECTION_BREAK,
 )
 
 

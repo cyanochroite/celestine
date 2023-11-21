@@ -4,7 +4,6 @@
 import lzma
 
 from celestine import load
-from celestine.file import data as stream
 from celestine.typed import (
     FILE,
     GS,
@@ -14,6 +13,49 @@ from celestine.typed import (
     P,
     S,
 )
+
+MAXIMUM_LINE_LENGTH = 72
+SECTION_BREAK = "######################################################\
+##################"
+
+# encoding
+ASCII = "ascii"
+ISO_8859_1 = "iso_8859_1"
+LATIN_1 = "latin_1"
+US_ASCII = "us_ascii"
+UTF_8 = "utf_8"
+UTF_16 = "utf_16"
+UTF_32 = "utf_32"
+
+# errors
+BACKSLASHREPLACE = "backslashreplace"
+IGNORE = "ignore"
+NAMEREPLACE = "namereplace"
+REPLACE = "replace"
+STRICT = "strict"
+SURROGATEESCAPE = "surrogateescape"
+XMLCHARREFREPLACE = "xmlcharrefreplace"
+
+# mode
+APPEND_BINARY = "ab"
+APPEND_TEXT = "at"
+EXCLUSIVE_BINARY = "xb"
+EXCLUSIVE_TEXT = "xt"
+READ_BINARY = "rb"
+READ_TEXT = "rt"
+TRUNCATE_BINARY = "w+b"
+TRUNCATE_TEXT = "w+t"
+UPDATE_BINARY = "r+b"
+UPDATE_TEXT = "r+t"
+WRITE_BINARY = "wb"
+WRITE_TEXT = "wt"
+
+# newline
+APPLE = "\n"
+COMMODORE = "\r"
+MICROSOFT = "\r\n"
+UNIVERSAL = None
+UNTRANSLATED = ""
 
 
 def binary(path: P, mode: S) -> FILE:
@@ -25,7 +67,7 @@ def binary(path: P, mode: S) -> FILE:
 
 def binary_load(path: P) -> FILE:
     """"""
-    return binary(path, stream.READ_BINARY)
+    return binary(path, READ_BINARY)
 
 
 def binary_read(path: P) -> S:
@@ -36,7 +78,7 @@ def binary_read(path: P) -> S:
 
 def binary_save(path: P) -> FILE:
     """"""
-    return binary(path, stream.WRITE_BINARY)
+    return binary(path, WRITE_BINARY)
 
 
 def binary_write(path: P, data: S) -> N:
@@ -49,7 +91,7 @@ def lzma_load(path: P) -> LZMA:
     """"""
     return lzma.open(
         path,
-        mode=stream.READ_BINARY,
+        mode=READ_BINARY,
     )
 
 
@@ -63,7 +105,7 @@ def lzma_save(path: P) -> LZMA:
     """"""
     return lzma.open(
         path,
-        mode=stream.WRITE_BINARY,
+        mode=WRITE_BINARY,
         format=lzma.FORMAT_XZ,
         check=lzma.CHECK_SHA256,
         preset=9,
@@ -81,7 +123,7 @@ def raw(path: P, mode: S, encoding: OS, errors: OS) -> FILE:
     """Does all file opperations."""
     file = path
     buffering = 1  # Use line buffering.
-    newline = stream.UNIVERSAL  # Universal newlines mode.
+    newline = UNIVERSAL  # Universal newlines mode.
     closefd = True  # The close file descriptor must be True.
     opener = None  # Use the default opener.
     return open(
@@ -98,14 +140,14 @@ def raw(path: P, mode: S, encoding: OS, errors: OS) -> FILE:
 
 def text(path: P, mode: S) -> FILE:
     """Does all file opperations."""
-    encoding = stream.UTF_8  # Use UTF 8 encoding.
-    errors = stream.STRICT  # Raise a ValueError exception on error.
+    encoding = UTF_8  # Use UTF 8 encoding.
+    errors = STRICT  # Raise a ValueError exception on error.
     return raw(path, mode, encoding, errors)
 
 
 def text_load(path: P) -> FILE:
     """"""
-    return text(path, stream.READ_TEXT)
+    return text(path, READ_TEXT)
 
 
 def text_read(path: P) -> S:
@@ -116,7 +158,7 @@ def text_read(path: P) -> S:
 
 def text_save(path: P) -> FILE:
     """"""
-    return text(path, stream.WRITE_TEXT)
+    return text(path, WRITE_TEXT)
 
 
 def text_write(path: P, data: S) -> N:

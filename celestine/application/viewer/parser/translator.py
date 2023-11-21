@@ -1,3 +1,12 @@
+# change to hold.package.itertools
+from more_itertools import split_when
+
+from celestine.application.viewer.parser.operator import (
+    number_parse,
+    tab_parse,
+    unary_parse,
+    word_parse,
+)
 from celestine.unicode.alphabet import (
     Comparison,
     Digit,
@@ -6,17 +15,6 @@ from celestine.unicode.alphabet import (
     Unary,
 )
 from celestine.unicode.encoding import encoding
-
-# change to hold.package.itertools
-from more_itertools import (
-    split_when,
-)
-from celestine.application.viewer.parser.operator import (
-    number_parse,
-    tab_parse,
-    unary_parse,
-    word_parse,
-)
 
 from .operator import comparison_parse
 

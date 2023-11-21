@@ -5,8 +5,8 @@ import io
 import re
 
 from celestine import load
+from celestine.data import normalize
 from celestine.file import (
-    normalize,
     text_load,
     text_read,
     text_save,

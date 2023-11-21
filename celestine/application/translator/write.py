@@ -3,10 +3,8 @@
 import io
 import keyword
 
-from celestine.file import (
-    module_save,
-    normalize,
-)
+from celestine.data import normalize
+from celestine.file import module_save
 from celestine.typed import (
     GS,
     TABLE,

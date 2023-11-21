@@ -5,8 +5,10 @@ import os
 
 from celestine import load
 from celestine.data import CELESTINE
-from celestine.file import text_save
-from celestine.file.data import UTF_8
+from celestine.file import (
+    UTF_8,
+    text_save,
+)
 from celestine.typed import (
     N,
     S,
