@@ -4,11 +4,11 @@ import configparser
 import os
 
 from celestine import (
-    stream,
     load,
+    stream,
 )
 from celestine.data import CELESTINE
-from celestine.stream.data import UTF_8
+from celestine.stream import UTF_8
 from celestine.typed import (
     N,
     S,

@@ -2,8 +2,10 @@
 
 import io
 
-from celestine.stream import module_open
-from celestine.stream.data import SECTION_BREAK
+from celestine.stream import (
+    SECTION_BREAK,
+    module_open,
+)
 from celestine.typed import (
     GS,
     S,

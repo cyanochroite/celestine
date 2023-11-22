@@ -74,3 +74,14 @@ def unregister() -> N:
 
 
 # Merge Code and View files. Mark Code functions. Scan all files in app.
+# sys.meta_path.append(DebugFileLoader) # importer
+
+# package name ref:
+# Glue
+# Bottle
+
+# zipapp on pypi
+# python -x importtime -c "filename"
+
+
+# decorator   __call__

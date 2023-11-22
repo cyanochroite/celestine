@@ -7,8 +7,10 @@ Was run from the project root.
 import os
 import sys
 
-from celestine import stream
-from celestine import load
+from celestine import (
+    load,
+    stream,
+)
 from celestine.stream import module_save
 from celestine.typed import (
     GS,

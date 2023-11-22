@@ -4,8 +4,10 @@ import datetime
 import io
 import re
 
-from celestine import stream
-from celestine import load
+from celestine import (
+    load,
+    stream,
+)
 from celestine.data import normalize
 from celestine.typed import (
     H,
