@@ -7,9 +7,9 @@ Was run from the project root.
 import os
 import sys
 
-from celestine import file as fuel
+from celestine import stream
 from celestine import load
-from celestine.file import module_save
+from celestine.stream import module_save
 from celestine.typed import (
     GS,
     S,
@@ -58,7 +58,8 @@ def work(document):
             value = string.getvalue()
             return value
 
-        with fuel.text.reader(file) as lines:
+        with stream.text.reader(file) as lines:
             load = read_stream(lines)
             text = work(load)
         module_save(text, "unicode")
+

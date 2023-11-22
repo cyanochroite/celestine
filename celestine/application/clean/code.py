@@ -4,7 +4,7 @@ import datetime
 import io
 import re
 
-from celestine import file as fuel
+from celestine import stream
 from celestine import load
 from celestine.data import normalize
 from celestine.typed import (
@@ -91,13 +91,13 @@ def licence(**star: R):
     files = load.many_file(location, [], [])
     for file in files:
         string = io.StringIO()
-        with fuel.text.reader(file) as lines:
+        with stream.text.reader(file) as lines:
             for line in lines:
                 character = normalize.character(line)
                 wrap = normalize.wrap_text(character)
                 for text in wrap:
                     string.write(text)
-        with fuel.text.writer(file) as document:
+        with stream.text.writer(file) as document:
             for line in string.getvalue():
                 document.write(line)
 

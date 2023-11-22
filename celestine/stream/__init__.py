@@ -3,8 +3,8 @@
 
 import lzma
 
-import celestine.file.lzma as _lzma
-import celestine.file.text as _text
+import celestine.stream.lzma as _lzma
+import celestine.stream.text as _text
 from celestine import load
 from celestine.typed import (
     GS,

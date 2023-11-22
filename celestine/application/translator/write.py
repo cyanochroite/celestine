@@ -4,7 +4,7 @@ import io
 import keyword
 
 from celestine.data import normalize
-from celestine.file import module_save
+from celestine.stream import module_save
 from celestine.typed import (
     GS,
     TABLE,

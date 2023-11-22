@@ -2,7 +2,7 @@
 
 import lzma
 
-from celestine.file.data import (
+from celestine.stream.data import (
     READ_BINARY,
     WRITE_BINARY,
 )
