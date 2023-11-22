@@ -85,3 +85,6 @@ def unregister() -> N:
 
 
 # decorator   __call__
+
+
+# split stream into load and save

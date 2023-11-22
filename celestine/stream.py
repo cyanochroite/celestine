@@ -1,9 +1,11 @@
 """Central place for loading and importing external files."""
 
-
+import importlib.resources
+import io
 import lzma as _lzma
 
 from celestine import load
+from celestine.data import CELESTINE
 from celestine.typed import (
     FILE,
     GS,
@@ -150,6 +152,31 @@ class Lzma:
             preset=9,
             filters=None,
         )
+
+
+class Resource:
+    """"""
+
+    def binary(self, child: S) -> io.TextIOWrapper:
+        return self.reader(child, READ_BINARY)
+
+    def text(self, child: S) -> io.TextIOWrapper:
+        return self.reader(child, READ_TEXT)
+
+    def reader(self, child: S, mode: S) -> io.TextIOWrapper:
+        """"""
+        files = importlib.resources.files(CELESTINE)
+        traversable = files.joinpath(child)
+        return traversable.open(
+            mode=mode,
+            buffering=1,  # Use line buffering.
+            encoding=UTF_8,  # Use UTF 8 encoding.
+            errors=STRICT,  # Raise a ValueError exception on error.
+            newline=UNIVERSAL,  # Universal newlines mode.
+        )
+
+
+resource = Resource()
 
 
 binary = File(
