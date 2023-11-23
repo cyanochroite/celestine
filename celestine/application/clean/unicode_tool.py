@@ -64,4 +64,3 @@ def work(document):
             load = read_stream(lines)
             text = work(load)
         module_save(text, "unicode")
-

@@ -77,5 +77,6 @@ def two(view: View) -> N:
         line.new("two_past", text=language.DEMO_TWO_PAST, view="one")
         line.new("two_next", text=language.DEMO_TWO_NEXT, view="zero")
 
+
 # if __spec__.name == "__main__":
 #    celestine.main(__spec__.origin)
