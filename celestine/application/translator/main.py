@@ -26,7 +26,6 @@ from .write import (
 
 def parser_magic(hold, source):
     """Do all parser stuff here."""
-
     all_languages = {}
 
     azure_to_iso = {}
@@ -65,7 +64,6 @@ def parser_magic(hold, source):
 
 def reset():
     """Remove the directory and rebuild it."""
-
     path = load.pathway.pathway(LANGUAGE)
     if os.path.islink(path):
         raise RuntimeError
@@ -92,7 +90,6 @@ def post(hold, code, text):
 
 def do_translate(hold):
     """Translate the language files."""
-
     # Add ability to choose master language file.
     source = "en"
 

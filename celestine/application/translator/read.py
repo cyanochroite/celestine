@@ -57,7 +57,6 @@ def make_dictionary(document):
 
 def open_language(*path):
     """Convert a dictionary to a string and save it to a file."""
-
     text = fix_line_split(*path)
     lines = read_new_lines(text)
     # normal = normalize(lines)

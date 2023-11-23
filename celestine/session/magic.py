@@ -73,7 +73,6 @@ class Magic:
         Parses the arguments with provided attributes.
         Adds the parsed objects to class objects
         """
-
         self._make_parser()
 
         self._add_argument(attributes)

@@ -11,7 +11,6 @@ from .main import do_translate
 
 def translate(*, hold: H, **star: R) -> N:
     """Translate the language files."""
-
     do_translate(hold)
 
 
