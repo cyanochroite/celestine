@@ -6,20 +6,19 @@ from celestine import load
 from celestine.data import CELESTINE
 from celestine.data.directory import APPLICATION
 from celestine.session.session import SuperSession
-from celestine.typed import N
 from celestine.window.container import View
-
-ERROR = "error"
-MODULE = "module"
-TARGET = "_test.py"
-TEST = "test"
-
 from celestine.typed import (
     L,
     N,
     S,
     T,
 )
+
+ERROR = "error"
+MODULE = "module"
+TARGET = "_test.py"
+TEST = "test"
+
 
 
 class Session(SuperSession):

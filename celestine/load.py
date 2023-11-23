@@ -99,7 +99,6 @@ def module(*path: S) -> M:
 
 def package(base: S, *path: S) -> M:
     """Load an external package from the system path."""
-    sub_package_children
     iterable = [base, *path]
     name = FULL_STOP.join(iterable)
     result = importlib.import_module(name, package=base)
