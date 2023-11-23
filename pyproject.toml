@@ -97,7 +97,6 @@ clean = [
     "isort",
     "pydocstringformatter",
     "pyupgrade",
-    "requests",
 ]
 demo = [
     "requests",

@@ -10,6 +10,7 @@ The Celestine Image Viewer
     README
     application
     dependencies
+    interface
 
 - About_
 - Goals_
