@@ -26,7 +26,6 @@ from .data import ERROR
 
 def parser(language: M, exit_on_error: B) -> argparse.ArgumentParser:
     """A basic parser with overloaded functions for text translation."""
-
     return _parser(language)(
         prog=CELESTINE,
         usage=None,  # Default.
@@ -109,7 +108,6 @@ def _parser(language: M) -> TYPE[argparse.ArgumentParser]:
             If you override this in a subclass, it should not return.
             It should either exit or raise an exception.
             """
-
             string = io.StringIO()
             string.write(self.prog)
             string.write(COLON)

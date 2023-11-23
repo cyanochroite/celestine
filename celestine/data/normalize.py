@@ -267,7 +267,6 @@ def quotation(string: S) -> GS:
 
 def punctuation(string: S) -> GS:
     """Remove duplicate punctiation symbols."""
-
     previous = None
     for character in string:
         if character in unicode_punctuation:

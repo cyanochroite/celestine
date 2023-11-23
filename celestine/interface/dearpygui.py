@@ -60,7 +60,6 @@ class Image(Abstract, Image_):
         channels = image[2]
         photo = image[3]
         """
-
         dearpygui = self.hold.package.dearpygui
 
         photo = self.load()

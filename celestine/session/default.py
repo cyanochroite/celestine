@@ -14,7 +14,6 @@ from celestine.typed import (
 
 def module(path: S, *items: S) -> M:
     """Return a default application."""
-
     for item in items:
         try:
             load.module(path, item)

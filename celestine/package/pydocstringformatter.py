@@ -23,7 +23,6 @@ class Package(Abstract):
         Exclude argument simply does not work.
         Manually feeding it files works.
         """
-
         location = os.getcwd()
         os.chdir(sys.path[0])
 
