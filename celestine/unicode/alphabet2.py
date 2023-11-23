@@ -5,8 +5,6 @@ https://www.unicode.org/Public/zipped/15.0.0/UCD.zip/UnicodeData.txt
 """
 
 
-bacon = ""
-
 from celestine.unicode import (
     CARRIAGE_RETURN,
     CHARACTER_TABULATION,

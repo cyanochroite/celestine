@@ -57,19 +57,20 @@ def begin_session(argument_list: LS, exit_on_error: B) -> H:
     # items = load.python(APPLICATION, application)
     # car = list(items)
 
-    load.modules(APPLICATION, application)
+    code = {}
+    main = {}
+    view = {}
 
-    view = load.module(APPLICATION, application, "view")
+    modules = load.modules(APPLICATION, application)
+    for module in modules:
+        code |= load.decorators(module, "code")
+        main |= load.decorators(module, "main")
+        view |= load.decorators(module, "scene")
 
-    code = load.module(APPLICATION, application, "code")
+    session.code = code
+    session.main = main
+    session.view = view | main
 
-    session.code = load.functions(code)
-    one = load.decorators(view, "scene")
-    two = load.decorators(view, "main")
-    session.view = one | two
-
-    main = load.decorator_name(view, "main")
-    session.main = session1.main if session1.main else main
     return session
 
 

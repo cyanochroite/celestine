@@ -69,7 +69,7 @@ class Window(View):
     def work(self, code, **star: R):
         """"""
         caller = self.code.get(code)
-        caller(hold=self.hold, **star)
+        caller(self.hold, **star)
         self.draw(**star)
 
     def __enter__(self) -> K:

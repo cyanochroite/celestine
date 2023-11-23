@@ -189,14 +189,14 @@ class word(Operator):
     """"""
 
     def __init__(self, iterable):
-        super().__init__("WORD", [item for item in iterable], [])
+        super().__init__("WORD", list(iterable), [])
 
 
 class number(Operator):
     """"""
 
     def __init__(self, iterable):
-        super().__init__("NUMBER", [item for item in iterable], [])
+        super().__init__("NUMBER", list(iterable), [])
 
 
 _comparison = {

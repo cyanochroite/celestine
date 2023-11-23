@@ -209,7 +209,7 @@ class Image(Abstract):
         x_size, y_size = self.size
         return (math.floor(x_size), math.floor(y_size))
 
-    def crop(_self, source_length: PAIR, target_length: PAIR) -> BOX:
+    def crop(self, source_length: PAIR, target_length: PAIR) -> BOX:
         """"""
 
         (source_length_x, source_length_y) = source_length

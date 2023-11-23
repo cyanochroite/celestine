@@ -1,4 +1,4 @@
-""""DearPyGui: A simple Python GUI Toolkit."""
+"""DearPyGui: A simple Python GUI Toolkit."""
 
 
 from celestine.typed import (

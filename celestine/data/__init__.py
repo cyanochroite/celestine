@@ -5,6 +5,8 @@ from enum import Enum
 from celestine.typed import (
     C,
     N,
+    H,
+    R,
 )
 from celestine.window.container import View
 
@@ -31,8 +33,8 @@ def scene(function: C[[View], N]) -> C[[View], N]:
 
 
 def code(function: C[[View], N]) -> C[[View], N]:
-    def decorator(view: View) -> N:
-        function(view)
+    def decorator(hold: H, **star: R) -> N:
+        function(hold, **star)
 
     return decorator
 

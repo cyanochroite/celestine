@@ -21,7 +21,7 @@ class Session(SuperSession):
 
 
 @code
-def cow(*, say: S, hold: H, **star: R) -> N:
+def cow(hold: H, *, say: S) -> N:
     """"""
     talk = hold.language.DEMO_COW_TALK
     print(talk, say)

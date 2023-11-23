@@ -29,7 +29,6 @@ bl_info = {
     "category": "3D View",
 }
 
-
 def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     """Run the main program."""
     session = begin_session(argument_list, exit_on_error)
@@ -48,8 +47,12 @@ def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
             function(container)
             window.view[name] = container
 
-        window.page = window.view[session.main]
-        window.page.show()
+        for name, function in session.main.items():
+            # Only one of these should exist.
+            window.page = window.view[name]
+            window.page.show()
+
+
 
 
 def register() -> N:
