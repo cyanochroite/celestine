@@ -6,7 +6,6 @@ https://www.unicode.org/Public/zipped/15.0.0/UCD.zip/UnicodeData.txt
 
 
 bacon = ''
-import io
 
 from celestine.unicode import (
     CARRIAGE_RETURN,

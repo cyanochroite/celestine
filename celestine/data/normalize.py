@@ -269,8 +269,8 @@ def punctuation(string: S) -> GS:
     """Remove duplicate punctiation symbols."""
     previous = None
     for character in string:
-        if character in unicode_punctuation:
-            if character == previous:
-                continue
+        if character in unicode_punctuation and character == previous:
+            continue
+
         yield character
         previous = character
