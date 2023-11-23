@@ -1,26 +1,30 @@
-autoflake
-black
-blender-stubs
-build
-coverage
-dearpygui
-flake8
-isort
 more-itertools
-mypy
 Pillow
-pip
 platformdirs
-pycodestyle
-pydocstringformatter
-pygame
-pylint
-pyright
-pytest
-pyupgrade
-requests
-ruff
-Sphinx
-twine
-types-requests
-windows-curses
+
+blender-stubs [build]
+build [build]
+coverage [build]
+flake8 [build]
+mypy [build]
+pip [build]
+pycodestyle [build]
+pylint [build]
+pyright [build]
+pytest [build]
+ruff [build]
+Sphinx [build]
+twine [build]
+types-requests [build]
+
+autoflake [clean]
+black [clean]
+isort [clean]
+pydocstringformatter [clean]
+pyupgrade [clean]
+
+requests [demo]
+
+dearpygui [gui]
+pygame [gui]
+windows-curses [gui] ; sys_platform == "win32" ; python_version < "3.12"

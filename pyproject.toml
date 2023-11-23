@@ -18,6 +18,7 @@ classifiers = [
     "Natural Language :: Danish",
     "Natural Language :: Dutch",
     "Natural Language :: English",
+#   "Natural Language :: Estonian",
     "Natural Language :: Finnish",
     "Natural Language :: French",
     "Natural Language :: German",
@@ -27,6 +28,7 @@ classifiers = [
     "Natural Language :: Italian",
     "Natural Language :: Latvian",
     "Natural Language :: Lithuanian",
+#   "Natural Language :: Maltese",
     "Natural Language :: Polish",
     "Natural Language :: Portuguese",
     "Natural Language :: Romanian",
@@ -97,12 +99,15 @@ clean = [
     "pyupgrade",
     "requests",
 ]
+demo = [
+    "requests",
+]
 gui = [
     "dearpygui",
     "pygame",
-    "windows-curses; platform_system=='Windows'",
+    # windows-curses curently broken on Python version 3.12
+    "windows-curses; platform_system=='Windows'; python_version<'3.12'",
 ]
-
 
 [project.urls]
 Changelog = "https://github.com/mem-dixy/celestine/blob/main/changelog.rst"
@@ -114,7 +119,6 @@ Tracker = "https://github.com/mem-dixy/celestine/issues"
 
 
 [tool.autoflake]
-exclude = ["unicode"]
 in-place = true
 recursive = true
 remove-all-unused-imports = true
@@ -123,21 +127,21 @@ remove-unused-variables = true
 
 
 [tool.black]
-extend-exclude = "unicode"
 line_length = 72
 safe = true
 target-version = [
+    "py310",
     "py311",
+    "py312",
 ]
 
 
 [tool.isort]
-extend_skip = ["unicode"]
 force_grid_wrap = 2
 line_ending = "\r\n"
 line_length = 72
 profile = "black"
-py_version = 310
+py_version = 312
 remove_redundant_aliases = true
 
 
@@ -168,7 +172,7 @@ write = true
 
 [tool.pylint.main]
 disable = "empty-docstring, too-few-public-methods"
-ignored-argument-names = "_|cls|ring|star|self"
+ignored-argument-names = "_|cls|hold|star|self"
 
 
 [tool.pylint.format]

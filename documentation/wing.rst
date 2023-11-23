@@ -33,7 +33,7 @@ Values
 ''''''
 _
 cls
-ring
+hold
 self
 star
 
@@ -52,7 +52,7 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 10000
+Maximum File Size (KB) = 1000
 
 Command Line = ${WING:PYTHON} -m flake8
 
@@ -68,7 +68,7 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 10000
+Maximum File Size (KB) = 1000
 
 Command Line = ${WING:PYTHON} -m mypy --show-column-numbers
 
@@ -80,7 +80,7 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 10000
+Maximum File Size (KB) = 1000
 
 Command Line = ${WING:PYTHON} -m pycodestyle
 
@@ -92,9 +92,9 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 10000
+Maximum File Size (KB) = 1000
 
-Command Line = ${WING:PYTHON} -m pylint --msg-template="{path}:{line}:{column}: {msg_id} {msg} ({symbol})" --ignored-argument-names="_|cls|ring|star|self"
+Command Line = ${WING:PYTHON} -m pylint --msg-template="{path}:{line}:{column}: {msg_id} {msg} ({symbol})" --ignored-argument-names="_|cls|hold|star|self"
 
 Include Pylint Errors = True
 
@@ -110,7 +110,7 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 10000
+Maximum File Size (KB) = 1000
 
 Command Line = ${WING:PYTHON} -m ruff
 
