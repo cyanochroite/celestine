@@ -27,4 +27,4 @@ requests [demo]
 
 dearpygui [gui]
 pygame [gui]
-windows-curses [gui] ; sys_platform == "win32" ; python_version < "3.12"
+windows-curses [gui]
