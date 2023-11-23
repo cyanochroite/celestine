@@ -1,0 +1,22 @@
+version = 1
+exclude_patterns = []
+test_patterns = [
+    "celestine/tests/\*\*",
+]
+
+[[analyzers]]
+name = "python"
+enabled = true
+dependency_file_paths = ["requirements.txt"]
+
+    [analyzers.meta]
+    runtime_version = "3.12.x"
+    max_line_length = 72
+    skip_doc_coverage = []
+    type_checker = "mypy"
+    additional_builtins = []
+    cyclomatic_complexity_threshold = "critical"
+
+[[transformers]]
+name = "black"
+enabled = true
