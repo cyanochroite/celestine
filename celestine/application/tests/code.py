@@ -21,7 +21,7 @@ def main(*, hold: H, **star: R) -> N:
     """Run the unittest library."""
     module = load.module(APPLICATION, TESTS)
     top = load.pathway()
-    files = load.many_python(top, [], [])
+    files = load.walk_python(top, [], [])
     files = list(files)
     paths = [file for file in files if file.name.startswith("test")]
     for path in paths:

@@ -3,6 +3,7 @@
 
 from celestine import load
 from celestine.data import (
+    code,
     main,
     scene,
 )
@@ -23,7 +24,7 @@ def picture(view: View) -> N:
 
 
 @main
-def main(view: View) -> N:
+def main1(view: View) -> N:
     """"""
     view.new(
         "load",

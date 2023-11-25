@@ -47,10 +47,8 @@ def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
             function(container)
             window.view[name] = container
 
-        for name, function in session.main.items():
-            # Only one of these should exist.
-            window.page = window.view[name]
-            window.page.show()
+        window.page = window.view[session.main]
+        window.page.show()
 
 
 

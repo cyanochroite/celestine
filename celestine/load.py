@@ -1,7 +1,15 @@
 """Central place for loading and importing external files."""
 
 import importlib
-import itertools
+import importlib.util
+import importlib.machinery
+import pkgutil
+
+
+from typing import TypeAlias as TA
+from typing import cast
+
+
 import os
 import pathlib
 import sys
@@ -76,9 +84,12 @@ PYTHON_EXTENSION = string(
 )
 
 
-def clamp(minimum, midterm, maximum):
-    """The order of the inputs actually don't matter."""
-    return sorted((minimum, midterm, maximum))[1]
+FF: TA = importlib.machinery.FileFinder
+MI: TA = pkgutil.ModuleInfo
+MS: TA = importlib.machinery.ModuleSpec
+# type FF = importlib.machinery.FileFinder
+# type MI = pkgutil.ModuleInfo
+# type MS = importlib.machinery.ModuleSpec
 
 
 ########################################################################
@@ -88,7 +99,7 @@ def package(base: S, *path: S) -> M:
     """Load an external package from the system path."""
     iterable = [base, *path]
     name = FULL_STOP.join(iterable)
-    result = importlib.import_module(name, package=base)
+    result = importlib.import_module(name)
     return result
 
 
@@ -97,21 +108,73 @@ def module(*path: S) -> M:
     return package(CELESTINE, *path)
 
 
-def package(base: S, *path: S) -> M:
-    """Load an external package from the system path."""
-    iterable = [base, *path]
-    name = FULL_STOP.join(iterable)
-    result = importlib.import_module(name, package=base)
-    return result
+def modulesa(*path: S) -> L[M]:
+    """Load an internal module from anywhere in the application."""
+
+    def specs(module_info: MI) -> MS:
+        (module_finder, name, _) = module_info
+        finder = cast(FF, module_finder)
+        spec = finder.find_spec(name)
+        return cast(MS, spec)
+
+    parent = pathlib.Path(__spec__.origin).parent
+    pkgpath = pathlib.Path(parent, *path)
+    paths = [str(pkgpath)]
+
+    walk_packages = pkgutil.walk_packages(paths)
+    spec = specs(walk_packages)
+    module = importlib.util.module_from_spec(spec)
+    return module
+
+def find_tests(start_dir, pattern):
+
+    paths = sorted(os.listdir(start_dir))
+    for path in paths:
+        full_path = os.path.join(start_dir, path)
+        tests, should_recurse = self._find_test_path(full_path, pattern)
+        if tests is not None:
+            yield tests
+        if should_recurse:
+            # we found a package that didn't use load_tests.
+            name = self._get_name_from_path(full_path)
+            self._loading_packages.add(name)
+            try:
+                yield from self._find_tests(full_path, pattern)
+            finally:
+                self._loading_packages.discard(name)
+
+
+
+def discover():
+    pattern = 'test*.py'
+    path = pathroot()
+
+    files = walk_python(path, [], [])
+    cow = list(files)
+    tests = list(find_tests(start_dir, pattern))
+    return tests
 
 
 def modules(*path: S) -> L[M]:
     """Load an internal module from anywhere in the application."""
-    children = sub_package_children(*path)
-    array = []
-    for item in children:
-        array.append(module(*item))
-    return array
+
+    def specs(module_info: MI) -> MS:
+        (module_finder, name, _) = module_info
+        finder = cast(FF, module_finder)
+        spec = finder.find_spec(name)
+        print(module_finder, name, spec)
+        return cast(MS, spec)
+
+    candy = discover()
+    parent = pathlib.Path(__spec__.origin).parent
+    pkgpath = pathlib.Path(parent, *path)
+    paths = [str(pkgpath)]
+
+    walk_packages = pkgutil.walk_packages(paths)
+    spec = map(specs, walk_packages)
+    result = map(importlib.util.module_from_spec, spec)
+    return result
+
 
 
 def attribute(*path: S) -> A:
@@ -252,6 +315,7 @@ def function_page(module: M) -> LS:
 
 ########################################################################
 
+#  os
 
 def walk(*path: S) -> G[T[S, LS, LS], N, N]:
     """Yields a 3-tuple (dirpath, dirnames, filenames)."""
@@ -262,7 +326,7 @@ def walk(*path: S) -> G[T[S, LS, LS], N, N]:
     return os.walk(top, topdown, onerror, followlinks)
 
 
-def many_file(top: P, include: LS, exclude: LS) -> GP:
+def walk_file(top: P, include: LS, exclude: LS) -> GP:
     """
     Item 'name_exclude': a list of directory names to exclude.
 
@@ -284,7 +348,7 @@ def many_file(top: P, include: LS, exclude: LS) -> GP:
                 yield path
 
 
-def many_python(top: P, include: LS, exclude: LS) -> LP:
+def walk_python(top: P, include: LS, exclude: LS) -> LP:
     """"""
     include = [".py", *include]
     exclude = [
@@ -293,41 +357,7 @@ def many_python(top: P, include: LS, exclude: LS) -> LP:
         "__pycache__",
         *exclude,
     ]
-    return many_file(top, include, exclude)
-
-
-def sub_package_children(*path: S) -> LP:
-    """"""
-
-    def check_me(stuff):
-        for one, two in stuff:
-            if one == "":
-                return True
-            if one == two:
-                continue
-            return False
-        return True
-
-    def fix_path(stuff):
-        array = []
-        for item in stuff:
-            if "." in item:
-                split = item.split(".")
-                array.append(split[0])
-            else:
-                array.append(item)
-        return array
-
-    done = [*path]
-    files = many_python(".", [], [])
-    array = []
-    for file in files:
-        parts = fix_path(file.parts)
-        car = itertools.zip_longest(done, parts, fillvalue="")
-        car = list(car)
-        if check_me(car):
-            array.append(parts)
-    return array
+    return walk_file(top, include, exclude)
 
 
 def remove_empty_directories(path: P) -> N:

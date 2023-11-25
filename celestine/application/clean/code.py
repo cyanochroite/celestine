@@ -90,7 +90,7 @@ def clean(*, hold: H, **star: R) -> N:
 def licence(**star: R):
     """"""
     location = load.pathway("licence")
-    files = load.many_file(location, [], [])
+    files = load.walk_file(location, [], [])
     for file in files:
         string = io.StringIO()
         with stream.text.reader(file) as lines:

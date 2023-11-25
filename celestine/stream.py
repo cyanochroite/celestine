@@ -157,6 +157,11 @@ class Lzma:
 class Resource:
     """"""
 
+    def load(self, path: P) -> S:
+        """"""
+        with self.reader(path) as file:
+            return file.read()
+
     def binary(self, child: S) -> io.TextIOWrapper:
         return self.reader(child, READ_BINARY)
 

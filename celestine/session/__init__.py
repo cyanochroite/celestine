@@ -1,6 +1,8 @@
 """"""
 
 
+import sys
+
 from celestine import load
 from celestine.data.directory import (
     APPLICATION,
@@ -52,8 +54,6 @@ def begin_session(argument_list: LS, exit_on_error: B) -> H:
 
     session.window = None
 
-    load.sub_package_children(APPLICATION, application)
-
     # items = load.python(APPLICATION, application)
     # car = list(items)
 
@@ -61,15 +61,23 @@ def begin_session(argument_list: LS, exit_on_error: B) -> H:
     main = {}
     view = {}
 
+
+
     modules = load.modules(APPLICATION, application)
     for module in modules:
         code |= load.decorators(module, "code")
         main |= load.decorators(module, "main")
         view |= load.decorators(module, "scene")
 
+    if not main:
+        raise LookupError("No '@main' decorator found.")
+
+    if len(main) > 1:
+        raise UserWarning("Expecting only one '@main' decorator.")
+
     session.code = code
-    session.main = main
     session.view = view | main
+    session.main = next(iter(main))
 
     return session
 

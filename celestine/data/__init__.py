@@ -45,3 +45,8 @@ INTERFACE = "interface"
 BLENDER = "blender"
 REGISTER = "register"
 UNREGISTER = "unregister"
+
+
+def clamp(minimum, midterm, maximum):
+    """The order of the inputs actually don't matter."""
+    return sorted((minimum, midterm, maximum))[1]

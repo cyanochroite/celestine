@@ -9,17 +9,22 @@ from celestine.typed import (
     P,
     R,
 )
-
+from celestine.data import (
+    code,
+    main,
+    scene,
+)
 
 def find_image(hold: H, directory: P) -> LP:
     """"""
     path = directory
     include = hold.window.extension()
     exclude: LS = []
-    files = list(load.many_file(path, include, exclude))
+    files = list(load.walk_file(path, include, exclude))
     return files
 
 
+@code
 def setup(*, hold: H, window: A, **star: R) -> N:
     """"""
     directory = hold.attribute.directory
