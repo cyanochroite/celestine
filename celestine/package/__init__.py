@@ -47,7 +47,7 @@ class Abstract:
 
         argv = sys.argv
 
-        path = str(load.pathfinder())
+        path = str(load.project_path())
         sys.argv = [path, path]
         try:
             module = load.package(self.name, *self.module())

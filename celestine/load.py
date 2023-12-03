@@ -83,6 +83,7 @@ PYTHON_EXTENSION = string(
     LATIN_SMALL_LETTER_Y,
 )
 
+INIT = "__init__"
 
 FF: TA = importlib.machinery.FileFinder
 MI: TA = pkgutil.ModuleInfo
@@ -126,56 +127,24 @@ def modulesa(*path: S) -> L[M]:
     module = importlib.util.module_from_spec(spec)
     return module
 
-def find_tests(start_dir, pattern):
-
-    paths = sorted(os.listdir(start_dir))
-    for path in paths:
-        full_path = os.path.join(start_dir, path)
-        tests, should_recurse = self._find_test_path(full_path, pattern)
-        if tests is not None:
-            yield tests
-        if should_recurse:
-            # we found a package that didn't use load_tests.
-            name = self._get_name_from_path(full_path)
-            self._loading_packages.add(name)
-            try:
-                yield from self._find_tests(full_path, pattern)
-            finally:
-                self._loading_packages.discard(name)
-
-
-
-def discover():
-    pattern = 'test*.py'
-    path = pathroot()
-
-    files = walk_python(path, [], [])
-    cow = list(files)
-    tests = list(find_tests(start_dir, pattern))
-    return tests
-
 
 def modules(*path: S) -> L[M]:
     """Load an internal module from anywhere in the application."""
 
-    def specs(module_info: MI) -> MS:
-        (module_finder, name, _) = module_info
-        finder = cast(FF, module_finder)
-        spec = finder.find_spec(name)
-        print(module_finder, name, spec)
-        return cast(MS, spec)
+    base = project_path()
+    other = project_root()
+    top = pathlib.Path(base, *path)
 
-    candy = discover()
-    parent = pathlib.Path(__spec__.origin).parent
-    pkgpath = pathlib.Path(parent, *path)
-    paths = [str(pkgpath)]
-
-    walk_packages = pkgutil.walk_packages(paths)
-    spec = map(specs, walk_packages)
-    result = map(importlib.util.module_from_spec, spec)
-    return result
-
-
+    walked = walk_python(top, [], [])
+    files = [top, *walked]
+    for file in files:
+        with_name = file.with_name(file.stem)
+        relative_to = with_name.relative_to(other)
+        parts = relative_to.parts
+        strip = parts[:-1] if parts[-1] == INIT else parts
+        join = FULL_STOP.join(strip)
+        grab = importlib.import_module(join)
+        yield grab
 
 def attribute(*path: S) -> A:
     """Functions like the 'from package import item' syntax."""
@@ -315,7 +284,6 @@ def function_page(module: M) -> LS:
 
 ########################################################################
 
-#  os
 
 def walk(*path: S) -> G[T[S, LS, LS], N, N]:
     """Yields a 3-tuple (dirpath, dirnames, filenames)."""
@@ -360,23 +328,10 @@ def walk_python(top: P, include: LS, exclude: LS) -> LP:
     return walk_file(top, include, exclude)
 
 
-def remove_empty_directories(path: P) -> N:
-    """"""
-    empty = True
-    for content in path.iterdir():
-        if content.is_dir():
-            empty &= remove_empty_directories(content)
-        else:
-            empty = False
-    if empty:
-        os.rmdir(path)
-    return empty
+########################################################################
 
 
-########
-
-
-def pathroot() -> P:
+def project_root() -> P:
     """When running as a package, sys.path[0] is wrong."""
     for path in sys.path:
         directory = pathlib.Path(path, CELESTINE)
@@ -386,7 +341,7 @@ def pathroot() -> P:
     return directory
 
 
-def pathfinder() -> P:
+def project_path() -> P:
     """When running as a package, sys.path[0] is wrong."""
     for path in sys.path:
         directory = pathlib.Path(path, CELESTINE)
@@ -398,7 +353,7 @@ def pathfinder() -> P:
 
 def safe_path(*path: S) -> P:
     """Might not be right be good for input from user."""
-    root = pathfinder()
+    root = project_path()
 
     join = os.path.join(root, *path)
     normcase = os.path.normcase(join)
@@ -415,13 +370,13 @@ def safe_path(*path: S) -> P:
 
 def pathway(*path: S) -> P:
     """"""
-    _package = pathfinder()
+    _package = project_path()
     return pathlib.Path(_package, *path)
 
 
 def pathway_root(*path: S) -> P:
     """"""
-    _package = pathroot()
+    _package = project_root()
     return pathlib.Path(_package, *path)
 
 
