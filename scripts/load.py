@@ -23,3 +23,22 @@ def remove_empty_directories(path: P) -> N:
     if empty:
         os.rmdir(path)
     return empty
+
+
+def modulesa(*path: S) -> L[M]:
+    """Load an internal module from anywhere in the application."""
+
+    def specs(module_info: MI) -> MS:
+        (module_finder, name, _) = module_info
+        finder = cast(FF, module_finder)
+        spec = finder.find_spec(name)
+        return cast(MS, spec)
+
+    parent = pathlib.Path(__spec__.origin).parent
+    pkgpath = pathlib.Path(parent, *path)
+    paths = [str(pkgpath)]
+
+    walk_packages = pkgutil.walk_packages(paths)
+    spec = specs(walk_packages)
+    module = importlib.util.module_from_spec(spec)
+    return module

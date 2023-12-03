@@ -104,47 +104,37 @@ def package(base: S, *path: S) -> M:
     return result
 
 
+def packages(base: S, *path: S) -> L[M]:
+    """Load an external package from the system path."""
+
+    find = importlib.import_module(base)
+    spec = find.__spec__
+    info = spec.origin if spec else project_path()
+    spot = pathlib.Path(info)
+    root = spot.parent
+
+    root = project_path()
+    top = pathlib.Path(root, *path)
+
+    walked = walk_python(top, [], [])
+    walker = [top, *walked]
+    for file in walker:
+        with_name = file.with_name(file.stem)
+        relative_to = with_name.relative_to(root)
+        parts = relative_to.parts
+        strip = parts[:-1] if parts[-1] == INIT else parts
+        yield package(base, *strip)
+
+
 def module(*path: S) -> M:
     """Load an internal module from anywhere in the application."""
     return package(CELESTINE, *path)
 
 
-def modulesa(*path: S) -> L[M]:
+def modules(*path: S) -> M:
     """Load an internal module from anywhere in the application."""
+    return packages(CELESTINE, *path)
 
-    def specs(module_info: MI) -> MS:
-        (module_finder, name, _) = module_info
-        finder = cast(FF, module_finder)
-        spec = finder.find_spec(name)
-        return cast(MS, spec)
-
-    parent = pathlib.Path(__spec__.origin).parent
-    pkgpath = pathlib.Path(parent, *path)
-    paths = [str(pkgpath)]
-
-    walk_packages = pkgutil.walk_packages(paths)
-    spec = specs(walk_packages)
-    module = importlib.util.module_from_spec(spec)
-    return module
-
-
-def modules(*path: S) -> L[M]:
-    """Load an internal module from anywhere in the application."""
-
-    base = project_path()
-    other = project_root()
-    top = pathlib.Path(base, *path)
-
-    walked = walk_python(top, [], [])
-    files = [top, *walked]
-    for file in files:
-        with_name = file.with_name(file.stem)
-        relative_to = with_name.relative_to(other)
-        parts = relative_to.parts
-        strip = parts[:-1] if parts[-1] == INIT else parts
-        join = FULL_STOP.join(strip)
-        grab = importlib.import_module(join)
-        yield grab
 
 def attribute(*path: S) -> A:
     """Functions like the 'from package import item' syntax."""
