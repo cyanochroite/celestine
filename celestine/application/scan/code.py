@@ -1,8 +1,10 @@
 """"""
 
-from celestine.typed import R
+from celestine.data import code
+from celestine.typed import H
 
 
-def cow(*, say, **star: R):
+@code
+def cow(hold: H, *, say):
     """"""
     print(say)

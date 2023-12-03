@@ -1,4 +1,0 @@
-""""""
-
-KEY = "key"
-GROUP = "group"

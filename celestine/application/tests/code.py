@@ -3,12 +3,15 @@
 import unittest
 
 from celestine import load
-from celestine.data import CELESTINE
+from celestine.data import (
+    CELESTINE,
+    code,
+    main,
+)
 from celestine.data.directory import APPLICATION
 from celestine.typed import (
     H,
     N,
-    R,
 )
 
 from .data import (
@@ -17,7 +20,8 @@ from .data import (
 )
 
 
-def main(*, hold: H, **star: R) -> N:
+@code
+def main(hold: H) -> N:
     """Run the unittest library."""
     module = load.module(APPLICATION, TESTS)
     top = load.pathway()
