@@ -1,8 +1,6 @@
 """"""
 
 
-import sys
-
 from celestine import load
 from celestine.data.directory import (
     APPLICATION,
@@ -60,8 +58,6 @@ def begin_session(argument_list: LS, exit_on_error: B) -> H:
     code = {}
     main = {}
     view = {}
-
-
 
     modules = load.modules(APPLICATION, application)
     for module in modules:

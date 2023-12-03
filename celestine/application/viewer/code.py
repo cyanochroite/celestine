@@ -1,5 +1,6 @@
 """"""
 from celestine import load
+from celestine.data import code
 from celestine.typed import (
     LP,
     LS,
@@ -7,13 +8,8 @@ from celestine.typed import (
     H,
     N,
     P,
-    R,
 )
-from celestine.data import (
-    code,
-    main,
-    scene,
-)
+
 
 def find_image(hold: H, directory: P) -> LP:
     """"""

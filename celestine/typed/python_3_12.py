@@ -143,4 +143,4 @@ class ImportNotUsed(Fix):
         return self
 
     def type_(self) -> TYPE[int]:
-        return type(0)
+        return int

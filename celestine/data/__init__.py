@@ -4,8 +4,8 @@ from enum import Enum
 
 from celestine.typed import (
     C,
-    N,
     H,
+    N,
     R,
 )
 from celestine.window.container import View
@@ -45,5 +45,3 @@ INTERFACE = "interface"
 BLENDER = "blender"
 REGISTER = "register"
 UNREGISTER = "unregister"
-
-

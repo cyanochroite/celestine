@@ -1,11 +1,4 @@
 """Map character code points to an internal reprensentation."""
-from celestine.unicode.alphabet import (
-    Comparison,
-    Digit,
-    Divider,
-    Letter,
-    Unary,
-)
 from celestine.unicode import (
     ACKNOWLEDGE,
     ACUTE_ACCENT,
@@ -186,6 +179,7 @@ from celestine.unicode import (
     HEAVY_VERTICAL_BAR,
     HEAVY_WEDGE_TAILED_RIGHTWARDS_ARROW,
     HEAVY_WIDE_HEADED_RIGHTWARDS_ARROW,
+    HIGH_OCTET_PRESET,
     HYPHEN_MINUS,
     INDEX,
     INFORMATION_SEPARATOR_FOUR,
@@ -362,6 +356,7 @@ from celestine.unicode import (
     OUTLINED_BLACK_STAR,
     OUTLINED_GREEK_CROSS,
     OUTLINED_LATIN_CROSS,
+    PADDING_CHARACTER,
     PARTIAL_LINE_BACKWARD,
     PARTIAL_LINE_FORWARD,
     PENCIL,
@@ -397,6 +392,7 @@ from celestine.unicode import (
     SHIFT_IN,
     SHIFT_OUT,
     SINGLE_CHARACTER_INTRODUCER,
+    SINGLE_GRAPHIC_CHARACTER_INTRODUCER,
     SINGLE_SHIFT_THREE,
     SINGLE_SHIFT_TWO,
     SIX_PETALLED_BLACK_AND_WHITE_FLORETTE,
@@ -432,9 +428,6 @@ from celestine.unicode import (
     TILDE,
     TRIANGLE_HEADED_RIGHTWARDS_ARROW,
     TWELVE_POINTED_BLACK_STAR,
-    PADDING_CHARACTER,
-    HIGH_OCTET_PRESET,
-    SINGLE_GRAPHIC_CHARACTER_INTRODUCER,
     UPPER_BLADE_SCISSORS,
     UPPER_RIGHT_DROP_SHADOWED_WHITE_SQUARE,
     UPPER_RIGHT_PENCIL,
@@ -455,6 +448,13 @@ from celestine.unicode import (
     WHITE_SCISSORS,
     WRITING_HAND,
     YEN_SIGN,
+)
+from celestine.unicode.alphabet import (
+    Comparison,
+    Digit,
+    Divider,
+    Letter,
+    Unary,
 )
 
 encoding = {

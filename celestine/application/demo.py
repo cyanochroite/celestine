@@ -10,7 +10,6 @@ from celestine.session.session import SuperSession
 from celestine.typed import (
     H,
     N,
-    R,
     S,
 )
 from celestine.window.container import View

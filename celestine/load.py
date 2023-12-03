@@ -1,19 +1,10 @@
 """Central place for loading and importing external files."""
 
 import importlib
-import importlib.util
-import importlib.machinery
-import pkgutil
-
-
-from typing import TypeAlias as TA
-from typing import cast
-
-
+import importlib.resources
 import os
 import pathlib
 import sys
-from importlib.resources import files
 
 from celestine.data import CELESTINE
 from celestine.typed import (
@@ -83,17 +74,30 @@ PYTHON_EXTENSION = string(
     LATIN_SMALL_LETTER_Y,
 )
 
-INIT = "__init__"
 
-FF: TA = importlib.machinery.FileFinder
-MI: TA = pkgutil.ModuleInfo
-MS: TA = importlib.machinery.ModuleSpec
-# type FF = importlib.machinery.FileFinder
-# type MI = pkgutil.ModuleInfo
-# type MS = importlib.machinery.ModuleSpec
+INIT = string(
+    LOW_LINE,
+    LOW_LINE,
+    LATIN_SMALL_LETTER_I,
+    LATIN_SMALL_LETTER_N,
+    LATIN_SMALL_LETTER_I,
+    LATIN_SMALL_LETTER_T,
+    LOW_LINE,
+    LOW_LINE,
+)
 
 
 ########################################################################
+
+
+def module(*path: S) -> M:
+    """Load an internal module from anywhere in the application."""
+    return package(CELESTINE, *path)
+
+
+def modules(*path: S) -> M:
+    """Load an internal module from anywhere in the application."""
+    return packages(CELESTINE, *path)
 
 
 def package(base: S, *path: S) -> M:
@@ -126,14 +130,7 @@ def packages(base: S, *path: S) -> L[M]:
         yield package(base, *strip)
 
 
-def module(*path: S) -> M:
-    """Load an internal module from anywhere in the application."""
-    return package(CELESTINE, *path)
-
-
-def modules(*path: S) -> M:
-    """Load an internal module from anywhere in the application."""
-    return packages(CELESTINE, *path)
+########################################################################
 
 
 def attribute(*path: S) -> A:
@@ -153,9 +150,6 @@ def redirect(*path: S) -> N:
     """
     function = attribute(*path)
     function()
-
-
-########################################################################
 
 
 def attempt(*path: S) -> B:
@@ -406,5 +400,5 @@ def asset(file: S) -> P:
     """"""
     # TODO: check if other path witchcraft needs replacing with this:
     data = "celestine.data"
-    item = files(data).joinpath(file)
+    item = importlib.resources.files(data).joinpath(file)
     return item

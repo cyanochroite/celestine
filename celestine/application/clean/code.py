@@ -8,11 +8,13 @@ from celestine import (
     load,
     stream,
 )
-from celestine.data import normalize
+from celestine.data import (
+    code,
+    normalize,
+)
 from celestine.typed import (
     H,
     N,
-    R,
     S,
 )
 
@@ -77,17 +79,19 @@ def run(name: S) -> N:
     package.run()
 
 
-def clean(*, hold: H, **star: R) -> N:
+@code
+def clean(hold: H) -> N:
     """"""
-    # TODO: This is breaking the language files. Find out why.
-    # hold.package.pyupgrade.run()
-    hold.package.pydocstringformatter.run()
+    hold.package.pyupgrade.run()
+    # TODO figure out why this print instead of fixes
+    # hold.package.pydocstringformatter.run()
     hold.package.autoflake.run()
     hold.package.isort.run()
     hold.package.black.run()
 
 
-def licence(**star: R):
+@code
+def licence(hold: H):
     """"""
     location = load.pathway("licence")
     files = load.walk_file(location, [], [])
@@ -104,7 +108,8 @@ def licence(**star: R):
                 document.write(line)
 
 
-def version(**star: R):
+@code
+def version(hold: H):
     """"""
     date = datetime.datetime.now(datetime.UTC)
 

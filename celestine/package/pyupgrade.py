@@ -20,7 +20,8 @@ class Package(Abstract):
 
         Since no way to configure exclude files, we do it ourself.
         """
-        files = load.many.python(path, [], ["unicode"])
+        # TODO: This is breaking the language files. Find out why.
+        files = load.walk_python(path, [], ["language"])
 
         file = map(str, files)
         argv = [*file, "--py311-plus"]

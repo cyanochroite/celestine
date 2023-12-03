@@ -3,7 +3,6 @@
 
 from celestine import load
 from celestine.data import (
-    code,
     main,
     scene,
 )

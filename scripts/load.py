@@ -1,10 +1,21 @@
 """"""
 
+import importlib.machinery
+import importlib.util
 import os
 import pathlib
+import pkgutil
+from typing import TypeAlias as TA
 
 type N = None
 type P = pathlib.Path
+
+FF: TA = importlib.machinery.FileFinder
+MI: TA = pkgutil.ModuleInfo
+MS: TA = importlib.machinery.ModuleSpec
+# type FF = importlib.machinery.FileFinder
+# type MI = pkgutil.ModuleInfo
+# type MS = importlib.machinery.ModuleSpec
 
 
 def clamp(minimum, midterm, maximum):
