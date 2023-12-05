@@ -60,13 +60,9 @@ class Image(Abstract, Image_):
     def make(self) -> N:
         """"""
         tkinter = self.hold.package.tkinter
-
-        self.image = tkinter.PhotoImage(file=self.path)
-
-        item = tkinter.Label
         self.render(
-            item,
-            image=self.image,
+            tkinter.Label,
+            image=self.image.image,
         )
 
     @override

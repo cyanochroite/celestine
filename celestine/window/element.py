@@ -142,6 +142,10 @@ class Image(Abstract):
     Keeping it within a byte (256) a nice goal.
     """
 
+    def spot(self, area: Plane, **star: R) -> N:
+        super().spot(area, **star)
+        self.image.resize(*area.size.int)
+
     def update(self, path: P, **star: R) -> N:
         """"""
         self.path = path
@@ -172,9 +176,12 @@ class Image(Abstract):
 
         return (best_x, best_y)
 
-    def __init__(self, hold: H, canvas, name, path, **star: R):
+    def __init__(self, hold: H, canvas, name, path, *, mode, **star: R):
+        pillow = hold.package.pillow
+
         self.path = path
-        self.image = None
+        self.image = pillow.new()
+        self.mode = mode
 
         super().__init__(hold, canvas, name, **star)
 

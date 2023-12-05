@@ -3,6 +3,7 @@
 import math
 
 from celestine import load
+from celestine.window.collection import Plane
 from celestine.typed import (
     IMAGE,
     LS,
@@ -100,6 +101,18 @@ class Image:
         hold = self.image.resize(size, resample, box, reducing_gap)
         self.image = hold
 
+    def resize(self, size_x, size_y):
+        """"""
+        pillow = self.hold.package.pillow
+
+        size = (size_x, size_y)
+        resample = pillow.Image.Resampling.LANCZOS
+        box = None
+        reducing_gap = None
+
+        hold = self.image.resize(size, resample, box, reducing_gap)
+        self.image = hold
+
     def scale_to_any(self, area, crop=False):
         """"""
         (size_x, size_y) = self.size
@@ -117,18 +130,19 @@ class Image:
 
         return (best_x, best_y)
 
-    def scale_to_fit(self, area):
+    def scale_to_fit(self, area: Plane):
         """"""
         pillow = self.hold.package.pillow
 
-        (size_x, size_y) = self.size
-        (area_x, area_y) = area
+        curent = Plane.make(self.image.width, self.image.height)
+        target = Plane.make(*area.size.int)
 
-        scale_x = math.floor(area_y * size_x / size_y)
-        scale_y = math.floor(area_x * size_y / size_x)
+        result = curent.scale_to_min(target)
+        # result = curent.scale_to_max(target)
+        result.center(target)
+        size = result.size
 
-        best_x = round(min(area_x, scale_x))
-        best_y = round(min(area_y, scale_y))
+        best_x, best_y = size.int
 
         self.image = self.image.resize(
             size=(best_x, best_y),
@@ -136,6 +150,8 @@ class Image:
             box=None,
             reducing_gap=None,
         )
+
+        pillow = self.hold.package.pillow
 
     def scale_to_fill(self, area):
         """"""
@@ -194,6 +210,19 @@ class Image:
 
 class Package(Abstract):
     """"""
+
+    def new(self) -> Image:
+        """"""
+        pillow = self.hold.package.pillow
+
+        mode = "RGBA"
+        size = (100, 50)
+        color = (250, 250, 250, 250)
+
+        image = pillow.Image.new(mode, size, color)
+
+        item = Image(self.hold, image)
+        return item
 
     def open(self, path: P) -> Image:
         """"""

@@ -5,6 +5,8 @@ from celestine.typed import (
     LS,
     H,
     N,
+    P,
+
     R,
     override,
 )
@@ -31,7 +33,7 @@ class Abstract(Abstract_):
 class Button(Abstract, Button_):
     """"""
 
-    def draw(self, *, font, **star: R):
+    def draw(self, *, font, **star: R) -> N:
         """"""
 
         text = f"Button{self.data}"
@@ -43,7 +45,7 @@ class Button(Abstract, Button_):
 class Label(Abstract, Label_):
     """"""
 
-    def draw(self, *, font, **star: R):
+    def draw(self, *, font, **star: R) -> N:
         """"""
 
         item = font.render(self.data, True, (255, 255, 255))
@@ -53,38 +55,41 @@ class Label(Abstract, Label_):
 class Image(Abstract, Image_):
     """"""
 
-    def draw(self, *, mode="hi", **star: R):
+    def make(self) -> N:
         """"""
-
         pillow = self.hold.package.pillow
+
+        self.image = pillow.new()
+
+    @override
+    def update(self, path: P, **star: R) -> N:
+        """"""
+        pillow = self.hold.package.pillow
+
+        self.path = path
+
+        image = pillow.open(self.path)
+        # image.resize(*self.area.size.int)
+        image.scale_to_fit(self.area)
+
+        im = image.image
+        box = None
+        # box = self.area.int
+        mask = None
+        self.image.image.paste(im, box, mask)
+
+        # self.image = image
+
+
+    def draw(self, *, font, **star: R) -> N:
+        """"""
         pygame = self.hold.package.pygame
 
-        # do we call parent or some other function to get this right?
-        # maybe call super, which does nothing but set name
-        size = self.area.size
-
-        if mode == "one":
-            pass
-
-        #  TODO explore how to resize
-        # resize = self.scale_to_fit(self.area.size)
-
-        if pillow:
-            image = pillow.open(self.path)
-
-            image.scale_to_fit(self.area.size)
-            # image.scale_to_fill(self.area.size)
-
-            image = pygame.image.fromstring(
-                image.image.tobytes(),
-                image.image.size,
-                image.image.mode,
-            )
-        else:
-            image = pygame.image.load(self.path)
-            image = image.convert_alpha()
-            size = self.resize((image.get_width(), image.get_height()))
-            image = pygame.transform.scale(image, size)
+        image = pygame.image.fromstring(
+            self.image.image.tobytes(),
+            self.image.image.size,
+            self.image.image.mode,
+        )
 
         self.render(image)
 
