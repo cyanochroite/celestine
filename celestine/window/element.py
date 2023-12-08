@@ -18,6 +18,7 @@ from celestine.window.collection import (
     Abstract,
     Plane,
 )
+from celestine.window.container import Image as Mode
 
 
 
@@ -54,6 +55,7 @@ class Image(Abstract):
     path: P  # The location of the image on disk.
     image: A  # The image object after being loaded from disk.
     size: T[I, I]  # The width and height of the image.
+    mode: Mode
 
     """
     A small version of an image.

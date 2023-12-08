@@ -19,6 +19,7 @@ from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
+from celestine.window.container import Image as Mode
 
 
 class Abstract(Abstract_):
@@ -69,17 +70,20 @@ class Image(Abstract, Image_):
         self.path = path
 
         image = pillow.open(self.path)
-        # image.resize(*self.area.size.int)
-        image.scale_to_fit(self.area)
 
-        im = image.image
-        box = None
-        # box = self.area.int
-        mask = None
-        self.image.image.paste(im, box, mask)
+        curent = Plane.make(image.image.width, image.image.height)
+        target = Plane.make(*self.area.size.int)
 
-        # self.image = image
+        match self.mode:
+            case Mode.FILL:
+                result = curent.scale_to_min(target)
+            case Mode.FULL:
+                result = curent.scale_to_max(target)
 
+        result.center(target)
+
+        image.resize(result.size)
+        self.image.paste(image, result)
 
     def draw(self, *, font, **star: R) -> N:
         """"""

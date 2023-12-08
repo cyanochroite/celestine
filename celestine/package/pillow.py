@@ -3,7 +3,11 @@
 import math
 
 from celestine import load
-from celestine.window.collection import Plane
+from celestine.window.collection import (
+    Plane,
+    Line,
+    Point,
+)
 from celestine.typed import (
     IMAGE,
     LS,
@@ -11,6 +15,8 @@ from celestine.typed import (
     K,
     N,
     P,
+    T,
+    I,
     R,
     S,
 )
@@ -85,111 +91,34 @@ class Image:
     def getdata(self):
         return self.image.getdata()
 
-    def resize(self, size, box=None):
-        """"""
-        pillow = self.hold.package.pillow
-
-        size_x, size_y = size
-
-        size_x = max(1, round(size_x))
-        size_y = max(1, round(size_y))
-
-        size = (size_x, size_y)
-        resample = pillow.Image.Resampling.LANCZOS
-        reducing_gap = None
-
-        hold = self.image.resize(size, resample, box, reducing_gap)
-        self.image = hold
-
-    def resize(self, size_x, size_y):
-        """"""
-        pillow = self.hold.package.pillow
-
-        size = (size_x, size_y)
-        resample = pillow.Image.Resampling.LANCZOS
-        box = None
-        reducing_gap = None
-
-        hold = self.image.resize(size, resample, box, reducing_gap)
-        self.image = hold
-
-    def scale_to_any(self, area, crop=False):
-        """"""
-        (size_x, size_y) = self.size
-        (area_x, area_y) = area
-
-        down_x = math.floor(area_y * size_x / size_y)
-        down_y = math.floor(area_x * size_y / size_x)
-
-        if crop:
-            best_x = max(area_x, down_x)
-            best_y = max(area_y, down_y)
-        else:
-            best_x = min(area_x, down_x)
-            best_y = min(area_y, down_y)
-
-        return (best_x, best_y)
-
-    def scale_to_fit(self, area: Plane):
-        """"""
-        pillow = self.hold.package.pillow
-
-        curent = Plane.make(self.image.width, self.image.height)
-        target = Plane.make(*area.size.int)
-
-        result = curent.scale_to_min(target)
-        # result = curent.scale_to_max(target)
-        result.center(target)
-        size = result.size
-
-        best_x, best_y = size.int
-
-        self.image = self.image.resize(
-            size=(best_x, best_y),
-            resample=pillow.Image.Resampling.LANCZOS,
-            box=None,
-            reducing_gap=None,
-        )
-
-        pillow = self.hold.package.pillow
-
-    def scale_to_fill(self, area):
-        """"""
-        pillow = self.hold.package.pillow
-
-        (size_x, size_y) = self.size
-        (area_x, area_y) = area
-
-        down_x = math.floor(area_y * size_x / size_y)
-        down_y = math.floor(area_x * size_y / size_x)
-
-        best_x = max(area_x, down_x)
-        best_y = max(area_y, down_y)
-
-        length_x = round(area_x / best_x * size_x)
-        length_y = round(area_y / best_y * size_y)
-
-        offset_x = round((size_x - length_x) / 2)
-        offset_y = round((size_y - length_y) / 2)
-        cutoff_x = offset_x + length_x
-        cutoff_y = offset_y + length_y
-
-        self.image = self.image.resize(
-            size=(area_x, area_y),
-            resample=pillow.Image.Resampling.LANCZOS,
-            box=(offset_x, offset_y, cutoff_x, cutoff_y),
-            reducing_gap=None,
-        )
-
     @property
     def size(self):
         """"""
         return self.image.size
 
+    def resize(self, point: Point) -> N:
+        pillow = self.hold.package.pillow
+
+        size = point.int
+        resample = pillow.Image.Resampling.LANCZOS
+        box = None
+        reducing_gap = None
+        self.image = self.image.resize(
+            size,
+            resample,
+            box,
+            reducing_gap,
+        )
+
+    def paste(self, image: K, plane: Plane) -> N:
+        im = image.image
+        box = plane.int
+        mask = None
+        self.image.paste(im, box, mask)
+
     def quantize(self):
         """"""
         pillow = self.hold.package.pillow
-
         # Median Cut only works in RGB mode.
         self.convert_to_color()
 
