@@ -196,8 +196,8 @@ class Abstract(Abstract_):
         """"""
         (x_dot, y_dot) = self.area.centroid.float
         # child sets mesh and then calls this
-        self.item.location = (x_dot, y_dot, 0)
-        self.item.rotation = (180, 0, 0)
+        self.keep.location = (x_dot, y_dot, 0)
+        self.keep.rotation = (180, 0, 0)
 
 
 class Mouse(Abstract):
@@ -207,7 +207,7 @@ class Mouse(Abstract):
         self.mesh = mesh.soul
         self.text = "mouse"
         super().__init__(hold, collection, "mouse")
-        self.item = mesh
+        self.keep = mesh
 
     def draw(self) -> N:
         """"""
@@ -236,7 +236,7 @@ class Button(Abstract, Button_):
 
         text.parent = plane
 
-        self.item = plane
+        self.keep = plane
         self.render()
 
 
@@ -267,7 +267,7 @@ class Image(Abstract, Image_):
         plane = basic.image(self.canvas, self.name, image.size)
 
         plane.body.data.materials.append(material)
-        self.item = plane
+        self.keep = plane
         self.render()
 
     def update(self, image: S, **star: R) -> B:
@@ -286,7 +286,7 @@ class Label(Abstract, Label_):
 
     def make(self) -> N:
         """"""
-        self.item = basic.text(self.canvas, self.data, self.data)
+        self.keep = basic.text(self.canvas, self.data, self.data)
         self.render()
 
 
@@ -330,7 +330,7 @@ class Window(Window_):
         old_item = None
         new_item = None
 
-        for name, item in bpy.data.collections.items():
+        for name, item in bpy.data.collections.keeps():
             if name == bpy.context.scene.celestine.page:
                 old_item = item
             if name == page:

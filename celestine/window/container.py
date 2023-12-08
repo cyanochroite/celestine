@@ -13,7 +13,7 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Collection,
-    Item,
+    Abstract,
     Line,
     Plane,
     Point,
@@ -44,10 +44,10 @@ class Call(enum.Enum):
     WORK = enum.auto()
 
 
-class View(Item, Collection):
+class View(Abstract, Collection):
     """"""
 
-    item: D[S, Item]
+    item: D[S, Abstract]
 
     def click(self, point: Point) -> N:
         if self.hidden:
@@ -247,4 +247,4 @@ class View(Item, Collection):
         for range_y in range(row):
             for range_x in range(col):
                 name = f"{self.name}_{range_x}-{range_y}"
-                self.item[name] = Item(hold, self.canvas, name)
+                self.item[name] = Abstract(hold, self.canvas, name)

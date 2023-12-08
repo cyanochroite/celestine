@@ -211,12 +211,13 @@ class Image:
 class Package(Abstract):
     """"""
 
-    def new(self) -> Image:
+    def new(self, size=(11, 10)) -> Image:
         """"""
         pillow = self.hold.package.pillow
 
         mode = "RGBA"
-        size = (100, 50)
+        #size = (100, 50)
+        size = (max(0, size[0] - 1), max(0, size[1] - 1))
         color = (250, 250, 250, 250)
 
         image = pillow.Image.new(mode, size, color)

@@ -15,25 +15,11 @@ from celestine.typed import (
     T,
 )
 from celestine.window.collection import (
-    Item,
+    Abstract,
     Plane,
 )
 
 
-class Abstract(Item):
-    """"""
-
-    item: A  # The object that the window system interacts with.
-
-    # TODO combine abstract and container into item clas
-
-    def spot(self, area: Plane) -> N:
-        """"""
-        self.area = area.copy()
-
-    def __init__(self, hold: H, canvas: A, name: S, **star: R) -> N:
-        super().__init__(hold, canvas, name, **star)
-        self.item = None
 
 
 class Button(Abstract):
@@ -62,59 +48,6 @@ class Button(Abstract):
         super().__init__(hold, canvas, name, **star)
 
 
-class Unit:
-    """"""
-
-    @property
-    def data(self):
-        """"""
-        return self._value
-
-    @data.setter
-    def data(self, value):
-        if value < self._minimum:
-            self._value = self._minimum
-
-        if value > self._maximum:
-            self._value = self._maximum
-
-        self._value = value
-
-    @data.deleter
-    def data(self):
-        del self._value
-
-    def __init__(self, minimum, maximum):
-        minimum = math.floor(minimum)
-        maximum = math.ceil(maximum - 1)
-        self._minimum = min(minimum, maximum)
-        self._maximum = max(minimum, maximum)
-        self._value = 0
-        self.data = 0
-
-
-class Picture:
-    def scale_to_any(self, frame: Plane, crop=False):
-        """"""
-        (size_x, size_y) = self.size
-        (area_x, area_y) = area
-
-        down_x = math.floor(area_y * size_x / size_y)
-        down_y = math.floor(area_x * size_y / size_x)
-
-        if crop:
-            best_x = max(area_x, down_x)
-            best_y = max(area_y, down_y)
-        else:
-            best_x = min(area_x, down_x)
-            best_y = min(area_y, down_y)
-
-        return (best_x, best_y)
-
-    def __init__(self):
-        self.area = Area(axis_x, axis_y)
-
-
 class Image(Abstract):
     """"""
 
@@ -141,10 +74,6 @@ class Image(Abstract):
     Largest thumbnail seems to be 250.
     Keeping it within a byte (256) a nice goal.
     """
-
-    def spot(self, area: Plane, **star: R) -> N:
-        super().spot(area, **star)
-        self.image.resize(*area.size.int)
 
     def update(self, path: P, **star: R) -> N:
         """"""
@@ -180,18 +109,14 @@ class Image(Abstract):
         pillow = hold.package.pillow
 
         self.path = path
-        self.image = pillow.new()
+        self.image = pillow.new((0, 0))
         self.mode = mode
 
         super().__init__(hold, canvas, name, **star)
-
-        minimum = 2**6
-        maximum = 2**16
-
-        minimum = 2**5
-        maximum = 2**8
-        self.unit_x = Unit(minimum, maximum)
-        self.unit_y = Unit(minimum, maximum)
+        # minimum = 2**6
+        # maximum = 2**16
+        # minimum = 2**5
+        # maximum = 2**8
 
     """
     A small version of an image.

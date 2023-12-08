@@ -24,10 +24,10 @@ from celestine.window.element import Label as Label_
 class Abstract(Abstract_):
     """"""
 
-    def render(self, item):
+    def render(self, keep):
         """"""
         origin = (self.area.one.minimum, self.area.two.minimum)
-        self.canvas.blit(item, origin)
+        self.canvas.blit(keep, origin)
 
 
 class Button(Abstract, Button_):
@@ -38,8 +38,8 @@ class Button(Abstract, Button_):
 
         text = f"Button{self.data}"
 
-        item = font.render(text, True, (255, 255, 255))
-        self.render(item)
+        keep = font.render(text, True, (255, 255, 255))
+        self.render(keep)
 
 
 class Label(Abstract, Label_):
@@ -48,8 +48,8 @@ class Label(Abstract, Label_):
     def draw(self, *, font, **star: R) -> N:
         """"""
 
-        item = font.render(self.data, True, (255, 255, 255))
-        self.render(item)
+        keep = font.render(self.data, True, (255, 255, 255))
+        self.render(keep)
 
 
 class Image(Abstract, Image_):
@@ -59,7 +59,7 @@ class Image(Abstract, Image_):
         """"""
         pillow = self.hold.package.pillow
 
-        self.image = pillow.new()
+        self.image = pillow.new(self.area.size.int)
 
     @override
     def update(self, path: P, **star: R) -> N:

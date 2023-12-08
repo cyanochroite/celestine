@@ -21,13 +21,13 @@ from celestine.window.element import Label as Label_
 class Abstract(Abstract_):
     """"""
 
-    def render(self, item: C, **star: R) -> N:
+    def render(self, keep: C, **star: R) -> N:
         """"""
-        self.item = item(self.canvas, **star)
+        self.keep = keep(self.canvas, **star)
 
         width, height = self.area.size
         dot_x, dot_y = self.area.origin.int
-        self.item.place(
+        self.keep.place(
             x=dot_x,
             y=dot_y,
             width=width,
@@ -46,9 +46,9 @@ class Button(Abstract, Button_):
         """"""
         tkinter = self.hold.package.tkinter
 
-        item = tkinter.Button
+        keep = tkinter.Button
         self.render(
-            item,
+            keep,
             command=self.callback,
             text=f"button: {self.data}",
         )
@@ -80,8 +80,8 @@ class Image(Abstract, Image_):
         else:
             self.image = tkinter.PhotoImage(file=self.path)
 
-        self.item.configure(image=self.image)
-        self.item.image = self.image
+        self.keep.configure(image=self.image)
+        self.keep.image = self.image
 
 
 class Label(Abstract, Label_):
@@ -91,9 +91,9 @@ class Label(Abstract, Label_):
         """"""
         tkinter = self.hold.package.tkinter
 
-        item = tkinter.Label
+        keep = tkinter.Label
         self.render(
-            item,
+            keep,
             fg="blue",
             height=4,
             text=f"label:{self.data}",

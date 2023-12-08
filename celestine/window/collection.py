@@ -299,8 +299,10 @@ class Rectangle:
         self.lower = lower
 
 
-class Item(Object):
+class Abstract(Object):
     """"""
+
+    keep: A  # The object that the window system interacts with.
 
     area: Plane
     canvas: A
@@ -337,7 +339,7 @@ class Item(Object):
 
     def spot(self, area: Plane) -> N:
         """"""
-        raise NotImplementedError(area)
+        self.area = area.copy()
 
     def __init__(self, hold: H, canvas: A, name: S, **star: R) -> N:
         super().__init__(**star)
@@ -347,26 +349,28 @@ class Item(Object):
         self.hold = hold
         self.name = name
 
+        self.keep = None
+
 
 class Collection(Object):
     """"""
 
-    item: D[S, Item]
+    item: D[S, Abstract]
 
-    def item_get(self, name: S) -> Item:
+    def item_get(self, name: S) -> Abstract:
         """"""
         return self.item[name]
 
-    def item_set(self, name: S, item: Item) -> Item:
+    def item_set(self, name: S, item: Abstract) -> Abstract:
         """"""
         self.item[name] = item
         return item
 
-    def load(self, name: S) -> Item:
+    def load(self, name: S) -> Abstract:
         """"""
         return self.item[name]
 
-    def save(self, item: Item) -> N:
+    def save(self, item: Abstract) -> N:
         """"""
         self.item[item.name] = item
 
@@ -374,6 +378,6 @@ class Collection(Object):
         self.item = {}
         super().__init__(**star)
 
-    def __iter__(self) -> G[T[S, Item], N, N]:
+    def __iter__(self) -> G[T[S, Abstract], N, N]:
         """"""
         yield from self.item.items()
