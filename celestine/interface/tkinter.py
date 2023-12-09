@@ -157,6 +157,8 @@ class Window(Abstract, Window_):
             "button": Button,
             "image": Image,
             "label": Label,
+            "view": View,
+            "window": Window,
         }
 
         canvas = hold.package.tkinter.Tk()

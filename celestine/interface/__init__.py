@@ -339,7 +339,7 @@ class View(Abstract, collection.Collection):
         """"""
         return self.item_set(
             name,
-            View(
+            self._view(
                 self.hold,
                 canvas if canvas else self.canvas,
                 name,
@@ -385,6 +385,7 @@ class View(Abstract, collection.Collection):
         self._button = element["button"]
         self._image = element["image"]
         self._label = element["label"]
+        self._view = element["view"]
 
         super().__init__(hold, canvas, name, **star)
 
@@ -438,16 +439,6 @@ class Window(View):
             ".png",
         ]
 
-    @override
-    def hide(self):
-        super().hide()
-        self.page.hide()
-
-    @override
-    def show(self):
-        super().show()
-        self.page.show()
-
     def turn(self, page: S) -> N:
         """"""
         self.page.hide()
@@ -465,6 +456,10 @@ class Window(View):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        page = self.hold.main
+        self.page = self.view[page]
+        self.turn(page)
+
         self.spot(self.area)
         self.make()
         self.draw()

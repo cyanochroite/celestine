@@ -100,6 +100,17 @@ class Image(Abstract, Image_):
 
 class View(Abstract, View_):
     """"""
+    @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+
+
+    @override
+    def show(self) -> N:
+        """"""
+        super().show()
+
 
 
 class Window(Abstract, Window_):
@@ -198,6 +209,8 @@ class Window(Abstract, Window_):
             "button": Button,
             "image": Image,
             "label": Label,
+            "view": View,
+            "window": Window,
         }
         area = Plane.make(1280, 960)
         canvas = hold.package.pygame.display.set_mode(area.size.int)

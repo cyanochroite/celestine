@@ -235,6 +235,8 @@ class Window(Abstract, Window_):
             "button": Button,
             "image": Image,
             "label": Label,
+            "view": View,
+            "window": Window,
         }
         canvas = None
         super().__init__(hold, canvas, element, **star)

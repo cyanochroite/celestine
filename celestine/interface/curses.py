@@ -420,6 +420,8 @@ class Window(Abstract, Window_):
             "button": Button,
             "image": Image,
             "label": Label,
+            "view": View,
+            "window": Window,
         }
 
         curses = hold.package.curses

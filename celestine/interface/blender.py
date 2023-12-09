@@ -349,22 +349,7 @@ class Window(Abstract, Window_):
     @override
     def turn(self, page):
         """"""
-
-        old_item = None
-        new_item = None
-
-        for name, item in bpy.data.collections.items():
-            if name == bpy.context.scene.celestine.page:
-                old_item = item
-            if name == page:
-                new_item = item
-
-        old_item.hide_render = True
-        old_item.hide_viewport = True
-
-        new_item.hide_render = False
-        new_item.hide_viewport = False
-
+        super().turn(page)
         bpy.context.scene.celestine.page = page
 
     @override
@@ -444,7 +429,7 @@ class Window(Abstract, Window_):
 
             page = bpy.context.scene.celestine.page
             item = self.view.get(page)
-            item.hidden = False
+            item.show()
 
             call = getattr(self, self.call)
             call(**self.star)
@@ -461,6 +446,8 @@ class Window(Abstract, Window_):
             "button": Button,
             "image": Image,
             "label": Label,
+            "view": View,
+            "window": Window,
         }
         canvas = None
         super().__init__(hold, canvas, element, **star)

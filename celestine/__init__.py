@@ -48,9 +48,6 @@ def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
             function(container)
             window.view[name] = container
 
-        window.page = window.view[session.main]
-        window.page.show()
-
 
 def register() -> N:
     """
