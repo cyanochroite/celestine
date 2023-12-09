@@ -7,6 +7,7 @@ from celestine.typed import (
     H,
     N,
     R,
+    P,
     override,
 )
 from celestine.unicode import LINE_FEED
@@ -168,6 +169,49 @@ class Image(Abstract, Image_):
 
             index_y += 1
 
+    def draw_old(self, **star: R):
+        """"""
+        curses = self.hold.package.curses
+        pillow = self.hold.package.pillow
+
+        if not pillow:
+            self.render(self.path.name, **star)
+            return
+
+        self.cache = pillow.open(self.path)
+        self.color = self.cache.copy()
+
+        # Crop box.
+        source_length_x = self.cache.image.width
+        source_length_y = self.cache.image.height
+
+        length_x, length_y = self.area.size
+
+        target_length_x = length_x * 2
+        target_length_y = length_y * 4
+
+        source_length = (source_length_x, source_length_y)
+        target_length = (target_length_x, target_length_y)
+
+        box = self.crop(source_length, target_length)
+        # Done.
+
+        self.color.brightwing()
+
+        target_length = (target_length_x, target_length_y)
+        self.cache.resize(target_length, box)
+        self.color.resize(self.area.size, box)
+
+        self.color.quantize()
+
+        self.cache.convert_to_mono()
+        self.color.convert_to_color()
+
+        get_colors(curses, self.color.image)
+
+        item = self.output()
+        self.render(item, **star)
+
     def draw(self, **star: R):
         """"""
         curses = self.hold.package.curses
@@ -210,6 +254,37 @@ class Image(Abstract, Image_):
 
         item = self.output()
         self.render(item, **star)
+
+####
+    def make(self) -> N:
+        """"""
+        pillow = self.hold.package.pillow
+
+        self.image = pillow.new(self.area.size.int)
+
+    @override
+    def update(self, path: P, **star: R) -> N:
+        """"""
+        pillow = self.hold.package.pillow
+
+        self.path = path
+
+        image = pillow.open(self.path)
+
+        curent = Plane.make(image.image.width, image.image.height)
+        target = Plane.make(*self.area.size.int)
+
+        match self.mode:
+            case Mode.FILL:
+                result = curent.scale_to_min(target)
+            case Mode.FULL:
+                result = curent.scale_to_max(target)
+
+        result.center(target)
+
+        image.resize(result.size)
+        self.image.paste(image, result)
+
 
 
 class Label(Abstract, Label_):

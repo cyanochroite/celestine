@@ -111,7 +111,12 @@ class Image(Abstract):
         pillow = hold.package.pillow
 
         self.path = path
-        self.image = pillow.new((0, 0))
+
+        if pillow:
+            self.image = pillow.new((0, 0))
+        else:
+            # Blender
+            self.image = None
         self.mode = mode
 
         super().__init__(hold, canvas, name, **star)

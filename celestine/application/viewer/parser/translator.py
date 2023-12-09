@@ -1,6 +1,3 @@
-# change to hold.package.itertools
-from more_itertools import split_when
-
 from celestine.application.viewer.parser.operator import (
     number_parse,
     tab_parse,
@@ -68,6 +65,10 @@ class tokenizer:
 
     @staticmethod
     def tokenize(iterable):
+        # TODO change to hold.package.itertools
+        # TODO import from top of file?
+        from more_itertools import split_when
+
         return list(
             split_when(iterable, lambda x, y: type(x) is not type(y))
         )

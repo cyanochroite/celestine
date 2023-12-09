@@ -10,6 +10,7 @@ from celestine.typed import (
     N,
     R,
     S,
+    override,
 )
 from celestine.window.collection import (
     Collection,
@@ -64,9 +65,10 @@ class View(Abstract, Collection):
         for _, item in self.item.items():
             item.draw(**star)
 
+    @override
     def hide(self) -> N:
         """"""
-        self.hidden = True
+        super().hide()
         for _, item in self.item.items():
             item.hide()
 
@@ -134,9 +136,10 @@ class View(Abstract, Collection):
                 )
             )
 
+    @override
     def show(self) -> N:
         """"""
-        self.hidden = False
+        super().show()
         for _, item in self.item.items():
             item.show()
 

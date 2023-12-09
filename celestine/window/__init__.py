@@ -9,6 +9,7 @@ from celestine.typed import (
     N,
     R,
     S,
+    override,
 )
 from celestine.window.container import View
 
@@ -53,10 +54,14 @@ class Window(View):
             ".png",
         ]
 
+    @override
     def hide(self):
-        pass
+        super().hide()
+        self.page.hide()
 
+    @override
     def show(self):
+        super().show()
         self.page.show()
 
     def turn(self, page: S) -> N:

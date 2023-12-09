@@ -199,6 +199,24 @@ class Abstract(Abstract_):
         self.keep.location = (x_dot, y_dot, 0)
         self.keep.rotation = (180, 0, 0)
 
+    @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+        for name, item in bpy.data.collections.items():
+            if name == self.name:
+                item.hide_render = True
+                item.hide_viewport = True
+
+    @override
+    def show(self) -> N:
+        """"""
+        super().show()
+        for name, item in bpy.data.collections.items():
+            if name == self.name:
+                item.hide_render = False
+                item.hide_viewport = False
+
 
 class Mouse(Abstract):
     """"""
@@ -330,7 +348,7 @@ class Window(Window_):
         old_item = None
         new_item = None
 
-        for name, item in bpy.data.collections.keeps():
+        for name, item in bpy.data.collections.items():
             if name == bpy.context.scene.celestine.page:
                 old_item = item
             if name == page:
