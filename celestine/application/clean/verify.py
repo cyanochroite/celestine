@@ -12,7 +12,7 @@ from celestine.typed import (
     S,
     T,
 )
-from celestine.window.container import View
+from celestine.window.element import View
 
 ERROR = "error"
 MODULE = "module"

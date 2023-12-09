@@ -6,8 +6,8 @@ import math
 from celestine.typed import (
     H,
     N,
-    R,
     P,
+    R,
     override,
 )
 from celestine.unicode import LINE_FEED
@@ -255,7 +255,7 @@ class Image(Abstract, Image_):
         item = self.output()
         self.render(item, **star)
 
-####
+    ####
     def make(self) -> N:
         """"""
         pillow = self.hold.package.pillow
@@ -284,7 +284,6 @@ class Image(Abstract, Image_):
 
         image.resize(result.size)
         self.image.paste(image, result)
-
 
 
 class Label(Abstract, Label_):

@@ -11,7 +11,7 @@ from celestine.typed import (
     S,
     override,
 )
-from celestine.window.container import View
+from celestine.window.element import View
 
 
 class Window(View):

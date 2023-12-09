@@ -8,7 +8,7 @@ from celestine.typed import (
     N,
     R,
 )
-from celestine.window.container import View
+from celestine.window.element import View
 
 
 class State(Enum):

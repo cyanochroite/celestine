@@ -6,7 +6,6 @@ from celestine.typed import (
     H,
     N,
     P,
-
     R,
     override,
 )
@@ -15,11 +14,11 @@ from celestine.window.collection import (
     Plane,
     Point,
 )
+from celestine.window.container import Image as Mode
 from celestine.window.element import Abstract as Abstract_
 from celestine.window.element import Button as Button_
 from celestine.window.element import Image as Image_
 from celestine.window.element import Label as Label_
-from celestine.window.container import Image as Mode
 
 
 class Abstract(Abstract_):

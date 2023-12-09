@@ -1,13 +1,7 @@
 """Python Imaging Library (Fork)."""
 
-import math
 
 from celestine import load
-from celestine.window.collection import (
-    Plane,
-    Line,
-    Point,
-)
 from celestine.typed import (
     IMAGE,
     LS,
@@ -15,10 +9,12 @@ from celestine.typed import (
     K,
     N,
     P,
-    T,
-    I,
     R,
     S,
+)
+from celestine.window.collection import (
+    Plane,
+    Point,
 )
 
 from . import Abstract
@@ -145,7 +141,7 @@ class Package(Abstract):
         pillow = self.hold.package.pillow
 
         mode = "RGBA"
-        #size = (100, 50)
+        # size = (100, 50)
         size = (max(0, size[0] - 1), max(0, size[1] - 1))
         color = (250, 250, 250, 250)
 
