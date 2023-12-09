@@ -1,5 +1,11 @@
 """"""
 
+from celestine.interface import Abstract as Abstract_
+from celestine.interface import Button as Button_
+from celestine.interface import Image as Image_
+from celestine.interface import Label as Label_
+from celestine.interface import View as View_
+from celestine.interface import Window as Window_
 from celestine.typed import (
     LF,
     H,
@@ -8,13 +14,7 @@ from celestine.typed import (
     R,
     override,
 )
-from celestine.window import Window as Window_
 from celestine.window.collection import Plane
-from celestine.window import Abstract as Abstract_
-from celestine.window import Button as Button_
-from celestine.window import Image as Image_
-from celestine.window import Label as Label_
-from celestine.window import View as View_
 
 
 class Abstract(Abstract_):

@@ -5,6 +5,7 @@ import unittest
 from celestine import load
 from celestine.data import CELESTINE
 from celestine.data.directory import APPLICATION
+from celestine.interface import View
 from celestine.session.session import SuperSession
 from celestine.typed import (
     L,
@@ -12,7 +13,6 @@ from celestine.typed import (
     S,
     T,
 )
-from celestine.window import View
 
 ERROR = "error"
 MODULE = "module"

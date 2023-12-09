@@ -3,6 +3,11 @@
 import io
 import math
 
+from celestine.interface import Abstract as Abstract_
+from celestine.interface import Button as Button_
+from celestine.interface import Image as Image_
+from celestine.interface import Label as Label_
+from celestine.interface import View as View_
 from celestine.typed import (
     H,
     N,
@@ -12,17 +17,11 @@ from celestine.typed import (
 )
 from celestine.unicode import LINE_FEED
 from celestine.unicode.notational_systems import BRAILLE_PATTERNS
-from celestine.window import Window as window
 from celestine.window.collection import (
     Line,
     Plane,
     Point,
 )
-from celestine.window import Abstract as Abstract_
-from celestine.window import Button as Button_
-from celestine.window import Image as Image_
-from celestine.window import Label as Label_
-from celestine.window import View as View_
 
 color_index = 8  # skip the 8 reserved colors
 color_table = {}

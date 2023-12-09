@@ -6,13 +6,13 @@ from celestine.data import (
     main,
     scene,
 )
+from celestine.interface import View
 from celestine.session.session import SuperSession
 from celestine.typed import (
     H,
     N,
     S,
 )
-from celestine.window import View
 
 
 class Session(SuperSession):
