@@ -22,7 +22,7 @@ from celestine.typed import (
     S,
 )
 from celestine.unicode import NONE
-from celestine.window.element import View
+from celestine.window import View
 
 KEY = "key"
 GROUP = "group"

@@ -2,7 +2,7 @@
 
 from celestine.data import main
 from celestine.typed import N
-from celestine.window.element import View
+from celestine.window import View
 
 
 @main

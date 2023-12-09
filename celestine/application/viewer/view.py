@@ -13,7 +13,7 @@ from celestine.data import (
     scene,
 )
 from celestine.typed import N
-from celestine.window.element import View
+from celestine.window import View
 
 NULL = load.asset("null.png")
 

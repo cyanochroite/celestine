@@ -12,7 +12,7 @@ from celestine.typed import (
     N,
     S,
 )
-from celestine.window.element import View
+from celestine.window import View
 
 
 class Session(SuperSession):

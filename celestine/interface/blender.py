@@ -30,10 +30,11 @@ from celestine.window.collection import (
     Plane,
     Point,
 )
-from celestine.window.element import Abstract as Abstract_
-from celestine.window.element import Button as Button_
-from celestine.window.element import Image as Image_
-from celestine.window.element import Label as Label_
+from celestine.window import Abstract as Abstract_
+from celestine.window import Button as Button_
+from celestine.window import Image as Image_
+from celestine.window import Label as Label_
+from celestine.window import View as View_
 
 COLLECTION = _collection
 
@@ -308,7 +309,11 @@ class Label(Abstract, Label_):
         self.render()
 
 
-class Window(Window_):
+class View(Abstract, View_):
+    """"""
+
+
+class Window(Abstract, Window_):
     """"""
 
     @override

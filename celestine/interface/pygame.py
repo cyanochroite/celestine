@@ -15,10 +15,11 @@ from celestine.window.collection import (
     Point,
 )
 from celestine.window.container import Image as Mode
-from celestine.window.element import Abstract as Abstract_
-from celestine.window.element import Button as Button_
-from celestine.window.element import Image as Image_
-from celestine.window.element import Label as Label_
+from celestine.window import Abstract as Abstract_
+from celestine.window import Button as Button_
+from celestine.window import Image as Image_
+from celestine.window import Label as Label_
+from celestine.window import View as View_
 
 
 class Abstract(Abstract_):
@@ -97,7 +98,11 @@ class Image(Abstract, Image_):
         self.render(image)
 
 
-class Window(Window_):
+class View(Abstract, View_):
+    """"""
+
+
+class Window(Abstract, Window_):
     """"""
 
     @override

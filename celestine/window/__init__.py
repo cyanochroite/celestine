@@ -1,5 +1,7 @@
 """"""
 
+import math
+
 from celestine.typed import (
     LS,
     A,
@@ -11,7 +13,399 @@ from celestine.typed import (
     S,
     override,
 )
-from celestine.window.element import View
+from celestine.typed import (
+    BOX,
+    PAIR,
+    A,
+    B,
+    D,
+    H,
+    I,
+    K,
+    N,
+    P,
+    R,
+    S,
+    T,
+    override,
+)
+from celestine.window import (
+    collection,
+    container,
+)
+from celestine.window.collection import (
+    Abstract,
+    Plane,
+)
+from celestine.window.container import Image as Mode
+
+
+class Button(Abstract):
+    """"""
+
+    def click_action(self) -> N:
+        """"""
+        self.hold.queue(self.call, self.action, self.argument)
+
+    def __init__(
+        self,
+        hold: H,
+        canvas,
+        name,
+        text,
+        *,
+        call,
+        action,
+        argument,
+        **star: R,
+    ):
+        self.action = action
+        self.argument = argument
+        self.call = call
+        self.data = text
+        super().__init__(hold, canvas, name, **star)
+
+
+class Image(Abstract):
+    """"""
+
+    path: P  # The location of the image on disk.
+    image: A  # The image object after being loaded from disk.
+    size: T[I, I]  # The width and height of the image.
+    mode: Mode
+
+    """
+    A small version of an image.
+
+    Terminal:
+    minimum = 2**4 = 16
+    maximum = 2**6 = 64
+
+    Regular:
+    minimum = 2**5 = 32
+    maximum = 2**8 = 256
+
+    Minimum:
+    Smallest thumbnail seems to be 40.
+    Resolution of 16 too small for regular images.
+
+    Maximum
+    Largest thumbnail seems to be 250.
+    Keeping it within a byte (256) a nice goal.
+    """
+
+    def update(self, path: P, **star: R) -> N:
+        """"""
+        self.path = path
+
+    def resize(self, size):
+        """"""
+        (size_x, size_y) = size
+        (area_x, area_y) = self.area.size
+
+        down_x = math.floor(area_y * size_x / size_y)
+        down_y = math.floor(area_x * size_y / size_x)
+
+        best_x = min(area_x, down_x)
+        best_y = min(area_y, down_y)
+
+        return (best_x, best_y)
+
+    def scale_to_fit(self, area):
+        """"""
+        (size_x, size_y) = self.size
+        (area_x, area_y) = area
+
+        down_x = math.floor(area_y * size_x / size_y)
+        down_y = math.floor(area_x * size_y / size_x)
+
+        best_x = min(area_x, down_x)
+        best_y = min(area_y, down_y)
+
+        return (best_x, best_y)
+
+    def __init__(self, hold: H, canvas, name, path, *, mode, **star: R):
+        pillow = hold.package.pillow
+
+        self.path = path
+
+        if pillow:
+            self.image = pillow.new((0, 0))
+        else:
+            # Blender
+            self.image = None
+        self.mode = mode
+
+        super().__init__(hold, canvas, name, **star)
+        # minimum = 2**6
+        # maximum = 2**16
+        # minimum = 2**5
+        # maximum = 2**8
+
+    """
+    A small version of an image.
+
+    Terminal:
+    minimum = 2**5 = 32
+    maximum = 2**7 = 128
+
+    Regular:
+    minimum = 2**05 = 64
+    maximum = 2**13 = 8192
+
+    Minimum:
+    Fairly good detail preservation at 64 pixels.
+
+    Maximum
+    Biggest TV is 8k and "biggest" monitors are less then 8K.
+    """
+
+    def resize_(self, size):
+        # TODO this is old
+        x_size, y_size = self.size
+        return (math.floor(x_size), math.floor(y_size))
+
+    def crop(self, source_length: PAIR, target_length: PAIR) -> BOX:
+        """"""
+
+        (source_length_x, source_length_y) = source_length
+        (target_length_x, target_length_y) = target_length
+
+        source_ratio = source_length_x / source_length_y
+        target_ratio = target_length_x / target_length_y
+
+        if source_ratio < target_ratio:
+            length = round(source_length_x / target_ratio)
+            offset = round((source_length_y - length) / 2)
+            return (0, 0 + offset, source_length_x, length + offset)
+
+        if source_ratio > target_ratio:
+            length = round(source_length_y * target_ratio)
+            offset = round((source_length_x - length) / 2)
+            return (0 + offset, 0, length + offset, source_length_y)
+
+        return (0, 0, source_length_x, source_length_y)
+
+
+class Label(Abstract):
+    """"""
+
+    def __init__(self, hold: H, canvas, name, text, **star: R):
+        self.data = text
+        super().__init__(hold, canvas, name, **star)
+
+
+class View(Abstract, collection.Collection):
+    """"""
+
+    item: D[S, Abstract]
+
+    def click(self, point: collection.Point) -> N:
+        if self.hidden:
+            return
+
+        for _, item in self.item.items():
+            item.click(point)
+
+    def draw(self, **star: R) -> N:
+        """"""
+        if self.hidden:
+            return
+
+        for _, item in self.item.items():
+            item.draw(**star)
+
+    @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+        for _, item in self.item.items():
+            item.hide()
+
+    def make(self) -> N:
+        """"""
+        for _, item in self.item.items():
+            item.make()
+
+    def new(
+        self, name, *, text="", path="", code="", view="", **star: R
+    ) -> N:
+        """"""
+        if text != "" and path != "":
+            raise AttributeError("text and path can't both be set")
+
+        if code != "" and view != "":
+            raise AttributeError("code and view path can't both be set")
+
+        call = None
+        action = container.Call.NONE
+        work = None
+
+        if view:
+            call = view
+            action = container.Call.VIEW
+            work = self.window.turn
+
+        if code:
+            call = code
+            action = container.Call.WORK
+            work = self.window.work
+
+        if action == container.Call.NONE:
+            if path:
+                self.save(
+                    self._image(
+                        self.hold,
+                        self.canvas,
+                        name,
+                        path,
+                        **star,
+                    )
+                )
+            else:
+                self.save(
+                    self._label(
+                        self.hold,
+                        self.canvas,
+                        name,
+                        text,
+                        **star,
+                    )
+                )
+        else:
+            self.save(
+                self._button(
+                    self.hold,
+                    self.canvas,
+                    name,
+                    text,
+                    call=work,  # the window function to call
+                    action=call,  # the name of the user function
+                    argument=star,
+                    **star,
+                )
+            )
+
+    @override
+    def show(self) -> N:
+        """"""
+        super().show()
+        for _, item in self.item.items():
+            item.show()
+
+    def spot(self, area: Plane, **star: R) -> N:
+        """"""
+        self.area = area.copy()
+        length = max(1, len(self.item))
+
+        match self.mode:
+            case container.Zone.DROP:
+                partition_x = 1
+                partition_y = length
+            case container.Zone.SPAN:
+                partition_x = length
+                partition_y = 1
+            case container.Zone.GRID:
+                partition_x = self.width
+                partition_y = math.ceil(length / self.width)
+            case container.Zone.NONE:
+                partition_x = 1
+                partition_y = 1
+
+        size_x, size_y = self.area.size
+        index = 0
+
+        fragment_x = size_x // partition_x
+        fragment_y = size_y // partition_y
+
+        items = self.item.items()
+        for _, item in items:
+            index_x = index % partition_x
+            index_y = min(index // partition_x, partition_y - 1)
+            index += 1
+
+            left = self.area.one.minimum
+            upper = self.area.two.minimum
+
+            ymin = upper + fragment_y * (index_y + 0)
+            ymax = upper + fragment_y * (index_y + 1)
+            xmin = left + fragment_x * (index_x + 0)
+            xmax = left + fragment_x * (index_x + 1)
+
+            one = collection.Line(xmin, xmax)
+            two = collection.Line(ymin, ymax)
+
+            rectangle = Plane(one, two)
+            item.spot(rectangle)
+
+    def zone(
+        self,
+        name: S,
+        *,
+        mode=container.Zone.NONE,
+        canvas=None,
+        **star: R,
+    ) -> K:
+        """"""
+        return self.item_set(
+            name,
+            View(
+                self.hold,
+                canvas if canvas else self.canvas,
+                name,
+                self.window,
+                self.element,
+                mode=mode,
+                **star,
+            ),
+        )
+
+    def drop(self, name: S, **star: R) -> K:
+        """"""
+        return self.zone(name, mode=container.Zone.DROP, **star)
+
+    def span(self, name: S, **star: R) -> K:
+        """"""
+        return self.zone(name, mode=container.Zone.SPAN, **star)
+
+    def __enter__(self) -> K:
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback) -> B:
+        return False
+
+    def __init__(
+        self,
+        hold,
+        canvas,
+        name,
+        window,
+        element,
+        *,
+        mode=container.Zone.NONE,
+        row=0,
+        col=0,
+        **star: R,
+    ) -> N:
+        self.window = window
+
+        self.canvas = None
+        #
+        self.element = element
+        self._button = element["button"]
+        self._image = element["image"]
+        self._label = element["label"]
+
+        super().__init__(hold, canvas, name, **star)
+
+        self.width = col
+        self.height = row
+        self.mode = mode
+
+        for range_y in range(row):
+            for range_x in range(col):
+                name = f"{self.name}_{range_x}-{range_y}"
+                self.item[name] = Abstract(hold, self.canvas, name)
 
 
 class Window(View):
