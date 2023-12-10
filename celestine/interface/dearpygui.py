@@ -12,6 +12,7 @@ from celestine.typed import (
     N,
     P,
     R,
+    A,
     override,
 )
 from celestine.window.collection import Plane
@@ -32,8 +33,11 @@ class Button(Abstract, Button_):
         """
         self.call(self.action, **self.argument)
 
-    def make(self):
+    @override
+    def make(self, canvas: A) -> N:
         """"""
+        super().make(canvas)
+
         dearpygui = self.hold.package.dearpygui
 
         dearpygui.add_button(
@@ -51,7 +55,8 @@ class Image(Abstract, Image_):
     delete_item(...)
     """
 
-    def make(self):
+    @override
+    def make(self, canvas: A) -> N:
         """
         Draw the image to screen.
 
@@ -61,6 +66,8 @@ class Image(Abstract, Image_):
         channels = image[2]
         photo = image[3]
         """
+        super().make(canvas)
+
         dearpygui = self.hold.package.dearpygui
 
         photo = self.load()
@@ -125,8 +132,10 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def make(self):
+    @override
+    def make(self, canvas: A) -> N:
         """"""
+        super().make(canvas)
 
         dearpygui = self.hold.package.dearpygui
 
@@ -162,19 +171,23 @@ class Window(Abstract, Window_):
         ]
 
     @override
-    def make(self):
+    def make(self, canvas: A) -> N:
         dearpygui = self.hold.package.dearpygui
+
+        canvas = dearpygui.window(tag=self.name)
+
+        super().make(canvas)
+
         for _, item in self.item.items():
             with item.canvas:
                 dearpygui.configure_item(item.name, show=False)
-                item.make()
-
     @override
     def setup(self, name):
         """"""
         dearpygui = self.hold.package.dearpygui
         canvas = dearpygui.window(tag=name)
         return canvas
+                item.make(canvas)
 
     @override
     def turn(self, page):
@@ -238,7 +251,6 @@ class Window(Abstract, Window_):
             "view": View,
             "window": Window,
         }
-        canvas = None
-        super().__init__(hold, canvas, element, **star)
+        super().__init__(hold, element, **star)
         self.area = Plane.make(1920, 1080)
         self.tag = "window"
