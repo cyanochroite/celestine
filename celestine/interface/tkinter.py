@@ -47,6 +47,8 @@ class Button(Abstract, Button_):
     @override
     def make(self, canvas: A) -> N:
         """"""
+        super().make(canvas)
+
         tkinter = self.hold.package.tkinter
 
         self.render(
@@ -63,6 +65,8 @@ class Image(Abstract, Image_):
     @override
     def make(self, canvas: A) -> N:
         """"""
+        super().make(canvas)
+
         tkinter = self.hold.package.tkinter
 
         self.render(
@@ -96,6 +100,8 @@ class Label(Abstract, Label_):
     @override
     def make(self, canvas: A) -> N:
         """"""
+        super().make(canvas)
+
         tkinter = self.hold.package.tkinter
 
         self.render(
@@ -131,6 +137,17 @@ class View(Abstract, View_):
 
 class Window(Abstract, Window_):
     """"""
+
+    @override
+    def make(self, canvas: A) -> N:
+        """"""
+        canvas = self.hold.package.tkinter.Tk()
+        canvas.title(self.hold.language.APPLICATION_TITLE)
+        canvas.geometry("1920x1080")
+        canvas.minsize(640, 480)
+        canvas.maxsize(3840, 2160)
+        canvas.config(bg="blue")
+        super().make(canvas)
 
     @override
     def extension(self):
@@ -184,12 +201,5 @@ class Window(Abstract, Window_):
             "window": Window,
         }
 
-        canvas = hold.package.tkinter.Tk()
-        canvas.title(hold.language.APPLICATION_TITLE)
-        canvas.geometry("1920x1080")
-        canvas.minsize(640, 480)
-        canvas.maxsize(3840, 2160)
-        canvas.config(bg="blue")
-
-        super().__init__(hold, canvas, element, **star)
+        super().__init__(hold, element, **star)
         self.area = Plane.make(1280, 1080)

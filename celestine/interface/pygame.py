@@ -9,6 +9,7 @@ from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.typed import (
     LS,
+    A,
     H,
     N,
     P,
@@ -117,6 +118,14 @@ class Window(Abstract, Window_):
     """"""
 
     @override
+    def make(self, canvas: A) -> N:
+        """"""
+        pygame = self.hold.package.pygame
+
+        canvas = pygame.display.set_mode(self.area.size.int)
+        super().make(canvas)
+
+    @override
     def draw(self, **star: R) -> N:
         """"""
         pygame = self.hold.package.pygame
@@ -157,6 +166,8 @@ class Window(Abstract, Window_):
 
     @override
     def __enter__(self):
+        super().__enter__()
+
         pygame = self.hold.package.pygame
 
         def set_caption():
@@ -169,17 +180,9 @@ class Window(Abstract, Window_):
             size = 40
             self.font = pygame.font.Font(file_path, size)
 
-        def set_icon():
-            path = "icon.png"
-            asset = load.asset(path)
-            image = pygame.image.load(asset)
-            icon = image.convert_alpha()
-            pygame.display.set_icon(icon)
-
-        super().__enter__()
-        set_icon()
         set_caption()
         set_font()
+
         return self
 
     @override
@@ -187,6 +190,15 @@ class Window(Abstract, Window_):
         super().__exit__(exc_type, exc_value, traceback)
 
         pygame = self.hold.package.pygame
+
+        def set_icon():
+            path = "icon.png"
+            asset = load.asset(path)
+            image = pygame.image.load(asset)
+            icon = image.convert_alpha()
+            pygame.display.set_icon(icon)
+
+        set_icon()
 
         while True:
             self.hold.dequeue()
@@ -212,8 +224,6 @@ class Window(Abstract, Window_):
             "view": View,
             "window": Window,
         }
-        area = Plane.make(1280, 960)
-        canvas = hold.package.pygame.display.set_mode(area.size.int)
-        super().__init__(hold, canvas, element, **star)
-        self.area = area
+        super().__init__(hold, element, **star)
+        self.area = Plane.make(1280, 960)
         self.font = None

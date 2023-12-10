@@ -40,7 +40,6 @@ class Button(Abstract):
     def __init__(
         self,
         hold: H,
-        canvas,
         name,
         text,
         *,
@@ -53,7 +52,7 @@ class Button(Abstract):
         self.argument = argument
         self.call = call
         self.data = text
-        super().__init__(hold, canvas, name, **star)
+        super().__init__(hold, name, **star)
 
 
 class Image(Abstract):
@@ -114,7 +113,7 @@ class Image(Abstract):
 
         return (best_x, best_y)
 
-    def __init__(self, hold: H, canvas, name, path, *, mode, **star: R):
+    def __init__(self, hold: H, name, path, *, mode, **star: R):
         pillow = hold.package.pillow
 
         self.path = path
@@ -126,7 +125,7 @@ class Image(Abstract):
             self.image = None
         self.mode = mode
 
-        super().__init__(hold, canvas, name, **star)
+        super().__init__(hold, name, **star)
         # minimum = 2**6
         # maximum = 2**16
         # minimum = 2**5
@@ -180,9 +179,9 @@ class Image(Abstract):
 class Label(Abstract):
     """"""
 
-    def __init__(self, hold: H, canvas, name, text, **star: R):
+    def __init__(self, hold: H, name, text, **star: R):
         self.data = text
-        super().__init__(hold, canvas, name, **star)
+        super().__init__(hold, name, **star)
 
 
 class View(Abstract, collection.Collection):
@@ -215,6 +214,7 @@ class View(Abstract, collection.Collection):
     @override
     def make(self, canvas: A) -> N:
         """"""
+        super().make(canvas)
         for _, item in self.item.items():
             item.make(canvas)
 
@@ -247,7 +247,6 @@ class View(Abstract, collection.Collection):
                 self.save(
                     self._image(
                         self.hold,
-                        self.canvas,
                         name,
                         path,
                         **star,
@@ -257,7 +256,6 @@ class View(Abstract, collection.Collection):
                 self.save(
                     self._label(
                         self.hold,
-                        self.canvas,
                         name,
                         text,
                         **star,
@@ -267,7 +265,6 @@ class View(Abstract, collection.Collection):
             self.save(
                 self._button(
                     self.hold,
-                    self.canvas,
                     name,
                     text,
                     call=work,  # the window function to call
@@ -335,7 +332,6 @@ class View(Abstract, collection.Collection):
         name: S,
         *,
         mode=container.Zone.NONE,
-        canvas=None,
         **star: R,
     ) -> K:
         """"""
@@ -343,7 +339,6 @@ class View(Abstract, collection.Collection):
             name,
             self._view(
                 self.hold,
-                canvas if canvas else self.canvas,
                 name,
                 self.window,
                 self.element,
@@ -369,7 +364,6 @@ class View(Abstract, collection.Collection):
     def __init__(
         self,
         hold,
-        canvas,
         name,
         window,
         element,
@@ -381,7 +375,6 @@ class View(Abstract, collection.Collection):
     ) -> N:
         self.window = window
 
-        self.canvas = None
         #
         self.element = element
         self._button = element["button"]
@@ -389,7 +382,7 @@ class View(Abstract, collection.Collection):
         self._label = element["label"]
         self._view = element["view"]
 
-        super().__init__(hold, canvas, name, **star)
+        super().__init__(hold, name, **star)
 
         self.width = col
         self.height = row
@@ -475,7 +468,7 @@ class Window(View):
 
         return False
 
-    def __init__(self, hold: H, canvas, element, **star: R) -> N:
+    def __init__(self, hold: H, element, **star: R) -> N:
         self.hold = hold
         self.page = self
         self.code = {}
@@ -483,7 +476,6 @@ class Window(View):
 
         super().__init__(
             self.hold,
-            canvas,
             "window",
             self,
             element,

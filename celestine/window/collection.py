@@ -337,10 +337,10 @@ class Abstract(Object):
         """"""
         self.area = area
 
-    def __init__(self, hold: H, canvas: A, name: S, **star: R) -> N:
+    def __init__(self, hold: H, name: S, **star: R) -> N:
         super().__init__(**star)
         self.area = Plane.make(0, 0)
-        self.canvas = canvas
+        self.canvas = None
         self.hidden = False
         self.hold = hold
         self.name = name
