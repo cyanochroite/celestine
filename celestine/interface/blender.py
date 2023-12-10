@@ -425,7 +425,7 @@ class Window(Abstract, Window_):
         if self.call is None:
             pass
         elif self.call != "make":
-            self.spot(self.area)
+            self.spot()
 
             page = bpy.context.scene.celestine.page
             item = self.view.get(page)

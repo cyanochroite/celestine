@@ -206,11 +206,6 @@ class Plane:
         self *= min(other.size / self.size)
         return self
 
-    def quantize(self) -> K:
-        self.one.quantize()
-        self.two.quantize()
-        return self
-
     @property
     def size(self) -> Point:
         return Point(self.one.length, self.two.length)
@@ -337,9 +332,10 @@ class Abstract(Object):
         """"""
         self.hidden = False
 
-    def spot(self, area: Plane) -> N:
+    def spot(self, area: Plane | N = None) -> N:
         """"""
-        self.area = area.copy()
+        if area:
+            self.area = area
 
     def __init__(self, hold: H, canvas: A, name: S, **star: R) -> N:
         super().__init__(**star)

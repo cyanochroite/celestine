@@ -8,6 +8,7 @@ from celestine.interface import Button as Button_
 from celestine.interface import Image as Image_
 from celestine.interface import Label as Label_
 from celestine.interface import View as View_
+from celestine.interface import Window as Window_
 from celestine.typed import (
     H,
     N,

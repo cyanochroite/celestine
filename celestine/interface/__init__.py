@@ -283,9 +283,10 @@ class View(Abstract, collection.Collection):
         for _, item in self.item.items():
             item.show()
 
-    def spot(self, area: Plane, **star: R) -> N:
+    @override
+    def spot(self, area: Plane | N = None) -> N:
         """"""
-        self.area = area.copy()
+        super().spot(area)
         length = max(1, len(self.item))
 
         match self.mode:
@@ -456,19 +457,21 @@ class Window(View):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        page = self.hold.main
-        self.page = self.view[page]
-        self.turn(page)
-
-        self.spot(self.area)
-        self.make()
-        self.draw()
         if exc_type:
             raise exc_type
         if exc_value:
             raise exc_value
         if traceback:
             raise traceback
+
+        self.spot()
+        self.make()
+        self.draw()
+
+        page = self.hold.main
+        self.page = self.view[page]
+        self.turn(page)
+
         return False
 
     def __init__(self, hold: H, canvas, element, **star: R) -> N:
