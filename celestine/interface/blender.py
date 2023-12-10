@@ -184,22 +184,6 @@ def context():
 class Abstract(Abstract_):
     """"""
 
-    def center_float(self) -> T[F, F]:
-        """"""
-        x_dot = self.area.left + self.area.right
-        y_dot = self.area.upper + self.area.lower
-
-        x_dot /= 2
-        y_dot /= 2
-        return (x_dot, y_dot)
-
-    def render(self) -> N:
-        """"""
-        (x_dot, y_dot) = self.area.centroid.float
-        # child sets mesh and then calls this
-        self.keep.location = (x_dot, y_dot, 0)
-        self.keep.rotation = (180, 0, 0)
-
     @override
     def hide(self) -> N:
         """"""
@@ -208,6 +192,13 @@ class Abstract(Abstract_):
             if name == self.name:
                 item.hide_render = True
                 item.hide_viewport = True
+
+    def render(self) -> N:
+        """"""
+        (x_dot, y_dot) = self.area.centroid.float
+        # child sets mesh and then calls this
+        self.keep.location = (x_dot, y_dot, 0)
+        self.keep.rotation = (180, 0, 0)
 
     @override
     def show(self) -> N:
@@ -228,7 +219,7 @@ class Mouse(Abstract):
         super().__init__(hold, collection, "mouse")
         self.keep = mesh
 
-    def draw(self) -> N:
+    def make(self) -> N:
         """"""
 
         diamond = Diamond()
@@ -403,7 +394,7 @@ class Window(Abstract, Window_):
         mesh.location = (0, 0, -1)
 
         self.mouse = Mouse(self.hold, collection, mesh)
-        self.mouse.draw()
+        self.mouse.make()
 
         @classmethod
         def bind(cls, collection, name, soul):
@@ -422,22 +413,23 @@ class Window(Abstract, Window_):
 
     @override
     def __exit__(self, exc_type, exc_value, traceback):
-        if self.call is None:
-            pass
-        elif self.call != "make":
-            self.spot()
-
-            page = bpy.context.scene.celestine.page
-            item = self.view.get(page)
-            item.show()
-
-            call = getattr(self, self.call)
-            call(**self.star)
-
-            self.hold.dequeue()
+        if self.call == "make":
+            super().__exit__(exc_type, exc_value, traceback)
             return False
 
-        super().__exit__(exc_type, exc_value, traceback)
+        self.spot()
+
+        page = bpy.context.scene.celestine.page
+        self.page = self.view[page]
+
+        item = self.view.get(page)
+        item.show()
+
+        call = getattr(self, self.call)
+        call(**self.star)
+
+        self.hold.dequeue()
+
         return False
 
     @override
