@@ -13,6 +13,7 @@ from celestine.typed import (
     N,
     P,
     R,
+    A,
     S,
     override,
 )
@@ -22,9 +23,9 @@ from celestine.window.collection import Plane
 class Abstract(Abstract_):
     """"""
 
-    def render(self, keep: C, **star: R) -> N:
+    def render(self, canvas: A, keep: C, **star: R) -> N:
         """"""
-        self.keep = keep(self.canvas, **star)
+        self.keep = keep(canvas, **star)
 
         width, height = self.area.size
         dot_x, dot_y = self.area.origin.int
@@ -43,13 +44,14 @@ class Button(Abstract, Button_):
         """"""
         self.call(self.action, **self.argument)
 
-    def make(self) -> N:
+    @override
+    def make(self, canvas: A) -> N:
         """"""
         tkinter = self.hold.package.tkinter
 
-        keep = tkinter.Button
         self.render(
-            keep,
+            canvas,
+            tkinter.Button,
             command=self.callback,
             text=f"button: {self.data}",
         )
@@ -58,10 +60,13 @@ class Button(Abstract, Button_):
 class Image(Abstract, Image_):
     """"""
 
-    def make(self) -> N:
+    @override
+    def make(self, canvas: A) -> N:
         """"""
         tkinter = self.hold.package.tkinter
+
         self.render(
+            canvas,
             tkinter.Label,
             image=self.image.image,
         )
@@ -88,22 +93,40 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def make(self) -> N:
+    @override
+    def make(self, canvas: A) -> N:
         """"""
         tkinter = self.hold.package.tkinter
 
-        keep = tkinter.Label
         self.render(
-            keep,
+            canvas,
+            tkinter.Label,
             fg="blue",
             height=4,
-            text=f"label:{self.data}",
+            text=f"label: {self.data}",
             width=100,
         )
 
 
 class View(Abstract, View_):
     """"""
+
+    @override
+    def make(self, canvas: A) -> N:
+        """"""
+        tkinter = self.hold.package.tkinter
+
+        self.keep = tkinter.Frame(
+            canvas,
+            padx=5,
+            pady=5,
+            bg="skyblue",
+            width=1920,
+            height=1080,
+        )
+        self.keep.place(x=0, y=0)
+
+        super().make(canvas)
 
 
 class Window(Abstract, Window_):

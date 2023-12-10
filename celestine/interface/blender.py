@@ -303,6 +303,11 @@ class Label(Abstract, Label_):
 class View(Abstract, View_):
     """"""
 
+class Frame(View):
+    def make(self) -> N:
+        """"""
+        self.keep = data.collection.make(name)
+
 
 class Window(Abstract, Window_):
     """"""
@@ -333,9 +338,7 @@ class Window(Abstract, Window_):
     @override
     def setup(self, name):
         """"""
-        collection = data.collection.make(name)
-        collection.hide()
-        return collection
+        return data.collection.make(name)
 
     @override
     def turn(self, page):

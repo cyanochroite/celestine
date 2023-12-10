@@ -325,17 +325,17 @@ class Abstract(Object):
         """"""
         self.hidden = True
 
-    def make(self) -> N:
+    def make(self, canvas: A) -> N:
         """"""
+        self.canvas = canvas
 
     def show(self) -> N:
         """"""
         self.hidden = False
 
-    def spot(self, area: Plane | N = None) -> N:
+    def spot(self, area: Plane) -> N:
         """"""
-        if area:
-            self.area = area
+        self.area = area
 
     def __init__(self, hold: H, canvas: A, name: S, **star: R) -> N:
         super().__init__(**star)

@@ -212,10 +212,11 @@ class View(Abstract, collection.Collection):
         for _, item in self.item.items():
             item.hide()
 
-    def make(self) -> N:
+    @override
+    def make(self, canvas: A) -> N:
         """"""
         for _, item in self.item.items():
-            item.make()
+            item.make(canvas)
 
     def new(
         self, name, *, text="", path="", code="", view="", **star: R
@@ -284,7 +285,7 @@ class View(Abstract, collection.Collection):
             item.show()
 
     @override
-    def spot(self, area: Plane | N = None) -> N:
+    def spot(self, area: Plane) -> N:
         """"""
         super().spot(area)
         length = max(1, len(self.item))
@@ -464,8 +465,8 @@ class Window(View):
         if traceback:
             raise traceback
 
-        self.spot()
-        self.make()
+        self.spot(self.area)
+        self.make(self.canvas)
         self.draw()
 
         page = self.hold.main
