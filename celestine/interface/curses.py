@@ -10,6 +10,7 @@ from celestine.interface import Label as Label_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.typed import (
+    A,
     H,
     N,
     P,
@@ -304,6 +305,11 @@ class Window(Abstract, Window_):
     """"""
 
     @override
+    def make(self, canvas: A) -> N:
+        """"""
+        super().make(self.background)
+
+    @override
     def draw(self, **star: R):
         """"""
         curses = self.hold.package.curses
@@ -439,7 +445,7 @@ class Window(Abstract, Window_):
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
 
-        super().__init__(hold, self.background, element, **star)
+        super().__init__(hold, element, **star)
         self.area = Plane(
             Line(1, size_x - 2),
             Line(1, size_y - 2),
