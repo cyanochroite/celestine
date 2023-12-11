@@ -309,7 +309,6 @@ class Window(Abstract, Window_):
         curses = self.hold.package.curses
 
         # Do normal draw stuff.
-        # self.setup(self.page)
 
         canvas = self.page.canvas
         canvas.erase()
@@ -339,6 +338,7 @@ class Window(Abstract, Window_):
     @override
     def setup(self, name):
         """"""
+        # TODO REMOVE
         curses = self.hold.package.curses
         return curses.window(*self.area.int)
 

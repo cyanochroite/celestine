@@ -402,10 +402,6 @@ class Window(View):
     code: D[S, A]  # function
     view: D[S, View]
 
-    def setup(self, name: S) -> A:
-        """"""
-        return self.canvas
-
     def extension(self) -> LS:
         """"""
         return [
@@ -459,7 +455,7 @@ class Window(View):
             raise traceback
 
         self.spot(self.area)
-        self.make(self.canvas)
+        self.make(None)
         self.draw()
 
         page = self.hold.main

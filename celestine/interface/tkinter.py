@@ -17,7 +17,7 @@ from celestine.typed import (
     S,
     override,
 )
-from celestine.window.collection import Plane
+from celestine.window.collection import Plane, Point
 
 
 class Abstract(Abstract_):
@@ -117,23 +117,6 @@ class Label(Abstract, Label_):
 class View(Abstract, View_):
     """"""
 
-    @override
-    def make(self, canvas: A) -> N:
-        """"""
-        tkinter = self.hold.package.tkinter
-
-        self.keep = tkinter.Frame(
-            canvas,
-            padx=5,
-            pady=5,
-            bg="skyblue",
-            width=1920,
-            height=1080,
-        )
-        self.keep.place(x=0, y=0)
-
-        super().make(canvas)
-
 
 class Window(Abstract, Window_):
     """"""
@@ -149,6 +132,19 @@ class Window(Abstract, Window_):
         canvas.config(bg="blue")
         super().make(canvas)
 
+        tkinter = self.hold.package.tkinter
+        for _, item in self.item.items():
+            canvas = tkinter.Frame(
+                canvas,
+                padx=5,
+                pady=5,
+                bg="skyblue",
+                width=1920,
+                height=1080,
+            )
+            canvas.place(x=0, y=0)
+            item.make(canvas)
+
     @override
     def extension(self):
         """"""
@@ -163,22 +159,6 @@ class Window(Abstract, Window_):
             ".gif",
             ".png",
         ]
-
-    @override
-    def setup(self, name: S) -> N:
-        """"""
-        tkinter = self.hold.package.tkinter
-
-        canvas = tkinter.Frame(
-            self.canvas,
-            padx=5,
-            pady=5,
-            bg="skyblue",
-            width=1920,
-            height=1080,
-        )
-        canvas.place(x=0, y=0)
-        return canvas
 
     @override
     def turn(self, page):
@@ -200,6 +180,5 @@ class Window(Abstract, Window_):
             "view": View,
             "window": Window,
         }
-
         super().__init__(hold, element, **star)
         self.area = Plane.make(1280, 1080)

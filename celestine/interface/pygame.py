@@ -101,17 +101,6 @@ class Image(Abstract, Image_):
 
 class View(Abstract, View_):
     """"""
-    @override
-    def hide(self) -> N:
-        """"""
-        super().hide()
-
-
-    @override
-    def show(self) -> N:
-        """"""
-        super().show()
-
 
 
 class Window(Abstract, Window_):

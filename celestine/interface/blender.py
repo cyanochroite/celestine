@@ -338,6 +338,7 @@ class Window(Abstract, Window_):
     @override
     def setup(self, name):
         """"""
+        # TODO REMOVE
         return data.collection.make(name)
 
     @override
