@@ -23,12 +23,10 @@ from celestine.package.blender.mesh import (
 from celestine.package.blender.mesh.quadrilateral import Diamond
 from celestine.typed import (
     B,
-    F,
     H,
     N,
     R,
     S,
-    T,
     override,
 )
 from celestine.window.collection import (
@@ -302,11 +300,6 @@ class Label(Abstract, Label_):
 
 class View(Abstract, View_):
     """"""
-
-class Frame(View):
-    def make(self) -> N:
-        """"""
-        self.keep = data.collection.make(name)
 
 
 class Window(Abstract, Window_):

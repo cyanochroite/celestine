@@ -8,16 +8,15 @@ from celestine.interface import Label as Label_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.typed import (
+    A,
     C,
     H,
     N,
     P,
     R,
-    A,
-    S,
     override,
 )
-from celestine.window.collection import Plane, Point
+from celestine.window.collection import Plane
 
 
 class Abstract(Abstract_):
@@ -134,7 +133,7 @@ class Window(Abstract, Window_):
 
         tkinter = self.hold.package.tkinter
         for _, item in self.item.items():
-            canvas = tkinter.Frame(
+            canvas1 = tkinter.Frame(
                 canvas,
                 padx=5,
                 pady=5,
@@ -142,8 +141,8 @@ class Window(Abstract, Window_):
                 width=1920,
                 height=1080,
             )
-            canvas.place(x=0, y=0)
-            item.make(canvas)
+            canvas1.place(x=0, y=0)
+            item.make(canvas1)
 
     @override
     def extension(self):

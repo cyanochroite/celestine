@@ -8,11 +8,11 @@ from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.typed import (
     LF,
+    A,
     H,
     N,
     P,
     R,
-    A,
     override,
 )
 from celestine.window.collection import Plane
