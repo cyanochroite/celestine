@@ -172,22 +172,14 @@ class Window(Abstract, Window_):
 
     @override
     def make(self, canvas: A) -> N:
-        dearpygui = self.hold.package.dearpygui
-
-        canvas = dearpygui.window(tag=self.name)
-
-        super().make(canvas)
-
-        for _, item in self.item.items():
-            with item.canvas:
-                dearpygui.configure_item(item.name, show=False)
-    @override
-    def setup(self, name):
         """"""
         dearpygui = self.hold.package.dearpygui
-        canvas = dearpygui.window(tag=name)
-        return canvas
-                item.make(canvas)
+        for name, item in self.item.items():
+            canvas = self.hold.package.dearpygui.window(tag=name)
+            item.canvas = canvas
+            with item.canvas:
+                dearpygui.configure_item(item.name, show=False)
+                item.make(None)
 
     @override
     def turn(self, page):

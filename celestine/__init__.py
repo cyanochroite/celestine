@@ -42,16 +42,10 @@ def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
             window.code[name] = function
 
         for name, function in session.view.items():
-            # canvas = window.setup(name)
             view = window.drop(name)
             function(view)
             view.hide()
             window.view[name] = view
-            # canvas = window.setup(name)
-            # container = window.drop(name, canvas=canvas)
-            # container.hide()
-            # function(container)
-            # window.view[name] = container
 
 
 def register() -> N:
