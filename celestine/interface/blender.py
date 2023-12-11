@@ -22,6 +22,7 @@ from celestine.package.blender.mesh import (
 )
 from celestine.package.blender.mesh.quadrilateral import Diamond
 from celestine.typed import (
+    A,
     B,
     H,
     N,
@@ -211,13 +212,14 @@ class Abstract(Abstract_):
 class Mouse(Abstract):
     """"""
 
-    def __init__(self, hold: H, collection, mesh) -> N:
+    def __init__(self, hold: H, mesh) -> N:
         self.mesh = mesh.soul
         self.text = "mouse"
-        super().__init__(hold, collection, "mouse")
+        super().__init__(hold, "mouse")
         self.keep = mesh
 
-    def make(self) -> N:
+    @override
+    def make(self, canvas: A) -> N:
         """"""
 
         diamond = Diamond()
@@ -229,13 +231,14 @@ class Mouse(Abstract):
 class Button(Abstract, Button_):
     """"""
 
-    def make(self) -> N:
+    @override
+    def make(self, canvas: A) -> N:
         """"""
 
         width = len(self.data) / 4
         height = 1 / 20
 
-        plane = quadrilateral.plane(self.canvas, self.data)
+        plane = quadrilateral.plane(canvas, self.data)
         plane.scale = (width, height, 1)
 
         text = basic.text(self.canvas, self.data, self.data)
@@ -267,12 +270,13 @@ class Image(Abstract, Image_):
         data.image.remove(item)
         cls.default = None
 
-    def make(self) -> N:
+    @override
+    def make(self, canvas: A) -> N:
         """"""
 
         image = data.image.load(self.path)
         material = UV.image(self.name, image)
-        plane = basic.image(self.canvas, self.name, image.size)
+        plane = basic.image(canvas, self.name, image.size)
 
         plane.body.data.materials.append(material)
         self.keep = plane
@@ -292,9 +296,10 @@ class Image(Abstract, Image_):
 class Label(Abstract, Label_):
     """"""
 
-    def make(self) -> N:
+    @override
+    def make(self, canvas: A) -> N:
         """"""
-        self.keep = basic.text(self.canvas, self.data, self.data)
+        self.keep = basic.text(canvas, self.data, self.data)
         self.render()
 
 
@@ -304,6 +309,12 @@ class View(Abstract, View_):
 
 class Window(Abstract, Window_):
     """"""
+
+    def make(self, canvas: A) -> N:
+        """"""
+        for name, item in self.item.items():
+            canvas = data.collection.make(name)
+            item.make(canvas)
 
     @override
     def extension(self):
@@ -327,12 +338,6 @@ class Window(Abstract, Window_):
             ".tiff",
             ".webp",
         ]
-
-    @override
-    def setup(self, name):
-        """"""
-        # TODO REMOVE
-        return data.collection.make(name)
 
     @override
     def turn(self, page):
@@ -390,8 +395,8 @@ class Window(Abstract, Window_):
         mesh = data.mesh.make(click, "mouse")
         mesh.location = (0, 0, -1)
 
-        self.mouse = Mouse(self.hold, collection, mesh)
-        self.mouse.make()
+        self.mouse = Mouse(self.hold, mesh)
+        self.mouse.make(collection)
 
         @classmethod
         def bind(cls, collection, name, soul):
@@ -438,8 +443,7 @@ class Window(Abstract, Window_):
             "view": View,
             "window": Window,
         }
-        canvas = None
-        super().__init__(hold, canvas, element, **star)
+        super().__init__(hold, element, **star)
         self.area = Plane.make(20, 20)
 
         self.frame = None
