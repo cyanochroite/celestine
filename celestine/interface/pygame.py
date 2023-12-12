@@ -99,11 +99,11 @@ class Image(Abstract, Image_):
         self.render(image)
 
 
-class View(Abstract, View_):
+class View(View_):
     """"""
 
 
-class Window(Abstract, Window_):
+class Window(Window_):
     """"""
 
     @override

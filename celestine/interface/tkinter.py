@@ -113,11 +113,11 @@ class Label(Abstract, Label_):
         )
 
 
-class View(Abstract, View_):
+class View(View_):
     """"""
 
 
-class Window(Abstract, Window_):
+class Window(Window_):
     """"""
 
     @override

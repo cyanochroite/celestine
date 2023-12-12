@@ -183,30 +183,12 @@ def context():
 class Abstract(Abstract_):
     """"""
 
-    @override
-    def hide(self) -> N:
-        """"""
-        super().hide()
-        for name, item in bpy.data.collections.items():
-            if name == self.name:
-                item.hide_render = True
-                item.hide_viewport = True
-
     def render(self) -> N:
         """"""
         (x_dot, y_dot) = self.area.centroid.float
         # child sets mesh and then calls this
         self.keep.location = (x_dot, y_dot, 0)
         self.keep.rotation = (180, 0, 0)
-
-    @override
-    def show(self) -> N:
-        """"""
-        super().show()
-        for name, item in bpy.data.collections.items():
-            if name == self.name:
-                item.hide_render = False
-                item.hide_viewport = False
 
 
 class Mouse(Abstract):
@@ -303,11 +285,28 @@ class Label(Abstract, Label_):
         self.render()
 
 
-class View(Abstract, View_):
+class View(View_):
     """"""
 
+    @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+        item = bpy.data.collections.get(self.name)
+        if item:
+            item.hide_render = True
+            item.hide_viewport = True
 
-class Window(Abstract, Window_):
+    @override
+    def show(self) -> N:
+        """"""
+        item = bpy.data.collections.get(self.name)
+        if item:
+            item.hide_render = False
+            item.hide_viewport = False
+
+
+class Window(Window_):
     """"""
 
     def make(self, canvas: A) -> N:

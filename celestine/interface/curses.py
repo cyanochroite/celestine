@@ -297,11 +297,11 @@ class Label(Abstract, Label_):
         self.render(item, **star)
 
 
-class View(Abstract, View_):
+class View(View_):
     """"""
 
 
-class Window(Abstract, Window_):
+class Window(Window_):
     """"""
 
     @override

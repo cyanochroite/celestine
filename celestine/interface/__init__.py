@@ -456,7 +456,9 @@ class Window(View):
 
         self.spot(self.area)
         self.make(None)
-        self.draw()
+
+        for item in self.item.values():
+            item.hide()
 
         page = self.hold.main
         self.page = self.view[page]
