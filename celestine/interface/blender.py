@@ -223,7 +223,7 @@ class Button(Abstract, Button_):
         plane = quadrilateral.plane(canvas, self.data)
         plane.scale = (width, height, 1)
 
-        text = basic.text(self.canvas, self.data, self.data)
+        text = basic.text(canvas, self.data, self.data)
         text.scale = (1 / width, 1 / height, 1)
         text.location = (-width / 4, -height, 0.1)
 
@@ -300,6 +300,7 @@ class View(View_):
     @override
     def show(self) -> N:
         """"""
+        super().show()
         item = bpy.data.collections.get(self.name)
         if item:
             item.hide_render = False
@@ -418,13 +419,14 @@ class Window(Window_):
             super().__exit__(exc_type, exc_value, traceback)
             return False
 
-        self.spot()
+        self.spot(self.area)
+        for item in self.item.values():
+            item.hide()
 
-        page = bpy.context.scene.celestine.page
+        page = self.hold.main
         self.page = self.view[page]
+        self.turn(page)
 
-        item = self.view.get(page)
-        item.show()
 
         call = getattr(self, self.call)
         call(**self.star)
