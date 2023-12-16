@@ -149,10 +149,27 @@ class Label(Abstract, Label_):
 class View(View_):
     """"""
 
+    @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+        try:
+            self.hold.package.dearpygui.hide_item(self.name)
+        except SystemError:
+            pass
+
+    @override
+    def show(self) -> N:
+        """"""
+        super().show()
+        try:
+            self.hold.package.dearpygui.show_item(self.name)
+        except SystemError:
+            pass
+
 
 class Window(Window_):
     """"""
-
     @override
     def extension(self):
         """"""
@@ -184,14 +201,9 @@ class Window(Window_):
     @override
     def turn(self, page):
         """"""
-        dearpygui = self.hold.package.dearpygui
-
-        dearpygui.hide_item(self.page.name)
-
         super().turn(page)
-
+        dearpygui = self.hold.package.dearpygui
         tag = self.page.name
-        dearpygui.show_item(tag)
         dearpygui.set_primary_window(tag, True)
 
     @override

@@ -121,6 +121,21 @@ class Window(Window_):
     """"""
 
     @override
+    def extension(self):
+        """"""
+        if self.hold.package.pillow:
+            return self.hold.package.pillow.extension()
+
+        return [
+            ".pbm",
+            ".pgm",
+            ".ppm",
+            ".pnm",
+            ".gif",
+            ".png",
+        ]
+
+    @override
     def make(self, canvas: A) -> N:
         """"""
         canvas = self.hold.package.tkinter.Tk()
@@ -143,21 +158,6 @@ class Window(Window_):
             )
             canvas1.place(x=0, y=0)
             item.make(canvas1)
-
-    @override
-    def extension(self):
-        """"""
-        if self.hold.package.pillow:
-            return self.hold.package.pillow.extension()
-
-        return [
-            ".pbm",
-            ".pgm",
-            ".ppm",
-            ".pnm",
-            ".gif",
-            ".png",
-        ]
 
     @override
     def turn(self, page):

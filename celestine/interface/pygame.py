@@ -107,14 +107,6 @@ class Window(Window_):
     """"""
 
     @override
-    def make(self, canvas: A) -> N:
-        """"""
-        pygame = self.hold.package.pygame
-
-        canvas = pygame.display.set_mode(self.area.size.int)
-        super().make(canvas)
-
-    @override
     def draw(self, **star: R) -> N:
         """"""
         pygame = self.hold.package.pygame
@@ -152,6 +144,14 @@ class Window(Window_):
             ".gif",
             ".png",
         ]
+
+    @override
+    def make(self, canvas: A) -> N:
+        """"""
+        pygame = self.hold.package.pygame
+
+        canvas = pygame.display.set_mode(self.area.size.int)
+        super().make(canvas)
 
     @override
     def __enter__(self):

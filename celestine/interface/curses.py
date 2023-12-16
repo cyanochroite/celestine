@@ -305,11 +305,6 @@ class Window(Window_):
     """"""
 
     @override
-    def make(self, canvas: A) -> N:
-        """"""
-        super().make(self.background)
-
-    @override
     def draw(self, **star: R):
         """"""
         curses = self.hold.package.curses
@@ -340,6 +335,11 @@ class Window(Window_):
             return self.hold.package.pillow.extension()
 
         return []
+
+    @override
+    def make(self, canvas: A) -> N:
+        """"""
+        super().make(self.background)
 
     @override
     def setup(self, name):

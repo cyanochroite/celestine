@@ -196,6 +196,7 @@ class View(Abstract, collection.Collection):
         for _, item in self.item.items():
             item.click(point)
 
+    @override
     def draw(self, **star: R) -> N:
         """"""
         if self.hidden:
@@ -430,6 +431,31 @@ class Window(View):
             ".png",
         ]
 
+    @override
+    def draw(self, **star: R) -> N:
+        """"""
+        super().draw(**star)
+
+    @override
+    def hide(self) -> N:
+        """"""
+        self.page.hide()
+
+    @override
+    def make(self, canvas: A) -> N:
+        """"""
+        super().make(canvas)
+
+    @override
+    def show(self) -> N:
+        """"""
+        self.page.show()
+
+    @override
+    def spot(self, area: Plane) -> N:
+        """"""
+        super().spot(area)
+
     def turn(self, page: S) -> N:
         """"""
         self.page.hide()
@@ -456,21 +482,16 @@ class Window(View):
 
         self.spot(self.area)
         self.make(None)
-
-        for item in self.item.values():
-            item.hide()
-
-        page = self.hold.main
-        self.page = self.view[page]
-        self.turn(page)
+        self.turn(self.hold.main)
 
         return False
 
     def __init__(self, hold: H, element, **star: R) -> N:
         self.hold = hold
-        self.page = self
         self.code = {}
         self.view = {}
+
+        self.page = View(hold, "", self, element)
 
         super().__init__(
             self.hold,

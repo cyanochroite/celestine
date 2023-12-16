@@ -310,12 +310,6 @@ class View(View_):
 class Window(Window_):
     """"""
 
-    def make(self, canvas: A) -> N:
-        """"""
-        for name, item in self.item.items():
-            canvas = data.collection.make(name)
-            item.make(canvas)
-
     @override
     def extension(self):
         """"""
@@ -338,6 +332,13 @@ class Window(Window_):
             ".tiff",
             ".webp",
         ]
+
+    @override
+    def make(self, canvas: A) -> N:
+        """"""
+        for name, item in self.item.items():
+            canvas = data.collection.make(name)
+            item.make(canvas)
 
     @override
     def turn(self, page):
@@ -420,13 +421,7 @@ class Window(Window_):
             return False
 
         self.spot(self.area)
-        for item in self.item.values():
-            item.hide()
-
-        page = self.hold.main
-        self.page = self.view[page]
-        self.turn(page)
-
+        self.turn(self.hold.main)
 
         call = getattr(self, self.call)
         call(**self.star)
