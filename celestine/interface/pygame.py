@@ -37,6 +37,8 @@ class Button(Abstract, Button_):
 
     def draw(self, *, font, **star: R) -> N:
         """"""
+        if self.hidden:
+            return
 
         text = f"Button{self.data}"
 
@@ -49,6 +51,8 @@ class Label(Abstract, Label_):
 
     def draw(self, *, font, **star: R) -> N:
         """"""
+        if self.hidden:
+            return
 
         keep = font.render(self.data, True, (255, 255, 255))
         self.render(keep)
@@ -57,8 +61,10 @@ class Label(Abstract, Label_):
 class Image(Abstract, Image_):
     """"""
 
-    def make(self) -> N:
+    @override
+    def make(self, canvas: A) -> N:
         """"""
+        super().make(canvas)
         pillow = self.hold.package.pillow
 
         self.image = pillow.new(self.area.size.int)
@@ -88,6 +94,9 @@ class Image(Abstract, Image_):
 
     def draw(self, *, font, **star: R) -> N:
         """"""
+        if self.hidden:
+            return
+
         pygame = self.hold.package.pygame
 
         image = pygame.image.fromstring(

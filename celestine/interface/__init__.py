@@ -189,6 +189,18 @@ class View(Abstract, collection.Collection):
 
     item: D[S, Abstract]
 
+    def find(self, name: S) -> N | Abstract:
+        """"""
+        for key, value in self.item.items():
+            if key == name:
+                return value
+            if not getattr(value, "find", False):
+                continue
+            item = value.find(name)
+            if item:
+                return item
+        return None
+
     def click(self, point: collection.Point) -> N:
         if self.hidden:
             return
@@ -392,7 +404,7 @@ class View(Abstract, collection.Collection):
         for range_y in range(row):
             for range_x in range(col):
                 name = f"{self.name}_{range_x}-{range_y}"
-                self.item[name] = Abstract(hold, self.canvas, name)
+                self.item[name] = Abstract(hold, name)
 
 
 class Window(View):
@@ -430,6 +442,13 @@ class Window(View):
             ".gif",
             ".png",
         ]
+
+    def find(self, name: S) -> Abstract:
+        """"""
+        item = super().find(name)
+        if item:
+            return item
+        raise KeyError(name)
 
     @override
     def draw(self, **star: R) -> N:

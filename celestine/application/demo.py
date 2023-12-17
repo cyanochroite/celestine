@@ -26,6 +26,13 @@ def cow(hold: H, *, say: S) -> N:
     print(talk, say)
 
 
+@code
+def cow(hold: H, *, say: S) -> N:
+    """"""
+    item = hold.window.find("zero_title")
+    item.hide()
+
+
 @main
 def zero(view: View) -> N:
     """"""
