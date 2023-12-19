@@ -4,7 +4,6 @@ from celestine.data import code
 from celestine.typed import (
     LP,
     LS,
-    A,
     H,
     N,
     P,

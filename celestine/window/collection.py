@@ -344,9 +344,7 @@ class Abstract(Object):
         self.hidden = False
         self.hold = hold
         self.name = name
-
         self.keep = None
-        self.hide()
 
 
 class Collection(Object):

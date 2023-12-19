@@ -45,6 +45,7 @@ def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
             view = window.drop(name)
             function(view)
             window.view[name] = view
+            # window.frame(name, function)
 
 
 def register() -> N:

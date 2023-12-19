@@ -170,6 +170,7 @@ class View(View_):
 
 class Window(Window_):
     """"""
+
     @override
     def extension(self):
         """"""

@@ -14,6 +14,7 @@ from celestine.typed import (
     N,
     P,
     R,
+    S,
     override,
 )
 from celestine.window.collection import (
@@ -112,8 +113,18 @@ class View(View_):
     """"""
 
 
+class Page(View_):
+    """"""
+
+
 class Window(Window_):
     """"""
+
+    def frame(self, name: S, function: A) -> N:
+        page = Page(self.hold, name, self, self.element)
+        view = page.drop(name)
+        function(view)
+        self.view[name] = view
 
     @override
     def draw(self, **star: R) -> N:

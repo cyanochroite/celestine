@@ -218,13 +218,6 @@ class View(Abstract, collection.Collection):
             item.draw(**star)
 
     @override
-    def hide(self) -> N:
-        """"""
-        super().hide()
-        for _, item in self.item.items():
-            item.hide()
-
-    @override
     def make(self, canvas: A) -> N:
         """"""
         super().make(canvas)
@@ -286,13 +279,6 @@ class View(Abstract, collection.Collection):
                     **star,
                 )
             )
-
-    @override
-    def show(self) -> N:
-        """"""
-        super().show()
-        for _, item in self.item.items():
-            item.show()
 
     @override
     def spot(self, area: Plane) -> N:
@@ -456,19 +442,9 @@ class Window(View):
         super().draw(**star)
 
     @override
-    def hide(self) -> N:
-        """"""
-        self.page.hide()
-
-    @override
     def make(self, canvas: A) -> N:
         """"""
         super().make(canvas)
-
-    @override
-    def show(self) -> N:
-        """"""
-        self.page.show()
 
     @override
     def spot(self, area: Plane) -> N:
@@ -501,6 +477,10 @@ class Window(View):
 
         self.spot(self.area)
         self.make(None)
+
+        for item in self.item.values():
+            item.hide()
+
         self.turn(self.hold.main)
 
         return False

@@ -24,11 +24,6 @@ def cow(hold: H, *, say: S) -> N:
     """"""
     talk = hold.language.DEMO_COW_TALK
     print(talk, say)
-
-
-@code
-def cow(hold: H, *, say: S) -> N:
-    """"""
     item = hold.window.find("zero_title")
     item.hide()
 
