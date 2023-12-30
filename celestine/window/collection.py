@@ -1,5 +1,6 @@
 """"""
 
+from collections.abc import Collection
 
 from celestine.typed import (
     GF,
@@ -347,32 +348,29 @@ class Abstract(Object):
         self.keep = None
 
 
-class Collection(Object):
+class Tree(Object, Collection[D[S, Abstract]]):
     """"""
 
-    item: D[S, Abstract]
+    _item: D[S, Abstract]
 
-    def item_get(self, name: S) -> Abstract:
+    def get(self, name: S) -> Abstract:
         """"""
-        return self.item[name]
+        return self._item[name]
 
-    def item_set(self, name: S, item: Abstract) -> Abstract:
+    def set(self, item: Abstract) -> Abstract:
         """"""
-        self.item[name] = item
+        self._item[item.name] = item
         return item
 
-    def load(self, name: S) -> Abstract:
-        """"""
-        return self.item[name]
-
-    def save(self, item: Abstract) -> N:
-        """"""
-        self.item[item.name] = item
+    def __contains__(self, item: S) -> B:
+        return item in self._item
 
     def __init__(self, **star: R) -> N:
-        self.item = {}
+        self._item = {}
         super().__init__(**star)
 
     def __iter__(self) -> G[T[S, Abstract], N, N]:
-        """"""
-        yield from self.item.items()
+        yield from self._item.items()
+
+    def __len__(self) -> I:
+        return len(self._item)

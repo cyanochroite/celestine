@@ -147,7 +147,7 @@ class Window(Window_):
         super().make(canvas)
 
         tkinter = self.hold.package.tkinter
-        for _, item in self.item.items():
+        for _, item in self:
             canvas1 = tkinter.Frame(
                 canvas,
                 padx=5,

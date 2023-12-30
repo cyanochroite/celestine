@@ -192,7 +192,7 @@ class Window(Window_):
     def make(self, canvas: A) -> N:
         """"""
         dearpygui = self.hold.package.dearpygui
-        for name, item in self.item.items():
+        for name, item in self:
             canvas = self.hold.package.dearpygui.window(tag=name)
             item.canvas = canvas
             with item.canvas:

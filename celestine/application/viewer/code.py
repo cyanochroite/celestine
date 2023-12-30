@@ -27,7 +27,7 @@ def setup(hold: H) -> N:
     find = find_image(hold, directory)
     images = iter(find)
 
-    grid = window.load("grid")
+    grid = window.get("grid")
     try:
         for _, item in grid.item.items():
             image = next(images)

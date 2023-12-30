@@ -184,14 +184,14 @@ class Label(Abstract):
         super().__init__(hold, name, **star)
 
 
-class View(Abstract, collection.Collection):
+class View(Abstract, collection.Tree):
     """"""
 
     item: D[S, Abstract]
 
     def find(self, name: S) -> N | Abstract:
         """"""
-        for key, value in self.item.items():
+        for key, value in self:
             if key == name:
                 return value
             if not getattr(value, "find", False):
@@ -205,7 +205,7 @@ class View(Abstract, collection.Collection):
         if self.hidden:
             return
 
-        for _, item in self.item.items():
+        for _, item in self:
             item.click(point)
 
     @override
@@ -214,14 +214,14 @@ class View(Abstract, collection.Collection):
         if self.hidden:
             return
 
-        for _, item in self.item.items():
+        for _, item in self:
             item.draw(**star)
 
     @override
     def make(self, canvas: A) -> N:
         """"""
         super().make(canvas)
-        for _, item in self.item.items():
+        for _, item in self:
             item.make(canvas)
 
     def new(
@@ -250,7 +250,7 @@ class View(Abstract, collection.Collection):
 
         if action == container.Call.NONE:
             if path:
-                self.save(
+                self.set(
                     self._image(
                         self.hold,
                         name,
@@ -259,7 +259,7 @@ class View(Abstract, collection.Collection):
                     )
                 )
             else:
-                self.save(
+                self.set(
                     self._label(
                         self.hold,
                         name,
@@ -268,7 +268,7 @@ class View(Abstract, collection.Collection):
                     )
                 )
         else:
-            self.save(
+            self.set(
                 self._button(
                     self.hold,
                     name,
@@ -280,11 +280,13 @@ class View(Abstract, collection.Collection):
                 )
             )
 
+
+
     @override
     def spot(self, area: Plane) -> N:
         """"""
         super().spot(area)
-        length = max(1, len(self.item))
+        length = max(1, len(self))
 
         match self.mode:
             case container.Zone.DROP:
@@ -306,8 +308,7 @@ class View(Abstract, collection.Collection):
         fragment_x = size_x // partition_x
         fragment_y = size_y // partition_y
 
-        items = self.item.items()
-        for _, item in items:
+        for _, item in self:
             index_x = index % partition_x
             index_y = min(index // partition_x, partition_y - 1)
             index += 1
@@ -334,8 +335,7 @@ class View(Abstract, collection.Collection):
         **star: R,
     ) -> K:
         """"""
-        return self.item_set(
-            name,
+        return self.set(
             self._view(
                 self.hold,
                 name,
@@ -343,7 +343,7 @@ class View(Abstract, collection.Collection):
                 self.element,
                 mode=mode,
                 **star,
-            ),
+            )
         )
 
     def drop(self, name: S, **star: R) -> K:
@@ -478,7 +478,7 @@ class Window(View):
         self.spot(self.area)
         self.make(None)
 
-        for item in self.item.values():
+        for _, item in self:
             item.hide()
 
         self.turn(self.hold.main)

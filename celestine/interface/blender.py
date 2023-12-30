@@ -336,7 +336,7 @@ class Window(Window_):
     @override
     def make(self, canvas: A) -> N:
         """"""
-        for name, item in self.item.items():
+        for name, item in self:
             canvas = data.collection.make(name)
             item.make(canvas)
 
