@@ -82,3 +82,4 @@ def unregister() -> N:
 
 
 # split stream into load and save
+# unicode file can use builtin to save space

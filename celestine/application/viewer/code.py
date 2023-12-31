@@ -29,7 +29,7 @@ def setup(hold: H) -> N:
 
     grid = window.get("grid")
     try:
-        for _, item in grid.item.items():
+        for _, item in grid:
             image = next(images)
             item.update(image)
     except StopIteration:

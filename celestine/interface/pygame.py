@@ -14,7 +14,6 @@ from celestine.typed import (
     N,
     P,
     R,
-    S,
     override,
 )
 from celestine.window.collection import (

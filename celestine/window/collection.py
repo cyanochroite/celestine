@@ -19,24 +19,7 @@ from celestine.typed import (
 )
 
 
-class Object:
-    """"""
-
-    @classmethod
-    def clone(cls, self: K) -> K:
-        """"""
-        return cls()
-
-    def copy(self) -> K:
-        """"""
-        return self.clone(self)
-
-    def __init__(self, **star: R) -> N:
-        """This does not pass the star parameter to the real object."""
-        super().__init__()
-
-
-class Point(Object):
+class Point:
     """"""
 
     one: F
@@ -84,7 +67,7 @@ class Point(Object):
         return type(self)(one, two)
 
 
-class Line(Object):
+class Line:
     """"""
 
     minimum: F
@@ -149,7 +132,7 @@ class Line(Object):
         return f"[{self.minimum}, {self.maximum}]"
 
 
-class Plane(Object):
+class Plane:
     """"""
 
     one: Line
@@ -251,48 +234,21 @@ class Plane(Object):
         return f"({one}, {two})"
 
 
-class Rectangle(Object):
+class Object:
     """"""
 
-    left: I
-    upper: I
-    right: I
-    lower: I
-
-    def copy(self, other: K) -> N:
-        """Copy the values from another object."""
-        self.left = other.left
-        self.upper = other.upper
-        self.right = other.right
-        self.lower = other.lower
-
-    def within(self, dot_x: I, dot_y: I) -> B:
-        """Test that click inside us."""
-        test_x = self.left <= dot_x <= self.right
-        test_y = self.upper <= dot_y <= self.lower
-        return test_x and test_y
-
-    @property
-    def origin(self) -> T[I, I]:
+    @classmethod
+    def clone(cls, self: K) -> K:
         """"""
-        return (self.left, self.upper)
+        return cls()
 
-    @property
-    def size(self) -> T[I, I]:
+    def copy(self) -> K:
         """"""
-        return (self.right - self.left, self.lower - self.upper)
+        return self.clone(self)
 
-    @property
-    def value(self) -> T[I, I, I, I]:
-        """"""
-        return (self.left, self.upper, self.right, self.lower)
-
-    def __init__(self, left: I, upper: I, right: I, lower: I) -> N:
-        """"""
-        self.left = left
-        self.upper = upper
-        self.right = right
-        self.lower = lower
+    def __init__(self, **star: R) -> N:
+        """This does not pass the star parameter to the real object."""
+        super().__init__()
 
 
 class Abstract(Object):
@@ -300,7 +256,6 @@ class Abstract(Object):
 
     keep: A  # The object that the window system interacts with.
     parent: K
-    children: D[S, K]
 
     area: Plane
     canvas: A
@@ -349,7 +304,12 @@ class Abstract(Object):
         self.hold = hold
         self.name = name
         self.keep = None
-        self.children = {}
+
+
+class Tree(Object, Collection):
+    """"""
+
+    children: D[S, K]
 
     def get(self, name: S) -> K:
         """"""
@@ -365,6 +325,10 @@ class Abstract(Object):
 
     def __contains__(self, item: S) -> B:
         return item in self.children
+
+    def __init__(self, **star: R) -> N:
+        self.children = {}
+        super().__init__(**star)
 
     def __iter__(self) -> G[T[S, K], N, N]:
         yield from self.children.items()

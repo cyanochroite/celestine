@@ -26,6 +26,7 @@ from celestine.window import (
 from celestine.window.collection import (
     Abstract,
     Plane,
+    Tree,
 )
 from celestine.window.container import Image as Mode
 
@@ -184,7 +185,7 @@ class Label(Abstract):
         super().__init__(hold, name, **star)
 
 
-class View(Abstract):
+class View(Abstract, Tree):
     """"""
 
     item: D[S, Abstract]
@@ -372,7 +373,6 @@ class View(Abstract):
         col=0,
         **star: R,
     ) -> N:
-
         #
         self.element = element
         self._button = element["button"]
@@ -390,7 +390,13 @@ class View(Abstract):
         for range_y in range(row):
             for range_x in range(col):
                 name = f"{self.name}_{range_x}-{range_y}"
-                self.item[name] = Abstract(hold, name)
+                self.set(
+                    Abstract(
+                        hold,
+                        name,
+                        self,
+                    )
+                )
 
 
 class Window(View):
@@ -492,9 +498,4 @@ class Window(View):
 
         self.page = View(hold, "", element, parent=None)
 
-        super().__init__(
-            self.hold,
-            "window",
-            element,
-            parent=None
-        )
+        super().__init__(self.hold, "window", element, parent=None)
