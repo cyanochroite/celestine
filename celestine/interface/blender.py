@@ -437,7 +437,7 @@ class Window(Window_):
             "image": Image,
             "label": Label,
             "view": View,
-            "window": Window,
+            "window": self,
         }
         super().__init__(hold, element, **star)
         self.area = Plane.make(20, 20)

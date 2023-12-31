@@ -184,7 +184,7 @@ class Label(Abstract):
         super().__init__(hold, name, **star)
 
 
-class View(Abstract, collection.Tree):
+class View(Abstract):
     """"""
 
     item: D[S, Abstract]
@@ -241,12 +241,12 @@ class View(Abstract, collection.Tree):
         if view:
             call = view
             action = container.Call.VIEW
-            work = self.window.turn
+            work = self._window.turn
 
         if code:
             call = code
             action = container.Call.WORK
-            work = self.window.work
+            work = self._window.work
 
         if action == container.Call.NONE:
             if path:
@@ -255,6 +255,7 @@ class View(Abstract, collection.Tree):
                         self.hold,
                         name,
                         path,
+                        parent=self,
                         **star,
                     )
                 )
@@ -264,6 +265,7 @@ class View(Abstract, collection.Tree):
                         self.hold,
                         name,
                         text,
+                        parent=self,
                         **star,
                     )
                 )
@@ -273,14 +275,13 @@ class View(Abstract, collection.Tree):
                     self.hold,
                     name,
                     text,
+                    parent=self,
                     call=work,  # the window function to call
                     action=call,  # the name of the user function
                     argument=star,
                     **star,
                 )
             )
-
-
 
     @override
     def spot(self, area: Plane) -> N:
@@ -339,9 +340,9 @@ class View(Abstract, collection.Tree):
             self._view(
                 self.hold,
                 name,
-                self.window,
                 self.element,
                 mode=mode,
+                parent=self,
                 **star,
             )
         )
@@ -364,7 +365,6 @@ class View(Abstract, collection.Tree):
         self,
         hold,
         name,
-        window,
         element,
         *,
         mode=container.Zone.NONE,
@@ -372,7 +372,6 @@ class View(Abstract, collection.Tree):
         col=0,
         **star: R,
     ) -> N:
-        self.window = window
 
         #
         self.element = element
@@ -380,6 +379,7 @@ class View(Abstract, collection.Tree):
         self._image = element["image"]
         self._label = element["label"]
         self._view = element["view"]
+        self._window = element["window"]
 
         super().__init__(hold, name, **star)
 
@@ -490,11 +490,11 @@ class Window(View):
         self.code = {}
         self.view = {}
 
-        self.page = View(hold, "", self, element)
+        self.page = View(hold, "", element, parent=None)
 
         super().__init__(
             self.hold,
             "window",
-            self,
             element,
+            parent=None
         )

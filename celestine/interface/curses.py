@@ -428,7 +428,7 @@ class Window(Window_):
             "image": Image,
             "label": Label,
             "view": View,
-            "window": Window,
+            "window": self,
         }
 
         curses = hold.package.curses

@@ -36,7 +36,7 @@ class Object:
         super().__init__()
 
 
-class Point:
+class Point(Object):
     """"""
 
     one: F
@@ -84,7 +84,7 @@ class Point:
         return type(self)(one, two)
 
 
-class Line:
+class Line(Object):
     """"""
 
     minimum: F
@@ -149,7 +149,7 @@ class Line:
         return f"[{self.minimum}, {self.maximum}]"
 
 
-class Plane:
+class Plane(Object):
     """"""
 
     one: Line
@@ -251,7 +251,7 @@ class Plane:
         return f"({one}, {two})"
 
 
-class Rectangle:
+class Rectangle(Object):
     """"""
 
     left: I
@@ -299,6 +299,8 @@ class Abstract(Object):
     """"""
 
     keep: A  # The object that the window system interacts with.
+    parent: K
+    children: D[S, K]
 
     area: Plane
     canvas: A
@@ -338,39 +340,34 @@ class Abstract(Object):
         """"""
         self.area = area
 
-    def __init__(self, hold: H, name: S, **star: R) -> N:
+    def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
         super().__init__(**star)
+        self.parent = parent
         self.area = Plane.make(0, 0)
         self.canvas = None
         self.hidden = False
         self.hold = hold
         self.name = name
         self.keep = None
+        self.children = {}
 
-
-class Tree(Object, Collection[D[S, Abstract]]):
-    """"""
-
-    _item: D[S, Abstract]
-
-    def get(self, name: S) -> Abstract:
+    def get(self, name: S) -> K:
         """"""
-        return self._item[name]
+        return self.children[name]
 
-    def set(self, item: Abstract) -> Abstract:
+    def set(self, item: K) -> K:
         """"""
-        self._item[item.name] = item
+        self.children[item.name] = item
         return item
 
+    def __bool__(self) -> B:
+        return True
+
     def __contains__(self, item: S) -> B:
-        return item in self._item
+        return item in self.children
 
-    def __init__(self, **star: R) -> N:
-        self._item = {}
-        super().__init__(**star)
-
-    def __iter__(self) -> G[T[S, Abstract], N, N]:
-        yield from self._item.items()
+    def __iter__(self) -> G[T[S, K], N, N]:
+        yield from self.children.items()
 
     def __len__(self) -> I:
-        return len(self._item)
+        return len(self.children)
