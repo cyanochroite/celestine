@@ -24,8 +24,26 @@ def cow(hold: H, *, say: S) -> N:
     """"""
     talk = hold.language.DEMO_COW_TALK
     print(talk, say)
+
+
+@code
+def dog(hold: H) -> N:
+    """"""
     item = hold.window.find("zero_title")
-    item.hide()
+    if item.hidden:
+        item.show()
+    else:
+        item.hide()
+
+
+@code
+def cat(hold: H) -> N:
+    """"""
+    item = hold.window.find("zero_body")
+    if item.hidden:
+        item.show()
+    else:
+        item.hide()
 
 
 @main
@@ -36,9 +54,20 @@ def zero(view: View) -> N:
         line.new("zero_title", text=language.DEMO_ZERO_TITLE)
         line.new(
             "zero_A",
-            text=language.DEMO_ZERO_ACTION,
+            # text=language.DEMO_ZERO_ACTION,
+            text="COW",
             code="cow",
             say=language.DEMO_ZERO_SAY,
+        )
+        line.new(
+            "zero_B",
+            text="DOG",
+            code="dog",
+        )
+        line.new(
+            "zero_C",
+            text="CAT",
+            code="cat",
         )
     with view.span("zero_body") as line:
         line.new("zero_past", text=language.DEMO_MAIN_PAST, view="one")

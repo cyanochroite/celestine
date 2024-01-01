@@ -197,7 +197,7 @@ class Mouse(Abstract):
     def __init__(self, hold: H, mesh) -> N:
         self.mesh = mesh.soul
         self.text = "mouse"
-        super().__init__(hold, "mouse")
+        super().__init__(hold, "mouse", parent=None)
         self.keep = mesh
 
     @override
