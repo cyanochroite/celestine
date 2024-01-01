@@ -86,9 +86,9 @@ class Diamond(Planar):
         quadrilateral(mesh, verts, layers)
 
 
-def plane(collection, name, uv_x=0, uv_y=0):
+def plane(name, collection, uv_x=0, uv_y=0):
     """"""
     box = Plane()
-    mesh = data.mesh.make(collection, name)
+    mesh = data.mesh(name, collection)
     box.make(mesh.soul, (+0, +0, +1), uv_x, uv_y)
     return mesh

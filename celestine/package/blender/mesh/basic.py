@@ -4,9 +4,9 @@ from celestine.package.blender import data
 from . import quadrilateral
 
 
-def text(collection, name, words):
+def text(name, collection, words):
     """"""
-    font_curve = data.curve.font.make(collection, name, words)
+    font_curve = data.curve.font(name, collection, words)
     return font_curve
 
 

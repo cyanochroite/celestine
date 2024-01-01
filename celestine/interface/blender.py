@@ -220,10 +220,10 @@ class Button(Abstract, Button_):
         width = len(self.data) / 4
         height = 1 / 20
 
-        plane = quadrilateral.plane(canvas, self.data)
+        plane = quadrilateral.plane(self.data, canvas)
         plane.scale = (width, height, 1)
 
-        text = basic.text(canvas, self.data, self.data)
+        text = basic.text(self.data, canvas, self.data)
         text.scale = (1 / width, 1 / height, 1)
         text.location = (-width / 4, -height, 0.1)
 
@@ -258,7 +258,7 @@ class Image(Abstract, Image_):
 
         image = data.image.load(self.path)
         material = UV.image(self.name, image)
-        plane = basic.image(canvas, self.name, image.size)
+        plane = basic.image(self.name, canvas, image.size)
 
         plane.body.data.materials.append(material)
         self.keep = plane
@@ -281,7 +281,7 @@ class Label(Abstract, Label_):
     @override
     def make(self, canvas: A) -> N:
         """"""
-        self.keep = basic.text(canvas, self.data, self.data)
+        self.keep = basic.text(self.data, canvas, self.data)
         self.render()
 
 
@@ -337,7 +337,7 @@ class Window(Window_):
     def make(self, canvas: A) -> N:
         """"""
         for name, item in self:
-            canvas = data.collection.make(name)
+            canvas = data.collection(name)
             item.make(canvas)
 
     @override
@@ -374,15 +374,15 @@ class Window(Window_):
         for texture in bpy.data.textures:
             data.texture.remove(texture)
 
-        collection = data.collection.make("window")
+        collection = data.collection("window")
 
-        camera = data.camera.make(collection, "camera")
+        camera = data.camera("camera", collection)
         camera.location = (+17.5, +10.0, -60.0)
         camera.rotation = (180, 0, 0)
         camera.ortho_scale = +35.0
         camera.type = "ORTHO"
 
-        starlight = data.light.sun.make(collection, "light")
+        starlight = data.light.sun("light", collection)
         starlight.rotation = (180, 0, 0)
         starlight.energy = 10.0
         starlight.diffuse_factor = 1.0
@@ -390,10 +390,10 @@ class Window(Window_):
         starlight.volume_factor = 1.0
         starlight.angle = 0.0
 
-        click = data.collection.make("click")
+        click = data.collection("click")
         click.soul.hide_select = False
 
-        mesh = data.mesh.make(click, "mouse")
+        mesh = data.mesh("mouse", click)
         mesh.location = (0, 0, -1)
 
         self.mouse = Mouse(self.hold, mesh)

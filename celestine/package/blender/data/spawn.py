@@ -38,13 +38,12 @@ class _real(_imaginary):
             collection.objects.link(body)
         return cls(body, soul)
 
-    @classmethod
-    def make(cls, collection, name):
-        """Create a new soul and give it a body."""
-        soul = cls.new(name)
-        return cls.bind(collection, name, soul)
+    def __init__(self, name, collection):
+        soul = self.new(name)
+        body = bpy.data.objects.new(name, soul)
+        if collection:
+            collection.objects.link(body)
 
-    def __init__(self, body, soul):
         self.__dict__["body"] = body
         self.__dict__["soul"] = soul
 
@@ -89,8 +88,12 @@ class _text(_real):
         soul.body = text
         return soul
 
-    @classmethod
-    def make(cls, collection, name, text):
+    def __init__(self, name, collection, text):
         """Create a new soul and give it a body."""
-        soul = cls.new(name, text)
-        return cls.bind(collection, name, soul)
+        soul = self.new(name, text)
+        body = bpy.data.objects.new(name, soul)
+        if collection:
+            collection.objects.link(body)
+
+        self.__dict__["body"] = body
+        self.__dict__["soul"] = soul
