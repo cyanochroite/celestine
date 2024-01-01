@@ -26,6 +26,11 @@ class _imaginary:
             item, do_unlink=True, do_id_user=True, do_ui_user=True
         )
 
+    def __init__(self, name):
+        soul = self.new(name)
+
+        self.__dict__["name"] = name
+        self.__dict__["soul"] = soul
 
 class _real(_imaginary):
     """Objects that exist in the real world."""
@@ -44,6 +49,7 @@ class _real(_imaginary):
         if collection:
             collection.objects.link(body)
 
+        self.__dict__["name"] = name
         self.__dict__["body"] = body
         self.__dict__["soul"] = soul
 

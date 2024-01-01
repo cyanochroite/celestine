@@ -7,10 +7,18 @@ from .spawn import _imaginary
 class _collection(_imaginary):
     """Collection of Object data-blocks."""
 
-    def __init__(self, name):
-        soul = self.new(name)
-        bpy.context.scene.collection.children.link(soul)
+    @property
+    def children(self):
+        return bpy.context.collection[self.name].children
 
-        self.objects = soul.objects
-        self.soul = soul
+    @property
+    def objects(self):
+        return self.soul.objects
+
+
+    def __init__(self, name):
+        super().__init__(name)
+        bpy.context.scene.collection.children.link(self.soul)
+
         self.soul.hide_select = True
+

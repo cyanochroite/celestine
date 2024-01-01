@@ -289,6 +289,19 @@ class View(View_):
     """"""
 
     @override
+    def make(self, canvas: A) -> N:
+        """"""
+        name = self.name
+
+        canvas = data.collection(name)
+
+        self.canvas = canvas
+
+        # self.canvas.children.link(canvas)
+        # self.canvas.parent = canvas
+        super().make(self.canvas)
+
+    @override
     def hide(self) -> N:
         """"""
         super().hide()
@@ -332,13 +345,6 @@ class Window(Window_):
             ".tiff",
             ".webp",
         ]
-
-    @override
-    def make(self, canvas: A) -> N:
-        """"""
-        for name, item in self:
-            canvas = data.collection(name)
-            item.make(canvas)
 
     @override
     def turn(self, page):
