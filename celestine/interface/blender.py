@@ -293,12 +293,12 @@ class View(View_):
         """"""
         name = self.name
 
-        canvas = data.collection(name)
+        self.canvas = data.collection(name)
+        if not canvas:
+            bpy.context.scene.collection.children.link(self.canvas.soul)
+        else:
+            canvas.children.link(self.canvas.soul)
 
-        self.canvas = canvas
-
-        # self.canvas.children.link(canvas)
-        # self.canvas.parent = canvas
         super().make(self.canvas)
 
     @override
@@ -381,6 +381,8 @@ class Window(Window_):
             data.texture.remove(texture)
 
         collection = data.collection("window")
+        bpy.context.scene.collection.children.link(collection.soul)
+
 
         camera = data.camera("camera", collection)
         camera.location = (+17.5, +10.0, -60.0)
@@ -397,6 +399,7 @@ class Window(Window_):
         starlight.angle = 0.0
 
         click = data.collection("click")
+        bpy.context.scene.collection.children.link(click.soul)
         click.soul.hide_select = False
 
         mesh = data.mesh("mouse", click)

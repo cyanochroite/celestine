@@ -32,6 +32,7 @@ class _imaginary:
         self.__dict__["name"] = name
         self.__dict__["soul"] = soul
 
+
 class _real(_imaginary):
     """Objects that exist in the real world."""
 
@@ -56,15 +57,15 @@ class _real(_imaginary):
     def __getattr__(self, name):
         match name:
             case "location":
-                getattr(self.body, name)
+                return getattr(self.body, name)
             case "parent":
-                getattr(self.body, name)
+                return getattr(self.body, name)
             case "rotation_euler":
-                getattr(self.body, name)
+                return getattr(self.body, name)
             case "scale":
-                getattr(self.body, name)
+                return getattr(self.body, name)
             case _:
-                getattr(self.soul, name)
+                return getattr(self.soul, name)
 
     def __setattr__(self, name, value):
         match name:
