@@ -268,8 +268,10 @@ class Abstract(Object):
         if self.hidden:
             return
 
-        if point in self.area:
-            self.click_action()
+        if point not in self.area:
+            return
+
+        self.click_action()
 
     def click_action(self) -> N:
         pass
@@ -283,7 +285,7 @@ class Abstract(Object):
         """"""
         self.hidden = True
 
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         self.canvas = canvas
 

@@ -202,9 +202,17 @@ class View(Abstract, Tree):
                 return item
         return None
 
+    def click_action(self) -> N:
+        pass
+
     def click(self, point: collection.Point) -> N:
         if self.hidden:
             return
+
+        if point not in self.area:
+            return
+
+        self.click_action()
 
         for _, item in self:
             item.click(point)
@@ -218,12 +226,13 @@ class View(Abstract, Tree):
         for _, item in self:
             item.draw(**star)
 
+
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
-        super().make(canvas)
+        super().make(canvas, **star)
         for _, item in self:
-            item.make(canvas)
+            item.make(canvas, **star)
 
     def new(
         self, name, *, text="", path="", code="", view="", **star: R
@@ -448,9 +457,9 @@ class Window(View):
         super().draw(**star)
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
-        super().make(canvas)
+        super().make(canvas, **star)
 
     @override
     def spot(self, area: Plane) -> N:
