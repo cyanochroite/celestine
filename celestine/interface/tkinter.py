@@ -13,6 +13,7 @@ from celestine.typed import (
     H,
     N,
     P,
+    B,
     R,
     override,
 )
@@ -22,9 +23,9 @@ from celestine.window.collection import Plane
 class Abstract(Abstract_):
     """"""
 
-    def render(self, canvas: A, keep: C, **star: R) -> N:
+    def render(self, keep: C, **star: R) -> N:
         """"""
-        self.keep = keep(canvas, **star)
+        self.keep = keep(self.canvas, **star)
 
         width, height = self.area.size
         dot_x, dot_y = self.area.origin.int
@@ -36,7 +37,7 @@ class Abstract(Abstract_):
         )
 
 
-class Button(Abstract, Button_):
+class Button(Button_, Abstract):
     """"""
 
     def callback(self) -> N:
@@ -44,35 +45,35 @@ class Button(Abstract, Button_):
         self.call(self.action, **self.argument)
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
-        super().make(canvas)
-
         tkinter = self.hold.package.tkinter
 
-        self.render(
-            canvas,
-            tkinter.Button,
-            command=self.callback,
-            text=f"button: {self.data}",
-        )
+        if super().make(canvas, **star):
+            self.render(
+                tkinter.Button,
+                command=self.callback,
+                text=f"button: {self.data}",
+            )
+
+        return True
 
 
-class Image(Abstract, Image_):
+class Image(Image_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
-        super().make(canvas)
-
         tkinter = self.hold.package.tkinter
 
-        self.render(
-            canvas,
-            tkinter.Label,
-            image=self.image.image,
-        )
+        if super().make(canvas, **star):
+            self.render(
+                tkinter.Label,
+                image=self.image.image,
+            )
+
+        return True
 
     @override
     def update(self, path: P, **star: R) -> N:
@@ -93,24 +94,24 @@ class Image(Abstract, Image_):
         self.keep.image = self.image
 
 
-class Label(Abstract, Label_):
+class Label(Label_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
-        super().make(canvas)
-
         tkinter = self.hold.package.tkinter
 
-        self.render(
-            canvas,
-            tkinter.Label,
-            fg="blue",
-            height=4,
-            text=f"label: {self.data}",
-            width=100,
-        )
+        if super().make(canvas, **star):
+            self.render(
+                tkinter.Label,
+                fg="blue",
+                height=4,
+                text=f"label: {self.data}",
+                width=100,
+            )
+
+        return True
 
 
 class View(View_):
@@ -136,28 +137,31 @@ class Window(Window_):
         ]
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
+        tkinter = self.hold.package.tkinter
+
         canvas = self.hold.package.tkinter.Tk()
         canvas.title(self.hold.language.APPLICATION_TITLE)
         canvas.geometry("1920x1080")
         canvas.minsize(640, 480)
         canvas.maxsize(3840, 2160)
         canvas.config(bg="blue")
-        super().make(canvas)
 
-        tkinter = self.hold.package.tkinter
-        for _, item in self:
-            canvas1 = tkinter.Frame(
-                canvas,
-                padx=5,
-                pady=5,
-                bg="skyblue",
-                width=1920,
-                height=1080,
-            )
-            canvas1.place(x=0, y=0)
-            item.make(canvas1)
+        if super().make(canvas, **star):
+            for _, item in self:
+                canvas1 = tkinter.Frame(
+                    canvas,
+                    padx=5,
+                    pady=5,
+                    bg="skyblue",
+                    width=1920,
+                    height=1080,
+                )
+                canvas1.place(x=0, y=0)
+                item.make(canvas1)
+
+        return True
 
     @override
     def turn(self, page):

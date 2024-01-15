@@ -53,13 +53,6 @@ def zero(view: View) -> N:
     with view.span("zero_head") as line:
         line.new("zero_title", text=language.DEMO_ZERO_TITLE)
         line.new(
-            "zero_A",
-            # text=language.DEMO_ZERO_ACTION,
-            text="COW",
-            code="cow",
-            say=language.DEMO_ZERO_SAY,
-        )
-        line.new(
             "zero_B",
             text="DOG",
             code="dog",
@@ -68,6 +61,13 @@ def zero(view: View) -> N:
             "zero_C",
             text="CAT",
             code="cat",
+        )
+        line.new(
+            "zero_A",
+            # text=language.DEMO_ZERO_ACTION,
+            text="COW",
+            code="cow",
+            say=language.DEMO_ZERO_SAY,
         )
     with view.span("zero_body") as line:
         line.new("zero_past", text=language.DEMO_MAIN_PAST, view="one")

@@ -12,4 +12,3 @@ class _collection(_imaginary):
     def __init__(self, name):
         super().__init__(name)
         self.soul.hide_select = True
-

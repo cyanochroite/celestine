@@ -226,13 +226,15 @@ class View(Abstract, Tree):
         for _, item in self:
             item.draw(**star)
 
-
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         super().make(canvas, **star)
+
         for _, item in self:
             item.make(canvas, **star)
+
+        return True
 
     def new(
         self, name, *, text="", path="", code="", view="", **star: R
@@ -457,9 +459,12 @@ class Window(View):
         super().draw(**star)
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
-        super().make(canvas, **star)
+        if super().make(canvas, **star):
+            pass
+
+        return True
 
     @override
     def spot(self, area: Plane) -> N:

@@ -27,6 +27,7 @@ from celestine.typed import (
     H,
     N,
     R,
+    K,
     S,
     override,
 )
@@ -208,9 +209,27 @@ class Abstract(Abstract_):
             item.hide_render = False
             item.hide_viewport = False
 
+    @override
+    def make(self, canvas: A, **star: R) -> B:
+        """"""
+        super().make(canvas, **star)
+
+        first = star.get("first")
+
+        if first:
+            return True
+        else:
+            item = self.dictionary.get(self.name)
+            self.hidden = item.hide_render
+            return False
+
+    def __init__(self, hold: H, name: S, **star: R) -> N:
+        super().__init__(hold, name, **star)
+        self.dictionary = bpy.data.objects
+
 
 class Mouse(Abstract):
-    """"""
+    """Should everyone get this?"""
 
     def __init__(self, hold: H, mesh) -> N:
         self.mesh = mesh.soul
@@ -219,38 +238,30 @@ class Mouse(Abstract):
         self.keep = mesh
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
-        first = star.get("first")
-
-        if first:
+        if super().make(canvas, **star):
             diamond = Diamond()
             diamond.make(self.mesh)
 
             self.render()
-        else:
-            item = bpy.data.objects.get(self.name)
-            self.hidden = item.hide_render
-
-        super().make(self.canvas, **star)
+        return True
 
 
-class Button(Abstract, Button_):
+class Button(Button_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
-        first = star.get("first")
-
-        if first:
+        if super().make(canvas, **star):
             width = len(self.data) / 4
             height = 1 / 20
 
             plane = quadrilateral.plane(self.name, canvas)
             plane.scale = (width, height, 1)
 
-            text = basic.text(self.data, canvas, self.data)
+            text = basic.text(self.data, self.canvas, self.data)
             text.scale = (1 / width, 1 / height, 1)
             text.location = (-width / 4, -height, 0.1)
 
@@ -258,14 +269,10 @@ class Button(Abstract, Button_):
 
             self.keep = plane
             self.render()
-        else:
-            item = bpy.data.objects.get(self.name)
-            self.hidden = item.hide_render
-
-        super().make(self.canvas, **star)
+        return True
 
 
-class Image(Abstract, Image_):
+class Image(Image_, Abstract):
     """"""
 
     default: data.image
@@ -284,29 +291,19 @@ class Image(Abstract, Image_):
         data.image.remove(item)
         cls.default = None
 
-
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
-        first = star.get("first")
-
-        if first:
+        if super().make(canvas, **star):
             image = data.image.load(self.path)
             material = UV.image(self.name, image)
-            plane = basic.image(self.name, canvas, image.size)
+            plane = basic.image(self.name, self.canvas, image.size)
 
             plane.body.data.materials.append(material)
             self.keep = plane
             self.render()
-        else:
-            item = bpy.data.objects.get(self.name)
-            self.hidden = item.hide_render
 
-        super().make(self.canvas, **star)
-
-        if not first:
-            return
-
+        return True
 
     def update(self, image: S, **star: R) -> B:
         """"""
@@ -319,42 +316,36 @@ class Image(Abstract, Image_):
         return True
 
 
-class Label(Abstract, Label_):
+class Label(Label_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
-        first = star.get("first")
-
-        if first:
-            self.keep = basic.text(self.name, canvas, self.data)
+        if super().make(canvas, **star):
+            self.keep = basic.text(self.name, self.canvas, self.data)
             self.render()
-        else:
-            item = bpy.data.objects.get(self.name)
-            self.hidden = item.hide_render
 
-        super().make(self.canvas, **star)
+        return True
 
 
-class View(View_):
+class View(View_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
-        first = star.get("first")
-        if first:
-            self.canvas = data.collection(self.name)
-            if not canvas:
-                bpy.context.scene.collection.children.link(self.canvas.soul)
-            else:
-                canvas.children.link(self.canvas.soul)
+        if canvas:
+            link = canvas.children.link
         else:
-            item = bpy.data.collections.get(self.name)
-            self.hidden = item.hide_render
+            link = bpy.context.scene.collection.children.link
 
-        super().make(self.canvas, **star)
+        collection = data.collection(self.name)
+        link(collection.soul)
+
+        super().make(collection, **star)
+
+        return True
 
     @override
     def hide(self) -> N:
@@ -374,8 +365,12 @@ class View(View_):
             item.hide_render = False
             item.hide_viewport = False
 
+    def __init__(self, hold, name, element, **star: R) -> N:
+        super().__init__(hold, name, element, **star)
+        self.dictionary = bpy.data.collections
 
-class Window(Window_):
+
+class Window(Window_, Abstract):
     """"""
 
     @override
@@ -489,6 +484,7 @@ class Window(Window_):
         self.spot(self.area)
 
         if self.call == "make":
+            canvas = bpy.context.scene.collection
             self.make(None, first=True)
 
             for _, item in self:
@@ -520,6 +516,8 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(hold, element, **star)
+        self.dictionary = bpy.data.collections  # From View?
+
         self.area = Plane.make(20, 20)
 
         self.frame = None

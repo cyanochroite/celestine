@@ -285,9 +285,10 @@ class Abstract(Object):
         """"""
         self.hidden = True
 
-    def make(self, canvas: A, **star: R) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         self.canvas = canvas
+        return True
 
     def show(self) -> N:
         """"""
