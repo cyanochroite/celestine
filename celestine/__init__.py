@@ -20,7 +20,7 @@ bl_info = {
     "description": "A python framework for desktop applications.",
     "author": "mem_dixy",
     "version": (2023, 10, 7),
-    "blender": (3, 3, 0),
+    "blender": (4, 0, 0),
     "location": "View3D > Properties > Object Properties > celestine",
     "warning": "",
     "support": "COMMUNITY",

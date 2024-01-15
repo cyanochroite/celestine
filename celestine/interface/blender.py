@@ -464,11 +464,28 @@ class Window(Window_, Abstract):
             collection.objects.link(body)
             return cls(body, soul)
 
-        override = context()
-        bpy.ops.view3d.toggle_shading(override, type="RENDERED")
+        for area in bpy.context.screen.areas:
+            if area.type == "VIEW_3D":
+                for space in area.spaces:
+                    if space.type == "VIEW_3D":
+                        space.shading.type = "RENDERED"
+
+        for window in bpy.context.window_manager.windows:
+            screen = window.screen
+            for area in screen.areas:
+                if area.type == "VIEW_3D":
+                    for region in area.regions:
+                        if region.type == "WINDOW":
+                            override = bpy.context.copy()
+                            override["window"] = window
+                            override["screen"] = screen
+                            override["area"] = area
+                            override["region"] = region
+                            space = area.spaces[0]
 
         if self.call == "make":
-            bpy.ops.view3d.view_camera(override)
+            with bpy.context.temp_override(**override):
+                bpy.ops.view3d.view_camera()
 
         return self
 
