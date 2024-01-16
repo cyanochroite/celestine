@@ -1,5 +1,6 @@
 """Terminal handling for character-cell displays."""
 
+from celestine import load
 from celestine.typed import A
 from celestine.unicode import (
     ESCAPE,
@@ -47,6 +48,15 @@ class Package(Abstract):
                 result = 260
             case "right":
                 result = 261
+            case "initscr":
+                # This a temporary fix for windows-curses.
+                # https://github.com/zephyrproject-rtos/windows-curses/
+                # issues/50#issuecomment-1840485627
+                _curses = load.package("_curses")
+                for key, value in _curses.__dict__.items():
+                    if key[0:4] == "ACS_" or key in ("LINES", "COLS"):
+                        setattr(self.package, key, value)
+                result = _curses.initscr
             case _:
                 result = getattr(self.package, name)
         return result

@@ -354,12 +354,6 @@ class Window(Window_):
 
         curses = self.hold.package.curses
 
-        self.stdscr = curses.initscr()
-        curses.noecho()
-        curses.cbreak()
-        self.stdscr.keypad(1)
-        curses.start_color()
-
         (size_y, size_x) = self.stdscr.getmaxyx()
         self.full = Plane.make(size_x, size_y)
 
@@ -434,6 +428,7 @@ class Window(Window_):
         curses = hold.package.curses
 
         self.stdscr = curses.initscr()
+
         curses.noecho()
         curses.cbreak()
         self.stdscr.keypad(1)

@@ -27,7 +27,6 @@ from celestine.typed import (
     H,
     N,
     R,
-    K,
     S,
     override,
 )
@@ -476,15 +475,15 @@ class Window(Window_, Abstract):
                 if area.type == "VIEW_3D":
                     for region in area.regions:
                         if region.type == "WINDOW":
-                            override = bpy.context.copy()
-                            override["window"] = window
-                            override["screen"] = screen
-                            override["area"] = area
-                            override["region"] = region
+                            temp_override = bpy.context.copy()
+                            temp_override["window"] = window
+                            temp_override["screen"] = screen
+                            temp_override["area"] = area
+                            temp_override["region"] = region
                             space = area.spaces[0]
 
         if self.call == "make":
-            with bpy.context.temp_override(**override):
+            with bpy.context.temp_override(**temp_override):
                 bpy.ops.view3d.view_camera()
 
         return self
@@ -501,7 +500,6 @@ class Window(Window_, Abstract):
         self.spot(self.area)
 
         if self.call == "make":
-            canvas = bpy.context.scene.collection
             self.make(None, first=True)
 
             for _, item in self:
