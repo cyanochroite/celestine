@@ -3,7 +3,6 @@
 import bpy  # pylint: disable=import-error
 
 import celestine
-from celestine import load
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Button as Button_
 from celestine.interface import Image as Image_
@@ -16,10 +15,7 @@ from celestine.package.blender import (
     preferences,
 )
 from celestine.package.blender.data.collection import _collection
-from celestine.package.blender.mesh import (
-    basic,
-    quadrilateral,
-)
+from celestine.package.blender.mesh import basic
 from celestine.package.blender.mesh.quadrilateral import Diamond
 from celestine.typed import (
     A,
@@ -125,7 +121,6 @@ class celestine_begin(bpy.types.Operator):
         print("begin")
         car = bpy.context.preferences.addons["celestine"].preferences
         data.begin()
-        Image.begin()
         preferences.begin()
         car.ready = True
 
@@ -144,7 +139,6 @@ class celestine_finish(bpy.types.Operator):
         """"""
         print("finish")
         preferences.finish()
-        Image.finish()
         data.finish()
         return {"FINISHED"}
 
@@ -254,41 +248,14 @@ class Button(Button_, Abstract):
     def make(self, canvas: A, **star: R) -> B:
         """"""
         if super().make(canvas, **star):
-            width = len(self.data) / 4
-            height = 1 / 20
-
-            plane = quadrilateral.plane(self.name, canvas)
-            plane.scale = (width, height, 1)
-
-            text = basic.text(self.data, self.canvas, self.data)
-            text.scale = (1 / width, 1 / height, 1)
-            text.location = (-width / 4, -height, 0.1)
-
-            text.parent = plane
-
-            self.keep = plane
+            data = f"button: {self.data}"
+            self.keep = basic.text(self.name, self.canvas, data)
             self.render()
         return True
 
 
 class Image(Image_, Abstract):
     """"""
-
-    default: data.image
-
-    @classmethod
-    def begin(cls):
-        """"""
-        name = "null.png"
-        path = load.asset(name)
-        cls.default = data.image.load(path)
-
-    @classmethod
-    def finish(cls):
-        """"""
-        item = cls.default
-        data.image.remove(item)
-        cls.default = None
 
     @override
     def make(self, canvas: A, **star: R) -> B:

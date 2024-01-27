@@ -9,6 +9,7 @@ from celestine.interface import Window as Window_
 from celestine.typed import (
     LF,
     A,
+    B,
     H,
     N,
     P,
@@ -22,7 +23,7 @@ class Abstract(Abstract_):
     """"""
 
 
-class Button(Abstract, Button_):
+class Button(Button_, Abstract):
     """"""
 
     def callback(self, *_):
@@ -34,7 +35,7 @@ class Button(Abstract, Button_):
         self.call(self.action, **self.argument)
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         super().make(canvas)
 
@@ -47,8 +48,10 @@ class Button(Abstract, Button_):
             pos=self.area.origin.int,
         )
 
+        return True
 
-class Image(Abstract, Image_):
+
+class Image(Image_, Abstract):
     """
     Manages image objects.
 
@@ -56,7 +59,7 @@ class Image(Abstract, Image_):
     """
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """
         Draw the image to screen.
 
@@ -86,6 +89,8 @@ class Image(Abstract, Image_):
             tag=f"{self.name}-base",
             pos=self.area.origin.int,
         )
+
+        return True
 
     def load(self) -> LF:
         """"""
@@ -129,11 +134,11 @@ class Image(Abstract, Image_):
         dearpygui.set_value(self.name, photo)
 
 
-class Label(Abstract, Label_):
+class Label(Label_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         super().make(canvas)
 
@@ -145,8 +150,10 @@ class Label(Abstract, Label_):
             pos=self.area.origin.int,
         )
 
+        return True
 
-class View(View_):
+
+class View(View_, Abstract):
     """"""
 
     @override
@@ -168,7 +175,7 @@ class View(View_):
             pass
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
     @override
@@ -189,7 +196,7 @@ class Window(Window_):
         ]
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         dearpygui = self.hold.package.dearpygui
         for name, item in self:
@@ -198,6 +205,8 @@ class Window(Window_):
             with item.canvas:
                 dearpygui.configure_item(item.name, show=False)
                 item.make(None)
+
+        return True
 
     @override
     def turn(self, page):

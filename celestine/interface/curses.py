@@ -11,6 +11,7 @@ from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.typed import (
     A,
+    B,
     H,
     N,
     P,
@@ -72,14 +73,17 @@ class Abstract(Abstract_):
         """
         self.canvas.addstr(y_dot - 1, x_dot - 1, text, *extra)
 
-    def render(self, item, **star: R):
+    def render(self, item, **star: R) -> N:
         """"""
+        if self.hidden:
+            return
+
         text = item
         (x_dot, y_dot) = self.area.origin.int
         self.add_string(x_dot, y_dot, text)
 
 
-class Button(Abstract, Button_):
+class Button(Button_, Abstract):
     """"""
 
     def draw(self, **star: R):
@@ -88,7 +92,7 @@ class Button(Abstract, Button_):
         self.render(item, **star)
 
 
-class Image(Abstract, Image_):
+class Image(Image_, Abstract):
     """"""
 
     def output(self):
@@ -258,11 +262,12 @@ class Image(Abstract, Image_):
         self.render(item, **star)
 
     ####
-    def make(self) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         pillow = self.hold.package.pillow
 
         self.image = pillow.new(self.area.size.int)
+        return True
 
     @override
     def update(self, path: P, **star: R) -> N:
@@ -288,7 +293,7 @@ class Image(Abstract, Image_):
         self.image.paste(image, result)
 
 
-class Label(Abstract, Label_):
+class Label(Label_, Abstract):
     """"""
 
     def draw(self, **star: R):
@@ -297,11 +302,11 @@ class Label(Abstract, Label_):
         self.render(item, **star)
 
 
-class View(View_):
+class View(View_, Abstract):
     """"""
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
     @override
@@ -337,9 +342,10 @@ class Window(Window_):
         return []
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         super().make(self.background)
+        return True
 
     @override
     def setup(self, name):

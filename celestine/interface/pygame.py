@@ -10,6 +10,7 @@ from celestine.interface import Window as Window_
 from celestine.typed import (
     LS,
     A,
+    B,
     H,
     N,
     P,
@@ -32,7 +33,7 @@ class Abstract(Abstract_):
         self.canvas.blit(keep, origin)
 
 
-class Button(Abstract, Button_):
+class Button(Button_, Abstract):
     """"""
 
     def draw(self, *, font, **star: R) -> N:
@@ -46,7 +47,7 @@ class Button(Abstract, Button_):
         self.render(keep)
 
 
-class Label(Abstract, Label_):
+class Label(Label_, Abstract):
     """"""
 
     def draw(self, *, font, **star: R) -> N:
@@ -58,16 +59,18 @@ class Label(Abstract, Label_):
         self.render(keep)
 
 
-class Image(Abstract, Image_):
+class Image(Image_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         super().make(canvas)
         pillow = self.hold.package.pillow
 
         self.image = pillow.new(self.area.size.int)
+
+        return True
 
     @override
     def update(self, path: P, **star: R) -> N:
@@ -108,11 +111,11 @@ class Image(Abstract, Image_):
         self.render(image)
 
 
-class View(View_):
+class View(View_, Abstract):
     """"""
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
     @override
@@ -155,12 +158,13 @@ class Window(Window_):
         ]
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         pygame = self.hold.package.pygame
 
         canvas = pygame.display.set_mode(self.area.size.int)
         super().make(canvas)
+        return True
 
     @override
     def __enter__(self):

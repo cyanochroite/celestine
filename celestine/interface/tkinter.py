@@ -114,11 +114,11 @@ class Label(Label_, Abstract):
         return True
 
 
-class View(View_):
+class View(View_, Abstract):
     """"""
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
     @override
