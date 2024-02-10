@@ -69,27 +69,23 @@ class Abstract(Abstract_):
         if self.hidden:
             return
 
+        origin = (self.area.one.minimum, self.area.two.minimum)
 
         image = pygame.image.fromstring(
             self.image.image.tobytes(),
             self.image.image.size,
             self.image.image.mode,
         )
-
-        origin = (self.area.one.minimum, self.area.two.minimum)
         self.canvas.blit(image, origin)
 
-
-        keep = font.render(self.text, True, (255, 0, 255))
-
-        origin = (self.area.one.minimum, self.area.two.minimum)
-        self.canvas.blit(keep, origin)
-
+        label = font.render(self.label, True, (255, 0, 255))
+        self.canvas.blit(label, origin)
 
     def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
         super().__init__(hold, name, parent, **star)
-        self.text = star.get("text", "MOO")
+        self.label = star.get("label", "MOO")
         self.path = star.get("path", "")
+
 
 class View(View_, Abstract):
     """"""

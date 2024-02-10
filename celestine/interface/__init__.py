@@ -26,6 +26,7 @@ from celestine.window import (
 from celestine.window.collection import (
     Abstract,
     Plane,
+    Point,
     Tree,
 )
 from celestine.window.container import Image as Mode
@@ -33,10 +34,6 @@ from celestine.window.container import Image as Mode
 
 class Button(Abstract):
     """"""
-
-    def click_action(self) -> N:
-        """"""
-        self.hold.queue(self.call, self.action, self.argument)
 
     def __init__(
         self,
@@ -202,20 +199,14 @@ class View(Abstract, Tree):
                 return item
         return None
 
-    def click_action(self) -> N:
-        pass
-
-    def click(self, point: collection.Point) -> N:
-        if self.hidden:
-            return
-
-        if point not in self.area:
-            return
-
-        self.click_action()
+    def click(self, point: Point) -> B:
+        if not super().click(point):
+            return False
 
         for _, item in self:
             item.click(point)
+
+        return True
 
     @override
     def draw(self, **star: R) -> N:

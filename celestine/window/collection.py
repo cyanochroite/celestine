@@ -263,18 +263,18 @@ class Abstract(Object):
     hold: H
     name: S  # The key to use to find this in the window dictionary.
 
-    def click(self, point: Point) -> N:
+    def click(self, point: Point) -> B:
         """"""
         if self.hidden:
-            return
+            return False
 
         if point not in self.area:
-            return
+            return False
 
-        self.click_action()
+        if self.action:
+            self.hold.queue(self.action, self.action_nme, self.argument)
 
-    def click_action(self) -> N:
-        pass
+        return True
 
     def draw(self, **star: R) -> N:
         """"""
@@ -307,6 +307,14 @@ class Abstract(Object):
         self.hold = hold
         self.name = name
         self.keep = None
+        self.action_nme = None  # name of method??to call when clicked
+        self.argument = None  # Stuff to send to action
+
+        self.action = None
+        # The action to perform when the user triggers the button.
+
+        self.label = ""
+        # A view that describes the purpose of the button’s action.
 
 
 class Tree(Object, Collection):

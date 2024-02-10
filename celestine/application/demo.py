@@ -51,27 +51,37 @@ def zero(view: View) -> N:
     """"""
     language = view.hold.language
     with view.span("zero_head") as line:
-        line.new("zero_title", text=language.DEMO_ZERO_TITLE)
+        line.new(
+            "zero_title",
+            label=language.DEMO_ZERO_TITLE,
+        )
         line.new(
             "zero_B",
-            text="DOG",
-            code="dog",
+            action="dog",
+            label="DOG",
         )
         line.new(
             "zero_C",
-            text="CAT",
-            code="cat",
+            action="cat",
+            label="CAT",
         )
         line.new(
             "zero_A",
-            # text=language.DEMO_ZERO_ACTION,
-            text="COW",
-            code="cow",
+            action="cow",
+            label=language.DEMO_ZERO_ACTION,
             say=language.DEMO_ZERO_SAY,
         )
     with view.span("zero_body") as line:
-        line.new("zero_past", view="one", text=language.DEMO_MAIN_PAST)
-        line.new("zero_next", view="two", text=language.DEMO_MAIN_NEXT)
+        line.new(
+            "zero_past",
+            label=language.DEMO_MAIN_PAST,
+            view="one",
+        )
+        line.new(
+            "zero_next",
+            label=language.DEMO_MAIN_NEXT,
+            view="two",
+        )
 
 
 @scene

@@ -1,5 +1,6 @@
 """Python Imaging Library (Fork)."""
 
+import random
 
 from celestine import load
 from celestine.typed import (
@@ -136,14 +137,18 @@ class Image:
 class Package(Abstract):
     """"""
 
-    def new(self, size=(11, 10)) -> Image:
+    def new(self, size) -> Image:
         """"""
         pillow = self.hold.package.pillow
 
         mode = "RGBA"
-        # size = (100, 50)
-        size = (max(0, size[0] - 1), max(0, size[1] - 1))
-        color = (250, 250, 250, 250)
+        color = (250, 250, 0, 250)
+        color = (
+            random.randint(0, 255),
+            random.randint(0, 255),
+            random.randint(0, 255),
+            255,
+        )
 
         image = pillow.Image.new(mode, size, color)
 
