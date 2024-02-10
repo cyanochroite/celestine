@@ -70,8 +70,8 @@ def zero(view: View) -> N:
             say=language.DEMO_ZERO_SAY,
         )
     with view.span("zero_body") as line:
-        line.goto("zero_past", "one", text=language.DEMO_MAIN_PAST)
-        line.goto("zero_next", "two", text=language.DEMO_MAIN_NEXT)
+        line.new("zero_past", view="one", text=language.DEMO_MAIN_PAST)
+        line.new("zero_next", view="two", text=language.DEMO_MAIN_NEXT)
 
 
 @scene
@@ -87,8 +87,8 @@ def one(view: View) -> N:
             say=language.DEMO_ONE_SAY,
         )
     with view.span("one_body") as line:
-        line.goto("one_past", "zero", text=language.DEMO_ONE_PAST)
-        line.goto("one_next", "two", text=language.DEMO_ONE_NEXT)
+        line.new("one_past", view="zero", text=language.DEMO_ONE_PAST)
+        line.new("one_next", view="two", text=language.DEMO_ONE_NEXT)
 
 
 @scene
@@ -104,8 +104,8 @@ def two(view: View) -> N:
             say=language.DEMO_TWO_SAY,
         )
     with view.span("two_body") as line:
-        line.goto("two_past", "one", text=language.DEMO_TWO_PAST)
-        line.goto("two_next", "zero", text=language.DEMO_TWO_NEXT)
+        line.new("two_past", view="one", text=language.DEMO_TWO_PAST)
+        line.new("two_next", view="zero", text=language.DEMO_TWO_NEXT)
 
 
 # if __spec__.name == "__main__":

@@ -12,6 +12,8 @@ from celestine.typed import (
     A,
     B,
     H,
+    S,
+    K,
     N,
     P,
     R,
@@ -25,41 +27,6 @@ from celestine.window.container import Image as Mode
 
 
 class Abstract(Abstract_):
-    """"""
-
-    def render(self, keep):
-        """"""
-        origin = (self.area.one.minimum, self.area.two.minimum)
-        self.canvas.blit(keep, origin)
-
-
-class Button(Button_, Abstract):
-    """"""
-
-    def draw(self, *, font, **star: R) -> N:
-        """"""
-        if self.hidden:
-            return
-
-        text = f"Button{self.data}"
-
-        keep = font.render(text, True, (255, 255, 255))
-        self.render(keep)
-
-
-class Label(Label_, Abstract):
-    """"""
-
-    def draw(self, *, font, **star: R) -> N:
-        """"""
-        if self.hidden:
-            return
-
-        keep = font.render(self.data, True, (255, 255, 255))
-        self.render(keep)
-
-
-class Image(Image_, Abstract):
     """"""
 
     @override
@@ -97,10 +64,11 @@ class Image(Image_, Abstract):
 
     def draw(self, *, font, **star: R) -> N:
         """"""
+        pygame = self.hold.package.pygame
+
         if self.hidden:
             return
 
-        pygame = self.hold.package.pygame
 
         image = pygame.image.fromstring(
             self.image.image.tobytes(),
@@ -108,8 +76,20 @@ class Image(Image_, Abstract):
             self.image.image.mode,
         )
 
-        self.render(image)
+        origin = (self.area.one.minimum, self.area.two.minimum)
+        self.canvas.blit(image, origin)
 
+
+        keep = font.render(self.text, True, (255, 0, 255))
+
+        origin = (self.area.one.minimum, self.area.two.minimum)
+        self.canvas.blit(keep, origin)
+
+
+    def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
+        super().__init__(hold, name, parent, **star)
+        self.text = star.get("text", "MOO")
+        self.path = star.get("path", "")
 
 class View(View_, Abstract):
     """"""
@@ -220,9 +200,10 @@ class Window(Window_, Abstract):
     @override
     def __init__(self, hold: H, **star: R) -> N:
         element = {
-            "button": Button,
-            "image": Image,
-            "label": Label,
+            #            "button": Button,
+            #            "image": Image,
+            #            "label": Label,
+            "abstract": Abstract,
             "view": View,
             "window": self,
         }
