@@ -23,6 +23,30 @@ from celestine.window.collection import Plane
 class Abstract(Abstract_):
     """"""
 
+    @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+        if self.keep:
+            # check may be removed if view has object
+            self.keep.place_forget()
+
+    @override
+    def show(self) -> N:
+        """"""
+        super().show()
+        if self.keep:
+            # check may be removed if view has object
+            # also this mostly calling render()
+            width, height = self.area.size
+            dot_x, dot_y = self.area.origin.int
+            self.keep.place(
+                x=dot_x,
+                y=dot_y,
+                width=width,
+                height=height,
+            )
+
     def render(self, keep: C, **star: R) -> N:
         """"""
         self.keep = keep(self.canvas, **star)
@@ -116,6 +140,20 @@ class Label(Label_, Abstract):
 
 class View(View_, Abstract):
     """"""
+
+    @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+        for _, item in self:
+            item.hide()
+
+    @override
+    def show(self) -> N:
+        """"""
+        super().show()
+        for _, item in self:
+            item.show()
 
 
 class Window(Window_, Abstract):

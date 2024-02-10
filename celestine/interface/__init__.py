@@ -236,65 +236,6 @@ class View(Abstract, Tree):
 
         return True
 
-    def new(
-        self, name, *, text="", path="", code="", view="", **star: R
-    ) -> N:
-        """"""
-        if text != "" and path != "":
-            raise AttributeError("text and path can't both be set")
-
-        if code != "" and view != "":
-            raise AttributeError("code and view path can't both be set")
-
-        call = None
-        action = container.Call.NONE
-        work = None
-
-        if view:
-            call = view
-            action = container.Call.VIEW
-            work = self._window.turn
-
-        if code:
-            call = code
-            action = container.Call.WORK
-            work = self._window.work
-
-        if action == container.Call.NONE:
-            if path:
-                self.set(
-                    self._image(
-                        self.hold,
-                        name,
-                        path,
-                        parent=self,
-                        **star,
-                    )
-                )
-            else:
-                self.set(
-                    self._label(
-                        self.hold,
-                        name,
-                        text,
-                        parent=self,
-                        **star,
-                    )
-                )
-        else:
-            self.set(
-                self._button(
-                    self.hold,
-                    name,
-                    text,
-                    parent=self,
-                    call=work,  # the window function to call
-                    action=call,  # the name of the user function
-                    argument=star,
-                    **star,
-                )
-            )
-
     @override
     def spot(self, area: Plane) -> N:
         """"""
@@ -408,6 +349,82 @@ class View(Abstract, Tree):
                         self,
                     )
                 )
+
+    def new(
+        self, name, *, text="", path="", code="", view="", **star: R
+    ) -> N:
+        """"""
+        if text != "" and path != "":
+            raise AttributeError("text and path can't both be set")
+
+        if code != "" and view != "":
+            raise AttributeError("code and view path can't both be set")
+
+        call = None
+        action = container.Call.NONE
+        work = None
+
+        if view:
+            call = view
+            action = container.Call.VIEW
+            work = self._window.turn
+
+        if code:
+            call = code
+            action = container.Call.WORK
+            work = self._window.work
+
+        if action == container.Call.NONE:
+            if path:
+                self.set(
+                    self._image(
+                        self.hold,
+                        name,
+                        path,
+                        parent=self,
+                        **star,
+                    )
+                )
+            else:
+                self.set(
+                    self._label(
+                        self.hold,
+                        name,
+                        text,
+                        parent=self,
+                        **star,
+                    )
+                )
+        else:
+            self.set(
+                self._button(
+                    self.hold,
+                    name,
+                    text,
+                    parent=self,
+                    call=work,  # the window function to call
+                    action=call,  # the name of the user function
+                    argument=star,
+                    **star,
+                )
+            )
+
+    def goto(
+        self, name: S, view: S, *, path: S ="", text: S = "", **star: R
+    ) -> N:
+        """"""
+        self.set(
+            self._button(
+                self.hold,
+                name,
+                text,
+                parent=self,
+                call=self._window.turn,
+                action=view,
+                argument=star,
+                **star,
+            )
+        )
 
 
 class Window(View):

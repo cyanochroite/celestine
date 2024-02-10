@@ -22,6 +22,7 @@ def find_image(hold: H, directory: P) -> LP:
 @code
 def setup(hold: H) -> N:
     """"""
+    print("MOO")
     window = hold.window.page
     directory = hold.attribute.directory
     find = find_image(hold, directory)
@@ -34,3 +35,9 @@ def setup(hold: H) -> N:
             item.update(image)
     except StopIteration:
         pass
+
+
+@code
+def test(hold: H) -> N:
+    """"""
+    print("test")
