@@ -2,7 +2,6 @@
 
 from collections.abc import Collection
 
-from celestine.unicode import NONE
 from celestine.typed import (
     GF,
     A,
@@ -18,6 +17,7 @@ from celestine.typed import (
     S,
     T,
 )
+from celestine.unicode import NONE
 
 
 class Point:

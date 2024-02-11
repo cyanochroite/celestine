@@ -2,9 +2,6 @@
 
 from celestine import load
 from celestine.interface import Abstract as Abstract_
-from celestine.interface import Button as Button_
-from celestine.interface import Image as Image_
-from celestine.interface import Label as Label_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.typed import (
@@ -12,11 +9,11 @@ from celestine.typed import (
     A,
     B,
     H,
-    S,
     K,
     N,
     P,
     R,
+    S,
     override,
 )
 from celestine.window.collection import (
@@ -24,7 +21,7 @@ from celestine.window.collection import (
     Point,
 )
 from celestine.window.container import Image as Mode
-from celestine.unicode import NONE
+
 
 class Abstract(Abstract_):
     """"""

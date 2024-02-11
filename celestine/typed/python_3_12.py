@@ -112,9 +112,10 @@ class Hold:
         """"""
         for action, argument, star in self._queue:
             action(argument, **star)
-#            self.window.work(action, **star)
-#            self.window.turn(action, **star)
+        #            self.window.work(action, **star)
+        #            self.window.turn(action, **star)
         self._queue.clear()
+
     def __init__(self) -> N:
         self._queue = []
 

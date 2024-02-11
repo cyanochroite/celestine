@@ -402,7 +402,7 @@ class View(Abstract, Tree):
             )
 
     def goto(
-        self, name: S, view: S, *, path: S ="", text: S = "", **star: R
+        self, name: S, view: S, *, path: S = "", text: S = "", **star: R
     ) -> N:
         """"""
         self.set(
@@ -417,7 +417,6 @@ class View(Abstract, Tree):
                 **star,
             )
         )
-
 
     def new(
         self, name, *, text="", path="", code="", view="", **star: R
@@ -487,7 +486,6 @@ class View(Abstract, Tree):
                     **star,
                 )
             )
-
 
 
 class Window(View):
