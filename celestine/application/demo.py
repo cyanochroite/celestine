@@ -75,12 +75,12 @@ def zero(view: View) -> N:
         line.new(
             "zero_past",
             label=language.DEMO_MAIN_PAST,
-            view="one",
+            navigate="one",
         )
         line.new(
             "zero_next",
             label=language.DEMO_MAIN_NEXT,
-            view="two",
+            navigate="two",
         )
 
 
@@ -89,16 +89,27 @@ def one(view: View) -> N:
     """"""
     language = view.hold.language
     with view.span("one_head") as line:
-        line.new("one_title", text=language.DEMO_ONE_TITLE)
+        line.new(
+            "one_title",
+            label=language.DEMO_ONE_TITLE,
+        )
         line.new(
             "one_A",
-            text=language.DEMO_ONE_ACTION,
-            code="cow",
+            action="cow",
+            label=language.DEMO_ONE_ACTION,
             say=language.DEMO_ONE_SAY,
         )
     with view.span("one_body") as line:
-        line.new("one_past", view="zero", text=language.DEMO_ONE_PAST)
-        line.new("one_next", view="two", text=language.DEMO_ONE_NEXT)
+        line.new(
+            "one_past",
+            label=language.DEMO_ONE_PAST,
+            navigate="zero",
+        )
+        line.new(
+            "one_next",
+            label=language.DEMO_ONE_NEXT,
+            navigate="two",
+        )
 
 
 @scene
@@ -106,16 +117,27 @@ def two(view: View) -> N:
     """"""
     language = view.hold.language
     with view.span("two_head") as line:
-        line.new("two_title", text=language.DEMO_TWO_TITLE)
+        line.new(
+            "two_title",
+            label=language.DEMO_TWO_TITLE,
+        )
         line.new(
             "two_A",
-            text=language.DEMO_TWO_ACTION,
-            code="cow",
+            action="cow",
+            label=language.DEMO_TWO_ACTION,
             say=language.DEMO_TWO_SAY,
         )
     with view.span("two_body") as line:
-        line.new("two_past", view="one", text=language.DEMO_TWO_PAST)
-        line.new("two_next", view="zero", text=language.DEMO_TWO_NEXT)
+        line.new(
+            "one",
+            label=language.DEMO_TWO_PAST,
+            navigate="one",
+        )
+        line.new(
+            "zero",
+            label=language.DEMO_TWO_NEXT,
+            navigate="zero",
+        )
 
 
 # if __spec__.name == "__main__":

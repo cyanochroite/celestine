@@ -428,10 +428,6 @@ class View(Abstract, Tree):
                 self.hold,
                 name,
                 self,
-                text=text,
-                path=path,
-                code=code,
-                view=view,
                 **star,
             )
         )
@@ -555,16 +551,23 @@ class Window(View):
         """"""
         super().spot(area)
 
-    def turn(self, page: S) -> N:
+    def turn(self, page: S, **star: R) -> N:
         """"""
+        view = self.view.get(page)
+        if not view:
+            return
+
         self.page.hide()
-        self.page = self.view[page]
+        self.page = view
         self.page.show()
         self.draw()
 
-    def work(self, code, **star: R):
+    def work(self, code: S, **star: R) -> N:
         """"""
         caller = self.code.get(code)
+        if not caller:
+            return
+
         caller(self.hold, **star)
         self.draw(**star)
 

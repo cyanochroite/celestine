@@ -24,7 +24,7 @@ from celestine.window.collection import (
     Point,
 )
 from celestine.window.container import Image as Mode
-
+from celestine.unicode import NONE
 
 class Abstract(Abstract_):
     """"""
@@ -83,7 +83,6 @@ class Abstract(Abstract_):
 
     def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
         super().__init__(hold, name, parent, **star)
-        self.label = star.get("label", "MOO")
         self.path = star.get("path", "")
 
 

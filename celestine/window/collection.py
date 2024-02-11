@@ -2,6 +2,7 @@
 
 from collections.abc import Collection
 
+from celestine.unicode import NONE
 from celestine.typed import (
     GF,
     A,
@@ -271,8 +272,13 @@ class Abstract(Object):
         if point not in self.area:
             return False
 
+        window = self.hold.window
+
         if self.action:
-            self.hold.queue(self.action, self.action_nme, self.argument)
+            self.hold.queue(window.work, self.action, self.star)
+
+        if self.navigate:
+            self.hold.queue(window.turn, self.navigate, self.star)
 
         return True
 
@@ -310,11 +316,17 @@ class Abstract(Object):
         self.action_nme = None  # name of method??to call when clicked
         self.argument = None  # Stuff to send to action
 
-        self.action = None
+        self.navigate = star.pop("navigate", NONE)
+        # The page to turn to when clicked.
+
+        self.action = star.pop("action", NONE)
         # The action to perform when the user triggers the button.
 
-        self.label = ""
-        # A view that describes the purpose of the button’s action.
+        self.label = star.pop("label", NONE)
+        # Text that describes the purpose of the button's action.
+
+        self.star = star
+        # Contains all remaining keyword arguments.
 
 
 class Tree(Object, Collection):

@@ -104,16 +104,17 @@ class Hold:
 
     _queue: L[T[C[..., N], A, A]]
 
-    def queue(self, call: C[..., N], action: A, argument: A) -> N:
+    def queue(self, action: C[..., N], argument: A, star: A) -> N:
         """Add to event queue and call function at end of update."""
-        self._queue.append((call, action, argument))
+        self._queue.append((action, argument, star))
 
     def dequeue(self) -> N:
         """"""
-        for call, action, argument in self._queue:
-            call(action, **argument)
-        self._queue = []
-
+        for action, argument, star in self._queue:
+            action(argument, **star)
+#            self.window.work(action, **star)
+#            self.window.turn(action, **star)
+        self._queue.clear()
     def __init__(self) -> N:
         self._queue = []
 
