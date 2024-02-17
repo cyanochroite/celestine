@@ -75,8 +75,8 @@ class Abstract(Abstract_):
         )
         self.canvas.blit(image, origin)
 
-        label = font.render(self.label, True, (255, 0, 255))
-        self.canvas.blit(label, origin)
+        text = font.render(self.text, True, (255, 0, 255))
+        self.canvas.blit(text, origin)
 
     def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
         super().__init__(hold, name, parent, **star)

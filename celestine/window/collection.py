@@ -272,13 +272,8 @@ class Abstract(Object):
         if point not in self.area:
             return False
 
-        window = self.hold.window
-
         if self.action:
-            self.hold.queue(window.work, self.action, self.star)
-
-        if self.navigate:
-            self.hold.queue(window.turn, self.navigate, self.star)
+            self.hold.queue(self.action, self.argument, self.star)
 
         return True
 
@@ -313,8 +308,6 @@ class Abstract(Object):
         self.hold = hold
         self.name = name
         self.keep = None
-        self.action_nme = None  # name of method??to call when clicked
-        self.argument = None  # Stuff to send to action
 
         self.navigate = star.pop("navigate", NONE)
         # The page to turn to when clicked.
@@ -322,7 +315,10 @@ class Abstract(Object):
         self.action = star.pop("action", NONE)
         # The action to perform when the user triggers the button.
 
-        self.label = star.pop("label", NONE)
+        self.argument = star.pop("argument", NONE)
+        # The data to send when the action is called.
+
+        self.text = star.pop("text", NONE)
         # Text that describes the purpose of the button's action.
 
         self.star = star

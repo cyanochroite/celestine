@@ -51,36 +51,42 @@ def zero(view: View) -> N:
     """"""
     language = view.hold.language
     with view.span("zero_head") as line:
-        line.new(
+        line.label(
             "zero_title",
-            label=language.DEMO_ZERO_TITLE,
+            language.DEMO_ZERO_TITLE,
         )
-        line.new(
+        line.button(
             "zero_B",
-            action="dog",
-            label="DOG",
+            "dog",
+            text="DOG",
         )
-        line.new(
+        line.button(
             "zero_C",
-            action="cat",
-            label="CAT",
+            "cat",
+            text="CAT",
         )
-        line.new(
+        line.button(
             "zero_A",
-            action="cow",
-            label=language.DEMO_ZERO_ACTION,
+            "cow",
+            text=language.DEMO_ZERO_ACTION,
+            say=language.DEMO_ZERO_SAY,
+        )
+        line.button(
+            "zero_A",
+            "cow",
+            language.DEMO_ZERO_ACTION,
             say=language.DEMO_ZERO_SAY,
         )
     with view.span("zero_body") as line:
-        line.new(
+        line.link(
             "zero_past",
-            label=language.DEMO_MAIN_PAST,
-            navigate="one",
+            "one",
+            text=language.DEMO_MAIN_PAST,
         )
-        line.new(
+        line.link(
             "zero_next",
-            label=language.DEMO_MAIN_NEXT,
-            navigate="two",
+            "two",
+            text=language.DEMO_MAIN_NEXT,
         )
 
 
@@ -89,26 +95,26 @@ def one(view: View) -> N:
     """"""
     language = view.hold.language
     with view.span("one_head") as line:
-        line.new(
+        line.label(
             "one_title",
-            label=language.DEMO_ONE_TITLE,
+            text=language.DEMO_ONE_TITLE,
         )
-        line.new(
+        line.button(
             "one_A",
-            action="cow",
-            label=language.DEMO_ONE_ACTION,
+            "cow",
+            text=language.DEMO_ONE_ACTION,
             say=language.DEMO_ONE_SAY,
         )
     with view.span("one_body") as line:
-        line.new(
+        line.link(
             "one_past",
-            label=language.DEMO_ONE_PAST,
-            navigate="zero",
+            "zero",
+            text=language.DEMO_ONE_PAST,
         )
-        line.new(
+        line.link(
             "one_next",
-            label=language.DEMO_ONE_NEXT,
-            navigate="two",
+            "two",
+            text=language.DEMO_ONE_NEXT,
         )
 
 
@@ -117,28 +123,24 @@ def two(view: View) -> N:
     """"""
     language = view.hold.language
     with view.span("two_head") as line:
-        line.new(
+        line.label(
             "two_title",
-            label=language.DEMO_TWO_TITLE,
+            language.DEMO_TWO_TITLE,
         )
-        line.new(
+        line.button(
             "two_A",
-            action="cow",
-            label=language.DEMO_TWO_ACTION,
+            "cow",
+            text=language.DEMO_TWO_ACTION,
             say=language.DEMO_TWO_SAY,
         )
     with view.span("two_body") as line:
-        line.new(
+        line.link(
+            "two_past",
             "one",
-            label=language.DEMO_TWO_PAST,
-            navigate="one",
+            text=language.DEMO_TWO_PAST,
         )
-        line.new(
+        line.link(
+            "two_next",
             "zero",
-            label=language.DEMO_TWO_NEXT,
-            navigate="zero",
+            text=language.DEMO_TWO_NEXT,
         )
-
-
-# if __spec__.name == "__main__":
-#    celestine.main(__spec__.origin)

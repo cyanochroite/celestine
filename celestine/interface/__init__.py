@@ -182,7 +182,7 @@ class Label(Abstract):
         super().__init__(hold, name, **star)
 
 
-class View(Abstract, Tree):
+class View1(Abstract, Tree):
     """"""
 
     item: D[S, Abstract]
@@ -284,7 +284,7 @@ class View(Abstract, Tree):
             self._view(
                 self.hold,
                 name,
-                self.element,
+                self.element_item,
                 mode=mode,
                 parent=self,
                 **star,
@@ -309,7 +309,7 @@ class View(Abstract, Tree):
         self,
         hold,
         name,
-        element,
+        element_item,
         *,
         mode=container.Zone.NONE,
         row=0,
@@ -317,13 +317,13 @@ class View(Abstract, Tree):
         **star: R,
     ) -> N:
         #
-        self.element = element
-        # self._button = element["button"]
-        # self._image = element["image"]
-        # self._label = element["label"]
-        self._abstract = element["abstract"]
-        self._view = element["view"]
-        self._window = element["window"]
+        self.element_item = element_item
+        # self._button = element_item["button"]
+        # self._image = element_item["image"]
+        # self._label = element_item["label"]
+        self._abstract = element_item["abstract"]
+        self._view = element_item["view"]
+        self._window = element_item["window"]
 
         super().__init__(hold, name, **star)
 
@@ -342,7 +342,7 @@ class View(Abstract, Tree):
                     )
                 )
 
-    def new(
+    def new2(
         self, name, *, text="", path="", code="", view="", **star: R
     ) -> N:
         """"""
@@ -401,26 +401,7 @@ class View(Abstract, Tree):
                 )
             )
 
-    def goto(
-        self, name: S, view: S, *, path: S = "", text: S = "", **star: R
-    ) -> N:
-        """"""
-        self.set(
-            self._button(
-                self.hold,
-                name,
-                text,
-                parent=self,
-                call=self._window.turn,
-                action=view,
-                argument=star,
-                **star,
-            )
-        )
-
-    def new(
-        self, name, *, text="", path="", code="", view="", **star: R
-    ) -> N:
+    def element(self, name: S, **star: R) -> N:
         """"""
         self.set(
             self._abstract(
@@ -430,65 +411,38 @@ class View(Abstract, Tree):
                 **star,
             )
         )
-        return
-
-        if text != "" and path != "":
-            raise AttributeError("text and path can't both be set")
-
-        if code != "" and view != "":
-            raise AttributeError("code and view path can't both be set")
-
-        call = None
-        action = container.Call.NONE
-        work = None
-
-        if view:
-            call = view
-            action = container.Call.VIEW
-            work = self._window.turn
-
-        if code:
-            call = code
-            action = container.Call.WORK
-            work = self._window.work
-
-        if action == container.Call.NONE:
-            if path:
-                self.set(
-                    self._image(
-                        self.hold,
-                        name,
-                        path,
-                        parent=self,
-                        **star,
-                    )
-                )
-            else:
-                self.set(
-                    self._label(
-                        self.hold,
-                        name,
-                        text,
-                        parent=self,
-                        **star,
-                    )
-                )
-        else:
-            self.set(
-                self._button(
-                    self.hold,
-                    name,
-                    text,
-                    parent=self,
-                    call=work,  # the window function to call
-                    action=call,  # the name of the user function
-                    argument=star,
-                    **star,
-                )
-            )
 
 
-class Window(View):
+class View(View1):
+    """"""
+
+    def button(self, name: S, task: S, /, text: S, **star: R) -> N:
+        self.element(
+            name,
+            action=self._window.work,
+            argument=task,
+            text=text,
+            **star
+        )
+
+    def link(self, name: S, task: S, /, text: S, **star: R) -> N:
+        self.element(
+            name,
+            action=self._window.turn,
+            argument=task,
+            text=text,
+            **star
+        )
+
+    def label(self, name: S, /, text: S, **star: R) -> N:
+        self.element(
+            name,
+            text=text,
+            **star
+        )
+
+
+class Window(View1):
     """"""
 
     hold: H
@@ -590,11 +544,10 @@ class Window(View):
 
         return False
 
-    def __init__(self, hold: H, element, **star: R) -> N:
+    def __init__(self, hold: H, element_item, **star: R) -> N:
         self.hold = hold
         self.code = {}
         self.view = {}
 
-        self.page = View(hold, "", element, parent=None)
-
-        super().__init__(self.hold, "window", element, parent=None)
+        self.page = View(hold, "", element_item, parent=None)
+        super().__init__(self.hold, "window", element_item, parent=None)
