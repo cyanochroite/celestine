@@ -35,9 +35,3 @@ def setup(hold: H) -> N:
             item.update(image)
     except StopIteration:
         pass
-
-
-@code
-def test(hold: H) -> N:
-    """"""
-    print("test")

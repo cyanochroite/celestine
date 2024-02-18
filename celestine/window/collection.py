@@ -11,6 +11,7 @@ from celestine.typed import (
     G,
     H,
     I,
+    P,
     K,
     N,
     R,
@@ -18,6 +19,7 @@ from celestine.typed import (
     T,
 )
 from celestine.unicode import NONE
+from celestine.window.container import Image as Mode
 
 
 class Point:
@@ -282,6 +284,10 @@ class Abstract(Object):
         if self.hidden:
             return
 
+        #  TODO: Check if other types want this here.
+        if self.path:
+            self.update(self.path)
+
     def hide(self) -> N:
         """"""
         self.hidden = True
@@ -299,6 +305,28 @@ class Abstract(Object):
         """"""
         self.area = area
 
+    def update(self, path: P, **star: R) -> N:
+        """"""
+        pillow = self.hold.package.pillow
+
+        self.path = path
+
+        image = pillow.open(self.path)
+
+        curent = Plane.make(image.image.width, image.image.height)
+        target = Plane.make(*self.area.size.int)
+
+        match self.fit:
+            case Mode.FILL:
+                result = curent.scale_to_min(target)
+            case Mode.FULL:
+                result = curent.scale_to_max(target)
+
+        result.center(target)
+
+        image.resize(result.size)
+        self.image.paste(image, result)
+
     def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
         super().__init__(**star)
         self.parent = parent
@@ -309,20 +337,23 @@ class Abstract(Object):
         self.name = name
         self.keep = None
 
-        self.navigate = star.pop("navigate", NONE)
-        # The page to turn to when clicked.
-
         self.action = star.pop("action", NONE)
         # The action to perform when the user triggers the button.
 
         self.argument = star.pop("argument", NONE)
         # The data to send when the action is called.
 
-        self.text = star.pop("text", NONE)
-        # Text that describes the purpose of the button's action.
+        self.fit = star.pop("fit", Mode.FILL)
+        # The way the image scales to fit the view space.
+
+        self.path = star.pop("path", NONE)
+        # The path to the image to use as a background.
 
         self.star = star
         # Contains all remaining keyword arguments.
+
+        self.text = star.pop("text", NONE)
+        # Text that describes the purpose of the button's action.
 
 
 class Tree(Object, Collection):

@@ -20,7 +20,6 @@ from celestine.window.collection import (
     Plane,
     Point,
 )
-from celestine.window.container import Image as Mode
 
 
 class Abstract(Abstract_):
@@ -35,29 +34,6 @@ class Abstract(Abstract_):
         self.image = pillow.new(self.area.size.int)
 
         return True
-
-    @override
-    def update(self, path: P, **star: R) -> N:
-        """"""
-        pillow = self.hold.package.pillow
-
-        self.path = path
-
-        image = pillow.open(self.path)
-
-        curent = Plane.make(image.image.width, image.image.height)
-        target = Plane.make(*self.area.size.int)
-
-        match self.mode:
-            case Mode.FILL:
-                result = curent.scale_to_min(target)
-            case Mode.FULL:
-                result = curent.scale_to_max(target)
-
-        result.center(target)
-
-        image.resize(result.size)
-        self.image.paste(image, result)
 
     def draw(self, *, font, **star: R) -> N:
         """"""

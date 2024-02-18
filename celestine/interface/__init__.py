@@ -434,6 +434,20 @@ class View(View1):
             **star
         )
 
+    def icon(self, name: S, /, **star: R) -> N:
+        self.element(
+            name,
+            fit=Mode.FILL,
+            **star
+        )
+
+    def image(self, name: S, /, **star: R) -> N:
+        self.element(
+            name,
+            fit=Mode.FULL,
+            **star
+        )
+
     def label(self, name: S, /, text: S, **star: R) -> N:
         self.element(
             name,
