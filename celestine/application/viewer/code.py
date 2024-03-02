@@ -7,6 +7,7 @@ from celestine.typed import (
     H,
     N,
     P,
+    S,
 )
 
 
@@ -20,7 +21,7 @@ def find_image(hold: H, directory: P) -> LP:
 
 
 @code
-def setup(hold: H) -> N:
+def setup(hold: H, caller: S) -> N:
     """"""
     print("MOO")
     window = hold.window.page
@@ -35,3 +36,12 @@ def setup(hold: H) -> N:
             item.update(image)
     except StopIteration:
         pass
+
+
+@code
+def see(hold: H, caller: S) -> N:
+    """"""
+    window = hold.window
+    source = window.find(caller)
+    destination = window.find("photo")
+    destination.update(source.path)

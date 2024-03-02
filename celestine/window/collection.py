@@ -266,6 +266,12 @@ class Abstract(Object):
     hold: H
     name: S  # The key to use to find this in the window dictionary.
 
+    action: S  # The action to perform when the user clicks the button.
+    fit: S  # The way the image scales to fit the view space.
+    goto: S  # The page to go to when clicked.
+    path: S  # The path to the image to use as a background.
+    text: S  # Text that describes the purpose of the button's action.
+
     def click(self, point: Point) -> B:
         """"""
         if self.hidden:
@@ -275,18 +281,30 @@ class Abstract(Object):
             return False
 
         if self.action:
-            self.hold.queue(self.action, self.argument, self.star)
+            action = self.hold.window.work
+            argument = self.action
+            star = self.star | {"caller": self.name}
+            self.hold.queue(action, argument, star)
+
+        if self.goto:
+            action = self.hold.window.turn
+            argument = self.goto
+            star = self.star | {}
+            self.hold.queue(action, argument, star)
 
         return True
 
-    def draw(self, **star: R) -> N:
+    def draw(self, **star: R) -> B:
         """"""
         if self.hidden:
-            return
+            return False
 
         #  TODO: Check if other types want this here.
         if self.path:
             self.update(self.path)
+
+        return True
+
 
     def hide(self) -> N:
         """"""
@@ -337,22 +355,26 @@ class Abstract(Object):
         self.name = name
         self.keep = None
 
-        self.action = star.pop("action", NONE)
-        # The action to perform when the user triggers the button.
-
-        self.argument = star.pop("argument", NONE)
-        # The data to send when the action is called.
-
-        self.fit = star.pop("fit", Mode.FILL)
-        # The way the image scales to fit the view space.
-
-        self.path = star.pop("path", NONE)
-        # The path to the image to use as a background.
-
         self.star = star
         # Contains all remaining keyword arguments.
 
-        self.text = star.pop("text", NONE)
+        def make(name: S, default: S = NONE) -> N:
+            value = star.pop(name, default)
+            setattr(self, name, value)
+
+        make("action")
+        # The action to perform when the user triggers the button.
+
+        make("fit", Mode.FILL)
+        # The way the image scales to fit the view space.
+
+        make("goto")
+        # The page to go to when clicked.
+
+        make("path")
+        # The path to the image to use as a background.
+
+        make("text")
         # Text that describes the purpose of the button's action.
 
 

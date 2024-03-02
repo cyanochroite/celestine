@@ -28,19 +28,21 @@ class Abstract(Abstract_):
     @override
     def make(self, canvas: A, **star: R) -> B:
         """"""
-        super().make(canvas)
+        if not super().make(canvas, **star):
+            return False
+
         pillow = self.hold.package.pillow
 
         self.image = pillow.new(self.area.size.int)
 
         return True
 
-    def draw(self, *, font, **star: R) -> N:
+    def draw(self, *, font, **star: R) -> B:
         """"""
-        pygame = self.hold.package.pygame
+        if not super().draw(**star):
+            return False
 
-        if self.hidden:
-            return
+        pygame = self.hold.package.pygame
 
         origin = (self.area.one.minimum, self.area.two.minimum)
 

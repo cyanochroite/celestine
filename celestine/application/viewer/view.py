@@ -1,6 +1,5 @@
 """"""
 
-from celestine import load
 from celestine.data import (
     main,
     scene,
@@ -12,13 +11,11 @@ from celestine.window.container import (
     Zone,
 )
 
-NULL = load.asset("null.png")
-
 
 @scene
 def picture(view: View) -> N:
     """"""
-    view.element("photo", path=NULL, mode=Image.FULL, view="display")
+    view.element("photo", mode=Image.FULL, goto="display")
 
 
 @main
@@ -31,10 +28,11 @@ def display(view: View) -> N:
     )
     with view.zone("grid", row=2, col=4, mode=Zone.GRID) as grid:
         for name, _ in grid:
-            grid.image(name, path=r"D:\done\unknown.png")
-            # grid.element(
-            #    name,
-            #    path=NULL,
-            #    argument=Image.FILL,
-            #    view="picture",
-            #)
+            # grid.image(name, path=r"D:\done\unknown.png")
+            grid.element(
+                name,
+                action="see",
+                path=r"D:\done\unknown.png",
+                fit=Image.FILL,
+                goto="picture",
+            )

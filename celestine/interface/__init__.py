@@ -419,8 +419,7 @@ class View(View1):
     def button(self, name: S, task: S, /, text: S, **star: R) -> N:
         self.element(
             name,
-            action=self._window.work,
-            argument=task,
+            action=task,
             text=text,
             **star
         )
@@ -428,8 +427,7 @@ class View(View1):
     def link(self, name: S, task: S, /, text: S, **star: R) -> N:
         self.element(
             name,
-            action=self._window.turn,
-            argument=task,
+            goto=task,
             text=text,
             **star
         )
