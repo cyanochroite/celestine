@@ -317,7 +317,7 @@ class Abstract(Object):
         """"""
         return True
 
-    def make(self, canvas: A, **star: R) -> N:
+    def make(self, canvas: A) -> N:
         """"""
         self.canvas = canvas
 

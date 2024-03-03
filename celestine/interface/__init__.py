@@ -218,12 +218,10 @@ class View1(Abstract, Tree):
             item.draw(**star)
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def make(self, canvas: A) -> N:
         """"""
-        super().make(canvas, **star)
-
         for _, item in self:
-            item.make(canvas, **star)
+            item.make(canvas)
 
     @override
     def spot(self, area: Plane) -> N:
@@ -438,6 +436,8 @@ class Window(Tree):
     code: D[S, A]  # function
     view: D[S, View]
 
+    canvas: A
+
     def extension(self) -> LS:
         """"""
         return [
@@ -485,22 +485,24 @@ class Window(Tree):
 
     def click(self, point: Point, **star: R) -> N:
         """"""
+        #check
         for _, item in self:
             item.click(point, **star)
 
     def draw(self, **star: R) -> N:
         """"""
+        #check
         for _, item in self:
             item.draw(**star)
 
-    def make(self, canvas: A, **star: R) -> N:
+    def make(self) -> N:
         """"""
-        self.canvas = canvas
         for _, item in self:
-            item.make(canvas, **star)
+            item.make(self.canvas)
 
     def spot(self, area: Plane, **star: R) -> N:
         """"""
+        # check
         self.area = area
         for _, item in self:
             item.spot(area, **star)
@@ -552,7 +554,7 @@ class Window(Tree):
             raise traceback
 
         self.spot(self.area)
-        self.make(None)
+        self.make()
 
         for _, item in self:
             item.hide()

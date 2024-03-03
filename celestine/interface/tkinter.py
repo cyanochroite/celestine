@@ -55,11 +55,8 @@ class Abstract(Abstract_):
         )
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A) -> N:
         """"""
-        if not super().make(canvas, **star):
-            return False
-
         tkinter = self.hold.package.tkinter
 
         width, height = self.area.size
@@ -84,6 +81,7 @@ class Abstract(Abstract_):
             height=height,
         )
 
+        super().make(canvas)
         return True
 
 
@@ -214,11 +212,11 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A) -> N:
         """"""
         tkinter = self.hold.package.tkinter
 
-        canvas1 = tkinter.Frame(
+        self.canvas = tkinter.Frame(
             canvas,
             padx=5,
             pady=5,
@@ -226,10 +224,9 @@ class View(View_, Abstract):
             width=1920,
             height=1080,
         )
-        canvas1.place(x=0, y=0)
+        self.canvas.place(x=0, y=0)
 
-        super().make(canvas1, **star)
-        return True
+        super().make(self.canvas)
 
     @override
     def hide(self) -> N:
@@ -246,7 +243,7 @@ class View(View_, Abstract):
             item.show()
 
 
-class Window(Window_, Abstract):
+class Window(Window_):
     """"""
 
     @override
@@ -265,23 +262,22 @@ class Window(Window_, Abstract):
         ]
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self) -> N:
         """"""
         tkinter = self.hold.package.tkinter
 
-        canvas = tkinter.Tk()
-        canvas.title(self.hold.language.APPLICATION_TITLE)
-        canvas.geometry("1920x1080")
-        canvas.minsize(640, 480)
-        canvas.maxsize(3840, 2160)
-        canvas.config(bg="blue")
+        self.canvas = tkinter.Tk()
+        self.canvas.title(self.hold.language.APPLICATION_TITLE)
+        self.canvas.geometry("1920x1080")
+        self.canvas.minsize(640, 480)
+        self.canvas.maxsize(3840, 2160)
+        self.canvas.config(bg="blue")
 
-        self.canvas = canvas
-        super().make(canvas, **star)
-        return True
+        super().make()
 
     @override
     def turn(self, page):
+        return
         super().turn(page)
         self.page.canvas.tkraise()
 
