@@ -17,11 +17,55 @@ from celestine.typed import (
     R,
     override,
 )
-from celestine.window.collection import Plane
+from celestine.window.collection import Plane, Point
 
 
 class Abstract(Abstract_):
     """"""
+
+    @override
+    def inside(self, point: Point) -> B:
+        """Pass in any Point. Click function always on target."""
+        return point is not None
+
+    def _button(self):
+        """"""
+        tkinter = self.hold.package.tkinter
+
+        def callback() -> N:
+            """"""
+            self.click(Point(0, 0))
+            self.hold.dequeue()
+
+        self.render(
+            tkinter.Button,
+            command=callback,
+            text=self.text,
+        )
+
+    def _label(self):
+        """"""
+        tkinter = self.hold.package.tkinter
+        self.render(
+            tkinter.Label,
+            fg="blue",
+            height=4,
+            text=self.text,
+            width=100,
+        )
+
+    @override
+    def make(self, canvas: A, **star: R) -> B:
+        """"""
+        if not super().make(canvas, **star):
+            return False
+
+        if self.action or self.goto:
+            self._button()
+        else:
+            self._label()
+
+        return True
 
     @override
     def hide(self) -> N:
@@ -215,9 +259,7 @@ class Window(Window_, Abstract):
     @override
     def __init__(self, hold: H, **star: R) -> N:
         element = {
-            "button": Button,
-            "image": Image,
-            "label": Label,
+            "abstract": Abstract,
             "view": View,
             "window": self,
         }

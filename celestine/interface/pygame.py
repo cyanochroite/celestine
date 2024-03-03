@@ -169,9 +169,6 @@ class Window(Window_, Abstract):
     @override
     def __init__(self, hold: H, **star: R) -> N:
         element = {
-            #            "button": Button,
-            #            "image": Image,
-            #            "label": Label,
             "abstract": Abstract,
             "view": View,
             "window": self,
