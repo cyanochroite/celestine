@@ -60,6 +60,34 @@ class Abstract(Abstract_):
         if not super().make(canvas, **star):
             return False
 
+        tkinter = self.hold.package.tkinter
+
+        width, height = self.area.size
+        dot_x, dot_y = self.area.origin.int
+
+        self.keep1 = tkinter.Frame(
+            canvas,
+            bg="green",
+        )
+        self.keep2 = tkinter.Label(self.keep1, text="MOO", bg="red")
+
+        self.keep1.place(
+            x=dot_x,
+            y=dot_y,
+            width=width,
+            height=height,
+        )
+        self.keep2.place(
+            x=0,
+            y=0,
+            width=width,
+            height=height,
+        )
+
+        return True
+
+
+
         if self.action or self.goto:
             self._button()
         else:
@@ -186,6 +214,24 @@ class View(View_, Abstract):
     """"""
 
     @override
+    def make(self, canvas: A, **star: R) -> B:
+        """"""
+        tkinter = self.hold.package.tkinter
+
+        canvas1 = tkinter.Frame(
+            canvas,
+            padx=5,
+            pady=5,
+            bg="yellow",
+            width=1920,
+            height=1080,
+        )
+        canvas1.place(x=0, y=0)
+
+        super().make(canvas1, **star)
+        return True
+
+    @override
     def hide(self) -> N:
         """"""
         super().hide()
@@ -223,26 +269,15 @@ class Window(Window_, Abstract):
         """"""
         tkinter = self.hold.package.tkinter
 
-        canvas = self.hold.package.tkinter.Tk()
+        canvas = tkinter.Tk()
         canvas.title(self.hold.language.APPLICATION_TITLE)
         canvas.geometry("1920x1080")
         canvas.minsize(640, 480)
         canvas.maxsize(3840, 2160)
         canvas.config(bg="blue")
 
-        if super().make(canvas, **star):
-            for _, item in self:
-                canvas1 = tkinter.Frame(
-                    canvas,
-                    padx=5,
-                    pady=5,
-                    bg="skyblue",
-                    width=1920,
-                    height=1080,
-                )
-                canvas1.place(x=0, y=0)
-                item.make(canvas1)
-
+        self.canvas = canvas
+        super().make(canvas, **star)
         return True
 
     @override

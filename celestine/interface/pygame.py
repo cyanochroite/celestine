@@ -27,14 +27,11 @@ class Abstract(Abstract_):
     @override
     def make(self, canvas: A, **star: R) -> B:
         """"""
-        if not super().make(canvas, **star):
-            return False
-
         pillow = self.hold.package.pillow
 
         self.image = pillow.new(self.area.size.int)
 
-        return True
+        super().make(canvas, **star)
 
     def draw(self, *, font, **star: R) -> B:
         """"""
@@ -64,7 +61,7 @@ class View(View_, Abstract):
     """"""
 
 
-class Window(Window_, Abstract):
+class Window(Window_):
     """"""
 
     @override
@@ -107,13 +104,13 @@ class Window(Window_, Abstract):
         ]
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         pygame = self.hold.package.pygame
 
         canvas = pygame.display.set_mode(self.area.size.int)
+
         super().make(canvas)
-        return True
 
     @override
     def __enter__(self):

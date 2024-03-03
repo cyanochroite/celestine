@@ -218,14 +218,12 @@ class View1(Abstract, Tree):
             item.draw(**star)
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         super().make(canvas, **star)
 
         for _, item in self:
             item.make(canvas, **star)
-
-        return True
 
     @override
     def spot(self, area: Plane) -> N:
@@ -432,7 +430,7 @@ class View(View1):
         self.element(name, text=text, **star)
 
 
-class Window(View1):
+class Window(Tree):
     """"""
 
     hold: H
@@ -468,30 +466,59 @@ class Window(View1):
             ".png",
         ]
 
-    def find(self, name: S) -> Abstract:
+    def drop(self, name: S, **star: R,) -> K:
         """"""
-        item = super().find(name)
-        if item:
-            return item
-        raise KeyError(name)
+        return self.set(
+            self.element_item["view"](
+                self.hold,
+                name,
+                self.element_item,
+                mode=container.Zone.DROP,
+                parent=self,
+                **star,
+            )
+        )
 
-    @override
+    ###############
+    # star might not be needed for all functions
+    # but it will stay for now for ease of itegration later
+
+    def click(self, point: Point, **star: R) -> N:
+        """"""
+        for _, item in self:
+            item.click(point, **star)
+
     def draw(self, **star: R) -> N:
         """"""
-        super().draw(**star)
+        for _, item in self:
+            item.draw(**star)
 
-    @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
-        if super().make(canvas, **star):
-            pass
+        self.canvas = canvas
+        for _, item in self:
+            item.make(canvas, **star)
 
-        return True
-
-    @override
-    def spot(self, area: Plane) -> N:
+    def spot(self, area: Plane, **star: R) -> N:
         """"""
-        super().spot(area)
+        self.area = area
+        for _, item in self:
+            item.spot(area, **star)
+
+    ###############
+    # No star functions
+
+    def find(self, name: S) -> N | Abstract:
+        """"""
+        for key, value in self:
+            if key == name:
+                return value
+            item = value.find(name)
+            if item:
+                return item
+        raise KeyError(name)
+
+    ###############
 
     def turn(self, page: S, **star: R) -> N:
         """"""
@@ -535,9 +562,10 @@ class Window(View1):
         return False
 
     def __init__(self, hold: H, element_item, **star: R) -> N:
+        super().__init__(**star)
+        self.area = Plane.make(0, 0)
         self.hold = hold
         self.code = {}
         self.view = {}
-
+        self.element_item = element_item
         self.page = View(hold, "", element_item, parent=None)
-        super().__init__(self.hold, "window", element_item, parent=None)

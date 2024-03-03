@@ -276,7 +276,7 @@ class Abstract(Object):
         """This seems pointless, but subclasses override it."""
         return point in self.area
 
-    def click(self, point: Point) -> B:
+    def click(self, point: Point, **star: R) -> B:
         """"""
         if self.hidden:
             return False
@@ -313,10 +313,13 @@ class Abstract(Object):
         """"""
         self.hidden = True
 
-    def make(self, canvas: A, **star: R) -> B:
+    def can_make(self, **star: R) -> B:
+        """"""
+        return True
+
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         self.canvas = canvas
-        return True
 
     def show(self) -> N:
         """"""
