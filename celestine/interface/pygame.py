@@ -11,7 +11,6 @@ from celestine.typed import (
     H,
     K,
     N,
-    P,
     R,
     S,
     override,

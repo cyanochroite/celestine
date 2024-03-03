@@ -20,6 +20,7 @@ from celestine.session.session import (
 from celestine.typed import (
     H,
     N,
+    R,
     S,
 )
 from celestine.unicode import NONE
@@ -86,7 +87,7 @@ def generate(hold: H, prompt: str):
 
 
 @code
-def draw(hold: H, *, prompt: S) -> N:
+def draw(hold: H, *, prompt: S, **star: R) -> N:
     """"""
     image = generate(hold, prompt)
     url = image_url(image)
@@ -99,9 +100,9 @@ def draw(hold: H, *, prompt: S) -> N:
 def enter(view: View) -> N:
     """"""
     with view.zone("main") as line:
-        line.new(
+        line.element(
             "main_A",
             text=view.hold.language.TRANSLATOR_MAIN_BUTTON,
-            code="draw",
+            action="draw",
             prompt="A cute baby dragon with a gold bed.",
         )

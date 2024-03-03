@@ -15,6 +15,7 @@ from celestine.data import (
 from celestine.typed import (
     H,
     N,
+    R,
     S,
 )
 
@@ -80,7 +81,7 @@ def run(name: S) -> N:
 
 
 @code
-def clean(hold: H) -> N:
+def clean(hold: H, **star: R) -> N:
     """"""
     hold.package.pyupgrade.run()
     # TODO figure out why this print instead of fixes
@@ -91,7 +92,7 @@ def clean(hold: H) -> N:
 
 
 @code
-def licence(hold: H):
+def licence(hold: H, **star: R):
     """"""
     location = load.pathway("licence")
     files = load.walk_file(location, [], [])
@@ -109,7 +110,7 @@ def licence(hold: H):
 
 
 @code
-def version(hold: H):
+def version(hold: H, **star: R):
     """"""
     date = datetime.datetime.now(datetime.UTC)
 

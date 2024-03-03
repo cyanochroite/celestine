@@ -11,6 +11,7 @@ from celestine.session.session import SuperSession
 from celestine.typed import (
     H,
     N,
+    R,
     S,
 )
 
@@ -20,14 +21,14 @@ class Session(SuperSession):
 
 
 @code
-def cow(hold: H, *, say: S) -> N:
+def cow(hold: H, *, say: S, **star: R) -> N:
     """"""
     talk = hold.language.DEMO_COW_TALK
     print(talk, say)
 
 
 @code
-def dog(hold: H) -> N:
+def dog(hold: H, **star: R) -> N:
     """"""
     item = hold.window.find("zero_title")
     if item.hidden:
@@ -37,7 +38,7 @@ def dog(hold: H) -> N:
 
 
 @code
-def cat(hold: H) -> N:
+def cat(hold: H, **star: R) -> N:
     """"""
     item = hold.window.find("zero_body")
     if item.hidden:

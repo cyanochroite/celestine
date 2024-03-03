@@ -9,8 +9,8 @@ from celestine.typed import N
 def app(view: View) -> N:
     """"""
     with view.zone("main") as line:
-        line.new(
+        line.button(
             "main_A",
-            action="main",
-            label=view.hold.language.TRANSLATOR_MAIN_BUTTON,
+            "main",
+            text=view.hold.language.TRANSLATOR_MAIN_BUTTON,
         )

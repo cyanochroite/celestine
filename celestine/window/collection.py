@@ -11,9 +11,9 @@ from celestine.typed import (
     G,
     H,
     I,
-    P,
     K,
     N,
+    P,
     R,
     S,
     T,
@@ -304,7 +304,6 @@ class Abstract(Object):
             self.update(self.path)
 
         return True
-
 
     def hide(self) -> N:
         """"""

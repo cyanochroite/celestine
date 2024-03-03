@@ -13,10 +13,10 @@ from celestine.typed import N
 def trans(view: View) -> N:
     """"""
     with view.zone("main") as line:
-        line.new(
+        line.element(
             "main_A",
             text=view.hold.language.TRANSLATOR_MAIN_BUTTON,
-            code="translate",
+            action="translate",
         )
 
 
@@ -28,7 +28,7 @@ def report(view: View) -> N:
         line.new("title", text="Page main")
     train = {}
 
-    line.new(
+    line.element(
         "main_action",
         text=view.hold.language.TRANSLATOR_REPORT_BUTTON,
         code="train",
@@ -37,4 +37,4 @@ def report(view: View) -> N:
 
     for tag, text in train.items():
         with view.zone("body") as line:
-            line.new(tag, text=text)
+            line.element(tag, text=text)

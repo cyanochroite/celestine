@@ -10,23 +10,23 @@ def enter(view: View) -> N:
     """"""
     language = view.hold.language
     with view.span("main_head") as line:
-        line.new(
+        line.label(
             "main_title",
-            label=language.CLEAN_MAIN_TITLE,
+            text=language.CLEAN_MAIN_TITLE,
         )
-        line.new(
+        line.button(
             "main_action",
-            action="clean",
-            label=language.CLEAN_MAIN_CLEAN,
+            "clean",
+            text=language.CLEAN_MAIN_CLEAN,
         )
     with view.span("main_body") as line:
-        line.new(
+        line.button(
             "main_L",
-            action="version",
-            label=language.CLEAN_MAIN_VERSION,
+            "version",
+            text=language.CLEAN_MAIN_VERSION,
         )
-        line.new(
+        line.button(
             "main_R",
-            action="licence",
-            label=language.CLEAN_MAIN_LICENCE,
+            "licence",
+            text=language.CLEAN_MAIN_LICENCE,
         )

@@ -5,6 +5,7 @@ from celestine.data import code
 from celestine.typed import (
     H,
     N,
+    R,
 )
 
 from .main import do_translate
@@ -17,7 +18,7 @@ def translate(hold: H) -> N:
 
 
 @code
-def train(hold: H) -> N:
+def train(hold: H, **star: R) -> N:
     """The main function."""
     minimum = {}
     maximum = {}

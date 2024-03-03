@@ -417,41 +417,19 @@ class View(View1):
     """"""
 
     def button(self, name: S, task: S, /, text: S, **star: R) -> N:
-        self.element(
-            name,
-            action=task,
-            text=text,
-            **star
-        )
+        self.element(name, action=task, text=text, **star)
 
     def link(self, name: S, task: S, /, text: S, **star: R) -> N:
-        self.element(
-            name,
-            goto=task,
-            text=text,
-            **star
-        )
+        self.element(name, goto=task, text=text, **star)
 
     def icon(self, name: S, /, **star: R) -> N:
-        self.element(
-            name,
-            fit=Mode.FILL,
-            **star
-        )
+        self.element(name, fit=Mode.FILL, **star)
 
     def image(self, name: S, /, **star: R) -> N:
-        self.element(
-            name,
-            fit=Mode.FULL,
-            **star
-        )
+        self.element(name, fit=Mode.FULL, **star)
 
     def label(self, name: S, /, text: S, **star: R) -> N:
-        self.element(
-            name,
-            text=text,
-            **star
-        )
+        self.element(name, text=text, **star)
 
 
 class Window(View1):
