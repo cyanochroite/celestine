@@ -1,7 +1,7 @@
 """"""
 
 from celestine import load
-from celestine.interface import Abstract as Abstract_
+from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.typed import (
@@ -21,7 +21,7 @@ from celestine.window.collection import (
 )
 
 
-class Abstract(Abstract_):
+class Element(Element_):
     """"""
 
     @override
@@ -57,7 +57,7 @@ class Abstract(Abstract_):
         self.path = star.get("path", "")
 
 
-class View(View_, Abstract):
+class View(View_):
     """"""
 
 
@@ -157,7 +157,6 @@ class Window(Window_):
                 case pygame.MOUSEBUTTONDOWN:
                     # TODO: This triggers on all mouse buttons
                     # including scroll wheel! That is bad.
-
                     self.click(Point(*pygame.mouse.get_pos()))
 
         pygame.quit()
@@ -166,7 +165,7 @@ class Window(Window_):
     @override
     def __init__(self, hold: H, **star: R) -> N:
         element = {
-            "abstract": Abstract,
+            "element": Element,
             "view": View,
             "window": self,
         }

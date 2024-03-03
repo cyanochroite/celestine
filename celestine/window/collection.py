@@ -272,16 +272,10 @@ class Abstract(Object):
     path: S  # The path to the image to use as a background.
     text: S  # Text that describes the purpose of the button's action.
 
-    def inside(self, point: Point) -> B:
-        """This seems pointless, but subclasses override it."""
-        return point in self.area
-
     def click(self, point: Point, **star: R) -> B:
         """"""
-        if self.hidden:
-            return False
 
-        if not self.inside(point):
+        if not point in self.area:
             return False
 
         if self.action:

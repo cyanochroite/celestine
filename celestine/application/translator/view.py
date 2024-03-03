@@ -1,10 +1,7 @@
 """The View page."""
 
 
-from celestine.data import (
-    main,
-    scene,
-)
+from celestine.data import main
 from celestine.interface import View
 from celestine.typed import N
 

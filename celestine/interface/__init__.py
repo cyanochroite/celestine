@@ -182,7 +182,14 @@ class Label(Abstract):
         super().__init__(hold, name, **star)
 
 
-class View1(Abstract, Tree):
+######
+
+
+class Element(Abstract):
+    """"""
+
+
+class View(Abstract, Tree):
     """"""
 
     item: D[S, Abstract]
@@ -314,10 +321,7 @@ class View1(Abstract, Tree):
     ) -> N:
         #
         self.element_item = element_item
-        # self._button = element_item["button"]
-        # self._image = element_item["image"]
-        # self._label = element_item["label"]
-        self._abstract = element_item["abstract"]
+        self._element = element_item["element"]
         self._view = element_item["view"]
         self._window = element_item["window"]
 
@@ -400,7 +404,7 @@ class View1(Abstract, Tree):
     def element(self, name: S, **star: R) -> N:
         """"""
         self.set(
-            self._abstract(
+            self._element(
                 self.hold,
                 name,
                 self,
@@ -408,9 +412,7 @@ class View1(Abstract, Tree):
             )
         )
 
-
-class View(View1):
-    """"""
+    ##### syntax sugar ######
 
     def button(self, name: S, task: S, /, text: S, **star: R) -> N:
         self.element(name, action=task, text=text, **star)
@@ -466,7 +468,11 @@ class Window(Tree):
             ".png",
         ]
 
-    def drop(self, name: S, **star: R,) -> K:
+    def drop(
+        self,
+        name: S,
+        **star: R,
+    ) -> K:
         """"""
         return self.set(
             self.element_item["view"](
@@ -485,13 +491,13 @@ class Window(Tree):
 
     def click(self, point: Point, **star: R) -> N:
         """"""
-        #check
+        # check
         for _, item in self:
             item.click(point, **star)
 
     def draw(self, **star: R) -> N:
         """"""
-        #check
+        # check
         for _, item in self:
             item.draw(**star)
 
