@@ -6,12 +6,13 @@ Was run from the project root.
 """
 import os
 import sys
+import io
 
 from celestine import (
     load,
     stream,
 )
-from celestine.stream import module_save
+from celestine.stream import Module
 from celestine.typed import (
     GS,
     S,
@@ -61,6 +62,6 @@ def work(document):
             return value
 
         with stream.text.reader(file) as lines:
-            load = read_stream(lines)
-            text = work(load)
-        module_save(text, "unicode")
+            loaded = read_stream(lines)
+            text = work(loaded)
+        Module.save(text, "unicode")

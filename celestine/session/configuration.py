@@ -8,7 +8,7 @@ from celestine import (
     stream,
 )
 from celestine.data import CELESTINE
-from celestine.stream import UTF_8
+from celestine.stream import Encoding
 from celestine.typed import (
     N,
     S,
@@ -32,7 +32,7 @@ class Configuration:
     def load(self) -> N:
         """Load the configuration file."""
         filenames = self.path
-        encoding = UTF_8
+        encoding = Encoding.UTF_8.value
         self.configuration.read(filenames, encoding)
 
     def save(self) -> N:

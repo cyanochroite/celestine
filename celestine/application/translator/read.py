@@ -4,7 +4,7 @@ import io
 
 from celestine.stream import (
     SECTION_BREAK,
-    module_open,
+    Module,
 )
 from celestine.typed import (
     GS,
@@ -21,7 +21,7 @@ def fix_line_split(*path: S) -> GS:
     """"""
     skip = False
 
-    document = module_open(*path)
+    document = Module.load(*path)
     for string in document:
         for character in string:
             if character not in UNICODE:

@@ -5,12 +5,13 @@ import sys
 
 from celestine import load
 from celestine.stream import (
-    UTF_8,
-    WRITE_TEXT,
+    Encoding,
+    Mode,
 )
 from celestine.typed import (
     LS,
     OS,
+    B,
     A,
     H,
     M,
@@ -57,10 +58,10 @@ class Abstract:
 
         sys.argv = argv
 
-    def __bool__(self):
+    def __bool__(self) -> B:
         return self.package is not None
 
-    def __getattr__(self, name):
+    def __getattr__(self, name: S) -> S:
         return getattr(self.package, name)
 
     def __init__(
@@ -75,7 +76,11 @@ class Abstract:
         # when being imported
         sys_stdout = sys.stdout
 
-        with open(os.devnull, WRITE_TEXT, encoding=UTF_8) as stdout:
+        with open(
+            os.devnull,
+            Mode.WRITE_TEXT.value,
+            encoding=Encoding.UTF_8.value,
+        ) as stdout:
             sys.stdout = stdout  # as TextIO
             try:
                 self.package = load.package(self.pypi)
