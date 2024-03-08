@@ -1,5 +1,6 @@
 """"""
 
+from celestine.session.data import Actions
 from celestine.typed import (
     LS,
     B,
@@ -20,11 +21,6 @@ from .attribute import (
     Help,
     Nargs,
     Version,
-)
-from .data import (
-    HELP,
-    STORE_TRUE,
-    VERSION,
 )
 from .hash import HashClass
 
@@ -146,7 +142,7 @@ class InformationConfiguration(Information):
     def __init__(self, help) -> N:
         """"""
         super().__init__(
-            action=STORE_TRUE,
+            action=Actions.STORE_TRUE,
             help=help,
         )
 
@@ -158,7 +154,7 @@ class InformationHelp(Information):
     def __init__(self, help: S) -> N:
         """"""
         super().__init__(
-            action=HELP,
+            action=Actions.HELP,
             help=help,
         )
 
@@ -170,6 +166,6 @@ class InformationVersion(Information, Version):
     def __init__(self, help: S) -> N:
         """"""
         super().__init__(
-            action=VERSION,
+            action=Actions.VERSION,
             help=help,
         )

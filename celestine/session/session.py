@@ -14,6 +14,10 @@ from celestine.session.argument import (
     InformationVersion,
     Positional,
 )
+from celestine.session.data import (
+    Actions,
+    Values,
+)
 from celestine.typed import (
     AD,
     AI,
@@ -23,12 +27,6 @@ from celestine.typed import (
 from celestine.unicode import NONE
 
 from . import default
-from .data import (
-    CONFIGURATION,
-    HELP,
-    MAIN,
-    VERSION,
-)
 
 
 class SuperSession:
@@ -53,13 +51,13 @@ class Information(SuperSession):
     def dictionary(cls, core) -> AD:
         """"""
         return super().dictionary(core) | {
-            CONFIGURATION: InformationConfiguration(
+            Values.CONFIGURATION: InformationConfiguration(
                 core.language.ARGUMENT_HELP_HELP,
             ),
-            HELP: InformationHelp(
+            Actions.HELP: InformationHelp(
                 core.language.ARGUMENT_HELP_HELP,
             ),
-            VERSION: InformationVersion(
+            Actions.VERSION: InformationVersion(
                 core.language.ARGUMENT_VERSION_HELP,
             ),
         }
@@ -129,7 +127,7 @@ class Session(Application, Interface, Language):
     def dictionary(cls, core) -> AD:
         """"""
         return super().dictionary(core) | {
-            MAIN: Positional(
+            Values.MAIN: Positional(
                 NONE,
                 core.language.ARGUMENT_LANGUAGE_HELP,
                 load.function_page(core.application),

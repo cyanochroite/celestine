@@ -2,11 +2,8 @@
 
 from celestine.data import VERSION_NUMBER
 from celestine.session.data import (
-    ACTION,
-    CHOICES,
-    HELP,
-    NARGS,
-    VERSION,
+    Actions,
+    Attributes,
 )
 from celestine.typed import (
     AT,
@@ -34,7 +31,7 @@ class Action(Attribute):
 
     def dictionary(self) -> AT:
         """"""
-        return super().dictionary() | {ACTION: self.action}
+        return super().dictionary() | {Attributes.ACTION: self.action}
 
     def __init__(self, *, action: S, **star: R) -> N:
         """"""
@@ -47,7 +44,7 @@ class Choices(Attribute):
 
     def dictionary(self) -> AT:
         """"""
-        return super().dictionary() | {CHOICES: self.choices}
+        return super().dictionary() | {Attributes.CHOICES: self.choices}
 
     def __init__(self, *, choices: LS, **star: R) -> N:
         """"""
@@ -60,7 +57,7 @@ class Help(Attribute):
 
     def dictionary(self) -> AT:
         """"""
-        return super().dictionary() | {HELP: self.help}
+        return super().dictionary() | {Attributes.HELP: self.help}
 
     # pylint: disable-next=redefined-builtin
     def __init__(self, *, help: S, **star: R) -> N:
@@ -74,7 +71,7 @@ class Nargs(Attribute):
 
     def dictionary(self) -> AT:
         """"""
-        return super().dictionary() | {NARGS: self.nargs}
+        return super().dictionary() | {Attributes.NARGS: self.nargs}
 
     def __init__(self, *, nargs: S, **star: R) -> N:
         """"""
@@ -87,4 +84,4 @@ class Version(Attribute):
 
     def dictionary(self) -> AT:
         """"""
-        return super().dictionary() | {VERSION: VERSION_NUMBER}
+        return super().dictionary() | {Actions.VERSION: VERSION_NUMBER}

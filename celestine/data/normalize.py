@@ -200,7 +200,7 @@ def wrap_text(string: S) -> GS:
     yield from buffer.read(count)
 
 
-def character(string: S) -> GS:
+def characters(string: S) -> GS:
     """Remove all invalid characters."""
     for character in string:
         if character not in UNICODE:

@@ -21,7 +21,7 @@ from celestine.unicode import (
     SPACE,
 )
 
-from .data import ERROR
+from .data import Parsers
 
 
 def parser(language: M, exit_on_error: B) -> argparse.ArgumentParser:
@@ -36,7 +36,7 @@ def parser(language: M, exit_on_error: B) -> argparse.ArgumentParser:
         prefix_chars=HYPHEN_MINUS,  # Default
         fromfile_prefix_chars=None,  # Default.
         argument_default=None,  # Default.
-        conflict_handler=ERROR,  # Default.
+        conflict_handler=Parsers.ERROR,  # Default.
         add_help=False,
         allow_abbrev=True,  # Default.
         exit_on_error=exit_on_error,

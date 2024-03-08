@@ -13,7 +13,7 @@ from celestine.session.argument import (
     Optional,
     Positional,
 )
-from celestine.session.data import CONFIGURATION
+from celestine.session.data import Values
 from celestine.typed import (
     APD,
     LS,
@@ -187,7 +187,7 @@ class Magic:
         return self
 
     def __exit__(self, *_):
-        save = bool(getattr(self.args, CONFIGURATION, NONE))
+        save = bool(getattr(self.args, Values.CONFIGURATION, NONE))
         if save:
             self.configuration.save()
         return False

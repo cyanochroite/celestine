@@ -53,7 +53,7 @@ def dictionary_to_string(dictionary: TABLE) -> GS:
         yield from QUOTATION_MARK
         yield from INFORMATION_SEPARATOR_FOUR
 
-        character = normalize.character(expression)
+        character = normalize.characters(expression)
         whitespace = normalize.whitespace(character)
         quotation = normalize.quotation(whitespace)
         punctuation = normalize.punctuation(quotation)

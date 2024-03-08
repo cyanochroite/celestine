@@ -100,7 +100,7 @@ def licence(hold: H, **star: R):
         string = io.StringIO()
         with stream.Text.reader(file) as lines:
             for line in lines:
-                character = normalize.character(line)
+                character = normalize.characters(line)
                 wrap = normalize.wrap_text(character)
                 for text in wrap:
                     string.write(text)
