@@ -38,7 +38,7 @@ class Configuration:
     def save(self) -> N:
         """Save the configuration file."""
         configuration = self.configuration
-        with stream.text.writer(self.path) as fileobject:
+        with stream.Text.writer(self.path) as fileobject:
             space_around_delimiters = True
             configuration.write(fileobject, space_around_delimiters)
 

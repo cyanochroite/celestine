@@ -11,8 +11,8 @@ from celestine.stream import (
 from celestine.typed import (
     LS,
     OS,
-    B,
     A,
+    B,
     H,
     M,
     N,

@@ -1,12 +1,9 @@
 """Central place for loading and importing external files."""
 
-import importlib.resources
-import io
-import lzma
 import enum
+import lzma
 
 from celestine import load
-from celestine.data import CELESTINE
 from celestine.typed import (
     FILE,
     GS,
@@ -21,38 +18,40 @@ SECTION_BREAK = "######################################################\
 ##################"
 
 
-class Buffering(enum.Enum):
+class Buffering(enum.IntEnum):
     """"""
+
     OFF = 0
     ON = 1
 
 
-class Encoding(enum.Enum):
+class Encoding(enum.StrEnum):
     """"""
+
     ASCII = "ascii"
     ISO_8859_1 = "iso_8859_1"
     LATIN_1 = "latin_1"
-    NONE = None
     US_ASCII = "us_ascii"
     UTF_8 = "utf_8"
     UTF_16 = "utf_16"
     UTF_32 = "utf_32"
 
 
-class Errors(enum.Enum):
+class Errors(enum.StrEnum):
     """"""
+
     BACKSLASHREPLACE = "backslashreplace"
     IGNORE = "ignore"
     NAMEREPLACE = "namereplace"
-    NONE = None
     REPLACE = "replace"
     STRICT = "strict"
     SURROGATEESCAPE = "surrogateescape"
     XMLCHARREFREPLACE = "xmlcharrefreplace"
 
 
-class Mode(enum.Enum):
+class Mode(enum.StrEnum):
     """"""
+
     APPEND_BINARY = "ab"
     APPEND_TEXT = "at"
     EXCLUSIVE_BINARY = "xb"
@@ -67,71 +66,50 @@ class Mode(enum.Enum):
     WRITE_TEXT = "wt"
 
 
-class Newline(enum.Enum):
+class Newline(enum.StrEnum):
     """"""
+
     APPLE = "\n"
     COMMODORE = "\r"
     MICROSOFT = "\r\n"
-    UNIVERSAL = None
     UNTRANSLATED = ""
 
 
-class File:
+class Binary:
     """"""
 
-    buffering: Buffering
-    encoding: Encoding
-    errors: Errors
-    newline: Newline
-    read: Mode
-    write: Mode
-
-    def load(self, path: P) -> S:
+    @classmethod
+    def load(cls, path: P) -> S:
         """"""
-        with self.reader(path) as file:
+        with cls.reader(path) as file:
             return file.read()
 
-    def reader(self, path: P) -> FILE:
+    @classmethod
+    def reader(cls, path: P) -> FILE:
         """"""
-        return self._open(path, self.read)
+        return cls._open(path, Mode.READ_BINARY)
 
-    def save(self, path: P, data: S) -> N:
+    @classmethod
+    def save(cls, path: P, data: S) -> N:
         """"""
-        with self.writer(path) as file:
+        with cls.writer(path) as file:
             file.write(data)
 
-    def writer(self, path: P) -> FILE:
+    @classmethod
+    def writer(cls, path: P) -> FILE:
         """"""
-        return self._open(path, self.write)
+        return cls._open(path, Mode.WRITE_BINARY)
 
-    def _open(self, file: P, mode: Mode) -> FILE:
-        """Does all file opperations."""
+    @classmethod
+    def _open(cls, file: P, mode: Mode) -> FILE:
+        """"""
+        # Using open without explicitly specifying an encoding.
+        # pylint: disable-next=W1514
         return open(
             file,
-            mode.value,
-            buffering=self.buffering.value,
-            encoding=self.encoding.value,
-            errors=self.errors.value,
-            newline=self.newline.value,
-            closefd=True,
-            opener=None,
+            mode,
+            buffering=Buffering.OFF,
         )
-
-    def __init__(
-        self,
-        buffering: Buffering,
-        encoding: Encoding,
-        errors: Errors,
-        newline: Newline,
-        read: Mode,
-        write: Mode,
-    ) -> N:
-        self.buffering = buffering
-        self.encoding = encoding
-        self.errors = errors
-        self.newline = newline
-        self.read = read
-        self.write = write
 
 
 class Lzma:
@@ -146,7 +124,7 @@ class Lzma:
         """"""
         return lzma.open(
             path,
-            mode=Mode.READ_BINARY.value,
+            mode=Mode.READ_BINARY,
         )
 
     def save(self, path: P, data: S) -> N:
@@ -158,7 +136,7 @@ class Lzma:
         """"""
         return lzma.open(
             path,
-            mode=Mode.WRITE_BINARY.value,
+            mode=Mode.WRITE_BINARY,
             format=lzma.FORMAT_XZ,
             check=lzma.CHECK_SHA256,
             preset=9,
@@ -169,38 +147,54 @@ class Lzma:
 class Module:
     """"""
 
-    def load(self, *paths: S) -> GS:
+    @classmethod
+    def load(cls, *paths: S) -> GS:
         """"""
         path = load.python(*paths)
-        with text.reader(path) as file:
+        with Text.reader(path) as file:
             yield from file
 
-    def save(self, string: GS, *paths: S) -> N:
+    @classmethod
+    def save(cls, string: GS, *paths: S) -> N:
         """"""
         path = load.python(*paths)
-        with text.writer(path) as file:
+        with Text.writer(path) as file:
             for line in string:
                 file.write(line)
 
 
-compression = Lzma()
+class Text:
+    """"""
 
-binary = File(
-    Buffering.OFF,
-    Encoding.NONE,
-    Errors.NONE,
-    Newline.UNIVERSAL,
-    Mode.READ_BINARY,
-    Mode.WRITE_BINARY,
-)
+    @classmethod
+    def load(cls, path: P) -> S:
+        """"""
+        with cls.reader(path) as file:
+            return file.read()
 
-text = File(
-    Buffering.ON,
-    Encoding.UTF_8,
-    Errors.STRICT,
-    Newline.UNIVERSAL,
-    Mode.READ_TEXT,
-    Mode.WRITE_TEXT,
-)
+    @classmethod
+    def reader(cls, path: P) -> FILE:
+        """"""
+        return cls._open(path, Mode.READ_TEXT)
 
-module = Module()
+    @classmethod
+    def save(cls, path: P, data: S) -> N:
+        """"""
+        with cls.writer(path) as file:
+            file.write(data)
+
+    @classmethod
+    def writer(cls, path: P) -> FILE:
+        """"""
+        return cls._open(path, Mode.WRITE_TEXT)
+
+    @classmethod
+    def _open(cls, file: P, mode: Mode) -> FILE:
+        """"""
+        return open(
+            file,
+            mode,
+            buffering=Buffering.ON,
+            encoding=Encoding.UTF_8,
+            errors=Errors.STRICT,
+        )
