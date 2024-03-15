@@ -287,7 +287,7 @@ class Object:
 class Abstract(Object):
     """"""
 
-    keep: A  # The object that the window system interacts with.
+    item: A  # The object that the window system interacts with.
     parent: K
 
     area: Area
@@ -385,7 +385,7 @@ class Abstract(Object):
         self.hidden = False
         self.hold = hold
         self.name = name
-        self.keep = None
+        self.item = None
 
         self.star = star
         # Contains all remaining keyword arguments.

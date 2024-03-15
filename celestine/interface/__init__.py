@@ -10,7 +10,6 @@ from celestine.typed import (
     H,
     K,
     N,
-    I,
     R,
     S,
     override,
@@ -75,32 +74,9 @@ class View(Abstract, Tree):
     @override
     def spot(self, area: Area) -> N:
         """"""
-        def under_spot(
-            this, index_x: I, index_y: I, partition_x: I, partition_y: I
-        ) -> Plane:
-            """"""
-            size_x = this.one.length
-            size_y = this.two.length
-
-            fragment_x = size_x // partition_x
-            fragment_y = size_y // partition_y
-
-            left = this.one.minimum
-            upper = this.two.minimum
-
-            ymin = upper + fragment_y * (index_y + 0)
-            ymax = upper + fragment_y * (index_y + 1)
-            xmin = left + fragment_x * (index_x + 0)
-            xmax = left + fragment_x * (index_x + 1)
-
-            one = Line(xmin, xmax)
-            two = Line(ymin, ymax)
-
-            return Plane(one, two)
-
         super().spot(area)
-        length = max(1, len(self))
 
+        length = max(1, len(self))
         match self.mode:
             case container.Zone.DROP:
                 partition_x = 1
@@ -117,28 +93,26 @@ class View(Abstract, Tree):
 
         index = 0
         for _, item in self:
-            index_x = index % partition_x
-            index_y = min(index // partition_x, partition_y - 1)
-            index += 1
+            this = self.area.world
 
-            world = under_spot(
-                self.area.world,
-                index_x,
-                index_y,
-                partition_x,
-                partition_y,
-            )
-            local = under_spot(
-                self.area.world,
-                index_x,
-                index_y,
-                partition_x,
-                partition_y,
-            )
+            one = Line(0, 1)
+            one += index % partition_x
+            one *= this.one.length // partition_x
+            one += this.one.minimum
+
+            two = Line(0, 1)
+            two += min(index // partition_x, partition_y - 1)
+            two *= this.two.length // partition_y
+            two += this.two.minimum
+
+            world = Plane(one, two)
+
+            local = world.copy()
             local -= area.world.origin
 
             rectangle = Area(local, world)
             item.spot(rectangle)
+            index += 1
 
     def zone(
         self,

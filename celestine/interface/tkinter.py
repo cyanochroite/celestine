@@ -13,6 +13,18 @@ from celestine.typed import (
 )
 from celestine.window.collection import Area
 
+class Abstract:
+    """"""
+
+    def place(self, item: A) -> N:
+        width, height = self.area.local.size
+        dot_x, dot_y = self.area.local.origin.int
+        item.place(
+            x=dot_x,
+            y=dot_y,
+            width=width,
+            height=height,
+        )
 
 class Element(Element_):
     """"""
@@ -24,17 +36,17 @@ class Element(Element_):
 
         def callback() -> N:
             """"""
-            self.click(self.area.local.centroid)
+            self.click(self.area.world.centroid)
             self.hold.dequeue()
 
         if self.action or self.goto:
-            self.canvas = tkinter.Button(
+            self.item = tkinter.Button(
                 canvas,
                 command=callback,
                 text=self.text,
             )
         else:
-            self.canvas = tkinter.Label(
+            self.item = tkinter.Label(
                 canvas,
                 fg="blue",
                 height=4,
@@ -42,9 +54,9 @@ class Element(Element_):
                 width=100,
             )
 
-        dot_x, dot_y = self.area.local.origin.int
         width, height = self.area.local.size
-        self.canvas.place(
+        dot_x, dot_y = self.area.local.origin.int
+        self.item.place(
             x=dot_x,
             y=dot_y,
             width=width,
@@ -57,25 +69,20 @@ class Element(Element_):
     def hide(self) -> N:
         """"""
         super().hide()
-        if self.keep:
-            # check may be removed if view has object
-            self.keep.place_forget()
+        self.item.place_forget()
 
     @override
     def show(self) -> N:
         """"""
         super().show()
-        if self.keep:
-            # check may be removed if view has object
-            # also this mostly calling render()
-            width, height = self.area.local.size
-            dot_x, dot_y = self.area.local.origin.int
-            self.keep.place(
-                x=dot_x,
-                y=dot_y,
-                width=width,
-                height=height,
-            )
+        width, height = self.area.local.size
+        dot_x, dot_y = self.area.local.origin.int
+        self.item.place(
+            x=dot_x,
+            y=dot_y,
+            width=width,
+            height=height,
+        )
 
 
 class View(View_):
@@ -103,15 +110,20 @@ class View(View_):
     def hide(self) -> N:
         """"""
         super().hide()
-        for _, item in self:
-            item.hide()
+        self.canvas.place_forget()
 
     @override
     def show(self) -> N:
         """"""
         super().show()
-        for _, item in self:
-            item.show()
+        width, height = self.area.local.size
+        dot_x, dot_y = self.area.local.origin.int
+        self.canvas.place(
+            x=dot_x,
+            y=dot_y,
+            width=width,
+            height=height,
+        )
 
 
 class Window(Window_):
