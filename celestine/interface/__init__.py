@@ -10,24 +10,159 @@ from celestine.typed import (
     H,
     K,
     N,
+    P,
     R,
     S,
     override,
 )
+from celestine.unicode import NONE
 from celestine.window import container
 from celestine.window.collection import (
-    Abstract,
     Area,
-    Point,
     Line,
+    Object,
     Plane,
+    Point,
     Tree,
 )
 from celestine.window.container import Image as Mode
 
 
+class Abstract(Object):
+    """"""
+
+    item: A  # The object that the window system interacts with.
+    parent: K
+
+    area: Area
+    canvas: A
+    hidden: B
+    hold: H
+    name: S  # The key to use to find this in the window dictionary.
+
+    action: S  # The action to perform when the user clicks the button.
+    fit: S  # The way the image scales to fit the view space.
+    goto: S  # The page to go to when clicked.
+    path: S  # The path to the image to use as a background.
+    text: S  # Text that describes the purpose of the button's action.
+
+    def click(self, point: Point, **star: R) -> B:
+        """"""
+        if self.hidden:
+            return False
+
+        if point not in self.area:
+            return False
+
+        if self.action:
+            action = self.hold.window.work
+            argument = self.action
+            star = self.star | {"caller": self.name}
+            self.hold.queue(action, argument, star)
+
+        if self.goto:
+            action = self.hold.window.turn
+            argument = self.goto
+            star = self.star | {}
+            self.hold.queue(action, argument, star)
+
+        return True
+
+    def draw(self, **star: R) -> B:
+        """"""
+        if self.hidden:
+            return False
+
+        return True
+
+    def hide(self) -> N:
+        """"""
+        self.hidden = True
+
+    def can_make(self, **star: R) -> B:
+        """"""
+        return True
+
+    def make(self, canvas: A) -> N:
+        """"""
+        self.canvas = canvas
+
+    def show(self) -> N:
+        """"""
+        self.hidden = False
+
+    def spot(self, area: Area) -> N:
+        """"""
+        self.area = area
+
+    def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
+        super().__init__(**star)
+        self.parent = parent
+        self.area = Area.make(0, 0)
+        self.canvas = None
+        self.hidden = False
+        self.hold = hold
+        self.name = name
+        self.item = None
+
+        self.star = star
+        # Contains all remaining keyword arguments.
+
+        def make(name: S, default: S = NONE) -> N:
+            value = star.pop(name, default)
+            setattr(self, name, value)
+
+        make("action")
+        # The action to perform when the user triggers the button.
+
+        make("fit", Mode.FILL)
+        # The way the image scales to fit the view space.
+
+        make("goto")
+        # The page to go to when clicked.
+
+        make("path")
+        # The path to the image to use as a background.
+
+        make("text")
+        # Text that describes the purpose of the button's action.
+
+
 class Element(Abstract):
     """"""
+
+    def draw(self, **star: R) -> B:
+        """"""
+        if not super().draw():
+            return False
+
+        #  TODO: Check if other types want this here.
+        if self.path:
+            self.update(self.path)
+
+        return True
+
+    def update(self, path: P, **star: R) -> N:
+        """"""
+        pillow = self.hold.package.pillow
+
+        self.path = path
+
+        image = pillow.open(self.path)
+
+        curent = Plane.make(image.image.width, image.image.height)
+        target = Plane.make(*self.area.world.size.int)
+
+        match self.fit:
+            case Mode.FILL:
+                result = curent.scale_to_min(target)
+            case Mode.FULL:
+                result = curent.scale_to_max(target)
+
+        result.center(target)
+
+        image.resize(result.size)
+        self.image.paste(image, result)
 
 
 class View(Abstract, Tree):

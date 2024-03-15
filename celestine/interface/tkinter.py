@@ -1,5 +1,6 @@
 """"""
 
+from celestine.interface import Element as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
@@ -13,7 +14,8 @@ from celestine.typed import (
 )
 from celestine.window.collection import Area
 
-class Abstract:
+
+class Abstract(Abstract_):
     """"""
 
     def place(self, item: A) -> N:
@@ -25,6 +27,7 @@ class Abstract:
             width=width,
             height=height,
         )
+
 
 class Element(Element_):
     """"""
