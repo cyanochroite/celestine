@@ -236,29 +236,6 @@ class Plane:
         # TODO: UNUSED
         return f"({one}, {two})"
 
-    def spot(
-        self, index_x: I, index_y: I, partition_x: I, partition_y: I
-    ) -> N:
-        """"""
-        size_x = self.one.length
-        size_y = self.two.length
-
-        fragment_x = size_x // partition_x
-        fragment_y = size_y // partition_y
-
-
-        left = self.one.minimum
-        upper = self.two.minimum
-
-        ymin = upper + fragment_y * (index_y + 0)
-        ymax = upper + fragment_y * (index_y + 1)
-        xmin = left + fragment_x * (index_x + 0)
-        xmax = left + fragment_x * (index_x + 1)
-
-        one = Line(xmin, xmax)
-        two = Line(ymin, ymax)
-
-        return Plane(one, two)
 
 class Area:
     """"""

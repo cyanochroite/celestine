@@ -7,8 +7,8 @@ from celestine.typed import (
     A,
     H,
     N,
-    S,
     R,
+    S,
     override,
 )
 from celestine.window.collection import Area
