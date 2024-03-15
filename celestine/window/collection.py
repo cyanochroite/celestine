@@ -236,6 +236,59 @@ class Plane:
         two = str(self.two)
         return f"({one}, {two})"
 
+    def spot(
+        self, index_x: I, index_y: I, partition_x: I, partition_y: I
+    ) -> N:
+        """"""
+        size_x = self.one.length
+        size_y = self.two.length
+
+        fragment_x = size_x // partition_x
+        fragment_y = size_y // partition_y
+
+
+        left = self.one.minimum
+        upper = self.two.minimum
+
+        ymin = upper + fragment_y * (index_y + 0)
+        ymax = upper + fragment_y * (index_y + 1)
+        xmin = left + fragment_x * (index_x + 0)
+        xmax = left + fragment_x * (index_x + 1)
+
+        one = Line(xmin, xmax)
+        two = Line(ymin, ymax)
+
+        return Plane(one, two)
+
+class Area:
+    """"""
+
+    local: Plane
+    world: Plane
+
+    @classmethod
+    def clone(cls, self: K) -> K:
+        """"""
+        return cls()
+
+    def copy(self) -> K:
+        """"""
+        return self.clone(self)
+
+    def __contains__(self, item: Point) -> B:
+        return item in self.world
+
+    @classmethod
+    def make(cls, width: F, height: F) -> K:
+        """"""
+        local = Plane.make(width, height)
+        world = Plane.make(width, height)
+        return cls(local, world)
+
+    def __init__(self, local: Plane, world: Plane) -> N:
+        self.local = local.copy()
+        self.world = world.copy()
+
 
 class Object:
     """"""
@@ -260,7 +313,7 @@ class Abstract(Object):
     keep: A  # The object that the window system interacts with.
     parent: K
 
-    area: Plane
+    area: Area
     canvas: A
     hidden: B
     hold: H
@@ -274,8 +327,10 @@ class Abstract(Object):
 
     def click(self, point: Point, **star: R) -> B:
         """"""
+        if self.hidden:
+            return False
 
-        if not point in self.area:
+        if point not in self.area:
             return False
 
         if self.action:
@@ -319,7 +374,7 @@ class Abstract(Object):
         """"""
         self.hidden = False
 
-    def spot(self, area: Plane) -> N:
+    def spot(self, area: Area) -> N:
         """"""
         self.area = area
 
@@ -331,8 +386,8 @@ class Abstract(Object):
 
         image = pillow.open(self.path)
 
-        curent = Plane.make(image.image.width, image.image.height)
-        target = Plane.make(*self.area.size.int)
+        curent = Area.make(image.image.width, image.image.height)
+        target = Area.make(*self.area.size.int)
 
         match self.fit:
             case Mode.FILL:
@@ -348,7 +403,7 @@ class Abstract(Object):
     def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
         super().__init__(**star)
         self.parent = parent
-        self.area = Plane.make(0, 0)
+        self.area = Area.make(0, 0)
         self.canvas = None
         self.hidden = False
         self.hold = hold

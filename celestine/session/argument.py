@@ -37,7 +37,7 @@ class Argument(HashClass, Attribute):
         self.attribute = attribute
         self.fallback = fallback
 
-    def key(self, _: S) -> LS:
+    def key(self, name: S) -> LS:
         """"""
         return []
 
@@ -139,7 +139,7 @@ class InformationConfiguration(Information):
     """"""
 
     # pylint: disable-next=redefined-builtin
-    def __init__(self, help) -> N:
+    def __init__(self, help: S) -> N:
         """"""
         super().__init__(
             action=Actions.STORE_TRUE,

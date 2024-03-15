@@ -20,13 +20,14 @@ from celestine.typed import (
     override,
 )
 from celestine.window import (
-    collection,
     container,
 )
 from celestine.window.collection import (
     Abstract,
+    Area,
     Plane,
     Point,
+    Line,
     Tree,
 )
 from celestine.window.container import Image as Mode
@@ -231,7 +232,7 @@ class View(Abstract, Tree):
             item.make(canvas)
 
     @override
-    def spot(self, area: Plane) -> N:
+    def spot(self, area: Area) -> N:
         """"""
         super().spot(area)
         length = max(1, len(self))
@@ -250,29 +251,26 @@ class View(Abstract, Tree):
                 partition_x = 1
                 partition_y = 1
 
-        size_x, size_y = self.area.size
         index = 0
-
-        fragment_x = size_x // partition_x
-        fragment_y = size_y // partition_y
-
         for _, item in self:
             index_x = index % partition_x
             index_y = min(index // partition_x, partition_y - 1)
             index += 1
 
-            left = self.area.one.minimum
-            upper = self.area.two.minimum
+            local = self.area.local.spot(
+                index_x,
+                index_y,
+                partition_x,
+                partition_y,
+            )
+            world = self.area.world.spot(
+                index_x,
+                index_y,
+                partition_x,
+                partition_y,
+            )
 
-            ymin = upper + fragment_y * (index_y + 0)
-            ymax = upper + fragment_y * (index_y + 1)
-            xmin = left + fragment_x * (index_x + 0)
-            xmax = left + fragment_x * (index_x + 1)
-
-            one = collection.Line(xmin, xmax)
-            two = collection.Line(ymin, ymax)
-
-            rectangle = Plane(one, two)
+            rectangle = Area(local, world)
             item.spot(rectangle)
 
     def zone(
@@ -506,7 +504,7 @@ class Window(Tree):
         for _, item in self:
             item.make(self.canvas)
 
-    def spot(self, area: Plane, **star: R) -> N:
+    def spot(self, area: Area, **star: R) -> N:
         """"""
         # check
         self.area = area
@@ -571,7 +569,7 @@ class Window(Tree):
 
     def __init__(self, hold: H, element_item, **star: R) -> N:
         super().__init__(**star)
-        self.area = Plane.make(0, 0)
+        self.area = Area.make(0, 0)
         self.hold = hold
         self.code = {}
         self.view = {}

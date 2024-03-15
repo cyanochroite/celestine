@@ -16,7 +16,7 @@ from celestine.typed import (
     override,
 )
 from celestine.window.collection import (
-    Plane,
+    Area,
     Point,
 )
 
@@ -29,7 +29,7 @@ class Element(Element_):
         """"""
         pillow = self.hold.package.pillow
 
-        self.image = pillow.new(self.area.size.int)
+        self.image = pillow.new(self.area.world.size.int)
 
         super().make(canvas)
 
@@ -40,7 +40,7 @@ class Element(Element_):
 
         pygame = self.hold.package.pygame
 
-        origin = (self.area.one.minimum, self.area.two.minimum)
+        origin = (self.area.world.one.minimum, self.area.world.two.minimum)
 
         image = pygame.image.fromstring(
             self.image.image.tobytes(),
@@ -108,7 +108,7 @@ class Window(Window_):
         """"""
         pygame = self.hold.package.pygame
 
-        self.canvas = pygame.display.set_mode(self.area.size.int)
+        self.canvas = pygame.display.set_mode(self.area.world.size.int)
 
         super().make()
 
@@ -170,5 +170,5 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(hold, element, **star)
-        self.area = Plane.make(1280, 960)
+        self.area = Area.make(1280, 960)
         self.font = None
