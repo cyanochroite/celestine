@@ -7,10 +7,11 @@ from celestine.typed import (
     A,
     H,
     N,
+    S,
     R,
     override,
 )
-from celestine.window.collection import Plane
+from celestine.window.collection import Area
 
 
 class Element(Element_):
@@ -23,7 +24,7 @@ class Element(Element_):
 
         def callback() -> N:
             """"""
-            self.click(self.area.centroid)
+            self.click(self.area.local.centroid)
             self.hold.dequeue()
 
         if self.action or self.goto:
@@ -41,8 +42,8 @@ class Element(Element_):
                 width=100,
             )
 
-        dot_x, dot_y = self.area.origin.int
-        width, height = self.area.size
+        dot_x, dot_y = self.area.local.origin.int
+        width, height = self.area.local.size
         self.canvas.place(
             x=dot_x,
             y=dot_y,
@@ -67,8 +68,8 @@ class Element(Element_):
         if self.keep:
             # check may be removed if view has object
             # also this mostly calling render()
-            width, height = self.area.size
-            dot_x, dot_y = self.area.origin.int
+            width, height = self.area.local.size
+            dot_x, dot_y = self.area.local.origin.int
             self.keep.place(
                 x=dot_x,
                 y=dot_y,
@@ -93,7 +94,8 @@ class View(View_):
             width=1920,
             height=1080,
         )
-        self.canvas.place(x=0, y=0)
+        dot_x, dot_y = self.area.local.origin.int
+        self.canvas.place(x=dot_x, y=dot_y)
 
         super().make(self.canvas)
 
@@ -145,8 +147,8 @@ class Window(Window_):
         super().make()
 
     @override
-    def turn(self, page):
-        super().turn(page)
+    def turn(self, page: S, **star: R) -> N:
+        super().turn(page, **star)
         self.page.canvas.tkraise()
 
     @override
@@ -163,7 +165,4 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(hold, element, **star)
-        self.area = Plane.make(1280, 1080)
-
-
-# TODO: convert global cords to local cords to place is correct
+        self.area = Area.make(1280, 1080)

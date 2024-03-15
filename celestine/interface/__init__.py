@@ -257,18 +257,19 @@ class View(Abstract, Tree):
             index_y = min(index // partition_x, partition_y - 1)
             index += 1
 
-            local = self.area.local.spot(
-                index_x,
-                index_y,
-                partition_x,
-                partition_y,
-            )
             world = self.area.world.spot(
                 index_x,
                 index_y,
                 partition_x,
                 partition_y,
             )
+            local = self.area.world.spot(
+                index_x,
+                index_y,
+                partition_x,
+                partition_y,
+            )
+            local -= area.world.origin
 
             rectangle = Area(local, world)
             item.spot(rectangle)

@@ -31,10 +31,12 @@ class Point:
     @classmethod
     def clone(cls, self: K) -> K:
         """"""
+        # TODO: UNUSED
         return cls(self.one, self.two)
 
     def copy(self) -> K:
         """"""
+        # TODO: UNUSED
         return self.clone(self)
 
     @property
@@ -54,9 +56,11 @@ class Point:
         yield self.two
 
     def __repr__(self) -> S:
+        # TODO: UNUSED
         return f"Point({self.one}, {self.two})"
 
     def __str__(self) -> S:
+        # TODO: UNUSED
         return f"({self.one}, {self.two})"
 
     def __sub__(self, other: K) -> K:
@@ -95,16 +99,13 @@ class Line:
 
     @property
     def float(self) -> T[F, F]:
+        # TODO: UNUSED
         return (self.minimum, self.maximum)
 
     @property
     def int(self) -> T[I, I]:
+        # TODO: UNUSED
         return tuple(map(round, self.float))
-
-    def __add__(self, other: F) -> K:
-        one = self.minimum + other
-        two = self.maximum + other
-        return type(self)(one, two)
 
     def __contains__(self, item: F) -> B:
         return self.minimum <= item <= self.maximum
@@ -123,15 +124,17 @@ class Line:
         self.minimum = float(min(minimum, maximum))
         self.maximum = float(max(minimum, maximum))
 
-    def __mul__(self, other: F) -> K:
-        one = self.minimum * other
-        two = self.maximum * other
-        return type(self)(one, two)
+    def __isub__(self, other: F) -> K:
+        self.minimum -= other
+        self.maximum -= other
+        return self
 
     def __repr__(self) -> S:
+        # TODO: UNUSED
         return f"Line({self.minimum}, {self.maximum})"
 
     def __str__(self) -> S:
+        # TODO: UNUSED
         return f"[{self.minimum}, {self.maximum}]"
 
 
@@ -197,11 +200,6 @@ class Plane:
     def size(self) -> Point:
         return Point(self.one.length, self.two.length)
 
-    def __add__(self, other: Point) -> K:
-        one = self.one + other.one
-        two = self.two + other.two
-        return type(self)(one, two)
-
     def __contains__(self, item: Point) -> B:
         one = item.one in self.one
         two = item.two in self.two
@@ -221,19 +219,21 @@ class Plane:
         self.one = one.copy()
         self.two = two.copy()
 
-    def __mul__(self, other: F) -> K:
-        one = self.one * other
-        two = self.two * other
-        return type(self)(one, two)
+    def __isub__(self, other: Point) -> K:
+        self.one -= other.one
+        self.two -= other.two
+        return self
 
     def __repr__(self) -> S:
         one = repr(self.one)
         two = repr(self.two)
+        # TODO: UNUSED
         return f"Plane({one}, {two})"
 
     def __str__(self) -> S:
         one = str(self.one)
         two = str(self.two)
+        # TODO: UNUSED
         return f"({one}, {two})"
 
     def spot(
@@ -386,8 +386,8 @@ class Abstract(Object):
 
         image = pillow.open(self.path)
 
-        curent = Area.make(image.image.width, image.image.height)
-        target = Area.make(*self.area.size.int)
+        curent = Plane.make(image.image.width, image.image.height)
+        target = Plane.make(*self.area.world.size.int)
 
         match self.fit:
             case Mode.FILL:
