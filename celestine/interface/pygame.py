@@ -1,7 +1,7 @@
 """"""
 
 from celestine import load
-from celestine.interface import Element as Abstract_
+from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
@@ -26,7 +26,7 @@ class Abstract(Abstract_):
     """"""
 
 
-class Element(Element_):
+class Element(Element_, Abstract):
     """"""
 
     @override
@@ -38,8 +38,10 @@ class Element(Element_):
 
         super().make(canvas)
 
-    def draw(self, *, font, **star: R) -> B:
+    def draw(self, **star: R) -> B:
         """"""
+        font = star.pop("font")
+
         if not super().draw(**star):
             return False
 
@@ -65,7 +67,7 @@ class Element(Element_):
         self.path = star.get("path", "")
 
 
-class View(View_):
+class View(View_, Abstract):
     """"""
 
 

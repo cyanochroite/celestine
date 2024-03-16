@@ -137,10 +137,10 @@ target-version = [
 
 [tool.isort]
 force_grid_wrap = 2
-line_ending = "\r\n"
+line_ending = "\n"
 line_length = 72
 profile = "black"
-py_version = 311
+py_version = 312
 remove_redundant_aliases = true
 
 
@@ -175,7 +175,7 @@ ignored-argument-names = "_|cls|hold|star|self"
 
 
 [tool.pylint.format]
-expected-line-ending-format = "CRLF"
+expected-line-ending-format = "LF"
 max-line-length = 72
 
 

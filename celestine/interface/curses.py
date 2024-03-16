@@ -88,7 +88,7 @@ class Button(Button_, Abstract):
 
     def draw(self, **star: R):
         """"""
-        item = f"button:{self.data}"
+        item = f"button: {self.data}"
         self.render(item, **star)
 
 
@@ -298,7 +298,7 @@ class Label(Label_, Abstract):
 
     def draw(self, **star: R):
         """"""
-        item = f"label:{self.data}"
+        item = f"label: {self.data}"
         self.render(item, **star)
 
 

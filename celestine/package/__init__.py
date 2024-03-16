@@ -14,6 +14,7 @@ from celestine.typed import (
     A,
     B,
     H,
+    D,
     M,
     N,
     R,
@@ -97,7 +98,9 @@ class Abstract:
 class Package:
     """"""
 
-    def __getattr__(self, name) -> A:
+    dictionary: D[S, M]
+
+    def __getattr__(self, name: S) -> M:
         """"""
         try:
             return self.dictionary[name]
@@ -105,7 +108,7 @@ class Package:
             message = f"'{PACKAGE}' object has no attribute '{name}'"
             raise AttributeError(message) from error
 
-    def __init__(self, hold: H, **star: R):
+    def __init__(self, hold: H, **star: R) -> N:
         self.dictionary = {}
         argument = load.argument(PACKAGE)
         for name in argument:

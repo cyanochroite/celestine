@@ -16,7 +16,6 @@ from celestine.typed import (
     override,
 )
 from celestine.unicode import NONE
-from celestine.window import container
 from celestine.window.collection import (
     Area,
     Line,
@@ -26,6 +25,10 @@ from celestine.window.collection import (
     Tree,
 )
 from celestine.window.container import Image as Mode
+from celestine.window.container import (
+    Image,
+    Zone,
+)
 
 
 class Abstract(Object):
@@ -41,7 +44,7 @@ class Abstract(Object):
     name: S  # The key to use to find this in the window dictionary.
 
     action: S  # The action to perform when the user clicks the button.
-    fit: S  # The way the image scales to fit the view space.
+    fit: Image  # The way the image scales to fit the view space.
     goto: S  # The page to go to when clicked.
     path: S  # The path to the image to use as a background.
     text: S  # Text that describes the purpose of the button's action.
@@ -108,23 +111,23 @@ class Abstract(Object):
         self.star = star
         # Contains all remaining keyword arguments.
 
-        def make(name: S, default: S = NONE) -> N:
+        def warp(name: S, default: S = NONE) -> N:
             value = star.pop(name, default)
             setattr(self, name, value)
 
-        make("action")
+        warp("action")
         # The action to perform when the user triggers the button.
 
-        make("fit", Mode.FILL)
+        warp("fit", Mode.FILL)
         # The way the image scales to fit the view space.
 
-        make("goto")
+        warp("goto")
         # The page to go to when clicked.
 
-        make("path")
+        warp("path")
         # The path to the image to use as a background.
 
-        make("text")
+        warp("text")
         # Text that describes the purpose of the button's action.
 
 
@@ -213,16 +216,16 @@ class View(Abstract, Tree):
 
         length = max(1, len(self))
         match self.mode:
-            case container.Zone.DROP:
+            case Zone.DROP:
                 partition_x = 1
                 partition_y = length
-            case container.Zone.SPAN:
+            case Zone.SPAN:
                 partition_x = length
                 partition_y = 1
-            case container.Zone.GRID:
+            case Zone.GRID:
                 partition_x = self.width
                 partition_y = math.ceil(length / self.width)
-            case container.Zone.NONE:
+            case Zone.NONE:
                 partition_x = 1
                 partition_y = 1
 
@@ -253,7 +256,7 @@ class View(Abstract, Tree):
         self,
         name: S,
         *,
-        mode=container.Zone.NONE,
+        mode: Zone=Zone.NONE,
         **star: R,
     ) -> K:
         """"""
@@ -270,11 +273,11 @@ class View(Abstract, Tree):
 
     def drop(self, name: S, **star: R) -> K:
         """"""
-        return self.zone(name, mode=container.Zone.DROP, **star)
+        return self.zone(name, mode=Zone.DROP, **star)
 
     def span(self, name: S, **star: R) -> K:
         """"""
-        return self.zone(name, mode=container.Zone.SPAN, **star)
+        return self.zone(name, mode=Zone.SPAN, **star)
 
     def __enter__(self) -> K:
         return self
@@ -290,7 +293,7 @@ class View(Abstract, Tree):
         name,
         element_item,
         *,
-        mode=container.Zone.NONE,
+        mode: Zone=Zone.NONE,
         row=0,
         col=0,
         **star: R,
@@ -396,7 +399,7 @@ class Window(Tree):
                 self.hold,
                 name,
                 self.element_item,
-                mode=container.Zone.DROP,
+                mode=Zone.DROP,
                 parent=self,
                 **star,
             )

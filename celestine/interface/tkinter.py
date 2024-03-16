@@ -1,6 +1,6 @@
 """"""
 
-from celestine.interface import Element as Abstract_
+from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
@@ -9,6 +9,7 @@ from celestine.typed import (
     H,
     N,
     R,
+    B,
     S,
     override,
 )
@@ -29,7 +30,7 @@ class Abstract(Abstract_):
         )
 
 
-class Element(Element_):
+class Element(Element_, Abstract):
     """"""
 
     @override
@@ -57,15 +58,7 @@ class Element(Element_):
                 width=100,
             )
 
-        width, height = self.area.local.size
-        dot_x, dot_y = self.area.local.origin.int
-        self.item.place(
-            x=dot_x,
-            y=dot_y,
-            width=width,
-            height=height,
-        )
-
+        self.place(self.item)
         super().make(canvas)
 
     @override
@@ -78,17 +71,10 @@ class Element(Element_):
     def show(self) -> N:
         """"""
         super().show()
-        width, height = self.area.local.size
-        dot_x, dot_y = self.area.local.origin.int
-        self.item.place(
-            x=dot_x,
-            y=dot_y,
-            width=width,
-            height=height,
-        )
+        self.place(self.item)
 
 
-class View(View_):
+class View(View_, Abstract):
     """"""
 
     @override
@@ -104,9 +90,7 @@ class View(View_):
             width=1920,
             height=1080,
         )
-        dot_x, dot_y = self.area.local.origin.int
-        self.canvas.place(x=dot_x, y=dot_y)
-
+        self.place(self.canvas)
         super().make(self.canvas)
 
     @override
@@ -119,14 +103,7 @@ class View(View_):
     def show(self) -> N:
         """"""
         super().show()
-        width, height = self.area.local.size
-        dot_x, dot_y = self.area.local.origin.int
-        self.canvas.place(
-            x=dot_x,
-            y=dot_y,
-            width=width,
-            height=height,
-        )
+        self.place(self.canvas)
 
 
 class Window(Window_):
@@ -167,7 +144,7 @@ class Window(Window_):
         self.page.canvas.tkraise()
 
     @override
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
         super().__exit__(exc_type, exc_value, traceback)
         self.canvas.mainloop()
         return False
