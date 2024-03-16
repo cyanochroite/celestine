@@ -24,11 +24,9 @@ from celestine.window.collection import (
     Point,
     Tree,
 )
+from celestine.window.container import Image
 from celestine.window.container import Image as Mode
-from celestine.window.container import (
-    Image,
-    Zone,
-)
+from celestine.window.container import Zone
 
 
 class Abstract(Object):
@@ -256,7 +254,7 @@ class View(Abstract, Tree):
         self,
         name: S,
         *,
-        mode: Zone=Zone.NONE,
+        mode: Zone = Zone.NONE,
         **star: R,
     ) -> K:
         """"""
@@ -293,7 +291,7 @@ class View(Abstract, Tree):
         name,
         element_item,
         *,
-        mode: Zone=Zone.NONE,
+        mode: Zone = Zone.NONE,
         row=0,
         col=0,
         **star: R,

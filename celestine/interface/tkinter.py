@@ -6,10 +6,10 @@ from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.typed import (
     A,
+    B,
     H,
     N,
     R,
-    B,
     S,
     override,
 )

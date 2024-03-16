@@ -3,8 +3,8 @@
 
 from celestine.typed import (
     H,
-    R,
     N,
+    R,
     S,
 )
 
