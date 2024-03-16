@@ -144,5 +144,6 @@ class ImportNotUsed(Fix):
     def self(self) -> K:
         return self
 
-    def type_(self) -> TYPE[int]:
+    @staticmethod
+    def type_() -> TYPE[int]:
         return int

@@ -110,7 +110,6 @@ def package(base: S, *path: S) -> M:
 
 def packages(base: S, *path: S) -> L[M]:
     """Load an external package from the system path."""
-
     find = importlib.import_module(base)
     spec = find.__spec__
     info = spec.origin if spec else project_path()

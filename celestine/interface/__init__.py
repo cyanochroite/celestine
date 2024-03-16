@@ -25,7 +25,6 @@ from celestine.window.collection import (
     Tree,
 )
 from celestine.window.container import Image
-from celestine.window.container import Image as Mode
 from celestine.window.container import Zone
 
 
@@ -116,7 +115,7 @@ class Abstract(Object):
         warp("action")
         # The action to perform when the user triggers the button.
 
-        warp("fit", Mode.FILL)
+        warp("fit", Image.FILL)
         # The way the image scales to fit the view space.
 
         warp("goto")
@@ -155,9 +154,9 @@ class Element(Abstract):
         target = Plane.make(*self.area.world.size.int)
 
         match self.fit:
-            case Mode.FILL:
+            case Image.FILL:
                 result = curent.scale_to_min(target)
-            case Mode.FULL:
+            case Image.FULL:
                 result = curent.scale_to_max(target)
 
         result.center(target)
@@ -339,10 +338,10 @@ class View(Abstract, Tree):
         self.element(name, goto=task, text=text, **star)
 
     def icon(self, name: S, /, **star: R) -> N:
-        self.element(name, fit=Mode.FILL, **star)
+        self.element(name, fit=Image.FILL, **star)
 
     def image(self, name: S, /, **star: R) -> N:
-        self.element(name, fit=Mode.FULL, **star)
+        self.element(name, fit=Image.FULL, **star)
 
     def label(self, name: S, /, text: S, **star: R) -> N:
         self.element(name, text=text, **star)

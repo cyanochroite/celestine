@@ -23,17 +23,6 @@ class Point:
     one: F
     two: F
 
-    @classmethod
-    def clone(cls, self: K) -> K:
-        """"""
-        # TODO: UNUSED
-        return cls(self.one, self.two)
-
-    def copy(self) -> K:
-        """"""
-        # TODO: UNUSED
-        return self.clone(self)
-
     @property
     def float(self) -> T[F, F]:
         return (self.one, self.two)
@@ -49,14 +38,6 @@ class Point:
     def __iter__(self) -> GF:
         yield self.one
         yield self.two
-
-    def __repr__(self) -> S:
-        # TODO: UNUSED
-        return f"Point({self.one}, {self.two})"
-
-    def __str__(self) -> S:
-        # TODO: UNUSED
-        return f"({self.one}, {self.two})"
 
     def __sub__(self, other: K) -> K:
         one = self.one - other.one
@@ -92,16 +73,6 @@ class Line:
     def midpoint(self) -> F:
         return (self.minimum + self.maximum) / 2
 
-    @property
-    def float(self) -> T[F, F]:
-        # TODO: UNUSED
-        return (self.minimum, self.maximum)
-
-    @property
-    def int(self) -> T[I, I]:
-        # TODO: UNUSED
-        return tuple(map(round, self.float))
-
     def __contains__(self, item: F) -> B:
         return self.minimum <= item <= self.maximum
 
@@ -123,14 +94,6 @@ class Line:
         self.minimum -= other
         self.maximum -= other
         return self
-
-    def __repr__(self) -> S:
-        # TODO: UNUSED
-        return f"Line({self.minimum}, {self.maximum})"
-
-    def __str__(self) -> S:
-        # TODO: UNUSED
-        return f"[{self.minimum}, {self.maximum}]"
 
 
 class Plane:
@@ -219,33 +182,12 @@ class Plane:
         self.two -= other.two
         return self
 
-    def __repr__(self) -> S:
-        one = repr(self.one)
-        two = repr(self.two)
-        # TODO: UNUSED
-        return f"Plane({one}, {two})"
-
-    def __str__(self) -> S:
-        one = str(self.one)
-        two = str(self.two)
-        # TODO: UNUSED
-        return f"({one}, {two})"
-
 
 class Area:
     """"""
 
     local: Plane
     world: Plane
-
-    @classmethod
-    def clone(cls, self: K) -> K:
-        """"""
-        return cls()
-
-    def copy(self) -> K:
-        """"""
-        return self.clone(self)
 
     def __contains__(self, item: Point) -> B:
         return item in self.world
@@ -264,15 +206,6 @@ class Area:
 
 class Object:
     """"""
-
-    @classmethod
-    def clone(cls, self: K) -> K:
-        """"""
-        return cls()
-
-    def copy(self) -> K:
-        """"""
-        return self.clone(self)
 
     def __init__(self, **star: R) -> N:
         """This does not pass the star parameter to the real object."""

@@ -211,10 +211,10 @@ class Abstract(Abstract_):
 
         if first:
             return True
-        else:
-            item = self.dictionary.get(self.name)
-            self.hidden = item.hide_render
-            return False
+
+        item = self.dictionary.get(self.name)
+        self.hidden = item.hide_render
+        return False
 
     def __init__(self, hold: H, name: S, **star: R) -> N:
         super().__init__(hold, name, **star)

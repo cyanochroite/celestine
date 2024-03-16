@@ -61,6 +61,7 @@ class Element(Element_, Abstract):
 
         text = font.render(self.text, True, (255, 0, 255))
         self.canvas.blit(text, origin)
+        return True
 
     def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
         super().__init__(hold, name, parent, **star)

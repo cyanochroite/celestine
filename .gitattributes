@@ -1,18 +1,18 @@
-*.bat            eol=crlf
-*.cff            text
+*.bat            text eol=lf
+*.cff            text eol=lf
 *.gif            binary
 *.jpg            binary
-*.md             text
+*.md             text eol=lf
 *.otf            binary
 *.png            binary
-*.py             text
-*.rst            text
-*.text           text
-*.toml           text
-*.yaml           text
-.deepsource.toml text
-.editorconfig    text
-.flake8          text
-.gitattributes   text
-.gitignore       text
-py.typed         text
+*.py             text eol=lf
+*.rst            text eol=lf
+*.text           text eol=lf
+*.toml           text eol=lf
+*.yaml           text eol=lf
+.deepsource.toml text eol=lf
+.editorconfig    text eol=lf
+.flake8          text eol=lf
+.gitattributes   text eol=lf
+.gitignore       text eol=lf
+py.typed         text eol=lf
