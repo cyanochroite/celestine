@@ -29,15 +29,6 @@ class Abstract(Abstract_):
 class Element(Element_, Abstract):
     """"""
 
-    @override
-    def make(self, canvas: A) -> N:
-        """"""
-        pillow = self.hold.package.pillow
-
-        self.image = pillow.new(self.area.world.size.int)
-
-        super().make(canvas)
-
     def draw(self, **star: R) -> B:
         """"""
         font = star.pop("font")

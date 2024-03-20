@@ -131,6 +131,16 @@ class Abstract(Object):
 class Element(Abstract):
     """"""
 
+    @override
+    def make(self, canvas: A) -> N:
+        """"""
+        pillow = self.hold.package.pillow
+
+        size = self.area.world.size.int
+        self.image = pillow.new(size)
+
+        super().make(canvas)
+
     def draw(self, **star: R) -> B:
         """"""
         if not super().draw():

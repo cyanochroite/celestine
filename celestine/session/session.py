@@ -4,10 +4,13 @@
 from celestine import load
 from celestine.data.directory import (
     APPLICATION,
+    WHALE,
+    DIRECTORY,
     INTERFACE,
     LANGUAGE,
 )
 from celestine.session.argument import (
+    Optional,
     Customization,
     InformationConfiguration,
     InformationHelp,
@@ -84,6 +87,55 @@ class Application(Dictionary):
         }
 
 
+# class Configuration(Dictionary):
+#    """"""
+#
+#    configuration: M
+#
+#    @classmethod
+#    def dictionary(cls, core) -> AD:
+#        """"""
+#        return super().dictionary(core) | {
+#            CONFIGURATION: Customization(
+#                default.application(),
+#                core.language.ARGUMENT_INTERFACE_HELP,
+#                load.argument(APPLICATION),
+#            ),
+#        }
+
+class Whale(Dictionary):
+    """"""
+
+    whale: M
+
+    @classmethod
+    def dictionary(cls, core) -> AD:
+        """"""
+        return super().dictionary(core) | {
+            WHALE: Optional(
+                "",
+                "Path to configuration file.",
+            ),
+        }
+
+
+class Directory(Dictionary):
+    """"""
+
+    directory: M
+
+    @classmethod
+    def dictionary(cls, core) -> AD:
+        """"""
+        return super().dictionary(core) | {
+            DIRECTORY: Customization(
+                default.application(),
+                core.language.ARGUMENT_INTERFACE_HELP,
+                load.argument(APPLICATION),
+            ),
+        }
+
+
 class Interface(Dictionary):
     """"""
 
@@ -118,7 +170,13 @@ class Language(Dictionary):
         }
 
 
-class Session(Application, Interface, Language):
+class Session(
+    Application,
+    Whale,
+    Directory,
+    Interface,
+    Language,
+):
     """"""
 
     main: S

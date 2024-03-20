@@ -12,6 +12,7 @@ from celestine.stream import Encoding
 from celestine.typed import (
     N,
     S,
+    OP,
 )
 from celestine.unicode import (
     EQUALS_SIGN,
@@ -29,9 +30,9 @@ class Configuration:
         """"""
         return self.configuration.get(section, option, fallback=NONE)
 
-    def load(self) -> N:
+    def load(self, path: OP = None) -> N:
         """Load the configuration file."""
-        filenames = self.path
+        filenames = path or self.path
         encoding = Encoding.UTF_8.value
         self.configuration.read(filenames, encoding)
 

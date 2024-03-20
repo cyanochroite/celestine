@@ -4,6 +4,8 @@
 from celestine import load
 from celestine.data.directory import (
     APPLICATION,
+    WHALE,
+    DIRECTORY,
     INTERFACE,
     LANGUAGE,
 )
@@ -19,11 +21,24 @@ from .magic import Magic
 
 
 def begin_session(argument_list: LS, exit_on_error: B) -> H:
-    """"""
+    """
+
+    First load Language so human can read errors.
+    Then load Interface so human see errors the way they want.
+    """
 
     magic = Magic(argument_list, exit_on_error)
 
     with magic:
+        magic.parse(LANGUAGE)
+        magic.parse(INTERFACE)
+        magic.parse(APPLICATION)
+
+        method = load.method("Whale", "session", "session")
+        magic.get_parser([method], True)
+        path = method.whale  # configuration file: avoid name conflict
+        magic.configuration.load(path)
+
         magic.parse(LANGUAGE)
         magic.parse(INTERFACE)
         magic.parse(APPLICATION)
@@ -95,3 +110,12 @@ if you have more then 1 language you must use language/__init__.py
 """
 
 """Configuration information will show your saved stuff."""
+
+
+"This needs a major redo. But for now, load essentials then load all."
+# LANGUAGE, what user speek
+# INTERFACE, the gui program
+# APPLICATION, what program to run
+# WHALE, # location of configuration file
+# DIRECTORY, curent working directory of application: security
+
