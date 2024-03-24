@@ -3,10 +3,9 @@
 import os
 import sys
 
-from celestine import load
-from celestine.stream import (
-    Encoding,
-    Mode,
+from celestine import (
+    load,
+    stream,
 )
 from celestine.typed import (
     LS,
@@ -79,8 +78,8 @@ class Abstract:
 
         with open(
             os.devnull,
-            Mode.WRITE_TEXT.value,
-            encoding=Encoding.UTF_8.value,
+            stream.Mode.WRITE_TEXT.value,
+            encoding=stream.Encoding.UTF_8.value,
         ) as stdout:
             sys.stdout = stdout  # as TextIO
             try:

@@ -35,6 +35,7 @@ class File(abc.ABC):
         with self.reader(*path) as file:
             return file.read()
 
+    @abc.abstractmethod
     def reader(self, *path: PATH) -> FILE:
         ...
 
@@ -43,6 +44,7 @@ class File(abc.ABC):
         with self.writer(*path) as file:
             file.write(data)
 
+    @abc.abstractmethod
     def writer(self, *path: PATH) -> FILE:
         ...
 
@@ -142,3 +144,8 @@ class Module(Text):
         """"""
         file = load.python(*path)
         super().writer(file)
+
+
+binary = Binary()
+module = Module()
+text = Text()

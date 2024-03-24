@@ -2,10 +2,7 @@
 
 import io
 
-from celestine.stream import (
-    SECTION_BREAK,
-    Module,
-)
+from celestine import stream
 from celestine.typed import (
     GS,
     S,
@@ -21,7 +18,7 @@ def fix_line_split(*path: S) -> GS:
     """"""
     skip = False
 
-    document = Module.load(*path)
+    document = stream.module.load(*path)
     for string in document:
         for character in string:
             if character not in UNICODE:
@@ -68,7 +65,7 @@ def open_language(*path):
 
     value = string.getvalue()
 
-    split = value.split(SECTION_BREAK)
+    split = value.split(stream.SECTION_BREAK)
 
     head = make_dictionary(split[0])
     body = make_dictionary(split[-1])

@@ -22,7 +22,8 @@ Unused Symbols
 ~~~~~~~~~~~~~~
 Show Import Not Used Warnings = True
 Show Variable Not Used Warnings = True
-Show Argument Not Used Warnings = True
+Show Argument Not Used Warnings = False
+# False positive: "Argument not used." on "abc.abstractmethod".
 
 Variables Not Used Configuration
 """"""""""""""""""""""""""""""""

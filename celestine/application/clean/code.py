@@ -98,13 +98,13 @@ def licence(hold: H, **star: R):
     files = load.walk_file(location, [], [])
     for file in files:
         string = io.StringIO()
-        with stream.Text.reader(file) as lines:
+        with stream.text.reader(file) as lines:
             for line in lines:
                 character = normalize.characters(line)
                 wrap = normalize.wrap_text(character)
                 for text in wrap:
                     string.write(text)
-        with stream.Text.writer(file) as document:
+        with stream.text.writer(file) as document:
             for line in string.getvalue():
                 document.write(line)
 
@@ -123,7 +123,7 @@ def version(hold: H, **star: R):
 
     for path, keys in array:
         file = load.pathway_root(*path)
-        text = stream.Text.load(file)
+        text = stream.text.load(file)
 
         for key in keys:
             pattern = key
@@ -151,4 +151,4 @@ def version(hold: H, **star: R):
             flags = 0
 
             text = re.sub(pattern, repl, string, count, flags)
-            stream.Text.save(file, text)
+            stream.text.save(text, file)

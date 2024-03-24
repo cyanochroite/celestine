@@ -2,10 +2,7 @@
 
 import io
 
-from celestine.stream import (
-    MAXIMUM_LINE_LENGTH,
-    SECTION_BREAK,
-)
+from celestine import stream
 from celestine.typed import (
     GS,
     S,
@@ -65,7 +62,7 @@ def wrap(string: S) -> GS:
     for character in string:
         if character == PARAGRAPH_SEPARATOR:
             yield from LINE_FEED
-            yield from SECTION_BREAK
+            yield from stream.SECTION_BREAK
             yield from LINE_FEED
             continue
 
@@ -100,20 +97,20 @@ def wrap(string: S) -> GS:
             continue
 
         size = len(character)
-        if count + size >= MAXIMUM_LINE_LENGTH:
+        if count + size >= stream.MAXIMUM_LINE_LENGTH:
             buffer.seek(0, io.SEEK_SET)
 
             pull = 0
-            if 0 < count_d < MAXIMUM_LINE_LENGTH:
+            if 0 < count_d < stream.MAXIMUM_LINE_LENGTH:
                 pull = count_d
-            elif 0 < count_c < MAXIMUM_LINE_LENGTH:
+            elif 0 < count_c < stream.MAXIMUM_LINE_LENGTH:
                 pull = count_c
-            elif 0 < count_b < MAXIMUM_LINE_LENGTH:
+            elif 0 < count_b < stream.MAXIMUM_LINE_LENGTH:
                 pull = count_b
-            elif 0 < count_a < MAXIMUM_LINE_LENGTH:
+            elif 0 < count_a < stream.MAXIMUM_LINE_LENGTH:
                 pull = count_a
             else:
-                pull = MAXIMUM_LINE_LENGTH
+                pull = stream.MAXIMUM_LINE_LENGTH
 
             data = buffer.read(pull)
 
@@ -172,14 +169,14 @@ def wrap_text(string: S) -> GS:
             yield from line
             continue
 
-        if count > MAXIMUM_LINE_LENGTH:
+        if count > stream.MAXIMUM_LINE_LENGTH:
             buffer.seek(0, io.SEEK_SET)
 
             pull = 0
-            if 0 < count_a < MAXIMUM_LINE_LENGTH:
+            if 0 < count_a < stream.MAXIMUM_LINE_LENGTH:
                 pull = count_a
             else:
-                pull = MAXIMUM_LINE_LENGTH
+                pull = stream.MAXIMUM_LINE_LENGTH
 
             data = buffer.read(pull)
 

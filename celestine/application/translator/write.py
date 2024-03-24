@@ -3,8 +3,8 @@
 import io
 import keyword
 
+from celestine import stream
 from celestine.data import normalize
-from celestine.stream import Module
 from celestine.typed import (
     GS,
     TABLE,
@@ -100,11 +100,11 @@ def make_init_file():
 
     value = string.getvalue()
     width = normalize.wrap(value)
-    Module.save(width, LANGUAGE, INIT)
+    stream.Module.save(width, LANGUAGE, INIT)
 
 
 def save_language(translation: TABLE, overridden: TABLE, *path: S) -> N:
     """Save a language file to disk."""
     file = language_file(translation, overridden)
     string = normalize.wrap(file)
-    Module.save(string, *path)
+    stream.Module.save(string, *path)

@@ -12,7 +12,6 @@ from celestine import (
     load,
     stream,
 )
-from celestine.stream import Module
 from celestine.typed import (
     GS,
     S,
@@ -61,7 +60,7 @@ def work(document):
             value = string.getvalue()
             return value
 
-        with stream.Text.reader(file) as lines:
+        with stream.text.reader(file) as lines:
             loaded = read_stream(lines)
             text = work(loaded)
-        Module.save(text, "unicode")
+        stream.Module.save(text, "unicode")

@@ -8,7 +8,6 @@ from celestine import (
     stream,
 )
 from celestine.data import CELESTINE
-from celestine.stream import Encoding
 from celestine.typed import (
     OP,
     N,
@@ -33,13 +32,13 @@ class Configuration:
     def load(self, path: OP = None) -> N:
         """Load the configuration file."""
         filenames = path or self.path
-        encoding = Encoding.UTF_8.value
+        encoding = stream.Encoding.UTF_8.value
         self.configuration.read(filenames, encoding)
 
     def save(self) -> N:
         """Save the configuration file."""
         configuration = self.configuration
-        with stream.Text.writer(self.path) as fileobject:
+        with stream.text.writer(self.path) as fileobject:
             space_around_delimiters = True
             configuration.write(fileobject, space_around_delimiters)
 
