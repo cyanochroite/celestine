@@ -66,6 +66,8 @@ LP: TA = L[P]
 LS: TA = L[S]
 
 
+PATH: TA = P | S
+
 FN: TA = C[[N], N]
 AXIS: TA = G[T[I, I], N, N]
 FILE: TA = typing.IO[A]

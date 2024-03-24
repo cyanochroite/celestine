@@ -1,15 +1,18 @@
 """Central place for loading and importing external files."""
 
+import abc
 import lzma
+import pathlib
 
 from celestine import load
 from celestine.typed import (
     FILE,
-    GS,
     LZMA,
+    PATH,
     N,
     P,
     S,
+    override,
 )
 
 from .data import (
@@ -24,33 +27,47 @@ SECTION_BREAK = "######################################################\
 ##################"
 
 
-class Binary:
+class File(abc.ABC):
     """"""
 
-    @classmethod
-    def load(cls, path: P) -> S:
+    def load(self, *path: PATH) -> S:
         """"""
-        with cls.reader(path) as file:
+        with self.reader(*path) as file:
             return file.read()
 
-    @classmethod
-    def reader(cls, file: P) -> FILE:
+    def reader(self, *path: PATH) -> FILE:
+        ...
+
+    def save(self, data: S, *path: PATH) -> N:
         """"""
+        with self.writer(*path) as file:
+            file.write(data)
+
+    def writer(self, *path: PATH) -> FILE:
+        ...
+
+    def join(self, *path: PATH) -> P:
+        """"""
+        return pathlib.Path(*path)
+
+
+class Binary(File):
+    """"""
+
+    @override
+    def reader(self, *path: PATH) -> FILE:
+        """"""
+        file = self.join(*path)
         return open(
             file,
             Mode.READ_BINARY,
             Buffering.OFF,
         )
 
-    @classmethod
-    def save(cls, path: P, data: S) -> N:
+    @override
+    def writer(self, *path: PATH) -> FILE:
         """"""
-        with cls.writer(path) as file:
-            file.write(data)
-
-    @classmethod
-    def writer(cls, file: P) -> FILE:
-        """"""
+        file = self.join(*path)
         return open(
             file,
             Mode.WRITE_BINARY,
@@ -58,30 +75,24 @@ class Binary:
         )
 
 
-class Lzma:
+class Lzma(File):
     """"""
 
-    def load(self, path: P) -> S:
+    @override
+    def reader(self, *path: PATH) -> LZMA:
         """"""
-        with self.reader(path) as file:
-            return file.read()
-
-    def reader(self, path: P) -> LZMA:
-        """"""
+        file = self.join(*path)
         return lzma.open(
-            path,
+            file,
             Mode.READ_BINARY,
         )
 
-    def save(self, path: P, data: S) -> N:
+    @override
+    def writer(self, *path: PATH) -> LZMA:
         """"""
-        with self.writer(path) as file:
-            file.write(data)
-
-    def writer(self, path: P) -> LZMA:
-        """"""
+        file = self.join(*path)
         return lzma.open(
-            path,
+            file,
             Mode.WRITE_BINARY,
             format=lzma.FORMAT_XZ,
             check=lzma.CHECK_SHA256,
@@ -89,37 +100,13 @@ class Lzma:
         )
 
 
-class Module:
+class Text(File):
     """"""
 
-    @classmethod
-    def load(cls, *paths: S) -> GS:
+    @override
+    def reader(self, *path: PATH) -> FILE:
         """"""
-        path = load.python(*paths)
-        with Text.reader(path) as file:
-            yield from file
-
-    @classmethod
-    def save(cls, string: GS, *paths: S) -> N:
-        """"""
-        path = load.python(*paths)
-        with Text.writer(path) as file:
-            for line in string:
-                file.write(line)
-
-
-class Text:
-    """"""
-
-    @classmethod
-    def load(cls, path: P) -> S:
-        """"""
-        with cls.reader(path) as file:
-            return file.read()
-
-    @classmethod
-    def reader(cls, file: P) -> FILE:
-        """"""
+        file = self.join(*path)
         return open(
             file,
             Mode.READ_TEXT,
@@ -128,15 +115,10 @@ class Text:
             Errors.STRICT,
         )
 
-    @classmethod
-    def save(cls, path: P, data: S) -> N:
+    @override
+    def writer(self, *path: PATH) -> FILE:
         """"""
-        with cls.writer(path) as file:
-            file.write(data)
-
-    @classmethod
-    def writer(cls, file: P) -> FILE:
-        """"""
+        file = self.join(*path)
         return open(
             file,
             Mode.WRITE_TEXT,
@@ -144,3 +126,19 @@ class Text:
             Encoding.UTF_8,
             Errors.STRICT,
         )
+
+
+class Module(Text):
+    """"""
+
+    @override
+    def reader(self, *path: PATH) -> FILE:
+        """"""
+        file = load.python(*path)
+        super().reader(file)
+
+    @override
+    def writer(self, *path: PATH) -> FILE:
+        """"""
+        file = load.python(*path)
+        super().writer(file)

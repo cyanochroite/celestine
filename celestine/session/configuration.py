@@ -10,9 +10,9 @@ from celestine import (
 from celestine.data import CELESTINE
 from celestine.stream import Encoding
 from celestine.typed import (
+    OP,
     N,
     S,
-    OP,
 )
 from celestine.unicode import (
     EQUALS_SIGN,

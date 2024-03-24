@@ -24,8 +24,10 @@ from celestine.window.collection import (
     Point,
     Tree,
 )
-from celestine.window.container import Image
-from celestine.window.container import Zone
+from celestine.window.container import (
+    Image,
+    Zone,
+)
 
 
 class Abstract(Object):

@@ -64,6 +64,7 @@ type LI = L[I]
 type LP = L[P]
 type LS = L[S]
 
+type PATH = P | S
 
 type FN = C[[N], N]
 type AXIS = G[T[I, I], N, N]

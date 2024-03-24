@@ -56,6 +56,8 @@ LP = _module.LP
 LS = _module.LS
 
 
+PATH = _module.PATH
+
 FN = _module.FN
 AXIS = _module.AXIS
 FILE = _module.FILE

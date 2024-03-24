@@ -4,17 +4,17 @@
 from celestine import load
 from celestine.data.directory import (
     APPLICATION,
-    WHALE,
     DIRECTORY,
     INTERFACE,
     LANGUAGE,
+    WHALE,
 )
 from celestine.session.argument import (
-    Optional,
     Customization,
     InformationConfiguration,
     InformationHelp,
     InformationVersion,
+    Optional,
     Positional,
 )
 from celestine.session.data import (
@@ -102,6 +102,7 @@ class Application(Dictionary):
 #                load.argument(APPLICATION),
 #            ),
 #        }
+
 
 class Whale(Dictionary):
     """"""
