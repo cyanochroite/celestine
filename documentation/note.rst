@@ -272,3 +272,62 @@ D	zero	+-
 +-----+---+---+---+---+
 | D   | A | B | C | D |
 +-----+---+---+---+---+
+
+
+# -a viewer main -l en -d D:/size/
+
+# the competition:
+# cengal
+# pysimplegui
+# bottle
+
+
+# Merge Code and View files. Mark Code functions. Scan all files in app.
+# sys.meta_path.append(DebugFileLoader) # importer
+
+# package name ref:
+# Glue
+# Bottle
+
+# zipapp on pypi
+# python -x importtime -c "filename"
+
+
+# decorator   __call__
+
+
+# split stream into load and save
+# unicode file can use builtin to save space
+
+
+# if __spec__.name == "__main__":
+#    celestine.main(__spec__.origin)
+
+
+
+"""
+importer notes.
+
+language.py is all you need for 1 language.
+language/__init__.py can be used instead.
+
+Not recomended to use both. However, note that
+language/__init__.py takes priority over language.py
+
+Must have at least one of these.
+Recomend using directory version so you can add more languages.
+Error messages will assume this version.
+
+if you have more then 1 language you must use language/__init__.py
+"""
+
+"""Configuration information will show your saved stuff."""
+
+
+"This needs a major redo. But for now, load essentials then load all."
+# LANGUAGE, what user speek
+# INTERFACE, the gui program
+# APPLICATION, what program to run
+# WHALE, # location of configuration file
+# DIRECTORY, curent working directory of application: security
+

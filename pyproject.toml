@@ -8,9 +8,8 @@ authors = [
     {name = "mem_dixy", email = "mem_dixy@pm.me"},
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "Intended Audience :: End Users/Desktop",
     "License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)",
     "Natural Language :: Bulgarian",
     "Natural Language :: Croatian",
@@ -37,20 +36,17 @@ classifiers = [
     "Natural Language :: Spanish",
     "Natural Language :: Swedish",
     "Operating System :: OS Independent",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
-    "Topic :: Multimedia :: Graphics :: Viewers",
+    "Topic :: Software Development :: User Interfaces",
     "Typing :: Typed",
 ]
 dependencies = [
-    "more-itertools >= 9.0.0",
-    "Pillow >= 9.0.0",
-    "platformdirs >= 3.0.0",
+    "more-itertools >= 10.0.0",
+    "Pillow >= 10.0.0",
+    "platformdirs >= 4.0.0",
 ]
 description = "A modular framework for desktop applications."
 maintainers = [

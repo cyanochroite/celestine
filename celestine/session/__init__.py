@@ -89,30 +89,3 @@ def begin_session(argument_list: LS, exit_on_error: B) -> H:
     session.main = next(iter(main))
 
     return session
-
-
-"""
-importer notes.
-
-language.py is all you need for 1 language.
-language/__init__.py can be used instead.
-
-Not recomended to use both. However, note that
-language/__init__.py takes priority over language.py
-
-Must have at least one of these.
-Recomend using directory version so you can add more languages.
-Error messages will assume this version.
-
-if you have more then 1 language you must use language/__init__.py
-"""
-
-"""Configuration information will show your saved stuff."""
-
-
-"This needs a major redo. But for now, load essentials then load all."
-# LANGUAGE, what user speek
-# INTERFACE, the gui program
-# APPLICATION, what program to run
-# WHALE, # location of configuration file
-# DIRECTORY, curent working directory of application: security

@@ -65,25 +65,3 @@ def unregister() -> N:
     this is called when the add-on is disabled.
     """
     load.redirect(INTERFACE, BLENDER, UNREGISTER)
-
-
-# Merge Code and View files. Mark Code functions. Scan all files in app.
-# sys.meta_path.append(DebugFileLoader) # importer
-
-# package name ref:
-# Glue
-# Bottle
-
-# zipapp on pypi
-# python -x importtime -c "filename"
-
-
-# decorator   __call__
-
-
-# split stream into load and save
-# unicode file can use builtin to save space
-
-
-# if __spec__.name == "__main__":
-#    celestine.main(__spec__.origin)
