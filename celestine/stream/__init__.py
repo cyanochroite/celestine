@@ -2,6 +2,7 @@
 
 import abc
 import lzma
+import os
 import pathlib
 
 from celestine import load
@@ -9,6 +10,7 @@ from celestine.typed import (
     FILE,
     LZMA,
     PATH,
+    B,
     N,
     P,
     S,
@@ -30,6 +32,23 @@ SECTION_BREAK = "######################################################\
 class File(abc.ABC):
     """"""
 
+    directory: P
+
+    def _file(self, strict: B, *path: PATH) -> P:
+        root = self.directory
+
+        join = os.path.join(root, *path)
+        norm = os.path.normpath(join)
+        real = os.path.realpath(norm, strict=strict)
+
+        safe = os.path.commonpath((root, real))
+
+        if not os.path.samefile(root, safe):
+            raise RuntimeError()
+
+        file = pathlib.Path(*path)
+        return file
+
     def load(self, *path: PATH) -> S:
         """"""
         with self.reader(*path) as file:
@@ -37,7 +56,7 @@ class File(abc.ABC):
 
     @abc.abstractmethod
     def reader(self, *path: PATH) -> FILE:
-        ...
+        """"""
 
     def save(self, data: S, *path: PATH) -> N:
         """"""
@@ -46,11 +65,10 @@ class File(abc.ABC):
 
     @abc.abstractmethod
     def writer(self, *path: PATH) -> FILE:
-        ...
-
-    def join(self, *path: PATH) -> P:
         """"""
-        return pathlib.Path(*path)
+
+    def __init__(self, directory: P) -> N:
+        self.directory = directory
 
 
 class Binary(File):
@@ -59,9 +77,8 @@ class Binary(File):
     @override
     def reader(self, *path: PATH) -> FILE:
         """"""
-        file = self.join(*path)
         return open(
-            file,
+            self._file(True, *path),
             Mode.READ_BINARY,
             Buffering.OFF,
         )
@@ -69,32 +86,29 @@ class Binary(File):
     @override
     def writer(self, *path: PATH) -> FILE:
         """"""
-        file = self.join(*path)
         return open(
-            file,
+            self._file(False, *path),
             Mode.WRITE_BINARY,
             Buffering.OFF,
         )
 
 
-class Lzma(File):
+class Compress(File):
     """"""
 
     @override
     def reader(self, *path: PATH) -> LZMA:
         """"""
-        file = self.join(*path)
         return lzma.open(
-            file,
+            self._file(True, *path),
             Mode.READ_BINARY,
         )
 
     @override
     def writer(self, *path: PATH) -> LZMA:
         """"""
-        file = self.join(*path)
         return lzma.open(
-            file,
+            self._file(False, *path),
             Mode.WRITE_BINARY,
             format=lzma.FORMAT_XZ,
             check=lzma.CHECK_SHA256,
@@ -108,9 +122,8 @@ class Text(File):
     @override
     def reader(self, *path: PATH) -> FILE:
         """"""
-        file = self.join(*path)
         return open(
-            file,
+            self._file(True, *path),
             Mode.READ_TEXT,
             Buffering.ON,
             Encoding.UTF_8,
@@ -120,9 +133,8 @@ class Text(File):
     @override
     def writer(self, *path: PATH) -> FILE:
         """"""
-        file = self.join(*path)
         return open(
-            file,
+            self._file(False, *path),
             Mode.WRITE_TEXT,
             Buffering.ON,
             Encoding.UTF_8,
@@ -146,6 +158,12 @@ class Module(Text):
         super().writer(file)
 
 
-binary = Binary()
-module = Module()
-text = Text()
+directory = load.project_root()
+
+project_root = load.project_root()
+project_path = load.project_path()
+
+binary = Binary(directory)
+compress = Compress(directory)
+module = Module(project_path)
+text = Text(directory)
