@@ -158,6 +158,7 @@ class Module(Text):
         super().writer(file)
 
 
+# set this in session loading.
 directory = load.project_root()
 
 project_root = load.project_root()

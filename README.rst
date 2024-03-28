@@ -1,4 +1,8 @@
-celestine
+
+.. image:: path_to_your_image.png
+   :align: center
+
+Célestine
 #########
 
 .. image:: https://readthedocs.org/projects/celestine/badge/?version=latest

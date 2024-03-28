@@ -1,29 +1,8 @@
-celestine
+Célestine
 #########
 
-.. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
-   :target: https://celestine.readthedocs.io/en/latest/?badge=latest
-   :alt: Documentation Status
-
-
-.. image:: https://img.shields.io/github/repo-size/mem-dixy/celestine
-   :alt: GitHub repo size
-
-
-.. image:: https://img.shields.io/pypi/v/celestine
-   :alt: PyPI - Version
-   :target: https://pypi.org/project/celestine/
-
-
-.. image:: https://img.shields.io/pypi/l/celestine
-   :alt: PyPI - License
-   :target: https://eupl.eu/
-
-
-.. image:: https://img.shields.io/badge/calver-YYYY.MM.DD-22bfda.svg
-   :alt: Calendar Versioning
-   :target: https://calver.org/
-
+.. image:: logo_scale_4.png
+   :align: center
 
 About
 *****
