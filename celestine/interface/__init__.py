@@ -40,7 +40,6 @@ class Abstract(Object):
     area: Area
     canvas: A
     hidden: B
-    hold: H
     name: S  # The key to use to find this in the window dictionary.
 
     action: S  # The action to perform when the user clicks the button.
@@ -98,13 +97,12 @@ class Abstract(Object):
         """"""
         self.area = area
 
-    def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
+    def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(**star)
         self.parent = parent
         self.area = Area.make(0, 0)
         self.canvas = None
         self.hidden = False
-        bank = hold
         self.name = name
         self.item = None
 
@@ -272,7 +270,6 @@ class View(Abstract, Tree):
         """"""
         return self.set(
             self._view(
-                bank,
                 name,
                 self.element_item,
                 mode=mode,
@@ -299,7 +296,6 @@ class View(Abstract, Tree):
 
     def __init__(
         self,
-        hold,
         name,
         element_item,
         *,
@@ -314,7 +310,7 @@ class View(Abstract, Tree):
         self._view = element_item["view"]
         self._window = element_item["window"]
 
-        super().__init__(hold, name, **star)
+        super().__init__(name, **star)
 
         self.width = col
         self.height = row
@@ -325,7 +321,6 @@ class View(Abstract, Tree):
                 name = f"{self.name}_{range_x}-{range_y}"
                 self.set(
                     Abstract(
-                        hold,
                         name,
                         self,
                     )
@@ -335,7 +330,6 @@ class View(Abstract, Tree):
         """"""
         self.set(
             self._element(
-                bank,
                 name,
                 self,
                 **star,
@@ -345,18 +339,23 @@ class View(Abstract, Tree):
     # syntax sugar
 
     def button(self, name: S, task: S, /, text: S, **star: R) -> N:
+        """"""
         self.element(name, action=task, text=text, **star)
 
     def link(self, name: S, task: S, /, text: S, **star: R) -> N:
+        """"""
         self.element(name, goto=task, text=text, **star)
 
     def icon(self, name: S, /, **star: R) -> N:
+        """"""
         self.element(name, fit=Image.FILL, **star)
 
     def image(self, name: S, /, **star: R) -> N:
+        """"""
         self.element(name, fit=Image.FULL, **star)
 
     def label(self, name: S, /, text: S, **star: R) -> N:
+        """"""
         self.element(name, text=text, **star)
 
 
@@ -406,7 +405,6 @@ class Window(Tree):
         """"""
         return self.set(
             self.element_item["view"](
-                bank,
                 name,
                 self.element_item,
                 mode=Zone.DROP,
@@ -475,7 +473,7 @@ class Window(Tree):
         if not caller:
             return
 
-        caller(bank, **star)
+        caller(**star)
         self.draw(**star)
 
     def __enter__(self) -> K:
@@ -499,11 +497,10 @@ class Window(Tree):
 
         return False
 
-    def __init__(self, hold: H, element_item, **star: R) -> N:
+    def __init__(self, element_item, **star: R) -> N:
         super().__init__(**star)
         self.area = Area.make(0, 0)
-        bank = hold
         self.code = {}
         self.view = {}
         self.element_item = element_item
-        self.page = View(hold, "", element_item, parent=None)
+        self.page = View("", element_item, parent=None)

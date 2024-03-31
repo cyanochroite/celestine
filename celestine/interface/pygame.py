@@ -54,8 +54,8 @@ class Element(Element_, Abstract):
         self.canvas.blit(text, origin)
         return True
 
-    def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
-        super().__init__(hold, name, parent, **star)
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
         self.path = star.get("path", "")
 
 
@@ -165,12 +165,12 @@ class Window(Window_):
         return False
 
     @override
-    def __init__(self, hold: H, **star: R) -> N:
+    def __init__(self, **star: R) -> N:
         element = {
             "element": Element,
             "view": View,
             "window": self,
         }
-        super().__init__(hold, element, **star)
+        super().__init__(element, **star)
         self.area = Area.make(1280, 960)
         self.font = None

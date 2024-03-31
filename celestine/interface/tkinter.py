@@ -151,11 +151,11 @@ class Window(Window_):
         return False
 
     @override
-    def __init__(self, hold: H, **star: R) -> N:
+    def __init__(self, **star: R) -> N:
         element = {
             "element": Element,
             "view": View,
             "window": self,
         }
-        super().__init__(hold, element, **star)
+        super().__init__(element, **star)
         self.area = Area.make(1280, 1080)

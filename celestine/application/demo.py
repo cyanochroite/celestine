@@ -22,16 +22,16 @@ class Session(SuperSession):
 
 
 @code
-def cow(hold: H, *, say: S, **star: R) -> N:
+def cow(*, say: S, **star: R) -> N:
     """"""
     talk = bank.language.DEMO_COW_TALK
     print(talk, say)
 
 
 @code
-def dog(hold: H, **star: R) -> N:
+def dog(**star: R) -> N:
     """"""
-    item = hold.window.find("zero_title")
+    item = bank.window.find("zero_title")
     if item.hidden:
         item.show()
     else:
@@ -39,9 +39,9 @@ def dog(hold: H, **star: R) -> N:
 
 
 @code
-def cat(hold: H, **star: R) -> N:
+def cat(**star: R) -> N:
     """"""
-    item = hold.window.find("zero_body")
+    item = bank.window.find("zero_body")
     if item.hidden:
         item.show()
     else:

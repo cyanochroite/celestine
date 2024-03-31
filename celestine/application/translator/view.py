@@ -33,7 +33,7 @@ def report(view: View) -> N:
         "main_action",
         text=bank.language.TRANSLATOR_REPORT_BUTTON,
         code="train",
-        page=bank,
+        page=hold,
     )
 
     for tag, text in train.items():

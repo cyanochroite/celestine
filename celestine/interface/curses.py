@@ -423,7 +423,7 @@ class Window(Window_, Abstract):
         return False
 
     @override
-    def __init__(self, hold: H, **star: R) -> N:
+    def __init__(self, **star: R) -> N:
         element = {
             "button": Button,
             "image": Image,
@@ -447,7 +447,7 @@ class Window(Window_, Abstract):
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
 
-        super().__init__(hold, element, **star)
+        super().__init__(element, **star)
         self.area = Plane(
             Line(1, size_x - 2),
             Line(1, size_y - 2),

@@ -39,8 +39,8 @@ def scene(function: C[[View], N]) -> C[[View], N]:
 def code(function: C[[View], N]) -> C[[View], N]:
     """"""
 
-    def decorator(hold: H, **star: R) -> N:
-        function(hold, **star)
+    def decorator(**star: R) -> N:
+        function(**star)
 
     return decorator
 

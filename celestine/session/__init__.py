@@ -18,16 +18,15 @@ from celestine.typed import (
     B,
     C,
     D,
-    H,
-    Hold,
     R,
     S,
+    N,
 )
 
 from .magic import Magic
 
 
-def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> H:
+def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     """
 
     First load Language so human can read errors.
@@ -60,19 +59,6 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> H:
 
     # Save values to session object.
     application = magic.core.application.name
-    session = Hold()
-
-    session.application = load.module(APPLICATION, session1.application)
-
-    session.attribute = session2
-
-    session.interface = load.module(INTERFACE, session1.interface)
-
-    session.language = load.module(LANGUAGE, session1.language)
-
-    session.package = Package()
-
-    session.window = session.interface.Window(session, **star)
 
     # items = load.python(APPLICATION, application)
     # car = list(items)
@@ -93,11 +79,6 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> H:
     if len(main) > 1:
         raise UserWarning("Expecting only one '@main' decorator.")
 
-    next_main = next(iter(main))
-    session.code = code
-    session.view = view | main
-    session.main = next_main
-
     bank.application = load.module(APPLICATION, session1.application)
     bank.attribute = session2
     bank.code = code
@@ -105,9 +86,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> H:
     bank.directory = pathlib.Path()  # unset
     bank.interface = load.module(INTERFACE, session1.interface)
     bank.language = load.module(LANGUAGE, session1.language)
-    bank.main = next_main
+    bank.main = next(iter(main))
     bank.package = Package()
     bank.view = view | main
-    bank.window = session.interface.Window(session, **star)
-
-    return session
+    bank.window = bank.interface.Window(**star)

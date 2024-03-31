@@ -258,7 +258,7 @@ class Window(Window_, Abstract):
         return False
 
     @override
-    def __init__(self, hold: H, **star: R) -> N:
+    def __init__(self, **star: R) -> N:
         element = {
             "button": Button,
             "image": Image,
@@ -266,6 +266,6 @@ class Window(Window_, Abstract):
             "view": View,
             "window": self,
         }
-        super().__init__(hold, element, **star)
+        super().__init__(element, **star)
         self.area = Plane.make(1920, 1080)
         self.tag = "window"

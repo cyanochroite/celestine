@@ -421,7 +421,7 @@ class Window(Window_, Abstract):
         mesh = data.mesh("mouse", click)
         mesh.location = (0, 0, -1)
 
-        self.mouse = Mouse(bank, mesh)
+        self.mouse = Mouse(mesh)
         self.mouse.make(collection, first=True)
 
         @classmethod
@@ -490,7 +490,7 @@ class Window(Window_, Abstract):
         return False
 
     @override
-    def __init__(self, hold: H, *, call=None, **star: R) -> N:
+    def __init__(self, *, call=None, **star: R) -> N:
         element = {
             "button": Button,
             "image": Image,
@@ -498,7 +498,7 @@ class Window(Window_, Abstract):
             "view": View,
             "window": self,
         }
-        super().__init__(hold, element, **star)
+        super().__init__(element, **star)
         self.dictionary = bpy.data.collections  # From View?
 
         self.area = Plane.make(20, 20)

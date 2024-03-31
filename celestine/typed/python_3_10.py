@@ -26,7 +26,7 @@ B: TA = bool
 E: TA = typing.Any
 F: TA = float
 # G: TA = collections.abc.Generator
-# H: TA = Hold
+H: TA = typing.Any  # Unused
 I: TA = int
 J: TA = object
 K: TA = typing.Any  # Python 3.10 fix.
@@ -83,6 +83,7 @@ AI: TA = collections.abc.Iterable[T[S, A]]
 
 
 def override(function: A) -> A:
+    """"""
     return function
 
 
@@ -95,50 +96,29 @@ def string(*characters: S) -> S:
     return value
 
 
-SELF: TA = A
-
-
 class Star(typing.TypedDict):
     """"""
 
 
-class Hold:
+class Fix:
     """"""
 
-    application: M
-    attribute: LS
-    code: M
-    interface: M
-    language: M
-    main: S
-    package: M
-    view: M
-    window: M
-
-    _queue: L[T[C[..., N], A, A]]
-
-    def queue(self, call: C[..., N], action: A, argument: A) -> N:
-        """Add to event queue and call function at end of update."""
-        self._queue.append((call, action, argument))
-
-    def dequeue(self) -> N:
+    def override(self) -> N:
         """"""
-        for call, action, argument in self._queue:
-            call(action, **argument)
-        self._queue = []
-
-    def __init__(self) -> N:
-        self._queue = []
 
 
-H = Hold  # noqa: F401 pylint: disable=W0611
-
-
-class ImportNotUsed:
+class ImportNotUsed(Fix):
     """"""
+
+    @override
+    def override(self) -> N:
+        print(override)
 
     def self(self) -> K:
+        """"""
         return self
 
-    def type_(self) -> TYPE[int]:
+    @staticmethod
+    def type_() -> TYPE[int]:
+        """"""
         return int
