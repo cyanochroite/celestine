@@ -5,8 +5,6 @@ Converts the Unicode text file into a python dictionary.
 Was run from the project root.
 """
 import io
-import os
-import sys
 
 from celestine import (
     load,
@@ -16,8 +14,6 @@ from celestine.typed import (
     GS,
     S,
 )
-
-sys.path[0] = os.path.dirname(sys.path[0])
 
 
 def work(document):

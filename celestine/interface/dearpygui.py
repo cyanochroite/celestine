@@ -11,7 +11,6 @@ from celestine.typed import (
     LF,
     A,
     B,
-    H,
     N,
     P,
     R,

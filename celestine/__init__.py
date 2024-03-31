@@ -1,13 +1,15 @@
 """"""
 
-from celestine import load
+from celestine import (
+    bank,
+    load,
+)
 from celestine.data import (
     BLENDER,
     INTERFACE,
     REGISTER,
     UNREGISTER,
 )
-from celestine import bank
 from celestine.session import begin_session
 from celestine.typed import (
     LS,

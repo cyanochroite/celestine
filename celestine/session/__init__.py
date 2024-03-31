@@ -18,9 +18,9 @@ from celestine.typed import (
     B,
     C,
     D,
+    N,
     R,
     S,
-    N,
 )
 
 from .magic import Magic

@@ -10,7 +10,6 @@ from celestine import (
 from celestine.typed import (
     LS,
     OS,
-    A,
     B,
     D,
     M,

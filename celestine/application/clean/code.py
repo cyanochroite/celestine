@@ -5,6 +5,7 @@ import io
 import re
 
 from celestine import (
+    bank,
     load,
     stream,
 )
@@ -13,7 +14,6 @@ from celestine.data import (
     normalize,
 )
 from celestine.typed import (
-    H,
     N,
     R,
     S,
@@ -81,18 +81,18 @@ def run(name: S) -> N:
 
 
 @code
-def clean(hold: H, **star: R) -> N:
+def clean(**star: R) -> N:
     """"""
-    hold.package.pyupgrade.run()
+    bank.package.pyupgrade.run()
     # TODO figure out why this print instead of fixes
-    # hold.package.pydocstringformatter.run()
-    hold.package.autoflake.run()
-    hold.package.isort.run()
-    hold.package.black.run()
+    # bank.package.pydocstringformatter.run()
+    bank.package.autoflake.run()
+    bank.package.isort.run()
+    bank.package.black.run()
 
 
 @code
-def licence(hold: H, **star: R):
+def licence(**star: R):
     """"""
     location = load.pathway("licence")
     files = load.walk_file(location, [], [])
@@ -110,7 +110,7 @@ def licence(hold: H, **star: R):
 
 
 @code
-def version(hold: H, **star: R):
+def version(**star: R):
     """"""
     date = datetime.datetime.now(datetime.UTC)
 

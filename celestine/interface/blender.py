@@ -2,8 +2,8 @@
 
 import bpy  # pylint: disable=import-error
 
-from celestine import bank
 import celestine
+from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Button as Button_
 from celestine.interface import Image as Image_

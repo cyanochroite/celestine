@@ -1,5 +1,6 @@
 """"""
 
+from celestine import bank
 from celestine.data import (
     main,
     scene,
@@ -10,7 +11,6 @@ from celestine.window.container import (
     Image,
     Zone,
 )
-from celestine import bank
 
 
 @scene

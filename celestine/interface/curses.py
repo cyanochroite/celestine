@@ -13,7 +13,6 @@ from celestine.interface import Window as Window_
 from celestine.typed import (
     A,
     B,
-    H,
     N,
     P,
     R,

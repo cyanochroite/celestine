@@ -2,18 +2,19 @@
 
 import random
 
-from celestine import load
+from celestine import (
+    bank,
+    load,
+)
 from celestine.typed import (
     IMAGE,
     LS,
-    H,
     K,
     N,
     P,
     R,
     S,
 )
-from celestine import bank
 from celestine.window.collection import (
     Plane,
     Point,

@@ -1,7 +1,11 @@
 """"""
 
 from celestine.package import Abstract
-from celestine.typed import R, S, N
+from celestine.typed import (
+    N,
+    R,
+    S,
+)
 
 
 class Package(Abstract):

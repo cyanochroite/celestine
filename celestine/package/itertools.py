@@ -1,26 +1,24 @@
 """More routines for operating on iterables, beyond itertools."""
 
 from celestine.typed import (
-    LS,
-    OS,
     A,
-    B,
-    D,
-    M,
-    N,
-    R,
+    G,
     I,
     L,
+    N,
+    R,
     S,
-    G,
 )
+
 from . import Abstract
 
 
 class Package(Abstract):
     """"""
 
-    def split_when(self, iterable: A, pred: A, maxsplit: I=-1) -> G[A, N, N]:
+    def split_when(
+        self, iterable: A, pred: A, maxsplit: I = -1
+    ) -> G[A, N, N]:
         """Split this when we feel like it."""
         if maxsplit == 0:
             yield list(iterable)

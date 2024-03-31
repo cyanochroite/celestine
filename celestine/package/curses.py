@@ -1,7 +1,11 @@
 """Terminal handling for character-cell displays."""
 
 from celestine import load
-from celestine.typed import A, I, S
+from celestine.typed import (
+    A,
+    I,
+    S,
+)
 from celestine.unicode import (
     ESCAPE,
     SPACE,
@@ -22,7 +26,8 @@ class Package(Abstract):
         return self.package.newwin(nlines, ncols, begin_y, begin_x)
 
     def subwindow(
-            self, window, column: I, row: I, width: I, height: I) -> A:
+        self, window, column: I, row: I, width: I, height: I
+    ) -> A:
         """"""
         nlines = height
         ncols = width

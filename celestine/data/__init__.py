@@ -5,7 +5,6 @@ from enum import Enum
 from celestine.interface import View
 from celestine.typed import (
     C,
-    H,
     N,
     R,
 )

@@ -6,8 +6,8 @@ import io
 import openai
 import PIL.Image
 import requests
-from celestine import bank
 
+from celestine import bank
 from celestine.data import (
     code,
     main,

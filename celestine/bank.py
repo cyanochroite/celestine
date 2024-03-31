@@ -3,15 +3,15 @@
 
 from celestine.typed import (
     LS,
+    A,
     C,
     D,
+    L,
     M,
+    N,
     P,
     S,
-    N,
     T,
-    L,
-    A,
 )
 
 #  These types might not be right.
