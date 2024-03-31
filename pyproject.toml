@@ -44,7 +44,6 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "more-itertools >= 10.0.0",
     "Pillow >= 10.0.0",
     "platformdirs >= 4.0.0",
 ]

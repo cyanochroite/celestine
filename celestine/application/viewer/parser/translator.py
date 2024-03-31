@@ -65,13 +65,13 @@ class tokenizer:
 
     @staticmethod
     def tokenize(iterable):
+        pass
         # TODO change to hold.package.itertools
         # TODO import from top of file?
-        from more_itertools import split_when
-
-        return list(
-            split_when(iterable, lambda x, y: type(x) is not type(y))
-        )
+        # return list(
+        #    more_itertools.split_when(
+        #        iterable, lambda x, y: type(x) is not type(y))
+        # )
 
 
 class parser:

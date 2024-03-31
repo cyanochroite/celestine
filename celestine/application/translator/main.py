@@ -6,7 +6,10 @@ import uuid
 
 import requests
 
-from celestine import load
+from celestine import (
+    bank,
+    load,
+)
 
 from .data import (
     LANGUAGE,
@@ -24,7 +27,7 @@ from .write import (
 )
 
 
-def parser_magic(hold, source):
+def parser_magic(source):
     """Do all parser stuff here."""
     all_languages = {}
 
@@ -50,7 +53,7 @@ def parser_magic(hold, source):
 
     source_list = load.dictionary(LANGUAGE, source)
     for name, value in source_list.items():
-        items = post(hold, dest_code, value)
+        items = post(dest_code, value)
         for item in items:
             translations = item[TRANSLATIONS]
             for translation in translations:
@@ -74,9 +77,9 @@ def reset():
     os.mkdir(path)
 
 
-def post(hold, code, text):
+def post(code, text):
     """Generate a post request."""
-    translator = Translator(hold.attribute)
+    translator = Translator(bank.attribute)
     url = translator.endpoint()
     data = None
     json = [{TEXT: text}]
@@ -88,12 +91,12 @@ def post(hold, code, text):
     return request.json()
 
 
-def do_translate(hold):
+def do_translate():
     """Translate the language files."""
     # Add ability to choose master language file.
     source = "en"
 
-    dictionary = parser_magic(hold, source)
+    dictionary = parser_magic(source)
 
     reset()
 

@@ -8,12 +8,15 @@ from celestine import (
 )
 from celestine.typed import (
     IMAGE,
+    LI,
     LS,
+    I,
     K,
     N,
     P,
     R,
     S,
+    T,
 )
 from celestine.window.collection import (
     Plane,
@@ -40,7 +43,7 @@ class Image:
         """
         pillow = bank.package.pillow
 
-        def brighter(pixel):
+        def brighter(pixel: I) -> I:
             invert = (255 - pixel) / 255
             boost = invert * 64
             shift = pixel + boost
@@ -54,7 +57,8 @@ class Image:
         self.image = pillow.Image.merge("HSV", bands).convert("RGB")
 
     @classmethod
-    def clone(cls, self) -> K:
+    def clone(cls, self: K) -> K:
+        """"""
         image = self.image.copy()
         return cls(image)
 
@@ -86,7 +90,7 @@ class Image:
         """"""
         return self.clone(self)
 
-    def getdata(self):
+    def getdata(self) -> LI:
         """"""
         return self.image.getdata()
 
@@ -111,6 +115,7 @@ class Image:
         )
 
     def paste(self, image: K, plane: Plane) -> N:
+        """"""
         im = image.image
         box = plane.int
         mask = None
@@ -139,7 +144,7 @@ class Image:
 class Package(Abstract):
     """"""
 
-    def new(self, size) -> Image:
+    def new(self, size: T[I, I]) -> Image:
         """"""
         pillow = bank.package.pillow
 

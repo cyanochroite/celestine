@@ -3,7 +3,6 @@
 from celestine import load
 from celestine.data import code
 from celestine.typed import (
-    H,
     N,
     R,
 )
@@ -12,13 +11,13 @@ from .main import do_translate
 
 
 @code
-def translate(hold: H) -> N:
+def translate() -> N:
     """Translate the language files."""
-    do_translate(hold)
+    do_translate()
 
 
 @code
-def train(hold: H, **star: R) -> N:
+def train(**star: R) -> N:
     """The main function."""
     minimum = {}
     maximum = {}
