@@ -16,13 +16,13 @@ from .data import DIRECTORY
 class Session(SuperSession):
     """"""
 
-    directory: S
+    output: S
 
     @classmethod
     def dictionary(cls, core) -> AD:
         """"""
         return super().dictionary(core) | {
-            DIRECTORY: Optional(
+            "output": Optional(
                 os.getcwd(),
                 core.language.VIEWER_SESSION_DIRECTORY,
             ),
