@@ -20,6 +20,7 @@ class State(Enum):
 
 def main(function: C[[View], N]) -> C[[View], N]:
     """"""
+
     def decorator(view: View) -> N:
         function(view)
 
@@ -28,6 +29,7 @@ def main(function: C[[View], N]) -> C[[View], N]:
 
 def scene(function: C[[View], N]) -> C[[View], N]:
     """"""
+
     def decorator(view: View) -> N:
         function(view)
 
@@ -36,6 +38,7 @@ def scene(function: C[[View], N]) -> C[[View], N]:
 
 def code(function: C[[View], N]) -> C[[View], N]:
     """"""
+
     def decorator(hold: H, **star: R) -> N:
         function(hold, **star)
 

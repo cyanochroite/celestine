@@ -10,8 +10,6 @@ from celestine.session.session import (
 )
 from celestine.typed import S
 
-from .data import DIRECTORY
-
 
 class Session(SuperSession):
     """"""

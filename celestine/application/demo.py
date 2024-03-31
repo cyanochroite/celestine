@@ -1,6 +1,7 @@
 """"""
 
 
+from celestine import bank
 from celestine.data import (
     code,
     main,
@@ -23,7 +24,7 @@ class Session(SuperSession):
 @code
 def cow(hold: H, *, say: S, **star: R) -> N:
     """"""
-    talk = hold.language.DEMO_COW_TALK
+    talk = bank.language.DEMO_COW_TALK
     print(talk, say)
 
 

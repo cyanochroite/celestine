@@ -4,7 +4,6 @@ import importlib
 import pathlib
 import sys
 
-
 CELESTINE = "celestine"
 
 path = pathlib.Path(sys.path[0])
