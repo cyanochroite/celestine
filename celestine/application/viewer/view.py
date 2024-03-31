@@ -10,6 +10,7 @@ from celestine.window.container import (
     Image,
     Zone,
 )
+from celestine import bank
 
 
 @scene
@@ -24,7 +25,7 @@ def display(view: View) -> N:
     view.button(
         "load",
         "setup",
-        text=view.hold.language.VIEWER_MAIN_BUTTON,
+        text=bank.language.VIEWER_MAIN_BUTTON,
     )
     with view.zone("grid", row=2, col=4, mode=Zone.GRID) as grid:
         for name, _ in grid:

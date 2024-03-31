@@ -1,6 +1,7 @@
 """The View page."""
 
 
+from celestine import bank
 from celestine.data import (
     main,
     scene,
@@ -15,7 +16,7 @@ def trans(view: View) -> N:
     with view.zone("main") as line:
         line.new(
             "main_A",
-            text=view.hold.language.TRANSLATOR_MAIN_BUTTON,
+            text=bank.language.TRANSLATOR_MAIN_BUTTON,
             code="translate",
         )
 
@@ -30,9 +31,9 @@ def report(view: View) -> N:
 
     line.new(
         "main_action",
-        text=view.hold.language.TRANSLATOR_REPORT_BUTTON,
+        text=bank.language.TRANSLATOR_REPORT_BUTTON,
         code="train",
-        page=view.hold,
+        page=bank,
     )
 
     for tag, text in train.items():

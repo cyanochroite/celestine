@@ -1,5 +1,6 @@
 """"""
 
+from celestine import bank
 from celestine import load
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
@@ -35,7 +36,7 @@ class Element(Element_, Abstract):
         if not super().draw(**star):
             return False
 
-        pygame = self.hold.package.pygame
+        pygame = bank.package.pygame
 
         origin = (
             self.area.world.one.minimum,
@@ -68,7 +69,7 @@ class Window(Window_):
     @override
     def draw(self, **star: R) -> N:
         """"""
-        pygame = self.hold.package.pygame
+        pygame = bank.package.pygame
 
         self.canvas.fill((0, 0, 0))
 
@@ -107,7 +108,7 @@ class Window(Window_):
     @override
     def make(self) -> N:
         """"""
-        pygame = self.hold.package.pygame
+        pygame = bank.package.pygame
 
         self.canvas = pygame.display.set_mode(self.area.world.size.int)
 
@@ -117,10 +118,10 @@ class Window(Window_):
     def __enter__(self):
         super().__enter__()
 
-        pygame = self.hold.package.pygame
+        pygame = bank.package.pygame
 
         def set_caption():
-            caption = self.hold.language.APPLICATION_TITLE
+            caption = bank.language.APPLICATION_TITLE
             pygame.display.set_caption(caption)
 
         def set_font():
@@ -138,7 +139,7 @@ class Window(Window_):
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
 
-        pygame = self.hold.package.pygame
+        pygame = bank.package.pygame
 
         def set_icon():
             path = "icon.png"
@@ -150,7 +151,7 @@ class Window(Window_):
         set_icon()
 
         while True:
-            self.hold.dequeue()
+            bank.dequeue()
             event = pygame.event.wait()
             match event.type:
                 case pygame.QUIT:

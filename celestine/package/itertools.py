@@ -1,14 +1,26 @@
 """More routines for operating on iterables, beyond itertools."""
 
-from celestine.typed import R
-
+from celestine.typed import (
+    LS,
+    OS,
+    A,
+    B,
+    D,
+    M,
+    N,
+    R,
+    I,
+    L,
+    S,
+    G,
+)
 from . import Abstract
 
 
 class Package(Abstract):
     """"""
 
-    def split_when(self, iterable, pred, maxsplit=-1):
+    def split_when(self, iterable: A, pred: A, maxsplit: I=-1) -> G[A, N, N]:
         """Split this when we feel like it."""
         if maxsplit == 0:
             yield list(iterable)
@@ -35,13 +47,13 @@ class Package(Abstract):
 
         yield buf
 
-    def filter_true(self, iterable, predicate=None):
+    def filter_true(self, iterable, predicate=None) -> L[A]:
         """Filter when we see a True value."""
         return list(filter(predicate, iterable))
 
-    def first_true(self, iterable, default=None, pred=None):
+    def first_true(self, iterable, default=None, pred=None) -> L[A]:
         """Return the first True value."""
         return next(filter(pred, iterable), default)
 
-    def __init__(self, hold, /, name, **star: R):
-        super().__init__(hold, name, pypi="more_itertools")
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(name, pypi="more_itertools")

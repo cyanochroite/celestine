@@ -1,5 +1,6 @@
 """"""
 
+from celestine import bank
 from celestine.data import main
 from celestine.interface import View
 from celestine.typed import N
@@ -8,7 +9,7 @@ from celestine.typed import N
 @main
 def enter(view: View) -> N:
     """"""
-    language = view.hold.language
+    language = bank.language
     with view.span("main_head") as line:
         line.label(
             "main_title",

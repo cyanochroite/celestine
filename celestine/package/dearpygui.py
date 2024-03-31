@@ -2,7 +2,6 @@
 
 
 from celestine.typed import (
-    H,
     N,
     R,
     S,
@@ -20,5 +19,5 @@ class Package(Abstract):
         combine = f"{root}"
         return combine
 
-    def __init__(self, hold: H, name: S, **star: R) -> N:
-        super().__init__(hold, name, pypi="dearpygui.dearpygui")
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(name, pypi="dearpygui.dearpygui")

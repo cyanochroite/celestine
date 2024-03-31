@@ -2,6 +2,7 @@
 
 import bpy  # pylint: disable=import-error
 
+from celestine import bank
 import celestine
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Button as Button_
@@ -420,7 +421,7 @@ class Window(Window_, Abstract):
         mesh = data.mesh("mouse", click)
         mesh.location = (0, 0, -1)
 
-        self.mouse = Mouse(self.hold, mesh)
+        self.mouse = Mouse(bank, mesh)
         self.mouse.make(collection, first=True)
 
         @classmethod
@@ -472,7 +473,7 @@ class Window(Window_, Abstract):
             for _, item in self:
                 item.hide()
 
-            self.turn(self.hold.main)
+            self.turn(bank.main)
 
             return False
 
@@ -484,7 +485,7 @@ class Window(Window_, Abstract):
         call = getattr(self, self.call)
         call(**self.star)
 
-        self.hold.dequeue()
+        bank.dequeue()
 
         return False
 

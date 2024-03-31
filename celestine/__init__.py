@@ -7,6 +7,7 @@ from celestine.data import (
     REGISTER,
     UNREGISTER,
 )
+from celestine import bank
 from celestine.session import begin_session
 from celestine.typed import (
     LS,
@@ -32,16 +33,15 @@ bl_info = {
 
 def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     """Run the main program."""
-    session = begin_session(argument_list, exit_on_error, **star)
-    window = session.window
-    with window:
-        for name, function in session.code.items():
-            window.code[name] = function
+    begin_session(argument_list, exit_on_error, **star)
+    with bank.window:
+        for name, function in bank.code.items():
+            bank.window.code[name] = function
 
-        for name, function in session.view.items():
-            view = window.drop(name)
+        for name, function in bank.view.items():
+            view = bank.window.drop(name)
             function(view)
-            window.view[name] = view
+            bank.window.view[name] = view
 
 
 def register() -> N:

@@ -6,6 +6,7 @@ import io
 import openai
 import PIL.Image
 import requests
+from celestine import bank
 
 from celestine.data import (
     code,
@@ -102,7 +103,7 @@ def enter(view: View) -> N:
     with view.zone("main") as line:
         line.element(
             "main_A",
-            text=view.hold.language.TRANSLATOR_MAIN_BUTTON,
+            text=bank.language.TRANSLATOR_MAIN_BUTTON,
             action="draw",
             prompt="A cute baby dragon with a gold bed.",
         )

@@ -70,7 +70,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> H:
 
     session.language = load.module(LANGUAGE, session1.language)
 
-    session.package = Package(session)
+    session.package = Package()
 
     session.window = session.interface.Window(session, **star)
 
@@ -106,7 +106,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> H:
     bank.interface = load.module(INTERFACE, session1.interface)
     bank.language = load.module(LANGUAGE, session1.language)
     bank.main = next_main
-    bank.package = Package(session)
+    bank.package = Package()
     bank.view = view | main
     bank.window = session.interface.Window(session, **star)
 

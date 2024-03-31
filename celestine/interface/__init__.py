@@ -2,6 +2,7 @@
 
 import math
 
+from celestine import bank
 from celestine.typed import (
     LS,
     A,
@@ -57,16 +58,16 @@ class Abstract(Object):
             return False
 
         if self.action:
-            action = self.hold.window.work
+            action = bank.window.work
             argument = self.action
             star = self.star | {"caller": self.name}
-            self.hold.queue(action, argument, star)
+            bank.queue(action, argument, star)
 
         if self.goto:
-            action = self.hold.window.turn
+            action = bank.window.turn
             argument = self.goto
             star = self.star | {}
-            self.hold.queue(action, argument, star)
+            bank.queue(action, argument, star)
 
         return True
 
@@ -103,7 +104,7 @@ class Abstract(Object):
         self.area = Area.make(0, 0)
         self.canvas = None
         self.hidden = False
-        self.hold = hold
+        bank = hold
         self.name = name
         self.item = None
 
@@ -136,7 +137,7 @@ class Element(Abstract):
     @override
     def make(self, canvas: A) -> N:
         """"""
-        pillow = self.hold.package.pillow
+        pillow = bank.package.pillow
 
         size = self.area.world.size.int
         self.image = pillow.new(size)
@@ -156,7 +157,7 @@ class Element(Abstract):
 
     def update(self, path: P, **star: R) -> N:
         """"""
-        pillow = self.hold.package.pillow
+        pillow = bank.package.pillow
 
         self.path = path
 
@@ -271,7 +272,7 @@ class View(Abstract, Tree):
         """"""
         return self.set(
             self._view(
-                self.hold,
+                bank,
                 name,
                 self.element_item,
                 mode=mode,
@@ -334,7 +335,7 @@ class View(Abstract, Tree):
         """"""
         self.set(
             self._element(
-                self.hold,
+                bank,
                 name,
                 self,
                 **star,
@@ -405,7 +406,7 @@ class Window(Tree):
         """"""
         return self.set(
             self.element_item["view"](
-                self.hold,
+                bank,
                 name,
                 self.element_item,
                 mode=Zone.DROP,
@@ -474,7 +475,7 @@ class Window(Tree):
         if not caller:
             return
 
-        caller(self.hold, **star)
+        caller(bank, **star)
         self.draw(**star)
 
     def __enter__(self) -> K:
@@ -494,14 +495,14 @@ class Window(Tree):
         for _, item in self:
             item.hide()
 
-        self.turn(self.hold.main)
+        self.turn(bank.main)
 
         return False
 
     def __init__(self, hold: H, element_item, **star: R) -> N:
         super().__init__(**star)
         self.area = Area.make(0, 0)
-        self.hold = hold
+        bank = hold
         self.code = {}
         self.view = {}
         self.element_item = element_item

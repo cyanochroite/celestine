@@ -1,5 +1,6 @@
 """"""
 
+from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
@@ -36,12 +37,12 @@ class Element(Element_, Abstract):
     @override
     def make(self, canvas: A) -> N:
         """"""
-        tkinter = self.hold.package.tkinter
+        tkinter = bank.package.tkinter
 
         def callback() -> N:
             """"""
             self.click(self.area.world.centroid)
-            self.hold.dequeue()
+            bank.dequeue()
 
         if self.action or self.goto:
             self.item = tkinter.Button(
@@ -80,7 +81,7 @@ class View(View_, Abstract):
     @override
     def make(self, canvas: A) -> N:
         """"""
-        tkinter = self.hold.package.tkinter
+        tkinter = bank.package.tkinter
 
         self.canvas = tkinter.Frame(
             canvas,
@@ -112,8 +113,8 @@ class Window(Window_):
     @override
     def extension(self):
         """"""
-        if self.hold.package.pillow:
-            return self.hold.package.pillow.extension()
+        if bank.package.pillow:
+            return bank.package.pillow.extension()
 
         return [
             ".pbm",
@@ -127,10 +128,10 @@ class Window(Window_):
     @override
     def make(self) -> N:
         """"""
-        tkinter = self.hold.package.tkinter
+        tkinter = bank.package.tkinter
 
         self.canvas = tkinter.Tk()
-        self.canvas.title(self.hold.language.APPLICATION_TITLE)
+        self.canvas.title(bank.language.APPLICATION_TITLE)
         self.canvas.geometry("1920x1080")
         self.canvas.minsize(640, 480)
         self.canvas.maxsize(3840, 2160)

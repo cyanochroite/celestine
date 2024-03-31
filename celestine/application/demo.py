@@ -51,7 +51,7 @@ def cat(hold: H, **star: R) -> N:
 @main
 def zero(view: View) -> N:
     """"""
-    language = view.hold.language
+    language = bank.language
     with view.span("zero_head") as line:
         line.label(
             "zero_title",
@@ -95,7 +95,7 @@ def zero(view: View) -> N:
 @scene
 def one(view: View) -> N:
     """"""
-    language = view.hold.language
+    language = bank.language
     with view.span("one_head") as line:
         line.label(
             "one_title",
@@ -123,7 +123,7 @@ def one(view: View) -> N:
 @scene
 def two(view: View) -> N:
     """"""
-    language = view.hold.language
+    language = bank.language
     with view.span("two_head") as line:
         line.label(
             "two_title",

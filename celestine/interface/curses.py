@@ -3,6 +3,7 @@
 import io
 import math
 
+from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Button as Button_
 from celestine.interface import Image as Image_
@@ -139,11 +140,11 @@ class Image(Image_, Abstract):
 
     def render(self, item, **star: R):
         """"""
-        curses = self.hold.package.curses
+        curses = bank.package.curses
 
         (x_dot, y_dot) = self.area.origin.int
 
-        if not self.hold.package.pillow:
+        if not bank.package.pillow:
             self.add_string(
                 x_dot,
                 y_dot,
@@ -177,8 +178,8 @@ class Image(Image_, Abstract):
 
     def draw_old(self, **star: R):
         """"""
-        curses = self.hold.package.curses
-        pillow = self.hold.package.pillow
+        curses = bank.package.curses
+        pillow = bank.package.pillow
 
         if not pillow:
             self.render(self.path.name, **star)
@@ -220,8 +221,8 @@ class Image(Image_, Abstract):
 
     def draw(self, **star: R):
         """"""
-        curses = self.hold.package.curses
-        pillow = self.hold.package.pillow
+        curses = bank.package.curses
+        pillow = bank.package.pillow
 
         if not pillow:
             self.render(self.path.name, **star)
@@ -264,7 +265,7 @@ class Image(Image_, Abstract):
     ####
     def make(self, canvas: A, **star: R) -> B:
         """"""
-        pillow = self.hold.package.pillow
+        pillow = bank.package.pillow
 
         self.image = pillow.new(self.area.size.int)
         return True
@@ -272,7 +273,7 @@ class Image(Image_, Abstract):
     @override
     def update(self, path: P, **star: R) -> N:
         """"""
-        pillow = self.hold.package.pillow
+        pillow = bank.package.pillow
 
         self.path = path
 
@@ -312,7 +313,7 @@ class Window(Window_, Abstract):
     @override
     def draw(self, **star: R):
         """"""
-        curses = self.hold.package.curses
+        curses = bank.package.curses
 
         # Do normal draw stuff.
 
@@ -336,8 +337,8 @@ class Window(Window_, Abstract):
     @override
     def extension(self):
         """"""
-        if self.hold.package.pillow:
-            return self.hold.package.pillow.extension()
+        if bank.package.pillow:
+            return bank.package.pillow.extension()
 
         return []
 
@@ -351,14 +352,14 @@ class Window(Window_, Abstract):
     def setup(self, name):
         """"""
         # TODO REMOVE
-        curses = self.hold.package.curses
+        curses = bank.package.curses
         return curses.window(*self.area.int)
 
     @override
     def __enter__(self):
         super().__enter__()
 
-        curses = self.hold.package.curses
+        curses = bank.package.curses
 
         (size_y, size_x) = self.stdscr.getmaxyx()
         self.full = Plane.make(size_x, size_y)
@@ -368,11 +369,11 @@ class Window(Window_, Abstract):
 
         header_box = (0, 0, size_x, 1)
         header = curses.subwindow(self.background, *header_box)
-        header.addstr(0, 1, self.hold.language.APPLICATION_TITLE)
+        header.addstr(0, 1, bank.language.APPLICATION_TITLE)
 
         footer_box = (0, size_y - 1, size_x, 1)
         footer = curses.subwindow(self.background, *footer_box)
-        footer.addstr(0, 1, self.hold.language.CURSES_EXIT)
+        footer.addstr(0, 1, bank.language.CURSES_EXIT)
 
         #
         self.area = Plane(
@@ -386,10 +387,10 @@ class Window(Window_, Abstract):
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
 
-        curses = self.hold.package.curses
+        curses = bank.package.curses
 
         while True:
-            self.hold.dequeue()
+            bank.dequeue()
             event = self.stdscr.getch()
             match event:
                 case 258 | 259 | 260 | 261 as key:

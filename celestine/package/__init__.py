@@ -13,7 +13,6 @@ from celestine.typed import (
     A,
     B,
     D,
-    H,
     M,
     N,
     R,
@@ -27,7 +26,6 @@ PACKAGE = "package"
 class Abstract:
     """"""
 
-    hold: A
     name: S
     package: M | N
 
@@ -64,10 +62,7 @@ class Abstract:
     def __getattr__(self, name: S) -> S:
         return getattr(self.package, name)
 
-    def __init__(
-        self, hold: H, name: S, pypi: OS = None, **star: R
-    ) -> N:
-        self.hold = hold
+    def __init__(self, name: S, pypi: OS = None, **star: R) -> N:
         self.name = name
         self.pypi = pypi or name
 
@@ -107,10 +102,10 @@ class Package:
             message = f"'{PACKAGE}' object has no attribute '{name}'"
             raise AttributeError(message) from error
 
-    def __init__(self, hold: H, **star: R) -> N:
+    def __init__(self, **star: R) -> N:
         self.dictionary = {}
         argument = load.argument(PACKAGE)
         for name in argument:
             attribute = load.attribute(PACKAGE, name, "Package")
-            package = attribute(hold, name)
+            package = attribute(name)
             self.dictionary[name] = package

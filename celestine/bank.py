@@ -1,7 +1,6 @@
 """Package wide global variables."""
 
 
-from celestine.package import Package
 from celestine.typed import (
     LS,
     C,
@@ -9,6 +8,10 @@ from celestine.typed import (
     M,
     P,
     S,
+    N,
+    T,
+    L,
+    A,
 )
 
 #  These types might not be right.
@@ -20,33 +23,22 @@ directory: P
 interface: M
 language: M
 main: S
-package: Package
+package: M  # Package
 view: D[S, C]
 window: M
 
-_queue = []
+_queue: L[T[C[..., N], A, A]] = []
 
 
-def queue(action, argument, star):
+def queue(action: C[..., N], argument: A, star: A) -> N:
     """Add to event queue and call function at end of update."""
     _queue.append((action, argument, star))
 
 
-def dequeue(self):
+def dequeue() -> N:
     """"""
     for action, argument, star in _queue:
         action(argument, **star)
+        # self.window.work(action, **star)
+        # self.window.turn(action, **star)
     _queue.clear()
-
-
-# _queue: L[T[C[..., N], A, A]]: []
-# def queue(self, action: C[..., N], argument: A, star: A) -> N:
-#    """Add to event queue and call function at end of update."""
-#    self._queue.append((action, argument, star))
-# def dequeue(self) -> N:
-#    """"""
-#    for action, argument, star in self._queue:
-#        action(argument, **star)
-#            self.window.work(action, **star)
-#            self.window.turn(action, **star)
-#    self._queue.clear()
