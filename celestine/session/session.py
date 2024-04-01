@@ -4,10 +4,10 @@
 from celestine import load
 from celestine.data.directory import (
     APPLICATION,
+    CONFIGURATION,
     DIRECTORY,
     INTERFACE,
     LANGUAGE,
-    WHALE,
 )
 from celestine.session.argument import (
     Customization,
@@ -54,7 +54,7 @@ class Information(SuperSession):
     def dictionary(cls, core) -> AD:
         """"""
         return super().dictionary(core) | {
-            Values.CONFIGURATION: InformationConfiguration(
+            "save": InformationConfiguration(
                 core.language.ARGUMENT_HELP_HELP,
             ),
             Actions.HELP: InformationHelp(
@@ -87,35 +87,18 @@ class Application(Dictionary):
         }
 
 
-# class Configuration(Dictionary):
-#    """"""
-#
-#    configuration: M
-#
-#    @classmethod
-#    def dictionary(cls, core) -> AD:
-#        """"""
-#        return super().dictionary(core) | {
-#            CONFIGURATION: Customization(
-#                default.application(),
-#                core.language.ARGUMENT_INTERFACE_HELP,
-#                load.argument(APPLICATION),
-#            ),
-#        }
-
-
-class Whale(Dictionary):
+class Configuration(Dictionary):
     """"""
 
-    whale: M
+    configuration: M
 
     @classmethod
     def dictionary(cls, core) -> AD:
         """"""
         return super().dictionary(core) | {
-            WHALE: Optional(
-                "",
-                "Path to configuration file.",
+            CONFIGURATION: Optional(
+                default.application(),
+                core.language.ARGUMENT_INTERFACE_HELP,
             ),
         }
 
@@ -129,10 +112,9 @@ class Directory(Dictionary):
     def dictionary(cls, core) -> AD:
         """"""
         return super().dictionary(core) | {
-            DIRECTORY: Customization(
+            DIRECTORY: Optional(
                 default.application(),
                 core.language.ARGUMENT_INTERFACE_HELP,
-                load.argument(APPLICATION),
             ),
         }
 
@@ -173,7 +155,7 @@ class Language(Dictionary):
 
 class Session(
     Application,
-    Whale,
+    Configuration,
     Directory,
     Interface,
     Language,

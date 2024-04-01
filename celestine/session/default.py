@@ -27,6 +27,7 @@ def module(path: S, *items: S) -> M:
 
 
 def application():
+    """"""
     return module(
         APPLICATION,
         "demo",
@@ -34,6 +35,7 @@ def application():
 
 
 def interface():
+    """"""
     return module(
         INTERFACE,
         "tkinter",
@@ -45,6 +47,7 @@ def interface():
 
 
 def language():
+    """"""
     # Sorted list of languages by number of native speakers in Europe.
     # English and French were manually placed at the top of the list.
     return module(

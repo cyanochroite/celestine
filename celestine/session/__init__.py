@@ -40,9 +40,9 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
         magic.parse(INTERFACE)
         magic.parse(APPLICATION)
 
-        method = load.method("Whale", "session", "session")
+        method = load.method("Configuration", "session", "session")
         magic.get_parser([method], True)
-        path = method.whale  # configuration file: avoid name conflict
+        path = method.configuration
         magic.configuration.load(path)
 
         magic.parse(LANGUAGE)
@@ -83,7 +83,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     bank.attribute = session2
     bank.code = code
     bank.configuration = pathlib.Path()  # unset
-    bank.directory = pathlib.Path()  # unset
+    bank.directory = session1.directory
     bank.interface = load.module(INTERFACE, session1.interface)
     bank.language = load.module(LANGUAGE, session1.language)
     bank.main = next(iter(main))

@@ -28,7 +28,7 @@ def find_image(directory: P) -> LP:
 def setup(**star: R) -> N:
     """"""
     window = bank.window.page
-    directory = bank.attribute.directory
+    directory = bank.directory
     find = find_image(directory)
     images = iter(find)
 
