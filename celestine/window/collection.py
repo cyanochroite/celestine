@@ -212,7 +212,7 @@ class Object:
         super().__init__()
 
 
-class Tree(Object, Collection):
+class Tree(Object, Collection[K]):
     """"""
 
     children: D[S, K]

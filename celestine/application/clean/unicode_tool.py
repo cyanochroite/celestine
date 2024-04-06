@@ -16,7 +16,7 @@ from celestine.typed import (
 )
 
 
-def work(document):
+def work(document: S) -> GS:
     for line in document:
         strip = line.strip()
         split = strip.split(";")
@@ -59,4 +59,4 @@ def work(document):
         with stream.text.reader(file) as lines:
             loaded = read_stream(lines)
             text = work(loaded)
-        stream.Module.save(text, "unicode")
+        stream.module.save(text, "unicode")

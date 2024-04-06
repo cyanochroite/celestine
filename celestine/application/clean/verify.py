@@ -1,6 +1,8 @@
 """Package unittest."""
 
 import unittest
+import os
+import pathlib
 
 from celestine import load
 from celestine.data import CELESTINE
@@ -26,7 +28,7 @@ class Session(SuperSession):
 
 def modularize(path: S, begin: S) -> T[S, ...]:
     """"""
-    relative = os.path.relpath(path, begin)
+    relative: S = os.path.relpath(path, begin)
     (root, _) = os.path.splitext(relative)
     pure = pathlib.PurePath(root)
     parts = pure.parts
@@ -35,11 +37,11 @@ def modularize(path: S, begin: S) -> T[S, ...]:
 
 def find(target: S) -> L[T[S, ...]]:
     """Find all project directories with this name."""
-    begin = load.pathway.celestine()
+    begin = load.pathway()
 
     array = [
         modularize(directory, begin)
-        for directory in walk_file(begin)
+        for directory in load.walk_file(begin, [], [])
         if directory.endswith(target)
     ]
     return array

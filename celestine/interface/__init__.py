@@ -9,6 +9,7 @@ from celestine.typed import (
     B,
     D,
     H,
+    I,
     K,
     N,
     P,
@@ -180,6 +181,9 @@ class View(Abstract, Tree):
     """"""
 
     item: D[S, Abstract]
+    width: I
+    height: I
+    element_item: D[S, A]
 
     def find(self, name: S) -> N | Abstract:
         """"""
@@ -289,19 +293,19 @@ class View(Abstract, Tree):
     def __enter__(self) -> K:
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback) -> B:
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
         if exc_type or exc_value or traceback:
             print("ERROR")
         return False
 
     def __init__(
         self,
-        name,
-        element_item,
+        name: S,
+        element_item: D[S, A],
         *,
         mode: Zone = Zone.NONE,
-        row=0,
-        col=0,
+        row: I = 0,
+        col: I = 0,
         **star: R,
     ) -> N:
         #
@@ -479,7 +483,7 @@ class Window(Tree):
     def __enter__(self) -> K:
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
         if exc_type:
             raise exc_type
         if exc_value:
@@ -497,7 +501,7 @@ class Window(Tree):
 
         return False
 
-    def __init__(self, element_item, **star: R) -> N:
+    def __init__(self, element_item: D[S, A], **star: R) -> N:
         super().__init__(**star)
         self.area = Area.make(0, 0)
         self.code = {}
