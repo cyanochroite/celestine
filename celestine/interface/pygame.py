@@ -39,10 +39,7 @@ class Element(Element_, Abstract):
 
         pygame = bank.package.pygame
 
-        origin = (
-            self.area.world.one.minimum,
-            self.area.world.two.minimum,
-        )
+        origin = self.area.world.origin.int
 
         image = pygame.image.fromstring(
             self.image.image.tobytes(),

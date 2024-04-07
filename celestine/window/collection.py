@@ -1,5 +1,7 @@
 """"""
 
+from decimal import Decimal
+
 from collections.abc import Collection
 
 from celestine.typed import (
@@ -20,20 +22,27 @@ from celestine.typed import (
 class Point:
     """"""
 
-    one: F
-    two: F
+    one: Decimal
+    two: Decimal
 
     @property
-    def float(self) -> T[F, F]:
+    def decimal(self) -> T[Decimal, Decimal]:
+        """"""
         return (self.one, self.two)
 
     @property
+    def float(self) -> T[F, F]:
+        """"""
+        return tuple(map(float, self.decimal))
+
+    @property
     def int(self) -> T[I, I]:
-        return tuple(map(round, self.float))
+        """"""
+        return tuple(map(round, self.decimal))
 
     def __init__(self, one: F, two: F) -> N:
-        self.one = float(one)
-        self.two = float(two)
+        self.one = Decimal(one)
+        self.two = Decimal(two)
 
     def __iter__(self) -> GF:
         yield self.one
@@ -49,12 +58,18 @@ class Point:
         two = self.two / other.two
         return type(self)(one, two)
 
+    def __repr__(self):
+        return f"Point({repr(self.one)}, {repr(self.two)})"
+
+    def __str__(self):
+        return f"({str(self.one)}, {str(self.two)})"
+
 
 class Line:
     """"""
 
-    minimum: F
-    maximum: F
+    minimum: Decimal
+    maximum: Decimal
 
     @classmethod
     def clone(cls, self: K) -> K:
@@ -67,33 +82,44 @@ class Line:
 
     @property
     def length(self) -> F:
-        return self.maximum - self.minimum
+        """"""
+        return float(self.maximum - self.minimum)
 
     @property
     def midpoint(self) -> F:
-        return (self.minimum + self.maximum) / 2
+        """"""
+        return float((self.minimum + self.maximum) / 2)
 
     def __contains__(self, item: F) -> B:
         return self.minimum <= item <= self.maximum
 
     def __iadd__(self, other: F) -> K:
-        self.minimum += other
-        self.maximum += other
+        value = Decimal(other)
+        self.minimum += value
+        self.maximum += value
         return self
 
     def __imul__(self, other: F) -> K:
-        self.minimum *= other
-        self.maximum *= other
+        value = Decimal(other)
+        self.minimum *= value
+        self.maximum *= value
         return self
 
     def __init__(self, minimum: F, maximum: F) -> N:
-        self.minimum = float(min(minimum, maximum))
-        self.maximum = float(max(minimum, maximum))
+        self.minimum = Decimal(min(minimum, maximum))
+        self.maximum = Decimal(max(minimum, maximum))
 
     def __isub__(self, other: F) -> K:
-        self.minimum -= other
-        self.maximum -= other
+        value = Decimal(other)
+        self.minimum -= value
+        self.maximum -= value
         return self
+
+    def __repr__(self):
+        return f"Line({repr(self.minimum)}, {repr(self.maximum)})"
+
+    def __str__(self):
+        return f"({str(self.minimum)}, {str(self.maximum)})"
 
 
 class Plane:
@@ -103,10 +129,12 @@ class Plane:
     two: Line
 
     def center(self, other: K) -> N:
+        """"""
         self += other.centroid - self.centroid
 
     @property
     def centroid(self) -> Point:
+        """"""
         one = self.one.midpoint
         two = self.two.midpoint
         return Point(one, two)
@@ -123,7 +151,8 @@ class Plane:
         return self.clone(self)
 
     @property
-    def float(self) -> T[F, F, F, F]:
+    def decimal(self) -> T[Decimal, Decimal, Decimal, Decimal]:
+        """"""
         xmin = self.one.minimum
         ymin = self.two.minimum
         xmax = self.one.maximum
@@ -131,8 +160,14 @@ class Plane:
         return (xmin, ymin, xmax, ymax)
 
     @property
-    def int(self) -> T[I, I, I, I]:
-        return tuple(map(round, self.float))
+    def float(self) -> T[F, F]:
+        """"""
+        return tuple(map(float, self.decimal))
+
+    @property
+    def int(self) -> T[I, I]:
+        """"""
+        return tuple(map(round, self.decimal))
 
     @classmethod
     def make(cls, width: F, height: F) -> K:
@@ -147,15 +182,18 @@ class Plane:
         return Point(self.one.minimum, self.two.minimum)
 
     def scale_to_max(self, other: K) -> K:
+        """"""
         self *= max(other.size / self.size)
         return self
 
     def scale_to_min(self, other: K) -> K:
+        """"""
         self *= min(other.size / self.size)
         return self
 
     @property
     def size(self) -> Point:
+        """"""
         return Point(self.one.length, self.two.length)
 
     def __contains__(self, item: Point) -> B:
@@ -182,6 +220,12 @@ class Plane:
         self.two -= other.two
         return self
 
+    def __repr__(self):
+        return f"Plane({repr(self.one)}, {repr(self.two)})"
+
+    def __str__(self):
+        return f"({str(self.one)}, {str(self.two)})"
+
 
 class Area:
     """"""
@@ -202,6 +246,12 @@ class Area:
     def __init__(self, local: Plane, world: Plane) -> N:
         self.local = local.copy()
         self.world = world.copy()
+
+    def __repr__(self):
+        return f"Area({self.local}, {self.world})"
+
+    def __str__(self):
+        return f"({self.local}, {self.world})"
 
 
 class Object:

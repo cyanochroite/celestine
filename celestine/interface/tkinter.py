@@ -20,6 +20,7 @@ class Abstract(Abstract_):
     """"""
 
     def place(self, item: A) -> N:
+        """"""
         width, height = self.area.local.size
         dot_x, dot_y = self.area.local.origin.int
         item.place(
@@ -84,8 +85,8 @@ class View(View_, Abstract):
 
         self.canvas = tkinter.Frame(
             canvas,
-            padx=5,
-            pady=5,
+            padx=0,
+            pady=0,
             bg="yellow",
             width=1920,
             height=1080,
