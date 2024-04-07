@@ -103,7 +103,7 @@ class Image:
         """"""
         pillow = bank.package.pillow
 
-        size = point.int
+        size = point.value
         resample = pillow.Image.Resampling.LANCZOS
         box = None
         reducing_gap = None
@@ -117,7 +117,7 @@ class Image:
     def paste(self, image: K, plane: Plane) -> N:
         """"""
         im = image.image
-        box = plane.int
+        box = plane.value
         mask = None
         self.image.paste(im, box, mask)
 

@@ -138,7 +138,7 @@ class Element(Abstract):
         """"""
         pillow = bank.package.pillow
 
-        size = self.area.world.size.int
+        size = self.area.world.size.value
         self.image = pillow.new(size)
 
         super().make(canvas)
@@ -163,7 +163,7 @@ class Element(Abstract):
         image = pillow.open(self.path)
 
         curent = Plane.make(image.image.width, image.image.height)
-        target = Plane.make(*self.area.world.size.int)
+        target = Plane.make(*self.area.world.size.value)
 
         match self.fit:
             case Image.FILL:

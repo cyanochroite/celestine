@@ -39,7 +39,7 @@ class Element(Element_, Abstract):
 
         pygame = bank.package.pygame
 
-        origin = self.area.world.origin.int
+        origin = self.area.world.origin.value
 
         image = pygame.image.fromstring(
             self.image.image.tobytes(),
@@ -108,7 +108,8 @@ class Window(Window_):
         """"""
         pygame = bank.package.pygame
 
-        self.canvas = pygame.display.set_mode(self.area.world.size.int)
+        value = self.area.world.size.value
+        self.canvas = pygame.display.set_mode(value)
 
         super().make()
 
