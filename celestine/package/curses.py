@@ -11,7 +11,7 @@ from celestine.unicode import (
     SPACE,
 )
 
-from . import Abstract
+from celestine.session import Abstract
 
 
 class Package(Abstract):

@@ -8,7 +8,7 @@ from celestine.typed import (
     S,
 )
 
-from . import Abstract
+from celestine.session import Abstract
 
 
 class Package(Abstract):

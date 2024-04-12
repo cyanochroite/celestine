@@ -2,7 +2,7 @@
 
 from celestine.typed import LS
 
-from . import Abstract
+from celestine.session import Abstract
 
 
 class Package(Abstract):

@@ -1,7 +1,7 @@
 """Python Game Development."""
 
 
-from . import Abstract
+from celestine.session import Abstract
 
 
 class Package(Abstract):

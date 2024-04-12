@@ -5,6 +5,7 @@ import random
 from celestine import (
     bank,
     load,
+    package,
 )
 from celestine.typed import (
     IMAGE,
@@ -23,7 +24,7 @@ from celestine.window.collection import (
     Point,
 )
 
-from . import Abstract
+from celestine.session import Abstract
 
 ########################################################################
 
@@ -41,7 +42,6 @@ class Image:
 
         Make image bright.
         """
-        pillow = bank.package.pillow
 
         def brighter(pixel: I) -> I:
             invert = (255 - pixel) / 255
@@ -54,7 +54,8 @@ class Image:
 
         bands = (hue, saturation, new_value)
 
-        self.image = pillow.Image.merge("HSV", bands).convert("RGB")
+        merge = package.pillow.Image.merge("HSV", bands)
+        self.image = merge.convert("RGB")
 
     @classmethod
     def clone(cls, self: K) -> K:
@@ -64,11 +65,9 @@ class Image:
 
     def convert(self, mode: S) -> N:
         """"""
-        pillow = bank.package.pillow
-
         matrix = None  # Unused default.
-        dither = pillow.Image.Dither.FLOYDSTEINBERG
-        palette = pillow.Image.Palette.WEB  # Unused default.
+        dither = package.pillow.Image.Dither.FLOYDSTEINBERG
+        palette = package.pillow.Image.Palette.WEB  # Unused default.
         colors = 256  # Unused default.
 
         hold = self.image.convert(mode, matrix, dither, palette, colors)
@@ -101,10 +100,8 @@ class Image:
 
     def resize(self, point: Point) -> N:
         """"""
-        pillow = bank.package.pillow
-
         size = point.value
-        resample = pillow.Image.Resampling.LANCZOS
+        resample = package.pillow.Image.Resampling.LANCZOS
         box = None
         reducing_gap = None
         self.image = self.image.resize(
@@ -146,8 +143,6 @@ class Package(Abstract):
 
     def new(self, size: T[I, I]) -> Image:
         """"""
-        pillow = bank.package.pillow
-
         mode = "RGBA"
         color = (250, 250, 0, 250)
         color = (
@@ -157,16 +152,14 @@ class Package(Abstract):
             255,
         )
 
-        image = pillow.Image.new(mode, size, color)
+        image = package.pillow.Image.new(mode, size, color)
 
         item = Image(image)
         return item
 
     def open(self, path: P) -> Image:
         """"""
-        pillow = bank.package.pillow
-
-        file = pillow.Image.open(
+        file = package.pillow.Image.open(
             fp=path,
             mode="r",
             formats=None,
@@ -175,8 +168,8 @@ class Package(Abstract):
         image = file.convert(
             mode="RGBA",
             matrix=None,
-            dither=pillow.Image.Dither.NONE,
-            palette=pillow.Image.Palette.ADAPTIVE,
+            dither=package.pillow.Image.Dither.NONE,
+            palette=package.pillow.Image.Palette.ADAPTIVE,
             colors=256,
         )
 
@@ -185,11 +178,9 @@ class Package(Abstract):
 
     def extension(self) -> LS:
         """"""
-        pillow = bank.package.pillow
-
-        dictionary = pillow.Image.registered_extensions()
+        dictionary = package.pillow.Image.registered_extensions()
         items = dictionary.items()
-        values = pillow.Image.OPEN
+        values = package.pillow.Image.OPEN
         result = [key for key, value in items if value in values]
         result.sort()
         return result

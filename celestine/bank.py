@@ -15,17 +15,17 @@ from celestine.typed import (
 )
 
 #  These types might not be right.
-application: M
-attribute: LS
-code: D[S, C]
-configuration: P
-directory: P
-interface: M
-language: M
-main: S
-package: M  # Package
-view: D[S, C]
-window: M
+application: M = None
+attribute: LS = None
+code: D[S, C] = None
+configuration: P = None
+directory: P = None
+interface: M = None
+language: M = None
+main: S = None
+package: M = None  # Package
+view: D[S, C] = None
+window: M = None
 
 _queue: L[T[C[..., N], A, A]] = []
 

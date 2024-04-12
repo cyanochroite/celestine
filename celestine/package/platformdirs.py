@@ -2,7 +2,7 @@
 
 import pathlib
 
-from . import Abstract
+from celestine.session import Abstract
 
 try:
     import platformdirs

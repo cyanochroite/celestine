@@ -1,7 +1,7 @@
 """Python interface to Tcl/Tk."""
 
 
-from . import Abstract
+from celestine.session import Abstract
 
 
 class Package(Abstract):
