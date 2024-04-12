@@ -1,12 +1,9 @@
 """"""
 
 
-import sys
 import os
 import pathlib
-import os
 import sys
-
 
 from celestine import (
     bank,
@@ -20,15 +17,9 @@ from celestine.data.directory import (
 )
 from celestine.typed import (
     LS,
-    B,
-    C,
-    D,
-    N,
-    R,
-    S,
-    LS,
     OS,
     B,
+    C,
     D,
     M,
     N,
@@ -37,7 +28,6 @@ from celestine.typed import (
 )
 
 from .magic import Magic
-
 
 CELESTINE = "celestine"
 PACKAGE = "package"

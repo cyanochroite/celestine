@@ -6,6 +6,7 @@ from celestine.typed import (
     GI,
     B,
     D,
+    F,
     G,
     I,
     K,
@@ -13,7 +14,6 @@ from celestine.typed import (
     R,
     S,
     T,
-    F,
 )
 
 

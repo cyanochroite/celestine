@@ -11,8 +11,10 @@ from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.typed import (
     LS,
+    A,
     B,
     K,
+    M,
     N,
     R,
     S,
@@ -30,6 +32,8 @@ class Abstract(Abstract_):
 
 class Element(Element_, Abstract):
     """"""
+
+    image: M
 
     def draw(self, **star: R) -> B:
         """"""
@@ -128,7 +132,7 @@ class Window(Window_):
         return self
 
     @override
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A):
         super().__exit__(exc_type, exc_value, traceback)
 
         def set_icon():
@@ -150,6 +154,8 @@ class Window(Window_):
                     # TODO: This triggers on all mouse buttons
                     # including scroll wheel! That is bad.
                     self.click(Point(*package.pygame.mouse.get_pos()))
+                case _:
+                    pass
 
         package.pygame.quit()
         return False

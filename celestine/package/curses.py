@@ -1,6 +1,7 @@
 """Terminal handling for character-cell displays."""
 
 from celestine import load
+from celestine.session import Abstract
 from celestine.typed import (
     A,
     I,
@@ -10,8 +11,6 @@ from celestine.unicode import (
     ESCAPE,
     SPACE,
 )
-
-from celestine.session import Abstract
 
 
 class Package(Abstract):

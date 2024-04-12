@@ -7,6 +7,7 @@ from celestine import (
     load,
     package,
 )
+from celestine.session import Abstract
 from celestine.typed import (
     IMAGE,
     LI,
@@ -23,8 +24,6 @@ from celestine.window.collection import (
     Plane,
     Point,
 )
-
-from celestine.session import Abstract
 
 ########################################################################
 

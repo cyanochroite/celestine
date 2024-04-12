@@ -1,7 +1,9 @@
 """"""
 
-from celestine import bank
-from celestine import package
+from celestine import (
+    bank,
+    package,
+)
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
@@ -38,6 +40,7 @@ class Element(Element_, Abstract):
     @override
     def make(self, canvas: A) -> N:
         """"""
+
         def callback() -> N:
             """"""
             self.click(self.area.world.centroid)

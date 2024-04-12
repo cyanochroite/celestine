@@ -1,8 +1,8 @@
 """Package unittest."""
 
-import unittest
 import os
 import pathlib
+import unittest
 
 from celestine import load
 from celestine.data import CELESTINE

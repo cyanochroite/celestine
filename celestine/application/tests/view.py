@@ -1,7 +1,7 @@
 """"""
 
-from celestine.data import main
 from celestine import bank
+from celestine.data import main
 from celestine.interface import View
 from celestine.typed import N
 

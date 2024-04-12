@@ -1,13 +1,12 @@
 """DearPyGui: A simple Python GUI Toolkit."""
 
 
+from celestine.session import Abstract
 from celestine.typed import (
     N,
     R,
     S,
 )
-
-from celestine.session import Abstract
 
 
 class Package(Abstract):

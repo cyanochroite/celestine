@@ -2,7 +2,10 @@
 
 import math
 
-from celestine import bank, package
+from celestine import (
+    bank,
+    package,
+)
 from celestine.typed import (
     LS,
     A,
@@ -169,7 +172,7 @@ class Element(Abstract):
 
         one = str(result.size)
         two = str(target.size)
-        moo = f"{one}, {two}"
+        f"{one}, {two}"
         result.center(target)
 
         image.resize(result.size)

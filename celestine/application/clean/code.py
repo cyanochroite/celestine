@@ -5,8 +5,8 @@ import io
 import re
 
 from celestine import (
-    bank,
     load,
+    package,
     stream,
 )
 from celestine.data import (
@@ -76,19 +76,19 @@ array = [
 def run(name: S) -> N:
     """"""
     module = load.module(PACKAGE, name)
-    package = module.Linter(name)
-    package.run()
+    linter = module.Linter(name)
+    linter.run()
 
 
 @code
 def clean(**star: R) -> N:
     """"""
-    bank.package.pyupgrade.run()
+    package.pyupgrade.run()
     # TODO figure out why this print instead of fixes
-    # bank.package.pydocstringformatter.run()
-    bank.package.autoflake.run()
-    bank.package.isort.run()
-    bank.package.black.run()
+    # package.pydocstringformatter.run()
+    package.autoflake.run()
+    package.isort.run()
+    package.black.run()
 
 
 @code
