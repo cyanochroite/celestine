@@ -1,27 +1,128 @@
 """"""
 
+from typing import override
+from typing import Type as TYPE
+from typing import Tuple as T
+from typing import Self as K
+from typing import Optional as O
+from typing import List as L
+from typing import Dict as D
+from collections.abc import Generator as G
+from collections.abc import Callable as C
+import typing
+import pathlib
+import lzma
+import io
+import collections.abc
 import importlib.abc
 import importlib.machinery
 import sys
 import types
 
 
-class DependencyInjectorFinder(importlib.abc.MetaPathFinder):
+""""""
+
+
+type Argument = typing.Any  # Import the real one.
+
+type A = typing.Any
+type B = bool
+# type C = collections.abc.Callable
+# type D = typing.Dict
+type E = typing.Any  # Unused.  # ENUM?
+type F = float
+# Generator[YieldType, SendType, ReturnType]
+# type G = collections.abc.Generator
+type H = typing.Any  # Unused
+type I = int
+type J = object
+# type K = typing.Self
+# type L = typing.List
+type M = types.ModuleType
+type N = None
+# type O = typing.Optional
+type P = pathlib.Path
+type Q = typing.Any  # Unused.  # Queue?
+type R = typing.Any  # **star
+type S = str
+# type T = typing.Tuple
+type U = typing.Any  # Unused.
+type V = typing.Any  # Unused.
+type W = typing.Any  # Unused.
+type X = typing.Any  # Unused.
+type Y = typing.Any  # Unused.
+type Z = typing.Any  # Unused.
+
+type GB = G[B, N, N]
+type GF = G[F, N, N]
+type GI = G[I, N, N]
+type GP = G[P, N, N]
+type GS = G[S, N, N]
+
+type OB = O[B]
+type OF = O[F]
+type OI = O[I]
+type OP = O[P]
+type OS = O[S]
+
+type LB = L[B]
+type LF = L[F]
+type LI = L[I]
+type LP = L[P]
+type LS = L[S]
+
+type PATH = P | S
+
+type FN = C[[N], N]
+type AXIS = G[T[I, I], N, N]
+type FILE = typing.IO[A]
+type AT = D[S, A]
+# type TYPE[X] = typing.Type
+type IMAGE = A
+type APD = D[A, A]
+type LZMA = lzma.LZMAFile
+type TABLE = D[S, S]
+type BOX = T[I, I, I, I]
+type PAIR = T[I, I]
+type AD = D[S, Argument]  # session.argument
+type AI = collections.abc.Iterable[T[S, Argument]]  # session.argument
+
+
+def string(*characters: S) -> S:
+    """"""
+    buffer = io.StringIO()
+    for character in characters:
+        buffer.write(character)
+    value = buffer.getvalue()
+    return value
+
+
+class Star(typing.TypedDict):
     """"""
 
-    def __init__(self, loader):
-        self._loader = loader
 
-    def find_spec(self, fullname, path, target=None):
+class Fix:
+    """"""
+
+    def override(self) -> N:
         """"""
-        print("spec", fullname, path, target)
-        if self._loader.provides(fullname):
-            return self._gen_spec(fullname)
-        return None
 
-    def _gen_spec(self, fullname):
-        spec = importlib.machinery.ModuleSpec(fullname, self._loader)
-        return spec
+
+class ImportNotUsed(Fix):
+    """"""
+
+    @override
+    def override(self) -> N:
+        print(override)
+
+    def self(self) -> K:
+        """"""
+        return self
+
+    @staticmethod
+    def type_() -> TYPE[int]:
+        """"""
+        return int
 
 
 class DependencyInjectorLoader(importlib.abc.Loader):
@@ -39,6 +140,12 @@ class DependencyInjectorLoader(importlib.abc.Loader):
         # this is important, since otherwise Python will believe our
         # dummy module can have no submodules
         self._dummy_module.__path__ = []
+
+    def _truncate_name(self, fullname):
+        """Strip off _COMMON_PREFIX from the given module name
+        Convenience method when checking if a service is provided.
+        """
+        return fullname[len(self._COMMON_PREFIX):]
 
     def provide(self, service_name, module):
         """"""
@@ -72,27 +179,30 @@ class DependencyInjectorLoader(importlib.abc.Loader):
         this method merely no-ops.
         """
 
-    def _truncate_name(self, fullname):
-        """Strip off _COMMON_PREFIX from the given module name
-        Convenience method when checking if a service is provided.
-        """
-        return fullname[len(self._COMMON_PREFIX):]
+
+type SO = typing.Sequence[str] | None
+type OM = types.ModuleType | None
+type MS = importlib.machinery.ModuleSpec | None
 
 
-class DependencyInjector:
+class MetaPathFinder(importlib.abc.MetaPathFinder):
     """"""
 
     def __init__(self):
-        self._loader = DependencyInjectorLoader()
-        self._finder = DependencyInjectorFinder(self._loader)
+        loader = DependencyInjectorLoader()
+        loader.provide("frontend", FrontendModule())
 
-    def install(self):
-        """"""
-        sys.meta_path.append(self._finder)
+        self._loader = loader
 
-    def provide(self, service_name, module):
+    @override
+    def find_spec(self, fullname: S, path: SO, target: OM = None) -> MS:
         """"""
-        self._loader.provide(service_name, module)
+        name = fullname
+        loader = self._loader
+        print("spec", fullname, path, target)
+        if self._loader.provides(fullname):
+            return importlib.machinery.ModuleSpec(name, loader)
+        return None
 
 
 class FrontendModule:
@@ -110,14 +220,15 @@ class FrontendModule:
 
 
 if __name__ == "__main__":
-    injector = DependencyInjector()
-    # we could install() and then provide() if we wanted, order isn't
-    # important for the below two calls
-    injector.provide("frontend", FrontendModule())
-    injector.install()
+
+    sys.meta_path.insert(0, MetaPathFinder())
+
     # note that these last three lines could exist in any other
     # source file,
     # as long as injector.install() was called somewhere first
+
+    import tkinter
+
     import myapp.virtual.frontend as frontend
 
     popup = frontend.Popup("Hello World!")
