@@ -1,24 +1,24 @@
 """"""
 
-from typing import override
-from typing import Type as TYPE
-from typing import Tuple as T
-from typing import Self as K
-from typing import Optional as O
-from typing import List as L
-from typing import Dict as D
-from collections.abc import Generator as G
-from collections.abc import Callable as C
-import typing
-import pathlib
-import lzma
-import io
 import collections.abc
+import importlib
 import importlib.abc
 import importlib.machinery
+import io
+import lzma
+import pathlib
 import sys
 import types
-
+import typing
+from collections.abc import Callable as C
+from collections.abc import Generator as G
+from typing import Dict as D
+from typing import List as L
+from typing import Optional as O
+from typing import Self as K
+from typing import Tuple as T
+from typing import Type as TYPE
+from typing import override
 
 """"""
 
@@ -125,6 +125,16 @@ class ImportNotUsed(Fix):
         return int
 
 
+type SO = typing.Sequence[str] | None
+type OM = types.ModuleType | None
+type MS = importlib.machinery.ModuleSpec | None
+type N = None
+
+
+def ignore(_: A) -> N:
+    """"""
+
+
 class DependencyInjectorLoader(importlib.abc.Loader):
     """"""
 
@@ -161,8 +171,10 @@ class DependencyInjectorLoader(importlib.abc.Loader):
         # myapp.virtual
         return self._COMMON_PREFIX.startswith(fullname)
 
-    def create_module(self, spec):
+    @override
+    def create_module(self, spec: importlib.machinery.ModuleSpec) -> OM:
         """"""
+        print("Fish", spec.name, spec)
         service_name = self._truncate_name(spec.name)
         if service_name not in self._services:
             # return our dummy module since at this point we're loading
@@ -172,36 +184,55 @@ class DependencyInjectorLoader(importlib.abc.Loader):
         module = self._services[service_name]
         return module
 
-    def exec_module(self, module):
-        """Execute the given module in its own namespace
-        This method is required to be present by importlib.abc.Loader,
-        but since we know our module object is already fully-formed,
-        this method merely no-ops.
-        """
+    @override
+    def exec_module(self, module: M) -> N:
+        return None
 
 
-type SO = typing.Sequence[str] | None
-type OM = types.ModuleType | None
-type MS = importlib.machinery.ModuleSpec | None
+class Loader(importlib.abc.Loader):
+    """"""
+
+    _COMMON_PREFIX = "myapp.virtual."
+
+    def __init__(self):
+        self._services = {}
+        # create a dummy module to return when Python attempts to import
+        # myapp and myapp.virtual, the :-1 removes the last "." for
+        # aesthetic reasons :)
+        self._dummy_module = types.ModuleType(self._COMMON_PREFIX[:-1])
+        # set __path__ so Python believes our dummy module is a package
+        # this is important, since otherwise Python will believe our
+        # dummy module can have no submodules
+        self._dummy_module.__path__ = []
+
+    @override
+    def create_module(self, spec: importlib.machinery.ModuleSpec) -> OM:
+        """"""
+        print(spec.name, spec, "HI")
+        return importlib.import_module(spec.name)
+
+    @override
+    def exec_module(self, module: M) -> N:
+        """"""
+        return None
 
 
 class MetaPathFinder(importlib.abc.MetaPathFinder):
     """"""
 
-    def __init__(self):
-        loader = DependencyInjectorLoader()
-        loader.provide("frontend", FrontendModule())
-
-        self._loader = loader
-
     @override
     def find_spec(self, fullname: S, path: SO, target: OM = None) -> MS:
         """"""
+        # ignore(path)
+        # ignore(target)
+        prefix = "celestine."
         name = fullname
-        loader = self._loader
         print("spec", fullname, path, target)
-        if self._loader.provides(fullname):
+        if name.startswith(prefix):
+            print("TRUE", fullname)
             return importlib.machinery.ModuleSpec(name, loader)
+        if loaderIn.provides(fullname):
+            return importlib.machinery.ModuleSpec(name, loaderIn)
         return None
 
 
@@ -219,17 +250,32 @@ class FrontendModule:
             print("Popup:", self._message)
 
 
-if __name__ == "__main__":
+loaderIn = DependencyInjectorLoader()
+loaderIn.provide("frontend", FrontendModule())
 
+loader = Loader()
+
+if __name__ == "__main__":
     sys.meta_path.insert(0, MetaPathFinder())
 
     # note that these last three lines could exist in any other
     # source file,
     # as long as injector.install() was called somewhere first
 
-    import tkinter
-
     import myapp.virtual.frontend as frontend
 
     popup = frontend.Popup("Hello World!")
     popup.display()
+
+
+""""""
+
+
+CELESTINE = "celestine"
+
+path1 = pathlib.Path(sys.path[0])
+if path1.name == CELESTINE:
+    sys.path[0] = str(path1.parent)
+
+celestine = importlib.import_module(CELESTINE)
+celestine.main(sys.argv[1:], True)

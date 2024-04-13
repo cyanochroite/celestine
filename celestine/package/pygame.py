@@ -1,12 +1,12 @@
 """Python Game Development."""
-
-
-from celestine.session import Abstract
 from celestine.typed import (
     A,
     M,
     S,
 )
+from celestine.session import Abstract
+
+print("LOADDREDRED")
 
 
 class Package(Abstract):

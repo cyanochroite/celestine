@@ -1,5 +1,7 @@
 """"""
 
+import celestine
+from celestine.package import pygame as piggy
 from celestine import (
     bank,
     load,
