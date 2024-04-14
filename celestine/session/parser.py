@@ -1,14 +1,6 @@
 """"""
 
-import argparse
-import io
-
-from celestine.data import CELESTINE
-from celestine.typed import (
-    TYPE,
-    B,
-    M,
-)
+from .data import Parsers
 from celestine.unicode import (
     APOSTROPHE,
     COLON,
@@ -20,8 +12,20 @@ from celestine.unicode import (
     RIGHT_PARENTHESIS,
     SPACE,
 )
+from celestine.typed import (
+    TYPE,
+    B,
+    M,
+)
+import argparse
+import io
 
-from .data import Parsers
+CELESTINE = "celestine"
+VERSION_NUMBER = "2023.10.7"
+INTERFACE = "interface"
+BLENDER = "blender"
+REGISTER = "register"
+UNREGISTER = "unregister"
 
 
 def parser(language: M, exit_on_error: B) -> argparse.ArgumentParser:

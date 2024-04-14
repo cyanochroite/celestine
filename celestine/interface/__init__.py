@@ -2,9 +2,9 @@
 
 import math
 
+from celestine.package import pillow
 from celestine import (
     bank,
-    package,
 )
 from celestine.typed import (
     LS,
@@ -140,7 +140,7 @@ class Element(Abstract):
     def make(self, canvas: A) -> N:
         """"""
         size = self.area.world.size.value
-        self.image = package.pillow.new(size)
+        self.image = pillow.new(size)
 
         super().make(canvas)
 
@@ -159,7 +159,7 @@ class Element(Abstract):
         """"""
         self.path = path
 
-        image = package.pillow.open(self.path)
+        image = pillow.open(self.path)
 
         curent = Plane.make(image.image.width, image.image.height)
         target = Plane.make(*self.area.world.size.value)

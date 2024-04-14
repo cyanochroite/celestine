@@ -1,10 +1,5 @@
 """"""
 
-from celestine.data import VERSION_NUMBER
-from celestine.session.data import (
-    Actions,
-    Attributes,
-)
 from celestine.typed import (
     AT,
     LS,
@@ -12,6 +7,16 @@ from celestine.typed import (
     R,
     S,
 )
+from celestine.session.data import (
+    Actions,
+    Attributes,
+)
+CELESTINE = "celestine"
+VERSION_NUMBER = "2023.10.7"
+INTERFACE = "interface"
+BLENDER = "blender"
+REGISTER = "register"
+UNREGISTER = "unregister"
 
 
 class Attribute:

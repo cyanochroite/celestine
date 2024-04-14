@@ -1,20 +1,7 @@
 """"""
 
 
-import os
-import pathlib
-import sys
-
-from celestine import (
-    bank,
-    load,
-    stream,
-)
-from celestine.data.directory import (
-    APPLICATION,
-    INTERFACE,
-    LANGUAGE,
-)
+from .magic import Magic
 from celestine.typed import (
     LS,
     OS,
@@ -26,8 +13,22 @@ from celestine.typed import (
     R,
     S,
 )
+import os
+import pathlib
+import sys
 
-from .magic import Magic
+from celestine import (
+    bank,
+    load,
+    stream,
+)
+CELESTINE = "celestine"
+VERSION_NUMBER = "2023.10.7"
+INTERFACE = "interface"
+BLENDER = "blender"
+REGISTER = "register"
+UNREGISTER = "unregister"
+
 
 CELESTINE = "celestine"
 PACKAGE = "package"

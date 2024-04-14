@@ -1,5 +1,16 @@
 """"""
 
+from .data import FILE
+from celestine.unicode import (
+    EQUALS_SIGN,
+    NONE,
+    POUND_SIGN,
+)
+from celestine.typed import (
+    OP,
+    N,
+    S,
+)
 import configparser
 import os
 
@@ -7,19 +18,12 @@ from celestine import (
     load,
     stream,
 )
-from celestine.data import CELESTINE
-from celestine.typed import (
-    OP,
-    N,
-    S,
-)
-from celestine.unicode import (
-    EQUALS_SIGN,
-    NONE,
-    POUND_SIGN,
-)
-
-from .data import FILE
+CELESTINE = "celestine"
+VERSION_NUMBER = "2023.10.7"
+INTERFACE = "interface"
+BLENDER = "blender"
+REGISTER = "register"
+UNREGISTER = "unregister"
 
 
 class Configuration:

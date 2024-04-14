@@ -1,9 +1,11 @@
 """"""
 
+from celestine.package import (
+    pygame,
+)
 from celestine import (
     bank,
     load,
-    package,
 )
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
@@ -44,7 +46,7 @@ class Element(Element_, Abstract):
 
         origin = self.area.world.origin.value
 
-        image = package.pygame.image.fromstring(
+        image = pygame.image.fromstring(
             self.image.image.tobytes(),
             self.image.image.size,
             self.image.image.mode,
@@ -74,7 +76,7 @@ class Window(Window_):
 
         super().draw(font=self.font, **star)
 
-        package.pygame.display.flip()
+        pygame.display.flip()
 
     @override
     def extension(self) -> LS:
@@ -108,7 +110,7 @@ class Window(Window_):
     def make(self) -> N:
         """"""
         value = self.area.world.size.value
-        self.canvas = package.pygame.display.set_mode(value)
+        self.canvas = pygame.display.set_mode(value)
 
         super().make()
 
@@ -118,13 +120,13 @@ class Window(Window_):
 
         def set_caption():
             caption = bank.language.APPLICATION_TITLE
-            package.pygame.display.set_caption(caption)
+            pygame.display.set_caption(caption)
 
         def set_font():
-            package.pygame.font.init()
+            pygame.font.init()
             file_path = load.asset("cascadia_code_regular.otf")
             size = 40
-            self.font = package.pygame.font.Font(file_path, size)
+            self.font = pygame.font.Font(file_path, size)
 
         set_caption()
         set_font()
@@ -138,26 +140,26 @@ class Window(Window_):
         def set_icon():
             path = "icon.png"
             asset = load.asset(path)
-            image = package.pygame.image.load(asset)
+            image = pygame.image.load(asset)
             icon = image.convert_alpha()
-            package.pygame.display.set_icon(icon)
+            pygame.display.set_icon(icon)
 
         set_icon()
 
         while True:
             bank.dequeue()
-            event = package.pygame.event.wait()
+            event = pygame.event.wait()
             match event.type:
-                case package.pygame.QUIT:
+                case pygame.QUIT:
                     break
-                case package.pygame.MOUSEBUTTONDOWN:
+                case pygame.MOUSEBUTTONDOWN:
                     # TODO: This triggers on all mouse buttons
                     # including scroll wheel! That is bad.
-                    self.click(Point(*package.pygame.mouse.get_pos()))
+                    self.click(Point(*pygame.mouse.get_pos()))
                 case _:
                     pass
 
-        package.pygame.quit()
+        pygame.quit()
         return False
 
     @override

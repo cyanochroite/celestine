@@ -2,21 +2,50 @@
 
 from celestine import (
     bank,
-    load,
 )
-from celestine.data import (
-    BLENDER,
-    INTERFACE,
-    REGISTER,
-    UNREGISTER,
-)
+
 from celestine.session import begin_session
 from celestine.typed import (
     LS,
     B,
     N,
     R,
+    FN,
+    GP,
+    LP,
+    LS,
+    A,
+    B,
+    D,
+    G,
+    L,
+    M,
+    N,
+    P,
+    S,
+    T,
+    string,
 )
+
+import importlib
+import importlib.resources
+import os
+import pathlib
+import sys
+
+CELESTINE = "celestine"
+VERSION_NUMBER = "2023.10.7"
+INTERFACE = "interface"
+BLENDER = "blender"
+REGISTER = "register"
+UNREGISTER = "unregister"
+
+CELESTINE = "celestine"
+VERSION_NUMBER = "2023.10.7"
+INTERFACE = "interface"
+BLENDER = "blender"
+REGISTER = "register"
+UNREGISTER = "unregister"
 
 bl_info = {
     "name": "celestine",
@@ -31,6 +60,38 @@ bl_info = {
     "tracker_url": "https://github.com/mem-dixy/celestine/",
     "category": "3D View",
 }
+
+
+def module(*path: S) -> M:
+    """Load an internal module from anywhere in the application."""
+    return package(CELESTINE, *path)
+
+
+def package(base: S, *path: S) -> M:
+    """Load an external package from the system path."""
+    iterable = [base, *path]
+    name = ".".join(iterable)
+    result = importlib.import_module(name)
+    return result
+
+
+def attribute(*path: S) -> A:
+    """Functions like the 'from package import item' syntax."""
+    iterable = [*path]
+    name = iterable.pop(-1)
+    item = module(*iterable)
+    result = getattr(item, name)
+    return result
+
+
+def redirect(*path: S) -> N:
+    """
+    Loads a function from the specified path, and then runs it.
+
+    :param path: The last item is the function name.
+    """
+    function = attribute(*path)
+    function()
 
 
 def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
