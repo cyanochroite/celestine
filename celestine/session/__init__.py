@@ -1,27 +1,24 @@
 """"""
 
 
-from .magic import Magic
-from celestine.typed import (
-    LS,
-    OS,
-    B,
-    C,
-    D,
-    M,
-    N,
-    R,
-    S,
-)
-import os
 import pathlib
-import sys
 
 from celestine import (
     bank,
     load,
-    stream,
 )
+from celestine.typed import (
+    LS,
+    B,
+    C,
+    D,
+    N,
+    R,
+    S,
+)
+
+from .magic import Magic
+
 CELESTINE = "celestine"
 VERSION_NUMBER = "2023.10.7"
 INTERFACE = "interface"

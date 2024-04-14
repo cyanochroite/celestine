@@ -6,25 +6,22 @@ import re
 
 from celestine import (
     load,
-    package,
     stream,
 )
 from celestine.data import (
     code,
     normalize,
 )
+from celestine.package import (
+    autoflake,
+    black,
+    isort,
+    pyupgrade,
+)
 from celestine.typed import (
     N,
     R,
     S,
-)
-
-from celestine.package import(
-    pyupgrade,
-    pydocstringformatter,
-    autoflake,
-    isort,
-    black,
 )
 
 PACKAGE = "package"

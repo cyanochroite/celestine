@@ -1,6 +1,13 @@
 """"""
 
-from .data import Parsers
+import argparse
+import io
+
+from celestine.typed import (
+    TYPE,
+    B,
+    M,
+)
 from celestine.unicode import (
     APOSTROPHE,
     COLON,
@@ -12,13 +19,8 @@ from celestine.unicode import (
     RIGHT_PARENTHESIS,
     SPACE,
 )
-from celestine.typed import (
-    TYPE,
-    B,
-    M,
-)
-import argparse
-import io
+
+from .data import Parsers
 
 CELESTINE = "celestine"
 VERSION_NUMBER = "2023.10.7"

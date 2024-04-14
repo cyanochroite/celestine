@@ -1,37 +1,19 @@
 """"""
 
-from celestine import (
-    bank,
-)
+import importlib
+import importlib.resources
 
+from celestine import bank
 from celestine.session import begin_session
 from celestine.typed import (
     LS,
-    B,
-    N,
-    R,
-    FN,
-    GP,
-    LP,
-    LS,
     A,
     B,
-    D,
-    G,
-    L,
     M,
     N,
-    P,
+    R,
     S,
-    T,
-    string,
 )
-
-import importlib
-import importlib.resources
-import os
-import pathlib
-import sys
 
 CELESTINE = "celestine"
 VERSION_NUMBER = "2023.10.7"

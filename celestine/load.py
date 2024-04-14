@@ -1,5 +1,28 @@
 """Central place for loading and importing external files."""
 
+import importlib
+import importlib.resources
+import os
+import pathlib
+import sys
+
+from celestine.typed import (
+    FN,
+    GP,
+    LP,
+    LS,
+    A,
+    B,
+    D,
+    G,
+    L,
+    M,
+    N,
+    P,
+    S,
+    T,
+    string,
+)
 from celestine.unicode import (
     FULL_STOP,
     LATIN_SMALL_LETTER_A,
@@ -20,28 +43,6 @@ from celestine.unicode import (
     NONE,
     SPACE,
 )
-from celestine.typed import (
-    FN,
-    GP,
-    LP,
-    LS,
-    A,
-    B,
-    D,
-    G,
-    L,
-    M,
-    N,
-    P,
-    S,
-    T,
-    string,
-)
-import importlib
-import importlib.resources
-import os
-import pathlib
-import sys
 
 CELESTINE = "celestine"
 

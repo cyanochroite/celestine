@@ -2,10 +2,8 @@
 
 import math
 
+from celestine import bank
 from celestine.package import pillow
-from celestine import (
-    bank,
-)
 from celestine.typed import (
     LS,
     A,

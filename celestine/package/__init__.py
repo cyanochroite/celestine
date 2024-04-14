@@ -1,66 +1,46 @@
 """"""
-from celestine.window.collection import (
-    Plane,
-    Point,
-)
+import importlib
+import importlib.abc
+import importlib.machinery
+import os
+import pathlib
+import random
+import sys
+import types
+import typing
+from typing import override
+
 from celestine import (
     bank,
     package,
 )
-import random
-import importlib
-import importlib.abc
-import importlib.machinery
-import sys
-import types
-import typing
-import pathlib
-from typing import override
-import os
-from celestine.unicode import (
-    ESCAPE,
-    SPACE,
-)
-from celestine.typed import LS
 from celestine.typed import (
-    M,
-    N,
-    A,
-    P,
-    LS,
     GP,
-    LP,
-    B,
-    S,
-    D,
-    OS,
-    I,
-    R,
     IMAGE,
     LI,
-    LS,
-    I,
-    K,
-    N,
-    P,
-    R,
-    S,
-    T,
-    FN,
-    GP,
     LP,
     LS,
+    OS,
     A,
     B,
     D,
     G,
-    L,
+    I,
+    K,
     M,
     N,
     P,
+    R,
     S,
     T,
-    string,
+)
+from celestine.unicode import (
+    ESCAPE,
+    SPACE,
+)
+from celestine.window.collection import (
+    Plane,
+    Point,
 )
 
 CELESTINE = "celestine"
@@ -127,11 +107,10 @@ class Abstract:
 
         with open(
             os.devnull,
-            "wt",
+            "w",
             encoding="utf-8",
             #            stream.Mode.WRITE_TEXT.value,
             #            encoding=stream.Encoding.UTF_8.value,
-
         ) as stdout:
             sys.stdout = stdout  # as TextIO
             try:

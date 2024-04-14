@@ -1,8 +1,5 @@
 """"""
 
-from celestine.package import (
-    pygame,
-)
 from celestine import (
     bank,
     load,
@@ -11,6 +8,7 @@ from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.package import pygame
 from celestine.typed import (
     LS,
     A,

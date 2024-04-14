@@ -20,7 +20,6 @@ from typing import Tuple as T
 from typing import Type as TYPE
 from typing import override
 
-
 type Argument = typing.Any  # Import the real one.
 
 type A = typing.Any
@@ -167,7 +166,7 @@ class DependencyInjectorLoader(importlib.abc.Loader):
         """Strip off _COMMON_PREFIX from the given module name
         Convenience method when checking if a service is provided.
         """
-        return fullname[len(self._COMMON_PREFIX):]
+        return fullname[len(self._COMMON_PREFIX) :]
 
     def provide(self, service_name, module):
         """"""

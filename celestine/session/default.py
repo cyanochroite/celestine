@@ -1,10 +1,11 @@
 """"""
 
+from celestine import load
 from celestine.typed import (
     M,
     S,
 )
-from celestine import load
+
 LANGUAGE = "language"
 APPLICATION = "application"
 CELESTINE = "celestine"
