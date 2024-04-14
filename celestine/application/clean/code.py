@@ -19,6 +19,14 @@ from celestine.typed import (
     S,
 )
 
+from celestine.package import(
+    pyupgrade,
+    pydocstringformatter,
+    autoflake,
+    isort,
+    black,
+)
+
 PACKAGE = "package"
 
 
@@ -83,12 +91,12 @@ def run(name: S) -> N:
 @code
 def clean(**star: R) -> N:
     """"""
-    package.pyupgrade.run()
+    pyupgrade.run()
     # TODO figure out why this print instead of fixes
-    # package.pydocstringformatter.run()
-    package.autoflake.run()
-    package.isort.run()
-    package.black.run()
+    # pydocstringformatter.run()
+    autoflake.run()
+    isort.run()
+    black.run()
 
 
 @code

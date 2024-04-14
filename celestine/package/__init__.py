@@ -46,9 +46,35 @@ from celestine.typed import (
     R,
     S,
     T,
+    FN,
+    GP,
+    LP,
+    LS,
+    A,
+    B,
+    D,
+    G,
+    L,
+    M,
+    N,
+    P,
+    S,
+    T,
+    string,
 )
 
+CELESTINE = "celestine"
 FULL_STOP = "."
+
+
+def project_path() -> P:
+    """When running as a package, sys.path[0] is wrong."""
+    for path in sys.path:
+        directory = pathlib.Path(path, CELESTINE)
+        if directory.is_dir():
+            return directory
+    directory = pathlib.Path(os.curdir)
+    return directory
 
 
 class Abstract:
@@ -74,10 +100,10 @@ class Abstract:
 
         argv = sys.argv
 
-        path = str(load.project_path())
+        path = str(project_path())
         sys.argv = [path, path]
         try:
-            module = load.package(self.name, *self.module())
+            module = package(self.name, *self.module())
             self.main(module, path)
         except SystemExit:
             pass
@@ -140,6 +166,15 @@ class Package:
             attribute = load.attribute(PACKAGE, name, "Package")
             package = attribute(name)
             self.dictionary[name] = package
+
+
+def walk(*path: S) -> G[T[S, LS, LS], N, N]:
+    """Yields a 3-tuple (dirpath, dirnames, filenames)."""
+    top = pathlib.Path(*path)
+    topdown = True
+    onerror = None
+    followlinks = False
+    return os.walk(top, topdown, onerror, followlinks)
 
 
 def walk_file(top: P, include: LS, exclude: LS) -> GP:
@@ -471,14 +506,14 @@ class _pillow(Abstract):
             255,
         )
 
-        image = package.pillow.Image.new(mode, size, color)
+        image = self.package.Image.new(mode, size, color)
 
         item = Image(image)
         return item
 
     def open(self, path: P) -> Image:
         """"""
-        file = package.pillow.Image.open(
+        file = self.package.Image.open(
             fp=path,
             mode="r",
             formats=None,
@@ -487,8 +522,8 @@ class _pillow(Abstract):
         image = file.convert(
             mode="RGBA",
             matrix=None,
-            dither=package.pillow.Image.Dither.NONE,
-            palette=package.pillow.Image.Palette.ADAPTIVE,
+            dither=self.package.Image.Dither.NONE,
+            palette=self.package.Image.Palette.ADAPTIVE,
             colors=256,
         )
 
@@ -497,9 +532,9 @@ class _pillow(Abstract):
 
     def extension(self) -> LS:
         """"""
-        dictionary = package.pillow.Image.registered_extensions()
+        dictionary = self.package.Image.registered_extensions()
         items = dictionary.items()
-        values = package.pillow.Image.OPEN
+        values = self.package.Image.OPEN
         result = [key for key, value in items if value in values]
         result.sort()
         return result

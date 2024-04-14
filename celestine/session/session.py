@@ -28,6 +28,14 @@ INTERFACE = "interface"
 BLENDER = "blender"
 REGISTER = "register"
 UNREGISTER = "unregister"
+LANGUAGE = "language"
+INTERFACE = "interface"
+APPLICATION = "application"
+
+
+CONFIGURATION = "configuration"
+DIRECTORY = "directory"
+INTERFACE = "interface"
 
 
 class SuperSession:

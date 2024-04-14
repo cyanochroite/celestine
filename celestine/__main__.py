@@ -1,6 +1,5 @@
 """"""
 
-from celestine.package import Loader
 import collections.abc
 import importlib
 import importlib.abc
@@ -20,8 +19,6 @@ from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TYPE
 from typing import override
-
-""""""
 
 
 type Argument = typing.Any  # Import the real one.
@@ -87,6 +84,20 @@ type BOX = T[I, I, I, I]
 type PAIR = T[I, I]
 type AD = D[S, Argument]  # session.argument
 type AI = collections.abc.Iterable[T[S, Argument]]  # session.argument
+
+
+CELESTINE = "celestine"
+
+path1 = pathlib.Path(sys.path[0])
+print(path1)
+if path1.name == CELESTINE:
+    print("fix", sys.path)
+    sys.path[0] = str(path1.parent)
+    print("odfix", sys.path)
+
+celestine = importlib.import_module(CELESTINE)
+package = importlib.import_module("celestine.package")
+Loader = getattr(package, "Loader")
 
 
 def string(*characters: S) -> S:
@@ -242,11 +253,4 @@ if __name__ == "__main__":
 """"""
 
 
-CELESTINE = "celestine"
-
-path1 = pathlib.Path(sys.path[0])
-if path1.name == CELESTINE:
-    sys.path[0] = str(path1.parent)
-
-celestine = importlib.import_module(CELESTINE)
 celestine.main(sys.argv[1:], True)

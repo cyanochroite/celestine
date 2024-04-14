@@ -28,6 +28,9 @@ INTERFACE = "interface"
 BLENDER = "blender"
 REGISTER = "register"
 UNREGISTER = "unregister"
+LANGUAGE = "language"
+INTERFACE = "interface"
+APPLICATION = "application"
 
 
 CELESTINE = "celestine"

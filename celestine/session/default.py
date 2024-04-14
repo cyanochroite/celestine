@@ -5,6 +5,8 @@ from celestine.typed import (
     S,
 )
 from celestine import load
+LANGUAGE = "language"
+APPLICATION = "application"
 CELESTINE = "celestine"
 VERSION_NUMBER = "2023.10.7"
 INTERFACE = "interface"
