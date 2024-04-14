@@ -1,5 +1,6 @@
 """"""
 
+from celestine.package import Loader
 import collections.abc
 import importlib
 import importlib.abc
@@ -189,50 +190,20 @@ class DependencyInjectorLoader(importlib.abc.Loader):
         return None
 
 
-class Loader(importlib.abc.Loader):
-    """"""
-
-    _COMMON_PREFIX = "myapp.virtual."
-
-    def __init__(self):
-        self._services = {}
-        # create a dummy module to return when Python attempts to import
-        # myapp and myapp.virtual, the :-1 removes the last "." for
-        # aesthetic reasons :)
-        self._dummy_module = types.ModuleType(self._COMMON_PREFIX[:-1])
-        # set __path__ so Python believes our dummy module is a package
-        # this is important, since otherwise Python will believe our
-        # dummy module can have no submodules
-        self._dummy_module.__path__ = []
-
-    @override
-    def create_module(self, spec: importlib.machinery.ModuleSpec) -> OM:
-        """"""
-        print(spec.name, spec, "HI")
-        return importlib.import_module(spec.name)
-
-    @override
-    def exec_module(self, module: M) -> N:
-        """"""
-        return None
-
-
 class MetaPathFinder(importlib.abc.MetaPathFinder):
     """"""
 
     @override
     def find_spec(self, fullname: S, path: SO, target: OM = None) -> MS:
         """"""
-        # ignore(path)
-        # ignore(target)
-        prefix = "celestine."
-        name = fullname
-        print("spec", fullname, path, target)
-        if name.startswith(prefix):
+        ignore(path)
+        ignore(target)
+        prefix = "celestine.package."
+        if fullname.startswith(prefix):
             print("TRUE", fullname)
-            return importlib.machinery.ModuleSpec(name, loader)
+            return importlib.machinery.ModuleSpec(fullname, loader)
         if loaderIn.provides(fullname):
-            return importlib.machinery.ModuleSpec(name, loaderIn)
+            return importlib.machinery.ModuleSpec(fullname, loaderIn)
         return None
 
 
