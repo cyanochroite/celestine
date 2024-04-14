@@ -1,4 +1,8 @@
-""""""
+"""
+Define types here.
+
+Generator[YieldType, SendType, ReturnType]
+"""
 
 import collections.abc
 import io
@@ -8,6 +12,8 @@ import types
 import typing
 from collections.abc import Callable as C
 from collections.abc import Generator as G
+from collections.abc import Sequence
+from importlib.machinery import ModuleSpec
 from typing import Dict as D
 from typing import List as L
 from typing import Optional as O
@@ -55,6 +61,7 @@ type GS = G[S, N, N]
 type OB = O[B]
 type OF = O[F]
 type OI = O[I]
+type OM = O[M]
 type OP = O[P]
 type OS = O[S]
 
@@ -79,6 +86,13 @@ type BOX = T[I, I, I, I]
 type PAIR = T[I, I]
 type AD = D[S, Argument]  # session.argument
 type AI = collections.abc.Iterable[T[S, Argument]]  # session.argument
+
+type SS = Sequence[S] | N
+type MS = ModuleSpec | N
+
+
+def ignore(_: A) -> N:
+    """"""
 
 
 def string(*characters: S) -> S:

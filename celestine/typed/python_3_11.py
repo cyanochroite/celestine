@@ -12,6 +12,8 @@ import types
 import typing
 from collections.abc import Callable as C
 from collections.abc import Generator as G
+from collections.abc import Sequence
+from importlib.machinery import ModuleSpec
 from typing import Dict as D
 from typing import List as L
 from typing import Optional as O
@@ -56,6 +58,7 @@ GS: TA = G[S, N, N]
 OB: TA = O[B]
 OF: TA = O[F]
 OI: TA = O[I]
+OM: TA = O[M]
 OP: TA = O[P]
 OS: TA = O[S]
 
@@ -81,6 +84,13 @@ BOX: TA = T[I, I, I, I]
 PAIR: TA = T[I, I]
 AD: TA = D[S, A]
 AI: TA = collections.abc.Iterable[T[S, A]]
+
+SS: TA = Sequence[S] | N
+MS: TA = ModuleSpec | N
+
+
+def ignore(_: A) -> N:
+    """"""
 
 
 def override(function: A) -> A:
