@@ -47,8 +47,8 @@ class CelestineMetaFinder(MetaPathFinder):
 def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     """Run the main program."""
     sys.meta_path.insert(0, CelestineMetaFinder())
-
     begin_session(argument_list, exit_on_error, **star)
+
     with bank.window:
         for name, function in bank.code.items():
             bank.window.code[name] = function

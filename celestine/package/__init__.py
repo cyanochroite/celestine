@@ -33,9 +33,11 @@ from celestine.typed import (
     R,
     S,
     T,
+    ignore,
 )
 from celestine.unicode import (
     ESCAPE,
+    FULL_STOP,
     SPACE,
 )
 from celestine.window.collection import (
@@ -44,7 +46,6 @@ from celestine.window.collection import (
 )
 
 CELESTINE = "celestine"
-FULL_STOP = "."
 
 
 def project_path() -> P:
@@ -527,52 +528,41 @@ class _pillow(Abstract):
 class Loader(importlib.abc.Loader):
     """"""
 
-    _COMMON_PREFIX = "myapp.virtual."
-
-    def __init__(self):
-        self._services = {}
-        # create a dummy module to return when Python attempts to import
-        # myapp and myapp.virtual, the :-1 removes the last "." for
-        # aesthetic reasons :)
-        self._dummy_module = types.ModuleType(self._COMMON_PREFIX[:-1])
-        # set __path__ so Python believes our dummy module is a package
-        # this is important, since otherwise Python will believe our
-        # dummy module can have no submodules
-        self._dummy_module.__path__ = []
-
     @override
     def create_module(self, spec: importlib.machinery.ModuleSpec) -> OM:
         """"""
-        names = spec.name.split(".")
-        name = names[-1]
-
-        print(spec.name, name, "HI")
+        name = spec.name[self.skip :]
         match name:
             case "autoflake":
-                return _autoflake(name)
+                module = _autoflake(name)
             case "black":
-                return _black(name)
+                module = _black(name)
             case "curses":
-                return _curses(name)
+                module = _curses(name)
             case "dearpygui":
-                return _dearpygui(name)
+                module = _dearpygui(name)
             case "isort":
-                return _isort(name)
+                module = _isort(name)
             case "pillow":
-                return _pillow(name)
+                module = _pillow(name)
             case "platformdirs":
-                return _platformdirs(name)
+                module = _platformdirs(name)
             case "pydocstringformatter":
-                return _pydocstringformatter(name)
+                module = _pydocstringformatter(name)
             case "pygame":
-                return _pygame(name)
+                module = _pygame(name)
             case "pyupgrade":
-                return _pyupgrade(name)
+                module = _pyupgrade(name)
             case "tkinter":
-                return _tkinter(name)
+                module = _tkinter(name)
             case _:
-                return None
+                module = None
+        return module
 
     @override
     def exec_module(self, module: M) -> N:
-        return None
+        """"""
+        ignore(module)
+
+    def __init__(self):
+        self.skip = len("celestine.package.")
