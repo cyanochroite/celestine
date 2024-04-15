@@ -1,5 +1,5 @@
 """Python Game Development."""
-from celestine.package._abstract import Abstract
+from celestine.package import Abstract
 from celestine.typed import (
     A,
     M,

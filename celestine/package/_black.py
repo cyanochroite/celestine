@@ -2,7 +2,7 @@
 
 import sys
 
-from celestine.package._abstract import Abstract
+from celestine.package import Abstract
 from celestine.typed import (
     M,
     N,

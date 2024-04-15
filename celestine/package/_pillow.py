@@ -6,7 +6,7 @@ from celestine import (
     bank,
     load,
 )
-from celestine.package._abstract import Abstract
+from celestine.package import Abstract
 from celestine.typed import (
     IMAGE,
     LI,
