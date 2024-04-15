@@ -531,7 +531,7 @@ class Loader(importlib.abc.Loader):
     @override
     def create_module(self, spec: importlib.machinery.ModuleSpec) -> OM:
         """"""
-        name = spec.name[self.skip :]
+        name = spec.name[self.skip:]
         match name:
             case "autoflake":
                 module = _autoflake(name)
