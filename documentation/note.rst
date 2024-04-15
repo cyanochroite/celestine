@@ -332,3 +332,8 @@ if you have more then 1 language you must use language/__init__.py
 # WHALE, # location of configuration file
 # DIRECTORY, curent working directory of application: security
 
+
+
+Root modules should have minimal dependecies.
+root data package causing a lot of problems
+remove repeated data of load and data
