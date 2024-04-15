@@ -96,12 +96,5 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     bank.interface = load.module(INTERFACE, session1.interface)
     bank.language = load.module(LANGUAGE, session1.language)
     bank.main = next(iter(main))
-
-    module = load.module("package")
-    for name in load.argument(PACKAGE):
-        attribute = load.attribute(PACKAGE, name, "Package")
-        package = attribute(name)
-        setattr(module, name, package)
-
     bank.view = view | main
     bank.window = bank.interface.Window(**star)

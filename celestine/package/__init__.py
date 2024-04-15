@@ -4,29 +4,20 @@ import importlib.abc
 import importlib.machinery
 import os
 import pathlib
-import random
 import sys
 import types
 import typing
 from typing import override
 
-from celestine import (
-    bank,
-    package,
-)
+from celestine import package
 from celestine.typed import (
     GP,
-    IMAGE,
-    LI,
     LP,
     LS,
     OS,
-    A,
     B,
     D,
     G,
-    I,
-    K,
     M,
     N,
     P,
@@ -35,15 +26,19 @@ from celestine.typed import (
     T,
     ignore,
 )
-from celestine.unicode import (
-    ESCAPE,
-    FULL_STOP,
-    SPACE,
-)
-from celestine.window.collection import (
-    Plane,
-    Point,
-)
+from celestine.unicode import FULL_STOP
+
+from ._autoflake import Package as _autoflake
+from ._black import Package as _black
+from ._curses import Package as _curses
+from ._dearpygui import Package as _dearpygui
+from ._isort import Package as _isort
+from ._pillow import Package as _pillow
+from ._platformdirs import Package as _platformdirs
+from ._pydocstringformatter import Package as _pydocstringformatter
+from ._pygame import Package as _pygame
+from ._pyupgrade import Package as _pyupgrade
+from ._tkinter import Package as _tkinter
 
 CELESTINE = "celestine"
 
@@ -203,326 +198,6 @@ type SO = typing.Sequence[str] | None
 type OM = types.ModuleType | None
 type MS = importlib.machinery.ModuleSpec | None
 type N = None
-
-
-class _autoflake(Abstract):
-    """Removes unused imports and unused variables."""
-
-
-class _black(Abstract):
-    """The uncompromising code formatter."""
-
-    def main(self, package: M, path: S) -> N:
-        """"""
-        sys.argv.append(path)
-        package.patched_main()
-
-
-class _curses(Abstract):
-    """Terminal handling for character-cell displays."""
-
-    def window(self, column: I, row: I, width: I, height: I) -> A:
-        """"""
-        nlines = height
-        ncols = width
-        begin_y = row
-        begin_x = column
-        return self.package.newwin(nlines, ncols, begin_y, begin_x)
-
-    def subwindow(
-        self, window, column: I, row: I, width: I, height: I
-    ) -> A:
-        """"""
-        nlines = height
-        ncols = width
-        begin_y = row
-        begin_x = column
-        return window.subwin(nlines, ncols, begin_y, begin_x)
-
-    def __getattr__(self, name: S) -> A:
-        result = None
-        match name:
-            case "KEY_EXIT":
-                result = ord(ESCAPE)
-            case "KEY_CLICK":
-                result = ord(SPACE)
-            case "space":
-                result = 32
-            case "quit":
-                result = 113
-            case "down":
-                result = 258
-            case "up":
-                result = 259
-            case "left":
-                result = 260
-            case "right":
-                result = 261
-            case "initscr":
-                # This a temporary fix for windows-curses.
-                # https://github.com/zephyrproject-rtos/windows-curses/
-                # issues/50#issuecomment-1840485627
-                _curses = package("_curses")
-                for key, value in _curses.__dict__.items():
-                    if key[0:4] == "ACS_" or key in ("LINES", "COLS"):
-                        setattr(self.package, key, value)
-                result = _curses.initscr
-            case _:
-                result = getattr(self.package, name)
-        return result
-
-
-class _dearpygui(Abstract):
-    """DearPyGui: A simple Python GUI Toolkit."""
-
-    def tag_root(self, tag: S) -> S:
-        """"""
-        root = tag.split("_")[0]
-        combine = f"{root}"
-        return combine
-
-    def __init__(self, name: S, **star: R) -> N:
-        super().__init__(name, pypi="dearpygui.dearpygui")
-
-
-class _isort(Abstract):
-    """A Python utility / library to sort Python imports."""
-
-    def module(self) -> LS:
-        """"""
-        return ["main"]
-
-
-class _platformdirs(Abstract):
-    """A package for determining appropriate platform-specific dirs."""
-
-    def __init__(self, name, pypi=None, **star):
-        self.directory = pathlib.Path(os.getcwd())
-
-
-class _pydocstringformatter(Abstract):
-    """A tool to automatically format Python docstrings."""
-
-    def main(self, package: M, path: S) -> N:
-        """
-        This package is troublesome.
-
-        It can't find the pyproject file unless run from root directory.
-        Exclude argument simply does not work.
-        Manually feeding it files works.
-        """
-        location = os.getcwd()
-        os.chdir(sys.path[0])
-
-        files = walk_python(path, [], ["unicode"])
-
-        file = map(str, files)
-        argv = [*file]
-        package.run_docstring_formatter(argv)
-
-        os.chdir(location)
-
-
-class _pygame(Abstract):
-    """Python Game Development."""
-
-    image: M
-
-    def __getattr__(self, name: S) -> A:
-        result = None
-        match name:
-            case _:
-                result = getattr(self.package, name)
-        return result
-
-
-class _pyupgrade(Abstract):
-    """Removes unused imports and unused variables."""
-
-    def main(self, package: M, path: S) -> N:
-        """
-        This package has no configuration file options.
-
-        Since no way to configure exclude files, we do it ourself.
-        """
-        # TODO: This is breaking the language files. Find out why.
-        files = walk_python(path, [], ["language"])
-
-        file = map(str, files)
-        argv = [*file, "--py311-plus"]
-        package.main(argv)
-
-    def module(self) -> LS:
-        """"""
-        return ["_main"]
-
-
-class _tkinter(Abstract):
-    """Python interface to Tcl/Tk."""
-
-
-########################################################################
-COLORS = 15  # int(255 - 8 / 16)
-
-
-class Image:
-    """"""
-
-    image: IMAGE
-
-    def brightwing(self):
-        """
-        Brightwing no like the dark colors.
-
-        Make image bright.
-        """
-
-        def brighter(pixel: I) -> I:
-            invert = (255 - pixel) / 255
-            boost = invert * 64
-            shift = pixel + boost
-            return shift
-
-        hue, saturation, value = self.image.convert("HSV").split()
-        new_value = value.point(brighter)
-
-        bands = (hue, saturation, new_value)
-
-        merge = package.pillow.Image.merge("HSV", bands)
-        self.image = merge.convert("RGB")
-
-    @classmethod
-    def clone(cls, self: K) -> K:
-        """"""
-        image = self.image.copy()
-        return cls(image)
-
-    def convert(self, mode: S) -> N:
-        """"""
-        matrix = None  # Unused default.
-        dither = package.pillow.Image.Dither.FLOYDSTEINBERG
-        palette = package.pillow.Image.Palette.WEB  # Unused default.
-        colors = 256  # Unused default.
-
-        hold = self.image.convert(mode, matrix, dither, palette, colors)
-        self.image = hold
-
-    def convert_to_alpha(self) -> N:
-        """"""
-        self.convert("RGBA")
-
-    def convert_to_color(self) -> N:
-        """"""
-        self.convert("RGB")
-
-    def convert_to_mono(self) -> N:
-        """"""
-        self.convert("1")
-
-    def copy(self) -> K:
-        """"""
-        return self.clone(self)
-
-    def getdata(self) -> LI:
-        """"""
-        return self.image.getdata()
-
-    @property
-    def size(self):
-        """"""
-        return self.image.size
-
-    def resize(self, point: Point) -> N:
-        """"""
-        size = point.value
-        resample = package.pillow.Image.Resampling.LANCZOS
-        box = None
-        reducing_gap = None
-        self.image = self.image.resize(
-            size,
-            resample,
-            box,
-            reducing_gap,
-        )
-
-    def paste(self, image: K, plane: Plane) -> N:
-        """"""
-        im = image.image
-        box = plane.value
-        mask = None
-        self.image.paste(im, box, mask)
-
-    def quantize(self):
-        """"""
-        pillow = bank.package.pillow
-        # Median Cut only works in RGB mode.
-        self.convert_to_color()
-
-        colors = COLORS
-        method = pillow.Image.Quantize.MEDIANCUT
-        kmeans = 0
-        palette = None
-        dither = pillow.Image.Dither.FLOYDSTEINBERG
-
-        self.image = self.image.quantize(
-            colors, method, kmeans, palette, dither
-        )
-
-    def __init__(self, image: IMAGE, **star: R):
-        self.image = image
-
-
-class _pillow(Abstract):
-    """Python Imaging Library (Fork)."""
-
-    def new(self, size: T[I, I]) -> Image:
-        """"""
-        mode = "RGBA"
-        color = (250, 250, 0, 250)
-        color = (
-            random.randint(0, 255),
-            random.randint(0, 255),
-            random.randint(0, 255),
-            255,
-        )
-
-        image = self.package.Image.new(mode, size, color)
-
-        item = Image(image)
-        return item
-
-    def open(self, path: P) -> Image:
-        """"""
-        file = self.package.Image.open(
-            fp=path,
-            mode="r",
-            formats=None,
-        )
-
-        image = file.convert(
-            mode="RGBA",
-            matrix=None,
-            dither=self.package.Image.Dither.NONE,
-            palette=self.package.Image.Palette.ADAPTIVE,
-            colors=256,
-        )
-
-        item = Image(image)
-        return item
-
-    def extension(self) -> LS:
-        """"""
-        dictionary = self.package.Image.registered_extensions()
-        items = dictionary.items()
-        values = self.package.Image.OPEN
-        result = [key for key, value in items if value in values]
-        result.sort()
-        return result
-
-    def __init__(self, name: S, **star: R) -> N:
-        super().__init__(name, pypi="PIL")
-        if self.package:
-            setattr(self, "ImageTk", package("PIL", "ImageTk"))
 
 
 class Loader(importlib.abc.Loader):

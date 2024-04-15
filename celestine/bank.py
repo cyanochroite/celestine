@@ -23,7 +23,6 @@ directory: P = None
 interface: M = None
 language: M = None
 main: S = None
-package: M = None  # Package
 view: D[S, C] = None
 window: M = None
 

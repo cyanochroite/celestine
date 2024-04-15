@@ -34,6 +34,8 @@ class CelestineMetaFinder(MetaPathFinder):
         """"""
         ignore(path)
         ignore(target)
+        if fullname.startswith("celestine.package._"):
+            return None
         if fullname.startswith("celestine.package."):
             return ModuleSpec(fullname, self.loader)
         return None
