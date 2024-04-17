@@ -1,11 +1,10 @@
 """"""
 
 import importlib
+import importlib.abc
+import importlib.machinery
 import sys
-from importlib.abc import (
-    Loader,
-    MetaPathFinder,
-)
+from importlib.abc import MetaPathFinder
 from importlib.machinery import ModuleSpec
 
 from celestine import bank
@@ -16,39 +15,20 @@ from celestine.typed import (
     OM,
     SS,
     B,
+    M,
     N,
     R,
     S,
     ignore,
     override,
 )
-
-
-class CelestineMetaFinder(MetaPathFinder):
-    """"""
-
-    loader: Loader
-
-    @override
-    def find_spec(self, fullname: S, path: SS, target: OM = None) -> MS:
-        """"""
-        ignore(path)
-        ignore(target)
-        if fullname.startswith("celestine.package._"):
-            return None
-        if fullname.startswith("celestine.package."):
-            return ModuleSpec(fullname, self.loader)
-        return None
-
-    @override
-    def __init__(self) -> None:
-        package = importlib.import_module("celestine.package")
-        self.loader = getattr(package, "Loader")()
+from celestine.unicode import FULL_STOP
+from celestine.loader import loader
 
 
 def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     """Run the main program."""
-    sys.meta_path.insert(0, CelestineMetaFinder())
+    loader()
     begin_session(argument_list, exit_on_error, **star)
 
     with bank.window:
