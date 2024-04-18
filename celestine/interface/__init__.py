@@ -295,7 +295,7 @@ class View(Abstract, Tree):
 
     def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
         if exc_type or exc_value or traceback:
-            print("ERROR")
+            print("ERROR", exc_type, exc_value, traceback)
         return False
 
     def __init__(

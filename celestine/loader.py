@@ -4,26 +4,25 @@ import importlib
 import importlib.abc
 import importlib.machinery
 import sys
+import types
 from importlib.abc import MetaPathFinder
 from importlib.machinery import ModuleSpec
 
-from celestine import bank
-from celestine.session import begin_session
 from celestine.typed import (
     LS,
     MS,
     OM,
     SS,
-    B,
     M,
+    D,
+    A,
+    S,
     N,
-    R,
     S,
     ignore,
     override,
 )
 from celestine.unicode import FULL_STOP
-import types
 
 
 def _package(base: S, *path: S) -> M:
@@ -32,6 +31,24 @@ def _package(base: S, *path: S) -> M:
     name = FULL_STOP.join(iterable)
     result = importlib.import_module(name)
     return result
+
+
+def _dictionary_items(_module):
+    _dictionary = vars(_module)
+    _items = _dictionary.items()
+    return _items
+
+
+class Magic:
+    """"""
+
+    dictionary: D[S, S]
+
+    def __getattr__(self, name: S) -> S:
+        return self.dictionary.get(name)
+
+    def __init__(self, dictionary: D[S, S]) -> N:
+        self.dictionary = dictionary
 
 
 class LanguageLoader(importlib.abc.Loader):
@@ -62,6 +79,19 @@ class LanguageLoader(importlib.abc.Loader):
         call = getattr(thing, "Package")
         module = call(partition[2])
         return module
+
+    def create_module(self, spec):
+        """"""
+        partition = spec.name.rpartition(FULL_STOP)
+        name = partition[2]
+        print(f">>{name}<<")
+        if name in ["en", "fr"]:
+            return self.module
+        module = _package("celestine.language.en")
+        car = vars(module)
+        pig = Magic(car)
+        return pig
+        # module = FrontendModule()
 
     @override
     def exec_module(self, module: M) -> N:
@@ -114,28 +144,22 @@ class DependencyInjectorLoader(importlib.abc.Loader):
     """"""
 
     _COMMON_PREFIX = "myapp.virtual."
-    name = "myapp.virtual"
+    _name = "myapp.virtual"
+
+    @override
+    def exec_module(self, module: M) -> N:
+        """"""
+        ignore(module)
 
     def __init__(self):
-        self._services = {
-            "frontend": FrontendModule()
-        }
-        self.module = types.ModuleType("myapp.virtual")
+        self._services = {"frontend": FrontendModule()}
+        self.module = types.ModuleType(self._name)
         self.module.__path__ = []
-
-    def provides(self, fullname):
-        """"""
-        if self._truncate_name(fullname) in self._services:
-            return True
-
-        # this checks if we should return the dummy module,
-        # since this evaluates to True when importing myapp and
-        # myapp.virtual
-        return self._COMMON_PREFIX.startswith(fullname)
 
     def create_module(self, spec):
         """"""
-        service_name = self._truncate_name(spec.name)
+        truncate_name = spec.name[len(self._COMMON_PREFIX):]
+        service_name = truncate_name
         if service_name not in self._services:
             # return our dummy module since at this point we're loading
             # *something* along the lines of "myapp.virtual" that's not
@@ -143,19 +167,6 @@ class DependencyInjectorLoader(importlib.abc.Loader):
             return self.module
         module = self._services[service_name]
         return module
-
-    def exec_module(self, module):
-        """Execute the given module in its own namespace
-        This method is required to be present by importlib.abc.Loader,
-        but since we know our module object is already fully-formed,
-        this method merely no-ops.
-        """
-
-    def _truncate_name(self, fullname):
-        """Strip off _COMMON_PREFIX from the given module name
-        Convenience method when checking if a service is provided.
-        """
-        return fullname[len(self._COMMON_PREFIX):]
 
 
 class CelestineMetaFinder(MetaPathFinder):
@@ -171,7 +182,7 @@ class CelestineMetaFinder(MetaPathFinder):
         ignore(target)
 
         partition = fullname.rpartition(FULL_STOP)
-        name = partition[2]
+        partition[2]
         language = [
             "bg",
             "cs",
@@ -212,13 +223,17 @@ class CelestineMetaFinder(MetaPathFinder):
     def __init__(self) -> N:
         self._loader = DependencyInjectorLoader()
         self.language = LanguageLoader()
-        self.language = DependencyInjectorLoader()
         self.package = PackageLoader()
 
     def find_spec(self, fullname, path, target=None):
         """"""
-        if self._loader.provides(fullname):
+
+        if fullname.startswith("myapp"):
             return ModuleSpec(fullname, self._loader)
+
+        if fullname.startswith("celestine.sign"):
+            return ModuleSpec(fullname, self.language)
+
         if fullname.startswith("celestine.package._"):
             return None
         if fullname.startswith("celestine.package."):
