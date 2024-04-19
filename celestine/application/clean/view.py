@@ -5,8 +5,6 @@ from celestine.interface import View
 from celestine.typed import N
 from celestine import language
 
-import celestine.language as language
-
 
 @main
 def enter(view: View) -> N:

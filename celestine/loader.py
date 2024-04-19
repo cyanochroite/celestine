@@ -34,36 +34,6 @@ def _package(base: S, *path: S) -> M:
     return result
 
 
-class Magic:
-    """"""
-
-    dictionary: D[S, S]
-
-    def __getattr__(self, name: S) -> S:
-        return self.dictionary.get(name)
-
-    def __init__(self, dictionary: D[S, S]) -> N:
-        self.dictionary = dictionary
-
-
-class LanguageLoader(importlib.machinery.SourcelessFileLoader):
-    """"""
-
-    language: LS
-
-    @override
-    def exec_module(self, module: M) -> N:
-        """"""
-        dictionary = vars(module)
-        magic = Magic(dictionary)
-        return magic
-
-    @override
-    def __init__(self) -> N:
-        self.module = types.ModuleType("celestine.sign")
-        self.module.__path__ = []
-
-
 class PackageLoader(importlib.abc.Loader):
     """"""
 
@@ -90,7 +60,6 @@ class PackageLoader(importlib.abc.Loader):
 class CelestineMetaFinder(MetaPathFinder):
     """"""
 
-    language: LanguageLoader
     package: PackageLoader
 
     @override
@@ -98,9 +67,6 @@ class CelestineMetaFinder(MetaPathFinder):
         """"""
         ignore(path)
         ignore(target)
-
-        if fullname.startswith("celestine.language."):
-            return ModuleSpec(fullname, self.language)
 
         if fullname.startswith("celestine.package._"):
             return None
@@ -110,7 +76,6 @@ class CelestineMetaFinder(MetaPathFinder):
 
     @override
     def __init__(self) -> N:
-        self.language = LanguageLoader()
         self.package = PackageLoader()
 
 
