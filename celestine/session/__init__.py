@@ -103,3 +103,4 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     language = load.package(CELESTINE, LANGUAGE)
     for key, value in vars(bank.language).items():
         setattr(language, key, value)
+

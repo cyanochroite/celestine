@@ -1,7 +1,7 @@
 """Terminal handling for character-cell displays."""
 
 from celestine import load
-from celestine.package import Abstract
+from celestine.package.abstract import Abstract
 from celestine.typed import (
     A,
     I,

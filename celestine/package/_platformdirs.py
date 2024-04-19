@@ -3,7 +3,7 @@
 import os
 import pathlib
 
-from celestine.package import Abstract
+from celestine.package.abstract import Abstract
 
 try:
     import platformdirs

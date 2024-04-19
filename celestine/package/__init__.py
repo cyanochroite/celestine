@@ -7,6 +7,7 @@ import os
 import pathlib
 import sys
 
+import package
 from celestine.typed import (
     LS,
     OS,
@@ -40,69 +41,22 @@ def _project_path() -> P:
     return directory
 
 
-class Abstract:
-    """"""
+def magic(name: S) -> M:
+    thing = _package(f"celestine.package._{name}")
+    call = getattr(thing, "Package")
+    module = call(name)
+    return module
 
-    name: S
-    package: M | N
 
-    def main(self, package: M, path: S) -> N:
-        """"""
-        sys.argv.append(path)
-        package.main()
-
-    def module(self) -> LS:
-        """The 'import PACKAGE.MODULE' name."""
-        return []
-
-    def run(self) -> N:
-        """"""
-
-        if not self.package:
-            return
-
-        argv = sys.argv
-
-        path = str(_project_path())
-        sys.argv = [path, path]
-        try:
-            module = _package(self.name, *self.module())
-            self.main(module, path)
-        except SystemExit:
-            pass
-
-        sys.argv = argv
-
-    def __bool__(self) -> B:
-        return self.package is not None
-
-    def __getattr2__(self, name: S) -> S:
-        return getattr(self.package, name)
-
-    def __init__(self, name: S, pypi: OS = None, **star: R) -> N:
-        self.name = name
-        self.pypi = pypi or name
-
-        # pygame prints an anoying message on import
-        # so this here to hide any messages a package may print
-        # when being imported
-        sys_stdout = sys.stdout
-
-        with open(
-            os.devnull,
-            "w",
-            encoding="utf-8",
-            # stream.Mode.WRITE_TEXT.value,
-            # encoding=stream.Encoding.UTF_8.value,
-        ) as stdout:
-            sys.stdout = stdout  # as TextIO
-            try:
-                self.package = _package(self.pypi)
-            except ModuleNotFoundError:
-                self.package = None
-                # found = f"Package '{self.name}' not found."
-                # install = f"Install with 'pip install {self.pypi}'."
-                # message = f"{found} {install}"
-                # logging.warning(message)
-
-        sys.stdout = sys_stdout
+autoflake = magic("autoflake")
+black = magic("black")
+blender = magic("blender")
+curses = magic("curses")
+dearpygui = magic("dearpygui")
+isort = magic("isort")
+pillow = magic("pillow")
+platformdirs = magic("platformdirs")
+pydocstringformatter = magic("pydocstringformatter")
+pygame = magic("pygame")
+pyupgrade = magic("pyupgrade")
+tkinterpy = magic("tkinter")

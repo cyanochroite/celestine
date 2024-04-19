@@ -1,6 +1,6 @@
 """"""
 
-from celestine.session import Abstract
+from celestine.package.abstract import Abstract
 from celestine.typed import (
     N,
     R,
