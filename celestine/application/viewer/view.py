@@ -1,6 +1,6 @@
 """"""
 
-from celestine import bank
+from celestine import language
 from celestine.data import (
     main,
     scene,
@@ -25,7 +25,7 @@ def display(view: View) -> N:
     view.button(
         "load",
         "setup",
-        text=bank.language.VIEWER_MAIN_BUTTON,
+        text=language.VIEWER_MAIN_BUTTON,
     )
     with view.zone("grid", row=2, col=4, mode=Zone.GRID) as grid:
         for name, _ in grid:

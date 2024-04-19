@@ -1,6 +1,7 @@
 """Application for translating text to other languages."""
 
 
+from celestine import language
 from celestine.session.argument import Optional
 from celestine.session.session import (
     AD,
@@ -27,14 +28,14 @@ class Session(SuperSession):
         return {
             KEY: Optional(
                 NONE,
-                core.language.TRANSLATOR_SESSION_KEY,
+                language.TRANSLATOR_SESSION_KEY,
             ),
             REGION: Optional(
                 NONE,
-                core.language.TRANSLATOR_SESSION_REGION,
+                language.TRANSLATOR_SESSION_REGION,
             ),
             URL: Optional(
                 NONE,
-                core.language.TRANSLATOR_SESSION_URL,
+                language.TRANSLATOR_SESSION_URL,
             ),
         }

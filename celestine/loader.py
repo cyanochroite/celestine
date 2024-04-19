@@ -1,23 +1,18 @@
 """"""
 
 import importlib
-import importlib.util
 import importlib.abc
 import importlib.machinery
+import importlib.util
 import sys
-import types
 from importlib.abc import MetaPathFinder
 from importlib.machinery import ModuleSpec
 
 from celestine.typed import (
-    LS,
     MS,
     OM,
     SS,
     M,
-    D,
-    A,
-    S,
     N,
     S,
     ignore,

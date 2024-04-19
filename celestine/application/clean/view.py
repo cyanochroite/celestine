@@ -1,9 +1,9 @@
 """"""
 
+from celestine import language
 from celestine.data import main
 from celestine.interface import View
 from celestine.typed import N
-from celestine import language
 
 
 @main

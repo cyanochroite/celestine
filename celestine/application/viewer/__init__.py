@@ -3,6 +3,7 @@
 # from celestine.application.viewer.core import os
 import os
 
+from celestine import language
 from celestine.session.argument import Optional
 from celestine.session.session import (
     AD,
@@ -22,6 +23,6 @@ class Session(SuperSession):
         return super().dictionary(core) | {
             "output": Optional(
                 os.getcwd(),
-                core.language.VIEWER_SESSION_DIRECTORY,
+                language.VIEWER_SESSION_DIRECTORY,
             ),
         }
