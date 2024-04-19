@@ -2,7 +2,8 @@
 
 
 import pathlib
-
+import importlib
+import sys
 from celestine import (
     bank,
     load,
@@ -75,6 +76,12 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     code: D[S, C] = {}
     main: D[S, C] = {}
     view: D[S, C] = {}
+
+    # Override language
+    module = importlib.import_module("celestine.language.fr")
+    sys.modules["celestine.language"] = module
+    dog = sys.modules
+    # end
 
     modules = load.modules(APPLICATION, application)
     for module in modules:

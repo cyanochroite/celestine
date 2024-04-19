@@ -1,6 +1,7 @@
 """"""
 
 import importlib
+import importlib.util
 import importlib.abc
 import importlib.machinery
 import sys
@@ -33,12 +34,6 @@ def _package(base: S, *path: S) -> M:
     return result
 
 
-def _dictionary_items(_module):
-    _dictionary = vars(_module)
-    _items = _dictionary.items()
-    return _items
-
-
 class Magic:
     """"""
 
@@ -51,52 +46,17 @@ class Magic:
         self.dictionary = dictionary
 
 
-class LanguageLoader(importlib.abc.Loader):
+class LanguageLoader(importlib.machinery.SourcelessFileLoader):
     """"""
 
     language: LS
 
     @override
-    def create_module(self, spec: importlib.machinery.ModuleSpec) -> OM:
-        """"""
-        if spec.name == "celestine.sign":
-            print("doggy", spec.name, self.module)
-            return self.module
-
-        name = "celestine.language.en"
-        module = _package(name)
-        print("MOO", spec.name, module)
-        return module
-
-        print("spec2", spec.name)
-        partition = spec.name.rpartition(FULL_STOP)
-        name = partition[2]
-        if name in self.language:
-            return None
-        return None
-
-        thing = _package(name)
-        call = getattr(thing, "Package")
-        module = call(partition[2])
-        return module
-
-    def create_module(self, spec):
-        """"""
-        partition = spec.name.rpartition(FULL_STOP)
-        name = partition[2]
-        print(f">>{name}<<")
-        if name in ["en", "fr"]:
-            return self.module
-        module = _package("celestine.language.en")
-        car = vars(module)
-        pig = Magic(car)
-        return pig
-        # module = FrontendModule()
-
-    @override
     def exec_module(self, module: M) -> N:
         """"""
-        ignore(module)
+        dictionary = vars(module)
+        magic = Magic(dictionary)
+        return magic
 
     @override
     def __init__(self) -> N:
@@ -122,51 +82,9 @@ class PackageLoader(importlib.abc.Loader):
         """"""
         ignore(module)
 
-
-""""""
-
-
-class FrontendModule:
-    """"""
-
-    class Popup:
-        """"""
-
-        def __init__(self, message):
-            self._message = message
-
-        def display(self):
-            """"""
-            print("Popup:", self._message)
-
-
-class DependencyInjectorLoader(importlib.abc.Loader):
-    """"""
-
-    _COMMON_PREFIX = "myapp.virtual."
-    _name = "myapp.virtual"
-
     @override
-    def exec_module(self, module: M) -> N:
-        """"""
-        ignore(module)
-
-    def __init__(self):
-        self._services = {"frontend": FrontendModule()}
-        self.module = types.ModuleType(self._name)
-        self.module.__path__ = []
-
-    def create_module(self, spec):
-        """"""
-        truncate_name = spec.name[len(self._COMMON_PREFIX):]
-        service_name = truncate_name
-        if service_name not in self._services:
-            # return our dummy module since at this point we're loading
-            # *something* along the lines of "myapp.virtual" that's not
-            # a service
-            return self.module
-        module = self._services[service_name]
-        return module
+    def __init__(self) -> N:
+        pass
 
 
 class CelestineMetaFinder(MetaPathFinder):
@@ -181,38 +99,9 @@ class CelestineMetaFinder(MetaPathFinder):
         ignore(path)
         ignore(target)
 
-        partition = fullname.rpartition(FULL_STOP)
-        partition[2]
-        language = [
-            "bg",
-            "cs",
-            "da",
-            "de",
-            "el",
-            "en",
-            "es",
-            "et",
-            "fi",
-            "fr",
-            "ga",
-            "hr",
-            "hu",
-            "it",
-            "lt",
-            "lv",
-            "mt",
-            "nl",
-            "pl",
-            "pt",
-            "ro",
-            "sk",
-            "sl",
-            "sv",
-        ]
-        if fullname.startswith("celestine.sign"):
-            candy = ModuleSpec(fullname, self.language)
-            print("candy", candy)
-            return candy
+        if fullname.startswith("celestine.language."):
+            return ModuleSpec(fullname, self.language)
+
         if fullname.startswith("celestine.package._"):
             return None
         if fullname.startswith("celestine.package."):
@@ -221,24 +110,8 @@ class CelestineMetaFinder(MetaPathFinder):
 
     @override
     def __init__(self) -> N:
-        self._loader = DependencyInjectorLoader()
         self.language = LanguageLoader()
         self.package = PackageLoader()
-
-    def find_spec(self, fullname, path, target=None):
-        """"""
-
-        if fullname.startswith("myapp"):
-            return ModuleSpec(fullname, self._loader)
-
-        if fullname.startswith("celestine.sign"):
-            return ModuleSpec(fullname, self.language)
-
-        if fullname.startswith("celestine.package._"):
-            return None
-        if fullname.startswith("celestine.package."):
-            return ModuleSpec(fullname, self.package)
-        return None
 
 
 def loader() -> N:
