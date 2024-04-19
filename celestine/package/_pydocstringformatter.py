@@ -3,7 +3,7 @@ import os
 import sys
 
 from celestine import load
-from celestine.package.abstract import Abstract
+from celestine.package import Abstract
 from celestine.typed import (
     M,
     N,

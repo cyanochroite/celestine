@@ -1,15 +1,16 @@
 """"""
 
 import importlib
+
 from celestine import bank
 from celestine.session import begin_session
 from celestine.typed import (
     LS,
     B,
+    M,
     N,
     R,
     S,
-    M,
 )
 
 

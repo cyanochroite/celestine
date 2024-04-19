@@ -1,7 +1,7 @@
 """DearPyGui: A simple Python GUI Toolkit."""
 
 
-from celestine.package.abstract import Abstract
+from celestine.package import Abstract
 from celestine.typed import (
     N,
     R,

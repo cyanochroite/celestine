@@ -12,8 +12,6 @@ from celestine.data import (
     code,
     normalize,
 )
-
-
 from celestine.package import (
     autoflake,
     black,

@@ -3,10 +3,8 @@
 import configparser
 import os
 
-from celestine import (
-    load,
-    stream,
-)
+from celestine import stream
+from celestine.package import platformdirs
 from celestine.typed import (
     OP,
     N,
@@ -17,7 +15,6 @@ from celestine.unicode import (
     NONE,
     POUND_SIGN,
 )
-from celestine.package import platformdirs
 
 from .data import FILE
 
