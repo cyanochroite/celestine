@@ -17,6 +17,7 @@ from celestine.unicode import (
     NONE,
     POUND_SIGN,
 )
+from celestine.package import platformdirs
 
 from .data import FILE
 
@@ -57,9 +58,9 @@ class Configuration:
 
     def __init__(self) -> N:
         """"""
-        module = load.module("package", "platformdirs")
-        path = os.path.join(module.directory, FILE)
-        self.path = path
+        self.path = "."
+        if platformdirs:
+            self.path = os.path.join(platformdirs.directory, FILE)
 
         defaults = None  # Default.
         dict_type = dict  # Default.

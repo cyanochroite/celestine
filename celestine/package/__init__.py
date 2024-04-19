@@ -7,7 +7,6 @@ import os
 import pathlib
 import sys
 
-import package
 from celestine.typed import (
     LS,
     OS,
@@ -48,15 +47,15 @@ def magic(name: S) -> M:
     return module
 
 
-autoflake = magic("autoflake")
-black = magic("black")
-blender = magic("blender")
-curses = magic("curses")
-dearpygui = magic("dearpygui")
-isort = magic("isort")
-pillow = magic("pillow")
-platformdirs = magic("platformdirs")
-pydocstringformatter = magic("pydocstringformatter")
-pygame = magic("pygame")
-pyupgrade = magic("pyupgrade")
-tkinterpy = magic("tkinter")
+autoflake = None
+black = None
+blender = None
+curses = None
+dearpygui = None
+isort = None
+pillow = None
+platformdirs = None
+pydocstringformatter = None
+pygame = None
+pyupgrade = None
+tkinterpy = None
