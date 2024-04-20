@@ -8,7 +8,7 @@ from celestine import (
     bank,
     load,
 )
-from celestine.text import (
+from celestine.literal import (
     APPLICATION,
     CELESTINE,
     INTERFACE,

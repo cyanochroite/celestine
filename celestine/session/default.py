@@ -1,7 +1,7 @@
 """"""
 
 from celestine import load
-from celestine.text import (
+from celestine.literal import (
     APPLICATION,
     INTERFACE,
     LANGUAGE,

@@ -1,10 +1,10 @@
 """"""
 
+from celestine.literal import VERSION_NUMBER
 from celestine.session.data import (
     Actions,
     Attributes,
 )
-from celestine.text import VERSION_NUMBER
 from celestine.typed import (
     AT,
     LS,

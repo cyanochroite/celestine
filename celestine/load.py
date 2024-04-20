@@ -6,7 +6,7 @@ import os
 import pathlib
 import sys
 
-from celestine.text import (
+from celestine.literal import (
     CELESTINE,
     FUNCTION,
     INIT,

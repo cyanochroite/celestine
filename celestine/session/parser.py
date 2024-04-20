@@ -3,7 +3,7 @@
 import argparse
 import io
 
-from celestine.text import CELESTINE
+from celestine.literal import CELESTINE
 from celestine.typed import (
     TYPE,
     B,

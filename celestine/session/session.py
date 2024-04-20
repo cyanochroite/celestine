@@ -2,6 +2,13 @@
 
 
 from celestine import load
+from celestine.literal import (
+    APPLICATION,
+    CONFIGURATION,
+    DIRECTORY,
+    INTERFACE,
+    LANGUAGE,
+)
 from celestine.session.argument import (
     Customization,
     InformationConfiguration,
@@ -13,13 +20,6 @@ from celestine.session.argument import (
 from celestine.session.data import (
     Actions,
     Values,
-)
-from celestine.text import (
-    APPLICATION,
-    CONFIGURATION,
-    DIRECTORY,
-    INTERFACE,
-    LANGUAGE,
 )
 from celestine.typed import (
     AD,

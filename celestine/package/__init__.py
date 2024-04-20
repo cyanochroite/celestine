@@ -7,7 +7,7 @@ import os
 import pathlib
 import sys
 
-from celestine.text import CELESTINE
+from celestine.literal import CELESTINE
 from celestine.typed import (
     LS,
     OS,

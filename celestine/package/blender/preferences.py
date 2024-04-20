@@ -2,7 +2,7 @@
 
 import bpy  # pylint: disable=import-error
 
-from celestine.text import CELESTINE
+from celestine.literal import CELESTINE
 
 
 def content():
