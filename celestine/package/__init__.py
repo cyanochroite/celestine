@@ -17,10 +17,7 @@ from celestine.typed import (
     R,
     S,
 )
-from celestine.unicode import (
-    FULL_STOP,
-    NONE,
-)
+from celestine.unicode import FULL_STOP
 
 CELESTINE = "celestine"
 
@@ -112,17 +109,3 @@ class Abstract:
                 # logging.warning(message)
 
         sys.stdout = sys_stdout
-
-
-autoflake = Abstract(NONE)
-black = Abstract(NONE)
-blender = Abstract(NONE)
-curses = Abstract(NONE)
-dearpygui = Abstract(NONE)
-isort = Abstract(NONE)
-pillow = Abstract(NONE)
-platformdirs = Abstract(NONE)
-pydocstringformatter = Abstract(NONE)
-pygame = Abstract(NONE)
-pyupgrade = Abstract(NONE)
-tkinterpy = Abstract(NONE)

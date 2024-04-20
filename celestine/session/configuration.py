@@ -1,10 +1,10 @@
 """"""
 
 import configparser
-import os
 
 from celestine import stream
-from celestine.package import platformdirs
+
+# from celestine.package import platformdirs
 from celestine.typed import (
     OP,
     N,
@@ -15,8 +15,6 @@ from celestine.unicode import (
     NONE,
     POUND_SIGN,
 )
-
-from .data import FILE
 
 CELESTINE = "celestine"
 VERSION_NUMBER = "2023.10.7"
@@ -56,8 +54,8 @@ class Configuration:
     def __init__(self) -> N:
         """"""
         self.path = "."
-        if platformdirs:
-            self.path = os.path.join(platformdirs.directory, FILE)
+        # if platformdirs:
+        #    self.path = os.path.join(platformdirs.directory, FILE)
 
         defaults = None  # Default.
         dict_type = dict  # Default.
