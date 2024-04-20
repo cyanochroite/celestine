@@ -25,7 +25,7 @@ class Package(Abstract):
         location = os.getcwd()
         os.chdir(sys.path[0])
 
-        files = load.walk_python(path, [], ["unicode"])
+        files = load.walk_python(path, [], [])
 
         file = map(str, files)
         argv = [*file]

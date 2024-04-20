@@ -29,6 +29,7 @@ from celestine.unicode import (
 
 
 def join(*iterable: S) -> S:
+    """"""
     return NONE.join(iterable)
 
 

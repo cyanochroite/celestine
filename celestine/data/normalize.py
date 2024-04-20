@@ -3,6 +3,16 @@
 import io
 
 from celestine import stream
+from celestine.data.alphabet2 import (
+    DIRECTIONAL_FORMATTING,
+    UNICODE,
+    unicode_break_hard,
+    unicode_break_soft,
+    unicode_identifier,
+    unicode_newline,
+    unicode_punctuation,
+    unicode_whitespace,
+)
 from celestine.typed import (
     GS,
     S,
@@ -19,16 +29,6 @@ from celestine.unicode import (
     QUOTATION_MARK,
     REVERSE_SOLIDUS,
     SPACE,
-)
-from celestine.unicode.alphabet2 import (
-    DIRECTIONAL_FORMATTING,
-    UNICODE,
-    unicode_break_hard,
-    unicode_break_soft,
-    unicode_identifier,
-    unicode_newline,
-    unicode_punctuation,
-    unicode_whitespace,
 )
 
 
