@@ -8,7 +8,10 @@ import sys
 
 from celestine.text import (
     CELESTINE,
+    FUNCTION,
+    INIT,
     PACKAGE,
+    PYTHON_EXTENSION,
 )
 from celestine.typed import (
     FN,
@@ -29,66 +32,9 @@ from celestine.typed import (
 )
 from celestine.unicode import (
     FULL_STOP,
-    LATIN_SMALL_LETTER_A,
-    LATIN_SMALL_LETTER_C,
-    LATIN_SMALL_LETTER_E,
-    LATIN_SMALL_LETTER_F,
-    LATIN_SMALL_LETTER_G,
-    LATIN_SMALL_LETTER_I,
-    LATIN_SMALL_LETTER_K,
-    LATIN_SMALL_LETTER_N,
-    LATIN_SMALL_LETTER_O,
-    LATIN_SMALL_LETTER_P,
-    LATIN_SMALL_LETTER_T,
-    LATIN_SMALL_LETTER_U,
-    LATIN_SMALL_LETTER_Y,
-    LESS_THAN_SIGN,
     LOW_LINE,
     NONE,
-    SPACE,
 )
-
-FUNCTION = string(
-    LESS_THAN_SIGN,
-    LATIN_SMALL_LETTER_F,
-    LATIN_SMALL_LETTER_U,
-    LATIN_SMALL_LETTER_N,
-    LATIN_SMALL_LETTER_C,
-    LATIN_SMALL_LETTER_T,
-    LATIN_SMALL_LETTER_I,
-    LATIN_SMALL_LETTER_O,
-    LATIN_SMALL_LETTER_N,
-    SPACE,
-)
-
-PACKAGE = string(
-    LATIN_SMALL_LETTER_P,
-    LATIN_SMALL_LETTER_A,
-    LATIN_SMALL_LETTER_C,
-    LATIN_SMALL_LETTER_K,
-    LATIN_SMALL_LETTER_A,
-    LATIN_SMALL_LETTER_G,
-    LATIN_SMALL_LETTER_E,
-)
-
-PYTHON_EXTENSION = string(
-    FULL_STOP,
-    LATIN_SMALL_LETTER_P,
-    LATIN_SMALL_LETTER_Y,
-)
-
-
-INIT = string(
-    LOW_LINE,
-    LOW_LINE,
-    LATIN_SMALL_LETTER_I,
-    LATIN_SMALL_LETTER_N,
-    LATIN_SMALL_LETTER_I,
-    LATIN_SMALL_LETTER_T,
-    LOW_LINE,
-    LOW_LINE,
-)
-
 
 ########################################################################
 

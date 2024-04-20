@@ -1,5 +1,6 @@
 """Central place for text strings."""
-from celestine.typed import string
+
+from celestine.typed import S
 from celestine.unicode import (
     FULL_STOP,
     LATIN_SMALL_LETTER_A,
@@ -22,20 +23,16 @@ from celestine.unicode import (
     LATIN_SMALL_LETTER_Y,
     LESS_THAN_SIGN,
     LOW_LINE,
+    NONE,
     SPACE,
 )
 
-INIT = string(
-    LOW_LINE,
-    LOW_LINE,
-    LATIN_SMALL_LETTER_I,
-    LATIN_SMALL_LETTER_N,
-    LATIN_SMALL_LETTER_I,
-    LATIN_SMALL_LETTER_T,
-    LOW_LINE,
-    LOW_LINE,
-)
-FUNCTION = string(
+
+def join(*iterable: S) -> S:
+    return NONE.join(iterable)
+
+
+FUNCTION = join(
     LESS_THAN_SIGN,
     LATIN_SMALL_LETTER_F,
     LATIN_SMALL_LETTER_U,
@@ -47,13 +44,23 @@ FUNCTION = string(
     LATIN_SMALL_LETTER_N,
     SPACE,
 )
-PYTHON_EXTENSION = string(
+INIT = join(
+    LOW_LINE,
+    LOW_LINE,
+    LATIN_SMALL_LETTER_I,
+    LATIN_SMALL_LETTER_N,
+    LATIN_SMALL_LETTER_I,
+    LATIN_SMALL_LETTER_T,
+    LOW_LINE,
+    LOW_LINE,
+)
+PYTHON_EXTENSION = join(
     FULL_STOP,
     LATIN_SMALL_LETTER_P,
     LATIN_SMALL_LETTER_Y,
 )
-#############
-APPLICATION = string(
+########################################################################
+APPLICATION = join(
     LATIN_SMALL_LETTER_A,
     LATIN_SMALL_LETTER_P,
     LATIN_SMALL_LETTER_P,
@@ -66,7 +73,7 @@ APPLICATION = string(
     LATIN_SMALL_LETTER_O,
     LATIN_SMALL_LETTER_N,
 )
-BLENDER = string(
+BLENDER = join(
     LATIN_SMALL_LETTER_B,
     LATIN_SMALL_LETTER_L,
     LATIN_SMALL_LETTER_E,
@@ -75,7 +82,7 @@ BLENDER = string(
     LATIN_SMALL_LETTER_E,
     LATIN_SMALL_LETTER_R,
 )
-CELESTINE = string(
+CELESTINE = join(
     LATIN_SMALL_LETTER_C,
     LATIN_SMALL_LETTER_E,
     LATIN_SMALL_LETTER_L,
@@ -86,7 +93,7 @@ CELESTINE = string(
     LATIN_SMALL_LETTER_N,
     LATIN_SMALL_LETTER_E,
 )
-CONFIGURATION = string(
+CONFIGURATION = join(
     LATIN_SMALL_LETTER_C,
     LATIN_SMALL_LETTER_O,
     LATIN_SMALL_LETTER_N,
@@ -101,7 +108,7 @@ CONFIGURATION = string(
     LATIN_SMALL_LETTER_O,
     LATIN_SMALL_LETTER_N,
 )
-DIRECTORY = string(
+DIRECTORY = join(
     LATIN_SMALL_LETTER_D,
     LATIN_SMALL_LETTER_I,
     LATIN_SMALL_LETTER_R,
@@ -112,7 +119,7 @@ DIRECTORY = string(
     LATIN_SMALL_LETTER_R,
     LATIN_SMALL_LETTER_Y,
 )
-INTERFACE = string(
+INTERFACE = join(
     LATIN_SMALL_LETTER_I,
     LATIN_SMALL_LETTER_N,
     LATIN_SMALL_LETTER_T,
@@ -123,7 +130,7 @@ INTERFACE = string(
     LATIN_SMALL_LETTER_C,
     LATIN_SMALL_LETTER_E,
 )
-LANGUAGE = string(
+LANGUAGE = join(
     LATIN_SMALL_LETTER_L,
     LATIN_SMALL_LETTER_A,
     LATIN_SMALL_LETTER_N,
@@ -133,7 +140,7 @@ LANGUAGE = string(
     LATIN_SMALL_LETTER_G,
     LATIN_SMALL_LETTER_E,
 )
-PACKAGE = string(
+PACKAGE = join(
     LATIN_SMALL_LETTER_P,
     LATIN_SMALL_LETTER_A,
     LATIN_SMALL_LETTER_C,
@@ -142,7 +149,7 @@ PACKAGE = string(
     LATIN_SMALL_LETTER_G,
     LATIN_SMALL_LETTER_E,
 )
-REGISTER = string(
+REGISTER = join(
     LATIN_SMALL_LETTER_R,
     LATIN_SMALL_LETTER_E,
     LATIN_SMALL_LETTER_G,
@@ -152,7 +159,7 @@ REGISTER = string(
     LATIN_SMALL_LETTER_E,
     LATIN_SMALL_LETTER_R,
 )
-UNREGISTER = string(
+UNREGISTER = join(
     LATIN_SMALL_LETTER_U,
     LATIN_SMALL_LETTER_N,
     LATIN_SMALL_LETTER_R,
@@ -164,4 +171,5 @@ UNREGISTER = string(
     LATIN_SMALL_LETTER_E,
     LATIN_SMALL_LETTER_R,
 )
+########################################################################
 VERSION_NUMBER = "2023.10.7"
