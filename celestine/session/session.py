@@ -14,6 +14,13 @@ from celestine.session.data import (
     Actions,
     Values,
 )
+from celestine.text import (
+    APPLICATION,
+    CONFIGURATION,
+    DIRECTORY,
+    INTERFACE,
+    LANGUAGE,
+)
 from celestine.typed import (
     AD,
     AI,
@@ -23,21 +30,6 @@ from celestine.typed import (
 from celestine.unicode import NONE
 
 from . import default
-
-CELESTINE = "celestine"
-VERSION_NUMBER = "2023.10.7"
-INTERFACE = "interface"
-BLENDER = "blender"
-REGISTER = "register"
-UNREGISTER = "unregister"
-LANGUAGE = "language"
-INTERFACE = "interface"
-APPLICATION = "application"
-
-
-CONFIGURATION = "configuration"
-DIRECTORY = "directory"
-INTERFACE = "interface"
 
 
 class SuperSession:

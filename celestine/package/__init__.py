@@ -7,6 +7,7 @@ import os
 import pathlib
 import sys
 
+from celestine.text import CELESTINE
 from celestine.typed import (
     LS,
     OS,
@@ -18,8 +19,6 @@ from celestine.typed import (
     S,
 )
 from celestine.unicode import FULL_STOP
-
-CELESTINE = "celestine"
 
 
 def _package(base: S, *path: S) -> M:

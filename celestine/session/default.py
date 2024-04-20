@@ -1,6 +1,11 @@
 """"""
 
 from celestine import load
+from celestine.text import (
+    APPLICATION,
+    INTERFACE,
+    LANGUAGE,
+)
 from celestine.typed import (
     M,
     S,
@@ -8,12 +13,6 @@ from celestine.typed import (
 
 LANGUAGE = "language"
 APPLICATION = "application"
-CELESTINE = "celestine"
-VERSION_NUMBER = "2023.10.7"
-INTERFACE = "interface"
-BLENDER = "blender"
-REGISTER = "register"
-UNREGISTER = "unregister"
 
 
 def module(path: S, *items: S) -> M:

@@ -3,6 +3,7 @@
 import configparser
 
 from celestine import stream
+from celestine.text import CELESTINE
 
 # from celestine.package import platformdirs
 from celestine.typed import (
@@ -15,13 +16,6 @@ from celestine.unicode import (
     NONE,
     POUND_SIGN,
 )
-
-CELESTINE = "celestine"
-VERSION_NUMBER = "2023.10.7"
-INTERFACE = "interface"
-BLENDER = "blender"
-REGISTER = "register"
-UNREGISTER = "unregister"
 
 
 class Configuration:

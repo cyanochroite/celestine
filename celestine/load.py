@@ -6,6 +6,10 @@ import os
 import pathlib
 import sys
 
+from celestine.text import (
+    CELESTINE,
+    PACKAGE,
+)
 from celestine.typed import (
     FN,
     GP,
@@ -43,8 +47,6 @@ from celestine.unicode import (
     NONE,
     SPACE,
 )
-
-CELESTINE = "celestine"
 
 FUNCTION = string(
     LESS_THAN_SIGN,

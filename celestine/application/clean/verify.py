@@ -5,10 +5,10 @@ import pathlib
 import unittest
 
 from celestine import load
-from celestine.data import CELESTINE
 from celestine.data.directory import APPLICATION
 from celestine.interface import View
 from celestine.session.session import SuperSession
+from celestine.text import CELESTINE
 from celestine.typed import (
     L,
     N,

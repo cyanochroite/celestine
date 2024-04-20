@@ -8,6 +8,13 @@ from celestine import (
     bank,
     load,
 )
+from celestine.text import (
+    APPLICATION,
+    CELESTINE,
+    INTERFACE,
+    LANGUAGE,
+    PACKAGE,
+)
 from celestine.typed import (
     LS,
     B,
@@ -21,19 +28,6 @@ from celestine.typed import (
 
 from .magic import Magic
 
-CELESTINE = "celestine"
-VERSION_NUMBER = "2023.10.7"
-INTERFACE = "interface"
-BLENDER = "blender"
-REGISTER = "register"
-UNREGISTER = "unregister"
-LANGUAGE = "language"
-INTERFACE = "interface"
-APPLICATION = "application"
-
-
-CELESTINE = "celestine"
-PACKAGE = "package"
 this = load.module(PACKAGE)
 
 

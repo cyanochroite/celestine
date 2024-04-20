@@ -3,6 +3,7 @@
 import argparse
 import io
 
+from celestine.text import CELESTINE
 from celestine.typed import (
     TYPE,
     B,
@@ -21,13 +22,6 @@ from celestine.unicode import (
 )
 
 from .data import Parsers
-
-CELESTINE = "celestine"
-VERSION_NUMBER = "2023.10.7"
-INTERFACE = "interface"
-BLENDER = "blender"
-REGISTER = "register"
-UNREGISTER = "unregister"
 
 
 def parser(language: M, exit_on_error: B) -> argparse.ArgumentParser:
