@@ -3,7 +3,7 @@
 import argparse
 import dataclasses
 
-from celestine import load
+from celestine import load, bank
 from celestine.session.argument import (
     Application,
     Customization,
@@ -85,7 +85,10 @@ class Magic:
         """Quickly parse important attributes."""
         method = load.method(name.capitalize(), SESSION, SESSION)
         self.get_parser([method], True)
-        setattr(self.core, name, getattr(method, name))
+        value = getattr(method, name)
+        module = load.module(name, value)
+        module.name = value
+        setattr(bank, name, module)
 
     ###
 
@@ -137,7 +140,7 @@ class Magic:
 
         for session in sessions:
             # TODO: Make class instance for less weird classmethods
-            for name, argument in session.items(self.core):
+            for name, argument in session.items():
                 if not argument.argument:
                     continue
                 parser = arguments[argument]
@@ -149,7 +152,7 @@ class Magic:
         """"""
         section = self.core.application.name
         for session in sessions:
-            for option, argument in session.items(self.core):
+            for option, argument in session.items():
                 if not argument.attribute:
                     continue
 

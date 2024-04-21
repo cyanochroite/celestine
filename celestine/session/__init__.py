@@ -39,7 +39,8 @@ def _package(base: S, *path: S) -> M:
     return result
 
 
-def magic(name: S) -> M:
+def loader(name: S) -> M:
+    """"""
     thing = _package("celestine", "package", name)
     call = getattr(thing, "Package")
     module = call(name)
@@ -47,20 +48,29 @@ def magic(name: S) -> M:
 
 
 def more():
+    """"""
     package = importlib.import_module("celestine.package")
 
-    package.autoflake = magic("autoflake")
-    package.black = magic("black")
-    package.blender = magic("blender")
-    package.curses = magic("curses")
-    package.dearpygui = magic("dearpygui")
-    package.isort = magic("isort")
-    package.pillow = magic("pillow")
-    package.platformdirs = magic("platformdirs")
-    package.pydocstringformatter = magic("pydocstringformatter")
-    package.pygame = magic("pygame")
-    package.pyupgrade = magic("pyupgrade")
-    package.tkinterpy = magic("tkinter")
+    package.autoflake = loader("autoflake")
+    package.black = loader("black")
+    package.blender = loader("blender")
+    package.curses = loader("curses")
+    package.dearpygui = loader("dearpygui")
+    package.isort = loader("isort")
+    package.pillow = loader("pillow")
+    package.platformdirs = loader("platformdirs")
+    package.pydocstringformatter = loader("pydocstringformatter")
+    package.pygame = loader("pygame")
+    package.pyupgrade = loader("pyupgrade")
+    package.tkinterpy = loader("tkinter")
+
+
+def set_lang():
+    """"""
+    # monkeypatch in the language
+    language = load.package(CELESTINE, LANGUAGE)
+    for key, value in vars(bank.language).items():
+        setattr(language, key, value)
 
 
 def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
@@ -77,6 +87,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
 
     with magic:
         magic.parse(LANGUAGE)
+        set_lang()
         magic.parse(INTERFACE)
         magic.parse(APPLICATION)
 
@@ -86,6 +97,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
         magic.configuration.load(path)
 
         magic.parse(LANGUAGE)
+        set_lang()
         magic.parse(INTERFACE)
         magic.parse(APPLICATION)
 
@@ -95,6 +107,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
         )
         session3 = load.method("Information", "session", "session")
 
+        print("MOO")
         magic.get_parser([session1, session2, session3], False)
 
     # Save values to session object.

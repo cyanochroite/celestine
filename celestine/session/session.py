@@ -1,6 +1,9 @@
 """"""
 
+import importlib
 
+from celestine import bank
+from celestine import language
 from celestine import load
 from celestine.literal import (
     APPLICATION,
@@ -36,14 +39,14 @@ class SuperSession:
     """"""
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> AD:
         """"""
         return {}
 
     @classmethod
-    def items(cls, core) -> AI:
+    def items(cls) -> AI:
         """"""
-        dictionary = cls.dictionary(core)
+        dictionary = cls.dictionary()
         return dictionary.items()
 
 
@@ -51,17 +54,17 @@ class Information(SuperSession):
     """"""
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> AD:
         """"""
-        return super().dictionary(core) | {
+        return super().dictionary() | {
             "save": InformationConfiguration(
-                core.language.ARGUMENT_HELP_HELP,
+                language.ARGUMENT_HELP_HELP,
             ),
             Actions.HELP: InformationHelp(
-                core.language.ARGUMENT_HELP_HELP,
+                language.ARGUMENT_HELP_HELP,
             ),
             Actions.VERSION: InformationVersion(
-                core.language.ARGUMENT_VERSION_HELP,
+                language.ARGUMENT_VERSION_HELP,
             ),
         }
 
@@ -76,12 +79,12 @@ class Application(Dictionary):
     application: M
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> AD:
         """"""
-        return super().dictionary(core) | {
+        return super().dictionary() | {
             APPLICATION: Customization(
                 default.application(),
-                core.language.ARGUMENT_INTERFACE_HELP,
+                language.ARGUMENT_INTERFACE_HELP,
                 load.argument(APPLICATION),
             ),
         }
@@ -93,12 +96,12 @@ class Configuration(Dictionary):
     configuration: M
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> AD:
         """"""
-        return super().dictionary(core) | {
+        return super().dictionary() | {
             CONFIGURATION: Optional(
                 default.application(),
-                core.language.ARGUMENT_INTERFACE_HELP,
+                language.ARGUMENT_INTERFACE_HELP,
             ),
         }
 
@@ -109,12 +112,12 @@ class Directory(Dictionary):
     directory: M
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> AD:
         """"""
-        return super().dictionary(core) | {
+        return super().dictionary() | {
             DIRECTORY: Optional(
                 default.application(),
-                core.language.ARGUMENT_INTERFACE_HELP,
+                language.ARGUMENT_INTERFACE_HELP,
             ),
         }
 
@@ -125,12 +128,12 @@ class Interface(Dictionary):
     interface: M
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> AD:
         """"""
-        return super().dictionary(core) | {
+        return super().dictionary() | {
             INTERFACE: Customization(
                 default.interface(),
-                core.language.ARGUMENT_INTERFACE_HELP,
+                language.ARGUMENT_INTERFACE_HELP,
                 load.argument(INTERFACE),
             ),
         }
@@ -142,12 +145,12 @@ class Language(Dictionary):
     language: M
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> AD:
         """"""
-        return super().dictionary(core) | {
+        return super().dictionary() | {
             LANGUAGE: Customization(
                 default.language(),
-                core.language.ARGUMENT_LANGUAGE_HELP,
+                language.ARGUMENT_LANGUAGE_HELP,
                 load.argument(LANGUAGE),
             ),
         }
@@ -165,12 +168,12 @@ class Session(
     main: S
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> AD:
         """"""
-        return super().dictionary(core) | {
+        return super().dictionary() | {
             Values.MAIN: Positional(
                 NONE,
-                core.language.ARGUMENT_LANGUAGE_HELP,
-                load.function_page(core.application),
+                language.ARGUMENT_LANGUAGE_HELP,
+                load.function_page(bank.application),
             ),
         }

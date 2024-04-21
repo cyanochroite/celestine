@@ -1,11 +1,12 @@
 """"""
 
 import configparser
+import os
 
 from celestine import stream
 from celestine.literal import CELESTINE
 
-# from celestine.package import platformdirs
+from celestine.package import platformdirs
 from celestine.typed import (
     OP,
     N,
@@ -16,6 +17,8 @@ from celestine.unicode import (
     NONE,
     POUND_SIGN,
 )
+
+FILE = "celestine.ini"
 
 
 class Configuration:
@@ -47,9 +50,10 @@ class Configuration:
 
     def __init__(self) -> N:
         """"""
-        self.path = "."
-        # if platformdirs:
-        #    self.path = os.path.join(platformdirs.directory, FILE)
+        if platformdirs:
+            self.path = os.path.join(platformdirs.directory, FILE)
+        else:
+            self.path = "."
 
         defaults = None  # Default.
         dict_type = dict  # Default.
