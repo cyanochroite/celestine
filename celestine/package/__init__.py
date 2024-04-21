@@ -1,42 +1,18 @@
 """"""
 
-import importlib
-import importlib.abc
-import importlib.machinery
 import os
-import pathlib
 import sys
 
-from celestine.literal import CELESTINE
+from celestine import load
 from celestine.typed import (
     LS,
     OS,
     B,
     M,
     N,
-    P,
     R,
     S,
 )
-from celestine.unicode import FULL_STOP
-
-
-def _package(base: S, *path: S) -> M:
-    """Load an external package from the system path."""
-    iterable = [base, *path]
-    name = FULL_STOP.join(iterable)
-    result = importlib.import_module(name)
-    return result
-
-
-def _project_path() -> P:
-    """When running as a package, sys.path[0] is wrong."""
-    for path in sys.path:
-        directory = pathlib.Path(path, CELESTINE)
-        if directory.is_dir():
-            return directory
-    directory = pathlib.Path(os.curdir)
-    return directory
 
 
 class Abstract:
@@ -62,10 +38,10 @@ class Abstract:
 
         argv = sys.argv
 
-        path = str(_project_path())
+        path = str(load.project_path())
         sys.argv = [path, path]
         try:
-            module = _package(self.name, *self.module())
+            module = load.package(self.name, *self.module())
             self.main(module, path)
         except SystemExit:
             pass
@@ -96,7 +72,7 @@ class Abstract:
         ) as stdout:
             sys.stdout = stdout  # as TextIO
             try:
-                self.package = _package(self.pypi)
+                self.package = load.package(self.pypi)
             except ValueError:
                 #  Name was none.
                 self.package = None

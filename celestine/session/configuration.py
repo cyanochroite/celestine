@@ -9,6 +9,7 @@ from celestine.package import platformdirs
 from celestine.typed import (
     OP,
     N,
+    P,
     S,
 )
 from celestine.unicode import (
@@ -22,6 +23,10 @@ FILE = "celestine.ini"
 
 class Configuration:
     """Parse configuration stuff."""
+
+    configuration: configparser.ConfigParser
+    path: P
+    save_it_file: stream.Text
 
     def get(self, section: S, option: S) -> S:
         """"""
@@ -51,30 +56,17 @@ class Configuration:
     def __init__(self) -> N:
         """"""
         self.path = platformdirs.directory if platformdirs else "."
-
         self.save_it_file = stream.Text(self.path)
-
-        defaults = None  # Default.
-        dict_type = dict  # Default.
-        allow_no_value = False  # Default.
-        delimiters = EQUALS_SIGN
-        comment_prefixes = POUND_SIGN
-        inline_comment_prefixes = None  # Default.
-        strict = True  # Important.
-        empty_lines_in_values = False
-        default_section = CELESTINE
-        interpolation = configparser.BasicInterpolation()  # Default.
-        converters = {}  # Default.
         self.configuration = configparser.ConfigParser(
-            defaults,
-            dict_type,
-            allow_no_value,
-            delimiters=delimiters,
-            comment_prefixes=comment_prefixes,
-            inline_comment_prefixes=inline_comment_prefixes,
-            strict=strict,
-            empty_lines_in_values=empty_lines_in_values,
-            default_section=default_section,
-            interpolation=interpolation,
-            converters=converters,
+            defaults=None,
+            dict_type=dict,
+            allow_no_value=False,
+            delimiters=EQUALS_SIGN,
+            comment_prefixes=POUND_SIGN,
+            inline_comment_prefixes=None,
+            strict=True,
+            empty_lines_in_values=False,
+            default_section=CELESTINE,
+            interpolation=configparser.BasicInterpolation(),
+            converters={},
         )

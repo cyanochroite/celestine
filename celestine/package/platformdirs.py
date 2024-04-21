@@ -5,6 +5,8 @@ import pathlib
 from celestine.package import Abstract
 from celestine.typed import P
 
+directory: P
+
 
 class Package(Abstract):
     """"""

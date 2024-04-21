@@ -39,6 +39,15 @@ from celestine.unicode import (
 ########################################################################
 
 
+def attribute(*path: S) -> A:
+    """Functions like the 'from package import item' syntax."""
+    iterable = [*path]
+    name = iterable.pop(-1)
+    item = module(*iterable)
+    result = getattr(item, name)
+    return result
+
+
 def module(*path: S) -> M:
     """Load an internal module from anywhere in the application."""
     return package(CELESTINE, *path)
@@ -79,15 +88,6 @@ def packages(base: S, *path: S) -> L[M]:
 
 
 ########################################################################
-
-
-def attribute(*path: S) -> A:
-    """Functions like the 'from package import item' syntax."""
-    iterable = [*path]
-    name = iterable.pop(-1)
-    item = module(*iterable)
-    result = getattr(item, name)
-    return result
 
 
 def redirect(*path: S) -> N:

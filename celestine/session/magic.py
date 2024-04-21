@@ -78,7 +78,7 @@ class Magic:
 
         self._add_attribute(attributes)
 
-    def parse(self, name) -> N:
+    def parse(self, name: S) -> N:
         """Quickly parse important attributes."""
         method = load.method(name.capitalize(), SESSION, SESSION)
         self.get_parser([method], True)

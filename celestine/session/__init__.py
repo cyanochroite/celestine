@@ -19,23 +19,15 @@ from celestine.typed import (
     B,
     C,
     D,
-    M,
     N,
     R,
     S,
 )
 
-from .magic import Magic
 from . import default
+from .magic import Magic
+
 this = load.module(PACKAGE)
-
-
-def _package(base: S, *path: S) -> M:
-    """Load an external package from the system path."""
-    iterable = [base, *path]
-    name = ".".join(iterable)
-    result = importlib.import_module(name)
-    return result
 
 
 def set_lang():
@@ -53,9 +45,12 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     Then load Interface so human see errors the way they want.
     """
 
-    from celestine.session.configuration import Configuration
-
-    bank.configuration = Configuration()
+    configuration = load.attribute(
+        "session",
+        "configuration",
+        "Configuration",
+    )
+    bank.configuration = configuration()
 
     # The order here matters.
     bank.language = load.module(LANGUAGE, default.language())
@@ -82,6 +77,9 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
         set_lang()
         magic.parse(INTERFACE)
         magic.parse(APPLICATION)
+
+        session = importlib.import_module("celestine.session.session")
+        importlib.reload(session)
 
         session1 = load.method("Session", "session", "session")
         session2 = load.method(
