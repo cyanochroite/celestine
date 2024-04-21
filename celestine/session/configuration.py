@@ -37,7 +37,8 @@ class Configuration:
     def save(self) -> N:
         """Save the configuration file."""
         configuration = self.configuration
-        with self.save_it_file.writer(self.path) as fileobject:
+        path = os.path.join(self.path, FILE)
+        with self.save_it_file.writer(path) as fileobject:
             space_around_delimiters = True
             configuration.write(fileobject, space_around_delimiters)
 
@@ -50,11 +51,7 @@ class Configuration:
 
     def __init__(self) -> N:
         """"""
-
-        if platformdirs:
-            self.path = os.path.join(platformdirs.directory, FILE)
-        else:
-            self.path = "."
+        self.path = platformdirs.directory if platformdirs else "."
 
         self.save_it_file = stream.Text(self.path)
 

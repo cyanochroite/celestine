@@ -20,6 +20,8 @@ from celestine.typed import (
     B,
     L,
     M,
+    S,
+    AD,
     N,
 )
 from celestine.unicode import NONE
@@ -27,7 +29,18 @@ from celestine.unicode import NONE
 from . import default
 from .data import SESSION
 from .parser import parser as make_parser
-from .session import Session as SessionParse
+
+
+class SessionParse():
+    """Typing info only. Reflecting Session from Session"""
+
+    main: S
+
+    @classmethod
+    def dictionary(cls) -> AD:
+        """"""
+        return {}
+
 
 ERROR = "error"
 INIT = "__init__"
@@ -40,20 +53,6 @@ TRANSLATE_THIS = "unrecognized arguments"
 class Magic:
     """"""
 
-    @dataclasses.dataclass
-    class Core:
-        """"""
-
-        application: M
-        interface: M
-        language: M
-
-        def __setattr__(self, name, value):
-            module = load.module(name, value)
-            module.name = value
-            super().__setattr__(name, module)
-
-    core: Core
     args: argparse.Namespace
     parser: argparse.ArgumentParser
 
@@ -93,7 +92,7 @@ class Magic:
     def _make_argument_group(self) -> APD:
         """"""
 
-        language = self.core.language
+        language = bank.language
 
         application = self.parser.add_argument_group(
             title=language.ARGUMENT_APPLICATION_TITLE,
@@ -148,7 +147,7 @@ class Magic:
 
     def _add_attribute(self, sessions: list[SessionParse]) -> N:
         """"""
-        section = self.core.application.name
+        section = bank.application.name
         for session in sessions:
             for option, argument in session.items():
                 if not argument.attribute:
@@ -169,7 +168,7 @@ class Magic:
 
     def _make_parser(self):
         """"""
-        language = self.core.language
+        language = bank.language
         exit_on_error = self.exit_on_error
         self.parser = make_parser(language, exit_on_error)
 
@@ -200,9 +199,3 @@ class Magic:
 
         self.argument_list = argument_list
         self.exit_on_error = exit_on_error
-
-        self.core = self.Core(
-            default.application(),
-            default.interface(),
-            default.language(),
-        )

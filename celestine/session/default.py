@@ -11,9 +11,6 @@ from celestine.typed import (
     S,
 )
 
-LANGUAGE = "language"
-APPLICATION = "application"
-
 
 def module(path: S, *items: S) -> M:
     """Return a default application."""
@@ -24,9 +21,7 @@ def module(path: S, *items: S) -> M:
             return item
         except ModuleNotFoundError:
             pass
-
-    raise RuntimeError("Failed to load any module from list.")
-    # raise RuntimeError(language.message)
+    raise ModuleNotFoundError("Failed to load any module from list.")
 
 
 def application():
