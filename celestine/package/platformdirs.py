@@ -1,38 +1,23 @@
 """A package for determining appropriate platform-specific dirs."""
 
-import os
 import pathlib
 
 from celestine.package import Abstract
-
-try:
-    import platformdirs
-
-    appname = "celestine"
-    appauthor = "celestine"
-    version = None
-    roaming = False
-    multipath = False
-    opinion = False
-    ensure_exists = True
-
-    directory = pathlib.Path(
-        platformdirs.user_data_dir(
-            appname,
-            appauthor,
-            version,
-            roaming,
-            ensure_exists,
-        )
-    )
-except ModuleNotFoundError:
-    import os
-
-    directory = pathlib.Path(os.getcwd())
+from celestine.typed import P
 
 
 class Package(Abstract):
     """"""
 
-    def __init__(self, name, pypi=None, **star):
-        self.directory = pathlib.Path(os.getcwd())
+    @property
+    def directory(self) -> P:
+        """"""
+        directory = self.package.user_data_dir(
+            appname="celestine",
+            appauthor=False,
+            version=None,
+            roaming=False,
+            ensure_exists=True,
+        )
+        path = pathlib.Path(directory)
+        return path

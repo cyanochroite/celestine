@@ -75,7 +75,7 @@ class Abstract:
     def __bool__(self) -> B:
         return self.package is not None
 
-    def __getattr2__(self, name: S) -> S:
+    def __getattr__(self, name: S) -> S:
         return getattr(self.package, name)
 
     def __init__(self, name: S, pypi: OS = None, **star: R) -> N:

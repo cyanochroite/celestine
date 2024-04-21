@@ -25,7 +25,6 @@ from celestine.typed import (
 from celestine.unicode import NONE
 
 from . import default
-from .configuration import Configuration
 from .data import SESSION
 from .parser import parser as make_parser
 from .session import Session as SessionParse
@@ -59,7 +58,6 @@ class Magic:
     parser: argparse.ArgumentParser
 
     argument_list: LS
-    configuration: Configuration
     exit_on_error: B
 
     def get_parser(self, attributes: L[SessionParse], known: B) -> N:
@@ -157,7 +155,7 @@ class Magic:
                     continue
 
                 override = getattr(self.args, option, NONE)
-                database = self.configuration.get(section, option)
+                database = bank.configuration.get(section, option)
                 fallback = argument.fallback
 
                 value = override or database or fallback
@@ -165,7 +163,7 @@ class Magic:
 
                 if override:
                     # Prepare for saving override values.
-                    self.configuration.set(section, option, override)
+                    bank.configuration.set(section, option, override)
 
     ######
 
@@ -186,13 +184,14 @@ class Magic:
             self.args = parser.parse_args(argument_list)
 
     def __enter__(self):
-        self.configuration.load()
+        bank.configuration.load()
         return self
 
     def __exit__(self, *_):
         save = bool(getattr(self.args, Values.CONFIGURATION, NONE))
+        save = True
         if save:
-            self.configuration.save()
+            bank.configuration.save()
         return False
 
     def __init__(self, argument_list: LS, exit_on_error: B) -> N:
@@ -200,7 +199,6 @@ class Magic:
         self.parser = argparse.ArgumentParser()
 
         self.argument_list = argument_list
-        self.configuration = Configuration()
         self.exit_on_error = exit_on_error
 
         self.core = self.Core(

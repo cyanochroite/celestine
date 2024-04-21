@@ -26,6 +26,7 @@ from celestine.typed import (
     S,
 )
 
+
 from .magic import Magic
 
 this = load.module(PACKAGE)
@@ -62,7 +63,7 @@ def more():
     package.pydocstringformatter = loader("pydocstringformatter")
     package.pygame = loader("pygame")
     package.pyupgrade = loader("pyupgrade")
-    package.tkinterpy = loader("tkinter")
+    package.tkinter = loader("tkinter")
 
 
 def set_lang():
@@ -83,6 +84,9 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     # load this data
     more()
 
+    from celestine.session.configuration import Configuration
+    bank.configuration = Configuration()
+
     magic = Magic(argument_list, exit_on_error)
 
     with magic:
@@ -94,7 +98,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
         method = load.method("Configuration", "session", "session")
         magic.get_parser([method], True)
         path = method.configuration
-        magic.configuration.load(path)
+        bank.configuration.load(path)
 
         magic.parse(LANGUAGE)
         set_lang()
@@ -107,7 +111,6 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
         )
         session3 = load.method("Information", "session", "session")
 
-        print("MOO")
         magic.get_parser([session1, session2, session3], False)
 
     # Save values to session object.
@@ -135,15 +138,12 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     bank.application = load.module(APPLICATION, session1.application)
     bank.attribute = session2
     bank.code = code
-    bank.configuration = pathlib.Path()  # unset
+    # bank.configuration = pathlib.Path()  # unset
     bank.directory = session1.directory
     bank.interface = load.module(INTERFACE, session1.interface)
-    bank.language = load.module(LANGUAGE, session1.language)
+    # bank.language = load.module(LANGUAGE, session1.language)
     bank.main = next(iter(main))
     bank.view = view | main
     bank.window = bank.interface.Window(**star)
 
-    # monkeypatch in the language
-    language = load.package(CELESTINE, LANGUAGE)
-    for key, value in vars(bank.language).items():
-        setattr(language, key, value)
+    set_lang()

@@ -2,8 +2,8 @@
 
 from celestine import (
     bank,
-    package,
 )
+from celestine.package import tkinter, pillow
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
@@ -47,13 +47,13 @@ class Element(Element_, Abstract):
             bank.dequeue()
 
         if self.action or self.goto:
-            self.item = package.tkinter.Button(
+            self.item = tkinter.Button(
                 canvas,
                 command=callback,
                 text=self.text,
             )
         else:
-            self.item = package.tkinter.Label(
+            self.item = tkinter.Label(
                 canvas,
                 fg="blue",
                 height=4,
@@ -83,7 +83,7 @@ class View(View_, Abstract):
     @override
     def make(self, canvas: A) -> N:
         """"""
-        self.canvas = package.tkinter.Frame(
+        self.canvas = tkinter.Frame(
             canvas,
             padx=0,
             pady=0,
@@ -113,8 +113,8 @@ class Window(Window_):
     @override
     def extension(self):
         """"""
-        if package.pillow:
-            return package.pillow.extension()
+        if pillow:
+            return pillow.extension()
 
         return [
             ".pbm",
@@ -128,7 +128,7 @@ class Window(Window_):
     @override
     def make(self) -> N:
         """"""
-        self.canvas = package.tkinter.Tk()
+        self.canvas = tkinter.Tk()
         self.canvas.title(bank.language.APPLICATION_TITLE)
         self.canvas.geometry("1920x1080")
         self.canvas.minsize(640, 480)
