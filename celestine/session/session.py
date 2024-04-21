@@ -1,10 +1,11 @@
 """"""
 
-import importlib
 
-from celestine import bank
-from celestine import language
-from celestine import load
+from celestine import (
+    bank,
+    language,
+    load,
+)
 from celestine.literal import (
     APPLICATION,
     CONFIGURATION,

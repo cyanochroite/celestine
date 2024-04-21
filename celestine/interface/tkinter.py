@@ -1,13 +1,14 @@
 """"""
 
-from celestine import (
-    bank,
-)
-from celestine.package import tkinter, pillow
+from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.package import (
+    pillow,
+    tkinter,
+)
 from celestine.typed import (
     A,
     B,

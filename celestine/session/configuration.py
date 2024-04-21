@@ -5,7 +5,6 @@ import os
 
 from celestine import stream
 from celestine.literal import CELESTINE
-
 from celestine.package import platformdirs
 from celestine.typed import (
     OP,

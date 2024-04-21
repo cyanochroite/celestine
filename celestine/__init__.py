@@ -1,14 +1,18 @@
 """"""
 
 import importlib
-from celestine import bank, load
+
+from celestine import (
+    bank,
+    load,
+)
 from celestine.typed import (
     LS,
     B,
-    N,
-    S,
     M,
+    N,
     R,
+    S,
 )
 
 

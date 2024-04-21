@@ -2,7 +2,6 @@
 
 
 import importlib
-import pathlib
 
 from celestine import (
     bank,
@@ -26,9 +25,8 @@ from celestine.typed import (
     S,
 )
 
-
 from .magic import Magic
-
+from . import default
 this = load.module(PACKAGE)
 
 
@@ -56,6 +54,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     """
 
     from celestine.session.configuration import Configuration
+
     bank.configuration = Configuration()
 
     # The order here matters.
