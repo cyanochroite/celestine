@@ -8,6 +8,7 @@ from celestine import (
 )
 from celestine.package import Abstract
 from celestine.typed import (
+    A,
     IMAGE,
     LI,
     LS,
@@ -23,6 +24,9 @@ from celestine.window.collection import (
     Plane,
     Point,
 )
+
+extension: LS
+open: A  # pylint: disable=redefined-builtin
 
 ########################################################################
 
@@ -132,8 +136,9 @@ class Image:
             colors, method, kmeans, palette, dither
         )
 
-    def __init__(self, image: IMAGE, **star: R):
+    def __init__(self, image: IMAGE, package: A, **star: R):
         self.image = image
+        self.package = package
 
 
 class Package(Abstract):
@@ -152,7 +157,7 @@ class Package(Abstract):
 
         image = self.package.Image.new(mode, size, color)
 
-        item = Image(image)
+        item = Image(image, self.package)
         return item
 
     def open(self, path: P) -> Image:
@@ -171,7 +176,7 @@ class Package(Abstract):
             colors=256,
         )
 
-        item = Image(image)
+        item = Image(image, self.package)
         return item
 
     def extension(self) -> LS:

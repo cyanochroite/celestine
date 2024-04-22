@@ -12,9 +12,11 @@ from celestine.package import (
 from celestine.typed import (
     A,
     B,
+    LS,
     N,
     R,
     S,
+    P,
     override,
 )
 from celestine.window.collection import Area
@@ -42,28 +44,53 @@ class Element(Element_, Abstract):
     def make(self, canvas: A) -> N:
         """"""
 
+        super().make(canvas)
+
         def callback() -> N:
             """"""
             self.click(self.area.world.centroid)
             bank.dequeue()
 
+        star = {}
+        # if not super().make(canvas):
+        #    return False
+
+        # if not super().draw(**star):
+        #    return False
+
+        if self.path:
+            self.image2 = tkinter.PhotoImage(file=self.path)
+            star.update(image=self.image2)
+
+        if self.text:
+            star.update(text=self.text)
+
         if self.action or self.goto:
-            self.item = tkinter.Button(
-                canvas,
-                command=callback,
-                text=self.text,
-            )
+            star.update(command=callback)
+            self.item = tkinter.Button(canvas, **star)
         else:
-            self.item = tkinter.Label(
-                canvas,
-                fg="blue",
-                height=4,
-                text=self.text,
-                width=100,
-            )
+            star.update(fg="blue")
+            star.update(height=4)
+            star.update(text=self.text)
+            star.update(width=100)
+            self.item = tkinter.Label(canvas, **star)
 
         self.place(self.item)
-        super().make(canvas)
+
+    def update(self, path: P, **star) -> N:
+        """"""
+        super().update(path)
+
+        if pillow and False:
+            image = pillow.image_load(self.path)
+            size = self.resize(image.size)
+            image.resize(size)
+            self.image = pillow.ImageTk.PhotoImage(image=image.image)
+        else:
+            self.image = tkinter.PhotoImage(file=self.path)
+
+        self.item.configure(image=self.image)
+        self.item.image = self.image
 
     @override
     def hide(self) -> N:
@@ -112,7 +139,7 @@ class Window(Window_):
     """"""
 
     @override
-    def extension(self):
+    def extension(self) -> LS:
         """"""
         if pillow:
             return pillow.extension()

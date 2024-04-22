@@ -18,9 +18,9 @@ class Session(SuperSession):
     output: S
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> AD:
         """"""
-        return super().dictionary(core) | {
+        return super().dictionary() | {
             "output": Optional(
                 os.getcwd(),
                 language.VIEWER_SESSION_DIRECTORY,

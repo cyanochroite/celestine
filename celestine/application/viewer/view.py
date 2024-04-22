@@ -16,7 +16,7 @@ from celestine.window.container import (
 @scene
 def picture(view: View) -> N:
     """"""
-    view.element("photo", fit=Image.FULL, goto="display")
+    view.element("photo", fit=Image.FILL, goto="display")
 
 
 @main
