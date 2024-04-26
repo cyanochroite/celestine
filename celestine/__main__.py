@@ -25,8 +25,20 @@ def make(number):
     return format(number * 17, "02x").upper()
 
 
+def hax(number):
+    return format(number, "02x").upper()
+
+
 def toop(x, y, z):
     return (x * 17, y * 17, z * 17)
+
+
+def rainbow(color):
+    x, y, z = color
+    x = int(x, 16)
+    y = int(y, 16)
+    z = int(z, 16)
+    return x, y, z
 
 
 reds = []
@@ -47,25 +59,15 @@ with open("./text.txt", mode="rt") as file:
         if red == green:
             blues.append(color)
 
-print(reds)
-print(greens)
-print(blues)
 
-print('<table class="table1"><tbody><tr>')
-for z in range(1):
-    for x in range(16):
-        for y in range(16):
-            xx = make(x)
-            yy = make(y)
-            zz = make(z)
-            color = f"{xx}{yy}{zz}"
-            color = f"{xx}{yy}{xx}"
-            row = f"{pre}{color}{post}{color}{final}"
-            print(row)
-            # image = PIL.Image.new("RGB", (1024, 1024), color=toop(x, y, z))
-            image = PIL.Image.new("RGB", (1024, 1024), color=toop(x, y, x))
-            image.save(f"./test/{color}.png")
-        print('</tr><tr>')
-print('</tr></tbody></table>')
+def draw(name, colors):
+    for color in colors:
+        x, y, z = color
+        r, g, b = rainbow(color)
+        image = PIL.Image.new("RGB", (1024, 1024), color=(r, g, b))
+        image.save(f"./test/{name}_{x}{y}{z}.png")
 
 
+draw("magenta", reds)
+draw("blue", blues)
+draw("cyan", greens)
