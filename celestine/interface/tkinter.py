@@ -79,7 +79,7 @@ class Element(Element_, Abstract):
 
     def update(self, path: P, **star) -> N:
         """"""
-        super().update(path)
+        # super().update(path)
 
         if pillow and False:
             image = pillow.image_load(self.path)
