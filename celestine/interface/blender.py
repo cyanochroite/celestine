@@ -5,9 +5,7 @@ import bpy  # pylint: disable=import-error
 import celestine
 from celestine import bank
 from celestine.interface import Abstract as Abstract_
-from celestine.interface import Button as Button_
-from celestine.interface import Image as Image_
-from celestine.interface import Label as Label_
+from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.package.blender import (
@@ -30,6 +28,7 @@ from celestine.typed import (
 from celestine.window.collection import (
     Plane,
     Point,
+    Area,
 )
 
 COLLECTION = _collection
@@ -242,33 +241,34 @@ class Mouse(Abstract):
         return True
 
 
-class Button(Button_, Abstract):
+class Element(Element_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A) -> B:
         """"""
-        if super().make(canvas, **star):
-            data = f"button: {self.data}"
+        if not super().make(canvas):
+            return False
+
+        if self.action or self.goto:
+            data = f"button: {self.text}"
             self.keep = basic.text(self.name, self.canvas, data)
             self.render()
-        return True
+            return True
 
-
-class Image(Image_, Abstract):
-    """"""
-
-    @override
-    def make(self, canvas: A, **star: R) -> B:
-        """"""
-        if super().make(canvas, **star):
-            image = data.image.load(self.path)
-            material = UV.image(self.name, image)
-            plane = basic.image(self.name, self.canvas, image.size)
-
-            plane.body.data.materials.append(material)
-            self.keep = plane
+        if self.text:
+            self.keep = basic.text(self.name, self.canvas, self.text)
             self.render()
+            return True
+
+        # image
+        image = data.image.load(self.path)
+        material = UV.image(self.name, image)
+        plane = basic.image(self.name, self.canvas, image.size)
+
+        plane.body.data.materials.append(material)
+        self.keep = plane
+        self.render()
 
         return True
 
@@ -279,19 +279,6 @@ class Image(Image_, Abstract):
         material = bpy.data.materials[self.name]
         node = material.node_tree.nodes["Image Texture"]
         node.image = data.image.load(image)
-
-        return True
-
-
-class Label(Label_, Abstract):
-    """"""
-
-    @override
-    def make(self, canvas: A, **star: R) -> B:
-        """"""
-        if super().make(canvas, **star):
-            self.keep = basic.text(self.name, self.canvas, self.data)
-            self.render()
 
         return True
 
@@ -337,7 +324,7 @@ class View(View_, Abstract):
         self.dictionary = bpy.data.collections
 
 
-class Window(Window_, Abstract):
+class Window(Window_):
     """"""
 
     @override
@@ -489,22 +476,18 @@ class Window(Window_, Abstract):
 
         return False
 
-    @override
     def __init__(self, *, call=None, **star: R) -> N:
         element = {
-            "button": Button,
-            "image": Image,
-            "label": Label,
+            "element": Element,
             "view": View,
             "window": self,
         }
         super().__init__(element, **star)
-        self.dictionary = bpy.data.collections  # From View?
+        self.area = Area.make(1920, 1080)
 
-        self.area = Plane.make(20, 20)
+        self.dictionary = bpy.data.collections  # From View?
 
         self.frame = None
         self.mouse = None
 
         self.call = call
-        self.star = star
