@@ -1,4 +1,4 @@
-*.egg-info/
+*.bat
 *.ini
 *.wpr
 *.wpu
@@ -6,5 +6,7 @@
 .mypy_cache/
 .ruff_cache/
 __pycache__/
+celestine.egg-info/
 dist/*
 doc/*
+scripts/*
