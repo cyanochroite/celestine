@@ -1,4 +1,5 @@
 """Map character code points to an internal reprensentation."""
+
 from celestine.unicode import (
     ACKNOWLEDGE,
     ACUTE_ACCENT,

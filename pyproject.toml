@@ -123,7 +123,6 @@ remove-unused-variables = true
 
 [tool.black]
 line_length = 72
-safe = true
 target-version = [
     "py310",
     "py311",

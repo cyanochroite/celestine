@@ -10,13 +10,13 @@ from celestine.package import (
     tkinter,
 )
 from celestine.typed import (
+    LS,
     A,
     B,
-    LS,
     N,
+    P,
     R,
     S,
-    P,
     override,
 )
 from celestine.window.collection import Area

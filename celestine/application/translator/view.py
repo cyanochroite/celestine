@@ -1,6 +1,5 @@
 """The View page."""
 
-
 from celestine import language
 from celestine.data import (
     main,

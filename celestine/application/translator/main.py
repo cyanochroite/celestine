@@ -1,4 +1,5 @@
 """Application for translating text to other languages."""
+
 import os
 import os.path
 import shutil

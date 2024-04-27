@@ -1,6 +1,5 @@
 """Package wide global variables."""
 
-
 from celestine.typed import (
     LS,
     A,

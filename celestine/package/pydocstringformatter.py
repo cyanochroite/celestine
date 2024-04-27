@@ -1,4 +1,5 @@
 """A tool to automatically format Python docstrings."""
+
 import os
 import sys
 

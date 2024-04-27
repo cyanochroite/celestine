@@ -168,9 +168,6 @@ class Element(Abstract):
             case Image.FULL:
                 result = curent.scale_to_max(target)
 
-        one = str(result.size)
-        two = str(target.size)
-        f"{one}, {two}"
         result.center(target)
 
         image.resize(result.size)

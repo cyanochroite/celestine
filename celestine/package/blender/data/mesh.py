@@ -1,4 +1,5 @@
 """Blender type is bpy.types.Mesh."""
+
 from .spawn import _real
 
 

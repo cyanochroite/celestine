@@ -15,7 +15,6 @@ dictionary[instance] = "test"
 print(dictionary[Test]) -> "test"
 """
 
-
 from celestine.typed import (
     B,
     I,

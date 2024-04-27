@@ -2,16 +2,13 @@
 
 import random
 
-from celestine import (
-    bank,
-    load,
-)
+from celestine import load
 from celestine.package import Abstract
 from celestine.typed import (
-    A,
     IMAGE,
     LI,
     LS,
+    A,
     I,
     K,
     N,

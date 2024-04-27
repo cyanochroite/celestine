@@ -1,6 +1,5 @@
 """Application for generating images with OpenAI."""
 
-
 import io
 
 import openai

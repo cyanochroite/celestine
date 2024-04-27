@@ -1,4 +1,5 @@
 """Blender type is bpy.types.Image."""
+
 from .spawn import _real
 
 

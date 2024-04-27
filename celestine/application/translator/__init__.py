@@ -1,6 +1,5 @@
 """Application for translating text to other languages."""
 
-
 from celestine import language
 from celestine.session.argument import Optional
 from celestine.session.session import (

@@ -4,6 +4,7 @@ This is a modified main file, so might not run as application.
 Converts the Unicode text file into a python dictionary.
 Was run from the project root.
 """
+
 import io
 
 from celestine import (

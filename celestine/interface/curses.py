@@ -4,31 +4,23 @@ import io
 import math
 
 from celestine import bank
+from celestine.data.notational_systems import BRAILLE_PATTERNS
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.package import (
-    pillow,
-    tkinter,
     curses,
+    pillow,
 )
 from celestine.typed import (
-    A,
-    B,
-    LS,
     N,
     R,
-    S,
-    P,
-    K,
     override,
 )
-from celestine.window.collection import Area
-
 from celestine.unicode import LINE_FEED
-from celestine.data.notational_systems import BRAILLE_PATTERNS
 from celestine.window.collection import (
+    Area,
     Line,
     Plane,
     Point,
@@ -256,30 +248,6 @@ class Element(Element_, Abstract):
 
         item = self.output()
         self.render(item, **star)
-
-    ####
-
-    @override
-    def update(self, path: P, **star: R) -> N:
-        """"""
-
-        self.path = path
-
-        image = pillow.open(self.path)
-
-        curent = Plane.make(image.image.width, image.image.height)
-        target = Plane.make(*self.area.size.int)
-
-        match self.mode:
-            case Mode.FILL:
-                result = curent.scale_to_min(target)
-            case Mode.FULL:
-                result = curent.scale_to_max(target)
-
-        result.center(target)
-
-        image.resize(result.size)
-        self.image.paste(image, result)
 
 
 class View(View_, Abstract):
