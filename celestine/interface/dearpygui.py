@@ -1,30 +1,48 @@
 """"""
 
 from celestine import bank
+from celestine.data.notational_systems import BRAILLE_PATTERNS
 from celestine.interface import Abstract as Abstract_
-from celestine.interface import Button as Button_
-from celestine.interface import Image as Image_
-from celestine.interface import Label as Label_
+from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.package import (
+    curses,
+    pillow,
+    dearpygui,
+)
 from celestine.typed import (
-    LF,
+    N,
+    R,
     A,
     B,
-    N,
+    R,
     P,
     R,
+    N,
+    LF,
+    S,
     override,
 )
-from celestine.window.collection import Plane
+from celestine.unicode import LINE_FEED
+from celestine.window.collection import (
+    Area,
+    Line,
+    Plane,
+    Point,
+)
 
 
 class Abstract(Abstract_):
     """"""
 
 
-class Button(Button_, Abstract):
-    """"""
+class Element(Element_, Abstract):
+    """
+    Manages image objects.
+
+    delete_item(...)
+    """
 
     def callback(self, *_):
         """
@@ -32,34 +50,11 @@ class Button(Button_, Abstract):
 
         callback(self, sender, app_data, user_data)
         """
-        self.call(self.action, **self.argument)
+        self.click(self.area.world.centroid)
+        bank.dequeue()
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
-        """"""
-        super().make(canvas)
-
-        dearpygui = bank.package.dearpygui
-
-        dearpygui.add_button(
-            callback=self.callback,
-            label=self.data,
-            tag=self.name,
-            pos=self.area.origin.int,
-        )
-
-        return True
-
-
-class Image(Image_, Abstract):
-    """
-    Manages image objects.
-
-    delete_item(...)
-    """
-
-    @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A) -> B:
         """
         Draw the image to screen.
 
@@ -71,8 +66,24 @@ class Image(Image_, Abstract):
         """
         super().make(canvas)
 
-        dearpygui = bank.package.dearpygui
+        if self.action or self.goto:
+            dearpygui.add_button(
+                callback=self.callback,
+                label=self.text,
+                tag=self.name,
+                pos=self.area.world.origin.value,
+            )
+            return True
 
+        if self.text:
+            dearpygui.add_text(
+                f" {self.text}",  # extra space hack to fix margin error
+                tag=self.name,
+                pos=self.area.world.origin.value,
+            )
+            return True
+
+        # image
         photo = self.load()
         width, height = self.area.size
 
@@ -94,9 +105,8 @@ class Image(Image_, Abstract):
 
     def load(self) -> LF:
         """"""
-        dearpygui = bank.package.dearpygui
-        itertools = bank.package.itertools
-        pillow = bank.package.pillow
+
+        itertools = itertools
 
         photo: LF = []
 
@@ -128,29 +138,9 @@ class Image(Image_, Abstract):
         """"""
         super().update(path, **star)
 
-        dearpygui = bank.package.dearpygui
         photo: list[float] = self.load()
 
         dearpygui.set_value(self.name, photo)
-
-
-class Label(Label_, Abstract):
-    """"""
-
-    @override
-    def make(self, canvas: A, **star: R) -> B:
-        """"""
-        super().make(canvas)
-
-        dearpygui = bank.package.dearpygui
-
-        dearpygui.add_text(
-            f" {self.data}",  # extra space hack to fix margin error
-            tag=self.name,
-            pos=self.area.origin.int,
-        )
-
-        return True
 
 
 class View(View_, Abstract):
@@ -161,7 +151,7 @@ class View(View_, Abstract):
         """"""
         super().hide()
         try:
-            bank.package.dearpygui.hide_item(self.name)
+            dearpygui.hide_item(self.name)
         except SystemError:
             pass
 
@@ -170,12 +160,12 @@ class View(View_, Abstract):
         """"""
         super().show()
         try:
-            bank.package.dearpygui.show_item(self.name)
+            dearpygui.show_item(self.name)
         except SystemError:
             pass
 
 
-class Window(Window_, Abstract):
+class Window(Window_):
     """"""
 
     @override
@@ -196,23 +186,20 @@ class Window(Window_, Abstract):
         ]
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self) -> N:
         """"""
-        dearpygui = bank.package.dearpygui
         for name, item in self:
-            canvas = bank.package.dearpygui.window(tag=name)
+            canvas = dearpygui.window(tag=name)
             item.canvas = canvas
             with item.canvas:
                 dearpygui.configure_item(item.name, show=False)
                 item.make(None)
 
-        return True
-
     @override
     def turn(self, page):
         """"""
         super().turn(page)
-        dearpygui = bank.package.dearpygui
+
         tag = self.page.name
         dearpygui.set_primary_window(tag, True)
 
@@ -220,11 +207,9 @@ class Window(Window_, Abstract):
     def __enter__(self):
         super().__enter__()
 
-        dearpygui = bank.package.dearpygui
-
         title = bank.language.APPLICATION_TITLE
         dearpygui.create_context()
-        width, height = self.area.size.int
+        width, height = self.area.world.size
         dearpygui.create_viewport(
             title=title,
             small_icon="celestine_small.ico",
@@ -248,7 +233,6 @@ class Window(Window_, Abstract):
     @override
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-        dearpygui = bank.package.dearpygui
 
         dearpygui.setup_dearpygui()
         dearpygui.show_viewport(minimized=False, maximized=False)
@@ -259,12 +243,10 @@ class Window(Window_, Abstract):
     @override
     def __init__(self, **star: R) -> N:
         element = {
-            "button": Button,
-            "image": Image,
-            "label": Label,
+            "element": Element,
             "view": View,
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Plane.make(1920, 1080)
+        self.area = Area.make(1280, 1080)
         self.tag = "window"
