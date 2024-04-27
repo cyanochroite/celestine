@@ -1,2 +1,4 @@
+move .\README.rst .\documentation\README.rst
 python -m sphinx documentation doc
-start doc/index.html
+move .\documentation\README.rst .\README.rst
+start .\doc\index.html

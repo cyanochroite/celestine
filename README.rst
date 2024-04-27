@@ -1,65 +1,29 @@
-
-.. image:: path_to_your_image.png
-   :align: center
-
-.. raw:: html
-
-    <span style="background-color:#FF00FF;font-color:#00FF00;">Donkey</span>
-
-
-.. role:: green-on-red
-
-.. raw:: html
-
-   <style>
-   .green-on-red {
-       color: green;
-       background-color: red;
-   }
-   </style>
-
-:green-on-red:`This is a heading`
-
-
 Célestine
 #########
-
 .. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
    :target: https://celestine.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
-
-
 .. image:: https://img.shields.io/github/repo-size/mem-dixy/celestine
    :alt: GitHub repo size
-
-
 .. image:: https://img.shields.io/pypi/v/celestine
    :alt: PyPI - Version
    :target: https://pypi.org/project/celestine/
-
-
 .. image:: https://img.shields.io/pypi/l/celestine
    :alt: PyPI - License
    :target: https://eupl.eu/
-
-
 .. image:: https://img.shields.io/badge/calver-YYYY.MM.DD-22bfda.svg
    :alt: Calendar Versioning
    :target: https://calver.org/
-
-
-.. image:: https://app.deepsource.com/gh/mem-dixy/celestine.svg/
-   ?label=active+issues&show_trend=false&token=1MUQkPi-6MM_PMqnaWrAJ6c7
+.. image:: https://app.deepsource.com/gh/mem-dixy/celestine.svg/?label=active+issues&show_trend=true&token=1MUQkPi-6MM_PMqnaWrAJ6c7
   :target: https://app.deepsource.com/gh/mem-dixy/celestine/
-
-
-About
-*****
 
 A python framework for desktop applications.
 Featuring support for multiple graphical user interfaces.
 Localized for members of the European Union.
 
+
+About
+*****
 The only requirement is Python.
 However, you can install additional packages for extended functionality.
 
@@ -69,13 +33,12 @@ Note that Blender is an isolated environment, so other packages can not be used 
 .. _`Blender Add-on`: https://docs.blender.org/manual/en/latest/editors/preferences/addons.html
 
 
-
 Commands
 ********
 
+
 Applications
 ^^^^^^^^^^^^
-
 Built in application to try out.
 
 +-------------+-------------------------+------------------------------------------------------------------+
@@ -95,37 +58,38 @@ Caution: By default the viewer application will try to load every image it finds
 
 Graphical User Interfaces
 ^^^^^^^^^^^^^^^^^^^^^^^^^
++-----------------+-------------------------+--------------+
+| Interface       | Source                  | Command      |
++=================+=========================+==============+
+| `blender`_ [1]_ | Blender Foundation      | -i blender   |
++-----------------+-------------------------+--------------+
+| `curses`_       | Python Standard Library | -i curses    |
++-----------------+-------------------------+--------------+
+| `dearpygui`_    | Python Package Index    | -i dearpygui |
++-----------------+-------------------------+--------------+
+| `pygame`_       | Python Package Index    | -i pygame    |
++-----------------+-------------------------+--------------+
+| `tkinter`_      | Python Standard Library | -i tkinter   |
++-----------------+-------------------------+--------------+
 
-+-----------------+-------------------------+--------------+---------------------+
-| Interface       | Source                  | celestine    | pip install         |
-+=================+=========================+==============+=====================+
-| `blender`_ [1]_ | Blender Foundation      | -i blender   |                     |
-+-----------------+-------------------------+--------------+---------------------+
-| `curses`_       | Python Standard Library | -i curses    | windows-curses [2]_ |
-+-----------------+-------------------------+--------------+---------------------+
-| `dearpygui`_    | Python Package Index    | -i dearpygui | dearpygui           |
-+-----------------+-------------------------+--------------+---------------------+
-| `pygame`_       | Python Package Index    | -i pygame    | pygame              |
-+-----------------+-------------------------+--------------+---------------------+
-| `tkinter`_      | Python Standard Library | -i tkinter   |                     |
-+-----------------+-------------------------+--------------+---------------------+
 
-Note:
-
-.. [1] Blender interface can only be run when this is installed as a Blender addon.
-.. [2] Package only needed on Windows. Unix and Linix already have Curses.
-
-.. _`blender`: https://www.blender.org/
-.. _`curses`: https://docs.python.org/3/howto/curses.html
-.. _`dearpygui`: https://pypi.org/project/dearpygui/
-.. _`pygame`: https://pypi.org/project/pygame/
-.. _`pyupgrade`: https://pypi.org/project/pyupgrade/
-.. _`tkinter`: https://docs.python.org/3/library/tk.html
+Optional Dependencies
+*********************
++------------------------+---------------------------------------------------+
+| Package                | Description                                       |
++========================+===================================================+
+| `dearpygui`_           | DearPyGui: A simple Python GUI Toolkit            |
++------------------------+---------------------------------------------------+
+| `pygame`_              | Python Game Development                           |
++------------------------+---------------------------------------------------+
+| `windows-curses`_ [2]_ | Support for the standard curses module on Windows |
++------------------------+---------------------------------------------------+
+| `pillow`_              | Python Imaging Library (Fork)                     |
++------------------------+---------------------------------------------------+
 
 
 Natural Languages
 ^^^^^^^^^^^^^^^^^
-
 Languages translated from English using the Microsoft Azure Translator.
 
 +------------+-------------+-----------------+
@@ -181,31 +145,8 @@ Languages translated from English using the Microsoft Azure Translator.
 +------------+-------------+-----------------+
 
 
-Optional Dependencies
-*********************
-
-+-------------------+----------------+------------------------------------------------------------------------+
-| Package           | pip install    | Information                                                            |
-+===================+================+========================================================================+
-| `dearpygui`_      | dearpygui      | DearPyGui: A simple Python GUI Toolkit.                                |
-+-------------------+----------------+------------------------------------------------------------------------+
-| `pygame`_         | pygame         | Python Game Development.                                               |
-+-------------------+----------------+------------------------------------------------------------------------+
-| `windows-curses`_ | windows-curses | Support for the standard curses module on Windows.                     |
-+-------------------+----------------+------------------------------------------------------------------------+
-| `Pillow`_         | Pillow         | Python Imaging Library (Fork)                                          |
-+-------------------+----------------+------------------------------------------------------------------------+
-
-
-.. _`dearpygui`: https://pypi.org/project/dearpygui/
-.. _`pygame`: https://pypi.org/project/pygame/
-.. _`windows-curses`: https://pypi.org/project/windows-curses/
-.. _`Pillow`: https://pypi.org/project/Pillow/
-
-
 Licences
 ********
-
 The licence for :code:`Cascadia Code` is the
 `SIL Open Font License <https://scripts.sil.org/OFL>`_.
 
@@ -215,7 +156,6 @@ The licence for :code:`celestine` is the
 
 Project Links
 *************
-
 * `Discord <https://discord.gg/aNmDWPXd7B>`_
 * `Documentation <https://celestine.readthedocs.io/>`_
 * `Email <mem_dixy@pm.me>`_
@@ -223,3 +163,20 @@ Project Links
 * `PyPI <https://pypi.org/project/celestine/>`_
 * `Source <https://github.com/mem-dixy/celestine>`_
 * `Tracker <https://github.com/mem-dixy/celestine/issues>`_
+
+.. _`dearpygui`: https://pypi.org/project/dearpygui/
+.. _`pygame`: https://pypi.org/project/pygame/
+.. _`windows-curses`: https://pypi.org/project/windows-curses/
+.. _`pillow`: https://pypi.org/project/Pillow/
+.. _`blender`: https://www.blender.org/
+.. _`curses`: https://docs.python.org/3/howto/curses.html
+.. _`dearpygui`: https://pypi.org/project/dearpygui/
+.. _`pygame`: https://pypi.org/project/pygame/
+.. _`pyupgrade`: https://pypi.org/project/pyupgrade/
+.. _`tkinter`: https://docs.python.org/3/library/tk.html
+
+
+Footnotes
+*********
+.. [1] Blender interface can only be run when this is installed as a Blender addon.
+.. [2] Package only needed on Windows. Unix and Linix already have Curses.
