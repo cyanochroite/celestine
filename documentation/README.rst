@@ -1,8 +1,24 @@
-Célestine
-#########
-
-.. image:: logo_scale_4.png
+.. image:: logo.png
    :align: center
+
+
+
+
+.. role:: header-color
+
+.. raw:: html
+
+   <style>
+   .header-color {
+       align: center;
+       background-color: MidnightBlue;
+       color: #B2FFFF;
+   }
+   </style>
+
+:header-color:`Célestine`
+#########################
+
 
 About
 *****

@@ -2,6 +2,25 @@
 .. image:: path_to_your_image.png
    :align: center
 
+.. raw:: html
+
+    <span style="background-color:#FF00FF;font-color:#00FF00;">Donkey</span>
+
+
+.. role:: green-on-red
+
+.. raw:: html
+
+   <style>
+   .green-on-red {
+       color: green;
+       background-color: red;
+   }
+   </style>
+
+:green-on-red:`This is a heading`
+
+
 Célestine
 #########
 
