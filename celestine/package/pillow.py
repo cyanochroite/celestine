@@ -63,7 +63,7 @@ class Image:
     def clone(cls, self: K) -> K:
         """"""
         image = self.image.copy()
-        return cls(image)
+        return cls(image, self.package)
 
     def convert(self, mode: S) -> N:
         """"""
@@ -122,15 +122,14 @@ class Image:
 
     def quantize(self):
         """"""
-        pillow = bank.self.package
         # Median Cut only works in RGB mode.
         self.convert_to_color()
 
         colors = COLORS
-        method = pillow.Image.Quantize.MEDIANCUT
+        method = self.package.Image.Quantize.MEDIANCUT
         kmeans = 0
         palette = None
-        dither = pillow.Image.Dither.FLOYDSTEINBERG
+        dither = self.package.Image.Dither.FLOYDSTEINBERG
 
         self.image = self.image.quantize(
             colors, method, kmeans, palette, dither

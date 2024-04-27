@@ -5,21 +5,29 @@ import math
 
 from celestine import bank
 from celestine.interface import Abstract as Abstract_
-from celestine.interface import Button as Button_
-from celestine.interface import Image as Image_
-from celestine.interface import Label as Label_
+from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.package import (
+    pillow,
+    tkinter,
+    curses,
+)
 from celestine.typed import (
     A,
     B,
+    LS,
     N,
-    P,
     R,
+    S,
+    P,
+    K,
     override,
 )
+from celestine.window.collection import Area
+
 from celestine.unicode import LINE_FEED
-from celestine.unicode.notational_systems import BRAILLE_PATTERNS
+from celestine.data.notational_systems import BRAILLE_PATTERNS
 from celestine.window.collection import (
     Line,
     Plane,
@@ -83,16 +91,7 @@ class Abstract(Abstract_):
         self.add_string(x_dot, y_dot, text)
 
 
-class Button(Button_, Abstract):
-    """"""
-
-    def draw(self, **star: R):
-        """"""
-        item = f"button: {self.data}"
-        self.render(item, **star)
-
-
-class Image(Image_, Abstract):
+class Element(Element_, Abstract):
     """"""
 
     def output(self):
@@ -139,11 +138,10 @@ class Image(Image_, Abstract):
 
     def render(self, item, **star: R):
         """"""
-        curses = bank.package.curses
 
-        (x_dot, y_dot) = self.area.origin.int
+        (x_dot, y_dot) = self.area.world.origin
 
-        if not bank.package.pillow:
+        if not pillow:
             self.add_string(
                 x_dot,
                 y_dot,
@@ -177,8 +175,6 @@ class Image(Image_, Abstract):
 
     def draw_old(self, **star: R):
         """"""
-        curses = bank.package.curses
-        pillow = bank.package.pillow
 
         if not pillow:
             self.render(self.path.name, **star)
@@ -220,36 +216,36 @@ class Image(Image_, Abstract):
 
     def draw(self, **star: R):
         """"""
-        curses = bank.package.curses
-        pillow = bank.package.pillow
 
         if not pillow:
             self.render(self.path.name, **star)
             return
 
-        self.cache = pillow.open(self.path)
+        self.cache = self.image
         self.color = self.cache.copy()
 
         # Crop box.
         source_length_x = self.cache.image.width
         source_length_y = self.cache.image.height
 
-        length_x, length_y = self.area.size
+        length_x, length_y = self.area.world.size
 
         target_length_x = length_x * 2
         target_length_y = length_y * 4
 
-        source_length = (source_length_x, source_length_y)
-        target_length = (target_length_x, target_length_y)
+        source_length = Plane.make(source_length_x, source_length_y)
+        target_length = Plane.make(target_length_x, target_length_y)
 
-        box = self.crop(source_length, target_length)
+        source_length.scale_to_min(target_length)
+        box = source_length.size
         # Done.
 
         self.color.brightwing()
 
-        target_length = (target_length_x, target_length_y)
-        self.cache.resize(target_length, box)
-        self.color.resize(self.area.size, box)
+        # self.cache.resize(target_length.size, box)
+        # self.color.resize(self.area.size, box)
+        self.cache.resize(target_length.size)
+        self.color.resize(self.area.local.size)
 
         self.color.quantize()
 
@@ -262,17 +258,10 @@ class Image(Image_, Abstract):
         self.render(item, **star)
 
     ####
-    def make(self, canvas: A, **star: R) -> B:
-        """"""
-        pillow = bank.package.pillow
-
-        self.image = pillow.new(self.area.size.int)
-        return True
 
     @override
     def update(self, path: P, **star: R) -> N:
         """"""
-        pillow = bank.package.pillow
 
         self.path = path
 
@@ -293,38 +282,27 @@ class Image(Image_, Abstract):
         self.image.paste(image, result)
 
 
-class Label(Label_, Abstract):
-    """"""
-
-    def draw(self, **star: R):
-        """"""
-        item = f"label: {self.data}"
-        self.render(item, **star)
-
-
 class View(View_, Abstract):
     """"""
 
 
-class Window(Window_, Abstract):
+class Window(Window_):
     """"""
 
     @override
     def draw(self, **star: R):
         """"""
-        curses = bank.package.curses
 
         # Do normal draw stuff.
 
-        canvas = self.page.canvas
-        canvas.erase()
+        self.canvas.erase()
         # canvas = curses.window(*self.area.value)
 
         super().draw(**star)
 
         self.stdscr.noutrefresh()
         self.background.noutrefresh()
-        canvas.noutrefresh()
+        self.canvas.noutrefresh()
         curses.doupdate()
 
         # Reset the global color counter.
@@ -336,29 +314,27 @@ class Window(Window_, Abstract):
     @override
     def extension(self):
         """"""
-        if bank.package.pillow:
-            return bank.package.pillow.extension()
+        if pillow:
+            return pillow.extension()
 
         return []
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self) -> N:
         """"""
-        super().make(self.background)
-        return True
+        self.canvas = self.background
+
+        super().make()
 
     @override
     def setup(self, name):
         """"""
-        # TODO REMOVE
-        curses = bank.package.curses
+
         return curses.window(*self.area.int)
 
     @override
     def __enter__(self):
         super().__enter__()
-
-        curses = bank.package.curses
 
         (size_y, size_x) = self.stdscr.getmaxyx()
         self.full = Plane.make(size_x, size_y)
@@ -375,18 +351,18 @@ class Window(Window_, Abstract):
         footer.addstr(0, 1, bank.language.CURSES_EXIT)
 
         #
-        self.area = Plane(
+        # TODO check why repeat code from init
+        plane = Plane(
             Line(1, size_x - 2),
             Line(1, size_y - 2),
         )
+        self.area = Area(plane, plane)
 
         return self
 
     @override
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
-
-        curses = bank.package.curses
 
         while True:
             bank.dequeue()
@@ -424,14 +400,10 @@ class Window(Window_, Abstract):
     @override
     def __init__(self, **star: R) -> N:
         element = {
-            "button": Button,
-            "image": Image,
-            "label": Label,
+            "element": Element,
             "view": View,
             "window": self,
         }
-
-        curses = hold.package.curses
 
         self.stdscr = curses.initscr()
 
@@ -447,9 +419,10 @@ class Window(Window_, Abstract):
         self.background.box()
 
         super().__init__(element, **star)
-        self.area = Plane(
+        plane = Plane(
             Line(1, size_x - 2),
             Line(1, size_y - 2),
         )
+        self.area = Area(plane, plane)
         self.cord_x = 0.5
         self.cord_y = 0.5

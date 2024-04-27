@@ -379,3 +379,7 @@ Sky Magenta
 
 Ultra Pink
 Hex triplet	#FF6FFF
+
+
+ToDo
+Interfaces are dependent on Pillow. Give them a fallback implementation.

@@ -51,7 +51,7 @@ class Element(Element_, Abstract):
             self.click(self.area.world.centroid)
             bank.dequeue()
 
-        star = {}
+        star: R = {}
         # if not super().make(canvas):
         #    return False
 
@@ -77,7 +77,7 @@ class Element(Element_, Abstract):
 
         self.place(self.item)
 
-    def update(self, path: P, **star) -> N:
+    def update(self, path: P, **star: R) -> N:
         """"""
         super().update(path)
 
