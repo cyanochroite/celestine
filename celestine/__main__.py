@@ -1,6 +1,7 @@
 """"""
 
 import importlib
+import pathlib
 import os
 import sys
 
@@ -51,21 +52,48 @@ with open("./text.txt", mode="rt") as file:
         red = item[0:2]
         green = item[2:4]
         blue = item[4:6]
+
         color = (red, green, blue)
+        _red = int(red, 16)
+        _green = int(green, 16)
+        _blue = int(blue, 16)
+
         if green == blue:
-            greens.append(color)
+            # cyan
+            fail = False
+            if _red + 16 >= _green:
+                fail = True
+            if _blue <= 128:
+                fail = True
+            if not fail:
+                greens.append(color)
         if red == blue:
-            reds.append(color)
+            # magenta
+            # ff00ff
+            fail = False
+            if _green >= _blue:
+                fail = True
+            if not fail:
+                reds.append(color)
         if red == green:
-            blues.append(color)
+            # blues
+            fail = False
+            if _red >= _blue:
+                fail = True
+            if _blue <= 32:
+                fail = True
+            if not fail:
+                blues.append(color)
 
 
 def draw(name, colors):
+    path = pathlib.Path(f"./test/{name}/")
+    path.mkdir(parents=True, exist_ok=True)
     for color in colors:
         x, y, z = color
         r, g, b = rainbow(color)
         image = PIL.Image.new("RGB", (1024, 1024), color=(r, g, b))
-        image.save(f"./test/{name}_{x}{y}{z}.png")
+        image.save(f"./test/{name}/{x}{y}{z}.png")
 
 
 draw("magenta", reds)

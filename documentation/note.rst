@@ -337,3 +337,45 @@ if you have more then 1 language you must use language/__init__.py
 Root modules should have minimal dependecies.
 root data package causing a lot of problems
 remove repeated data of load and data
+
+
+session\init
+application\clean\code
+configuration self.path
+application\tests\data
+translator\data
+viewer\data
+session\data
+main
+
+Pink
+
+300
+100
+**
+
+Midnight Blue
+#191970
+240
+63.50
+26.86
+
+Celeste
+#B2FFFF
+180
+30.20
+100.00
+
+
+Dark Magenta
+#8B008B
+300
+100.00
+54.51
+
+Sky Magenta
+#CF71AF
+
+
+Ultra Pink
+Hex triplet	#FF6FFF
