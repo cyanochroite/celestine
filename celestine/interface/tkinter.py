@@ -81,16 +81,15 @@ class Element(Element_, Abstract):
         """"""
         super().update(path)
 
-        if pillow and False:
-            image = pillow.image_load(self.path)
-            size = self.resize(image.size)
-            image.resize(size)
-            self.image = pillow.ImageTk.PhotoImage(image=image.image)
+        if pillow:
+            image = self.image.image
+            self.image2 = pillow.ImageTk.PhotoImage(image=image)
         else:
-            self.image = tkinter.PhotoImage(file=self.path)
+            # breaks other stuff elsewere
+            self.image2 = tkinter.PhotoImage(file=self.path)
 
-        self.item.configure(image=self.image)
-        self.item.image = self.image
+        self.item.configure(image=self.image2)
+        self.item.image = self.image2
 
     @override
     def hide(self) -> N:
