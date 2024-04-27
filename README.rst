@@ -58,19 +58,74 @@ Caution: By default the viewer application will try to load every image it finds
 
 Graphical User Interfaces
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-+-----------------+-------------------------+--------------+
-| Interface       | Source                  | Command      |
-+=================+=========================+==============+
-| `blender`_ [1]_ | Blender Foundation      | -i blender   |
-+-----------------+-------------------------+--------------+
-| `curses`_       | Python Standard Library | -i curses    |
-+-----------------+-------------------------+--------------+
-| `dearpygui`_    | Python Package Index    | -i dearpygui |
-+-----------------+-------------------------+--------------+
-| `pygame`_       | Python Package Index    | -i pygame    |
-+-----------------+-------------------------+--------------+
-| `tkinter`_      | Python Standard Library | -i tkinter   |
-+-----------------+-------------------------+--------------+
++--------------+------------------------------+--------------+
+| Interface    | Source                       | Command      |
++==============+==============================+==============+
+| `blender`_   | Blender Foundation [1]_      | -i blender   |
++--------------+------------------------------+--------------+
+| `curses`_    | Python Standard Library [2]_ | -i curses    |
++--------------+------------------------------+--------------+
+| `dearpygui`_ | Python Package Index         | -i dearpygui |
++--------------+------------------------------+--------------+
+| `pygame`_    | Python Package Index         | -i pygame    |
++--------------+------------------------------+--------------+
+| `tkinter`_   | Python Standard Library [3]_ | -i tkinter   |
++--------------+------------------------------+--------------+
+
+
+Natural Languages
+^^^^^^^^^^^^^^^^^
++------------+------------------+---------+
+| Language   | Translation [4]_ | Command |
++============+==================+=========+
+| Bulgarian  | български        | -l bg   |
++------------+------------------+---------+
+| Czech      | čeština          | -l cs   |
++------------+------------------+---------+
+| Danish     | dansk            | -l da   |
++------------+------------------+---------+
+| German     | Deutsch          | -l de   |
++------------+------------------+---------+
+| Greek      | ελληνικά         | -l el   |
++------------+------------------+---------+
+| English    | English          | -l en   |
++------------+------------------+---------+
+| Spanish    | español          | -l es   |
++------------+------------------+---------+
+| Estonian   | eesti            | -l et   |
++------------+------------------+---------+
+| Finnish    | suomi            | -l fi   |
++------------+------------------+---------+
+| French     | français         | -l fr   |
++------------+------------------+---------+
+| Irish      | Gaeilge          | -l ga   |
++------------+------------------+---------+
+| Croatian   | hrvatski         | -l hr   |
++------------+------------------+---------+
+| Hungarian  | magyar           | -l hu   |
++------------+------------------+---------+
+| Italian    | italiano         | -l it   |
++------------+------------------+---------+
+| Lithuanian | lietuvių         | -l lt   |
++------------+------------------+---------+
+| Latvian    | latviešu         | -l lv   |
++------------+------------------+---------+
+| Maltese    | Malti            | -l mt   |
++------------+------------------+---------+
+| Dutch      | Nederlands       | -l nl   |
++------------+------------------+---------+
+| Polish     | polski           | -l pl   |
++------------+------------------+---------+
+| Portuguese | português        | -l pt   |
++------------+------------------+---------+
+| Romanian   | română           | -l ro   |
++------------+------------------+---------+
+| Slovak     | slovenčina       | -l sk   |
++------------+------------------+---------+
+| Slovenian  | slovenščina      | -l sl   |
++------------+------------------+---------+
+| Swedish    | svenska          | -l sv   |
++------------+------------------+---------+
 
 
 Optional Dependencies
@@ -82,67 +137,10 @@ Optional Dependencies
 +------------------------+---------------------------------------------------+
 | `pygame`_              | Python Game Development                           |
 +------------------------+---------------------------------------------------+
-| `windows-curses`_ [2]_ | Support for the standard curses module on Windows |
+| `windows-curses`_ [5]_ | Support for the standard curses module on Windows |
 +------------------------+---------------------------------------------------+
 | `pillow`_              | Python Imaging Library (Fork)                     |
 +------------------------+---------------------------------------------------+
-
-
-Natural Languages
-^^^^^^^^^^^^^^^^^
-Languages translated from English using the Microsoft Azure Translator.
-
-+------------+-------------+-----------------+
-| Language   | Translation | Command         |
-+============+=============+=================+
-| Bulgarian  | български   | celestine -l bg |
-+------------+-------------+-----------------+
-| Czech      | čeština     | celestine -l cs |
-+------------+-------------+-----------------+
-| Danish     | dansk       | celestine -l da |
-+------------+-------------+-----------------+
-| German     | Deutsch     | celestine -l de |
-+------------+-------------+-----------------+
-| Greek      | ελληνικά    | celestine -l el |
-+------------+-------------+-----------------+
-| English    | English     | celestine -l en |
-+------------+-------------+-----------------+
-| Spanish    | español     | celestine -l es |
-+------------+-------------+-----------------+
-| Estonian   | eesti       | celestine -l et |
-+------------+-------------+-----------------+
-| Finnish    | suomi       | celestine -l fi |
-+------------+-------------+-----------------+
-| French     | français    | celestine -l fr |
-+------------+-------------+-----------------+
-| Irish      | Gaeilge     | celestine -l ga |
-+------------+-------------+-----------------+
-| Croatian   | hrvatski    | celestine -l hr |
-+------------+-------------+-----------------+
-| Hungarian  | magyar      | celestine -l hu |
-+------------+-------------+-----------------+
-| Italian    | italiano    | celestine -l it |
-+------------+-------------+-----------------+
-| Lithuanian | lietuvių    | celestine -l lt |
-+------------+-------------+-----------------+
-| Latvian    | latviešu    | celestine -l lv |
-+------------+-------------+-----------------+
-| Maltese    | Malti       | celestine -l mt |
-+------------+-------------+-----------------+
-| Dutch      | Nederlands  | celestine -l nl |
-+------------+-------------+-----------------+
-| Polish     | polski      | celestine -l pl |
-+------------+-------------+-----------------+
-| Portuguese | português   | celestine -l pt |
-+------------+-------------+-----------------+
-| Romanian   | română      | celestine -l ro |
-+------------+-------------+-----------------+
-| Slovak     | slovenčina  | celestine -l sk |
-+------------+-------------+-----------------+
-| Slovenian  | slovenščina | celestine -l sl |
-+------------+-------------+-----------------+
-| Swedish    | svenska     | celestine -l sv |
-+------------+-------------+-----------------+
 
 
 Licences
@@ -165,18 +163,20 @@ Project Links
 * `Tracker <https://github.com/mem-dixy/celestine/issues>`_
 
 .. _`dearpygui`: https://pypi.org/project/dearpygui/
+.. _`pillow`: https://pypi.org/project/Pillow/
 .. _`pygame`: https://pypi.org/project/pygame/
 .. _`windows-curses`: https://pypi.org/project/windows-curses/
-.. _`pillow`: https://pypi.org/project/Pillow/
-.. _`blender`: https://www.blender.org/
-.. _`curses`: https://docs.python.org/3/howto/curses.html
-.. _`dearpygui`: https://pypi.org/project/dearpygui/
-.. _`pygame`: https://pypi.org/project/pygame/
-.. _`pyupgrade`: https://pypi.org/project/pyupgrade/
+
+.. _`curses`: https://docs.python.org/3/library/curses.html
 .. _`tkinter`: https://docs.python.org/3/library/tk.html
+
+.. _`blender`: https://www.blender.org/
 
 
 Footnotes
 *********
 .. [1] Blender interface can only be run when this is installed as a Blender addon.
-.. [2] Package only needed on Windows. Unix and Linix already have Curses.
+.. [2] Windows does not come with Curses.
+.. [3] Not always installed. Espically on Linix.
+.. [4] Language files were translated from English using the Microsoft Azure Translator.
+.. [5] Package only needed on Windows. Unix and Linix already have Curses.
