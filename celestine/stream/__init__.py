@@ -4,6 +4,7 @@ import abc
 import lzma
 import os
 import pathlib
+import sys
 
 from celestine import load
 from celestine.typed import (
@@ -13,6 +14,7 @@ from celestine.typed import (
     B,
     N,
     P,
+    OP,
     S,
     override,
 )

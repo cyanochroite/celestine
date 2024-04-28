@@ -7,8 +7,6 @@ from celestine import (
     bank,
     load,
 )
-from celestine import bank
-from celestine.session import begin_session
 from celestine.typed import (
     LS,
     A,
@@ -41,7 +39,7 @@ bl_info = {
     "description": "A python framework for desktop applications.",
     "author": "mem_dixy",
     "version": (2023, 10, 7),
-    "blender": (4, 0, 0),
+    "blender": (4, 1, 0),
     "location": "View3D > Properties > Object Properties > celestine",
     "warning": "",
     "support": "COMMUNITY",

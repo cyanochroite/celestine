@@ -87,9 +87,10 @@ class Abstract(Object):
         """"""
         return True
 
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         self.canvas = canvas
+        return True
 
     def show(self) -> N:
         """"""
@@ -430,10 +431,11 @@ class Window(Tree):
         for _, item in self:
             item.draw(**star)
 
-    def make(self) -> N:
+    def make(self, **star: R) -> B:
         """"""
         for _, item in self:
             item.make(self.canvas)
+        return True
 
     def spot(self, area: Area, **star: R) -> N:
         """"""

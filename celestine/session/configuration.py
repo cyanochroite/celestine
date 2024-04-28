@@ -2,8 +2,10 @@
 
 import configparser
 import os
+import platform
+import pathlib
 
-from celestine import stream
+from celestine import stream, load
 from celestine.literal import CELESTINE
 from celestine.package import platformdirs
 from celestine.typed import (
@@ -55,7 +57,11 @@ class Configuration:
 
     def __init__(self) -> N:
         """"""
-        self.path = platformdirs.directory if platformdirs else "."
+        if platformdirs:
+            self.path = platformdirs.directory
+        else:
+            self.path = load.pathway_root()
+
         self.save_it_file = stream.Text(self.path)
         self.configuration = configparser.ConfigParser(
             defaults=None,

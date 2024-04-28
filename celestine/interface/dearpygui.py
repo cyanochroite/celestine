@@ -1,36 +1,24 @@
 """"""
 
 from celestine import bank
-from celestine.data.notational_systems import BRAILLE_PATTERNS
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.package import (
-    curses,
-    pillow,
     dearpygui,
+    pillow,
 )
 from celestine.typed import (
-    N,
-    R,
+    LF,
     A,
     B,
-    R,
+    N,
     P,
     R,
-    N,
-    LF,
-    S,
     override,
 )
-from celestine.unicode import LINE_FEED
-from celestine.window.collection import (
-    Area,
-    Line,
-    Plane,
-    Point,
-)
+from celestine.window.collection import Area
 
 
 class Abstract(Abstract_):

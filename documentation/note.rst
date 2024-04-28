@@ -383,3 +383,6 @@ Hex triplet	#FF6FFF
 
 ToDo
 Interfaces are dependent on Pillow. Give them a fallback implementation.
+
+make has **star for blender first
+draw has **star for pygame Font

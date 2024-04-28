@@ -20,15 +20,15 @@ from celestine.typed import (
     A,
     B,
     H,
+    K,
     N,
     R,
     S,
     override,
 )
 from celestine.window.collection import (
-    Plane,
-    Point,
     Area,
+    Point,
 )
 
 COLLECTION = _collection
@@ -179,7 +179,7 @@ class Abstract(Abstract_):
 
     def render(self) -> N:
         """"""
-        (x_dot, y_dot) = self.area.centroid.float
+        (x_dot, y_dot) = self.area.world.centroid
         # child sets mesh and then calls this
         self.keep.location = (x_dot, y_dot, 0)
         self.keep.rotation = (180, 0, 0)
@@ -216,19 +216,13 @@ class Abstract(Abstract_):
         self.hidden = item.hide_render
         return False
 
-    def __init__(self, hold: H, name: S, **star: R) -> N:
-        super().__init__(hold, name, **star)
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
         self.dictionary = bpy.data.objects
 
 
 class Mouse(Abstract):
     """Should everyone get this?"""
-
-    def __init__(self, hold: H, mesh) -> N:
-        self.mesh = mesh.soul
-        self.text = "mouse"
-        super().__init__(hold, "mouse", parent=None)
-        self.keep = mesh
 
     @override
     def make(self, canvas: A, **star: R) -> B:
@@ -240,14 +234,20 @@ class Mouse(Abstract):
             self.render()
         return True
 
+    def __init__(self, mesh) -> N:
+        self.mesh = mesh.soul
+        self.text = "mouse"
+        super().__init__("mouse", parent=None)
+        self.keep = mesh
+
 
 class Element(Element_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A) -> B:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
-        if not super().make(canvas):
+        if not super().make(canvas, **star):
             return False
 
         if self.action or self.goto:
@@ -319,13 +319,20 @@ class View(View_, Abstract):
             item.hide_render = False
             item.hide_viewport = False
 
-    def __init__(self, hold, name, element, **star: R) -> N:
-        super().__init__(hold, name, element, **star)
+    def __init__(self, name, element, **star: R) -> N:
+        super().__init__(name, element, **star)
         self.dictionary = bpy.data.collections
 
 
 class Window(Window_):
     """"""
+
+    @override
+    def make(self, **star: R) -> B:
+        """"""
+        self.canvas = None
+
+        return super().make()
 
     @override
     def extension(self):
@@ -455,7 +462,7 @@ class Window(Window_):
         self.spot(self.area)
 
         if self.call == "make":
-            self.make(None, first=True)
+            self.make(first=True)
 
             for _, item in self:
                 item.hide()
@@ -464,7 +471,7 @@ class Window(Window_):
 
             return False
 
-        self.make(None, first=False)
+        self.make(first=False)
 
         page = bpy.context.scene.celestine.page
         self.page = self.view[page]
