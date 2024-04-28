@@ -11,6 +11,7 @@ The Celestine Image Viewer
     application
     dependencies
     interface
+    changelog
 
 - About_
 - Goals_
