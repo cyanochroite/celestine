@@ -1,19 +1,22 @@
 """Terminal handling for character-cell displays."""
 
 from celestine import load
-from celestine.typed import A
+from celestine.package import Abstract
+from celestine.typed import (
+    A,
+    I,
+    S,
+)
 from celestine.unicode import (
     ESCAPE,
     SPACE,
 )
 
-from . import Abstract
-
 
 class Package(Abstract):
     """"""
 
-    def window(self, column, row, width, height):
+    def window(self, column: I, row: I, width: I, height: I) -> A:
         """"""
         nlines = height
         ncols = width
@@ -21,7 +24,9 @@ class Package(Abstract):
         begin_x = column
         return self.package.newwin(nlines, ncols, begin_y, begin_x)
 
-    def subwindow(self, window, column, row, width, height):
+    def subwindow(
+        self, window, column: I, row: I, width: I, height: I
+    ) -> A:
         """"""
         nlines = height
         ncols = width
@@ -29,7 +34,7 @@ class Package(Abstract):
         begin_x = column
         return window.subwin(nlines, ncols, begin_y, begin_x)
 
-    def __getattr__(self, name) -> A:
+    def __getattr__(self, name: S) -> A:
         result = None
         match name:
             case "KEY_EXIT":

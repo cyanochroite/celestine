@@ -1,6 +1,9 @@
 """"""
 
-
+from celestine import (
+    bank,
+    language,
+)
 from celestine.data import (
     code,
     main,
@@ -9,7 +12,6 @@ from celestine.data import (
 from celestine.interface import View
 from celestine.session.session import SuperSession
 from celestine.typed import (
-    H,
     N,
     R,
     S,
@@ -21,16 +23,16 @@ class Session(SuperSession):
 
 
 @code
-def cow(hold: H, *, say: S, **star: R) -> N:
+def cow(*, say: S, **star: R) -> N:
     """"""
-    talk = hold.language.DEMO_COW_TALK
+    talk = language.DEMO_COW_TALK
     print(talk, say)
 
 
 @code
-def dog(hold: H, **star: R) -> N:
+def dog(**star: R) -> N:
     """"""
-    item = hold.window.find("zero_title")
+    item = bank.window.find("zero_title")
     if item.hidden:
         item.show()
     else:
@@ -38,9 +40,9 @@ def dog(hold: H, **star: R) -> N:
 
 
 @code
-def cat(hold: H, **star: R) -> N:
+def cat(**star: R) -> N:
     """"""
-    item = hold.window.find("zero_body")
+    item = bank.window.find("zero_body")
     if item.hidden:
         item.show()
     else:
@@ -50,7 +52,6 @@ def cat(hold: H, **star: R) -> N:
 @main
 def zero(view: View) -> N:
     """"""
-    language = view.hold.language
     with view.span("zero_head") as line:
         line.label(
             "zero_title",
@@ -94,7 +95,6 @@ def zero(view: View) -> N:
 @scene
 def one(view: View) -> N:
     """"""
-    language = view.hold.language
     with view.span("one_head") as line:
         line.label(
             "one_title",
@@ -122,7 +122,6 @@ def one(view: View) -> N:
 @scene
 def two(view: View) -> N:
     """"""
-    language = view.hold.language
     with view.span("two_head") as line:
         line.label(
             "two_title",

@@ -6,7 +6,13 @@ import os
 import pathlib
 import sys
 
-from celestine.data import CELESTINE
+from celestine.literal import (
+    CELESTINE,
+    FUNCTION,
+    INIT,
+    PACKAGE,
+    PYTHON_EXTENSION,
+)
 from celestine.typed import (
     FN,
     GP,
@@ -26,68 +32,20 @@ from celestine.typed import (
 )
 from celestine.unicode import (
     FULL_STOP,
-    LATIN_SMALL_LETTER_A,
-    LATIN_SMALL_LETTER_C,
-    LATIN_SMALL_LETTER_E,
-    LATIN_SMALL_LETTER_F,
-    LATIN_SMALL_LETTER_G,
-    LATIN_SMALL_LETTER_I,
-    LATIN_SMALL_LETTER_K,
-    LATIN_SMALL_LETTER_N,
-    LATIN_SMALL_LETTER_O,
-    LATIN_SMALL_LETTER_P,
-    LATIN_SMALL_LETTER_T,
-    LATIN_SMALL_LETTER_U,
-    LATIN_SMALL_LETTER_Y,
-    LESS_THAN_SIGN,
     LOW_LINE,
     NONE,
-    SPACE,
 )
-
-FUNCTION = string(
-    LESS_THAN_SIGN,
-    LATIN_SMALL_LETTER_F,
-    LATIN_SMALL_LETTER_U,
-    LATIN_SMALL_LETTER_N,
-    LATIN_SMALL_LETTER_C,
-    LATIN_SMALL_LETTER_T,
-    LATIN_SMALL_LETTER_I,
-    LATIN_SMALL_LETTER_O,
-    LATIN_SMALL_LETTER_N,
-    SPACE,
-)
-
-PACKAGE = string(
-    LATIN_SMALL_LETTER_P,
-    LATIN_SMALL_LETTER_A,
-    LATIN_SMALL_LETTER_C,
-    LATIN_SMALL_LETTER_K,
-    LATIN_SMALL_LETTER_A,
-    LATIN_SMALL_LETTER_G,
-    LATIN_SMALL_LETTER_E,
-)
-
-PYTHON_EXTENSION = string(
-    FULL_STOP,
-    LATIN_SMALL_LETTER_P,
-    LATIN_SMALL_LETTER_Y,
-)
-
-
-INIT = string(
-    LOW_LINE,
-    LOW_LINE,
-    LATIN_SMALL_LETTER_I,
-    LATIN_SMALL_LETTER_N,
-    LATIN_SMALL_LETTER_I,
-    LATIN_SMALL_LETTER_T,
-    LOW_LINE,
-    LOW_LINE,
-)
-
 
 ########################################################################
+
+
+def attribute(*path: S) -> A:
+    """Functions like the 'from package import item' syntax."""
+    iterable = [*path]
+    name = iterable.pop(-1)
+    item = module(*iterable)
+    result = getattr(item, name)
+    return result
 
 
 def module(*path: S) -> M:
@@ -113,7 +71,7 @@ def packages(base: S, *path: S) -> L[M]:
     find = importlib.import_module(base)
     spec = find.__spec__
     info = spec.origin if spec else project_path()
-    spot = pathlib.Path(info)
+    spot = pathlib.Path(str(info))
     root = spot.parent
 
     root = project_path()
@@ -130,15 +88,6 @@ def packages(base: S, *path: S) -> L[M]:
 
 
 ########################################################################
-
-
-def attribute(*path: S) -> A:
-    """Functions like the 'from package import item' syntax."""
-    iterable = [*path]
-    name = iterable.pop(-1)
-    item = module(*iterable)
-    result = getattr(item, name)
-    return result
 
 
 def redirect(*path: S) -> N:
@@ -194,7 +143,7 @@ def method(name: S, *path: S):
 ####
 
 
-def package_dependency(name: S, fail) -> M:
+def package_dependency(name: S, fail: M) -> M:
     """Attempt to make loading packages easier."""
     try:
         flag = package(CELESTINE, PACKAGE, name)
@@ -208,7 +157,7 @@ def package_dependency(name: S, fail) -> M:
 
 
 def _dictionary_items(_module: M) -> T[S, FN]:
-    _dictionary = vars(_module)
+    _dictionary: D[S, A] = vars(_module)
     _items = _dictionary.items()
     return _items
 
@@ -250,7 +199,7 @@ def decorators(_module: M, name: S) -> D[S, FN]:
 
 def decorator_name(module: M, name: S) -> S:
     """Load from module all functions and turn them into dictionary."""
-    dictionary = vars(module)
+    dictionary: D[S, A] = vars(module)
     text = string(FUNCTION, name, FULL_STOP)
     for key, value in dictionary.items():
         if text in repr(value):
@@ -261,7 +210,7 @@ def decorator_name(module: M, name: S) -> S:
 def function_page(module: M) -> LS:
     """Load from module all functions and turn them into dictionary."""
     dictionary = functions(module)
-    iterable = [key for key, value in dictionary.items()]
+    iterable = [key for key, _ in dictionary.items()]
     return iterable
 
 
@@ -338,10 +287,10 @@ def safe_path(*path: S) -> P:
     """Might not be right be good for input from user."""
     root = project_path()
 
-    join = os.path.join(root, *path)
-    normcase = os.path.normcase(join)
-    normpath = os.path.normpath(normcase)
-    realpath = os.path.realpath(normpath, strict=True)
+    join: S = os.path.join(root, *path)
+    normcase: S = os.path.normcase(join)
+    normpath: S = os.path.normpath(normcase)
+    realpath: S = os.path.realpath(normpath, strict=True)
 
     safe = os.path.commonpath((root, realpath))
 
@@ -381,7 +330,7 @@ def argument(*path: S) -> LS:
     """
     directory = pathway(*path)
     try:
-        folder = os.listdir(directory)
+        folder: LS = os.listdir(directory)
     except FileNotFoundError:
         return []
 

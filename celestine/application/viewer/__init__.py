@@ -3,6 +3,7 @@
 # from celestine.application.viewer.core import os
 import os
 
+from celestine import language
 from celestine.session.argument import Optional
 from celestine.session.session import (
     AD,
@@ -10,20 +11,18 @@ from celestine.session.session import (
 )
 from celestine.typed import S
 
-from .data import DIRECTORY
-
 
 class Session(SuperSession):
     """"""
 
-    directory: S
+    output: S
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> AD:
         """"""
-        return super().dictionary(core) | {
-            DIRECTORY: Optional(
+        return super().dictionary() | {
+            "output": Optional(
                 os.getcwd(),
-                core.language.VIEWER_SESSION_DIRECTORY,
+                language.VIEWER_SESSION_DIRECTORY,
             ),
         }

@@ -4,9 +4,8 @@ This is a modified main file, so might not run as application.
 Converts the Unicode text file into a python dictionary.
 Was run from the project root.
 """
+
 import io
-import os
-import sys
 
 from celestine import (
     load,
@@ -17,10 +16,8 @@ from celestine.typed import (
     S,
 )
 
-sys.path[0] = os.path.dirname(sys.path[0])
 
-
-def work(document):
+def work(document: S) -> GS:
     for line in document:
         strip = line.strip()
         split = strip.split(";")
@@ -63,4 +60,4 @@ def work(document):
         with stream.text.reader(file) as lines:
             loaded = read_stream(lines)
             text = work(loaded)
-        stream.Module.save(text, "unicode")
+        stream.module.save(text, "unicode")

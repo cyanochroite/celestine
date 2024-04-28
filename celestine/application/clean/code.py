@@ -12,8 +12,13 @@ from celestine.data import (
     code,
     normalize,
 )
+from celestine.package import (
+    autoflake,
+    black,
+    isort,
+    pyupgrade,
+)
 from celestine.typed import (
-    H,
     N,
     R,
     S,
@@ -76,23 +81,23 @@ array = [
 def run(name: S) -> N:
     """"""
     module = load.module(PACKAGE, name)
-    package = module.Linter(name)
-    package.run()
+    linter = module.Linter(name)
+    linter.run()
 
 
 @code
-def clean(hold: H, **star: R) -> N:
+def clean(**star: R) -> N:
     """"""
-    hold.package.pyupgrade.run()
+    pyupgrade.run()
     # TODO figure out why this print instead of fixes
-    # hold.package.pydocstringformatter.run()
-    hold.package.autoflake.run()
-    hold.package.isort.run()
-    hold.package.black.run()
+    # pydocstringformatter.run()
+    autoflake.run()
+    isort.run()
+    black.run()
 
 
 @code
-def licence(hold: H, **star: R):
+def licence(**star: R):
     """"""
     location = load.pathway("licence")
     files = load.walk_file(location, [], [])
@@ -110,7 +115,7 @@ def licence(hold: H, **star: R):
 
 
 @code
-def version(hold: H, **star: R):
+def version(**star: R):
     """"""
     date = datetime.datetime.now(datetime.UTC)
 

@@ -12,6 +12,8 @@ import types
 import typing
 from collections.abc import Callable as C
 from collections.abc import Generator as G
+from collections.abc import Sequence
+from importlib.machinery import ModuleSpec
 from typing import Dict as D
 from typing import List as L
 from typing import Optional as O
@@ -27,7 +29,7 @@ B: TA = bool
 E: TA = typing.Any
 F: TA = float
 # G: TA = collections.abc.Generator
-# H: TA = Hold
+H: TA = typing.Any  # Unused
 I: TA = int
 J: TA = object
 # K: TA = typing.Self  # "Self" is not valid in this context.
@@ -56,6 +58,7 @@ GS: TA = G[S, N, N]
 OB: TA = O[B]
 OF: TA = O[F]
 OI: TA = O[I]
+OM: TA = O[M]
 OP: TA = O[P]
 OS: TA = O[S]
 
@@ -82,8 +85,16 @@ PAIR: TA = T[I, I]
 AD: TA = D[S, A]
 AI: TA = collections.abc.Iterable[T[S, A]]
 
+SS: TA = Sequence[S] | N
+MS: TA = ModuleSpec | N
+
+
+def ignore(_: A) -> N:
+    """"""
+
 
 def override(function: A) -> A:
+    """"""
     return function
 
 
@@ -100,43 +111,25 @@ class Star(typing.TypedDict):
     """"""
 
 
-class Hold:
+class Fix:
     """"""
 
-    application: M
-    attribute: LS
-    code: M
-    interface: M
-    language: M
-    main: S
-    package: M
-    view: M
-    window: M
-
-    _queue: L[T[C[..., N], A, A]]
-
-    def queue(self, call: C[..., N], action: A, argument: A) -> N:
-        """Add to event queue and call function at end of update."""
-        self._queue.append((call, action, argument))
-
-    def dequeue(self) -> N:
+    def override(self) -> N:
         """"""
-        for call, action, argument in self._queue:
-            call(action, **argument)
-        self._queue = []
-
-    def __init__(self) -> N:
-        self._queue = []
 
 
-H = Hold  # noqa: F401 pylint: disable=W0611
-
-
-class ImportNotUsed:
+class ImportNotUsed(Fix):
     """"""
+
+    @override
+    def override(self) -> N:
+        print(override)
 
     def self(self) -> K:
+        """"""
         return self
 
-    def type_(self) -> TYPE[int]:
+    @staticmethod
+    def type_() -> TYPE[int]:
+        """"""
         return int

@@ -1,33 +1,23 @@
-"""Run a bunch of auto formaters."""
+""""""
 
 import os
 import sys
 
-from celestine import (
-    load,
-    stream,
-)
+from celestine import load
 from celestine.typed import (
     LS,
     OS,
-    A,
     B,
-    D,
-    H,
     M,
     N,
     R,
     S,
 )
 
-CELESTINE = "celestine"
-PACKAGE = "package"
-
 
 class Abstract:
     """"""
 
-    hold: A
     name: S
     package: M | N
 
@@ -64,10 +54,7 @@ class Abstract:
     def __getattr__(self, name: S) -> S:
         return getattr(self.package, name)
 
-    def __init__(
-        self, hold: H, name: S, pypi: OS = None, **star: R
-    ) -> N:
-        self.hold = hold
+    def __init__(self, name: S, pypi: OS = None, **star: R) -> N:
         self.name = name
         self.pypi = pypi or name
 
@@ -78,12 +65,17 @@ class Abstract:
 
         with open(
             os.devnull,
-            stream.Mode.WRITE_TEXT.value,
-            encoding=stream.Encoding.UTF_8.value,
+            "w",
+            encoding="utf-8",
+            # stream.Mode.WRITE_TEXT.value,
+            # encoding=stream.Encoding.UTF_8.value,
         ) as stdout:
             sys.stdout = stdout  # as TextIO
             try:
                 self.package = load.package(self.pypi)
+            except ValueError:
+                #  Name was none.
+                self.package = None
             except ModuleNotFoundError:
                 self.package = None
                 # found = f"Package '{self.name}' not found."
@@ -92,25 +84,3 @@ class Abstract:
                 # logging.warning(message)
 
         sys.stdout = sys_stdout
-
-
-class Package:
-    """"""
-
-    dictionary: D[S, M]
-
-    def __getattr__(self, name: S) -> M:
-        """"""
-        try:
-            return self.dictionary[name]
-        except KeyError as error:
-            message = f"'{PACKAGE}' object has no attribute '{name}'"
-            raise AttributeError(message) from error
-
-    def __init__(self, hold: H, **star: R) -> N:
-        self.dictionary = {}
-        argument = load.argument(PACKAGE)
-        for name in argument:
-            attribute = load.attribute(PACKAGE, name, "Package")
-            package = attribute(hold, name)
-            self.dictionary[name] = package

@@ -3,10 +3,9 @@
 import bpy  # pylint: disable=import-error
 
 import celestine
+from celestine import bank
 from celestine.interface import Abstract as Abstract_
-from celestine.interface import Button as Button_
-from celestine.interface import Image as Image_
-from celestine.interface import Label as Label_
+from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.package.blender import (
@@ -20,14 +19,14 @@ from celestine.package.blender.mesh.quadrilateral import Diamond
 from celestine.typed import (
     A,
     B,
-    H,
+    K,
     N,
     R,
     S,
     override,
 )
 from celestine.window.collection import (
-    Plane,
+    Area,
     Point,
 )
 
@@ -179,7 +178,7 @@ class Abstract(Abstract_):
 
     def render(self) -> N:
         """"""
-        (x_dot, y_dot) = self.area.centroid.float
+        (x_dot, y_dot) = self.area.world.centroid
         # child sets mesh and then calls this
         self.keep.location = (x_dot, y_dot, 0)
         self.keep.rotation = (180, 0, 0)
@@ -216,19 +215,13 @@ class Abstract(Abstract_):
         self.hidden = item.hide_render
         return False
 
-    def __init__(self, hold: H, name: S, **star: R) -> N:
-        super().__init__(hold, name, **star)
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
         self.dictionary = bpy.data.objects
 
 
 class Mouse(Abstract):
     """Should everyone get this?"""
-
-    def __init__(self, hold: H, mesh) -> N:
-        self.mesh = mesh.soul
-        self.text = "mouse"
-        super().__init__(hold, "mouse", parent=None)
-        self.keep = mesh
 
     @override
     def make(self, canvas: A, **star: R) -> B:
@@ -240,34 +233,41 @@ class Mouse(Abstract):
             self.render()
         return True
 
+    def __init__(self, mesh) -> N:
+        self.mesh = mesh.soul
+        self.text = "mouse"
+        super().__init__("mouse", parent=None)
+        self.keep = mesh
 
-class Button(Button_, Abstract):
+
+class Element(Element_, Abstract):
     """"""
 
     @override
     def make(self, canvas: A, **star: R) -> B:
         """"""
-        if super().make(canvas, **star):
-            data = f"button: {self.data}"
+        if not super().make(canvas, **star):
+            return False
+
+        if self.action or self.goto:
+            data = f"button: {self.text}"
             self.keep = basic.text(self.name, self.canvas, data)
             self.render()
-        return True
+            return True
 
-
-class Image(Image_, Abstract):
-    """"""
-
-    @override
-    def make(self, canvas: A, **star: R) -> B:
-        """"""
-        if super().make(canvas, **star):
-            image = data.image.load(self.path)
-            material = UV.image(self.name, image)
-            plane = basic.image(self.name, self.canvas, image.size)
-
-            plane.body.data.materials.append(material)
-            self.keep = plane
+        if self.text:
+            self.keep = basic.text(self.name, self.canvas, self.text)
             self.render()
+            return True
+
+        # image
+        image = data.image.load(self.path)
+        material = UV.image(self.name, image)
+        plane = basic.image(self.name, self.canvas, image.size)
+
+        plane.body.data.materials.append(material)
+        self.keep = plane
+        self.render()
 
         return True
 
@@ -278,19 +278,6 @@ class Image(Image_, Abstract):
         material = bpy.data.materials[self.name]
         node = material.node_tree.nodes["Image Texture"]
         node.image = data.image.load(image)
-
-        return True
-
-
-class Label(Label_, Abstract):
-    """"""
-
-    @override
-    def make(self, canvas: A, **star: R) -> B:
-        """"""
-        if super().make(canvas, **star):
-            self.keep = basic.text(self.name, self.canvas, self.data)
-            self.render()
 
         return True
 
@@ -331,13 +318,20 @@ class View(View_, Abstract):
             item.hide_render = False
             item.hide_viewport = False
 
-    def __init__(self, hold, name, element, **star: R) -> N:
-        super().__init__(hold, name, element, **star)
+    def __init__(self, name, element, **star: R) -> N:
+        super().__init__(name, element, **star)
         self.dictionary = bpy.data.collections
 
 
-class Window(Window_, Abstract):
+class Window(Window_):
     """"""
+
+    @override
+    def make(self, **star: R) -> B:
+        """"""
+        self.canvas = None
+
+        return super().make(**star)
 
     @override
     def extension(self):
@@ -420,7 +414,7 @@ class Window(Window_, Abstract):
         mesh = data.mesh("mouse", click)
         mesh.location = (0, 0, -1)
 
-        self.mouse = Mouse(self.hold, mesh)
+        self.mouse = Mouse(mesh)
         self.mouse.make(collection, first=True)
 
         @classmethod
@@ -467,16 +461,16 @@ class Window(Window_, Abstract):
         self.spot(self.area)
 
         if self.call == "make":
-            self.make(None, first=True)
+            self.make(first=True)
 
             for _, item in self:
                 item.hide()
 
-            self.turn(self.hold.main)
+            self.turn(bank.main)
 
             return False
 
-        self.make(None, first=False)
+        self.make(first=False)
 
         page = bpy.context.scene.celestine.page
         self.page = self.view[page]
@@ -484,26 +478,22 @@ class Window(Window_, Abstract):
         call = getattr(self, self.call)
         call(**self.star)
 
-        self.hold.dequeue()
+        bank.dequeue()
 
         return False
 
-    @override
-    def __init__(self, hold: H, *, call=None, **star: R) -> N:
+    def __init__(self, *, call=None, **star: R) -> N:
         element = {
-            "button": Button,
-            "image": Image,
-            "label": Label,
+            "element": Element,
             "view": View,
             "window": self,
         }
-        super().__init__(hold, element, **star)
-        self.dictionary = bpy.data.collections  # From View?
+        super().__init__(element, **star)
+        self.area = Area.make(20, 20)
 
-        self.area = Plane.make(20, 20)
+        self.dictionary = bpy.data.collections  # From View?
 
         self.frame = None
         self.mouse = None
 
         self.call = call
-        self.star = star

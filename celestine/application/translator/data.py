@@ -1,6 +1,5 @@
 """Keywords used throughout the translator application."""
 
-
 INIT = "__init__"
 KEY = "key"
 LANGUAGE = "language"

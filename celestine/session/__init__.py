@@ -1,76 +1,102 @@
 """"""
 
+import importlib
 
-from celestine import load
-from celestine.data.directory import (
+from celestine import (
+    bank,
+    load,
+)
+from celestine.literal import (
     APPLICATION,
+    CELESTINE,
     INTERFACE,
     LANGUAGE,
+    PACKAGE,
 )
-from celestine.package import Package
 from celestine.typed import (
     LS,
     B,
-    H,
-    Hold,
+    C,
+    D,
+    N,
+    R,
+    S,
 )
 
+from . import default
 from .magic import Magic
 
+this = load.module(PACKAGE)
 
-def begin_session(argument_list: LS, exit_on_error: B) -> H:
+
+def set_lang():
+    """"""
+    # monkeypatch in the language
+    language = load.package(CELESTINE, LANGUAGE)
+    for key, value in vars(bank.language).items():
+        setattr(language, key, value)
+
+
+def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     """
 
     First load Language so human can read errors.
     Then load Interface so human see errors the way they want.
     """
 
+    configuration = load.attribute(
+        "session",
+        "configuration",
+        "Configuration",
+    )
+    bank.configuration = configuration()
+
+    # The order here matters.
+    bank.language = load.module(LANGUAGE, default.language())
+    set_lang()
+    bank.interface = load.module(INTERFACE, default.interface())
+    hold = default.application()
+    bank.application = load.module(APPLICATION, default.application())
+    bank.application.name = hold
+
     magic = Magic(argument_list, exit_on_error)
 
     with magic:
         magic.parse(LANGUAGE)
+        set_lang()
         magic.parse(INTERFACE)
         magic.parse(APPLICATION)
 
-        method = load.method("Whale", "session", "session")
+        method = load.method("Configuration", "session", "session")
         magic.get_parser([method], True)
-        path = method.whale  # configuration file: avoid name conflict
-        magic.configuration.load(path)
+        path = method.configuration
+        bank.configuration.load(path)
 
         magic.parse(LANGUAGE)
+        set_lang()
         magic.parse(INTERFACE)
         magic.parse(APPLICATION)
+
+        session = importlib.import_module("celestine.session.session")
+        importlib.reload(session)
 
         session1 = load.method("Session", "session", "session")
         session2 = load.method(
-            "Session", APPLICATION, magic.core.application.name
+            "Session", APPLICATION, bank.application.name
         )
         session3 = load.method("Information", "session", "session")
 
         magic.get_parser([session1, session2, session3], False)
 
     # Save values to session object.
-    application = magic.core.application.name
-    session = Hold()
-
-    session.application = load.module(APPLICATION, session1.application)
-
-    session.attribute = session2
-
-    session.interface = load.module(INTERFACE, session1.interface)
-
-    session.language = load.module(LANGUAGE, session1.language)
-
-    session.package = Package(session)
-
-    session.window = None
+    application = bank.application.name
 
     # items = load.python(APPLICATION, application)
     # car = list(items)
 
-    code = {}
-    main = {}
-    view = {}
+    code: D[S, C] = {}
+    main: D[S, C] = {}
+    view: D[S, C] = {}
 
     modules = load.modules(APPLICATION, application)
     for module in modules:
@@ -84,8 +110,15 @@ def begin_session(argument_list: LS, exit_on_error: B) -> H:
     if len(main) > 1:
         raise UserWarning("Expecting only one '@main' decorator.")
 
-    session.code = code
-    session.view = view | main
-    session.main = next(iter(main))
+    bank.application = load.module(APPLICATION, session1.application)
+    bank.attribute = session2
+    bank.code = code
+    # bank.configuration = pathlib.Path()  # unset
+    bank.directory = session1.directory
+    bank.interface = load.module(INTERFACE, session1.interface)
+    # bank.language = load.module(LANGUAGE, session1.language)
+    bank.main = next(iter(main))
+    bank.view = view | main
+    bank.window = bank.interface.Window(**star)
 
-    return session
+    set_lang()

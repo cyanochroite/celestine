@@ -1,14 +1,11 @@
 """DearPyGui: A simple Python GUI Toolkit."""
 
-
+from celestine.package import Abstract
 from celestine.typed import (
-    H,
     N,
     R,
     S,
 )
-
-from . import Abstract
 
 
 class Package(Abstract):
@@ -20,5 +17,5 @@ class Package(Abstract):
         combine = f"{root}"
         return combine
 
-    def __init__(self, hold: H, name: S, **star: R) -> N:
-        super().__init__(hold, name, pypi="dearpygui.dearpygui")
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(name, pypi="dearpygui.dearpygui")

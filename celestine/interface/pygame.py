@@ -1,15 +1,20 @@
 """"""
 
-from celestine import load
+from celestine import (
+    bank,
+    load,
+)
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.package import pygame
 from celestine.typed import (
     LS,
+    A,
     B,
-    H,
     K,
+    M,
     N,
     R,
     S,
@@ -28,6 +33,8 @@ class Abstract(Abstract_):
 class Element(Element_, Abstract):
     """"""
 
+    image: M
+
     def draw(self, **star: R) -> B:
         """"""
         font = star.pop("font")
@@ -35,12 +42,7 @@ class Element(Element_, Abstract):
         if not super().draw(**star):
             return False
 
-        pygame = self.hold.package.pygame
-
-        origin = (
-            self.area.world.one.minimum,
-            self.area.world.two.minimum,
-        )
+        origin = self.area.world.origin.value
 
         image = pygame.image.fromstring(
             self.image.image.tobytes(),
@@ -53,8 +55,8 @@ class Element(Element_, Abstract):
         self.canvas.blit(text, origin)
         return True
 
-    def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
-        super().__init__(hold, name, parent, **star)
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
         self.path = star.get("path", "")
 
 
@@ -68,8 +70,6 @@ class Window(Window_):
     @override
     def draw(self, **star: R) -> N:
         """"""
-        pygame = self.hold.package.pygame
-
         self.canvas.fill((0, 0, 0))
 
         super().draw(font=self.font, **star)
@@ -107,9 +107,8 @@ class Window(Window_):
     @override
     def make(self) -> N:
         """"""
-        pygame = self.hold.package.pygame
-
-        self.canvas = pygame.display.set_mode(self.area.world.size.int)
+        value = self.area.world.size.value
+        self.canvas = pygame.display.set_mode(value)
 
         super().make()
 
@@ -117,10 +116,8 @@ class Window(Window_):
     def __enter__(self):
         super().__enter__()
 
-        pygame = self.hold.package.pygame
-
         def set_caption():
-            caption = self.hold.language.APPLICATION_TITLE
+            caption = bank.language.APPLICATION_TITLE
             pygame.display.set_caption(caption)
 
         def set_font():
@@ -135,10 +132,8 @@ class Window(Window_):
         return self
 
     @override
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A):
         super().__exit__(exc_type, exc_value, traceback)
-
-        pygame = self.hold.package.pygame
 
         def set_icon():
             path = "icon.png"
@@ -150,7 +145,7 @@ class Window(Window_):
         set_icon()
 
         while True:
-            self.hold.dequeue()
+            bank.dequeue()
             event = pygame.event.wait()
             match event.type:
                 case pygame.QUIT:
@@ -159,17 +154,20 @@ class Window(Window_):
                     # TODO: This triggers on all mouse buttons
                     # including scroll wheel! That is bad.
                     self.click(Point(*pygame.mouse.get_pos()))
+                case _:
+                    pass
 
         pygame.quit()
         return False
 
     @override
-    def __init__(self, hold: H, **star: R) -> N:
+    def __init__(self, **star: R) -> N:
         element = {
             "element": Element,
             "view": View,
             "window": self,
         }
-        super().__init__(hold, element, **star)
+        super().__init__(element, **star)
         self.area = Area.make(1280, 960)
+        self.area = Area.make(1920, 1080)
         self.font = None

@@ -1,12 +1,12 @@
 """Application for generating images with OpenAI."""
 
-
 import io
 
 import openai
 import PIL.Image
 import requests
 
+from celestine import language
 from celestine.data import (
     code,
     main,
@@ -40,11 +40,11 @@ class Session(SuperSession):
         return {
             KEY: Optional(
                 NONE,
-                core.language.TRANSLATOR_SESSION_KEY,
+                language.TRANSLATOR_SESSION_KEY,
             ),
             GROUP: Optional(
                 NONE,
-                core.language.TRANSLATOR_SESSION_REGION,
+                language.TRANSLATOR_SESSION_REGION,
             ),
         }
 
@@ -102,7 +102,7 @@ def enter(view: View) -> N:
     with view.zone("main") as line:
         line.element(
             "main_A",
-            text=view.hold.language.TRANSLATOR_MAIN_BUTTON,
+            text=language.TRANSLATOR_MAIN_BUTTON,
             action="draw",
             prompt="A cute baby dragon with a gold bed.",
         )

@@ -1,5 +1,6 @@
 """"""
 
+from celestine import language
 from celestine.data import main
 from celestine.interface import View
 from celestine.typed import N
@@ -12,5 +13,5 @@ def app(view: View) -> N:
         line.button(
             "main_A",
             "main",
-            text=view.hold.language.TRANSLATOR_MAIN_BUTTON,
+            text=language.TRANSLATOR_MAIN_BUTTON,
         )

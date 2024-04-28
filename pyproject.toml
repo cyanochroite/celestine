@@ -8,7 +8,8 @@ authors = [
     {name = "mem_dixy", email = "mem_dixy@pm.me"},
 ]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 3 - Alpha",
+#   "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)",
     "Natural Language :: Bulgarian",
@@ -44,7 +45,6 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "more-itertools >= 10.0.0",
     "Pillow >= 10.0.0",
     "platformdirs >= 4.0.0",
 ]
@@ -123,7 +123,6 @@ remove-unused-variables = true
 
 [tool.black]
 line_length = 72
-safe = true
 target-version = [
     "py310",
     "py311",
@@ -167,7 +166,7 @@ write = true
 
 [tool.pylint.main]
 disable = "empty-docstring, too-few-public-methods"
-ignored-argument-names = "_|cls|hold|star|self"
+ignored-argument-names = "_|cls|star|self"
 
 
 [tool.pylint.format]

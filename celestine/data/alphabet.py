@@ -1,4 +1,5 @@
 """Internal representatino of letters and symbols."""
+
 import enum
 
 

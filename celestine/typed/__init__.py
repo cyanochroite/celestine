@@ -2,7 +2,7 @@
 
 import importlib
 import sys
-from typing import TypeAlias as TA
+import typing
 
 _version = sys.version.split(".")
 _major = _version[0]
@@ -23,7 +23,7 @@ J = _module.J
 K = _module.K
 L = _module.L
 M = _module.M
-N: TA = None
+N: typing.TypeAlias = None
 O = _module.O
 P = _module.P
 Q = _module.Q
@@ -46,6 +46,7 @@ GS = _module.GS
 OB = _module.OB
 OF = _module.OF
 OI = _module.OI
+OM = _module.OM
 OP = _module.OP
 OS = _module.OS
 
@@ -72,7 +73,9 @@ PAIR = _module.PAIR
 AD = _module.AD
 AI = _module.AI
 
-override = _module.override
+SS = _module.SS
+MS = _module.MS
 
-Hold = _module.Hold
+ignore = _module.ignore
+override = _module.override
 string = _module.string

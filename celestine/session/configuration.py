@@ -7,10 +7,12 @@ from celestine import (
     load,
     stream,
 )
-from celestine.data import CELESTINE
+from celestine.literal import CELESTINE
+from celestine.package import platformdirs
 from celestine.typed import (
     OP,
     N,
+    P,
     S,
 )
 from celestine.unicode import (
@@ -19,11 +21,15 @@ from celestine.unicode import (
     POUND_SIGN,
 )
 
-from .data import FILE
+FILE = "celestine.ini"
 
 
 class Configuration:
     """Parse configuration stuff."""
+
+    configuration: configparser.ConfigParser
+    path: P
+    save_it_file: stream.Text
 
     def get(self, section: S, option: S) -> S:
         """"""
@@ -38,7 +44,8 @@ class Configuration:
     def save(self) -> N:
         """Save the configuration file."""
         configuration = self.configuration
-        with stream.text.writer(self.path) as fileobject:
+        path = os.path.join(self.path, FILE)
+        with self.save_it_file.writer(path) as fileobject:
             space_around_delimiters = True
             configuration.write(fileobject, space_around_delimiters)
 
@@ -51,31 +58,22 @@ class Configuration:
 
     def __init__(self) -> N:
         """"""
-        module = load.module("package", "platformdirs")
-        path = os.path.join(module.directory, FILE)
-        self.path = path
+        if platformdirs:
+            self.path = platformdirs.directory
+        else:
+            self.path = load.pathway_root()
 
-        defaults = None  # Default.
-        dict_type = dict  # Default.
-        allow_no_value = False  # Default.
-        delimiters = EQUALS_SIGN
-        comment_prefixes = POUND_SIGN
-        inline_comment_prefixes = None  # Default.
-        strict = True  # Important.
-        empty_lines_in_values = False
-        default_section = CELESTINE
-        interpolation = configparser.BasicInterpolation()  # Default.
-        converters = {}  # Default.
+        self.save_it_file = stream.Text(self.path)
         self.configuration = configparser.ConfigParser(
-            defaults,
-            dict_type,
-            allow_no_value,
-            delimiters=delimiters,
-            comment_prefixes=comment_prefixes,
-            inline_comment_prefixes=inline_comment_prefixes,
-            strict=strict,
-            empty_lines_in_values=empty_lines_in_values,
-            default_section=default_section,
-            interpolation=interpolation,
-            converters=converters,
+            defaults=None,
+            dict_type=dict,
+            allow_no_value=False,
+            delimiters=EQUALS_SIGN,
+            comment_prefixes=POUND_SIGN,
+            inline_comment_prefixes=None,
+            strict=True,
+            empty_lines_in_values=False,
+            default_section=CELESTINE,
+            interpolation=configparser.BasicInterpolation(),
+            converters={},
         )

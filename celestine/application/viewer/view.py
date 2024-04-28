@@ -1,5 +1,6 @@
 """"""
 
+from celestine import language
 from celestine.data import (
     main,
     scene,
@@ -15,7 +16,7 @@ from celestine.window.container import (
 @scene
 def picture(view: View) -> N:
     """"""
-    view.element("photo", fit=Image.FULL, goto="display")
+    view.element("photo", fit=Image.FILL, goto="display")
 
 
 @main
@@ -24,7 +25,7 @@ def display(view: View) -> N:
     view.button(
         "load",
         "setup",
-        text=view.hold.language.VIEWER_MAIN_BUTTON,
+        text=language.VIEWER_MAIN_BUTTON,
     )
     with view.zone("grid", row=2, col=4, mode=Zone.GRID) as grid:
         for name, _ in grid:

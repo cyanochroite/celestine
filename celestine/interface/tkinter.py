@@ -1,14 +1,20 @@
 """"""
 
+from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.package import (
+    pillow,
+    tkinter,
+)
 from celestine.typed import (
+    LS,
     A,
     B,
-    H,
     N,
+    P,
     R,
     S,
     override,
@@ -20,8 +26,9 @@ class Abstract(Abstract_):
     """"""
 
     def place(self, item: A) -> N:
+        """"""
         width, height = self.area.local.size
-        dot_x, dot_y = self.area.local.origin.int
+        dot_x, dot_y = self.area.local.origin
         item.place(
             x=dot_x,
             y=dot_y,
@@ -36,30 +43,53 @@ class Element(Element_, Abstract):
     @override
     def make(self, canvas: A) -> N:
         """"""
-        tkinter = self.hold.package.tkinter
+
+        super().make(canvas)
 
         def callback() -> N:
             """"""
             self.click(self.area.world.centroid)
-            self.hold.dequeue()
+            bank.dequeue()
+
+        star: R = {}
+        # if not super().make(canvas):
+        #    return False
+
+        # if not super().draw(**star):
+        #    return False
+
+        if self.path:
+            self.image2 = tkinter.PhotoImage(file=self.path)
+            star.update(image=self.image2)
+
+        if self.text:
+            star.update(text=self.text)
 
         if self.action or self.goto:
-            self.item = tkinter.Button(
-                canvas,
-                command=callback,
-                text=self.text,
-            )
+            star.update(command=callback)
+            self.item = tkinter.Button(canvas, **star)
         else:
-            self.item = tkinter.Label(
-                canvas,
-                fg="blue",
-                height=4,
-                text=self.text,
-                width=100,
-            )
+            star.update(fg="blue")
+            star.update(height=4)
+            star.update(text=self.text)
+            star.update(width=100)
+            self.item = tkinter.Label(canvas, **star)
 
         self.place(self.item)
-        super().make(canvas)
+
+    def update(self, path: P, **star: R) -> N:
+        """"""
+        super().update(path)
+
+        if pillow:
+            image = self.image.image
+            self.image2 = pillow.ImageTk.PhotoImage(image=image)
+        else:
+            # breaks other stuff elsewere
+            self.image2 = tkinter.PhotoImage(file=self.path)
+
+        self.item.configure(image=self.image2)
+        self.item.image = self.image2
 
     @override
     def hide(self) -> N:
@@ -80,12 +110,10 @@ class View(View_, Abstract):
     @override
     def make(self, canvas: A) -> N:
         """"""
-        tkinter = self.hold.package.tkinter
-
         self.canvas = tkinter.Frame(
             canvas,
-            padx=5,
-            pady=5,
+            padx=0,
+            pady=0,
             bg="yellow",
             width=1920,
             height=1080,
@@ -110,10 +138,10 @@ class Window(Window_):
     """"""
 
     @override
-    def extension(self):
+    def extension(self) -> LS:
         """"""
-        if self.hold.package.pillow:
-            return self.hold.package.pillow.extension()
+        if pillow:
+            return pillow.extension()
 
         return [
             ".pbm",
@@ -127,10 +155,8 @@ class Window(Window_):
     @override
     def make(self) -> N:
         """"""
-        tkinter = self.hold.package.tkinter
-
         self.canvas = tkinter.Tk()
-        self.canvas.title(self.hold.language.APPLICATION_TITLE)
+        self.canvas.title(bank.language.APPLICATION_TITLE)
         self.canvas.geometry("1920x1080")
         self.canvas.minsize(640, 480)
         self.canvas.maxsize(3840, 2160)
@@ -150,11 +176,11 @@ class Window(Window_):
         return False
 
     @override
-    def __init__(self, hold: H, **star: R) -> N:
+    def __init__(self, **star: R) -> N:
         element = {
             "element": Element,
             "view": View,
             "window": self,
         }
-        super().__init__(hold, element, **star)
+        super().__init__(element, **star)
         self.area = Area.make(1280, 1080)

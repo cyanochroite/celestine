@@ -1,4 +1,8 @@
-""""""
+"""
+Define types here.
+
+Generator[YieldType, SendType, ReturnType]
+"""
 
 import collections.abc
 import io
@@ -8,6 +12,8 @@ import types
 import typing
 from collections.abc import Callable as C
 from collections.abc import Generator as G
+from collections.abc import Sequence
+from importlib.machinery import ModuleSpec
 from typing import Dict as D
 from typing import List as L
 from typing import Optional as O
@@ -26,7 +32,7 @@ type E = typing.Any  # Unused.  # ENUM?
 type F = float
 # Generator[YieldType, SendType, ReturnType]
 # type G = collections.abc.Generator
-# type H = Hold
+type H = typing.Any  # Unused
 type I = int
 type J = object
 # type K = typing.Self
@@ -55,6 +61,7 @@ type GS = G[S, N, N]
 type OB = O[B]
 type OF = O[F]
 type OI = O[I]
+type OM = O[M]
 type OP = O[P]
 type OS = O[S]
 
@@ -80,6 +87,13 @@ type PAIR = T[I, I]
 type AD = D[S, Argument]  # session.argument
 type AI = collections.abc.Iterable[T[S, Argument]]  # session.argument
 
+type SS = Sequence[S] | N
+type MS = ModuleSpec | N
+
+
+def ignore(_: A) -> N:
+    """"""
+
 
 def string(*characters: S) -> S:
     """"""
@@ -90,40 +104,6 @@ def string(*characters: S) -> S:
     return value
 
 
-class Hold:
-    """"""
-
-    application: M
-    attribute: LS
-    code: M
-    interface: M
-    language: M
-    main: S
-    package: M
-    view: M
-    window: M
-
-    _queue: L[T[C[..., N], A, A]]
-
-    def queue(self, action: C[..., N], argument: A, star: A) -> N:
-        """Add to event queue and call function at end of update."""
-        self._queue.append((action, argument, star))
-
-    def dequeue(self) -> N:
-        """"""
-        for action, argument, star in self._queue:
-            action(argument, **star)
-        #            self.window.work(action, **star)
-        #            self.window.turn(action, **star)
-        self._queue.clear()
-
-    def __init__(self) -> N:
-        self._queue = []
-
-
-H = Hold  # noqa: F401 pylint: disable=W0611
-
-
 class Star(typing.TypedDict):
     """"""
 
@@ -132,7 +112,7 @@ class Fix:
     """"""
 
     def override(self) -> N:
-        pass
+        """"""
 
 
 class ImportNotUsed(Fix):
@@ -143,8 +123,10 @@ class ImportNotUsed(Fix):
         print(override)
 
     def self(self) -> K:
+        """"""
         return self
 
     @staticmethod
     def type_() -> TYPE[int]:
+        """"""
         return int

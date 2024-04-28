@@ -2,12 +2,15 @@
 
 import math
 
+from celestine import bank
+from celestine.package import pillow
 from celestine.typed import (
     LS,
     A,
     B,
     D,
     H,
+    I,
     K,
     N,
     P,
@@ -39,7 +42,6 @@ class Abstract(Object):
     area: Area
     canvas: A
     hidden: B
-    hold: H
     name: S  # The key to use to find this in the window dictionary.
 
     action: S  # The action to perform when the user clicks the button.
@@ -57,16 +59,16 @@ class Abstract(Object):
             return False
 
         if self.action:
-            action = self.hold.window.work
+            action = bank.window.work
             argument = self.action
             star = self.star | {"caller": self.name}
-            self.hold.queue(action, argument, star)
+            bank.queue(action, argument, star)
 
         if self.goto:
-            action = self.hold.window.turn
+            action = bank.window.turn
             argument = self.goto
             star = self.star | {}
-            self.hold.queue(action, argument, star)
+            bank.queue(action, argument, star)
 
         return True
 
@@ -85,9 +87,10 @@ class Abstract(Object):
         """"""
         return True
 
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         self.canvas = canvas
+        return True
 
     def show(self) -> N:
         """"""
@@ -97,13 +100,12 @@ class Abstract(Object):
         """"""
         self.area = area
 
-    def __init__(self, hold: H, name: S, parent: K, **star: R) -> N:
+    def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(**star)
         self.parent = parent
         self.area = Area.make(0, 0)
         self.canvas = None
         self.hidden = False
-        self.hold = hold
         self.name = name
         self.item = None
 
@@ -134,14 +136,16 @@ class Element(Abstract):
     """"""
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
-        pillow = self.hold.package.pillow
+        size = self.area.world.size.value
+        blender_mode = False
+        if pillow and not blender_mode:
+            self.image = pillow.new(size)
+        else:
+            self.image = None
 
-        size = self.area.world.size.int
-        self.image = pillow.new(size)
-
-        super().make(canvas)
+        return super().make(canvas, **star)
 
     def draw(self, **star: R) -> B:
         """"""
@@ -156,14 +160,12 @@ class Element(Abstract):
 
     def update(self, path: P, **star: R) -> N:
         """"""
-        pillow = self.hold.package.pillow
-
         self.path = path
 
         image = pillow.open(self.path)
 
         curent = Plane.make(image.image.width, image.image.height)
-        target = Plane.make(*self.area.world.size.int)
+        target = Plane.make(*self.area.world.size.value)
 
         match self.fit:
             case Image.FILL:
@@ -181,6 +183,9 @@ class View(Abstract, Tree):
     """"""
 
     item: D[S, Abstract]
+    width: I
+    height: I
+    element_item: D[S, A]
 
     def find(self, name: S) -> N | Abstract:
         """"""
@@ -213,10 +218,10 @@ class View(Abstract, Tree):
             item.draw(**star)
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         for _, item in self:
-            item.make(canvas)
+            item.make(canvas, **star)
 
     @override
     def spot(self, area: Area) -> N:
@@ -271,7 +276,6 @@ class View(Abstract, Tree):
         """"""
         return self.set(
             self._view(
-                self.hold,
                 name,
                 self.element_item,
                 mode=mode,
@@ -291,20 +295,19 @@ class View(Abstract, Tree):
     def __enter__(self) -> K:
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback) -> B:
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
         if exc_type or exc_value or traceback:
-            print("ERROR")
+            print("ERROR", exc_type, exc_value, traceback)
         return False
 
     def __init__(
         self,
-        hold,
-        name,
-        element_item,
+        name: S,
+        element_item: D[S, A],
         *,
         mode: Zone = Zone.NONE,
-        row=0,
-        col=0,
+        row: I = 0,
+        col: I = 0,
         **star: R,
     ) -> N:
         #
@@ -313,7 +316,7 @@ class View(Abstract, Tree):
         self._view = element_item["view"]
         self._window = element_item["window"]
 
-        super().__init__(hold, name, **star)
+        super().__init__(name, **star)
 
         self.width = col
         self.height = row
@@ -324,7 +327,6 @@ class View(Abstract, Tree):
                 name = f"{self.name}_{range_x}-{range_y}"
                 self.set(
                     Abstract(
-                        hold,
                         name,
                         self,
                     )
@@ -334,7 +336,6 @@ class View(Abstract, Tree):
         """"""
         self.set(
             self._element(
-                self.hold,
                 name,
                 self,
                 **star,
@@ -344,18 +345,23 @@ class View(Abstract, Tree):
     # syntax sugar
 
     def button(self, name: S, task: S, /, text: S, **star: R) -> N:
+        """"""
         self.element(name, action=task, text=text, **star)
 
     def link(self, name: S, task: S, /, text: S, **star: R) -> N:
+        """"""
         self.element(name, goto=task, text=text, **star)
 
     def icon(self, name: S, /, **star: R) -> N:
+        """"""
         self.element(name, fit=Image.FILL, **star)
 
     def image(self, name: S, /, **star: R) -> N:
+        """"""
         self.element(name, fit=Image.FULL, **star)
 
     def label(self, name: S, /, text: S, **star: R) -> N:
+        """"""
         self.element(name, text=text, **star)
 
 
@@ -405,7 +411,6 @@ class Window(Tree):
         """"""
         return self.set(
             self.element_item["view"](
-                self.hold,
                 name,
                 self.element_item,
                 mode=Zone.DROP,
@@ -430,10 +435,11 @@ class Window(Tree):
         for _, item in self:
             item.draw(**star)
 
-    def make(self) -> N:
+    def make(self, **star: R) -> B:
         """"""
         for _, item in self:
-            item.make(self.canvas)
+            item.make(self.canvas, **star)
+        return True
 
     def spot(self, area: Area, **star: R) -> N:
         """"""
@@ -474,13 +480,13 @@ class Window(Tree):
         if not caller:
             return
 
-        caller(self.hold, **star)
+        caller(**star)
         self.draw(**star)
 
     def __enter__(self) -> K:
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
         if exc_type:
             raise exc_type
         if exc_value:
@@ -494,15 +500,14 @@ class Window(Tree):
         for _, item in self:
             item.hide()
 
-        self.turn(self.hold.main)
+        self.turn(bank.main)
 
         return False
 
-    def __init__(self, hold: H, element_item, **star: R) -> N:
+    def __init__(self, element_item: D[S, A], **star: R) -> N:
         super().__init__(**star)
         self.area = Area.make(0, 0)
-        self.hold = hold
         self.code = {}
         self.view = {}
         self.element_item = element_item
-        self.page = View(hold, "", element_item, parent=None)
+        self.page = View("", element_item, parent=None)

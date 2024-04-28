@@ -2,13 +2,12 @@
 
 import sys
 
+from celestine.package import Abstract
 from celestine.typed import (
     M,
     N,
     S,
 )
-
-from . import Abstract
 
 
 class Package(Abstract):

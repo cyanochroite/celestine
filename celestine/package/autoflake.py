@@ -1,6 +1,6 @@
 """Removes unused imports and unused variables."""
 
-from . import Abstract
+from celestine.package import Abstract
 
 
 class Package(Abstract):

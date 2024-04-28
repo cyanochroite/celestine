@@ -1,6 +1,6 @@
 """"""
 
-from celestine.data import VERSION_NUMBER
+from celestine.literal import VERSION_NUMBER
 from celestine.session.data import (
     Actions,
     Attributes,

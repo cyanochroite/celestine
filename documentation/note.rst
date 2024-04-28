@@ -280,6 +280,7 @@ D	zero	+-
 # cengal
 # pysimplegui
 # bottle
+# masonite
 
 
 # Merge Code and View files. Mark Code functions. Scan all files in app.
@@ -331,3 +332,57 @@ if you have more then 1 language you must use language/__init__.py
 # WHALE, # location of configuration file
 # DIRECTORY, curent working directory of application: security
 
+
+
+Root modules should have minimal dependecies.
+root data package causing a lot of problems
+remove repeated data of load and data
+
+
+session\init
+application\clean\code
+configuration self.path
+application\tests\data
+translator\data
+viewer\data
+session\data
+main
+
+Pink
+
+300
+100
+**
+
+Midnight Blue
+#191970
+240
+63.50
+26.86
+
+Celeste
+#B2FFFF
+180
+30.20
+100.00
+
+
+Dark Magenta
+#8B008B
+300
+100.00
+54.51
+
+Sky Magenta
+#CF71AF
+
+
+Ultra Pink
+Hex triplet	#FF6FFF
+
+
+ToDo
+Interfaces are dependent on Pillow. Give them a fallback implementation.
+
+make has **star for blender first
+draw has **star for pygame Font

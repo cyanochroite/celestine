@@ -1,14 +1,13 @@
 """Removes unused imports and unused variables."""
 
 from celestine import load
+from celestine.package import Abstract
 from celestine.typed import (
     LS,
     M,
     N,
     S,
 )
-
-from . import Abstract
 
 
 class Package(Abstract):

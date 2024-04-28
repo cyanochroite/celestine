@@ -1,10 +1,13 @@
 """"""
-from celestine import load
+
+from celestine import (
+    bank,
+    load,
+)
 from celestine.data import code
 from celestine.typed import (
     LP,
     LS,
-    H,
     N,
     P,
     R,
@@ -12,21 +15,21 @@ from celestine.typed import (
 )
 
 
-def find_image(hold: H, directory: P) -> LP:
+def find_image(directory: P) -> LP:
     """"""
     path = directory
-    include = hold.window.extension()
+    include = bank.window.extension()
     exclude: LS = []
     files = list(load.walk_file(path, include, exclude))
     return files
 
 
 @code
-def setup(hold: H, **star: R) -> N:
+def setup(**star: R) -> N:
     """"""
-    window = hold.window.page
-    directory = hold.attribute.directory
-    find = find_image(hold, directory)
+    window = bank.window.page
+    directory = bank.directory
+    find = find_image(directory)
     images = iter(find)
 
     grid = window.get("grid")
@@ -39,9 +42,9 @@ def setup(hold: H, **star: R) -> N:
 
 
 @code
-def see(hold: H, caller: S, **star: R) -> N:
+def see(caller: S, **star: R) -> N:
     """"""
-    window = hold.window
+    window = bank.window
     source = window.find(caller)
     destination = window.find("photo")
     destination.update(source.path)

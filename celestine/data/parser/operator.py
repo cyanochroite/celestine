@@ -1,4 +1,5 @@
 """"""
+
 from celestine.unicode.alphabet import (
     Comparison,
     Divider,

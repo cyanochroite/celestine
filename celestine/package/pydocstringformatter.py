@@ -1,15 +1,15 @@
 """A tool to automatically format Python docstrings."""
+
 import os
 import sys
 
 from celestine import load
+from celestine.package import Abstract
 from celestine.typed import (
     M,
     N,
     S,
 )
-
-from . import Abstract
 
 
 class Package(Abstract):
@@ -26,7 +26,7 @@ class Package(Abstract):
         location = os.getcwd()
         os.chdir(sys.path[0])
 
-        files = load.walk_python(path, [], ["unicode"])
+        files = load.walk_python(path, [], [])
 
         file = map(str, files)
         argv = [*file]

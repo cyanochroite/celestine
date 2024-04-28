@@ -37,9 +37,9 @@ class File(abc.ABC):
     def _file(self, strict: B, *path: PATH) -> P:
         root = self.directory
 
-        join = os.path.join(root, *path)
-        norm = os.path.normpath(join)
-        real = os.path.realpath(norm, strict=strict)
+        join: S = os.path.join(root, *path)
+        norm: S = os.path.normpath(join)
+        real: S = os.path.realpath(norm, strict=strict)
 
         safe = os.path.commonpath((root, real))
 
@@ -67,8 +67,8 @@ class File(abc.ABC):
     def writer(self, *path: PATH) -> FILE:
         """"""
 
-    def __init__(self, directory: P) -> N:
-        self.directory = directory
+    def __init__(self, path: P) -> N:
+        self.directory = path
 
 
 class Binary(File):
@@ -158,6 +158,7 @@ class Module(Text):
         super().writer(file)
 
 
+# set this in session loading.
 directory = load.project_root()
 
 project_root = load.project_root()

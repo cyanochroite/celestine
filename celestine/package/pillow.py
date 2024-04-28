@@ -3,22 +3,27 @@
 import random
 
 from celestine import load
+from celestine.package import Abstract
 from celestine.typed import (
     IMAGE,
+    LI,
     LS,
-    H,
+    A,
+    I,
     K,
     N,
     P,
     R,
     S,
+    T,
 )
 from celestine.window.collection import (
     Plane,
     Point,
 )
 
-from . import Abstract
+extension: LS
+open: A  # pylint: disable=redefined-builtin
 
 ########################################################################
 
@@ -28,7 +33,6 @@ COLORS = 15  # int(255 - 8 / 16)
 class Image:
     """"""
 
-    hold: H
     image: IMAGE
 
     def brightwing(self):
@@ -37,9 +41,8 @@ class Image:
 
         Make image bright.
         """
-        pillow = self.hold.package.pillow
 
-        def brighter(pixel):
+        def brighter(pixel: I) -> I:
             invert = (255 - pixel) / 255
             boost = invert * 64
             shift = pixel + boost
@@ -50,21 +53,20 @@ class Image:
 
         bands = (hue, saturation, new_value)
 
-        self.image = pillow.Image.merge("HSV", bands).convert("RGB")
+        merge = self.package.Image.merge("HSV", bands)
+        self.image = merge.convert("RGB")
 
     @classmethod
-    def clone(cls, self) -> K:
-        hold = self.hold
+    def clone(cls, self: K) -> K:
+        """"""
         image = self.image.copy()
-        return cls(hold, image)
+        return cls(image, self.package)
 
     def convert(self, mode: S) -> N:
         """"""
-        pillow = self.hold.package.pillow
-
         matrix = None  # Unused default.
-        dither = pillow.Image.Dither.FLOYDSTEINBERG
-        palette = pillow.Image.Palette.WEB  # Unused default.
+        dither = self.package.Image.Dither.FLOYDSTEINBERG
+        palette = self.package.Image.Palette.WEB  # Unused default.
         colors = 256  # Unused default.
 
         hold = self.image.convert(mode, matrix, dither, palette, colors)
@@ -83,9 +85,11 @@ class Image:
         self.convert("1")
 
     def copy(self) -> K:
+        """"""
         return self.clone(self)
 
-    def getdata(self):
+    def getdata(self) -> LI:
+        """"""
         return self.image.getdata()
 
     @property
@@ -94,10 +98,9 @@ class Image:
         return self.image.size
 
     def resize(self, point: Point) -> N:
-        pillow = self.hold.package.pillow
-
-        size = point.int
-        resample = pillow.Image.Resampling.LANCZOS
+        """"""
+        size = point.value
+        resample = self.package.Image.Resampling.LANCZOS
         box = None
         reducing_gap = None
         self.image = self.image.resize(
@@ -108,39 +111,37 @@ class Image:
         )
 
     def paste(self, image: K, plane: Plane) -> N:
+        """"""
         im = image.image
-        box = plane.int
+        box = plane.value
         mask = None
         self.image.paste(im, box, mask)
 
     def quantize(self):
         """"""
-        pillow = self.hold.package.pillow
         # Median Cut only works in RGB mode.
         self.convert_to_color()
 
         colors = COLORS
-        method = pillow.Image.Quantize.MEDIANCUT
+        method = self.package.Image.Quantize.MEDIANCUT
         kmeans = 0
         palette = None
-        dither = pillow.Image.Dither.FLOYDSTEINBERG
+        dither = self.package.Image.Dither.FLOYDSTEINBERG
 
         self.image = self.image.quantize(
             colors, method, kmeans, palette, dither
         )
 
-    def __init__(self, hold: H, /, image: IMAGE, **star: R):
-        self.hold = hold
+    def __init__(self, image: IMAGE, package: A, **star: R):
         self.image = image
+        self.package = package
 
 
 class Package(Abstract):
     """"""
 
-    def new(self, size) -> Image:
+    def new(self, size: T[I, I]) -> Image:
         """"""
-        pillow = self.hold.package.pillow
-
         mode = "RGBA"
         color = (250, 250, 0, 250)
         color = (
@@ -150,16 +151,14 @@ class Package(Abstract):
             255,
         )
 
-        image = pillow.Image.new(mode, size, color)
+        image = self.package.Image.new(mode, size, color)
 
-        item = Image(self.hold, image)
+        item = Image(image, self.package)
         return item
 
     def open(self, path: P) -> Image:
         """"""
-        pillow = self.hold.package.pillow
-
-        file = pillow.Image.open(
+        file = self.package.Image.open(
             fp=path,
             mode="r",
             formats=None,
@@ -168,26 +167,24 @@ class Package(Abstract):
         image = file.convert(
             mode="RGBA",
             matrix=None,
-            dither=pillow.Image.Dither.NONE,
-            palette=pillow.Image.Palette.ADAPTIVE,
+            dither=self.package.Image.Dither.NONE,
+            palette=self.package.Image.Palette.ADAPTIVE,
             colors=256,
         )
 
-        item = Image(self.hold, image)
+        item = Image(image, self.package)
         return item
 
     def extension(self) -> LS:
         """"""
-        pillow = self.hold.package.pillow
-
-        dictionary = pillow.Image.registered_extensions()
+        dictionary = self.package.Image.registered_extensions()
         items = dictionary.items()
-        values = pillow.Image.OPEN
+        values = self.package.Image.OPEN
         result = [key for key, value in items if value in values]
         result.sort()
         return result
 
-    def __init__(self, hold: H, /, name: S, **star: R) -> N:
-        super().__init__(hold, name, pypi="PIL")
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(name, pypi="PIL")
         if self.package:
             setattr(self, "ImageTk", load.package("PIL", "ImageTk"))

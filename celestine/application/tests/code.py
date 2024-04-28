@@ -6,7 +6,6 @@ from celestine import load
 from celestine.data import (
     CELESTINE,
     code,
-    main,
 )
 from celestine.data.directory import APPLICATION
 from celestine.typed import (

@@ -34,7 +34,6 @@ Values
 ''''''
 _
 cls
-hold
 self
 star
 
