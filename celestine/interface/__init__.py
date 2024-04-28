@@ -136,12 +136,16 @@ class Element(Abstract):
     """"""
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         size = self.area.world.size.value
-        self.image = pillow.new(size)
+        blender_mode = False
+        if pillow and not blender_mode:
+            self.image = pillow.new(size)
+        else:
+            self.image = None
 
-        super().make(canvas)
+        return super().make(canvas, **star)
 
     def draw(self, **star: R) -> B:
         """"""
@@ -214,10 +218,10 @@ class View(Abstract, Tree):
             item.draw(**star)
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> B:
         """"""
         for _, item in self:
-            item.make(canvas)
+            item.make(canvas, **star)
 
     @override
     def spot(self, area: Area) -> N:
@@ -434,7 +438,7 @@ class Window(Tree):
     def make(self, **star: R) -> B:
         """"""
         for _, item in self:
-            item.make(self.canvas)
+            item.make(self.canvas, **star)
         return True
 
     def spot(self, area: Area, **star: R) -> N:

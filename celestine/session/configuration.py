@@ -2,10 +2,11 @@
 
 import configparser
 import os
-import platform
-import pathlib
 
-from celestine import stream, load
+from celestine import (
+    load,
+    stream,
+)
 from celestine.literal import CELESTINE
 from celestine.package import platformdirs
 from celestine.typed import (

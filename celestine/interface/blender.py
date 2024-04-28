@@ -19,7 +19,6 @@ from celestine.package.blender.mesh.quadrilateral import Diamond
 from celestine.typed import (
     A,
     B,
-    H,
     K,
     N,
     R,
@@ -332,7 +331,7 @@ class Window(Window_):
         """"""
         self.canvas = None
 
-        return super().make()
+        return super().make(**star)
 
     @override
     def extension(self):
@@ -490,7 +489,7 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.make(1920, 1080)
+        self.area = Area.make(20, 20)
 
         self.dictionary = bpy.data.collections  # From View?
 
