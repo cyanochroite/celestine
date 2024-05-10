@@ -37,6 +37,4 @@ def dequeue() -> N:
     """"""
     for action, argument, star in _queue:
         action(argument, **star)
-        # self.window.work(action, **star)
-        # self.window.turn(action, **star)
     _queue.clear()

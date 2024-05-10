@@ -16,6 +16,7 @@ from celestine.package import (
 from celestine.typed import (
     N,
     R,
+    B,
     override,
 )
 from celestine.unicode import LINE_FEED
@@ -258,7 +259,7 @@ class Window(Window_):
     """"""
 
     @override
-    def draw(self, **star: R):
+    def draw(self, **star: R) -> B:
         """"""
 
         # Do normal draw stuff.
@@ -288,11 +289,11 @@ class Window(Window_):
         return []
 
     @override
-    def make(self) -> N:
+    def make(self, **star: R) -> N:
         """"""
         self.canvas = self.background
 
-        super().make()
+        super().make(**star)
 
     @override
     def setup(self, name):

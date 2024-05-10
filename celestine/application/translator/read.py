@@ -11,7 +11,7 @@ from celestine.unicode import (
     LINE_FEED,
     REVERSE_SOLIDUS,
 )
-from celestine.unicode.alphabet2 import UNICODE
+from celestine.data.alphabet2 import UNICODE
 
 
 def fix_line_split(*path: S) -> GS:
@@ -36,6 +36,7 @@ def fix_line_split(*path: S) -> GS:
 
 
 def make_dictionary(document):
+    """"""
     dictionary = {}
 
     lines = document.split(LINE_FEED)
@@ -56,7 +57,6 @@ def open_language(*path):
     """Convert a dictionary to a string and save it to a file."""
     text = fix_line_split(*path)
     lines = read_new_lines(text)
-    # normal = normalize(lines)
     normal = lines
 
     string = io.StringIO()

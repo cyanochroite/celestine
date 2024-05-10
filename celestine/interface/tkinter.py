@@ -153,7 +153,7 @@ class Window(Window_):
         ]
 
     @override
-    def make(self) -> N:
+    def make(self, **star: R) -> N:
         """"""
         self.canvas = tkinter.Tk()
         self.canvas.title(bank.language.APPLICATION_TITLE)
@@ -162,7 +162,7 @@ class Window(Window_):
         self.canvas.maxsize(3840, 2160)
         self.canvas.config(bg="blue")
 
-        super().make()
+        super().make(**star)
 
     @override
     def turn(self, page: S, **star: R) -> N:

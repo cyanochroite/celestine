@@ -22,6 +22,7 @@ from celestine.typed import (
     K,
     N,
     R,
+    LS,
     S,
     override,
 )
@@ -327,14 +328,7 @@ class Window(Window_):
     """"""
 
     @override
-    def make(self, **star: R) -> B:
-        """"""
-        self.canvas = None
-
-        return super().make(**star)
-
-    @override
-    def extension(self):
+    def extension(self) -> LS:
         """"""
         return [
             ".bmp",
@@ -357,9 +351,16 @@ class Window(Window_):
         ]
 
     @override
-    def turn(self, page):
+    def make(self, **star: R) -> N:
         """"""
-        super().turn(page)
+        self.canvas = None
+
+        super().make(**star)
+
+    @override
+    def turn(self, page: S, **star: R) -> N:
+        """"""
+        super().turn(page, **star)
         bpy.context.scene.celestine.page = page
 
     @override

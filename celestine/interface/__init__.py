@@ -423,45 +423,19 @@ class Window(Tree):
     # star might not be needed for all functions
     # but it will stay for now for ease of itegration later
 
-    def click(self, point: Point, **star: R) -> N:
-        """"""
-        # check
-        for _, item in self:
-            item.click(point, **star)
-
     def draw(self, **star: R) -> N:
         """"""
         # check
         for _, item in self:
             item.draw(**star)
+        return True
 
-    def make(self, **star: R) -> B:
+    def make(self, **star: R) -> N:
         """"""
+        # check
         for _, item in self:
             item.make(self.canvas, **star)
         return True
-
-    def spot(self, area: Area, **star: R) -> N:
-        """"""
-        # check
-        self.area = area
-        for _, item in self:
-            item.spot(area, **star)
-
-    ###############
-    # No star functions
-
-    def find(self, name: S) -> N | Abstract:
-        """"""
-        for key, value in self:
-            if key == name:
-                return value
-            item = value.find(name)
-            if item:
-                return item
-        raise KeyError(name)
-
-    ###############
 
     def turn(self, page: S, **star: R) -> N:
         """"""
@@ -473,6 +447,32 @@ class Window(Tree):
         self.page = view
         self.page.show()
         self.draw()
+
+    ###############
+    # No star functions
+
+    def click(self, point: Point) -> N:
+        """"""
+        for _, item in self:
+            item.click(point)
+
+    def find(self, name: S) -> N | Abstract:
+        """"""
+        for key, value in self:
+            if key == name:
+                return value
+            item = value.find(name)
+            if item:
+                return item
+        raise KeyError(name)
+
+    def spot(self, area: Area) -> N:
+        """"""
+        self.area = area
+        for _, item in self:
+            item.spot(area)
+
+    ###############
 
     def work(self, code: S, **star: R) -> N:
         """"""

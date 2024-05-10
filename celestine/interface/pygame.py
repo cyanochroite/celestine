@@ -105,7 +105,7 @@ class Window(Window_):
         ]
 
     @override
-    def make(self) -> N:
+    def make(self, **star: R) -> N:
         """"""
         value = self.area.world.size.value
         self.canvas = pygame.display.set_mode(value)
