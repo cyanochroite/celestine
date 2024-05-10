@@ -13,23 +13,24 @@ from celestine.data.alphabet2 import (
     unicode_punctuation,
     unicode_whitespace,
 )
-from celestine.typed import (
-    GS,
-    S,
-)
-from celestine.unicode import (
+from celestine.literal import (
     APOSTROPHE,
     INFORMATION_SEPARATOR_FOUR,
     INFORMATION_SEPARATOR_ONE,
     INFORMATION_SEPARATOR_THREE,
     INFORMATION_SEPARATOR_TWO,
     LINE_FEED,
-    LINE_SEPARATOR,
-    PARAGRAPH_SEPARATOR,
     QUOTATION_MARK,
     REVERSE_SOLIDUS,
     SPACE,
 )
+from celestine.typed import (
+    GS,
+    S,
+)
+
+LINE_SEPARATOR = chr(8232)
+PARAGRAPH_SEPARATOR = chr(8233)
 
 
 def wrap(string: S) -> GS:

@@ -3,15 +3,15 @@
 import io
 
 from celestine import stream
+from celestine.data.alphabet2 import UNICODE
+from celestine.literal import (
+    LINE_FEED,
+    REVERSE_SOLIDUS,
+)
 from celestine.typed import (
     GS,
     S,
 )
-from celestine.unicode import (
-    LINE_FEED,
-    REVERSE_SOLIDUS,
-)
-from celestine.data.alphabet2 import UNICODE
 
 
 def fix_line_split(*path: S) -> GS:

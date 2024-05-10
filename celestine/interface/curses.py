@@ -9,17 +9,17 @@ from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.literal import LINE_FEED
 from celestine.package import (
     curses,
     pillow,
 )
 from celestine.typed import (
+    B,
     N,
     R,
-    B,
     override,
 )
-from celestine.unicode import LINE_FEED
 from celestine.window.collection import (
     Area,
     Line,

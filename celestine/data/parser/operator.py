@@ -1,6 +1,6 @@
 """"""
 
-from celestine.unicode.alphabet import (
+from celestine.literal.alphabet import (
     Comparison,
     Divider,
     Unary,

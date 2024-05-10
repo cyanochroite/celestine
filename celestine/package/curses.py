@@ -1,15 +1,15 @@
 """Terminal handling for character-cell displays."""
 
 from celestine import load
+from celestine.literal import (
+    ESCAPE,
+    SPACE,
+)
 from celestine.package import Abstract
 from celestine.typed import (
     A,
     I,
     S,
-)
-from celestine.unicode import (
-    ESCAPE,
-    SPACE,
 )
 
 

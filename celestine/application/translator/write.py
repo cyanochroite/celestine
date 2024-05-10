@@ -5,13 +5,7 @@ import keyword
 
 from celestine import stream
 from celestine.data import normalize
-from celestine.typed import (
-    GS,
-    TABLE,
-    N,
-    S,
-)
-from celestine.unicode import (
+from celestine.literal import (
     EQUALS_SIGN,
     FULL_STOP,
     INFORMATION_SEPARATOR_FOUR,
@@ -20,6 +14,12 @@ from celestine.unicode import (
     PARAGRAPH_SEPARATOR,
     QUOTATION_MARK,
     SPACE,
+)
+from celestine.typed import (
+    GS,
+    TABLE,
+    N,
+    S,
 )
 
 from .data import (

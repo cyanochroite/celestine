@@ -1,5 +1,10 @@
 """"""
 
+from celestine.literal import (
+    HYPHEN_MINUS,
+    NONE,
+    QUESTION_MARK,
+)
 from celestine.session.data import Actions
 from celestine.typed import (
     LS,
@@ -7,11 +12,6 @@ from celestine.typed import (
     N,
     R,
     S,
-)
-from celestine.unicode import (
-    HYPHEN_MINUS,
-    NONE,
-    QUESTION_MARK,
 )
 
 from .attribute import (

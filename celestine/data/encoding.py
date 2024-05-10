@@ -1,6 +1,6 @@
 """Map character code points to an internal reprensentation."""
 
-from celestine.unicode import (
+from celestine.literal import (
     ACKNOWLEDGE,
     ACUTE_ACCENT,
     AIRPLANE,
@@ -450,7 +450,7 @@ from celestine.unicode import (
     WRITING_HAND,
     YEN_SIGN,
 )
-from celestine.unicode.alphabet import (
+from celestine.literal.alphabet import (
     Comparison,
     Digit,
     Divider,

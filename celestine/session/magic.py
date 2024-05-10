@@ -6,6 +6,7 @@ from celestine import (
     bank,
     load,
 )
+from celestine.literal import NONE
 from celestine.session.argument import (
     Application,
     Customization,
@@ -25,7 +26,6 @@ from celestine.typed import (
     N,
     S,
 )
-from celestine.unicode import NONE
 
 from .data import SESSION
 from .parser import parser as make_parser

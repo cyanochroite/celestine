@@ -3,6 +3,7 @@
 import math
 
 from celestine import bank
+from celestine.literal import NONE
 from celestine.package import pillow
 from celestine.typed import (
     LS,
@@ -18,7 +19,6 @@ from celestine.typed import (
     S,
     override,
 )
-from celestine.unicode import NONE
 from celestine.window.collection import (
     Area,
     Line,

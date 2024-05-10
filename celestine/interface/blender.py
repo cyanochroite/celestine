@@ -17,12 +17,12 @@ from celestine.package.blender.data.collection import _collection
 from celestine.package.blender.mesh import basic
 from celestine.package.blender.mesh.quadrilateral import Diamond
 from celestine.typed import (
+    LS,
     A,
     B,
     K,
     N,
     R,
-    LS,
     S,
     override,
 )
