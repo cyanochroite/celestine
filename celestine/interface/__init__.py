@@ -135,11 +135,13 @@ class Abstract(Object):
 class Element(Abstract):
     """"""
 
+    image: A
+
     @override
     def make(self, canvas: A, **star: R) -> B:
         """"""
         size = self.area.world.size.value
-        blender_mode = False
+        blender_mode = True
         if pillow and not blender_mode:
             self.image = pillow.new(size)
         else:
@@ -177,6 +179,10 @@ class Element(Abstract):
 
         image.resize(result.size)
         self.image.paste(image, result)
+
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
+        self.image = None
 
 
 class View(Abstract, Tree):
@@ -425,17 +431,11 @@ class Window(Tree):
 
     def draw(self, **star: R) -> N:
         """"""
-        # check
-        for _, item in self:
-            item.draw(**star)
-        return True
+        any(item.draw(**star) for _, item in self)
 
     def make(self, **star: R) -> N:
         """"""
-        # check
-        for _, item in self:
-            item.make(self.canvas, **star)
-        return True
+        any(item.make(self.canvas, **star) for _, item in self)
 
     def turn(self, page: S, **star: R) -> N:
         """"""
@@ -453,8 +453,7 @@ class Window(Tree):
 
     def click(self, point: Point) -> N:
         """"""
-        for _, item in self:
-            item.click(point)
+        any(item.click(point) for _, item in self)
 
     def find(self, name: S) -> N | Abstract:
         """"""

@@ -351,13 +351,6 @@ class Window(Window_):
         ]
 
     @override
-    def make(self, **star: R) -> N:
-        """"""
-        self.canvas = None
-
-        super().make(**star)
-
-    @override
     def turn(self, page: S, **star: R) -> N:
         """"""
         super().turn(page, **star)
@@ -498,3 +491,5 @@ class Window(Window_):
         self.mouse = None
 
         self.call = call
+
+        self.canvas = None

@@ -24,6 +24,7 @@ from celestine.window.collection import (
 
 extension: LS
 open: A  # pylint: disable=redefined-builtin
+ImageTk: A
 
 ########################################################################
 

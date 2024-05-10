@@ -105,14 +105,6 @@ class Window(Window_):
         ]
 
     @override
-    def make(self, **star: R) -> N:
-        """"""
-        value = self.area.world.size.value
-        self.canvas = pygame.display.set_mode(value)
-
-        super().make()
-
-    @override
     def __enter__(self):
         super().__enter__()
 
@@ -171,3 +163,6 @@ class Window(Window_):
         self.area = Area.make(1280, 960)
         self.area = Area.make(1920, 1080)
         self.font = None
+
+        value = self.area.world.size.value
+        self.canvas = pygame.display.set_mode(value)

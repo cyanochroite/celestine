@@ -289,13 +289,6 @@ class Window(Window_):
         return []
 
     @override
-    def make(self, **star: R) -> N:
-        """"""
-        self.canvas = self.background
-
-        super().make(**star)
-
-    @override
     def setup(self, name):
         """"""
 
@@ -395,3 +388,5 @@ class Window(Window_):
         self.area = Area(plane, plane)
         self.cord_x = 0.5
         self.cord_y = 0.5
+
+        self.canvas = self.background

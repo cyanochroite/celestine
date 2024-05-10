@@ -176,11 +176,8 @@ class Window(Window_):
     @override
     def make(self, **star: R) -> N:
         """"""
-        self.canvas = None
-
         for name, item in self:
-            canvas = dearpygui.window(tag=name)
-            item.canvas = canvas
+            item.canvas = dearpygui.window(tag=name)
             with item.canvas:
                 dearpygui.configure_item(item.name, show=False)
                 item.make(None)
@@ -240,3 +237,5 @@ class Window(Window_):
         super().__init__(element, **star)
         self.area = Area.make(1280, 1080)
         self.tag = "window"
+
+        self.canvas = None
