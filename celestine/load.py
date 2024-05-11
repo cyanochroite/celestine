@@ -37,14 +37,20 @@ from celestine.typed import (
 ########################################################################
 
 
-def instance(*path: S) -> A:
+def function(*path: S) -> A:
     """Functions like the 'from package import item' syntax."""
     iterable = [*path]
     name = iterable.pop(-1)
     item = module(*iterable)
     result = getattr(item, name)
-    call = result()
-    return call
+    return result
+
+
+def instance(*path: S) -> A:
+    """Functions like the 'from package import item' syntax."""
+    call = function(*path)
+    result = call()
+    return result
 
 
 def module(*path: S) -> M:
@@ -177,7 +183,6 @@ def decorators(_module: M, name: S) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
     _dictionary = _dictionary_items(_module)
     text = string(FUNCTION, name, FULL_STOP)
-    print("text", text)
     iterable = {
         key: value for key, value in _dictionary if text in repr(value)
     }

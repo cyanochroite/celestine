@@ -48,7 +48,7 @@ dependencies = [
     "Pillow >= 10.0.0",
     "platformdirs >= 4.0.0",
 ]
-description = "A modular framework for desktop applications."
+description = "A python framework for desktop applications."
 maintainers = [
     {name = "mem_dixy", email = "mem_dixy@pm.me"},
 ]

@@ -1,32 +1,16 @@
 """Package wide global variables."""
 
+from celestine.interface import Window
 from celestine.typed import (
     LS,
     A,
-    B,
     C,
-    K,
     L,
     M,
     N,
     P,
     T,
 )
-
-
-class Window:
-    """"""
-
-    code: A
-    drop: A
-    view: A
-
-    def __enter__(self) -> K: ...
-
-    def __exit__(
-        self, exc_type: A, exc_value: A, traceback: A
-    ) -> B: ...
-
 
 #  These types might not be right.
 application: M = None
@@ -35,7 +19,7 @@ configuration: P = None
 directory: P = None
 interface: M = None
 language: M = None
-window: Window = Window()
+window: Window
 
 _queue: L[T[C[..., N], A, A]] = []
 

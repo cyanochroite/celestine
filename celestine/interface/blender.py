@@ -77,7 +77,7 @@ class celestine_main(bpy.types.Panel):
     bl_context = "object"
     bl_description = "Celestine Tab"
     bl_idname = "OBJECT_PT_celestine"
-    bl_label = "celestine"
+    bl_label = "Célestine"
     bl_options = {"HEADER_LAYOUT_EXPAND"}
     bl_order = 0
     bl_owner_id = ""

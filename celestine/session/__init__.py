@@ -16,8 +16,11 @@ from celestine.literal import (
 from celestine.typed import (
     LS,
     B,
+    C,
+    D,
     N,
     R,
+    S,
 )
 
 from . import default
@@ -96,3 +99,34 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     set_lang()
 
     return bank.window, bank.application.name
+
+
+def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
+    window, application = begin_session(
+        argument_list,
+        exit_on_error,
+        **star,
+    )
+
+    code: D[S, C] = {}
+    view: D[S, C] = {}
+
+    for module in load.modules(APPLICATION, application):
+        code |= load.decorators(module, "code")
+        view |= load.decorators(module, "scene")
+
+    with window:
+        for key, value in view.items():
+            if "primary" in repr(value):
+                window.main = key
+                break
+        else:
+            window.main = next(iter(view))
+
+        for name, function in code.items():
+            window.code[name] = function
+
+        for name, function in view.items():
+            view = window.drop(name)
+            function(view)
+            window.view[name] = view
