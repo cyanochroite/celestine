@@ -7,10 +7,8 @@ from celestine import (
 from celestine.typed import (
     LS,
     B,
-    M,
     N,
     R,
-    S,
 )
 
 bl_info = {
@@ -27,30 +25,18 @@ bl_info = {
     "category": "3D View",
 }
 
+PACKAGE = "package"
+
 
 def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     """Run the main program."""
-    package = load.module("package")
+    package = load.module(PACKAGE)
 
-    def loader(name: S) -> M:
-        """"""
-        module = load.package("celestine", "package", name)
-        call = getattr(module, "Package")
-        value = call(name)
+    items = load.argument(PACKAGE)
+    for name in items:
+        attribute = load.instance("package", name, "Package")
+        value = attribute
         setattr(package, name, value)
-
-    loader("autoflake")
-    loader("black")
-    loader("blender")
-    loader("curses")
-    loader("dearpygui")
-    loader("isort")
-    loader("pillow")
-    loader("platformdirs")
-    loader("pydocstringformatter")
-    loader("pygame")
-    loader("pyupgrade")
-    loader("tkinter")
 
     session = load.package("celestine", "session")
     begin_session = getattr(session, "begin_session")
@@ -73,7 +59,7 @@ def register() -> N:
     This is a function which only runs when enabling the add-on,
     this means the module can be loaded without activating the add-on.
     """
-    load.attribute("interface", "blender", "register")()
+    load.instance("interface", "blender", "register")
 
 
 def unregister() -> N:
@@ -83,4 +69,4 @@ def unregister() -> N:
     This is a function to unload anything setup by register,
     this is called when the add-on is disabled.
     """
-    load.attribute("interface", "blender", "unregister")()
+    load.instance("interface", "blender", "unregister")

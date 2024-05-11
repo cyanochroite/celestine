@@ -37,13 +37,14 @@ from celestine.typed import (
 ########################################################################
 
 
-def attribute(*path: S) -> A:
+def instance(*path: S) -> A:
     """Functions like the 'from package import item' syntax."""
     iterable = [*path]
     name = iterable.pop(-1)
     item = module(*iterable)
     result = getattr(item, name)
-    return result
+    call = result()
+    return call
 
 
 def module(*path: S) -> M:
