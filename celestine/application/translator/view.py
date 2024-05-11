@@ -1,16 +1,13 @@
 """The View page."""
 
 from celestine import language
-from celestine.data import (
-    main,
-    scene,
-)
+from celestine.data import scene
 from celestine.interface import View
 from celestine.typed import N
 
 
-@main
-def trans(view: View) -> N:
+@scene(True)
+def main(view: View) -> N:
     """"""
     with view.zone("main") as line:
         line.new(

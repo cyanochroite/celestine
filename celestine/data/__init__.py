@@ -18,24 +18,6 @@ class State(Enum):
     VIEW = 2
 
 
-def main(function: C[[View], N]) -> C[[View], N]:
-    """"""
-
-    def decorator(view: View) -> N:
-        function(view)
-
-    return decorator
-
-
-def scene(function):
-    """"""
-
-    def decorator(view: View) -> N:
-        function(view)
-
-    return decorator
-
-
 def code(function: C[[View], N]) -> C[[View], N]:
     """"""
 
@@ -45,22 +27,10 @@ def code(function: C[[View], N]) -> C[[View], N]:
     return decorator
 
 
-def scene(function):
+def scene(primary_window=False) -> C[[C[[View], N]], N]:
     """"""
 
-    def decorator(view: View) -> N:
-        function(view)
-
-    return decorator
-
-
-print("A!")
-
-
-def scene(value=False):
-    """"""
-
-    def main(function: C[[View], N]) -> C[[View], N]:
+    def primary(function: C[[View], N]) -> C[[View], N]:
         """"""
 
         def decorator(view: View) -> N:
@@ -68,7 +38,7 @@ def scene(value=False):
 
         return decorator
 
-    def view(function: C[[View], N]) -> C[[View], N]:
+    def secondary(function: C[[View], N]) -> C[[View], N]:
         """"""
 
         def decorator(view: View) -> N:
@@ -76,7 +46,7 @@ def scene(value=False):
 
         return decorator
 
-    if str(value).startswith(FUNCTION):
-        return view(value)
+    if str(primary_window).startswith(FUNCTION):
+        return secondary(primary_window)
 
-    return main if value else view
+    return primary if primary_window else secondary

@@ -19,8 +19,8 @@ def picture(view: View) -> N:
     view.element("photo", fit=Image.FILL, goto="display")
 
 
-@main
-def display(view: View) -> N:
+@scene(True)
+def main(view: View) -> N:
     """"""
     view.button(
         "load",
