@@ -386,3 +386,88 @@ Interfaces are dependent on Pillow. Give them a fallback implementation.
 
 make has star for blender first
 draw has star for pygame Font
+
+
+    def extension(self) -> LS:
+        """"""
+        return [
+            ".bmp",
+            ".sgi",
+            ".rgb",
+            ".bw",
+            ".png",
+            ".jpg",
+            ".jpeg",
+            ".jp2",
+            ".j2c",
+            ".tga",
+            ".cin",
+            ".dpx",
+            ".exr",
+            ".hdr",
+            ".tif",
+            ".tiff",
+            ".webp",
+            ".pbm",
+            ".pgm",
+            ".ppm",
+            ".pnm",
+            ".gif",
+            ".png",
+        ]
+
+    def drop(
+        self,
+        name: S,
+        **star: R,
+    ) -> K:
+        """"""
+        return self.set(
+            self.element_item["view"](
+                name,
+                self.element_item,
+                mode=Zone.DROP,
+                parent=self,
+                **star,
+            )
+        )
+
+    ###############
+    # star might not be needed for all functions
+    # but it will stay for now for ease of itegration later
+
+    def draw(self, **star: R) -> B:
+    def make(self, **star: R) -> B:
+    def turn(self, page: S, **star: R) -> N:
+
+    def click(self, point: Point, **star: R) -> B:
+    def spot(self, area: Area, **star: R) -> B:
+    def work(self, code: S, **star: R) -> N:
+    def find(self, name: S) -> N | Abstract:
+
+
+blender
+extension
+make
+turn
+
+curses
+draw
+extension
+make
+setup
+
+dearpygui
+extension
+make
+turn
+
+pygame
+draw
+extension
+make
+
+tkinter
+extension
+make
+turn

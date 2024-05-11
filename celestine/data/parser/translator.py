@@ -4,14 +4,14 @@ from celestine.application.viewer.parser.operator import (
     unary_parse,
     word_parse,
 )
-from celestine.unicode.alphabet import (
+from celestine.literal.alphabet import (
     Comparison,
     Digit,
     Divider,
     Letter,
     Unary,
 )
-from celestine.unicode.encoding import encoding
+from celestine.literal.encoding import encoding
 
 from .operator import comparison_parse
 

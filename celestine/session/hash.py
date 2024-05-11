@@ -15,16 +15,16 @@ dictionary[instance] = "test"
 print(dictionary[Test]) -> "test"
 """
 
+from celestine.literal import (
+    APOSTROPHE,
+    FULL_STOP,
+    SPACE,
+)
 from celestine.typed import (
     B,
     I,
     J,
     S,
-)
-from celestine.unicode import (
-    APOSTROPHE,
-    FULL_STOP,
-    SPACE,
 )
 
 

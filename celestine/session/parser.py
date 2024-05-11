@@ -3,14 +3,9 @@
 import argparse
 import io
 
-from celestine.literal import CELESTINE
-from celestine.typed import (
-    TYPE,
-    B,
-    M,
-)
-from celestine.unicode import (
+from celestine.literal import (
     APOSTROPHE,
+    CELESTINE,
     COLON,
     COMMA,
     HYPHEN_MINUS,
@@ -19,6 +14,11 @@ from celestine.unicode import (
     NONE,
     RIGHT_PARENTHESIS,
     SPACE,
+)
+from celestine.typed import (
+    TYPE,
+    B,
+    M,
 )
 
 from .data import Parsers

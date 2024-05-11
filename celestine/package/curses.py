@@ -1,28 +1,20 @@
 """Terminal handling for character-cell displays."""
 
 from celestine import load
+from celestine.literal import (
+    ESCAPE,
+    SPACE,
+)
 from celestine.package import Abstract
 from celestine.typed import (
     A,
     I,
     S,
 )
-from celestine.unicode import (
-    ESCAPE,
-    SPACE,
-)
 
 
 class Package(Abstract):
     """"""
-
-    def window(self, column: I, row: I, width: I, height: I) -> A:
-        """"""
-        nlines = height
-        ncols = width
-        begin_y = row
-        begin_x = column
-        return self.package.newwin(nlines, ncols, begin_y, begin_x)
 
     def subwindow(
         self, window, column: I, row: I, width: I, height: I
@@ -33,6 +25,14 @@ class Package(Abstract):
         begin_y = row
         begin_x = column
         return window.subwin(nlines, ncols, begin_y, begin_x)
+
+    def window(self, column: I, row: I, width: I, height: I) -> A:
+        """"""
+        nlines = height
+        ncols = width
+        begin_y = row
+        begin_x = column
+        return self.package.newwin(nlines, ncols, begin_y, begin_x)
 
     def __getattr__(self, name: S) -> A:
         result = None

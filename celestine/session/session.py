@@ -11,6 +11,7 @@ from celestine.literal import (
     DIRECTORY,
     INTERFACE,
     LANGUAGE,
+    NONE,
 )
 from celestine.session.argument import (
     Customization,
@@ -30,7 +31,6 @@ from celestine.typed import (
     M,
     S,
 )
-from celestine.unicode import NONE
 
 from . import default
 

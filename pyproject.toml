@@ -132,7 +132,7 @@ target-version = [
 
 [tool.isort]
 force_grid_wrap = 2
-line_ending = "\n"
+line_ending = "\r\n"
 line_length = 72
 profile = "black"
 py_version = 312

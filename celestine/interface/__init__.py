@@ -3,6 +3,7 @@
 import math
 
 from celestine import bank
+from celestine.literal import NONE
 from celestine.package import pillow
 from celestine.typed import (
     LS,
@@ -18,7 +19,6 @@ from celestine.typed import (
     S,
     override,
 )
-from celestine.unicode import NONE
 from celestine.window.collection import (
     Area,
     Line,
@@ -135,11 +135,13 @@ class Abstract(Object):
 class Element(Abstract):
     """"""
 
+    image: A
+
     @override
     def make(self, canvas: A, **star: R) -> B:
         """"""
         size = self.area.world.size.value
-        blender_mode = False
+        blender_mode = True
         if pillow and not blender_mode:
             self.image = pillow.new(size)
         else:
@@ -177,6 +179,10 @@ class Element(Abstract):
 
         image.resize(result.size)
         self.image.paste(image, result)
+
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
+        self.image = None
 
 
 class View(Abstract, Tree):
@@ -423,45 +429,13 @@ class Window(Tree):
     # star might not be needed for all functions
     # but it will stay for now for ease of itegration later
 
-    def click(self, point: Point, **star: R) -> N:
-        """"""
-        # check
-        for _, item in self:
-            item.click(point, **star)
-
     def draw(self, **star: R) -> N:
         """"""
-        # check
-        for _, item in self:
-            item.draw(**star)
+        any(item.draw(**star) for _, item in self)
 
-    def make(self, **star: R) -> B:
+    def make(self, **star: R) -> N:
         """"""
-        for _, item in self:
-            item.make(self.canvas, **star)
-        return True
-
-    def spot(self, area: Area, **star: R) -> N:
-        """"""
-        # check
-        self.area = area
-        for _, item in self:
-            item.spot(area, **star)
-
-    ###############
-    # No star functions
-
-    def find(self, name: S) -> N | Abstract:
-        """"""
-        for key, value in self:
-            if key == name:
-                return value
-            item = value.find(name)
-            if item:
-                return item
-        raise KeyError(name)
-
-    ###############
+        any(item.make(self.canvas, **star) for _, item in self)
 
     def turn(self, page: S, **star: R) -> N:
         """"""
@@ -473,6 +447,31 @@ class Window(Tree):
         self.page = view
         self.page.show()
         self.draw()
+
+    ###############
+    # No star functions
+
+    def click(self, point: Point) -> N:
+        """"""
+        any(item.click(point) for _, item in self)
+
+    def find(self, name: S) -> N | Abstract:
+        """"""
+        for key, value in self:
+            if key == name:
+                return value
+            item = value.find(name)
+            if item:
+                return item
+        raise KeyError(name)
+
+    def spot(self, area: Area) -> N:
+        """"""
+        self.area = area
+        for _, item in self:
+            item.spot(area)
+
+    ###############
 
     def work(self, code: S, **star: R) -> N:
         """"""

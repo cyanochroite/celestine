@@ -9,16 +9,17 @@ from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.literal import LINE_FEED
 from celestine.package import (
     curses,
     pillow,
 )
 from celestine.typed import (
+    B,
     N,
     R,
     override,
 )
-from celestine.unicode import LINE_FEED
 from celestine.window.collection import (
     Area,
     Line,
@@ -258,7 +259,7 @@ class Window(Window_):
     """"""
 
     @override
-    def draw(self, **star: R):
+    def draw(self, **star: R) -> B:
         """"""
 
         # Do normal draw stuff.
@@ -286,13 +287,6 @@ class Window(Window_):
             return pillow.extension()
 
         return []
-
-    @override
-    def make(self) -> N:
-        """"""
-        self.canvas = self.background
-
-        super().make()
 
     @override
     def setup(self, name):
@@ -394,3 +388,5 @@ class Window(Window_):
         self.area = Area(plane, plane)
         self.cord_x = 0.5
         self.cord_y = 0.5
+
+        self.canvas = self.background

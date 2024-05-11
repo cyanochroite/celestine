@@ -153,18 +153,6 @@ class Window(Window_):
         ]
 
     @override
-    def make(self) -> N:
-        """"""
-        self.canvas = tkinter.Tk()
-        self.canvas.title(bank.language.APPLICATION_TITLE)
-        self.canvas.geometry("1920x1080")
-        self.canvas.minsize(640, 480)
-        self.canvas.maxsize(3840, 2160)
-        self.canvas.config(bg="blue")
-
-        super().make()
-
-    @override
     def turn(self, page: S, **star: R) -> N:
         super().turn(page, **star)
         self.page.canvas.tkraise()
@@ -184,3 +172,10 @@ class Window(Window_):
         }
         super().__init__(element, **star)
         self.area = Area.make(1280, 1080)
+
+        self.canvas = tkinter.Tk()
+        self.canvas.title(bank.language.APPLICATION_TITLE)
+        self.canvas.geometry("1920x1080")
+        self.canvas.minsize(640, 480)
+        self.canvas.maxsize(3840, 2160)
+        self.canvas.config(bg="blue")

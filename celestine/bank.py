@@ -3,8 +3,10 @@
 from celestine.typed import (
     LS,
     A,
+    B,
     C,
     D,
+    K,
     L,
     M,
     N,
@@ -12,6 +14,21 @@ from celestine.typed import (
     S,
     T,
 )
+
+
+class Window:
+    """"""
+
+    code: A
+    drop: A
+    view: A
+
+    def __enter__(self) -> K: ...
+
+    def __exit__(
+        self, exc_type: A, exc_value: A, traceback: A
+    ) -> B: ...
+
 
 #  These types might not be right.
 application: M = None
@@ -23,7 +40,7 @@ interface: M = None
 language: M = None
 main: S = None
 view: D[S, C] = None
-window: M = None
+window: Window = Window()
 
 _queue: L[T[C[..., N], A, A]] = []
 
@@ -37,6 +54,4 @@ def dequeue() -> N:
     """"""
     for action, argument, star in _queue:
         action(argument, **star)
-        # self.window.work(action, **star)
-        # self.window.turn(action, **star)
     _queue.clear()

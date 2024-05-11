@@ -12,6 +12,7 @@ from celestine.data import (
     main,
 )
 from celestine.interface import View
+from celestine.literal import NONE
 from celestine.session.argument import Optional
 from celestine.session.session import (
     AD,
@@ -23,7 +24,6 @@ from celestine.typed import (
     R,
     S,
 )
-from celestine.unicode import NONE
 
 KEY = "key"
 GROUP = "group"

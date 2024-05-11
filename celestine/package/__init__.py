@@ -54,9 +54,9 @@ class Abstract:
     def __getattr__(self, name: S) -> S:
         return getattr(self.package, name)
 
-    def __init__(self, name: S, pypi: OS = None, **star: R) -> N:
-        self.name = name
-        self.pypi = pypi or name
+    def __init__(self, *, pypi: OS = None, **star: R) -> N:
+        self.name = self.__module__.split(".")[-1]
+        self.pypi = pypi or self.name
 
         # pygame prints an anoying message on import
         # so this here to hide any messages a package may print

@@ -24,6 +24,7 @@ from celestine.window.collection import (
 
 extension: LS
 open: A  # pylint: disable=redefined-builtin
+ImageTk: A
 
 ########################################################################
 
@@ -184,7 +185,7 @@ class Package(Abstract):
         result.sort()
         return result
 
-    def __init__(self, name: S, **star: R) -> N:
-        super().__init__(name, pypi="PIL")
+    def __init__(self, **star: R) -> N:
+        super().__init__(pypi="PIL")
         if self.package:
             setattr(self, "ImageTk", load.package("PIL", "ImageTk"))

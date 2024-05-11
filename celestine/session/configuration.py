@@ -7,18 +7,18 @@ from celestine import (
     load,
     stream,
 )
-from celestine.literal import CELESTINE
+from celestine.literal import (
+    CELESTINE,
+    EQUALS_SIGN,
+    NONE,
+    NUMBER_SIGN,
+)
 from celestine.package import platformdirs
 from celestine.typed import (
     OP,
     N,
     P,
     S,
-)
-from celestine.unicode import (
-    EQUALS_SIGN,
-    NONE,
-    POUND_SIGN,
 )
 
 FILE = "celestine.ini"
@@ -69,7 +69,7 @@ class Configuration:
             dict_type=dict,
             allow_no_value=False,
             delimiters=EQUALS_SIGN,
-            comment_prefixes=POUND_SIGN,
+            comment_prefixes=NUMBER_SIGN,
             inline_comment_prefixes=None,
             strict=True,
             empty_lines_in_values=False,

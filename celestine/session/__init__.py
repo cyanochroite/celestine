@@ -44,12 +44,11 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     Then load Interface so human see errors the way they want.
     """
 
-    configuration = load.attribute(
+    bank.configuration = load.instance(
         "session",
         "configuration",
         "Configuration",
     )
-    bank.configuration = configuration()
 
     # The order here matters.
     bank.language = load.module(LANGUAGE, default.language())

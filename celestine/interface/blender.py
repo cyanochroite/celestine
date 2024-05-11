@@ -17,6 +17,7 @@ from celestine.package.blender.data.collection import _collection
 from celestine.package.blender.mesh import basic
 from celestine.package.blender.mesh.quadrilateral import Diamond
 from celestine.typed import (
+    LS,
     A,
     B,
     K,
@@ -327,14 +328,7 @@ class Window(Window_):
     """"""
 
     @override
-    def make(self, **star: R) -> B:
-        """"""
-        self.canvas = None
-
-        return super().make(**star)
-
-    @override
-    def extension(self):
+    def extension(self) -> LS:
         """"""
         return [
             ".bmp",
@@ -357,9 +351,9 @@ class Window(Window_):
         ]
 
     @override
-    def turn(self, page):
+    def turn(self, page: S, **star: R) -> N:
         """"""
-        super().turn(page)
+        super().turn(page, **star)
         bpy.context.scene.celestine.page = page
 
     @override
@@ -497,3 +491,5 @@ class Window(Window_):
         self.mouse = None
 
         self.call = call
+
+        self.canvas = None

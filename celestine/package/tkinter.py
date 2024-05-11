@@ -7,6 +7,7 @@ Button: A
 Label: A
 Frame: A
 Tk: A
+PhotoImage: A
 
 
 class Package(Abstract):

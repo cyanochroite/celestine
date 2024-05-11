@@ -8,8 +8,11 @@ import sys
 
 from celestine.literal import (
     CELESTINE,
+    FULL_STOP,
     FUNCTION,
     INIT,
+    LOW_LINE,
+    NONE,
     PACKAGE,
     PYTHON_EXTENSION,
 )
@@ -30,22 +33,18 @@ from celestine.typed import (
     T,
     string,
 )
-from celestine.unicode import (
-    FULL_STOP,
-    LOW_LINE,
-    NONE,
-)
 
 ########################################################################
 
 
-def attribute(*path: S) -> A:
+def instance(*path: S) -> A:
     """Functions like the 'from package import item' syntax."""
     iterable = [*path]
     name = iterable.pop(-1)
     item = module(*iterable)
     result = getattr(item, name)
-    return result
+    call = result()
+    return call
 
 
 def module(*path: S) -> M:
@@ -88,16 +87,6 @@ def packages(base: S, *path: S) -> L[M]:
 
 
 ########################################################################
-
-
-def redirect(*path: S) -> N:
-    """
-    Loads a function from the specified path, and then runs it.
-
-    :param path: The last item is the function name.
-    """
-    function = attribute(*path)
-    function()
 
 
 def attempt(*path: S) -> B:
