@@ -37,14 +37,20 @@ from celestine.typed import (
 ########################################################################
 
 
-def instance(*path: S) -> A:
+def function(*path: S) -> A:
     """Functions like the 'from package import item' syntax."""
     iterable = [*path]
     name = iterable.pop(-1)
     item = module(*iterable)
     result = getattr(item, name)
-    call = result()
-    return call
+    return result
+
+
+def instance(*path: S) -> A:
+    """Functions like the 'from package import item' syntax."""
+    call = function(*path)
+    result = call()
+    return result
 
 
 def module(*path: S) -> M:
@@ -174,16 +180,6 @@ def decorators(_module: M, name: S) -> D[S, FN]:
 
 
 ########
-
-
-def decorator_name(module: M, name: S) -> S:
-    """Load from module all functions and turn them into dictionary."""
-    dictionary: D[S, A] = vars(module)
-    text = string(FUNCTION, name, FULL_STOP)
-    for key, value in dictionary.items():
-        if text in repr(value):
-            return key
-    raise LookupError("No function with '@main' found.")
 
 
 def function_page(module: M) -> LS:

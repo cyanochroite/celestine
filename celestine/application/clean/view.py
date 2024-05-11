@@ -1,13 +1,13 @@
 """"""
 
 from celestine import language
-from celestine.data import main
+from celestine.data import scene
 from celestine.interface import View
 from celestine.typed import N
 
 
-@main
-def enter(view: View) -> N:
+@scene
+def main(view: View) -> N:
     """"""
     with view.span("main_head") as line:
         line.label(

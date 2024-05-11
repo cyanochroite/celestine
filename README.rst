@@ -14,7 +14,7 @@ Célestine
 .. image:: https://img.shields.io/badge/calver-YYYY.MM.DD-22bfda.svg
    :alt: Calendar Versioning
    :target: https://calver.org/
-.. image:: https://app.deepsource.com/gh/mem-dixy/celestine.svg/?label=active+issues&show_trend=true&token=1MUQkPi-6MM_PMqnaWrAJ6c7
+.. image:: https://app.deepsource.com/gh/mem-dixy/celestine.svg/?label=active+issues&show_trend=false&token=1MUQkPi-6MM_PMqnaWrAJ6c7
   :target: https://app.deepsource.com/gh/mem-dixy/celestine/
 
 A python framework for desktop applications.

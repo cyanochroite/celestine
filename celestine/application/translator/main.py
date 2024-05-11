@@ -85,7 +85,7 @@ def post(code, text):
     data = None
     json = [{TEXT: text}]
     headers = translator.header(str(uuid.uuid4()))
-    params = translator.parameter(code)
+    params = Translator.parameter(code)
     request = requests.post(
         url, data, json, headers=headers, params=params
     )

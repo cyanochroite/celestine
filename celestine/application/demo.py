@@ -6,7 +6,6 @@ from celestine import (
 )
 from celestine.data import (
     code,
-    main,
     scene,
 )
 from celestine.interface import View
@@ -49,7 +48,7 @@ def cat(**star: R) -> N:
         item.hide()
 
 
-@main
+@scene(True)
 def zero(view: View) -> N:
     """"""
     with view.span("zero_head") as line:

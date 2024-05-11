@@ -18,7 +18,6 @@ from celestine.literal import (
     INFORMATION_SEPARATOR_TWO,
     LINE_FEED,
     LINE_TABULATION,
-    NONE,
     QUESTION_MARK,
     SEMICOLON,
     SPACE,
@@ -101,7 +100,7 @@ DIRECTIONAL_FORMATTING = frozenset(
 
 UNICODE = frozenset(
     (
-        NONE,
+        "",
         chr(0),
         chr(1),
         chr(2),

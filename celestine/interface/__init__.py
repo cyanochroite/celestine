@@ -225,7 +225,7 @@ class View(Abstract, Tree):
             item.draw(**star)
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         for _, item in self:
             item.make(canvas, **star)
@@ -377,6 +377,7 @@ class Window(Tree):
 
     hold: H
     page: View
+    main: S
     code: D[S, A]  # function
     view: D[S, View]
 
@@ -500,12 +501,13 @@ class Window(Tree):
         for _, item in self:
             item.hide()
 
-        self.turn(bank.main)
+        self.turn(self.main)
 
         return False
 
     def __init__(self, element_item: D[S, A], **star: R) -> N:
         super().__init__(**star)
+        self.main = ""
         self.area = Area.make(0, 0)
         self.code = {}
         self.view = {}

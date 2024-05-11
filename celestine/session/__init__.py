@@ -86,36 +86,45 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
         magic.get_parser([session1, session2, session3], False)
 
     # Save values to session object.
-    application = bank.application.name
-
-    # items = load.python(APPLICATION, application)
-    # car = list(items)
-
-    code: D[S, C] = {}
-    main: D[S, C] = {}
-    view: D[S, C] = {}
-
-    modules = load.modules(APPLICATION, application)
-    for module in modules:
-        code |= load.decorators(module, "code")
-        main |= load.decorators(module, "main")
-        view |= load.decorators(module, "scene")
-
-    if not main:
-        raise LookupError("No '@main' decorator found.")
-
-    if len(main) > 1:
-        raise UserWarning("Expecting only one '@main' decorator.")
-
     bank.application = load.module(APPLICATION, session1.application)
     bank.attribute = session2
-    bank.code = code
     # bank.configuration = pathlib.Path()  # unset
     bank.directory = session1.directory
     bank.interface = load.module(INTERFACE, session1.interface)
     # bank.language = load.module(LANGUAGE, session1.language)
-    bank.main = next(iter(main))
-    bank.view = view | main
     bank.window = bank.interface.Window(**star)
 
     set_lang()
+
+    return bank.window, bank.application.name
+
+
+def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
+    window, application = begin_session(
+        argument_list,
+        exit_on_error,
+        **star,
+    )
+
+    code: D[S, C] = {}
+    view: D[S, C] = {}
+
+    for module in load.modules(APPLICATION, application):
+        code |= load.decorators(module, "code")
+        view |= load.decorators(module, "scene")
+
+    with window:
+        for key, value in view.items():
+            if "primary" in repr(value):
+                window.main = key
+                break
+        else:
+            window.main = next(iter(view))
+
+        for name, function in code.items():
+            window.code[name] = function
+
+        for name, function in view.items():
+            view = window.drop(name)
+            function(view)
+            window.view[name] = view
