@@ -4,6 +4,13 @@ from celestine import (
     bank,
     load,
 )
+from celestine.literal import (
+    BLENDER,
+    INTERFACE,
+    PACKAGE,
+    REGISTER,
+    UNREGISTER,
+)
 from celestine.typed import (
     LS,
     B,
@@ -25,20 +32,15 @@ bl_info = {
     "category": "3D View",
 }
 
-PACKAGE = "package"
-
 
 def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     """Run the main program."""
     package = load.module(PACKAGE)
-
-    items = load.argument(PACKAGE)
-    for name in items:
-        attribute = load.instance("package", name, "Package")
-        value = attribute
+    for name in load.argument(PACKAGE):
+        value = load.instance(PACKAGE, name, "Package")
         setattr(package, name, value)
 
-    session = load.package("celestine", "session")
+    session = load.module("session")
     begin_session = getattr(session, "begin_session")
     begin_session(argument_list, exit_on_error, **star)
 
@@ -59,7 +61,7 @@ def register() -> N:
     This is a function which only runs when enabling the add-on,
     this means the module can be loaded without activating the add-on.
     """
-    load.instance("interface", "blender", "register")
+    load.instance(INTERFACE, BLENDER, REGISTER)
 
 
 def unregister() -> N:
@@ -69,4 +71,4 @@ def unregister() -> N:
     This is a function to unload anything setup by register,
     this is called when the add-on is disabled.
     """
-    load.instance("interface", "blender", "unregister")
+    load.instance(INTERFACE, BLENDER, UNREGISTER)

@@ -2,10 +2,10 @@
 
 import datetime
 import io
-import re
 
 from celestine import (
     load,
+    regex,
     stream,
 )
 from celestine.data import (
@@ -30,14 +30,6 @@ PACKAGE = "package"
 array = [
     (
         [
-            "pyproject.toml",
-        ],
-        [
-            'version = "YYYY.MM.DD"',
-        ],
-    ),
-    (
-        [
             "CITATION.cff",
         ],
         [
@@ -47,23 +39,10 @@ array = [
     ),
     (
         [
-            "documentation",
-            "conf.py",
+            "pyproject.toml",
         ],
         [
-            'copyright = "YYYY, mem_dixy"',
-            'release = "YYYY-0M-0D"',
             'version = "YYYY.MM.DD"',
-        ],
-    ),
-    (
-        [
-            "celestine",
-            "data",
-            "__init__.py",
-        ],
-        [
-            'VERSION_NUMBER = "YYYY.MM.DD"',
         ],
     ),
     (
@@ -73,6 +52,26 @@ array = [
         ],
         [
             '"version": (YYYY, MM, DD),',
+        ],
+    ),
+    (
+        [
+            "celestine",
+            "literal.py",
+        ],
+        [
+            'VERSION_NUMBER = "YYYY.MM.DD"',
+        ],
+    ),
+    (
+        [
+            "documentation",
+            "conf.py",
+        ],
+        [
+            'copyright = "YYYY, mem_dixy"',
+            'release = "YYYY.MM.DD"',
+            'version = "YYYY.MM.DD"',
         ],
     ),
 ]
@@ -119,12 +118,12 @@ def version(**star: R):
     """"""
     date = datetime.datetime.now(datetime.UTC)
 
-    year1 = str(date.year)
-    month1 = str(date.month)
-    day1 = str(date.day)
+    year = str(date.year)
+    month = str(date.month)
+    day = str(date.day)
 
-    month0 = month1.zfill(2)
-    day0 = day1.zfill(2)
+    month_fill = month.zfill(2)
+    day_fill = day.zfill(2)
 
     for path, keys in array:
         file = load.pathway_root(*path)
@@ -144,16 +143,13 @@ def version(**star: R):
             pattern = pattern.replace(")", r"\)")
 
             repl = key
-            repl = repl.replace("YYYY", year1)
-            repl = repl.replace("MM", month1)
-            repl = repl.replace("DD", day1)
+            repl = repl.replace("YYYY", year)
+            repl = repl.replace("MM", month)
+            repl = repl.replace("DD", day)
 
-            repl = repl.replace("0M", month0)
-            repl = repl.replace("0D", day0)
+            repl = repl.replace("0M", month_fill)
+            repl = repl.replace("0D", day_fill)
 
-            string = text
-            count = 1
-            flags = 0
+            text = regex.replace(pattern, repl, text)
 
-            text = re.sub(pattern, repl, string, count, flags)
-            stream.text.save(text, file)
+        stream.text.save(text, file)
