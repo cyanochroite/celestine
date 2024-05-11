@@ -2,10 +2,10 @@
 
 from celestine.package import Abstract
 from celestine.typed import (
+    A,
     N,
     R,
     S,
-    A,
 )
 
 add_button: A

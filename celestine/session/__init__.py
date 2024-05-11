@@ -16,11 +16,8 @@ from celestine.literal import (
 from celestine.typed import (
     LS,
     B,
-    C,
-    D,
     N,
     R,
-    S,
 )
 
 from . import default
@@ -88,36 +85,12 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
         magic.get_parser([session1, session2, session3], False)
 
     # Save values to session object.
-    application = bank.application.name
-
-    # items = load.python(APPLICATION, application)
-    # car = list(items)
-
-    code: D[S, C] = {}
-    main: D[S, C] = {}
-    view: D[S, C] = {}
-
-    modules = load.modules(APPLICATION, application)
-    for module in modules:
-        code |= load.decorators(module, "code")
-        main |= load.decorators(module, "main")
-        view |= load.decorators(module, "scene")
-
-    if not main:
-        raise LookupError("No '@main' decorator found.")
-
-    if len(main) > 1:
-        raise UserWarning("Expecting only one '@main' decorator.")
-
     bank.application = load.module(APPLICATION, session1.application)
     bank.attribute = session2
-    bank.code = code
     # bank.configuration = pathlib.Path()  # unset
     bank.directory = session1.directory
     bank.interface = load.module(INTERFACE, session1.interface)
     # bank.language = load.module(LANGUAGE, session1.language)
-    bank.main = next(iter(main))
-    bank.view = view | main
     bank.window = bank.interface.Window(**star)
 
     set_lang()

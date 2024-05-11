@@ -177,6 +177,7 @@ def decorators(_module: M, name: S) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
     _dictionary = _dictionary_items(_module)
     text = string(FUNCTION, name, FULL_STOP)
+    print("text", text)
     iterable = {
         key: value for key, value in _dictionary if text in repr(value)
     }
@@ -184,16 +185,6 @@ def decorators(_module: M, name: S) -> D[S, FN]:
 
 
 ########
-
-
-def decorator_name(module: M, name: S) -> S:
-    """Load from module all functions and turn them into dictionary."""
-    dictionary: D[S, A] = vars(module)
-    text = string(FUNCTION, name, FULL_STOP)
-    for key, value in dictionary.items():
-        if text in repr(value):
-            return key
-    raise LookupError("No function with '@main' found.")
 
 
 def function_page(module: M) -> LS:

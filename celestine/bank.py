@@ -5,13 +5,11 @@ from celestine.typed import (
     A,
     B,
     C,
-    D,
     K,
     L,
     M,
     N,
     P,
-    S,
     T,
 )
 
@@ -37,7 +35,6 @@ configuration: P = None
 directory: P = None
 interface: M = None
 language: M = None
-main: S = None
 window: Window = Window()
 
 _queue: L[T[C[..., N], A, A]] = []

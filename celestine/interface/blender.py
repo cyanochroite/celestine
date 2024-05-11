@@ -460,7 +460,7 @@ class Window(Window_):
             for _, item in self:
                 item.hide()
 
-            self.turn(bank.main)
+            self.turn(self.main)
 
             return False
 

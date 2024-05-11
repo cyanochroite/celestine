@@ -33,8 +33,6 @@ color_table = {}
 COLORS = 15
 
 
-
-
 def get_colors(curses, image):
     """Fails after being called 16 times."""
     global color_index

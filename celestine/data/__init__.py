@@ -3,6 +3,7 @@
 from enum import Enum
 
 from celestine.interface import View
+from celestine.literal import FUNCTION
 from celestine.typed import (
     C,
     N,
@@ -26,7 +27,7 @@ def main(function: C[[View], N]) -> C[[View], N]:
     return decorator
 
 
-def scene(function: C[[View], N]) -> C[[View], N]:
+def scene(function):
     """"""
 
     def decorator(view: View) -> N:
@@ -42,3 +43,40 @@ def code(function: C[[View], N]) -> C[[View], N]:
         function(**star)
 
     return decorator
+
+
+def scene(function):
+    """"""
+
+    def decorator(view: View) -> N:
+        function(view)
+
+    return decorator
+
+
+print("A!")
+
+
+def scene(value=False):
+    """"""
+
+    def main(function: C[[View], N]) -> C[[View], N]:
+        """"""
+
+        def decorator(view: View) -> N:
+            function(view)
+
+        return decorator
+
+    def view(function: C[[View], N]) -> C[[View], N]:
+        """"""
+
+        def decorator(view: View) -> N:
+            function(view)
+
+        return decorator
+
+    if str(value).startswith(FUNCTION):
+        return view(value)
+
+    return main if value else view

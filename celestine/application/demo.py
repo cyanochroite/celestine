@@ -94,6 +94,7 @@ def zero(view: View) -> N:
 
 @scene
 def one(view: View) -> N:
+    print("T*")
     """"""
     with view.span("one_head") as line:
         line.label(
@@ -119,8 +120,37 @@ def one(view: View) -> N:
         )
 
 
-@scene
+@scene()
+def three(view: View) -> N:
+    print("T*")
+    """"""
+    with view.span("one_head") as line:
+        line.label(
+            "one_title",
+            text=language.DEMO_ONE_TITLE,
+        )
+        line.button(
+            "one_A",
+            "cow",
+            text=language.DEMO_ONE_ACTION,
+            say=language.DEMO_ONE_SAY,
+        )
+    with view.span("one_body") as line:
+        line.link(
+            "one_past",
+            "zero",
+            text=language.DEMO_ONE_PAST,
+        )
+        line.link(
+            "one_next",
+            "two",
+            text=language.DEMO_ONE_NEXT,
+        )
+
+
+@scene(value=True)
 def two(view: View) -> N:
+    print("H^")
     """"""
     with view.span("two_head") as line:
         line.label(

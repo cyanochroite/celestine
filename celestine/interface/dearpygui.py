@@ -11,13 +11,12 @@ from celestine.package import (
 )
 from celestine.typed import (
     LF,
-    A,
-    B,
-    S,
     LS,
+    A,
     N,
     P,
     R,
+    S,
     override,
 )
 from celestine.window.collection import Area

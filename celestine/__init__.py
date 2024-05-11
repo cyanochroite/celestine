@@ -5,6 +5,7 @@ from celestine import (
     load,
 )
 from celestine.literal import (
+    APPLICATION,
     BLENDER,
     INTERFACE,
     PACKAGE,
@@ -14,8 +15,11 @@ from celestine.literal import (
 from celestine.typed import (
     LS,
     B,
+    C,
+    D,
     N,
     R,
+    S,
 )
 
 bl_info = {
@@ -44,11 +48,35 @@ def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     begin_session = getattr(session, "begin_session")
     window = begin_session(argument_list, exit_on_error, **star)
 
+    code: D[S, C] = {}
+    _main: D[S, C] = {}
+    view: D[S, C] = {}
+
+    application = bank.application.name
+    for module in load.modules(APPLICATION, application):
+        code |= load.decorators(module, "code")
+        _main |= load.decorators(module, "main")
+        view |= load.decorators(module, "scene")
+
+    if not _main:
+        raise LookupError("No '@main' decorator found.")
+
+    if len(_main) > 1:
+        raise UserWarning("Expecting only one '@main' decorator.")
+
+    view = view | _main
+
+    for thing, name in view.items():
+        print(thing, repr(thing), str(thing))
+        print(name, repr(name), str(name))
+
     with window:
-        for name, function in bank.code.items():
+        window.main = next(iter(_main))
+
+        for name, function in code.items():
             window.code[name] = function
 
-        for name, function in bank.view.items():
+        for name, function in view.items():
             view = window.drop(name)
             function(view)
             window.view[name] = view
