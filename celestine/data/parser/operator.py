@@ -13,9 +13,7 @@ class Operator:
     def __init__(self, name, primary, secondary):
         self.name = name
         self.value = primary
-        self.value = "".join(
-            [getattr(item, "value", str(item)) for item in primary]
-        )
+        self.value = "".join([getattr(item, "value", str(item)) for item in primary])
 
     def __str__(self):
         return self.value

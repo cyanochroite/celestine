@@ -129,9 +129,7 @@ class Image:
         palette = None
         dither = self.package.Image.Dither.FLOYDSTEINBERG
 
-        self.image = self.image.quantize(
-            colors, method, kmeans, palette, dither
-        )
+        self.image = self.image.quantize(colors, method, kmeans, palette, dither)
 
     def __init__(self, image: IMAGE, package: A, **star: R):
         self.image = image

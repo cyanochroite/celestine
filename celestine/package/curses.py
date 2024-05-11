@@ -16,9 +16,7 @@ from celestine.typed import (
 class Package(Abstract):
     """"""
 
-    def subwindow(
-        self, window, column: I, row: I, width: I, height: I
-    ) -> A:
+    def subwindow(self, window, column: I, row: I, width: I, height: I) -> A:
         """"""
         nlines = height
         ncols = width

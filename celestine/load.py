@@ -154,22 +154,14 @@ def _dictionary_items(_module: M) -> T[S, FN]:
 def functions(_module: M) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
     _dictionary = _dictionary_items(_module)
-    mapping = {
-        key: value
-        for key, value in _dictionary
-        if FUNCTION in repr(value)
-    }
+    mapping = {key: value for key, value in _dictionary if FUNCTION in repr(value)}
     return mapping
 
 
 def dictionary(_module: M) -> D[S, FN]:
     """Load from module all key value pairs and make it a dictionary."""
     _dictionary = _dictionary_items(_module)
-    mapping = {
-        key: value
-        for key, value in _dictionary
-        if not key.startswith(LOW_LINE)
-    }
+    mapping = {key: value for key, value in _dictionary if not key.startswith(LOW_LINE)}
     return mapping
 
 
@@ -177,9 +169,7 @@ def decorators(_module: M, name: S) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
     _dictionary = _dictionary_items(_module)
     text = string(FUNCTION, name, FULL_STOP)
-    iterable = {
-        key: value for key, value in _dictionary if text in repr(value)
-    }
+    iterable = {key: value for key, value in _dictionary if text in repr(value)}
     return iterable
 
 

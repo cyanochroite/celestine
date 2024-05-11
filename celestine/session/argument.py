@@ -28,9 +28,7 @@ from .hash import HashClass
 class Argument(HashClass, Attribute):
     """Abstract class."""
 
-    def __init__(
-        self, argument: B, attribute: B, fallback: S, **star: R
-    ) -> N:
+    def __init__(self, argument: B, attribute: B, fallback: S, **star: R) -> N:
         """"""
         super().__init__(**star)
         self.argument = argument

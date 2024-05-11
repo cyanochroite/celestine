@@ -25,9 +25,7 @@ class Window:
 
     def __enter__(self) -> K: ...
 
-    def __exit__(
-        self, exc_type: A, exc_value: A, traceback: A
-    ) -> B: ...
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B: ...
 
 
 #  These types might not be right.

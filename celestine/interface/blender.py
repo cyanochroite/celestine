@@ -33,7 +33,6 @@ from celestine.window.collection import (
 
 COLLECTION = _collection
 
-
 INTERFACE = "interface"
 BLENDER = "blender"
 PACKAGE = "package"

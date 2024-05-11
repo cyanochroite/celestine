@@ -110,6 +110,7 @@ class Abstract(Object):
         self.item = None
 
         self.star = star
+
         # Contains all remaining keyword arguments.
 
         def warp(name: S, default: S = NONE) -> N:

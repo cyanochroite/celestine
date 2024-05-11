@@ -80,9 +80,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
         importlib.reload(session)
 
         session1 = load.method("Session", "session", "session")
-        session2 = load.method(
-            "Session", APPLICATION, bank.application.name
-        )
+        session2 = load.method("Session", APPLICATION, bank.application.name)
         session3 = load.method("Information", "session", "session")
 
         magic.get_parser([session1, session2, session3], False)
