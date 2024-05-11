@@ -121,3 +121,5 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     bank.window = bank.interface.Window(**star)
 
     set_lang()
+
+    return bank.window

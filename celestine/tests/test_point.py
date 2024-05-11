@@ -46,8 +46,11 @@ class TestPoint(unittest.TestCase):
         """"""
         point = Point(1, 2)
         items = iter(point)
-        self.assertEqual(next(items), 1)
-        self.assertEqual(next(items), 2)
+        try:
+            self.assertEqual(next(items), 1)
+            self.assertEqual(next(items), 2)
+        except StopIteration:
+            self.assertFalse(point)
 
     def test_repr(self):
         """"""

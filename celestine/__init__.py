@@ -42,16 +42,16 @@ def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
 
     session = load.module("session")
     begin_session = getattr(session, "begin_session")
-    begin_session(argument_list, exit_on_error, **star)
+    window = begin_session(argument_list, exit_on_error, **star)
 
-    with bank.window:
+    with window:
         for name, function in bank.code.items():
-            bank.window.code[name] = function
+            window.code[name] = function
 
         for name, function in bank.view.items():
-            view = bank.window.drop(name)
+            view = window.drop(name)
             function(view)
-            bank.window.view[name] = view
+            window.view[name] = view
 
 
 def register() -> N:

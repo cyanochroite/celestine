@@ -170,7 +170,7 @@ ignored-argument-names = "_|cls|star|self"
 
 
 [tool.pylint.format]
-expected-line-ending-format = "LF"
+expected-line-ending-format = "CRLF"
 max-line-length = 72
 
 

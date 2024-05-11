@@ -224,7 +224,7 @@ class View(Abstract, Tree):
             item.draw(**star)
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         for _, item in self:
             item.make(canvas, **star)

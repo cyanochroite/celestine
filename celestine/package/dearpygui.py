@@ -5,7 +5,27 @@ from celestine.typed import (
     N,
     R,
     S,
+    A,
 )
+
+add_button: A
+add_dynamic_texture: A
+add_image: A
+add_text: A
+configure_item: A
+create_context: A
+create_viewport: A
+destroy_context: A
+hide_item: A
+load_image: A
+set_primary_window: A
+set_value: A
+setup_dearpygui: A
+show_item: A
+show_viewport: A
+start_dearpygui: A
+texture_registry: A
+window: A
 
 
 class Package(Abstract):

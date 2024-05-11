@@ -13,6 +13,8 @@ from celestine.typed import (
     LF,
     A,
     B,
+    S,
+    LS,
     N,
     P,
     R,
@@ -32,7 +34,7 @@ class Element(Element_, Abstract):
     delete_item(...)
     """
 
-    def callback(self, *_):
+    def callback(self, *_) -> N:
         """
         The object callback.
 
@@ -42,7 +44,7 @@ class Element(Element_, Abstract):
         bank.dequeue()
 
     @override
-    def make(self, canvas: A) -> B:
+    def make(self, canvas: A, **star: R) -> N:
         """
         Draw the image to screen.
 
@@ -61,7 +63,7 @@ class Element(Element_, Abstract):
                 tag=self.name,
                 pos=self.area.world.origin.value,
             )
-            return True
+            return
 
         if self.text:
             dearpygui.add_text(
@@ -69,11 +71,11 @@ class Element(Element_, Abstract):
                 tag=self.name,
                 pos=self.area.world.origin.value,
             )
-            return True
+            return
 
         # image
         photo = self.load()
-        width, height = self.area.size
+        width, height = self.area.local.size
 
         with dearpygui.texture_registry(show=False):
             dearpygui.add_dynamic_texture(
@@ -86,10 +88,8 @@ class Element(Element_, Abstract):
         dearpygui.add_image(
             self.name,
             tag=f"{self.name}-base",
-            pos=self.area.origin.int,
+            pos=self.area.local.origin,
         )
-
-        return True
 
     def load(self) -> LF:
         """"""
@@ -100,7 +100,7 @@ class Element(Element_, Abstract):
 
         if pillow:
             image = pillow.open(self.path)
-            image.resize(self.area.size)
+            image.resize(self.area.local.size)
             data = image.getdata()
             flat = itertools.flatten(data)
             photo = list(map(lambda pixel: float(pixel / 255), flat))
@@ -112,7 +112,7 @@ class Element(Element_, Abstract):
             photo = image[3]
             # Unable to figure out how to avoid crashing application.
             # So just paint a boring blue image instead.
-            width, height = self.area.size
+            width, height = self.area.local.size
             length = width * height
             for _ in range(length):
                 photo.append(0)
@@ -157,7 +157,7 @@ class Window(Window_):
     """"""
 
     @override
-    def extension(self):
+    def extension(self) -> LS:
         """"""
         return [
             ".jpg",
@@ -183,7 +183,7 @@ class Window(Window_):
                 item.make(None)
 
     @override
-    def turn(self, page):
+    def turn(self, page: S, **star: R) -> N:
         """"""
         super().turn(page)
 
@@ -218,7 +218,7 @@ class Window(Window_):
         return self
 
     @override
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A):
         super().__exit__(exc_type, exc_value, traceback)
 
         dearpygui.setup_dearpygui()

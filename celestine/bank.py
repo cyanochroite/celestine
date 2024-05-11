@@ -33,13 +33,11 @@ class Window:
 #  These types might not be right.
 application: M = None
 attribute: LS = None
-code: D[S, C] = None
 configuration: P = None
 directory: P = None
 interface: M = None
 language: M = None
 main: S = None
-view: D[S, C] = None
 window: Window = Window()
 
 _queue: L[T[C[..., N], A, A]] = []
