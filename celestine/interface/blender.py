@@ -205,15 +205,14 @@ class Abstract(Abstract_):
     @override
     def make(self, canvas: A, **star: R) -> N:
         """"""
+        if star.get("first"):
+            self.render()
+
+        else:
+            item = self.dictionary.get(self.name)
+            self.hidden = item.hide_render
+
         super().make(canvas, **star)
-
-        first = star.get("first")
-
-        if first:
-            return
-
-        item = self.dictionary.get(self.name)
-        self.hidden = item.hide_render
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
@@ -226,11 +225,11 @@ class Mouse(Abstract):
     @override
     def make(self, canvas: A, **star: R) -> N:
         """"""
-        if super().make(canvas, **star):
+        if star.get("first"):
             diamond = Diamond()
             diamond.make(self.mesh)
 
-            self.render()
+        super().make(canvas, **star)
 
     def __init__(self, mesh) -> N:
         self.mesh = mesh.soul
@@ -245,21 +244,21 @@ class Element(Element_, Abstract):
     @override
     def make(self, canvas: A, **star: R) -> N:
         """"""
-        if self.action or self.goto:
-            data = f"button: {self.text}"
-            self.keep = basic.text(self.name, self.canvas, data)
-        elif self.text:
-            self.keep = basic.text(self.name, self.canvas, self.text)
-        else:
-            # image
-            image = data.image.load(self.path)
-            material = UV.image(self.name, image)
-            plane = basic.image(self.name, self.canvas, image.size)
+        if star.get("first"):
+            if self.action or self.goto:
+                data = f"button: {self.text}"
+                self.keep = basic.text(self.name, canvas, data)
+            elif self.text:
+                self.keep = basic.text(self.name, canvas, self.text)
+            else:
+                # image
+                image = data.image.load(self.path)
+                material = UV.image(self.name, image)
+                plane = basic.image(self.name, self.canvas, image.size)
 
-            plane.body.data.materials.append(material)
-            self.keep = plane
+                plane.body.data.materials.append(material)
+                self.keep = plane
 
-        self.render()
         super().make(canvas, **star)
 
     def update(self, image: S, **star: R) -> B:
@@ -279,15 +278,17 @@ class View(View_, Abstract):
     @override
     def make(self, canvas: A, **star: R) -> N:
         """"""
-        if canvas:
-            link = canvas.children.link
-        else:
-            link = bpy.context.scene.collection.children.link
+        if star.get("first"):
+            if canvas:
+                link = canvas.children.link
+            else:
+                link = bpy.context.scene.collection.children.link
 
-        collection = data.collection(self.name)
-        link(collection.soul)
+            collection = data.collection(self.name)
+            link(collection.soul)
+            canvas = collection
 
-        super().make(collection, **star)
+        super().make(canvas, **star)
 
     @override
     def hide(self) -> N:
