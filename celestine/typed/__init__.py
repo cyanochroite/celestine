@@ -18,13 +18,13 @@ E = _module.E
 F = _module.F
 G = _module.G
 H = _module.H
-I = _module.I
+# I = _module.I  # Ambiguous variable name.
 J = _module.J
 K = _module.K
 L = _module.L
 M = _module.M
 N: typing.TypeAlias = None
-O = _module.O
+# O = _module.O  # Ambiguous variable name.
 P = _module.P
 Q = _module.Q
 R = _module.R
@@ -39,20 +39,20 @@ Z = _module.Z
 
 GB = _module.GB
 GF = _module.GF
-GI = _module.GI
+GZ = _module.GZ
 GP = _module.GP
 GS = _module.GS
 
 OB = _module.OB
 OF = _module.OF
-OI = _module.OI
+OZ = _module.OZ
 OM = _module.OM
 OP = _module.OP
 OS = _module.OS
 
 LB = _module.LB
 LF = _module.LF
-LI = _module.LI
+LZ = _module.LZ
 LP = _module.LP
 LS = _module.LS
 

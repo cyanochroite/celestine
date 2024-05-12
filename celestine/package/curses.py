@@ -8,8 +8,8 @@ from celestine.literal import (
 from celestine.package import Abstract
 from celestine.typed import (
     A,
-    I,
     S,
+    Z,
 )
 
 cbreak: A
@@ -37,7 +37,7 @@ class Package(Abstract):
     """"""
 
     def subwindow(
-        self, window, column: I, row: I, width: I, height: I
+        self, window, column: Z, row: Z, width: Z, height: Z
     ) -> A:
         """"""
         nlines = height
@@ -46,7 +46,7 @@ class Package(Abstract):
         begin_x = column
         return window.subwin(nlines, ncols, begin_y, begin_x)
 
-    def window(self, column: I, row: I, width: I, height: I) -> A:
+    def window(self, column: Z, row: Z, width: Z, height: Z) -> A:
         """"""
         nlines = height
         ncols = width

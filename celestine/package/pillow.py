@@ -6,16 +6,16 @@ from celestine import load
 from celestine.package import Abstract
 from celestine.typed import (
     IMAGE,
-    LI,
     LS,
+    LZ,
     A,
-    I,
     K,
     N,
     P,
     R,
     S,
     T,
+    Z,
 )
 from celestine.window.collection import (
     Plane,
@@ -89,7 +89,7 @@ class Image:
         """"""
         return self.clone(self)
 
-    def getdata(self) -> LI:
+    def getdata(self) -> LZ:
         """"""
         return self.image.getdata()
 
@@ -141,7 +141,7 @@ class Image:
 class Package(Abstract):
     """"""
 
-    def new(self, size: T[I, I]) -> Image:
+    def new(self, size: T[Z, Z]) -> Image:
         """"""
         mode = "RGBA"
         color = (250, 250, 0, 250)

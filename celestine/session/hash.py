@@ -22,9 +22,9 @@ from celestine.literal import (
 )
 from celestine.typed import (
     B,
-    I,
     J,
     S,
+    Z,
 )
 
 
@@ -34,7 +34,7 @@ class HashMetaClass(type):
     def __eq__(cls, other: J) -> B:
         return str(cls) == str(other)
 
-    def __hash__(cls) -> I:
+    def __hash__(cls) -> Z:
         """"""
         return hash(str(cls))
 
@@ -53,7 +53,7 @@ class HashMetaClass(type):
 class HashClass(metaclass=HashMetaClass):
     """"""
 
-    def __hash__(self) -> I:
+    def __hash__(self) -> Z:
         """"""
         return hash(str(self))
 

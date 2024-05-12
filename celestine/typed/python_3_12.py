@@ -16,10 +16,11 @@ from collections.abc import Sequence
 from importlib.machinery import ModuleSpec
 from typing import Dict as D
 from typing import List as L
-from typing import Optional as O
+from typing import Optional as OPT
 from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TYPE
+from typing import TypeAlias as TA
 from typing import override
 
 type Argument = typing.Any  # Import the real one.
@@ -33,13 +34,15 @@ type F = float
 # Generator[YieldType, SendType, ReturnType]
 # type G = collections.abc.Generator
 type H = typing.Any  # Unused
-type I = int
+# type I = typing.Any  # Ambiguous variable name.
 type J = object
 # type K = typing.Self
 # type L = typing.List
 type M = types.ModuleType
-type N = None
-# type O = typing.Optional
+# type N = None
+N: TA = None
+# type O = typing.Any  # Ambiguous variable name.
+# type O = typing.Optional # Ambiguous variable name.
 type P = pathlib.Path
 type Q = typing.Any  # Unused.  # Queue?
 type R = typing.Any  # **star
@@ -50,31 +53,31 @@ type V = typing.Any  # Unused.
 type W = typing.Any  # Unused.
 type X = typing.Any  # Unused.
 type Y = typing.Any  # Unused.
-type Z = typing.Any  # Unused.
+type Z = int
 
 type GB = G[B, N, N]
 type GF = G[F, N, N]
-type GI = G[I, N, N]
+type GZ = G[Z, N, N]
 type GP = G[P, N, N]
 type GS = G[S, N, N]
 
-type OB = O[B]
-type OF = O[F]
-type OI = O[I]
-type OM = O[M]
-type OP = O[P]
-type OS = O[S]
+type OB = OPT[B]
+type OF = OPT[F]
+type OZ = OPT[Z]
+type OM = OPT[M]
+type OP = OPT[P]
+type OS = OPT[S]
 
 type LB = L[B]
 type LF = L[F]
-type LI = L[I]
+type LZ = L[Z]
 type LP = L[P]
 type LS = L[S]
 
 type PATH = P | S
 
 type FN = C[[N], N]
-type AXIS = G[T[I, I], N, N]
+type AXIS = G[T[Z, Z], N, N]
 type FILE = typing.IO[A]
 type AT = D[S, A]
 # type TYPE[X] = typing.Type
@@ -82,8 +85,8 @@ type IMAGE = A
 type APD = D[A, A]
 type LZMA = lzma.LZMAFile
 type TABLE = D[S, S]
-type BOX = T[I, I, I, I]
-type PAIR = T[I, I]
+type BOX = T[Z, Z, Z, Z]
+type PAIR = T[Z, Z]
 type AD = D[S, Argument]  # session.argument
 type AI = collections.abc.Iterable[T[S, Argument]]  # session.argument
 

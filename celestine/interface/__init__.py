@@ -11,12 +11,12 @@ from celestine.typed import (
     B,
     D,
     H,
-    I,
     K,
     N,
     P,
     R,
     S,
+    Z,
     override,
 )
 from celestine.window.collection import (
@@ -189,8 +189,8 @@ class View(Abstract, Tree):
     """"""
 
     item: D[S, Abstract]
-    width: I
-    height: I
+    width: Z
+    height: Z
     element_item: D[S, A]
 
     def find(self, name: S) -> N | Abstract:
@@ -312,8 +312,8 @@ class View(Abstract, Tree):
         element_item: D[S, A],
         *,
         mode: Zone = Zone.NONE,
-        row: I = 0,
-        col: I = 0,
+        row: Z = 0,
+        col: Z = 0,
         **star: R,
     ) -> N:
         #
