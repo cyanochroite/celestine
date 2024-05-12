@@ -3,17 +3,17 @@
 from collections.abc import Collection
 
 from celestine.typed import (
-    GI,
+    GZ,
     B,
     D,
     F,
     G,
-    I,
     K,
     N,
     R,
     S,
     T,
+    Z,
 )
 
 
@@ -24,7 +24,7 @@ class Point:
     _two: F
 
     @property
-    def value(self) -> T[I, I]:
+    def value(self) -> T[Z, Z]:
         """"""
         return (int(self._one), int(self._two))
 
@@ -32,7 +32,7 @@ class Point:
         self._one = _one
         self._two = _two
 
-    def __iter__(self) -> GI:
+    def __iter__(self) -> GZ:
         yield self._one
         yield self._two
 
@@ -56,8 +56,8 @@ class Point:
 class Line:
     """"""
 
-    minimum: I
-    maximum: I
+    minimum: Z
+    maximum: Z
 
     @classmethod
     def clone(cls, self: K) -> K:
@@ -69,33 +69,33 @@ class Line:
         return self.clone(self)
 
     @property
-    def length(self) -> I:
+    def length(self) -> Z:
         """"""
         return self.maximum - self.minimum
 
     @property
-    def midpoint(self) -> I:
+    def midpoint(self) -> Z:
         """"""
         return (self.minimum + self.maximum) // 2
 
-    def __contains__(self, item: I) -> B:
+    def __contains__(self, item: Z) -> B:
         return self.minimum <= item <= self.maximum
 
-    def __iadd__(self, other: I) -> K:
+    def __iadd__(self, other: Z) -> K:
         self.minimum += other
         self.maximum += other
         return self
 
-    def __imul__(self, other: I) -> K:
+    def __imul__(self, other: Z) -> K:
         self.minimum *= other
         self.maximum *= other
         return self
 
-    def __init__(self, minimum: I, maximum: I) -> N:
+    def __init__(self, minimum: Z, maximum: Z) -> N:
         self.minimum = min(minimum, maximum)
         self.maximum = max(minimum, maximum)
 
-    def __isub__(self, other: I) -> K:
+    def __isub__(self, other: Z) -> K:
         self.minimum -= other
         self.maximum -= other
         return self
@@ -139,7 +139,7 @@ class Plane:
         return Plane(self._one, self._two)
 
     @property
-    def value(self) -> T[I, I, I, I]:
+    def value(self) -> T[Z, Z, Z, Z]:
         """"""
         xmin = int(self._one.minimum)
         ymin = int(self._two.minimum)
@@ -148,7 +148,7 @@ class Plane:
         return (xmin, ymin, xmax, ymax)
 
     @classmethod
-    def make(cls, width: I, height: I) -> K:
+    def make(cls, width: Z, height: Z) -> K:
         """"""
         _one = Line(0, width)
         _two = Line(0, height)
@@ -184,7 +184,7 @@ class Plane:
         self._two += other._two
         return self
 
-    def __imul__(self, other: I) -> K:
+    def __imul__(self, other: Z) -> K:
         self._one *= other
         self._two *= other
         return self
@@ -215,7 +215,7 @@ class Area:
         return item in self.world
 
     @classmethod
-    def make(cls, width: I, height: I) -> K:
+    def make(cls, width: Z, height: Z) -> K:
         """"""
         local = Plane.make(width, height)
         world = Plane.make(width, height)
@@ -247,7 +247,8 @@ class Tree(Object, Collection[K]):
 
     def get(self, name: S) -> K:
         """"""
-        return self.children[name]
+        result = self.children[name]
+        return result
 
     def set(self, item: K) -> K:
         """"""
@@ -258,14 +259,17 @@ class Tree(Object, Collection[K]):
         return True
 
     def __contains__(self, item: S) -> B:
-        return item in self.children
+        contains = item in self.children
+        return contains
 
     def __init__(self, **star: R) -> N:
         self.children = {}
         super().__init__(**star)
 
     def __iter__(self) -> G[T[S, K], N, N]:
-        yield from self.children.items()
+        items = self.children.items()
+        yield from items
 
-    def __len__(self) -> I:
-        return len(self.children)
+    def __len__(self) -> Z:
+        length = len(self.children)
+        return length

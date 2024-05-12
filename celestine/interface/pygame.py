@@ -57,7 +57,7 @@ class Element(Element_, Abstract):
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
-        self.path = star.get("path", "")
+        self.path = star.pop("path", "")
 
 
 class View(View_, Abstract):

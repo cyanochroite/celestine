@@ -52,6 +52,7 @@ unicode_break_soft = frozenset(
     }
 )
 
+
 unicode_newline = frozenset(
     {
         CARRIAGE_RETURN,
@@ -62,7 +63,9 @@ unicode_newline = frozenset(
     }
 )
 
-unicode_punctuation = unicode_break_hard | unicode_break_soft
+
+unicode_punctuation: set[str] = unicode_break_hard | unicode_break_soft
+
 
 unicode_whitespace = frozenset(
     {
@@ -84,7 +87,8 @@ unicode_whitespace = frozenset(
 
 not_identifier = unicode_punctuation | unicode_whitespace
 
-DIRECTIONAL_FORMATTING = frozenset(
+
+DIRECTIONAL_FORMATTING: set[str] = frozenset(
     (
         LEFT_TO_RIGHT_MARK,
         RIGHT_TO_LEFT_MARK,
@@ -97,6 +101,7 @@ DIRECTIONAL_FORMATTING = frozenset(
         RIGHT_TO_LEFT_ISOLATE,
     )
 )
+
 
 UNICODE = frozenset(
     (
@@ -34992,4 +34997,5 @@ UNICODE = frozenset(
     )
 )
 
-unicode_identifier = UNICODE - not_identifier
+
+unicode_identifier: set[str] = UNICODE - not_identifier

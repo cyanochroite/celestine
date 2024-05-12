@@ -88,10 +88,8 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
     # Save values to session object.
     bank.application = load.module(APPLICATION, session1.application)
     bank.attribute = session2
-    # bank.configuration = pathlib.Path()  # unset
     bank.directory = session1.directory
     bank.interface = load.module(INTERFACE, session1.interface)
-    # bank.language = load.module(LANGUAGE, session1.language)
     bank.window = bank.interface.Window(**star)
 
     set_lang()

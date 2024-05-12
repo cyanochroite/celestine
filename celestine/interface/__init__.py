@@ -11,12 +11,12 @@ from celestine.typed import (
     B,
     D,
     H,
-    I,
     K,
     N,
     P,
     R,
     S,
+    Z,
     override,
 )
 from celestine.window.collection import (
@@ -87,10 +87,9 @@ class Abstract(Object):
         """"""
         return True
 
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         self.canvas = canvas
-        return True
 
     def show(self) -> N:
         """"""
@@ -139,7 +138,7 @@ class Element(Abstract):
     image: A
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         size = self.area.world.size.value
         blender_mode = True
@@ -148,7 +147,7 @@ class Element(Abstract):
         else:
             self.image = None
 
-        return super().make(canvas, **star)
+        super().make(canvas, **star)
 
     def draw(self, **star: R) -> B:
         """"""
@@ -190,8 +189,8 @@ class View(Abstract, Tree):
     """"""
 
     item: D[S, Abstract]
-    width: I
-    height: I
+    width: Z
+    height: Z
     element_item: D[S, A]
 
     def find(self, name: S) -> N | Abstract:
@@ -313,8 +312,8 @@ class View(Abstract, Tree):
         element_item: D[S, A],
         *,
         mode: Zone = Zone.NONE,
-        row: I = 0,
-        col: I = 0,
+        row: Z = 0,
+        col: Z = 0,
         **star: R,
     ) -> N:
         #
@@ -433,11 +432,13 @@ class Window(Tree):
 
     def draw(self, **star: R) -> N:
         """"""
-        any(item.draw(**star) for _, item in self)
+        for _, item in self:
+            item.draw(**star)
 
     def make(self, **star: R) -> N:
         """"""
-        any(item.make(self.canvas, **star) for _, item in self)
+        for _, item in self:
+            item.make(self.canvas, **star)
 
     def turn(self, page: S, **star: R) -> N:
         """"""
@@ -455,7 +456,8 @@ class Window(Tree):
 
     def click(self, point: Point) -> N:
         """"""
-        any(item.click(point) for _, item in self)
+        for _, item in self:
+            item.click(point)
 
     def find(self, name: S) -> N | Abstract:
         """"""

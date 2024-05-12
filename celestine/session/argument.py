@@ -1,5 +1,7 @@
 """"""
 
+from abc import abstractmethod
+
 from celestine.literal import (
     HYPHEN_MINUS,
     NONE,
@@ -35,9 +37,9 @@ class Argument(HashClass, Attribute):
         self.attribute = attribute
         self.fallback = fallback
 
+    @abstractmethod
     def key(self, name: S) -> LS:
         """"""
-        return []
 
 
 class Flag(Argument):
