@@ -1,10 +1,7 @@
 """"""
 
 from celestine import language
-from celestine.data import (
-    main,
-    scene,
-)
+from celestine.data import scene
 from celestine.interface import View
 from celestine.typed import N
 from celestine.window.container import (

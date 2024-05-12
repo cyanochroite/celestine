@@ -141,7 +141,7 @@ class Element(Abstract):
     def make(self, canvas: A, **star: R) -> B:
         """"""
         size = self.area.world.size.value
-        blender_mode = True
+        blender_mode = False
         if pillow and not blender_mode:
             self.image = pillow.new(size)
         else:

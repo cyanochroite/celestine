@@ -47,7 +47,6 @@ def parser_magic(source):
         all_languages[language] = {}
         all_languages[language]["name"] = language
         all_languages[language]["skip"] = body
-        # all_languages[language]["work"] = {}
 
         # hold because we skipped translator
         all_languages[language]["work"] = head

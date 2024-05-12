@@ -93,11 +93,11 @@ class Element(Element_, Abstract):
     def load(self) -> LF:
         """"""
 
-        itertools = itertools
+        itertools = None
 
         photo: LF = []
 
-        if pillow:
+        if pillow and itertools:
             image = pillow.open(self.path)
             image.resize(self.area.local.size)
             data = image.getdata()
@@ -105,9 +105,6 @@ class Element(Element_, Abstract):
             photo = list(map(lambda pixel: float(pixel / 255), flat))
         else:
             image = dearpygui.load_image(self.path)
-            # width = image[0]
-            # height = image[1]
-            # channels = image[2]
             photo = image[3]
             # Unable to figure out how to avoid crashing application.
             # So just paint a boring blue image instead.
