@@ -19,7 +19,7 @@ def code(function: C[[View], N]) -> C[[View], N]:
     return decorator
 
 
-def scene(primary_window: B = False) -> C[[C[[View], N]], N]:
+def scene(main: B = False) -> C[[C[[View], N]], N]:
     """"""
 
     def primary(function: C[[View], N]) -> C[[View], N]:
@@ -38,7 +38,7 @@ def scene(primary_window: B = False) -> C[[C[[View], N]], N]:
 
         return decorator
 
-    if str(primary_window).startswith(FUNCTION):
-        return secondary(primary_window)
+    if str(main).startswith(FUNCTION):
+        return secondary(main)
 
-    return primary if primary_window else secondary
+    return primary if main else secondary

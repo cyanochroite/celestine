@@ -247,7 +247,8 @@ class Tree(Object, Collection[K]):
 
     def get(self, name: S) -> K:
         """"""
-        return self.children[name]
+        result = self.children[name]
+        return result
 
     def set(self, item: K) -> K:
         """"""
@@ -258,14 +259,17 @@ class Tree(Object, Collection[K]):
         return True
 
     def __contains__(self, item: S) -> B:
-        return item in self.children
+        contains = item in self.children
+        return contains
 
     def __init__(self, **star: R) -> N:
         self.children = {}
         super().__init__(**star)
 
     def __iter__(self) -> G[T[S, K], N, N]:
-        yield from self.children.items()
+        items = self.children.items()
+        yield from items
 
     def __len__(self) -> Z:
-        return len(self.children)
+        length = len(self.children)
+        return length

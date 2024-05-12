@@ -203,18 +203,17 @@ class Abstract(Abstract_):
             item.hide_viewport = False
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         super().make(canvas, **star)
 
         first = star.get("first")
 
         if first:
-            return True
+            return
 
         item = self.dictionary.get(self.name)
         self.hidden = item.hide_render
-        return False
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
@@ -225,14 +224,13 @@ class Mouse(Abstract):
     """Should everyone get this?"""
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         if super().make(canvas, **star):
             diamond = Diamond()
             diamond.make(self.mesh)
 
             self.render()
-        return True
 
     def __init__(self, mesh) -> N:
         self.mesh = mesh.soul
@@ -245,32 +243,24 @@ class Element(Element_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
-        if not super().make(canvas, **star):
-            return False
-
         if self.action or self.goto:
             data = f"button: {self.text}"
             self.keep = basic.text(self.name, self.canvas, data)
-            self.render()
-            return True
-
-        if self.text:
+        elif self.text:
             self.keep = basic.text(self.name, self.canvas, self.text)
-            self.render()
-            return True
+        else:
+            # image
+            image = data.image.load(self.path)
+            material = UV.image(self.name, image)
+            plane = basic.image(self.name, self.canvas, image.size)
 
-        # image
-        image = data.image.load(self.path)
-        material = UV.image(self.name, image)
-        plane = basic.image(self.name, self.canvas, image.size)
+            plane.body.data.materials.append(material)
+            self.keep = plane
 
-        plane.body.data.materials.append(material)
-        self.keep = plane
         self.render()
-
-        return True
+        super().make(canvas, **star)
 
     def update(self, image: S, **star: R) -> B:
         """"""
@@ -287,7 +277,7 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A, **star: R) -> B:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         if canvas:
             link = canvas.children.link
@@ -298,8 +288,6 @@ class View(View_, Abstract):
         link(collection.soul)
 
         super().make(collection, **star)
-
-        return True
 
     @override
     def hide(self) -> N:
@@ -326,6 +314,12 @@ class View(View_, Abstract):
 
 class Window(Window_):
     """"""
+
+    @override
+    def make(self, **star: R) -> N:
+        """"""
+        first = self.call == "make"
+        super().make(first=first, **star)
 
     @override
     def extension(self) -> LS:
@@ -445,26 +439,10 @@ class Window(Window_):
 
     @override
     def __exit__(self, exc_type, exc_value, traceback):
-        if exc_type:
-            raise exc_type
-        if exc_value:
-            raise exc_value
-        if traceback:
-            raise traceback
-
-        self.spot(self.area)
+        super().__exit__(exc_type, exc_value, traceback)
 
         if self.call == "make":
-            self.make(first=True)
-
-            for _, item in self:
-                item.hide()
-
-            self.turn(self.main)
-
             return False
-
-        self.make(first=False)
 
         page = bpy.context.scene.celestine.page
         self.page = self.view[page]
@@ -483,7 +461,7 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.make(20, 20)
+        self.area = Area.make(35, 20)
 
         self.dictionary = bpy.data.collections  # From View?
 
@@ -491,5 +469,6 @@ class Window(Window_):
         self.mouse = None
 
         self.call = call
+        self.star = star
 
         self.canvas = None

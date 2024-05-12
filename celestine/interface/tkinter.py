@@ -41,7 +41,7 @@ class Element(Element_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
 
         super().make(canvas)
