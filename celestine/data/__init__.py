@@ -1,5 +1,7 @@
 """"""
 
+import typing
+
 from celestine.interface import View
 from celestine.literal import FUNCTION
 from celestine.typed import (
@@ -8,6 +10,8 @@ from celestine.typed import (
     N,
     R,
 )
+
+Call: typing.TypeAlias = C[[View], N]
 
 
 def code(function: C[[R], B]) -> C[[R], B]:
@@ -19,10 +23,10 @@ def code(function: C[[R], B]) -> C[[R], B]:
     return decorator
 
 
-def scene(main: B = False) -> C[[C[[View], N]], N]:
+def scene(main: B | Call = False) -> C[[Call], N]:
     """"""
 
-    def primary(function: C[[View], N]) -> C[[View], N]:
+    def primary(function: Call) -> Call:
         """"""
 
         def decorator(view: View) -> N:
@@ -30,7 +34,7 @@ def scene(main: B = False) -> C[[C[[View], N]], N]:
 
         return decorator
 
-    def secondary(function: C[[View], N]) -> C[[View], N]:
+    def secondary(function: Call) -> Call:
         """"""
 
         def decorator(view: View) -> N:

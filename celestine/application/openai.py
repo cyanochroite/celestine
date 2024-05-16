@@ -19,6 +19,7 @@ from celestine.session.session import (
     SuperSession,
 )
 from celestine.typed import (
+    B,
     H,
     N,
     R,
@@ -87,7 +88,7 @@ def generate(hold: H, prompt: str):
 
 
 @code
-def draw(hold: H, *, prompt: S, **star: R) -> N:
+def draw(hold: H, *, prompt: S, **star: R) -> B:
     """"""
     image = generate(hold, prompt)
     url = image_url(image)

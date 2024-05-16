@@ -8,7 +8,7 @@ from celestine.data import code
 from celestine.typed import (
     LP,
     LS,
-    N,
+    B,
     P,
     R,
     S,
@@ -25,7 +25,7 @@ def find_image(directory: P) -> LP:
 
 
 @code
-def setup(**star: R) -> N:
+def setup(**star: R) -> B:
     """"""
     window = bank.window.page
     directory = bank.directory
@@ -42,7 +42,7 @@ def setup(**star: R) -> N:
 
 
 @code
-def see(caller: S, **star: R) -> N:
+def see(caller: S, **star: R) -> B:
     """"""
     window = bank.window
     source = window.find(caller)

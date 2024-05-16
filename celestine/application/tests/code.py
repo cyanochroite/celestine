@@ -9,8 +9,8 @@ from celestine.data import (
 )
 from celestine.data.directory import APPLICATION
 from celestine.typed import (
+    B,
     H,
-    N,
     R,
 )
 
@@ -21,7 +21,7 @@ from .data import (
 
 
 @code
-def main(hold: H, **star: R) -> N:
+def main(hold: H, **star: R) -> B:
     """Run the unittest library."""
     module = load.module(APPLICATION, TESTS)
     top = load.pathway()

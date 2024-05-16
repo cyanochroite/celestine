@@ -19,6 +19,7 @@ from celestine.package import (
     pyupgrade,
 )
 from celestine.typed import (
+    B,
     N,
     R,
     S,
@@ -84,7 +85,7 @@ def run(name: S) -> N:
 
 
 @code
-def clean(**star: R) -> N:
+def clean(**star: R) -> B:
     """"""
     pyupgrade.run()
     # TODO figure out why this print instead of fixes
@@ -95,7 +96,7 @@ def clean(**star: R) -> N:
 
 
 @code
-def licence(**star: R):
+def licence(**star: R) -> B:
     """"""
     location = load.pathway("licence")
     files = load.walk_file(location, [], [])
@@ -113,7 +114,7 @@ def licence(**star: R):
 
 
 @code
-def version(**star: R):
+def version(**star: R) -> B:
     """"""
     date = datetime.datetime.now(datetime.UTC)
 
