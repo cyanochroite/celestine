@@ -1,20 +1,37 @@
 """"""
 
-import typing
+from typing import Protocol
 
 from celestine.interface import View
-from celestine.literal import FUNCTION
 from celestine.typed import (
     B,
-    C,
     N,
     R,
 )
 
-Call: typing.TypeAlias = C[[View], N]
+
+class Code(Protocol):
+    """Type for code functions."""
+
+    def __call__(self, **star: R) -> B:
+        ...
 
 
-def code(function: C[[R], B]) -> C[[R], B]:
+class Scene(Protocol):
+    """Type for code functions."""
+
+    def __call__(self, view: View) -> N:
+        ...
+
+
+class SuperScene(Protocol):
+    """Type for code functions."""
+
+    def __call__(self, function: Scene) -> Scene:
+        ...
+
+
+def code(function: Code) -> Code:
     """"""
 
     def decorator(**star: R) -> B:
@@ -23,26 +40,26 @@ def code(function: C[[R], B]) -> C[[R], B]:
     return decorator
 
 
-def scene(main: B | Call = False) -> C[[Call], N]:
+def scene(main: B | Scene = False) -> Scene | SuperScene:
     """"""
 
-    def primary(function: Call) -> Call:
+    def primary(function: Scene) -> Scene:
         """"""
 
         def decorator(view: View) -> N:
-            function(view)
+            return function(view)
 
         return decorator
 
-    def secondary(function: Call) -> Call:
+    def secondary(function: Scene) -> Scene:
         """"""
 
         def decorator(view: View) -> N:
-            function(view)
+            return function(view)
 
         return decorator
 
-    if str(main).startswith(FUNCTION):
+    if not isinstance(main, B):
         return secondary(main)
 
     return primary if main else secondary

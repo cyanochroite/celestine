@@ -4,22 +4,25 @@ Define types here.
 Generator[YieldType, SendType, ReturnType]
 """
 
+# TODO: Replace all this with 'type' after python 3.12 and mypy support.
+
 import collections.abc
 import io
 import lzma
 import pathlib
 import types
 import typing
-from collections.abc import Callable as C
-from collections.abc import Generator as G
-from collections.abc import Sequence
+from typing import Generator as G
+from typing import Sequence
 from importlib.machinery import ModuleSpec
 from typing import Dict as D
 from typing import List as L
 from typing import Optional as OPT
+from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TYPE
 from typing import TypeAlias as TA
+from typing import Callable as C
 
 A: TA = typing.Any
 B: TA = bool
@@ -31,7 +34,7 @@ F: TA = float
 H: TA = typing.Any  # Unused
 # I: TA = typing.Any  # Ambiguous variable name.
 J: TA = object
-K: TA = typing.Any  # Python 3.10 fix.
+# K: TA = typing.Self  # "Self" is not valid in this context.
 # L: TA = typing.List
 M: TA = types.ModuleType
 N: TA = None
