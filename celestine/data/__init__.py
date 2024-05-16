@@ -10,11 +10,11 @@ from celestine.typed import (
 )
 
 
-def code(function: C[[View], N]) -> C[[View], N]:
+def code(function: C[[R], B]) -> C[[R], B]:
     """"""
 
-    def decorator(**star: R) -> N:
-        function(**star)
+    def decorator(**star: R) -> B:
+        return function(**star)
 
     return decorator
 

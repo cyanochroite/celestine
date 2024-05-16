@@ -119,8 +119,8 @@ def module_fallback(*path: S) -> M:
 
 def module_to_name(_module: M) -> S:
     """"""
-    string = repr(_module)
-    array = string.split("'")
+    text = repr(_module)
+    array = text.split("'")
     name = array[1]
     split = name.split(".")
     section = split[-1]
@@ -159,23 +159,23 @@ def _dictionary_items(_module: M) -> T[S, FN]:
 
 def functions(_module: M) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
+
+    def test(value: S) -> B:
+        return FUNCTION in repr(value)
+
     _dictionary = _dictionary_items(_module)
-    mapping = {
-        key: value
-        for key, value in _dictionary
-        if FUNCTION in repr(value)
-    }
+    mapping = {key: value for key, value in _dictionary if test(value)}
     return mapping
 
 
 def dictionary(_module: M) -> D[S, FN]:
     """Load from module all key value pairs and make it a dictionary."""
+
+    def test(value: S) -> B:
+        return not value.startswith(LOW_LINE)
+
     _dictionary = _dictionary_items(_module)
-    mapping = {
-        key: value
-        for key, value in _dictionary
-        if not key.startswith(LOW_LINE)
-    }
+    mapping = {key: value for key, value in _dictionary if test(key)}
     return mapping
 
 
@@ -183,19 +183,21 @@ def decorators(_module: M, name: S) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
     _dictionary = _dictionary_items(_module)
     text = string(FUNCTION, name, FULL_STOP)
-    iterable = {
-        key: value for key, value in _dictionary if text in repr(value)
-    }
+
+    def test(value: S) -> B:
+        return text in repr(value)
+
+    iterable = {key: value for key, value in _dictionary if test(value)}
     return iterable
 
 
 ########
 
 
-def function_page(module: M) -> LS:
+def function_page(_module: M) -> LS:
     """Load from module all functions and turn them into dictionary."""
-    dictionary = functions(module)
-    iterable = [key for key, _ in dictionary.items()]
+    _dictionary = functions(_module)
+    iterable = [key for key, _ in _dictionary.items()]
     return iterable
 
 
@@ -331,7 +333,6 @@ def argument(*path: S) -> LS:
 
 def asset(file: S) -> P:
     """"""
-    # TODO: check if other path witchcraft needs replacing with this:
     data = "celestine.data"
     item = importlib.resources.files(data).joinpath(file)
     return item

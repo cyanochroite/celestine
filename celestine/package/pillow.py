@@ -128,10 +128,8 @@ class Image:
         kmeans = 0
         palette = None
         dither = self.package.Image.Dither.FLOYDSTEINBERG
-
-        self.image = self.image.quantize(
-            colors, method, kmeans, palette, dither
-        )
+        quantize = self.image.quantize
+        self.image = quantize(colors, method, kmeans, palette, dither)
 
     def __init__(self, image: IMAGE, package: A, **star: R):
         self.image = image

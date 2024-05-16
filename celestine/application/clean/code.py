@@ -26,7 +26,6 @@ from celestine.typed import (
 
 PACKAGE = "package"
 
-
 array = [
     (
         [

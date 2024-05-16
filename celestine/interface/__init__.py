@@ -109,6 +109,7 @@ class Abstract(Object):
         self.item = None
 
         self.star = star
+
         # Contains all remaining keyword arguments.
 
         def warp(name: S, default: S = NONE) -> N:
@@ -140,7 +141,7 @@ class Element(Abstract):
     def make(self, canvas: A, **star: R) -> N:
         """"""
         size = self.area.world.size.value
-        blender_mode = True
+        blender_mode = False
         if pillow and not blender_mode:
             self.image = pillow.new(size)
         else:
