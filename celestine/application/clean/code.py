@@ -16,6 +16,7 @@ from celestine.package import (
     autoflake,
     black,
     isort,
+    pydocstringformatter,
     pyupgrade,
 )
 from celestine.typed import (
@@ -88,11 +89,11 @@ def run(name: S) -> N:
 def clean(**star: R) -> B:
     """"""
     pyupgrade.run()
-    # TODO figure out why this print instead of fixes
-    # pydocstringformatter.run()
+    pydocstringformatter.run()
     autoflake.run()
     isort.run()
     black.run()
+    return True
 
 
 @code
@@ -111,6 +112,7 @@ def licence(**star: R) -> B:
         with stream.text.writer(file) as document:
             for line in string.getvalue():
                 document.write(line)
+    return True
 
 
 @code
@@ -153,3 +155,4 @@ def version(**star: R) -> B:
             text = regex.replace(pattern, repl, text)
 
         stream.text.save(text, file)
+    return True

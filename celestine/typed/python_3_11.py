@@ -68,10 +68,15 @@ LZ: TA = L[Z]
 LP: TA = L[P]
 LS: TA = L[S]
 
+FN: TA = C[[N], N]
+FB: TA = C[[N], B]
+FF: TA = C[[N], F]
+FZ: TA = C[[N], Z]
+FP: TA = C[[N], P]
+FS: TA = C[[N], S]
 
 PATH: TA = P | S
 
-FN: TA = C[[N], N]
 AXIS: TA = G[T[Z, Z], N, N]
 FILE: TA = typing.IO[A]
 AT: TA = D[S, A]

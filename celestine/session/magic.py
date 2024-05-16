@@ -32,7 +32,10 @@ from .parser import parser as make_parser
 
 
 class SessionParse:
-    """Typing info only. Reflecting Session from Session"""
+    """Typing info only.
+
+    Reflecting Session from Session
+    """
 
     main: S
 

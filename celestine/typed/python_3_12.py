@@ -74,6 +74,13 @@ type LZ = L[Z]
 type LP = L[P]
 type LS = L[S]
 
+type FN = C[[N], N]
+type FB = C[[N], B]
+type FF = C[[N], F]
+type FZ = C[[N], Z]
+type FP = C[[N], P]
+type FS = C[[N], S]
+
 type PATH = P | S
 
 type FN = C[[N], N]

@@ -40,8 +40,8 @@ def set_lang():
 
 def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> A:
     """
-
     First load Language so human can read errors.
+
     Then load Interface so human see errors the way they want.
     """
 

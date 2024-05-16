@@ -3,11 +3,14 @@
 from celestine import load
 from celestine.package import Abstract
 from celestine.typed import (
+    FN,
     LS,
     M,
     N,
     S,
 )
+
+run: FN
 
 
 class Package(Abstract):

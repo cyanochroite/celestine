@@ -3,6 +3,7 @@
 import importlib
 import sys
 import typing
+from typing import TypeAlias as TA
 
 _version = sys.version.split(".")
 _major = _version[0]
@@ -11,7 +12,7 @@ _name = f"celestine.typed.python_{_major}_{_minor}"
 _module = importlib.import_module(_name)
 
 A = _module.A
-B = _module.B
+# B = _module.B
 C = _module.C
 D = _module.D
 E = _module.E
@@ -56,6 +57,11 @@ LZ = _module.LZ
 LP = _module.LP
 LS = _module.LS
 
+FB = _module.FB
+FF = _module.FF
+FZ = _module.FZ
+FP = _module.FP
+FS = _module.FS
 
 PATH = _module.PATH
 
@@ -79,3 +85,5 @@ MS = _module.MS
 ignore = _module.ignore
 override = _module.override
 string = _module.string
+
+B: TA = bool

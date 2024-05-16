@@ -27,6 +27,7 @@ def cow(*, say: S, **star: R) -> B:
     """"""
     talk = language.DEMO_COW_TALK
     print(talk, say)
+    return True
 
 
 @code
@@ -37,6 +38,7 @@ def dog(**star: R) -> B:
         item.show()
     else:
         item.hide()
+    return True
 
 
 @code
@@ -47,6 +49,7 @@ def cat(**star: R) -> B:
         item.show()
     else:
         item.hide()
+    return True
 
 
 @scene(True)
