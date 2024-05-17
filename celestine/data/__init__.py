@@ -13,22 +13,19 @@ from celestine.typed import (
 class Code(Protocol):
     """Type for code functions."""
 
-    def __call__(self, **star: R) -> B:
-        ...
+    def __call__(self, **star: R) -> B: ...
 
 
 class Scene(Protocol):
     """Type for code functions."""
 
-    def __call__(self, view: View) -> N:
-        ...
+    def __call__(self, view: View) -> N: ...
 
 
 class SuperScene(Protocol):
     """Type for code functions."""
 
-    def __call__(self, function: Scene) -> Scene:
-        ...
+    def __call__(self, function: Scene) -> Scene: ...
 
 
 def code(function: Code) -> Code:
@@ -40,7 +37,7 @@ def code(function: Code) -> Code:
     return decorator
 
 
-def scene(main: B | Scene = False) -> Scene | SuperScene:
+def scene(main: B) -> SuperScene:
     """"""
 
     def primary(function: Scene) -> Scene:
@@ -58,8 +55,5 @@ def scene(main: B | Scene = False) -> Scene | SuperScene:
             return function(view)
 
         return decorator
-
-    if not isinstance(main, B):
-        return secondary(main)
 
     return primary if main else secondary

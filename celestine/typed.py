@@ -10,19 +10,28 @@ import collections.abc
 import io
 import lzma
 import pathlib
+import sys
 import types
 import typing
-from typing import Generator as G
-from typing import Sequence
+from collections.abc import Callable as C
+from collections.abc import Generator as G
+from collections.abc import Sequence
 from importlib.machinery import ModuleSpec
 from typing import Dict as D
 from typing import List as L
 from typing import Optional as OPT
-from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TYPE
 from typing import TypeAlias as TA
-from typing import Callable as C
+
+_version = sys.version.split(".")
+_major = _version[0]
+_minor = _version[1]
+
+if _major == "3" and _minor == "10":
+    K: TA = typing.Any  # Python 3.10 fix.
+else:
+    from typing import Self as K
 
 A: TA = typing.Any
 B: TA = bool

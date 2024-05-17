@@ -6,7 +6,7 @@ from celestine.interface import View
 from celestine.typed import N
 
 
-@scene
+@scene(True)
 def main(view: View) -> N:
     """"""
     with view.span("main_head") as line:
