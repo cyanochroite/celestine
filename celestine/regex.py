@@ -15,14 +15,3 @@ def replace(pattern: S, repl: S, string: S) -> S:
     flags = 0
     result: S = re.sub(pattern, repl, string, count, flags)
     return result
-
-
-def first(pattern: S, string: S) -> S:
-    """"""
-    match = re.search(pattern, string, flags=0)
-    if match:
-        try:
-            return match[1]
-        except IndexError:
-            pass
-    return NONE

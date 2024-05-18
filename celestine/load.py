@@ -5,6 +5,7 @@ import importlib.resources
 import os
 import pathlib
 import sys
+import re
 
 from celestine.literal import (
     CELESTINE,
@@ -22,6 +23,8 @@ from celestine.typed import (
     GP,
     LP,
     LS,
+
+    C,
     A,
     B,
     D,
@@ -179,7 +182,7 @@ def dictionary(_module: M) -> D[S, FN]:
     return mapping
 
 
-def decorators(_module: M, name: S) -> D[S, FN]:
+def decorators2(_module: M, name: S) -> D[S, FN]:
     """Load from module all functions and turn them into dictionary."""
     _dictionary = _dictionary_items(_module)
     text = string(FUNCTION, name, FULL_STOP)
@@ -189,6 +192,36 @@ def decorators(_module: M, name: S) -> D[S, FN]:
 
     iterable = {key: value for key, value in _dictionary if test(value)}
     return iterable
+
+
+def decorators(*path: S) -> D[S, D[S, C]]:
+    """Load all decorated functions from all modules found in path."""
+
+    _dictionary: D[S, D[S, C]] = {}
+
+    pattern = re.compile(r"<function (\w*)\.")
+
+    for module in modules(*path):
+        items = vars(module).items()
+
+        for key, value in items:
+            _string = repr(value)
+            match = pattern.search(_string)
+
+            if not match:
+                continue
+
+            try:
+                name = match[1]
+            except IndexError:
+                continue
+
+            if not _dictionary.get(name):
+                _dictionary[name] = {}
+
+            _dictionary[name][key] = value
+
+    return _dictionary
 
 
 ########

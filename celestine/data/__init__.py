@@ -16,16 +16,10 @@ class Code(Protocol):
     def __call__(self, **star: R) -> B: ...
 
 
-class Scene(Protocol):
+class Draw(Protocol):
     """Type for code functions."""
 
     def __call__(self, view: View) -> N: ...
-
-
-class SuperScene(Protocol):
-    """Type for code functions."""
-
-    def __call__(self, function: Scene) -> Scene: ...
 
 
 def call(function: Code) -> Code:
@@ -37,32 +31,19 @@ def call(function: Code) -> Code:
     return decorator
 
 
-def main(function: Code) -> Code:
+def draw(function: Draw) -> Draw:
     """"""
 
-    def decorator(**star: R) -> B:
-        return function(**star)
+    def decorator(view: View) -> N:
+        return function(view)
 
     return decorator
 
 
-def draw(main: B) -> SuperScene:
+def main(function: Draw) -> Draw:
     """"""
 
-    def primary(function: Scene) -> Scene:
-        """"""
+    def decorator(view: View) -> N:
+        return function(view)
 
-        def decorator(view: View) -> N:
-            return function(view)
-
-        return decorator
-
-    def secondary(function: Scene) -> Scene:
-        """"""
-
-        def decorator(view: View) -> N:
-            return function(view)
-
-        return decorator
-
-    return primary if main else secondary
+    return decorator

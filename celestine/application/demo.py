@@ -49,7 +49,7 @@ def cat(**star: R) -> B:
     return True
 
 
-@draw(True)
+@main
 def zero(view: View) -> N:
     """"""
     with view.span("zero_head") as line:

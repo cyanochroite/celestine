@@ -109,49 +109,22 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
         **star,
     )
 
-    code: D[S, C] = {}
-    view: D[S, C] = {}
-
-    decorators: D[S, D[S, C]] = {}
-
-    pattern = re.compile(r"<function (\w*)\.")
-
-    for module in load.modules(APPLICATION, application):
-        items = vars(module).items()
-        for key, value in items:
-            string = repr(value)
-            match = pattern.search(string)
-
-            if not match:
-                continue
-
-            try:
-                name = match[1]
-            except IndexError:
-                continue
-
-            if not decorators.get(name):
-                decorators[name] = {}
-
-            decorators[name][key] = value
-
-    print(decorators)
-    for module in load.modules(APPLICATION, application):
-        code |= load.decorators(module, "call")
-        view |= load.decorators(module, "draw")
+    decorators = load.decorators(APPLICATION, application)
+    call = decorators.get("call", {})
+    draw = decorators.get("draw", {})
+    main = decorators.get("main", {})
+    draw |= main
 
     with window:
-        for key, value in view.items():
-            if "primary" in repr(value):
-                window.main = key
-                break
-        else:
-            window.main = next(iter(view))
+        try:
+            window.main = next(iter(main or draw))
+        except StopIteration as error:
+            raise Warning("There is nothing to draw.") from error
 
-        for name, function in code.items():
+        for name, function in call.items():
             window.code[name] = function
 
-        for name, function in view.items():
+        for name, function in draw.items():
             view = window.drop(name)
             function(view)
             window.view[name] = view
