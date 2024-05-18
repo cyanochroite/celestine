@@ -8,7 +8,7 @@ import requests
 
 from celestine import language
 from celestine.data import (
-    code,
+    call,
     main,
 )
 from celestine.interface import View
@@ -87,7 +87,7 @@ def generate(hold: H, prompt: str):
     return image
 
 
-@code
+@call
 def draw(hold: H, *, prompt: S, **star: R) -> B:
     """"""
     image = generate(hold, prompt)

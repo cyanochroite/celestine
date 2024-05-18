@@ -9,7 +9,7 @@ from celestine import (
     stream,
 )
 from celestine.data import (
-    code,
+    call,
     normalize,
 )
 from celestine.package import (
@@ -85,7 +85,7 @@ def run(name: S) -> N:
     linter.run()
 
 
-@code
+@call
 def clean(**star: R) -> B:
     """"""
     pyupgrade.run()
@@ -96,7 +96,7 @@ def clean(**star: R) -> B:
     return True
 
 
-@code
+@call
 def licence(**star: R) -> B:
     """"""
     location = load.pathway("licence")
@@ -115,7 +115,7 @@ def licence(**star: R) -> B:
     return True
 
 
-@code
+@call
 def version(**star: R) -> B:
     """"""
     date = datetime.datetime.now(datetime.UTC)

@@ -65,6 +65,7 @@ GF: TA = G[F, N, N]
 GZ: TA = G[Z, N, N]
 GP: TA = G[P, N, N]
 GS: TA = G[S, N, N]
+GM: TA = G[M, N, N]
 
 OB: TA = OPT[B]
 OF: TA = OPT[F]

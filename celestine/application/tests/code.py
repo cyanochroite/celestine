@@ -5,7 +5,7 @@ import unittest
 from celestine import load
 from celestine.data import (
     CELESTINE,
-    code,
+    call,
 )
 from celestine.data.directory import APPLICATION
 from celestine.typed import (
@@ -20,7 +20,7 @@ from .data import (
 )
 
 
-@code
+@call
 def main(hold: H, **star: R) -> B:
     """Run the unittest library."""
     module = load.module(APPLICATION, TESTS)

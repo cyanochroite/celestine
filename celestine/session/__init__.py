@@ -5,6 +5,7 @@ import importlib
 from celestine import (
     bank,
     load,
+    regex,
 )
 from celestine.literal import (
     APPLICATION,
@@ -110,9 +111,19 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     code: D[S, C] = {}
     view: D[S, C] = {}
 
+    pattern = r"<function \w*\."
     for module in load.modules(APPLICATION, application):
-        code |= load.decorators(module, "code")
-        view |= load.decorators(module, "scene")
+        # code |= load.decorators(module, "code")
+        # view |= load.decorators(module, "scene")
+        items = vars(module).items()
+        for key, value in items:
+            string = repr(value)
+            if regex.contains(pattern, string):
+                print(key, value)
+
+    for module in load.modules(APPLICATION, application):
+        code |= load.decorators(module, "call")
+        view |= load.decorators(module, "draw")
 
     with window:
         for key, value in view.items():

@@ -1,12 +1,12 @@
 """"""
 
 from celestine import language
-from celestine.data import scene
+from celestine.data import draw
 from celestine.interface import View
 from celestine.typed import N
 
 
-@scene(True)
+@draw(True)
 def main(view: View) -> N:
     """"""
     with view.span("main_head") as line:

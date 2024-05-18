@@ -1,12 +1,12 @@
 """The View page."""
 
 from celestine import language
-from celestine.data import scene
+from celestine.data import draw
 from celestine.interface import View
 from celestine.typed import N
 
 
-@scene(True)
+@draw(True)
 def main(view: View) -> N:
     """"""
     with view.zone("main") as line:
@@ -18,7 +18,7 @@ def main(view: View) -> N:
 
 
 # TODO: Add report functionality back in, and make it better.
-@scene
+@draw
 def report(view: View) -> N:
     """"""
     with view.zone("head") as line:

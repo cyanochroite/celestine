@@ -28,7 +28,7 @@ class SuperScene(Protocol):
     def __call__(self, function: Scene) -> Scene: ...
 
 
-def code(function: Code) -> Code:
+def call(function: Code) -> Code:
     """"""
 
     def decorator(**star: R) -> B:
@@ -37,7 +37,7 @@ def code(function: Code) -> Code:
     return decorator
 
 
-def scene(main: B) -> SuperScene:
+def draw(main: B) -> SuperScene:
     """"""
 
     def primary(function: Scene) -> Scene:

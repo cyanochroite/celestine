@@ -4,10 +4,9 @@ from celestine import (
     bank,
     language,
 )
-from celestine.data import (
-    code,
-    scene,
-)
+from celestine.data import call
+from celestine.data import draw
+from celestine.data import draw as pig
 from celestine.interface import View
 from celestine.session.session import SuperSession
 from celestine.typed import (
@@ -22,7 +21,7 @@ class Session(SuperSession):
     """"""
 
 
-@code
+@call
 def cow(*, say: S, **star: R) -> B:
     """"""
     talk = language.DEMO_COW_TALK
@@ -30,7 +29,7 @@ def cow(*, say: S, **star: R) -> B:
     return True
 
 
-@code
+@call
 def dog(**star: R) -> B:
     """"""
     item = bank.window.find("zero_title")
@@ -41,7 +40,7 @@ def dog(**star: R) -> B:
     return True
 
 
-@code
+@call
 def cat(**star: R) -> B:
     """"""
     item = bank.window.find("zero_body")
@@ -52,7 +51,7 @@ def cat(**star: R) -> B:
     return True
 
 
-@scene(True)
+@draw(True)
 def zero(view: View) -> N:
     """"""
     with view.span("zero_head") as line:
@@ -95,7 +94,7 @@ def zero(view: View) -> N:
         )
 
 
-@scene
+@draw
 def one(view: View) -> N:
     """"""
     with view.span("one_head") as line:
@@ -122,7 +121,7 @@ def one(view: View) -> N:
         )
 
 
-@scene
+@pig
 def two(view: View) -> N:
     """"""
     with view.span("two_head") as line:

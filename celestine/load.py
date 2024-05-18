@@ -18,6 +18,7 @@ from celestine.literal import (
 )
 from celestine.typed import (
     FN,
+    GM,
     GP,
     LP,
     LS,
@@ -25,7 +26,6 @@ from celestine.typed import (
     B,
     D,
     G,
-    L,
     M,
     N,
     P,
@@ -58,9 +58,9 @@ def module(*path: S) -> M:
     return package(CELESTINE, *path)
 
 
-def modules(*path: S) -> M:
+def modules(*path: S) -> GM:
     """Load an internal module from anywhere in the application."""
-    return packages(CELESTINE, *path)
+    yield from packages(CELESTINE, *path)
 
 
 def package(base: S, *path: S) -> M:
@@ -71,7 +71,7 @@ def package(base: S, *path: S) -> M:
     return result
 
 
-def packages(base: S, *path: S) -> L[M]:
+def packages(base: S, *path: S) -> GM:
     """Load an external package from the system path."""
     find = importlib.import_module(base)
     spec = find.__spec__
@@ -151,7 +151,7 @@ def package_dependency(name: S, fail: M) -> M:
 # Dictionary stuff
 
 
-def _dictionary_items(_module: M) -> T[S, FN]:
+def _dictionary_items(_module: M) -> T[S, A]:
     _dictionary: D[S, A] = vars(_module)
     _items = _dictionary.items()
     return _items
@@ -210,7 +210,7 @@ def walk(*path: S) -> G[T[S, LS, LS], N, N]:
     topdown = True
     onerror = None
     followlinks = False
-    return os.walk(top, topdown, onerror, followlinks)
+    yield from os.walk(top, topdown, onerror, followlinks)
 
 
 def walk_file(top: P, include: LS, exclude: LS) -> GP:

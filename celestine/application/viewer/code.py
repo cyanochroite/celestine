@@ -4,7 +4,7 @@ from celestine import (
     bank,
     load,
 )
-from celestine.data import code
+from celestine.data import call
 from celestine.typed import (
     LP,
     LS,
@@ -24,7 +24,7 @@ def find_image(directory: P) -> LP:
     return files
 
 
-@code
+@call
 def setup(**star: R) -> B:
     """"""
     window = bank.window.page
@@ -41,7 +41,7 @@ def setup(**star: R) -> B:
         pass
 
 
-@code
+@call
 def see(caller: S, **star: R) -> B:
     """"""
     window = bank.window
