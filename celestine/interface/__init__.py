@@ -490,12 +490,8 @@ class Window(Tree):
         return self
 
     def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
-        if exc_type:
-            raise exc_type
-        if exc_value:
-            raise exc_value
-        if traceback:
-            raise traceback
+        if exc_type or exc_value or traceback:
+            print(exc_type, exc_value, traceback)
 
         self.spot(self.area)
         self.make()

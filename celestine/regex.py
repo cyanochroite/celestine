@@ -2,11 +2,7 @@
 
 import re
 
-from celestine.typed import (
-    B,
-    S,
-)
-from celestine.literal import NONE
+from celestine.typed import S
 
 
 def replace(pattern: S, repl: S, string: S) -> S:

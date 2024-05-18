@@ -16,7 +16,7 @@ def picture(view: View) -> N:
     view.element("photo", fit=Image.FILL, goto="display")
 
 
-@draw(True)
+@draw
 def main(view: View) -> N:
     """"""
     view.button(

@@ -4,7 +4,11 @@ from celestine import (
     bank,
     language,
 )
-from celestine.data import call, draw, main
+from celestine.data import (
+    call,
+    draw,
+    main,
+)
 from celestine.interface import View
 from celestine.session.session import SuperSession
 from celestine.typed import (

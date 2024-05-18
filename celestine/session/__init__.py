@@ -1,12 +1,10 @@
 """"""
 
 import importlib
-import re
 
 from celestine import (
     bank,
     load,
-    regex,
 )
 from celestine.literal import (
     APPLICATION,
@@ -19,8 +17,6 @@ from celestine.typed import (
     LS,
     A,
     B,
-    C,
-    D,
     N,
     R,
     S,
@@ -115,11 +111,25 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     main = decorators.get("main", {})
     draw |= main
 
-    with window:
+    def find_main() -> S:
+        """Finds @main or 'def main' or any @draw."""
         try:
-            window.main = next(iter(main or draw))
-        except StopIteration as error:
-            raise Warning("There is nothing to draw.") from error
+            return next(iter(main))
+        except StopIteration:
+            pass
+
+        if draw.get("main"):
+            return "main"
+
+        try:
+            return next(iter(draw))
+        except StopIteration:
+            pass
+
+        raise Warning("There is nothing to draw.")
+
+    with window:
+        window.main = find_main()
 
         for name, function in call.items():
             window.code[name] = function

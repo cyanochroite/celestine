@@ -6,7 +6,7 @@ from celestine.interface import View
 from celestine.typed import N
 
 
-@draw(True)
+@draw
 def main(view: View) -> N:
     """"""
     with view.zone("main") as line:

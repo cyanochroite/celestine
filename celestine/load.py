@@ -4,8 +4,8 @@ import importlib
 import importlib.resources
 import os
 import pathlib
-import sys
 import re
+import sys
 
 from celestine.literal import (
     CELESTINE,
@@ -23,10 +23,9 @@ from celestine.typed import (
     GP,
     LP,
     LS,
-
-    C,
     A,
     B,
+    C,
     D,
     G,
     M,
