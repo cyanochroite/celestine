@@ -37,6 +37,15 @@ def call(function: Code) -> Code:
     return decorator
 
 
+def main(function: Code) -> Code:
+    """"""
+
+    def decorator(**star: R) -> B:
+        return function(**star)
+
+    return decorator
+
+
 def draw(main: B) -> SuperScene:
     """"""
 

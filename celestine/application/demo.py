@@ -4,9 +4,7 @@ from celestine import (
     bank,
     language,
 )
-from celestine.data import call
-from celestine.data import draw
-from celestine.data import draw as pig
+from celestine.data import call, draw, main
 from celestine.interface import View
 from celestine.session.session import SuperSession
 from celestine.typed import (
@@ -121,7 +119,7 @@ def one(view: View) -> N:
         )
 
 
-@pig
+@draw
 def two(view: View) -> N:
     """"""
     with view.span("two_head") as line:

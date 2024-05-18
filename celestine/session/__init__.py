@@ -1,6 +1,7 @@
 """"""
 
 import importlib
+import re
 
 from celestine import (
     bank,
@@ -111,16 +112,30 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     code: D[S, C] = {}
     view: D[S, C] = {}
 
-    pattern = r"<function \w*\."
+    decorators: D[S, D[S, C]] = {}
+
+    pattern = re.compile(r"<function (\w*)\.")
+
     for module in load.modules(APPLICATION, application):
-        # code |= load.decorators(module, "code")
-        # view |= load.decorators(module, "scene")
         items = vars(module).items()
         for key, value in items:
             string = repr(value)
-            if regex.contains(pattern, string):
-                print(key, value)
+            match = pattern.search(string)
 
+            if not match:
+                continue
+
+            try:
+                name = match[1]
+            except IndexError:
+                continue
+
+            if not decorators.get(name):
+                decorators[name] = {}
+
+            decorators[name][key] = value
+
+    print(decorators)
     for module in load.modules(APPLICATION, application):
         code |= load.decorators(module, "call")
         view |= load.decorators(module, "draw")

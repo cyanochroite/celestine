@@ -6,6 +6,7 @@ from celestine.typed import (
     B,
     S,
 )
+from celestine.literal import NONE
 
 
 def replace(pattern: S, repl: S, string: S) -> S:
@@ -16,8 +17,12 @@ def replace(pattern: S, repl: S, string: S) -> S:
     return result
 
 
-def contains(pattern: S, string: S) -> B:
+def first(pattern: S, string: S) -> S:
     """"""
     match = re.search(pattern, string, flags=0)
-    result = bool(match)
-    return result
+    if match:
+        try:
+            return match[1]
+        except IndexError:
+            pass
+    return NONE
