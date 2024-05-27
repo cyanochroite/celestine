@@ -1,26 +1,18 @@
 """"""
 
-import typing
-import pathlib
-import os
-
-import io
-import importlib
-import os
-import sys
-import pathlib
 import hashlib
+import os
+import pathlib
 
-from celestine import (
-    bank,
-    language,
-)
+from celestine import language
 from celestine.data import (
     call,
     draw,
 )
 from celestine.interface import View
+from celestine.literal import NONE
 from celestine.session.session import SuperSession
+from celestine.stream import Binary
 from celestine.typed import (
     B,
     N,
@@ -28,7 +20,6 @@ from celestine.typed import (
     S,
     Z,
 )
-from celestine.stream import Binary
 
 BRAILLE_PATTERNS = 0x2800
 
@@ -51,13 +42,17 @@ def decode(string: S) -> Z:
     return binary
 
 
-def encode2(data):
-    items = data
-    for item in items:
-        print(item)
+def encoder(binary: bytes) -> S:
+    """"""
+    return NONE.join(map(encode, binary))
 
 
-@ call
+def decoder(string: S) -> bytes:
+    """"""
+    return bytes(map(decode, string))
+
+
+@call
 def list_files(**star: R) -> B:
     """"""
     path = pathlib.Path("D:/test")
@@ -68,7 +63,7 @@ def list_files(**star: R) -> B:
     return True
 
 
-@ call
+@call
 def braille_patterns(**star: R) -> B:
     """"""
     for index in range(256):
@@ -76,19 +71,21 @@ def braille_patterns(**star: R) -> B:
     return True
 
 
-@ call
+@call
 def run(**star: R) -> B:
     """"""
     root = pathlib.Path("D:/test/")
     binary = Binary(root)
     path = pathlib.Path(root, "test0.jpg")
     with binary.reader(path) as file:
-        for line in file:
-            encode2(line)
+        digest = hashlib.file_digest(file, hashlib.sha384)
+        cat = encoder(digest.digest())
+        print(cat)
+
     return True
 
 
-@ draw
+@draw
 def main(view: View) -> N:
     """"""
     with view.span("main_head") as line:

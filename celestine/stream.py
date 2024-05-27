@@ -1,7 +1,7 @@
 """Central place for loading and importing external files."""
 
-import enum
 import abc
+import enum
 import lzma
 import os
 import pathlib
