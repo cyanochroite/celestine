@@ -5,23 +5,25 @@ import enum
 import lzma
 import os
 import pathlib
+from typing import (
+    IO,
+    TextIO,
+)
 
 from celestine import load
 from celestine.typed import (
-    IO,
-    PATH,
     TA,
     A,
     B,
     N,
     P,
     S,
-    TextIO,
     override,
 )
 
 FILE: TA = IO[A]
 LZMA: TA = lzma.LZMAFile | TextIO
+PATH: TA = P | S
 
 MAXIMUM_LINE_LENGTH = 72
 SECTION_BREAK = "######################################################\

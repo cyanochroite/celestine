@@ -2,6 +2,7 @@
 
 import argparse
 import io
+from typing import Type as TYPE
 
 from celestine.literal import (
     APOSTROPHE,
@@ -16,7 +17,6 @@ from celestine.literal import (
     SPACE,
 )
 from celestine.typed import (
-    TYPE,
     B,
     M,
 )

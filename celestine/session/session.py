@@ -1,5 +1,7 @@
 """"""
 
+import collections.abc
+
 from celestine import (
     bank,
     language,
@@ -26,13 +28,17 @@ from celestine.session.data import (
     Values,
 )
 from celestine.typed import (
-    AI,
     DA,
+    TA,
+    A,
     M,
     S,
+    T,
 )
 
 from . import default
+
+AI: TA = collections.abc.Iterable[T[S, A]]
 
 
 class SuperSession:

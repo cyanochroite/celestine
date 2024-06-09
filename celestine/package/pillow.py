@@ -5,9 +5,9 @@ import random
 from celestine import load
 from celestine.package import Abstract
 from celestine.typed import (
-    IMAGE,
     LS,
     LZ,
+    TA,
     A,
     K,
     N,
@@ -22,6 +22,7 @@ from celestine.window.collection import (
     Point,
 )
 
+IMAGE: TA = A
 extension: LS
 open: A  # pylint: disable=redefined-builtin
 ImageTk: A
@@ -43,7 +44,7 @@ class Image:
         Make image bright.
         """
 
-        def brighter(pixel: I) -> I:
+        def brighter(pixel: Z) -> Z:
             invert = (255 - pixel) / 255
             boost = invert * 64
             shift = pixel + boost
