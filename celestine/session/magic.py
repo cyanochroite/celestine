@@ -18,10 +18,12 @@ from celestine.session.argument import (
 )
 from celestine.session.data import Values
 from celestine.typed import (
-    AD,
-    APD,
+    DA,
     LS,
+    TA,
+    A,
     B,
+    D,
     L,
     N,
     S,
@@ -40,7 +42,7 @@ class SessionParse:
     main: S
 
     @classmethod
-    def dictionary(cls) -> AD:
+    def dictionary(cls) -> DA:
         """"""
         return {}
 
@@ -51,6 +53,7 @@ TRANSLATE_THIS = "unrecognized arguments"
 
 # ADI: typing.TypeAlias = typing.Iterable[typing.Tuple[str, Argument]]
 # APD: TA = D[U[Argument, T[Argument]], U[AP, AG]]
+APD: TA = D[A, A]
 
 
 class Magic:

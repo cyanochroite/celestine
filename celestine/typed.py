@@ -8,7 +8,6 @@ Generator[YieldType, SendType, ReturnType]
 
 import collections.abc
 import io
-import lzma
 import pathlib
 import sys
 import types
@@ -20,6 +19,9 @@ from importlib.machinery import ModuleSpec
 from typing import Dict as D
 from typing import List as L
 from typing import Literal
+
+from typing import TextIO
+from typing import IO
 from typing import Optional as V  # Void.
 from typing import Tuple as T
 from typing import Type as TYPE
@@ -59,17 +61,7 @@ S: TA = str
 # W: TA = typing.Any  # Unused
 # X: TA = typing.Any  # Unused
 # Y: TA = typing.Any  # Unused
-Z: TA = int
-
-# E: TA = typing.Any
-# H: TA = typing.Any  # Unused
-# Q: TA = typing.Any  # Unused
-# R: TA = typing.Any  # Unused
-# U: TA = typing.Any  # Unused
-# V: TA = typing.Any  # Unused
-# W: TA = typing.Any  # Unused
-# X: TA = typing.Any  # Unused
-# Y: TA = typing.Any  # Unused
+Z: TA = int  # Set of Integers Symbol ℤ.
 
 
 BF: Literal[False]
@@ -77,6 +69,7 @@ BT: Literal[True]
 
 CN: TA = C[[N], N]
 
+DA: TA = D[S, A]
 DB: TA = D[S, B]
 DF: TA = D[S, F]
 DM: TA = D[S, M]
@@ -84,6 +77,7 @@ DP: TA = D[S, P]
 DS: TA = D[S, S]
 DZ: TA = D[S, Z]
 
+GA: TA = G[A, N, N]
 GB: TA = G[B, N, N]
 GF: TA = G[F, N, N]
 GM: TA = G[M, N, N]
@@ -91,6 +85,7 @@ GP: TA = G[P, N, N]
 GS: TA = G[S, N, N]
 GZ: TA = G[Z, N, N]
 
+LA: TA = L[A]
 LB: TA = L[B]
 LF: TA = L[F]
 LM: TA = L[M]
@@ -98,6 +93,7 @@ LP: TA = L[P]
 LS: TA = L[S]
 LZ: TA = L[Z]
 
+VA: TA = V[A]
 VB: TA = V[B]
 VF: TA = V[F]
 VM: TA = V[M]
@@ -108,16 +104,8 @@ VZ: TA = V[Z]
 
 PATH: TA = P | S
 
-AXIS: TA = G[T[Z, Z], N, N]
-FILE: TA = typing.IO[A]
-AT: TA = D[S, A]
-# TYPE: TA = typing.Type
+
 IMAGE: TA = A
-APD: TA = D[A, A]
-LZMA: TA = lzma.LZMAFile | typing.TextIO
-TABLE: TA = D[S, S]
-BOX: TA = T[Z, Z, Z, Z]
-PAIR: TA = T[Z, Z]
 AD: TA = D[S, A]
 AI: TA = collections.abc.Iterable[T[S, A]]
 
@@ -126,16 +114,17 @@ MS: TA = ModuleSpec | N
 
 
 def ignore(_: A) -> N:
-    """"""
+    """An empty function used to hide unused variable warnings."""
 
 
 def override(function: A) -> A:
-    """"""
+    """Used so earlier Python wont fail when using @override."""
+    # TODO: Remove this once we drop Python 3.11.
     return function
 
 
 def string(*characters: S) -> S:
-    """"""
+    """A simple utility for joining together a series of strings."""
     buffer = io.StringIO()
     for character in characters:
         buffer.write(character)
@@ -144,28 +133,34 @@ def string(*characters: S) -> S:
 
 
 class Star(typing.TypedDict):
+    """The global Star object."""
+
+
+class _Fix:
     """"""
 
-
-class Fix:
-    """"""
-
-    def override(self) -> N:
+    def _override(self) -> N:
         """"""
 
 
-class ImportNotUsed(Fix):
+class _ImportNotUsed(_Fix):
     """"""
 
+    def _text_input_output(self, var: TextIO) -> N:
+        print(var)
+
+    def _input_output(self, var: IO) -> N:
+        print(var)
+
     @override
-    def override(self) -> N:
+    def _override(self) -> N:
         print(override)
 
-    def self(self) -> K:
+    def _self(self) -> K:
         """"""
         return self
 
     @staticmethod
-    def type_() -> TYPE[int]:
+    def _type() -> TYPE[int]:
         """"""
         return int

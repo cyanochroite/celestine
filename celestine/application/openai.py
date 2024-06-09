@@ -14,11 +14,9 @@ from celestine.data import (
 from celestine.interface import View
 from celestine.literal import NONE
 from celestine.session.argument import Optional
-from celestine.session.session import (
-    AD,
-    SuperSession,
-)
+from celestine.session.session import SuperSession
 from celestine.typed import (
+    DA,
     B,
     H,
     N,
@@ -36,7 +34,7 @@ class Session(SuperSession):
     directory: S
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls, core) -> DA:
         """"""
         return {
             KEY: Optional(

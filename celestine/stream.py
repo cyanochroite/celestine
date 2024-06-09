@@ -8,22 +8,24 @@ import pathlib
 
 from celestine import load
 from celestine.typed import (
-    FILE,
-    LZMA,
+    IO,
     PATH,
+    TA,
+    A,
     B,
     N,
     P,
     S,
+    TextIO,
     override,
 )
+
+FILE: TA = IO[A]
+LZMA: TA = lzma.LZMAFile | TextIO
 
 MAXIMUM_LINE_LENGTH = 72
 SECTION_BREAK = "######################################################\
 ##################"
-
-
-"""Central place for loading and importing external files."""
 
 
 class Buffering(enum.IntEnum):

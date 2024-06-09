@@ -3,11 +3,11 @@
 from celestine import language
 from celestine.literal import NONE
 from celestine.session.argument import Optional
-from celestine.session.session import (
-    AD,
-    SuperSession,
+from celestine.session.session import SuperSession
+from celestine.typed import (
+    DA,
+    S,
 )
-from celestine.typed import S
 
 from .data import (
     KEY,
@@ -22,7 +22,7 @@ class Session(SuperSession):
     directory: S
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls, core) -> DA:
         """"""
         return {
             KEY: Optional(
