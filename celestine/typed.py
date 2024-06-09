@@ -59,7 +59,6 @@ S: TA = str
 # Y: TA = typing.Any  # Unused
 Z: TA = int  # Set of Integers Symbol ℤ.
 
-
 BF: TA = Literal[False]
 BT: TA = Literal[True]
 
