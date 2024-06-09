@@ -40,6 +40,8 @@ def setup(**star: R) -> B:
     except StopIteration:
         pass
 
+    return True
+
 
 @call
 def see(caller: S, **star: R) -> B:
@@ -48,3 +50,4 @@ def see(caller: S, **star: R) -> B:
     source = window.find(caller)
     destination = window.find("photo")
     destination.update(source.path)
+    return True

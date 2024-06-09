@@ -9,6 +9,7 @@ from celestine.typed import (
     LS,
     A,
     B,
+    BF,
     D,
     K,
     N,
@@ -300,7 +301,7 @@ class View(Abstract, Tree):
     def __enter__(self) -> K:
         return self
 
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
         if exc_type or exc_value or traceback:
             print("ERROR", exc_type, exc_value, traceback)
         return False

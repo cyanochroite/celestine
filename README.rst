@@ -30,6 +30,25 @@ However, you can install additional packages for extended functionality.
 This has also been designed to run as a `Blender Add-on`_!
 Note that Blender is an isolated environment, so other packages can not be used with it.
 
+Project Update
+^^^^^^^^^^^^^^
+It seems that every release is broken in some form or another.
+My plan of "just fix everything and then release it" has not been working out.
+My new realization is that, since this is still in Alpha, it is okay that it is not perfect.
+So I'm going to be releasing it "AS IS" for a while until Beta, where everything should be functioning as expected.
+(The idea being that pushing out a semi-working package is better then leaving up a totaly broken package.)
+
+Curently "pillow" and "platformdirs" are required dependencies because I have not made the workarounds yet.
+Blender just dropped support for Python 3.10 and so I am going to be as well.
+I would have liked to have a functioning Python 3.10 version so anyone who downloads this wont get errors, but it just hasn't happened yet.
+
+In todays build, only pygame and tkinter are fully functional, using the "demo" and "viewer" applications.
+(Unless there is another issue with the font file, then pygame wont work.)
+Blender fails because it can't find the Pillow package, and it was having issues drawing images properly anyways.
+Curses was having issues with windows-curses for a while, so I have not worked on it recently.
+The DearPyGui Package seems to be nearly abandoned so I have not spent the time keeping it up to date.
+
+
 .. _`Blender Add-on`: https://docs.blender.org/manual/en/latest/editors/preferences/addons.html
 
 

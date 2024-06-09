@@ -15,6 +15,7 @@ from celestine.typed import (
     LS,
     A,
     B,
+    BF,
     K,
     M,
     N,
@@ -119,14 +120,14 @@ class Window(Window_):
         ]
 
     @override
-    def __enter__(self):
+    def __enter__(self) -> K:
         super().__enter__()
 
-        def set_caption():
+        def set_caption() -> N:
             caption = bank.language.APPLICATION_TITLE
             pygame.display.set_caption(caption)
 
-        def set_font():
+        def set_font() -> N:
             pygame.font.init()
             file_path = load.asset("cascadia_code_regular.otf")
             size = 40
@@ -138,10 +139,10 @@ class Window(Window_):
         return self
 
     @override
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A):
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
         super().__exit__(exc_type, exc_value, traceback)
 
-        def set_icon():
+        def set_icon() -> N:
             path = "icon.png"
             asset = load.asset(path)
             image = pygame.image.load(asset)

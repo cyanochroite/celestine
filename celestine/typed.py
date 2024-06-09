@@ -60,8 +60,8 @@ S: TA = str
 Z: TA = int  # Set of Integers Symbol ℤ.
 
 
-BF: Literal[False]
-BT: Literal[True]
+BF: TA = Literal[False]
+BT: TA = Literal[True]
 
 CN: TA = C[[N], N]
 

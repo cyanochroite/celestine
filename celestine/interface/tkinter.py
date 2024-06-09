@@ -12,6 +12,7 @@ from celestine.package import (
 from celestine.typed import (
     LS,
     A,
+    BF,
     N,
     P,
     R,
@@ -50,7 +51,6 @@ class Element(Element_, Abstract):
             self.click(self.area.world.centroid)
             bank.dequeue()
 
-        star: R = {}
         # if not super().make(canvas):
         #    return False
 
@@ -157,7 +157,7 @@ class Window(Window_):
         self.page.canvas.tkraise()
 
     @override
-    def __exit__(self, exc_type: A, exc_value: A, traceback) -> False:
+    def __exit__(self, exc_type: A, exc_value: A, traceback) -> BF:
         super().__exit__(exc_type, exc_value, traceback)
         self.canvas.mainloop()
         return False
