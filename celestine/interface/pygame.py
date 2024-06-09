@@ -1,5 +1,7 @@
 """"""
 
+import enum
+
 from celestine import (
     bank,
     load,
@@ -24,6 +26,18 @@ from celestine.window.collection import (
     Area,
     Point,
 )
+
+
+class Mouse(enum.IntEnum):
+    """Values returned by mouse click."""
+
+    PRIMARY = 1
+    MIDDLE = 2
+    SECONDARY = 3
+    SCROLL_UP = 4
+    SCROLL_DOWN = 5
+    TERTIARY = 6
+    QUATERNARY = 7
 
 
 class Abstract(Abstract_):
@@ -143,9 +157,8 @@ class Window(Window_):
                 case pygame.QUIT:
                     break
                 case pygame.MOUSEBUTTONDOWN:
-                    # TODO: This triggers on all mouse buttons
-                    # including scroll wheel! That is bad.
-                    self.click(Point(*pygame.mouse.get_pos()))
+                    if event.button == Mouse.PRIMARY:
+                        self.click(Point(*pygame.mouse.get_pos()))
                 case _:
                     pass
 

@@ -12,7 +12,6 @@ from celestine.package import (
 from celestine.typed import (
     LS,
     A,
-    B,
     N,
     P,
     R,
@@ -158,7 +157,7 @@ class Window(Window_):
         self.page.canvas.tkraise()
 
     @override
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
+    def __exit__(self, exc_type: A, exc_value: A, traceback) -> False:
         super().__exit__(exc_type, exc_value, traceback)
         self.canvas.mainloop()
         return False

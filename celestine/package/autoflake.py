@@ -1,9 +1,9 @@
 """Removes unused imports and unused variables."""
 
 from celestine.package import Abstract
-from celestine.typed import FN
+from celestine.typed import CN
 
-run: FN
+run: CN
 
 
 class Package(Abstract):

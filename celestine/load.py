@@ -18,7 +18,7 @@ from celestine.literal import (
     PYTHON_EXTENSION,
 )
 from celestine.typed import (
-    FN,
+    CN,
     GM,
     GP,
     LP,
@@ -159,7 +159,7 @@ def _dictionary_items(_module: M) -> T[S, A]:
     return _items
 
 
-def functions(_module: M) -> D[S, FN]:
+def functions(_module: M) -> D[S, CN]:
     """Load from module all functions and turn them into dictionary."""
 
     def test(value: S) -> B:
@@ -170,7 +170,7 @@ def functions(_module: M) -> D[S, FN]:
     return mapping
 
 
-def dictionary(_module: M) -> D[S, FN]:
+def dictionary(_module: M) -> D[S, CN]:
     """Load from module all key value pairs and make it a dictionary."""
 
     def test(value: S) -> B:
@@ -181,7 +181,7 @@ def dictionary(_module: M) -> D[S, FN]:
     return mapping
 
 
-def decorators2(_module: M, name: S) -> D[S, FN]:
+def decorators2(_module: M, name: S) -> D[S, CN]:
     """Load from module all functions and turn them into dictionary."""
     _dictionary = _dictionary_items(_module)
     text = string(FUNCTION, name, FULL_STOP)

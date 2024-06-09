@@ -19,7 +19,8 @@ from collections.abc import Sequence
 from importlib.machinery import ModuleSpec
 from typing import Dict as D
 from typing import List as L
-from typing import Optional as OPT
+from typing import Literal
+from typing import Optional as V  # Void.
 from typing import Tuple as T
 from typing import Type as TYPE
 from typing import TypeAlias as TA
@@ -37,10 +38,10 @@ A: TA = typing.Any
 B: TA = bool
 # C: TA = collections.abc.Callable
 # D: TA = typing.Dict
-E: TA = typing.Any
+# E: TA = typing.Any  # Unused
 F: TA = float
 # G: TA = collections.abc.Generator
-H: TA = typing.Any  # Unused
+# H: TA = typing.Any  # Unused
 # I: TA = typing.Any  # Ambiguous variable name.
 J: TA = object
 # K: TA = typing.Self  # "Self" is not valid in this context.
@@ -49,43 +50,61 @@ M: TA = types.ModuleType
 N: TA = None
 # O: TA = typing.Any  # Ambiguous variable name.
 P: TA = pathlib.Path
-Q: TA = typing.Any
-R: TA = typing.Any
+# Q: TA = typing.Any  # Unused
+R: TA = typing.Any  # Star.
 S: TA = str
 # T: TA = typing.Tuple
-U: TA = typing.Any
-V: TA = typing.Any
-W: TA = typing.Any
-X: TA = typing.Any
-Y: TA = typing.Any
+# U: TA = typing.Any  # Unused  # Union?
+# V: TA = typing.Any  # Unused
+# W: TA = typing.Any  # Unused
+# X: TA = typing.Any  # Unused
+# Y: TA = typing.Any  # Unused
 Z: TA = int
+
+# E: TA = typing.Any
+# H: TA = typing.Any  # Unused
+# Q: TA = typing.Any  # Unused
+# R: TA = typing.Any  # Unused
+# U: TA = typing.Any  # Unused
+# V: TA = typing.Any  # Unused
+# W: TA = typing.Any  # Unused
+# X: TA = typing.Any  # Unused
+# Y: TA = typing.Any  # Unused
+
+
+BF: Literal[False]
+BT: Literal[True]
+
+CN: TA = C[[N], N]
+
+DB: TA = D[S, B]
+DF: TA = D[S, F]
+DM: TA = D[S, M]
+DP: TA = D[S, P]
+DS: TA = D[S, S]
+DZ: TA = D[S, Z]
 
 GB: TA = G[B, N, N]
 GF: TA = G[F, N, N]
-GZ: TA = G[Z, N, N]
+GM: TA = G[M, N, N]
 GP: TA = G[P, N, N]
 GS: TA = G[S, N, N]
-GM: TA = G[M, N, N]
-
-OB: TA = OPT[B]
-OF: TA = OPT[F]
-OZ: TA = OPT[Z]
-OM: TA = OPT[M]
-OP: TA = OPT[P]
-OS: TA = OPT[S]
+GZ: TA = G[Z, N, N]
 
 LB: TA = L[B]
 LF: TA = L[F]
-LZ: TA = L[Z]
+LM: TA = L[M]
 LP: TA = L[P]
 LS: TA = L[S]
+LZ: TA = L[Z]
 
-FN: TA = C[[N], N]
-FB: TA = C[[N], B]
-FF: TA = C[[N], F]
-FZ: TA = C[[N], Z]
-FP: TA = C[[N], P]
-FS: TA = C[[N], S]
+VB: TA = V[B]
+VF: TA = V[F]
+VM: TA = V[M]
+VP: TA = V[P]
+VS: TA = V[S]
+VZ: TA = V[Z]
+
 
 PATH: TA = P | S
 

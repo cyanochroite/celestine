@@ -2,11 +2,11 @@
 
 from celestine.package import Abstract
 from celestine.typed import (
-    FN,
+    CN,
     LS,
 )
 
-run: FN
+run: CN
 
 
 class Package(Abstract):

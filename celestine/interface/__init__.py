@@ -10,7 +10,6 @@ from celestine.typed import (
     A,
     B,
     D,
-    H,
     K,
     N,
     P,
@@ -374,7 +373,6 @@ class View(Abstract, Tree):
 class Window(Tree):
     """"""
 
-    hold: H
     page: View
     main: S
     code: D[S, A]  # function
