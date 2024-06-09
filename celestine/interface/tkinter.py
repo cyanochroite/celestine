@@ -10,9 +10,9 @@ from celestine.package import (
     tkinter,
 )
 from celestine.typed import (
+    BF,
     LS,
     A,
-    BF,
     N,
     P,
     R,

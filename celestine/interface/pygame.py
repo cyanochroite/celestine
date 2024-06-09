@@ -12,10 +12,10 @@ from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.package import pygame
 from celestine.typed import (
+    BF,
     LS,
     A,
     B,
-    BF,
     K,
     M,
     N,

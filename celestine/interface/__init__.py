@@ -6,10 +6,10 @@ from celestine import bank
 from celestine.literal import NONE
 from celestine.package import pillow
 from celestine.typed import (
+    BF,
     LS,
     A,
     B,
-    BF,
     D,
     K,
     N,
