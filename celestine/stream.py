@@ -1,15 +1,19 @@
 """Central place for loading and importing external files."""
 
 import abc
+import enum
 import lzma
 import os
 import pathlib
+from typing import (
+    IO,
+    TextIO,
+)
 
 from celestine import load
 from celestine.typed import (
-    FILE,
-    LZMA,
-    PATH,
+    TA,
+    A,
     B,
     N,
     P,
@@ -17,16 +21,70 @@ from celestine.typed import (
     override,
 )
 
-from .data import (
-    Buffering,
-    Encoding,
-    Errors,
-    Mode,
-)
+FILE: TA = IO[A]
+LZMA: TA = lzma.LZMAFile | TextIO
+PATH: TA = P | S
 
 MAXIMUM_LINE_LENGTH = 72
 SECTION_BREAK = "######################################################\
 ##################"
+
+
+class Buffering(enum.IntEnum):
+    """"""
+
+    OFF = 0
+    ON = 1
+
+
+class Encoding(enum.StrEnum):
+    """"""
+
+    ASCII = "ascii"
+    ISO_8859_1 = "iso_8859_1"
+    LATIN_1 = "latin_1"
+    US_ASCII = "us_ascii"
+    UTF_8 = "utf_8"
+    UTF_16 = "utf_16"
+    UTF_32 = "utf_32"
+
+
+class Errors(enum.StrEnum):
+    """"""
+
+    BACKSLASHREPLACE = "backslashreplace"
+    IGNORE = "ignore"
+    NAMEREPLACE = "namereplace"
+    REPLACE = "replace"
+    STRICT = "strict"
+    SURROGATEESCAPE = "surrogateescape"
+    XMLCHARREFREPLACE = "xmlcharrefreplace"
+
+
+class Mode(enum.StrEnum):
+    """"""
+
+    APPEND_BINARY = "ab"
+    APPEND_TEXT = "at"
+    EXCLUSIVE_BINARY = "xb"
+    EXCLUSIVE_TEXT = "xt"
+    READ_BINARY = "rb"
+    READ_TEXT = "rt"
+    TRUNCATE_BINARY = "w+b"
+    TRUNCATE_TEXT = "w+t"
+    UPDATE_BINARY = "r+b"
+    UPDATE_TEXT = "r+t"
+    WRITE_BINARY = "wb"
+    WRITE_TEXT = "wt"
+
+
+class Newline(enum.StrEnum):
+    """"""
+
+    APPLE = "\n"
+    COMMODORE = "\r"
+    MICROSOFT = "\r\n"
+    UNTRANSLATED = ""
 
 
 class File(abc.ABC):
@@ -148,14 +206,16 @@ class Module(Text):
     @override
     def reader(self, *path: PATH) -> FILE:
         """"""
-        file = load.python(*path)
-        super().reader(file)
+        paths = list(map(str, path))
+        file = load.python(*paths)
+        return super().reader(file)
 
     @override
     def writer(self, *path: PATH) -> FILE:
         """"""
-        file = load.python(*path)
-        super().writer(file)
+        paths = list(map(str, path))
+        file = load.python(*paths)
+        return super().writer(file)
 
 
 # set this in session loading.

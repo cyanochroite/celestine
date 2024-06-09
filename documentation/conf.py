@@ -1,8 +1,8 @@
 project = "Célestine"
 author = "mem_dixy"
-copyright = "2023, mem_dixy"
-version = "2023.10.7"
-release = "2023.09.03"
+copyright = "2024, mem_dixy"
+version = "2024.6.9"
+release = "2024.6.9"
 
 keep_warnings = True
 

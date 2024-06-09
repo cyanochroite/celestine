@@ -1,5 +1,7 @@
 """"""
 
+import collections.abc
+
 from celestine import (
     bank,
     language,
@@ -26,20 +28,24 @@ from celestine.session.data import (
     Values,
 )
 from celestine.typed import (
-    AD,
-    AI,
+    DA,
+    TA,
+    A,
     M,
     S,
+    T,
 )
 
 from . import default
+
+AI: TA = collections.abc.Iterable[T[S, A]]
 
 
 class SuperSession:
     """"""
 
     @classmethod
-    def dictionary(cls) -> AD:
+    def dictionary(cls) -> DA:
         """"""
         return {}
 
@@ -54,7 +60,7 @@ class Information(SuperSession):
     """"""
 
     @classmethod
-    def dictionary(cls) -> AD:
+    def dictionary(cls) -> DA:
         """"""
         return super().dictionary() | {
             "save": InformationConfiguration(
@@ -79,7 +85,7 @@ class Application(Dictionary):
     application: M
 
     @classmethod
-    def dictionary(cls) -> AD:
+    def dictionary(cls) -> DA:
         """"""
         return super().dictionary() | {
             APPLICATION: Customization(
@@ -96,7 +102,7 @@ class Configuration(Dictionary):
     configuration: M
 
     @classmethod
-    def dictionary(cls) -> AD:
+    def dictionary(cls) -> DA:
         """"""
         return super().dictionary() | {
             CONFIGURATION: Optional(
@@ -112,7 +118,7 @@ class Directory(Dictionary):
     directory: M
 
     @classmethod
-    def dictionary(cls) -> AD:
+    def dictionary(cls) -> DA:
         """"""
         return super().dictionary() | {
             DIRECTORY: Optional(
@@ -128,7 +134,7 @@ class Interface(Dictionary):
     interface: M
 
     @classmethod
-    def dictionary(cls) -> AD:
+    def dictionary(cls) -> DA:
         """"""
         return super().dictionary() | {
             INTERFACE: Customization(
@@ -145,7 +151,7 @@ class Language(Dictionary):
     language: M
 
     @classmethod
-    def dictionary(cls) -> AD:
+    def dictionary(cls) -> DA:
         """"""
         return super().dictionary() | {
             LANGUAGE: Customization(
@@ -168,7 +174,7 @@ class Session(
     main: S
 
     @classmethod
-    def dictionary(cls) -> AD:
+    def dictionary(cls) -> DA:
         """"""
         return super().dictionary() | {
             Values.MAIN: Positional(

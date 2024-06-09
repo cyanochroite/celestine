@@ -5,11 +5,11 @@ import os
 
 from celestine import language
 from celestine.session.argument import Optional
-from celestine.session.session import (
-    AD,
-    SuperSession,
+from celestine.session.session import SuperSession
+from celestine.typed import (
+    DA,
+    S,
 )
-from celestine.typed import S
 
 
 class Session(SuperSession):
@@ -18,7 +18,7 @@ class Session(SuperSession):
     output: S
 
     @classmethod
-    def dictionary(cls) -> AD:
+    def dictionary(cls) -> DA:
         """"""
         return super().dictionary() | {
             "output": Optional(

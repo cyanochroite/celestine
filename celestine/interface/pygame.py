@@ -1,5 +1,7 @@
 """"""
 
+import enum
+
 from celestine import (
     bank,
     load,
@@ -10,6 +12,7 @@ from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.package import pygame
 from celestine.typed import (
+    BF,
     LS,
     A,
     B,
@@ -24,6 +27,18 @@ from celestine.window.collection import (
     Area,
     Point,
 )
+
+
+class Mouse(enum.IntEnum):
+    """Values returned by mouse click."""
+
+    PRIMARY = 1
+    MIDDLE = 2
+    SECONDARY = 3
+    SCROLL_UP = 4
+    SCROLL_DOWN = 5
+    TERTIARY = 6
+    QUATERNARY = 7
 
 
 class Abstract(Abstract_):
@@ -105,14 +120,14 @@ class Window(Window_):
         ]
 
     @override
-    def __enter__(self):
+    def __enter__(self) -> K:
         super().__enter__()
 
-        def set_caption():
+        def set_caption() -> N:
             caption = bank.language.APPLICATION_TITLE
             pygame.display.set_caption(caption)
 
-        def set_font():
+        def set_font() -> N:
             pygame.font.init()
             file_path = load.asset("cascadia_code_regular.otf")
             size = 40
@@ -124,10 +139,10 @@ class Window(Window_):
         return self
 
     @override
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A):
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
         super().__exit__(exc_type, exc_value, traceback)
 
-        def set_icon():
+        def set_icon() -> N:
             path = "icon.png"
             asset = load.asset(path)
             image = pygame.image.load(asset)
@@ -143,9 +158,8 @@ class Window(Window_):
                 case pygame.QUIT:
                     break
                 case pygame.MOUSEBUTTONDOWN:
-                    # TODO: This triggers on all mouse buttons
-                    # including scroll wheel! That is bad.
-                    self.click(Point(*pygame.mouse.get_pos()))
+                    if event.button == Mouse.PRIMARY:
+                        self.click(Point(*pygame.mouse.get_pos()))
                 case _:
                     pass
 

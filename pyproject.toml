@@ -67,7 +67,7 @@ keywords = [
 ]
 readme = "README.rst"
 requires-python = ">=3.10"
-version = "2023.10.7"
+version = "2024.6.9"
 
 
 [project.optional-dependencies]
@@ -100,8 +100,7 @@ demo = [
 gui = [
     "dearpygui",
     "pygame",
-    # windows-curses curently broken on Python version 3.12
-    "windows-curses; platform_system=='Windows'; python_version<'3.12'",
+    "windows-curses; platform_system=='Windows'",
 ]
 
 [project.urls]

@@ -1,7 +1,7 @@
 """"""
 
 from celestine import language
-from celestine.data import scene
+from celestine.data import draw
 from celestine.interface import View
 from celestine.typed import N
 from celestine.window.container import (
@@ -10,13 +10,13 @@ from celestine.window.container import (
 )
 
 
-@scene
+@draw
 def picture(view: View) -> N:
     """"""
-    view.element("photo", fit=Image.FILL, goto="display")
+    view.element("photo", fit=Image.FILL, goto="main")
 
 
-@scene(True)
+@draw
 def main(view: View) -> N:
     """"""
     view.button(

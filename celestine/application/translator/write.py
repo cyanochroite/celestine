@@ -16,8 +16,8 @@ from celestine.literal import (
     SPACE,
 )
 from celestine.typed import (
+    DS,
     GS,
-    TABLE,
     N,
     S,
 )
@@ -31,7 +31,7 @@ from .data import (
 )
 
 
-def dictionary_to_string(dictionary: TABLE) -> GS:
+def dictionary_to_string(dictionary: DS) -> GS:
     """Prepares the dictionary to be written to a file."""
     dictionary_items = dictionary.items()
     sorted_items = sorted(dictionary_items)
@@ -64,7 +64,7 @@ def dictionary_to_string(dictionary: TABLE) -> GS:
         yield from LINE_SEPARATOR
 
 
-def language_file(translation: TABLE, overridden: TABLE) -> GS:
+def language_file(translation: DS, overridden: DS) -> GS:
     """Print translations first then print overridden values."""
     lookup = translation | overridden
     yield from QUOTATION_MARK
@@ -103,7 +103,7 @@ def make_init_file():
     stream.Module.save(width, LANGUAGE, INIT)
 
 
-def save_language(translation: TABLE, overridden: TABLE, *path: S) -> N:
+def save_language(translation: DS, overridden: DS, *path: S) -> N:
     """Save a language file to disk."""
     file = language_file(translation, overridden)
     string = normalize.wrap(file)

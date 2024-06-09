@@ -24,6 +24,16 @@ class Point:
     _two: F
 
     @property
+    def one(self) -> F:
+        """"""
+        return self._one
+
+    @property
+    def two(self) -> F:
+        """"""
+        return self._two
+
+    @property
     def value(self) -> T[Z, Z]:
         """"""
         return (int(self._one), int(self._two))
@@ -175,13 +185,13 @@ class Plane:
         return Point(self._one.length, self._two.length)
 
     def __contains__(self, item: Point) -> B:
-        _one = item._one in self._one
-        _two = item._two in self._two
+        _one = item.one in self._one
+        _two = item.two in self._two
         return _one and _two
 
     def __iadd__(self, other: Point) -> K:
-        self._one += other._one
-        self._two += other._two
+        self._one += other.one
+        self._two += other.two
         return self
 
     def __imul__(self, other: Z) -> K:
@@ -194,8 +204,8 @@ class Plane:
         self._two = _two.copy()
 
     def __isub__(self, other: Point) -> K:
-        self._one -= other._one
-        self._two -= other._two
+        self._one -= other.one
+        self._two -= other.two
         return self
 
     def __repr__(self):

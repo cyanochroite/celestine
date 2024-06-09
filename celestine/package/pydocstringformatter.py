@@ -6,10 +6,13 @@ import sys
 from celestine import load
 from celestine.package import Abstract
 from celestine.typed import (
+    CN,
     M,
     N,
     S,
 )
+
+run: CN
 
 
 class Package(Abstract):

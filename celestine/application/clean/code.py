@@ -9,16 +9,18 @@ from celestine import (
     stream,
 )
 from celestine.data import (
-    code,
+    call,
     normalize,
 )
 from celestine.package import (
     autoflake,
     black,
     isort,
+    pydocstringformatter,
     pyupgrade,
 )
 from celestine.typed import (
+    B,
     N,
     R,
     S,
@@ -83,19 +85,19 @@ def run(name: S) -> N:
     linter.run()
 
 
-@code
-def clean(**star: R) -> N:
+@call
+def clean(**star: R) -> B:
     """"""
     pyupgrade.run()
-    # TODO figure out why this print instead of fixes
-    # pydocstringformatter.run()
+    pydocstringformatter.run()
     autoflake.run()
     isort.run()
     black.run()
+    return True
 
 
-@code
-def licence(**star: R):
+@call
+def licence(**star: R) -> B:
     """"""
     location = load.pathway("licence")
     files = load.walk_file(location, [], [])
@@ -110,10 +112,11 @@ def licence(**star: R):
         with stream.text.writer(file) as document:
             for line in string.getvalue():
                 document.write(line)
+    return True
 
 
-@code
-def version(**star: R):
+@call
+def version(**star: R) -> B:
     """"""
     date = datetime.datetime.now(datetime.UTC)
 
@@ -152,3 +155,4 @@ def version(**star: R):
             text = regex.replace(pattern, repl, text)
 
         stream.text.save(text, file)
+    return True

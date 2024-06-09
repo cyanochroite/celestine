@@ -8,17 +8,16 @@ import requests
 
 from celestine import language
 from celestine.data import (
-    code,
+    call,
     main,
 )
 from celestine.interface import View
 from celestine.literal import NONE
 from celestine.session.argument import Optional
-from celestine.session.session import (
-    AD,
-    SuperSession,
-)
+from celestine.session.session import SuperSession
 from celestine.typed import (
+    DA,
+    B,
     H,
     N,
     R,
@@ -35,7 +34,7 @@ class Session(SuperSession):
     directory: S
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls, core) -> DA:
         """"""
         return {
             KEY: Optional(
@@ -86,8 +85,8 @@ def generate(hold: H, prompt: str):
     return image
 
 
-@code
-def draw(hold: H, *, prompt: S, **star: R) -> N:
+@call
+def draw(hold: H, *, prompt: S, **star: R) -> B:
     """"""
     image = generate(hold, prompt)
     url = image_url(image)

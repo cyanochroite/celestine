@@ -4,11 +4,11 @@ from celestine import (
     bank,
     load,
 )
-from celestine.data import code
+from celestine.data import call
 from celestine.typed import (
     LP,
     LS,
-    N,
+    B,
     P,
     R,
     S,
@@ -24,8 +24,8 @@ def find_image(directory: P) -> LP:
     return files
 
 
-@code
-def setup(**star: R) -> N:
+@call
+def setup(**star: R) -> B:
     """"""
     window = bank.window.page
     directory = bank.directory
@@ -40,11 +40,14 @@ def setup(**star: R) -> N:
     except StopIteration:
         pass
 
+    return True
 
-@code
-def see(caller: S, **star: R) -> N:
+
+@call
+def see(caller: S, **star: R) -> B:
     """"""
     window = bank.window
     source = window.find(caller)
     destination = window.find("photo")
     destination.update(source.path)
+    return True

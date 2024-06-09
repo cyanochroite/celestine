@@ -6,11 +6,11 @@ from celestine import bank
 from celestine.literal import NONE
 from celestine.package import pillow
 from celestine.typed import (
+    BF,
     LS,
     A,
     B,
     D,
-    H,
     K,
     N,
     P,
@@ -141,7 +141,7 @@ class Element(Abstract):
     def make(self, canvas: A, **star: R) -> N:
         """"""
         size = self.area.world.size.value
-        blender_mode = True
+        blender_mode = False
         if pillow and not blender_mode:
             self.image = pillow.new(size)
         else:
@@ -301,7 +301,7 @@ class View(Abstract, Tree):
     def __enter__(self) -> K:
         return self
 
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
         if exc_type or exc_value or traceback:
             print("ERROR", exc_type, exc_value, traceback)
         return False
@@ -374,7 +374,6 @@ class View(Abstract, Tree):
 class Window(Tree):
     """"""
 
-    hold: H
     page: View
     main: S
     code: D[S, A]  # function
@@ -490,12 +489,8 @@ class Window(Tree):
         return self
 
     def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
-        if exc_type:
-            raise exc_type
-        if exc_value:
-            raise exc_value
-        if traceback:
-            raise traceback
+        if exc_type or exc_value or traceback:
+            print(exc_type, exc_value, traceback)
 
         self.spot(self.area)
         self.make()

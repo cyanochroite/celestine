@@ -15,9 +15,8 @@ from celestine.literal import (
 )
 from celestine.typed import (
     LS,
+    A,
     B,
-    C,
-    D,
     N,
     R,
     S,
@@ -37,10 +36,10 @@ def set_lang():
         setattr(language, key, value)
 
 
-def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
+def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> A:
     """
-
     First load Language so human can read errors.
+
     Then load Interface so human see errors the way they want.
     """
 
@@ -80,7 +79,8 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
         importlib.reload(session)
 
         session1 = load.method("Session", "session", "session")
-        session2 = load.method("Session", APPLICATION, bank.application.name)
+        name = bank.application.name
+        session2 = load.method("Session", APPLICATION, name)
         session3 = load.method("Information", "session", "session")
 
         magic.get_parser([session1, session2, session3], False)
@@ -98,31 +98,43 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> N:
 
 
 def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
+    """"""
     window, application = begin_session(
         argument_list,
         exit_on_error,
         **star,
     )
 
-    code: D[S, C] = {}
-    view: D[S, C] = {}
+    decorators = load.decorators(APPLICATION, application)
+    call = decorators.get("call", {})
+    draw = decorators.get("draw", {})
+    main = decorators.get("main", {})
+    draw |= main
 
-    for module in load.modules(APPLICATION, application):
-        code |= load.decorators(module, "code")
-        view |= load.decorators(module, "scene")
+    def find_main() -> S:
+        """Finds @main or 'def main' or any @draw."""
+        try:
+            return next(iter(main))
+        except StopIteration:
+            pass
+
+        if draw.get("main"):
+            return "main"
+
+        try:
+            return next(iter(draw))
+        except StopIteration:
+            pass
+
+        raise Warning("There is nothing to draw.")
 
     with window:
-        for key, value in view.items():
-            if "primary" in repr(value):
-                window.main = key
-                break
-        else:
-            window.main = next(iter(view))
+        window.main = find_main()
 
-        for name, function in code.items():
+        for name, function in call.items():
             window.code[name] = function
 
-        for name, function in view.items():
+        for name, function in draw.items():
             view = window.drop(name)
             function(view)
             window.view[name] = view

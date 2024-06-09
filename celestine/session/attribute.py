@@ -6,7 +6,7 @@ from celestine.session.data import (
     Attributes,
 )
 from celestine.typed import (
-    AT,
+    DA,
     LS,
     N,
     R,
@@ -17,7 +17,7 @@ from celestine.typed import (
 class Attribute:
     """"""
 
-    def dictionary(self) -> AT:
+    def dictionary(self) -> DA:
         """"""
         return {}
 
@@ -29,7 +29,7 @@ class Attribute:
 class Action(Attribute):
     """"""
 
-    def dictionary(self) -> AT:
+    def dictionary(self) -> DA:
         """"""
         return super().dictionary() | {Attributes.ACTION: self.action}
 
@@ -42,7 +42,7 @@ class Action(Attribute):
 class Choices(Attribute):
     """"""
 
-    def dictionary(self) -> AT:
+    def dictionary(self) -> DA:
         """"""
         return super().dictionary() | {Attributes.CHOICES: self.choices}
 
@@ -55,7 +55,7 @@ class Choices(Attribute):
 class Help(Attribute):
     """"""
 
-    def dictionary(self) -> AT:
+    def dictionary(self) -> DA:
         """"""
         return super().dictionary() | {Attributes.HELP: self.help}
 
@@ -69,7 +69,7 @@ class Help(Attribute):
 class Nargs(Attribute):
     """"""
 
-    def dictionary(self) -> AT:
+    def dictionary(self) -> DA:
         """"""
         return super().dictionary() | {Attributes.NARGS: self.nargs}
 
@@ -82,6 +82,6 @@ class Nargs(Attribute):
 class Version(Attribute):
     """"""
 
-    def dictionary(self) -> AT:
+    def dictionary(self) -> DA:
         """"""
         return super().dictionary() | {Actions.VERSION: VERSION_NUMBER}

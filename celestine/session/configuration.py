@@ -15,7 +15,7 @@ from celestine.literal import (
 )
 from celestine.package import platformdirs
 from celestine.typed import (
-    OP,
+    VP,
     N,
     P,
     S,
@@ -35,7 +35,7 @@ class Configuration:
         """"""
         return self.configuration.get(section, option, fallback=NONE)
 
-    def load(self, path: OP = None) -> N:
+    def load(self, path: VP = None) -> N:
         """Load the configuration file."""
         filenames = path or self.path
         encoding = stream.Encoding.UTF_8.value

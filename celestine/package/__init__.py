@@ -6,7 +6,7 @@ import sys
 from celestine import load
 from celestine.typed import (
     LS,
-    OS,
+    VS,
     B,
     M,
     N,
@@ -54,8 +54,8 @@ class Abstract:
     def __getattr__(self, name: S) -> S:
         return getattr(self.package, name)
 
-    def __init__(self, *, pypi: OS = None, **star: R) -> N:
-        self.name = self.__module__.split(".")[-1]
+    def __init__(self, *, pypi: VS = None, **star: R) -> N:
+        self.name = self.__module__.rsplit(".", maxsplit=1)[-1]
         self.pypi = pypi or self.name
 
         # pygame prints an anoying message on import
