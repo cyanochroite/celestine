@@ -34,9 +34,9 @@ def setup(**star: R) -> B:
 
     grid = window.get("grid")
     try:
-        for _, item in grid:
+        for value in grid.values():
             image = next(images)
-            item.update(image)
+            value.update(image)
     except StopIteration:
         pass
 

@@ -172,7 +172,7 @@ class Window(Window_):
     @override
     def make(self, **star: R) -> N:
         """"""
-        for name, item in self:
+        for name, item in self.items():
             item.canvas = dearpygui.window(tag=name)
             with item.canvas:
                 dearpygui.configure_item(item.name, show=False)

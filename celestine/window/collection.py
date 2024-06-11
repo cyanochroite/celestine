@@ -1,9 +1,10 @@
 """"""
 
-from collections.abc import Collection
-
 from celestine.typed import (
+    GA,
+    GS,
     GZ,
+    A,
     B,
     D,
     F,
@@ -250,36 +251,58 @@ class Object:
         super().__init__()
 
 
-class Tree(Object, Collection[K]):
+class Tree(Object):
     """"""
 
-    children: D[S, K]
+    # TODO Python 3.12: Make class Tree[TYPE] and replace ANY.
+    _children: D[S, A]
 
-    def get(self, name: S) -> K:
+    def find(self, name: S) -> A:
         """"""
-        result = self.children[name]
+        for key, value in self.items():
+            if key == name:
+                return value
+            try:
+                return value.find(name)
+            except AttributeError:
+                pass
+            except KeyError:
+                pass
+        raise KeyError(name)
+
+    def get(self, name: S) -> A:
+        """"""
+        result = self._children[name]
         return result
 
-    def set(self, item: K) -> K:
+    def items(self) -> GA:
         """"""
-        self.children[item.name] = item
+        iterator = iter(self._children.items())
+        yield from iterator
+
+    def keys(self) -> GS:
+        """"""
+        iterator = iter(self._children.keys())
+        yield from iterator
+
+    def set(self, item: A) -> A:
+        """"""
+        self._children[item.name] = item
         return item
 
-    def __bool__(self) -> B:
-        return True
+    def values(self) -> G[T[S, A], N, N]:
+        """"""
+        iterator = iter(self._children.values())
+        yield from iterator
 
-    def __contains__(self, item: S) -> B:
-        contains = item in self.children
-        return contains
+    def __bool__(self) -> B:
+        boolean = bool(self._children)
+        return boolean
 
     def __init__(self, **star: R) -> N:
-        self.children = {}
+        self._children = {}
         super().__init__(**star)
 
-    def __iter__(self) -> G[T[S, K], N, N]:
-        items = self.children.items()
-        yield from items
-
     def __len__(self) -> Z:
-        length = len(self.children)
+        length = len(self._children)
         return length

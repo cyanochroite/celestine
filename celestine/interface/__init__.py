@@ -193,24 +193,12 @@ class View(Abstract, Tree):
     height: Z
     element_item: D[S, A]
 
-    def find(self, name: S) -> N | Abstract:
-        """"""
-        for key, value in self:
-            if key == name:
-                return value
-            if not getattr(value, "find", False):
-                continue
-            item = value.find(name)
-            if item:
-                return item
-        return None
-
     def click(self, point: Point, **star: R) -> B:
         if not super().click(point, **star):
             return False
 
-        for _, item in self:
-            item.click(point)
+        for value in self.values():
+            value.click(point)
 
         return True
 
@@ -220,14 +208,14 @@ class View(Abstract, Tree):
         if self.hidden:
             return
 
-        for _, item in self:
-            item.draw(**star)
+        for value in self.values():
+            value.draw(**star)
 
     @override
     def make(self, canvas: A, **star: R) -> N:
         """"""
-        for _, item in self:
-            item.make(canvas, **star)
+        for value in self.values():
+            value.make(canvas, **star)
 
     @override
     def spot(self, area: Area) -> N:
@@ -250,7 +238,7 @@ class View(Abstract, Tree):
                 partition_y = 1
 
         index = 0
-        for _, item in self:
+        for value in self.values():
             this = self.area.world
 
             one = Line(0, 1)
@@ -269,7 +257,7 @@ class View(Abstract, Tree):
             local -= area.world.origin
 
             rectangle = Area(local, world)
-            item.spot(rectangle)
+            value.spot(rectangle)
             index += 1
 
     def zone(
@@ -431,13 +419,13 @@ class Window(Tree):
 
     def draw(self, **star: R) -> N:
         """"""
-        for _, item in self:
-            item.draw(**star)
+        for value in self.values():
+            value.draw(**star)
 
     def make(self, **star: R) -> N:
         """"""
-        for _, item in self:
-            item.make(self.canvas, **star)
+        for value in self.values():
+            value.make(self.canvas, **star)
 
     def turn(self, page: S, **star: R) -> N:
         """"""
@@ -455,24 +443,14 @@ class Window(Tree):
 
     def click(self, point: Point) -> N:
         """"""
-        for _, item in self:
-            item.click(point)
-
-    def find(self, name: S) -> N | Abstract:
-        """"""
-        for key, value in self:
-            if key == name:
-                return value
-            item = value.find(name)
-            if item:
-                return item
-        raise KeyError(name)
+        for value in self.values():
+            value.click(point)
 
     def spot(self, area: Area) -> N:
         """"""
         self.area = area
-        for _, item in self:
-            item.spot(area)
+        for value in self.values():
+            value.spot(area)
 
     ###############
 
@@ -488,15 +466,15 @@ class Window(Tree):
     def __enter__(self) -> K:
         return self
 
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
         if exc_type or exc_value or traceback:
             print(exc_type, exc_value, traceback)
 
         self.spot(self.area)
         self.make()
 
-        for _, item in self:
-            item.hide()
+        for value in self.values():
+            value.hide()
 
         self.turn(self.main)
 

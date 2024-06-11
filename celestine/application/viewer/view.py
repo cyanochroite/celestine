@@ -25,10 +25,10 @@ def main(view: View) -> N:
         text=language.VIEWER_MAIN_BUTTON,
     )
     with view.zone("grid", row=2, col=4, mode=Zone.GRID) as grid:
-        for name, _ in grid:
+        for key in grid.keys():
             # grid.image(name, path=r"D:\done\unknown.png")
             grid.element(
-                name,
+                key,
                 action="see",
                 path=r"D:\done\unknown.png",
                 fit=Image.FILL,
