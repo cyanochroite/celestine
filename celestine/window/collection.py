@@ -1,18 +1,11 @@
 """"""
 
 from celestine.typed import (
-    GA,
-    GS,
     GZ,
-    A,
     B,
-    D,
     F,
-    G,
     K,
     N,
-    R,
-    S,
     T,
     Z,
 )
@@ -241,68 +234,3 @@ class Area:
 
     def __str__(self):
         return f"({self.local}, {self.world})"
-
-
-class Object:
-    """"""
-
-    def __init__(self, **star: R) -> N:
-        """This does not pass the star parameter to the real object."""
-        super().__init__()
-
-
-class Tree(Object):
-    """"""
-
-    # TODO Python 3.12: Make class Tree[TYPE] and replace ANY.
-    _children: D[S, A]
-
-    def find(self, name: S) -> A:
-        """"""
-        for key, value in self.items():
-            if key == name:
-                return value
-            try:
-                return value.find(name)
-            except AttributeError:
-                pass
-            except KeyError:
-                pass
-        raise KeyError(name)
-
-    def get(self, name: S) -> A:
-        """"""
-        result = self._children[name]
-        return result
-
-    def items(self) -> GA:
-        """"""
-        iterator = iter(self._children.items())
-        yield from iterator
-
-    def keys(self) -> GS:
-        """"""
-        iterator = iter(self._children.keys())
-        yield from iterator
-
-    def set(self, item: A) -> A:
-        """"""
-        self._children[item.name] = item
-        return item
-
-    def values(self) -> G[T[S, A], N, N]:
-        """"""
-        iterator = iter(self._children.values())
-        yield from iterator
-
-    def __bool__(self) -> B:
-        boolean = bool(self._children)
-        return boolean
-
-    def __init__(self, **star: R) -> N:
-        self._children = {}
-        super().__init__(**star)
-
-    def __len__(self) -> Z:
-        length = len(self._children)
-        return length

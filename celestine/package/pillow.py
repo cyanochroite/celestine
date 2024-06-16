@@ -15,6 +15,7 @@ from celestine.typed import (
     R,
     S,
     T,
+    C,
     Z,
 )
 from celestine.window.collection import (
@@ -22,8 +23,9 @@ from celestine.window.collection import (
     Point,
 )
 
+
 IMAGE: TA = A
-extension: LS
+extension: C[[N], LS]
 open: A  # pylint: disable=redefined-builtin
 ImageTk: A
 

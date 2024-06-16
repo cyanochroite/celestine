@@ -7,25 +7,27 @@ from celestine.literal import NONE
 from celestine.package import pillow
 from celestine.typed import (
     BF,
+    GA,
+    GS,
     LS,
     A,
     B,
     D,
+    G,
     K,
     N,
     P,
     R,
     S,
+    T,
     Z,
     override,
 )
 from celestine.window.collection import (
     Area,
     Line,
-    Object,
     Plane,
     Point,
-    Tree,
 )
 from celestine.window.container import (
     Image,
@@ -33,10 +35,17 @@ from celestine.window.container import (
 )
 
 
+class Object:
+    """"""
+
+    def __init__(self, **star: R) -> N:
+        """This does not pass the star parameter to the real object."""
+        super().__init__()
+
+
 class Abstract(Object):
     """"""
 
-    item: A  # The object that the window system interacts with.
     parent: K
 
     area: Area
@@ -106,7 +115,6 @@ class Abstract(Object):
         self.canvas = None
         self.hidden = False
         self.name = name
-        self.item = None
 
         self.star = star
 
@@ -136,6 +144,7 @@ class Element(Abstract):
     """"""
 
     image: A
+    item: A
 
     @override
     def make(self, canvas: A, **star: R) -> N:
@@ -183,6 +192,64 @@ class Element(Abstract):
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
         self.image = None
+        self.item = None
+
+
+class Tree(Object):
+    """"""
+
+    # TODO Python 3.12: Make class Tree[TYPE] and replace ANY.
+    _children: D[S, Abstract]
+
+    def find(self, name: S) -> Abstract:
+        """"""
+        for key, value in self.items():
+            if key == name:
+                return value
+            try:
+                return value.find(name)
+            except AttributeError:
+                pass
+            except KeyError:
+                pass
+        raise KeyError(name)
+
+    def get(self, name: S) -> Abstract:
+        """"""
+        result = self._children[name]
+        return result
+
+    def items(self) -> GA:
+        """"""
+        iterator = iter(self._children.items())
+        yield from iterator
+
+    def keys(self) -> GS:
+        """"""
+        iterator = iter(self._children.keys())
+        yield from iterator
+
+    def set(self, item: Abstract) -> Abstract:
+        """"""
+        self._children[item.name] = item
+        return item
+
+    def values(self) -> G[T[S, Abstract], N, N]:
+        """"""
+        iterator = iter(self._children.values())
+        yield from iterator
+
+    def __bool__(self) -> B:
+        boolean = bool(self._children)
+        return boolean
+
+    def __init__(self, **star: R) -> N:
+        self._children = {}
+        super().__init__(**star)
+
+    def __len__(self) -> Z:
+        length = len(self._children)
+        return length
 
 
 class View(Abstract, Tree):

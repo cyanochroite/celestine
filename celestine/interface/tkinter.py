@@ -107,7 +107,7 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         self.canvas = tkinter.Frame(
             canvas,
@@ -157,7 +157,7 @@ class Window(Window_):
         self.page.canvas.tkraise()
 
     @override
-    def __exit__(self, exc_type: A, exc_value: A, traceback) -> BF:
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
         super().__exit__(exc_type, exc_value, traceback)
         self.canvas.mainloop()
         return False
