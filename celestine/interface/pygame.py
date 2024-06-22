@@ -59,25 +59,31 @@ class Element(Element_, Abstract):
     @override
     def draw(self, **star: R) -> B:
         """"""
-        font = star.pop("font")
-
         if not super().draw(**star):
             return False
 
-        if self.path:
-            self.update(self.path)
+        if self.image:
+            bytes_ = self.image.image.tobytes()
+            size = self.image.image.size
+            format_ = self.image.image.mode
+            flipped = False
+            surface = pygame.image.fromstring(
+                bytes_,
+                size,
+                format_,
+                flipped,
+            )
+            self.render(surface)
 
-        origin = self.area.world.origin.value
+        if self.text:
+            font = star.pop("font")
+            text = self.text
+            antialias = True
+            color = self.color
+            background = None
+            surface = font.render(text, antialias, color, background)
+            self.render(surface)
 
-        image = pygame.image.fromstring(
-            self.image.image.tobytes(),
-            self.image.image.size,
-            self.image.image.mode,
-        )
-        self.canvas.blit(image, origin)
-
-        text = font.render(self.text, True, (255, 0, 255))
-        self.canvas.blit(text, origin)
         return True
 
     @override
@@ -91,6 +97,16 @@ class Element(Element_, Abstract):
             self.image = None
 
         super().make(canvas, **star)
+
+        if self.path:
+            self.update(self.path)
+
+    def render(self, source: A) -> N:
+        """"""
+        dest = self.area.world.origin.value
+        area = None
+        special_flags = 0
+        self.canvas.blit(source, dest, area, special_flags)
 
     def update(self, path: P, **star: R) -> N:
         """"""
@@ -115,6 +131,7 @@ class Element(Element_, Abstract):
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
         self.path = star.pop("path", "")
+        self.color = (255, 0, 255)
 
 
 class View(View_, Abstract):

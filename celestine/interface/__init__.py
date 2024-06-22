@@ -85,10 +85,7 @@ class Abstract(Object):
 
     def draw(self, **star: R) -> B:
         """"""
-        if self.hidden:
-            return False
-
-        return True
+        return not self.hidden
 
     def hide(self) -> N:
         """"""

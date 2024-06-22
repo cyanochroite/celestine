@@ -68,12 +68,6 @@ class Element(Element_, Abstract):
             self.click(self.area.world.centroid)
             bank.dequeue()
 
-        # if not super().make(canvas):
-        #    return False
-
-        # if not super().draw(**star):
-        #    return False
-
         if self.path:
             image = tkinter.PhotoImage(file=self.path)
             star.update(image=image)
@@ -124,11 +118,16 @@ class Element(Element_, Abstract):
 
         # super().update(path)
 
-        if pillow:
+        if pillow and False:
             photo = pillow.ImageTk.PhotoImage(image=self.image.image)
         else:
+            width, height = result.size.value
             # breaks other stuff elsewere
-            photo = tkinter.PhotoImage(file=self.path)
+            photo = tkinter.PhotoImage(
+                file=self.path,
+                width=width,
+                height=height,
+            )
 
         self.photo = photo
         self.item.configure(image=photo)
@@ -178,10 +177,10 @@ class Window(Window_):
             return pillow.extension()
 
         return [
-            ".pbm",
+            # ".pbm",
             ".pgm",
             ".ppm",
-            ".pnm",
+            # ".pnm",
             ".gif",
             ".png",
         ]
