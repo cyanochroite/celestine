@@ -6,9 +6,7 @@ from celestine.literal import (
     INTERFACE,
     LANGUAGE,
 )
-from celestine.typed import (
-    S,
-)
+from celestine.typed import S
 
 
 def module(path: S, *items: S) -> S:

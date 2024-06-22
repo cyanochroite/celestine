@@ -4,12 +4,12 @@ import math
 import pathlib
 
 from celestine import bank
-from celestine.package import pillow
 from celestine.typed import (
     BF,
     GA,
     GS,
     LS,
+    TY,
     A,
     B,
     D,
@@ -20,7 +20,6 @@ from celestine.typed import (
     R,
     S,
     T,
-    TY,
     Z,
     override,
 )
@@ -152,49 +151,6 @@ class Element(Abstract):
 
     image: A
     item: A
-
-    @override
-    def make(self, canvas: A, **star: R) -> N:
-        """"""
-        size = self.area.world.size.value
-        blender_mode = False
-        if pillow and not blender_mode:
-            self.image = pillow.new(size)
-        else:
-            self.image = None
-
-        super().make(canvas, **star)
-
-    def draw(self, **star: R) -> B:
-        """"""
-        if not super().draw():
-            return False
-
-        #  TODO: Check if other types want this here.
-        if self.path:
-            self.update(self.path)
-
-        return True
-
-    def update(self, path: P, **star: R) -> N:
-        """"""
-        self.path = path
-
-        image = pillow.open(self.path)
-
-        curent = Plane.make(image.image.width, image.image.height)
-        target = Plane.make(*self.area.world.size.value)
-
-        match self.fit:
-            case Image.FILL:
-                result = curent.scale_to_min(target)
-            case Image.FULL:
-                result = curent.scale_to_max(target)
-
-        result.center(target)
-
-        image.resize(result.size)
-        self.image.paste(image, result)
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)

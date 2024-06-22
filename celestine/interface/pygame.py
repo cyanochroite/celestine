@@ -10,7 +10,10 @@ from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
-from celestine.package import pygame
+from celestine.package import (
+    pillow,
+    pygame,
+)
 from celestine.typed import (
     BF,
     LS,
@@ -19,14 +22,17 @@ from celestine.typed import (
     K,
     M,
     N,
+    P,
     R,
     S,
     override,
 )
 from celestine.window.collection import (
     Area,
+    Plane,
     Point,
 )
+from celestine.window.container import Image
 
 
 class Mouse(enum.IntEnum):
@@ -50,12 +56,16 @@ class Element(Element_, Abstract):
 
     image: M
 
+    @override
     def draw(self, **star: R) -> B:
         """"""
         font = star.pop("font")
 
         if not super().draw(**star):
             return False
+
+        if self.path:
+            self.update(self.path)
 
         origin = self.area.world.origin.value
 
@@ -69,6 +79,38 @@ class Element(Element_, Abstract):
         text = font.render(self.text, True, (255, 0, 255))
         self.canvas.blit(text, origin)
         return True
+
+    @override
+    def make(self, canvas: A, **star: R) -> N:
+        """"""
+        size = self.area.world.size.value
+        blender_mode = False
+        if pillow and not blender_mode:
+            self.image = pillow.new(size)
+        else:
+            self.image = None
+
+        super().make(canvas, **star)
+
+    def update(self, path: P, **star: R) -> N:
+        """"""
+        self.path = path
+
+        image = pillow.open(self.path)
+
+        curent = Plane.make(image.image.width, image.image.height)
+        target = Plane.make(*self.area.world.size.value)
+
+        match self.fit:
+            case Image.FILL:
+                result = curent.scale_to_min(target)
+            case Image.FULL:
+                result = curent.scale_to_max(target)
+
+        result.center(target)
+
+        image.resize(result.size)
+        self.image.paste(image, result)
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)

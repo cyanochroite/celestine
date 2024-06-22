@@ -46,10 +46,22 @@ class Element(Element_, Abstract):
     """"""
 
     @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+        self.item.place_forget()
+
+    @override
     def make(self, canvas: A, **star: R) -> N:
         """"""
+        super().make(canvas, **star)
 
-        super().make(canvas)
+        size = self.area.world.size.value
+        blender_mode = False
+        if pillow and not blender_mode:
+            self.image = pillow.new(size)
+        else:
+            self.image = None
 
         def callback() -> N:
             """"""
@@ -79,6 +91,15 @@ class Element(Element_, Abstract):
             star.update(width=100)
             self.item = tkinter.Label(canvas, **star)
 
+        self.place(self.item)
+
+        if self.path:
+            self.update(self.path)
+
+    @override
+    def show(self) -> N:
+        """"""
+        super().show()
         self.place(self.item)
 
     def update(self, path: P, **star: R) -> N:
@@ -111,18 +132,6 @@ class Element(Element_, Abstract):
 
         self.photo = photo
         self.item.configure(image=photo)
-
-    @override
-    def hide(self) -> N:
-        """"""
-        super().hide()
-        self.item.place_forget()
-
-    @override
-    def show(self) -> N:
-        """"""
-        super().show()
-        self.place(self.item)
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)

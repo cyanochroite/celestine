@@ -14,8 +14,8 @@ from typing import List as L
 from typing import Literal
 from typing import Optional as V  # Void
 from typing import Tuple as T
-from typing import TypeAlias as TA
 from typing import Type as TY
+from typing import TypeAlias as TA
 
 #  TODO: Remove after Python 3.10.
 _version = sys.version.split(".")
