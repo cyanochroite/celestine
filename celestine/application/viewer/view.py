@@ -26,7 +26,6 @@ def main(view: View) -> N:
     )
     with view.zone("grid", row=2, col=4, mode=Zone.GRID) as grid:
         for key in grid.keys():
-            # grid.image(name, path=r"D:\done\unknown.png")
             grid.element(
                 key,
                 action="see",

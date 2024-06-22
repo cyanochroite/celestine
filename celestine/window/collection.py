@@ -40,6 +40,11 @@ class Point:
         yield self._one
         yield self._two
 
+    def __add__(self, other: K) -> K:
+        one = self._one + other._one
+        two = self._two + other._two
+        return type(self)(one, two)
+
     def __sub__(self, other: K) -> K:
         one = self._one - other._one
         two = self._two - other._two

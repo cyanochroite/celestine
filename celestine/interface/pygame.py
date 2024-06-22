@@ -55,6 +55,8 @@ class Element(Element_, Abstract):
     """"""
 
     image: M
+    text_item: A
+    image_item: A
 
     @override
     def draw(self, **star: R) -> B:
@@ -62,59 +64,47 @@ class Element(Element_, Abstract):
         if not super().draw(**star):
             return False
 
-        if self.image:
-            bytes_ = self.image.image.tobytes()
-            size = self.image.image.size
-            format_ = self.image.image.mode
-            flipped = False
-            surface = pygame.image.fromstring(
-                bytes_,
-                size,
-                format_,
-                flipped,
-            )
-            self.render(surface)
-
-        if self.text:
-            font = star.pop("font")
-            text = self.text
-            antialias = True
-            color = self.color
-            background = None
-            surface = font.render(text, antialias, color, background)
-            self.render(surface)
+        self.render(self.image_item)
+        self.render(self.text_item)
 
         return True
 
     @override
     def make(self, canvas: A, **star: R) -> N:
         """"""
-        size = self.area.world.size.value
-        blender_mode = False
-        if pillow and not blender_mode:
-            self.image = pillow.new(size)
-        else:
-            self.image = None
-
         super().make(canvas, **star)
+        self.font = star.pop("font")
+
+        if self.text:
+            self.update_text(self.text)
 
         if self.path:
-            self.update(self.path)
+            self.update_image(self.path)
 
     def render(self, source: A) -> N:
         """"""
-        dest = self.area.world.origin.value
+        if not source:
+            return
+        point = self.area.world.origin + self.offset
+        dest = point.value
         area = None
         special_flags = 0
         self.canvas.blit(source, dest, area, special_flags)
 
-    def update(self, path: P, **star: R) -> N:
+    def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
 
-        image = pillow.open(self.path)
+        if pillow:
+            image = pillow.open(self.path)
+            width = image.image.width
+            height = image.image.height
+        else:
+            image = pygame.image.load(self.path)
+            width = image.get_width()
+            height = image.get_height()
 
-        curent = Plane.make(image.image.width, image.image.height)
+        curent = Plane.make(width, height)
         target = Plane.make(*self.area.world.size.value)
 
         match self.fit:
@@ -124,14 +114,50 @@ class Element(Element_, Abstract):
                 result = curent.scale_to_max(target)
 
         result.center(target)
+        self.offset = result.origin
 
-        image.resize(result.size)
-        self.image.paste(image, result)
+        if pillow:
+            image.resize(result.size)
+            bytes_ = image.image.tobytes()
+            size = image.image.size
+            format_ = image.image.mode
+            flipped = False
+            self.image_item = pygame.image.fromstring(
+                bytes_,
+                size,
+                format_,
+                flipped,
+            )
+        else:
+            cow = result.size
+            image = pygame.transform.smoothscale(
+                image,
+                result.size.value,
+            )
+            self.image_item = image
+
+    def update_text(self, text: S) -> N:
+        """"""
+        self.text = text
+        antialias = True
+        color = self.color
+        background = None
+        self.text_item = self.font.render(
+            text,
+            antialias,
+            color,
+            background,
+        )
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
         self.path = star.pop("path", "")
         self.color = (255, 0, 255)
+        self.offset = Point(0, 0)
+        self.font = None
+
+        self.image_item = None
+        self.text_item = None
 
 
 class View(View_, Abstract):
@@ -177,6 +203,11 @@ class Window(Window_):
             ".gif",
             ".png",
         ]
+
+    @override
+    def make(self, **star: R) -> N:
+        """"""
+        super().make(font=self.font, **star)
 
     @override
     def __enter__(self) -> K:
