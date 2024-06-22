@@ -15,6 +15,7 @@ from typing import Literal
 from typing import Optional as V  # Void
 from typing import Tuple as T
 from typing import TypeAlias as TA
+from typing import Type as TY
 
 #  TODO: Remove after Python 3.10.
 _version = sys.version.split(".")
@@ -139,3 +140,6 @@ class _ImportNotUsed(_Fix):
 
     def _tuple(self) -> T[Z, Z]:
         return (0, 0)
+
+    def _type(self) -> TY:
+        return str

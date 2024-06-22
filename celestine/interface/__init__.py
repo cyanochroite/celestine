@@ -1,9 +1,9 @@
 """"""
 
 import math
+import pathlib
 
 from celestine import bank
-from celestine.literal import NONE
 from celestine.package import pillow
 from celestine.typed import (
     BF,
@@ -20,6 +20,7 @@ from celestine.typed import (
     R,
     S,
     T,
+    TY,
     Z,
     override,
 )
@@ -56,7 +57,7 @@ class Abstract(Object):
     action: S  # The action to perform when the user clicks the button.
     fit: Image  # The way the image scales to fit the view space.
     goto: S  # The page to go to when clicked.
-    path: S  # The path to the image to use as a background.
+    path: P  # The path to the image to use as a background.
     text: S  # Text that describes the purpose of the button's action.
 
     def click(self, point: Point, **star: R) -> B:
@@ -68,16 +69,18 @@ class Abstract(Object):
             return False
 
         if self.action:
-            action = bank.window.work
-            argument = self.action
-            star = self.star | {"caller": self.name}
-            bank.queue(action, argument, star)
+            bank.queue(
+                bank.window.work,
+                self.action,
+                self.star | {"caller": self.name},
+            )
 
         if self.goto:
-            action = bank.window.turn
-            argument = self.goto
-            star = self.star | {}
-            bank.queue(action, argument, star)
+            bank.queue(
+                bank.window.turn,
+                self.goto,
+                self.star | {},
+            )
 
         return True
 
@@ -120,20 +123,24 @@ class Abstract(Object):
 
         # Contains all remaining keyword arguments.
 
-        def warp(name: S, default: S = NONE) -> N:
-            value = star.pop(name, default)
+        def warp(name: S, cast: TY = str, default: A = None) -> N:
+            try:
+                pop = star.pop(name)
+                value = cast(pop)
+            except KeyError:
+                value = default
             setattr(self, name, value)
 
         warp("action")
         # The action to perform when the user triggers the button.
 
-        warp("fit", Image.FILL)
+        warp("fit", Image, Image.FILL)
         # The way the image scales to fit the view space.
 
         warp("goto")
         # The page to go to when clicked.
 
-        warp("path")
+        warp("path", pathlib.Path)
         # The path to the image to use as a background.
 
         warp("text")

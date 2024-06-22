@@ -9,20 +9,19 @@ from celestine.typed import (
     LZ,
     TA,
     A,
+    C,
     K,
     N,
     P,
     R,
     S,
     T,
-    C,
     Z,
 )
 from celestine.window.collection import (
     Plane,
     Point,
 )
-
 
 IMAGE: TA = A
 extension: C[[N], LS]

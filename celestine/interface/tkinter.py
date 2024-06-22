@@ -13,13 +13,18 @@ from celestine.typed import (
     BF,
     LS,
     A,
+    K,
     N,
     P,
     R,
     S,
     override,
 )
-from celestine.window.collection import Area
+from celestine.window.collection import (
+    Area,
+    Plane,
+)
+from celestine.window.container import Image
 
 
 class Abstract(Abstract_):
@@ -58,8 +63,8 @@ class Element(Element_, Abstract):
         #    return False
 
         if self.path:
-            self.image2 = tkinter.PhotoImage(file=self.path)
-            star.update(image=self.image2)
+            image = tkinter.PhotoImage(file=self.path)
+            star.update(image=image)
 
         if self.text:
             star.update(text=self.text)
@@ -78,17 +83,34 @@ class Element(Element_, Abstract):
 
     def update(self, path: P, **star: R) -> N:
         """"""
-        super().update(path)
+        self.path = path
+
+        image = pillow.open(self.path)
+
+        curent = Plane.make(image.image.width, image.image.height)
+        target = Plane.make(*self.area.world.size.value)
+
+        match self.fit:
+            case Image.FILL:
+                result = curent.scale_to_min(target)
+            case Image.FULL:
+                result = curent.scale_to_max(target)
+
+        result.center(target)
+
+        image.resize(result.size)
+        self.image.paste(image, result)
+
+        # super().update(path)
 
         if pillow:
-            image = self.image.image
-            self.image2 = pillow.ImageTk.PhotoImage(image=image)
+            photo = pillow.ImageTk.PhotoImage(image=self.image.image)
         else:
             # breaks other stuff elsewere
-            self.image2 = tkinter.PhotoImage(file=self.path)
+            photo = tkinter.PhotoImage(file=self.path)
 
-        self.item.configure(image=self.image2)
-        self.item.image = self.image2
+        self.photo = photo
+        self.item.configure(image=photo)
 
     @override
     def hide(self) -> N:
@@ -101,6 +123,10 @@ class Element(Element_, Abstract):
         """"""
         super().show()
         self.place(self.item)
+
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
+        self.photo = None
 
 
 class View(View_, Abstract):

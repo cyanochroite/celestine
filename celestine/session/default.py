@@ -7,12 +7,11 @@ from celestine.literal import (
     LANGUAGE,
 )
 from celestine.typed import (
-    M,
     S,
 )
 
 
-def module(path: S, *items: S) -> M:
+def module(path: S, *items: S) -> S:
     """Return a default application."""
     for item in items:
         try:
