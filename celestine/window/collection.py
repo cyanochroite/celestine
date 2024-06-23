@@ -168,15 +168,13 @@ class Plane:
         """"""
         return Point(self._one.minimum, self._two.minimum)
 
-    def scale_to_max(self, other: K) -> K:
+    def scale_to_max(self, other: K) -> N:
         """"""
         self *= max(other.size / self.size)
-        return self
 
-    def scale_to_min(self, other: K) -> K:
+    def scale_to_min(self, other: K) -> N:
         """"""
         self *= min(other.size / self.size)
-        return self
 
     @property
     def size(self) -> Point:
