@@ -6,11 +6,18 @@ from celestine.typed import (
     TZ3,
     K,
     N,
-    S,
     P,
+    S,
     Z,
     ignore,
 )
+
+
+class Event:
+    """"""
+
+    type: Z
+    button: Z
 
 
 class Font:
@@ -30,10 +37,23 @@ class Surface:
         ignore(dest)
         return Rect()
 
+    @staticmethod
+    def convert_alpha() -> K:
+        """"""
+        return K
+
     def fill(self, color: TZ3) -> Rect:
         """"""
         ignore(color)
         return Rect()
+
+    def get_height(self) -> Z:
+        """"""
+        return 0
+
+    def get_width(self) -> Z:
+        """"""
+        return 0
 
     def __init__(self, size: TZ2) -> N:
         """"""
@@ -43,6 +63,8 @@ class Surface:
 ########################################################################
 SIZE = (0, 0)
 SURFACE = Surface(SIZE)
+MOUSEBUTTONDOWN: Z
+QUIT: Z
 ########################################################################
 
 
@@ -74,8 +96,9 @@ class event:  # pylint: disable=invalid-name
     """"""
 
     @staticmethod
-    def wait() -> N:
+    def wait() -> Event:
         """"""
+        return Event()
 
 
 class font:  # pylint: disable=invalid-name

@@ -98,13 +98,13 @@ class Element(Element_, Abstract):
         self.image.fill((0, 0, 0))
 
         if pillow:
-            image = pillow.open(self.path)
-            width = image.image.width
-            height = image.image.height
+            image_pillow = pillow.open(self.path)
+            width = image_pillow.image.width
+            height = image_pillow.image.height
         else:
-            image = pygame.image.load(self.path)
-            width = image.get_width()
-            height = image.get_height()
+            image_pygame = pygame.image.load(self.path)
+            width = image_pygame.get_width()
+            height = image_pygame.get_height()
 
         # TODO got to figure out Area coordinates
         # or cach this somehow
@@ -119,15 +119,14 @@ class Element(Element_, Abstract):
         curent.center(target)
 
         if pillow:
-            image.resize(curent.size)
+            image_pillow.resize(curent.size)
 
-            buffer = image.image.tobytes()
-            size = image.image.size
-            format_ = image.image.mode
+            buffer = image_pillow.image.tobytes()
+            size = image_pillow.image.size
+            format_ = image_pillow.image.mode
             source = pygame.image.frombuffer(buffer, size, format_)
-
         else:
-            surface = image
+            surface = image_pygame
             size = curent.size.value
             source = pygame.transform.smoothscale(surface, size)
 
