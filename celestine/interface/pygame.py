@@ -121,15 +121,14 @@ class Element(Element_, Abstract):
         if pillow:
             image.resize(curent.size)
 
-            bytes_ = image.image.tobytes()
+            buffer = image.image.tobytes()
             size = image.image.size
             format_ = image.image.mode
-            source = pygame.image.frombuffer(bytes_, size, format_)
+            source = pygame.image.frombuffer(buffer, size, format_)
 
         else:
             surface = image
             size = curent.size.value
-
             source = pygame.transform.smoothscale(surface, size)
 
         dest = curent.origin.value
