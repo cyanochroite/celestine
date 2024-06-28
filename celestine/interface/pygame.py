@@ -20,7 +20,6 @@ from celestine.typed import (
     A,
     B,
     K,
-    M,
     N,
     P,
     R,
@@ -63,8 +62,15 @@ class Element(Element_, Abstract):
         if not super().draw(**star):
             return False
 
-        self.render(self.image)
-        self.render(self.text_item)
+        dest = self.area.world.origin.value
+
+        def render(source: A) -> N:
+            """"""
+            if source:
+                self.canvas.blit(source, dest)
+
+        render(self.image)
+        render(self.text_item)
 
         return True
 
@@ -75,6 +81,7 @@ class Element(Element_, Abstract):
         self.font = star.pop("font")
 
         size = self.area.local.size.value
+
         self.image = pygame.Surface(size)
 
         if self.text:
@@ -83,23 +90,9 @@ class Element(Element_, Abstract):
         if self.path:
             self.update_image(self.path)
 
-    def render(self, source: A) -> N:
-        """"""
-        if not source:
-            return
-        point = self.area.world.origin
-        dest = point.value
-        area = None
-        special_flags = 0
-        self.canvas.blit(source, dest, area, special_flags)
-
     def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
-        # TODO got to figure out Area coordinates
-        # or cach this somehow
-        target = self.area.local
-        target = Plane.make(*self.area.world.size.value)
 
         # reset image
         self.image.fill((0, 0, 0))
@@ -113,47 +106,34 @@ class Element(Element_, Abstract):
             width = image.get_width()
             height = image.get_height()
 
+        # TODO got to figure out Area coordinates
+        # or cach this somehow
+        target = self.area.local
+        target = Plane.make(*self.area.world.size.value)
         curent = Plane.make(width, height)
-
         match self.fit:
             case Image.FILL:
                 curent.scale_to_min(target)
             case Image.FULL:
                 curent.scale_to_max(target)
-
         curent.center(target)
 
         if pillow:
             image.resize(curent.size)
+
             bytes_ = image.image.tobytes()
             size = image.image.size
             format_ = image.image.mode
-            flipped = False
-            self.image = pygame.image.fromstring(
-                bytes_,
-                size,
-                format_,
-                flipped,
-            )
+            source = pygame.image.frombuffer(bytes_, size, format_)
+
         else:
-            image = pygame.transform.smoothscale(
-                image,
-                curent.size.value,
-            )
-            # origin = curent.origin.value
-            # self.image.blit(image, (0, 0), (30, 30, 80, 80))
-            # self.image.blit(image, (0, 0))
-            # self.image.blit(image, origin)
+            surface = image
+            size = curent.size.value
 
-            source = image
-            dest = curent.origin.value
+            source = pygame.transform.smoothscale(surface, size)
 
-            area = None
-            one, two = curent.size.value
-            # area = (0, 0, one, two)
-
-            special_flags = 0
-            self.image.blit(source, dest, area, special_flags)
+        dest = curent.origin.value
+        self.image.blit(source, dest)
 
     def update_text(self, text: S) -> N:
         """"""
@@ -283,6 +263,7 @@ class Window(Window_):
         super().__init__(element, **star)
         self.area = Area.make(1280, 960)
         self.area = Area.make(1920, 1080)
+        # self.area = Area.make(1920 * 2, 1080 * 2)
         self.font = None
 
         value = self.area.world.size.value

@@ -17,11 +17,15 @@ from celestine.typed import (
     S,
     T,
     Z,
+    ignore,
 )
 from celestine.window.collection import (
     Plane,
     Point,
 )
+
+Img: TA = A
+
 
 IMAGE: TA = A
 extension: C[[N], LS]
@@ -35,6 +39,14 @@ COLORS = 15  # int(255 - 8 / 16)
 
 class Image:
     """"""
+
+    def open(self, fp: P, mode: S, formats: LS) -> Img:
+        """"""
+        ignore(fp)
+        ignore(mode)
+        ignore(formats)
+
+    ####################
 
     image: IMAGE
 
