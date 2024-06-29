@@ -52,8 +52,8 @@ def get_colors(curses, image):
         blue //= 255
 
         if red >= 920 or green >= 920 or blue >= 920:
-            pass
-            # print(red, green, blue)
+            print(red, green, blue)
+
         curses.init_color(color_index, red, green, blue)
         curses.init_pair(color_index, color_index, 0)
 
@@ -235,8 +235,6 @@ class Element(Element_, Abstract):
 
         self.color.brightwing()
 
-        # self.cache.resize(target_length.size, box)
-        # self.color.resize(self.area.size, box)
         self.cache.resize(target_length.size)
         self.color.resize(self.area.local.size)
 

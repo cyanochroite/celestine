@@ -96,7 +96,7 @@ class Element(Element_, Abstract):
         # reset image
         self.image.fill((0, 0, 0))
 
-        if pillow:
+        if bool(pillow):
             image_pillow = pillow.open(self.path)
             width = image_pillow.image.width
             height = image_pillow.image.height
@@ -110,14 +110,14 @@ class Element(Element_, Abstract):
         target = self.area.local
         target = Plane.make(*self.area.world.size.value)
         curent = Plane.make(width, height)
-        match self.fit:
-            case Image.FILL:
-                curent.scale_to_min(target)
-            case Image.FULL:
-                curent.scale_to_max(target)
+
+        if self.fit == Image.FILL:
+            curent.scale_to_min(target)
+        elif self.fit == Image.FULL:
+            curent.scale_to_max(target)
         curent.center(target)
 
-        if pillow:
+        if bool(pillow):
             image_pillow.resize(curent.size)
 
             buffer = image_pillow.image.tobytes()

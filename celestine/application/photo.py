@@ -88,7 +88,7 @@ def run(**star: R) -> B:
     return True
 
 
-"""
+NOTE = """
 tar.lzma
 WITNESS_CAMPAIGN
 VBOX - EXTPACK

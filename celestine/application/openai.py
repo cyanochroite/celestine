@@ -34,7 +34,7 @@ class Session(SuperSession):
     directory: S
 
     @classmethod
-    def dictionary(cls, core) -> DA:
+    def dictionary(cls) -> DA:
         """"""
         return {
             KEY: Optional(
@@ -75,10 +75,8 @@ def generate(hold: H, prompt: str):
         prompt=prompt,
         model="dall-e-2",
         n=1,
-        # quality="hd",
         quality="standard",
         response_format="url",
-        # size="1024x1024",
         size="256x256",
         style="vivid",
     )

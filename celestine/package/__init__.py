@@ -67,10 +67,8 @@ class Abstract:
             os.devnull,
             "w",
             encoding="utf-8",
-            # stream.Mode.WRITE_TEXT.value,
-            # encoding=stream.Encoding.UTF_8.value,
         ) as stdout:
-            sys.stdout = stdout  # as TextIO
+            sys.stdout = stdout
             try:
                 self.package = load.package(self.pypi)
             except ValueError:
@@ -78,12 +76,9 @@ class Abstract:
                 self.package = None
             except ModuleNotFoundError:
                 self.package = None
-                # found = f"Package '{self.name}' not found."
-                # install = f"Install with 'pip install {self.pypi}'."
-                # message = f"{found} {install}"
-                # logging.warning(message)
+                found = f"Package '{self.name}' not found."
+                install = f"Install with 'pip install {self.pypi}'."
+                message = f"{found} {install}"
+                print(message)
 
         sys.stdout = sys_stdout
-
-
-pillow: Abstract

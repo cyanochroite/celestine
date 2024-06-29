@@ -355,7 +355,7 @@ class Window(Window_):
         super().run()
 
         if self.call == "make":
-            return False
+            return
 
         page = bpy.context.scene.celestine.page
         self.page = self.view[page]

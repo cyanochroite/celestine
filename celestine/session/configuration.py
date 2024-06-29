@@ -58,7 +58,7 @@ class Configuration:
 
     def __init__(self) -> N:
         """"""
-        if platformdirs:
+        if bool(platformdirs):
             self.path = platformdirs.directory
         else:
             self.path = load.pathway_root()

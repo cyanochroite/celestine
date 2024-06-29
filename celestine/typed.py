@@ -1,4 +1,8 @@
-"""Define types here."""
+"""
+Define types here.
+
+Generator[YieldType, SendType, ReturnType]
+"""
 
 # TODO: Replace all this with 'type' after python 3.12 and mypy support.
 
@@ -73,7 +77,6 @@ DP: TA = D[S, P]
 DS: TA = D[S, S]
 DZ: TA = D[S, Z]
 
-# Generator[YieldType, SendType, ReturnType]
 GA: TA = G[A, N, N]
 GB: TA = G[B, N, N]
 GF: TA = G[F, N, N]
@@ -142,8 +145,10 @@ class _ImportNotUsed(_Fix):
         """"""
         return self
 
-    def _tuple(self) -> T[Z, Z]:
+    @staticmethod
+    def _tuple() -> T[Z, Z]:
         return (0, 0)
 
-    def _type(self) -> TY:
+    @staticmethod
+    def _type() -> TY:
         return str

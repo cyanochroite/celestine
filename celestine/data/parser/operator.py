@@ -11,6 +11,7 @@ class Operator:
     """"""
 
     def __init__(self, name, primary, secondary):
+        print(secondary)
         self.name = name
         self.value = primary
         array = [getattr(item, "value", str(item)) for item in primary]
@@ -182,6 +183,7 @@ class tab(Operator):
     """"""
 
     def __init__(self, iterable):
+        print(iterable)
         super().__init__("TAB", [Divider.WHITESPACE], [])
 
 

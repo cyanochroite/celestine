@@ -1,6 +1,5 @@
 """"""
 
-# from celestine.application.viewer.core import os
 import os
 
 from celestine import language
