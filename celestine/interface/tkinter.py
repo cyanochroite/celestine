@@ -10,7 +10,6 @@ from celestine.package import (
     tkinter,
 )
 from celestine.typed import (
-    BF,
     LS,
     A,
     K,
@@ -191,10 +190,9 @@ class Window(Window_):
         self.page.canvas.tkraise()
 
     @override
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
-        super().__exit__(exc_type, exc_value, traceback)
+    def run(self) -> N:
+        super().run()
         self.canvas.mainloop()
-        return False
 
     @override
     def __init__(self, **star: R) -> N:

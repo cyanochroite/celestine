@@ -15,7 +15,6 @@ from celestine.package import (
     pygame,
 )
 from celestine.typed import (
-    BF,
     LS,
     A,
     B,
@@ -205,27 +204,8 @@ class Window(Window_):
         super().make(font=self.font, **star)
 
     @override
-    def __enter__(self) -> K:
-        super().__enter__()
-
-        def set_caption() -> N:
-            caption = bank.language.APPLICATION_TITLE
-            pygame.display.set_caption(caption)
-
-        def set_font() -> N:
-            pygame.font.init()
-            file_path = load.asset("cascadia_code_regular.otf")
-            size = 40
-            self.font = pygame.font.Font(file_path, size)
-
-        set_caption()
-        set_font()
-
-        return self
-
-    @override
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
-        super().__exit__(exc_type, exc_value, traceback)
+    def run(self) -> N:
+        super().run()
 
         def set_icon() -> N:
             path = "icon.png"
@@ -249,7 +229,6 @@ class Window(Window_):
                     pass
 
         pygame.quit()
-        return False
 
     @override
     def __init__(self, **star: R) -> N:
@@ -259,10 +238,15 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.make(1280, 960)
         self.area = Area.make(1920, 1080)
-        # self.area = Area.make(1920 * 2, 1080 * 2)
-        self.font = None
 
         value = self.area.world.size.value
         self.canvas = pygame.display.set_mode(value)
+
+        caption = bank.language.APPLICATION_TITLE
+        pygame.display.set_caption(caption)
+
+        pygame.font.init()
+        file_path = load.asset("cascadia_code_regular.otf")
+        size = 40
+        self.font = pygame.font.Font(file_path, size)

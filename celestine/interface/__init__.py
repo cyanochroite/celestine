@@ -490,13 +490,7 @@ class Window(Tree):
         caller(**star)
         self.draw(**star)
 
-    def __enter__(self) -> K:
-        return self
-
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
-        if exc_type or exc_value or traceback:
-            print(exc_type, exc_value, traceback)
-
+    def run(self) -> N:
         self.spot(self.area)
         self.make()
 
@@ -504,8 +498,6 @@ class Window(Tree):
             value.hide()
 
         self.turn(self.main)
-
-        return False
 
     def __init__(self, element_item: D[S, A], **star: R) -> N:
         super().__init__(**star)

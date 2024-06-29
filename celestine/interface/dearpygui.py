@@ -187,8 +187,25 @@ class Window(Window_):
         dearpygui.set_primary_window(tag, True)
 
     @override
-    def __enter__(self):
-        super().__enter__()
+    def run(self) -> N:
+        super().run()
+        dearpygui.setup_dearpygui()
+        dearpygui.show_viewport(minimized=False, maximized=False)
+        dearpygui.start_dearpygui()
+        dearpygui.destroy_context()
+
+    @override
+    def __init__(self, **star: R) -> N:
+        element = {
+            "element": Element,
+            "view": View,
+            "window": self,
+        }
+        super().__init__(element, **star)
+        self.area = Area.make(1280, 1080)
+        self.tag = "window"
+
+        self.canvas = None
 
         title = bank.language.APPLICATION_TITLE
         dearpygui.create_context()
@@ -211,27 +228,3 @@ class Window(Window_):
             decorated=True,
             clear_color=(0, 0, 0),
         )
-        return self
-
-    @override
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A):
-        super().__exit__(exc_type, exc_value, traceback)
-
-        dearpygui.setup_dearpygui()
-        dearpygui.show_viewport(minimized=False, maximized=False)
-        dearpygui.start_dearpygui()
-        dearpygui.destroy_context()
-        return False
-
-    @override
-    def __init__(self, **star: R) -> N:
-        element = {
-            "element": Element,
-            "view": View,
-            "window": self,
-        }
-        super().__init__(element, **star)
-        self.area = Area.make(1280, 1080)
-        self.tag = "window"
-
-        self.canvas = None
