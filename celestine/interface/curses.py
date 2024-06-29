@@ -295,36 +295,8 @@ class Window(Window_):
         return curses.window(*self.area.int)
 
     @override
-    def __enter__(self):
-        super().__enter__()
-
-        (size_y, size_x) = self.stdscr.getmaxyx()
-        self.full = Plane.make(size_x, size_y)
-
-        self.background = curses.window(0, 0, size_x, size_y)
-        self.background.box()
-
-        header_box = (0, 0, size_x, 1)
-        header = curses.subwindow(self.background, *header_box)
-        header.addstr(0, 1, bank.language.APPLICATION_TITLE)
-
-        footer_box = (0, size_y - 1, size_x, 1)
-        footer = curses.subwindow(self.background, *footer_box)
-        footer.addstr(0, 1, bank.language.CURSES_EXIT)
-
-        #
-        # TODO check why repeat code from init
-        plane = Plane(
-            Line(1, size_x - 2),
-            Line(1, size_y - 2),
-        )
-        self.area = Area(plane, plane)
-
-        return self
-
-    @override
-    def __exit__(self, exc_type, exc_value, traceback):
-        super().__exit__(exc_type, exc_value, traceback)
+    def run(self) -> N:
+        super().run()
 
         while True:
             bank.dequeue()
@@ -357,7 +329,6 @@ class Window(Window_):
         curses.echo()
         curses.nocbreak()
         curses.endwin()
-        return False
 
     @override
     def __init__(self, **star: R) -> N:
@@ -390,3 +361,27 @@ class Window(Window_):
         self.cord_y = 0.5
 
         self.canvas = self.background
+
+        #####
+
+        (size_y, size_x) = self.stdscr.getmaxyx()
+        self.full = Plane.make(size_x, size_y)
+
+        self.background = curses.window(0, 0, size_x, size_y)
+        self.background.box()
+
+        header_box = (0, 0, size_x, 1)
+        header = curses.subwindow(self.background, *header_box)
+        header.addstr(0, 1, bank.language.APPLICATION_TITLE)
+
+        footer_box = (0, size_y - 1, size_x, 1)
+        footer = curses.subwindow(self.background, *footer_box)
+        footer.addstr(0, 1, bank.language.CURSES_EXIT)
+
+        #
+        # TODO check why repeat code from init
+        plane = Plane(
+            Line(1, size_x - 2),
+            Line(1, size_y - 2),
+        )
+        self.area = Area(plane, plane)

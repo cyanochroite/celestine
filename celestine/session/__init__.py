@@ -128,13 +128,14 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
 
         raise Warning("There is nothing to draw.")
 
-    with window:
-        window.main = find_main()
+    window.main = find_main()
 
-        for name, function in call.items():
-            window.code[name] = function
+    for name, function in call.items():
+        window.code[name] = function
 
-        for name, function in draw.items():
-            view = window.drop(name)
-            function(view)
-            window.view[name] = view
+    for name, function in draw.items():
+        view = window.drop(name)
+        function(view)
+        window.view[name] = view
+
+    window.run()

@@ -351,15 +351,47 @@ class Window(Window_):
         bpy.context.scene.celestine.page = page
 
     @override
-    def __enter__(self):
+    def run(self) -> N:
+        super().run()
+
+        if self.call == "make":
+            return False
+
+        page = bpy.context.scene.celestine.page
+        self.page = self.view[page]
+
+        call = getattr(self, self.call)
+        call(**self.star)
+
+        bank.dequeue()
+
+    def __init__(self, *, call=None, **star: R) -> N:
+        element = {
+            "element": Element,
+            "view": View,
+            "window": self,
+        }
+        super().__init__(element, **star)
+        self.area = Area.make(35, 20)
+
+        self.dictionary = bpy.data.collections  # From View?
+
+        self.frame = None
+        self.mouse = None
+
+        self.call = call
+        self.star = star
+
+        self.canvas = None
+
+        ######
+
         if self.call is None:
             print("THIS IS BEST RUN AS A BLENDER ADD-ONS")
             register()
             data.begin()
         elif self.call != "make":
-            return self
-
-        super().__enter__()
+            return
 
         for camera in bpy.data.cameras:
             data.camera.remove(camera)
@@ -434,41 +466,3 @@ class Window(Window_):
         if self.call == "make":
             with bpy.context.temp_override(**temp_override):
                 bpy.ops.view3d.view_camera()
-
-        return self
-
-    @override
-    def __exit__(self, exc_type, exc_value, traceback):
-        super().__exit__(exc_type, exc_value, traceback)
-
-        if self.call == "make":
-            return False
-
-        page = bpy.context.scene.celestine.page
-        self.page = self.view[page]
-
-        call = getattr(self, self.call)
-        call(**self.star)
-
-        bank.dequeue()
-
-        return False
-
-    def __init__(self, *, call=None, **star: R) -> N:
-        element = {
-            "element": Element,
-            "view": View,
-            "window": self,
-        }
-        super().__init__(element, **star)
-        self.area = Area.make(35, 20)
-
-        self.dictionary = bpy.data.collections  # From View?
-
-        self.frame = None
-        self.mouse = None
-
-        self.call = call
-        self.star = star
-
-        self.canvas = None

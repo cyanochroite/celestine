@@ -14,6 +14,7 @@ from typing import List as L
 from typing import Literal
 from typing import Optional as V  # Void
 from typing import Tuple as T
+from typing import Type as TY
 from typing import TypeAlias as TA
 
 #  TODO: Remove after Python 3.10.
@@ -59,7 +60,6 @@ S: TA = str
 # Y: TA = typing.Any  # Unused
 Z: TA = int  # Set of Integers Symbol ℤ.
 
-
 BF: TA = Literal[False]
 BT: TA = Literal[True]
 
@@ -97,6 +97,10 @@ VM: TA = V[M]
 VP: TA = V[P]
 VS: TA = V[S]
 VZ: TA = V[Z]
+
+
+TZ2: TA = T[Z, Z]
+TZ3: TA = T[Z, Z, Z]
 
 
 def ignore(_: A) -> N:
@@ -140,3 +144,6 @@ class _ImportNotUsed(_Fix):
 
     def _tuple(self) -> T[Z, Z]:
         return (0, 0)
+
+    def _type(self) -> TY:
+        return str

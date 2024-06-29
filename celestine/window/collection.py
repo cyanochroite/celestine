@@ -1,17 +1,11 @@
 """"""
 
-from collections.abc import Collection
-
 from celestine.typed import (
     GZ,
     B,
-    D,
     F,
-    G,
     K,
     N,
-    R,
-    S,
     T,
     Z,
 )
@@ -45,6 +39,11 @@ class Point:
     def __iter__(self) -> GZ:
         yield self._one
         yield self._two
+
+    def __add__(self, other: K) -> K:
+        one = self._one + other._one
+        two = self._two + other._two
+        return type(self)(one, two)
 
     def __sub__(self, other: K) -> K:
         one = self._one - other._one
@@ -169,15 +168,13 @@ class Plane:
         """"""
         return Point(self._one.minimum, self._two.minimum)
 
-    def scale_to_max(self, other: K) -> K:
+    def scale_to_max(self, other: K) -> N:
         """"""
         self *= max(other.size / self.size)
-        return self
 
-    def scale_to_min(self, other: K) -> K:
+    def scale_to_min(self, other: K) -> N:
         """"""
         self *= min(other.size / self.size)
-        return self
 
     @property
     def size(self) -> Point:
@@ -240,46 +237,3 @@ class Area:
 
     def __str__(self):
         return f"({self.local}, {self.world})"
-
-
-class Object:
-    """"""
-
-    def __init__(self, **star: R) -> N:
-        """This does not pass the star parameter to the real object."""
-        super().__init__()
-
-
-class Tree(Object, Collection[K]):
-    """"""
-
-    children: D[S, K]
-
-    def get(self, name: S) -> K:
-        """"""
-        result = self.children[name]
-        return result
-
-    def set(self, item: K) -> K:
-        """"""
-        self.children[item.name] = item
-        return item
-
-    def __bool__(self) -> B:
-        return True
-
-    def __contains__(self, item: S) -> B:
-        contains = item in self.children
-        return contains
-
-    def __init__(self, **star: R) -> N:
-        self.children = {}
-        super().__init__(**star)
-
-    def __iter__(self) -> G[T[S, K], N, N]:
-        items = self.children.items()
-        yield from items
-
-    def __len__(self) -> Z:
-        length = len(self.children)
-        return length

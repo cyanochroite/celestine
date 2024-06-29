@@ -1,31 +1,33 @@
 """"""
 
 import math
+import pathlib
 
 from celestine import bank
-from celestine.literal import NONE
-from celestine.package import pillow
 from celestine.typed import (
     BF,
+    GA,
+    GS,
     LS,
+    TY,
     A,
     B,
     D,
+    G,
     K,
     N,
     P,
     R,
     S,
+    T,
     Z,
     override,
 )
 from celestine.window.collection import (
     Area,
     Line,
-    Object,
     Plane,
     Point,
-    Tree,
 )
 from celestine.window.container import (
     Image,
@@ -33,10 +35,17 @@ from celestine.window.container import (
 )
 
 
+class Object:
+    """"""
+
+    def __init__(self, **star: R) -> N:
+        """This does not pass the star parameter to the real object."""
+        super().__init__()
+
+
 class Abstract(Object):
     """"""
 
-    item: A  # The object that the window system interacts with.
     parent: K
 
     area: Area
@@ -47,7 +56,7 @@ class Abstract(Object):
     action: S  # The action to perform when the user clicks the button.
     fit: Image  # The way the image scales to fit the view space.
     goto: S  # The page to go to when clicked.
-    path: S  # The path to the image to use as a background.
+    path: P  # The path to the image to use as a background.
     text: S  # Text that describes the purpose of the button's action.
 
     def click(self, point: Point, **star: R) -> B:
@@ -59,25 +68,24 @@ class Abstract(Object):
             return False
 
         if self.action:
-            action = bank.window.work
-            argument = self.action
-            star = self.star | {"caller": self.name}
-            bank.queue(action, argument, star)
+            bank.queue(
+                bank.window.work,
+                self.action,
+                self.star | {"caller": self.name},
+            )
 
         if self.goto:
-            action = bank.window.turn
-            argument = self.goto
-            star = self.star | {}
-            bank.queue(action, argument, star)
+            bank.queue(
+                bank.window.turn,
+                self.goto,
+                self.star | {},
+            )
 
         return True
 
     def draw(self, **star: R) -> B:
         """"""
-        if self.hidden:
-            return False
-
-        return True
+        return not self.hidden
 
     def hide(self) -> N:
         """"""
@@ -106,26 +114,29 @@ class Abstract(Object):
         self.canvas = None
         self.hidden = False
         self.name = name
-        self.item = None
 
         self.star = star
 
         # Contains all remaining keyword arguments.
 
-        def warp(name: S, default: S = NONE) -> N:
-            value = star.pop(name, default)
+        def warp(name: S, cast: TY = str, default: A = None) -> N:
+            try:
+                pop = star.pop(name)
+                value = cast(pop)
+            except KeyError:
+                value = default
             setattr(self, name, value)
 
         warp("action")
         # The action to perform when the user triggers the button.
 
-        warp("fit", Image.FILL)
+        warp("fit", Image, Image.FILL)
         # The way the image scales to fit the view space.
 
         warp("goto")
         # The page to go to when clicked.
 
-        warp("path")
+        warp("path", pathlib.Path)
         # The path to the image to use as a background.
 
         warp("text")
@@ -136,53 +147,69 @@ class Element(Abstract):
     """"""
 
     image: A
-
-    @override
-    def make(self, canvas: A, **star: R) -> N:
-        """"""
-        size = self.area.world.size.value
-        blender_mode = False
-        if pillow and not blender_mode:
-            self.image = pillow.new(size)
-        else:
-            self.image = None
-
-        super().make(canvas, **star)
-
-    def draw(self, **star: R) -> B:
-        """"""
-        if not super().draw():
-            return False
-
-        #  TODO: Check if other types want this here.
-        if self.path:
-            self.update(self.path)
-
-        return True
-
-    def update(self, path: P, **star: R) -> N:
-        """"""
-        self.path = path
-
-        image = pillow.open(self.path)
-
-        curent = Plane.make(image.image.width, image.image.height)
-        target = Plane.make(*self.area.world.size.value)
-
-        match self.fit:
-            case Image.FILL:
-                result = curent.scale_to_min(target)
-            case Image.FULL:
-                result = curent.scale_to_max(target)
-
-        result.center(target)
-
-        image.resize(result.size)
-        self.image.paste(image, result)
+    item: A
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
         self.image = None
+        self.item = None
+
+
+class Tree(Object):
+    """"""
+
+    # TODO Python 3.12: Make class Tree[TYPE] and replace ANY.
+    _children: D[S, Abstract]
+
+    def find(self, name: S) -> Abstract:
+        """"""
+        for key, value in self.items():
+            if key == name:
+                return value
+            try:
+                return value.find(name)
+            except AttributeError:
+                pass
+            except KeyError:
+                pass
+        raise KeyError(name)
+
+    def get(self, name: S) -> Abstract:
+        """"""
+        result = self._children[name]
+        return result
+
+    def items(self) -> GA:
+        """"""
+        iterator = iter(self._children.items())
+        yield from iterator
+
+    def keys(self) -> GS:
+        """"""
+        iterator = iter(self._children.keys())
+        yield from iterator
+
+    def set(self, item: Abstract) -> Abstract:
+        """"""
+        self._children[item.name] = item
+        return item
+
+    def values(self) -> G[T[S, Abstract], N, N]:
+        """"""
+        iterator = iter(self._children.values())
+        yield from iterator
+
+    def __bool__(self) -> B:
+        boolean = bool(self._children)
+        return boolean
+
+    def __init__(self, **star: R) -> N:
+        self._children = {}
+        super().__init__(**star)
+
+    def __len__(self) -> Z:
+        length = len(self._children)
+        return length
 
 
 class View(Abstract, Tree):
@@ -193,24 +220,12 @@ class View(Abstract, Tree):
     height: Z
     element_item: D[S, A]
 
-    def find(self, name: S) -> N | Abstract:
-        """"""
-        for key, value in self:
-            if key == name:
-                return value
-            if not getattr(value, "find", False):
-                continue
-            item = value.find(name)
-            if item:
-                return item
-        return None
-
     def click(self, point: Point, **star: R) -> B:
         if not super().click(point, **star):
             return False
 
-        for _, item in self:
-            item.click(point)
+        for value in self.values():
+            value.click(point)
 
         return True
 
@@ -220,14 +235,14 @@ class View(Abstract, Tree):
         if self.hidden:
             return
 
-        for _, item in self:
-            item.draw(**star)
+        for value in self.values():
+            value.draw(**star)
 
     @override
     def make(self, canvas: A, **star: R) -> N:
         """"""
-        for _, item in self:
-            item.make(canvas, **star)
+        for value in self.values():
+            value.make(canvas, **star)
 
     @override
     def spot(self, area: Area) -> N:
@@ -250,7 +265,7 @@ class View(Abstract, Tree):
                 partition_y = 1
 
         index = 0
-        for _, item in self:
+        for value in self.values():
             this = self.area.world
 
             one = Line(0, 1)
@@ -269,7 +284,7 @@ class View(Abstract, Tree):
             local -= area.world.origin
 
             rectangle = Area(local, world)
-            item.spot(rectangle)
+            value.spot(rectangle)
             index += 1
 
     def zone(
@@ -431,13 +446,13 @@ class Window(Tree):
 
     def draw(self, **star: R) -> N:
         """"""
-        for _, item in self:
-            item.draw(**star)
+        for value in self.values():
+            value.draw(**star)
 
     def make(self, **star: R) -> N:
         """"""
-        for _, item in self:
-            item.make(self.canvas, **star)
+        for value in self.values():
+            value.make(self.canvas, **star)
 
     def turn(self, page: S, **star: R) -> N:
         """"""
@@ -455,24 +470,14 @@ class Window(Tree):
 
     def click(self, point: Point) -> N:
         """"""
-        for _, item in self:
-            item.click(point)
-
-    def find(self, name: S) -> N | Abstract:
-        """"""
-        for key, value in self:
-            if key == name:
-                return value
-            item = value.find(name)
-            if item:
-                return item
-        raise KeyError(name)
+        for value in self.values():
+            value.click(point)
 
     def spot(self, area: Area) -> N:
         """"""
         self.area = area
-        for _, item in self:
-            item.spot(area)
+        for value in self.values():
+            value.spot(area)
 
     ###############
 
@@ -485,22 +490,14 @@ class Window(Tree):
         caller(**star)
         self.draw(**star)
 
-    def __enter__(self) -> K:
-        return self
-
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
-        if exc_type or exc_value or traceback:
-            print(exc_type, exc_value, traceback)
-
+    def run(self) -> N:
         self.spot(self.area)
         self.make()
 
-        for _, item in self:
-            item.hide()
+        for value in self.values():
+            value.hide()
 
         self.turn(self.main)
-
-        return False
 
     def __init__(self, element_item: D[S, A], **star: R) -> N:
         super().__init__(**star)

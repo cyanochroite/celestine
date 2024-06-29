@@ -84,3 +84,6 @@ class Abstract:
                 # logging.warning(message)
 
         sys.stdout = sys_stdout
+
+
+pillow: Abstract

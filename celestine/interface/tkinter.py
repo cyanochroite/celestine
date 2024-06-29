@@ -10,16 +10,20 @@ from celestine.package import (
     tkinter,
 )
 from celestine.typed import (
-    BF,
     LS,
     A,
+    K,
     N,
     P,
     R,
     S,
     override,
 )
-from celestine.window.collection import Area
+from celestine.window.collection import (
+    Area,
+    Plane,
+)
+from celestine.window.container import Image
 
 
 class Abstract(Abstract_):
@@ -41,25 +45,31 @@ class Element(Element_, Abstract):
     """"""
 
     @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+        self.item.place_forget()
+
+    @override
     def make(self, canvas: A, **star: R) -> N:
         """"""
+        super().make(canvas, **star)
 
-        super().make(canvas)
+        size = self.area.world.size.value
+        blender_mode = False
+        if pillow and not blender_mode:
+            self.image = pillow.new(size)
+        else:
+            self.image = None
 
         def callback() -> N:
             """"""
             self.click(self.area.world.centroid)
             bank.dequeue()
 
-        # if not super().make(canvas):
-        #    return False
-
-        # if not super().draw(**star):
-        #    return False
-
         if self.path:
-            self.image2 = tkinter.PhotoImage(file=self.path)
-            star.update(image=self.image2)
+            image = tkinter.PhotoImage(file=self.path)
+            star.update(image=image)
 
         if self.text:
             star.update(text=self.text)
@@ -76,25 +86,8 @@ class Element(Element_, Abstract):
 
         self.place(self.item)
 
-    def update(self, path: P, **star: R) -> N:
-        """"""
-        super().update(path)
-
-        if pillow:
-            image = self.image.image
-            self.image2 = pillow.ImageTk.PhotoImage(image=image)
-        else:
-            # breaks other stuff elsewere
-            self.image2 = tkinter.PhotoImage(file=self.path)
-
-        self.item.configure(image=self.image2)
-        self.item.image = self.image2
-
-    @override
-    def hide(self) -> N:
-        """"""
-        super().hide()
-        self.item.place_forget()
+        if self.path:
+            self.update(self.path)
 
     @override
     def show(self) -> N:
@@ -102,12 +95,52 @@ class Element(Element_, Abstract):
         super().show()
         self.place(self.item)
 
+    def update(self, path: P, **star: R) -> N:
+        """"""
+        self.path = path
+
+        image = pillow.open(self.path)
+
+        curent = Plane.make(image.image.width, image.image.height)
+        target = Plane.make(*self.area.world.size.value)
+
+        match self.fit:
+            case Image.FILL:
+                result = curent.scale_to_min(target)
+            case Image.FULL:
+                result = curent.scale_to_max(target)
+
+        result.center(target)
+
+        image.resize(result.size)
+        self.image.paste(image, result)
+
+        # super().update(path)
+
+        if pillow and False:
+            photo = pillow.ImageTk.PhotoImage(image=self.image.image)
+        else:
+            width, height = result.size.value
+            # breaks other stuff elsewere
+            photo = tkinter.PhotoImage(
+                file=self.path,
+                width=width,
+                height=height,
+            )
+
+        self.photo = photo
+        self.item.configure(image=photo)
+
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
+        self.photo = None
+
 
 class View(View_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A) -> N:
+    def make(self, canvas: A, **star: R) -> N:
         """"""
         self.canvas = tkinter.Frame(
             canvas,
@@ -143,10 +176,10 @@ class Window(Window_):
             return pillow.extension()
 
         return [
-            ".pbm",
+            # ".pbm",
             ".pgm",
             ".ppm",
-            ".pnm",
+            # ".pnm",
             ".gif",
             ".png",
         ]
@@ -157,10 +190,9 @@ class Window(Window_):
         self.page.canvas.tkraise()
 
     @override
-    def __exit__(self, exc_type: A, exc_value: A, traceback) -> BF:
-        super().__exit__(exc_type, exc_value, traceback)
+    def run(self) -> N:
+        super().run()
         self.canvas.mainloop()
-        return False
 
     @override
     def __init__(self, **star: R) -> N:
