@@ -1,11 +1,16 @@
-*.egg-info/
+*.bat
 *.ini
 *.wpr
 *.wpu
 .coverage
+.editorconfig
+.flake8
+.gitattributes
 .mypy_cache/
 .ruff_cache/
 __pycache__/
+celestine.egg-info/
 dist/*
 doc/*
 docs/*
+scripts/*
