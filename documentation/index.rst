@@ -7,7 +7,6 @@ The Celestine Image Viewer
 
     note
     wing
-    README
     application
     dependencies
     interface
@@ -37,7 +36,6 @@ Most files in this project are dedicated to viewing and modifying local images.
 Will try to update the project to reflect that.
 
 The application :doc:`application`.
-The readme :doc:`README`.
 Development settings at :doc:`wing`.
 Project notes at :doc:`note`.
 Dependent in :doc:`dependencies`.
