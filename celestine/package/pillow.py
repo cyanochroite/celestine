@@ -26,7 +26,6 @@ from celestine.window.collection import (
 
 Img: TA = A
 
-
 IMAGE: TA = A
 extension: C[[N], LS]
 open: A  # pylint: disable=redefined-builtin

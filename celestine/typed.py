@@ -101,7 +101,6 @@ VP: TA = V[P]
 VS: TA = V[S]
 VZ: TA = V[Z]
 
-
 TZ2: TA = T[Z, Z]
 TZ3: TA = T[Z, Z, Z]
 

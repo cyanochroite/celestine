@@ -24,7 +24,6 @@ ignore(mouse)
 ignore(Surface)
 ignore(transform)
 
-
 MOUSEBUTTONDOWN: Z
 QUIT: Z
 
