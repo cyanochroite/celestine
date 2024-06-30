@@ -97,16 +97,19 @@ class Element(Element_, Abstract):
         self.image.fill((0, 0, 0))
 
         if bool(pillow):
-            image_pillow = pillow.open(self.path)
-            width = image_pillow.image.width
-            height = image_pillow.image.height
+            image = pillow.Image.open(self.path)
+            buffer = image.tobytes()
+            size = image.size
+            format_ = image.mode
+            surface = pygame.image.frombuffer(buffer, size, format_)
         else:
-            image_pygame = pygame.image.load(self.path)
-            width = image_pygame.get_width()
-            height = image_pygame.get_height()
+            surface = pygame.image.load(self.path)
+
+        width = surface.get_width()
+        height = surface.get_height()
 
         # TODO got to figure out Area coordinates
-        # or cach this somehow
+        # or cache this somehow
         target = self.area.local
         target = Plane.make(*self.area.world.size.value)
         curent = Plane.make(width, height)
@@ -117,23 +120,18 @@ class Element(Element_, Abstract):
             curent.scale_to_max(target)
         curent.center(target)
 
-        if bool(pillow):
-            image_pillow.resize(curent.size)
-
-            buffer = image_pillow.image.tobytes()
-            size = image_pillow.image.size
-            format_ = image_pillow.image.mode
-            source = pygame.image.frombuffer(buffer, size, format_)
-        else:
-            surface = image_pygame
-            size = curent.size.value
-            source = pygame.transform.smoothscale(surface, size)
+        size = curent.size.value
+        source = pygame.transform.smoothscale(surface, size)
 
         dest = curent.origin.value
         self.image.blit(source, dest)
 
     def update_text(self, text: S) -> N:
         """"""
+        if not self.font:
+            # TODO: Is there a way to make font not none in init?
+            return
+
         self.text = text
         antialias = True
         color = self.color

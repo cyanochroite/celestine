@@ -30,6 +30,6 @@ def main(view: View) -> N:
                 key,
                 action="see",
                 path=r"D:\done\unknown.png",
-                fit=Image.FILL,
+                fit=Image.FULL,
                 goto="picture",
             )

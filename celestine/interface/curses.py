@@ -383,3 +383,20 @@ class Window(Window_):
             Line(1, size_y - 2),
         )
         self.area = Area(plane, plane)
+
+        # hold this for later
+        return
+
+        if bool(pillow):
+            size = curent.size.value
+            resample = pillow.Image.Resampling.LANCZOS
+            self.image = image_pillow.resize(size, resample)
+
+            buffer = image_pillow.tobytes()
+            size = image_pillow.size
+            format_ = image_pillow.mode
+            source = pygame.image.frombuffer(buffer, size, format_)
+        else:
+            surface = image_pygame
+            size = curent.size.value
+            source = pygame.transform.smoothscale(surface, size)
