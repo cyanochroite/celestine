@@ -16,14 +16,13 @@ The Celestine Image Viewer
 - Goals_
 - Requirements_
 - Inspiration_
-- Info_
 
 .. _About:
 
 About
 *****
-View, tag, and organize your photos. Work in progress. Not currently functional.
 
+View, tag, and organize your photos. Work in progress. Not currently functional.
 
 By default this is a command line application.
 Should work anywhere Python 3 code can be run.
@@ -42,8 +41,10 @@ Dependent in :doc:`dependencies`.
 
 .. _Goals:
 
+
 Primary Goals
 *************
+
 - Is an offline only application. (The only internet used is when you use pip.)
 - Minimal required dependencies. (All you need to run this package is Python.)
 - Can be customized to use different packages. (See the list below for supported packages.)
@@ -52,12 +53,13 @@ Primary Goals
 
 Offline Only
 ^^^^^^^^^^^^
-The only internet you need is when you install with pip.
 
+The only internet you need is when you install with pip.
 
 
 Privacy and Internet access
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Celestine respects your privacy, no registration is needed, no connection to the internet is made if you decide to install and use Celestine. Celestine does not need internet to function properly.
 
 Some add-ons bundled with Celestine may access the internet for additional services. These add-ons are not enabled on installing Celestine. These add-ons are not required to be enabled for proper functioning of the software, nor will any Celestine function ask for enabling such add-ons.
@@ -67,9 +69,9 @@ Add-ons that require internet will ask a user explicit permission to use interne
 Note: this applies to the official version provided via GitHub. We always recommend you to use the official releases.
 
 
-
 Your Artwork
 ^^^^^^^^^^^^
+
 What you create with Celestine is your sole property. All your artwork – images or movie files – including the .blend files and other data files Celestine can write, is free for you to use as you like.
 
 That means that Celestine can be used commercially by artists, by studios to make animation films or VFX, by game artists to work on commercial games, by scientists for research, and by students in educational institutions.
@@ -98,11 +100,7 @@ No begging for likes, subscribes, popularity, donations, patrions.
 
 I will never ask for money for this project. So if you see someone claiming you need to pay money, it is a scam.
 
-
-
 I very much like the model Blender uses. So I just copy and pasted what they said here and will adjust the wording later.
-
-
 
 The Software
 
@@ -131,7 +129,7 @@ What you create with Blender is your sole property. All your artwork – images 
 
 That means that Blender can be used commercially by artists, by studios to make animation films or VFX, by game artists to work on commercial games, by scientists for research, and by students in educational institutions.
 
-Blender’s GNU GPL license guarantees you this freedom. Nobody is ever permitted to take it away, in contrast to trial or “educational” versions of commercial software that will forbid your work in commercial situations.
+Blender's GNU GPL license guarantees you this freedom. Nobody is ever permitted to take it away, in contrast to trial or “educational” versions of commercial software that will forbid your work in commercial situations.
 Privacy and Internet access
 
 Blender respects your privacy, no registration is needed, no connection to the internet is made if you decide to install and use Blender. Blender does not need internet to function properly.
@@ -144,15 +142,7 @@ Note: this applies to the official version provided via blender.org. We always r
 
 Sharing or selling Blender add-ons (Python scripts)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Blender’s Python API is an integral part of the software, used to define the user interface or develop tools for example. The GNU GPL license therefore requires that such scripts (if published) are being shared under a GPL compatible license. DO NOT SELL SUCH SCRIPTS. Your customers will receive the script under the same license (GPL), with the same free conditions as everyone has for Blender.
-
-
-
-
-
-
-
-
+Blender's Python API is an integral part of the software, used to define the user interface or develop tools for example. The GNU GPL license therefore requires that such scripts (if published) are being shared under a GPL compatible license. DO NOT SELL SUCH SCRIPTS. Your customers will receive the script under the same license (GPL), with the same free conditions as everyone has for Blender.
 
 All addons and plugins, skins, textures, whatever, should also be free.
 
@@ -166,6 +156,7 @@ This is free for everyone, hopefully forever. Lets keep it that way.
 
 Custom Install
 ^^^^^^^^^^^^^^
+
 Choose which packages to use.
 
 Swap packages
@@ -180,6 +171,7 @@ What this is not:
 - This is not a photo editor.
 - This is not a photo downloader.
 - This is not a mobile application.
+
 
 Requirements
 ************
@@ -221,6 +213,7 @@ If you want celestine to be more then just a command line tool, you will need at
 .. _`Tkinter`: https://docs.python.org/3/library/tk.html
 .. _`Windows Curses`: https://github.com/zephyrproject-rtos/windows-curses/
 
+
 Extensions
 ^^^^^^^^^^
 
@@ -237,17 +230,10 @@ These packages are optional. But features and performance may be lacking without
 .. _`More Itertools`: https://pypi.org/project/Pillow/
 .. _`Pillow`: https://pypi.org/project/Pillow/
 
-
-
-
 .. _python: https://www.python.org/downloads/
 .. _unittest: https://docs.python.org/3/library/unittest.html
 .. _PyPi: https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-pypi
 .. _`Celestine`: https://test.pypi.org/project/celestine/
-
-
-
-
 
 .. _python: https://www.python.org/downloads/
 .. _unittest: https://docs.python.org/3/library/unittest.html
@@ -268,25 +254,17 @@ Additional GUI libraries and features may be added in the future. Some configura
 
 Rexex parser: Adds support for wildcard searches using '*'.
 
-
 command core
 only the basics here
 use on web server or as external library
 
+
 Inspiration
 ***********
+
 `Safebooru`_ - And the thousands of other booru sites.
 
 `Board Game Geek`_ - Epic advancned search.
 
 .. _`Safebooru`: https://safebooru.org
 .. _`Board Game Geek`: https://boardgamegeek.com/advsearch/boardgame">
-
-Info
-****
-`Semantic Versioning 2.0.0`_
-
-`Write to me`_
-
-.. _`Semantic Versioning 2.0.0`: https://semver.org/
-.. _`Write to me`: celestine@mem-dixy.ch

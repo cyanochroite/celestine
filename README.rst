@@ -1,5 +1,6 @@
 Célestine
 #########
+
 .. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
    :target: https://celestine.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
@@ -24,14 +25,17 @@ Localized for members of the European Union.
 
 About
 *****
+
 The only requirement is Python.
 However, you can install additional packages for extended functionality.
 
 This has also been designed to run as a `Blender Add-on`_!
 Note that Blender is an isolated environment, so other packages can not be used with it.
 
+
 Project Update
 ^^^^^^^^^^^^^^
+
 It seems that every release is broken in some form or another.
 My plan of "just fix everything and then release it" has not been working out.
 My new realization is that, since this is still in Alpha, it is okay that it is not perfect.
@@ -49,15 +53,15 @@ Curses was having issues with windows-curses for a while, so I have not worked o
 The DearPyGui Package seems to be nearly abandoned so I have not spent the time keeping it up to date.
 
 
-.. _`Blender Add-on`: https://docs.blender.org/manual/en/latest/editors/preferences/addons.html
-
-
 Commands
 ********
+
+Comand line arguments to use when launching the application.
 
 
 Applications
 ^^^^^^^^^^^^
+
 Built in application to try out.
 
 +-------------+-------------------------+------------------------------------------------------------------+
@@ -77,6 +81,7 @@ Caution: By default the viewer application will try to load every image it finds
 
 Graphical User Interfaces
 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
 +--------------+------------------------------+--------------+
 | Interface    | Source                       | Command      |
 +==============+==============================+==============+
@@ -94,6 +99,7 @@ Graphical User Interfaces
 
 Natural Languages
 ^^^^^^^^^^^^^^^^^
+
 +------------+------------------+---------+
 | Language   | Translation [4]_ | Command |
 +============+==================+=========+
@@ -149,6 +155,7 @@ Natural Languages
 
 Optional Dependencies
 *********************
+
 +------------------------+---------------------------------------------------+
 | Package                | Description                                       |
 +========================+===================================================+
@@ -164,6 +171,7 @@ Optional Dependencies
 
 Licences
 ********
+
 The licence for :code:`Cascadia Code` is the
 `SIL Open Font License <https://scripts.sil.org/OFL>`_.
 
@@ -173,6 +181,7 @@ The licence for :code:`celestine` is the
 
 Project Links
 *************
+
 * `Discord <https://discord.gg/aNmDWPXd7B>`_
 * `Documentation <https://celestine.readthedocs.io/>`_
 * `Email <mem_dixy@pm.me>`_
@@ -190,10 +199,12 @@ Project Links
 .. _`tkinter`: https://docs.python.org/3/library/tk.html
 
 .. _`blender`: https://www.blender.org/
+.. _`Blender Add-on`: https://docs.blender.org/manual/en/latest/editors/preferences/addons.html
 
 
 Footnotes
 *********
+
 .. [1] Blender interface can only be run when this is installed as a Blender addon.
 .. [2] Windows does not come with Curses.
 .. [3] Not always installed. Espically on Linix.

@@ -80,14 +80,13 @@ class Element(Element_, Abstract):
         self.font = star.pop("font")
 
         size = self.area.local.size.value
-
         self.image = pygame.Surface(size)
-
-        if self.text:
-            self.update_text(self.text)
 
         if self.path:
             self.update_image(self.path)
+
+        if self.text:
+            self.update_text(self.text)
 
     def update_image(self, path: P, **star: R) -> N:
         """"""
