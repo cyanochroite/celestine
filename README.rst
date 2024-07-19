@@ -4,7 +4,7 @@ Célestine
 .. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
    :target: https://celestine.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
-.. image:: https://img.shields.io/github/repo-size/mem-dixy/celestine
+.. image:: https://img.shields.io/github/repo-size/cyanochroite/celestine
    :alt: GitHub repo size
 .. image:: https://img.shields.io/pypi/v/celestine
    :alt: PyPI - Version
@@ -15,8 +15,8 @@ Célestine
 .. image:: https://img.shields.io/badge/calver-YYYY.MM.DD-22bfda.svg
    :alt: Calendar Versioning
    :target: https://calver.org/
-.. image:: https://app.deepsource.com/gh/mem-dixy/celestine.svg/?label=active+issues&show_trend=false&token=1MUQkPi-6MM_PMqnaWrAJ6c7
-  :target: https://app.deepsource.com/gh/mem-dixy/celestine/
+.. image:: https://app.deepsource.com/gh/cyanochroite/celestine.svg/?label=active+issues&show_trend=false&token=1MUQkPi-6MM_PMqnaWrAJ6c7
+  :target: https://app.deepsource.com/gh/cyanochroite/celestine/
 
 A python framework for desktop applications.
 Featuring support for multiple graphical user interfaces.
@@ -187,8 +187,8 @@ Project Links
 * `Email <mem_dixy@pm.me>`_
 * `Libraries.io <https://libraries.io/pypi/celestine>`_
 * `PyPI <https://pypi.org/project/celestine/>`_
-* `Source <https://github.com/mem-dixy/celestine>`_
-* `Tracker <https://github.com/mem-dixy/celestine/issues>`_
+* `Source <https://github.com/cyanochroite/celestine>`_
+* `Tracker <https://github.com/cyanochroite/celestine/issues>`_
 
 .. _`dearpygui`: https://pypi.org/project/dearpygui/
 .. _`pillow`: https://pypi.org/project/Pillow/

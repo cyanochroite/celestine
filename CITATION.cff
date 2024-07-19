@@ -2,20 +2,23 @@
 # Visit https://bit.ly/cffinit to generate yours today!
 
 cff-version: 1.2.0
-title: celestine
+title: Célestine
 message: >-
   If you need to cite this software, please do so using the
   metadata from this file.
 type: software
 authors:
-  - given-names: Mem
-    family-names: Dixy
-    email: mem_dixy@pm.me
+  - given-names: Marian
+    family-names: Molyneux
+    email: celestine@cyanochroite.com
 identifiers:
   - type: url
     value: 'https://pypi.org/project/celestine/'
     description: Python Package Index
-repository-code: 'https://github.com/mem-dixy/celestine/'
+  - type: url
+    value: 'https://libraries.io/pypi/celestine'
+    description: Libraries.io
+repository-code: 'https://github.com/cyanochroite/celestine/'
 url: 'https://pypi.org/project/celestine/'
 abstract: >-
   A python framework for desktop applications. Featuring
@@ -23,15 +26,16 @@ abstract: >-
   for members of the European Union.
 keywords:
   - python
-  - application
-  - wrapper
+  - gui
   - framework
-  - localization
+  - internationalization
   - cross-platform
-  - offline
+  - blender
   - desktop
-  - image-viewer
+  - pygame
+  - curses
+  - tkinter
+  - dearpygui
 license: EUPL-1.2
-commit: 5444efed33f124879cbd28e5ae5b19f03ec56b9
 version: 2024.6.9
 date-released: '2024-06-09'
