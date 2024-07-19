@@ -1,6 +1,6 @@
 project = "Célestine"
-author = "mem_dixy"
-copyright = "2024, mem_dixy"
+author = "Marian Molyneux"
+copyright = "2024, Marian Molyneux"
 version = "2024.6.9"
 release = "2024.6.9"
 
