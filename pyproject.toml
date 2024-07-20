@@ -5,7 +5,7 @@ requires = ["setuptools >= 61.0.0"]
 
 [project]
 authors = [
-    {name = "mem_dixy", email = "mem_dixy@pm.me"},
+    {name = "Marian Molyneux", email = "celestine@cyanochroite.com"},
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -104,11 +104,11 @@ gui = [
 ]
 
 [project.urls]
-Changelog = "https://github.com/mem-dixy/celestine/blob/main/changelog.rst"
+Changelog = "https://github.com/cyanochroite/celestine/blob/main/changelog.rst"
 Discord = "https://discord.gg/aNmDWPXd7B"
 Documentation = "https://celestine.readthedocs.io/"
-Source = "https://github.com/mem-dixy/celestine"
-Tracker = "https://github.com/mem-dixy/celestine/issues"
+Source = "https://github.com/cyanochroite/celestine"
+Tracker = "https://github.com/cyanochroite/celestine/issues"
 
 
 

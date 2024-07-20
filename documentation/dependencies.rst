@@ -6,6 +6,7 @@ Distribution
 
 build
 ^^^^^
+
 python -m build
 
 
@@ -26,6 +27,7 @@ validation
 
 sphinx
 ^^^^^^
+
 python -m sphinx documentation doc
 
 
@@ -34,6 +36,7 @@ validation
 
 black
 ^^^^^
+
 python -m black celestine
 pyproject.toml
 https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-via-a-file
@@ -41,6 +44,7 @@ https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#c
 
 coverage
 ^^^^^^^^
+
 python -m coverage run --source=celestine --module pytest --verbose
 python -m coverage report --show-missing
 python -m coverage html
@@ -68,6 +72,7 @@ https://coverage.readthedocs.io/en/7.2.0/config.html#configuration-reference
 
 flake8
 ^^^^^^
+
 python -m flake8 celestine
 setup.cfg
 https://flake8.pycqa.org/en/latest/user/configuration.html#configuring-flake8
@@ -75,12 +80,14 @@ https://flake8.pycqa.org/en/latest/user/configuration.html#configuring-flake8
 
 isort
 ^^^^^
+
 python -m isort celestine
 pyproject.toml
 https://pycqa.github.io/isort/docs/configuration/options.html
 
 mypy
 ^^^^
+
 python -m mypy celestine
 setup.cfg
 https://mypy.readthedocs.io/en/stable/config_file.html#config-file-format
@@ -88,6 +95,7 @@ https://mypy.readthedocs.io/en/stable/config_file.html#config-file-format
 
 pycodestyle
 ^^^^^^^^^^^
+
 python -m pycodestyle celestine
 setup.cfg
 https://pycodestyle.pycqa.org/en/latest/intro.html#configuration
@@ -95,6 +103,7 @@ https://pycodestyle.pycqa.org/en/latest/intro.html#configuration
 
 pylint
 ^^^^^^
+
 python -m pylint celestine
 pyproject.toml
 https://pylint.pycqa.org/en/latest/user_guide/configuration/all-options.html#standard-checkers
@@ -102,20 +111,14 @@ https://pylint.pycqa.org/en/latest/user_guide/configuration/all-options.html#sta
 
 pyright
 ^^^^^^^
+
 python -m pyright celestine
 pyproject.toml
 https://github.com/microsoft/pyright/blob/main/docs/configuration.md#pyright-configuration
 
 
-
-
-
-
-
-
 Package Dependency
 ^^^^^^^^^^^^^^^^^^
-
 
 * `autoflake`_ :command:`pip install autoflake`
 * `black`_ :command:`pip install black`
@@ -123,7 +126,6 @@ Package Dependency
 * `pydocstringformatter`_ :command:`pip install pydocstringformatter`
 * `pygame`_ :command:`pip install pygame`
 * `pyupgrade`_ :command:`pip install pyupgrade`
-
 
 .. _`autoflake`: https://pypi.org/project/autoflake/
 .. _`black`: https://pypi.org/project/black/
@@ -136,10 +138,8 @@ Package Dependency
 Package Dependency
 ^^^^^^^^^^^^^^^^^^
 
-
 Notes:
 1. On Windows, use 'pip install windows-curses'.
-
 
 .. _`autoflake`: https://pypi.org/project/autoflake/
 .. _`black`: https://pypi.org/project/black/

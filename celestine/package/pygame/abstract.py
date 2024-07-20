@@ -40,10 +40,9 @@ class Surface:
         self.dest = dest
         return Rect()
 
-    @staticmethod
-    def convert_alpha() -> K:
+    def convert_alpha(self) -> K:
         """"""
-        return K
+        return self
 
     def fill(self, color: TZ3) -> Rect:
         """"""

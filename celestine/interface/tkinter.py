@@ -55,39 +55,27 @@ class Element(Element_, Abstract):
         """"""
         super().make(canvas, **star)
 
-        size = self.area.world.size.value
-        blender_mode = False
-        if pillow and not blender_mode:
-            self.image = pillow.new(size)
-        else:
-            self.image = None
+        size = self.area.local.size.value
+        self.image = tkinter.PhotoImage()
 
         def callback() -> N:
             """"""
             self.click(self.area.world.centroid)
             bank.dequeue()
 
-        if self.path:
-            image = tkinter.PhotoImage(file=self.path)
-            star.update(image=image)
-
-        if self.text:
-            star.update(text=self.text)
-
+        # Change everything to button and disable if no action?
         if self.action or self.goto:
             star.update(command=callback)
             self.item = tkinter.Button(canvas, **star)
         else:
-            star.update(fg="blue")
-            star.update(height=4)
-            star.update(text=self.text)
-            star.update(width=100)
             self.item = tkinter.Label(canvas, **star)
-
         self.place(self.item)
 
         if self.path:
-            self.update(self.path)
+            self.update_image(self.path)
+
+        if self.text:
+            self.update_text(self.text)
 
     @override
     def show(self) -> N:
@@ -95,41 +83,47 @@ class Element(Element_, Abstract):
         super().show()
         self.place(self.item)
 
-    def update(self, path: P, **star: R) -> N:
+    def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
-
-        image = pillow.open(self.path)
-
-        curent = Plane.make(image.image.width, image.image.height)
         target = Plane.make(*self.area.world.size.value)
 
-        match self.fit:
-            case Image.FILL:
-                result = curent.scale_to_min(target)
-            case Image.FULL:
-                result = curent.scale_to_max(target)
+        # image = pillow.open(self.path)
 
-        result.center(target)
+        # curent = Plane.make(image.image.width, image.image.height)
+        # target = Plane.make(*self.area.world.size.value)
 
-        image.resize(result.size)
-        self.image.paste(image, result)
+        # match self.fit:
+        #    case Image.FILL:
+        #        result = curent.scale_to_min(target)
+        #    case Image.FULL:
+        #        result = curent.scale_to_max(target)
+
+        # result.center(target)
+
+        # image.resize(result.size)
+        # self.image.paste(image, result)
 
         # super().update(path)
 
-        if pillow and False:
+        if pillow:
             photo = pillow.ImageTk.PhotoImage(image=self.image.image)
         else:
-            width, height = result.size.value
-            # breaks other stuff elsewere
+            width, height = target.size.value
             photo = tkinter.PhotoImage(
                 file=self.path,
-                width=width,
-                height=height,
+                width=0,
+                height=0,
             )
 
         self.photo = photo
-        self.item.configure(image=photo)
+        # self.item.configure(image=photo)
+        self.item.configure(image=self.image)
+
+    def update_text(self, text: S) -> N:
+        """"""
+        self.text = text
+        self.item.config(text=text)
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
@@ -172,7 +166,7 @@ class Window(Window_):
     @override
     def extension(self) -> LS:
         """"""
-        if pillow:
+        if bool(pillow):
             return pillow.extension()
 
         return [
@@ -185,14 +179,14 @@ class Window(Window_):
         ]
 
     @override
-    def turn(self, page: S, **star: R) -> N:
-        super().turn(page, **star)
-        self.page.canvas.tkraise()
-
-    @override
     def run(self) -> N:
         super().run()
         self.canvas.mainloop()
+
+    @override
+    def turn(self, page: S, **star: R) -> N:
+        super().turn(page, **star)
+        self.page.canvas.tkraise()
 
     @override
     def __init__(self, **star: R) -> N:
