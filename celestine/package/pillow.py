@@ -5,12 +5,12 @@ import enum
 from celestine import load
 from celestine.package import Abstract
 from celestine.typed import (
+    TZ2,
     K,
     N,
     P,
     R,
     S,
-    TZ2,
     ignore,
 )
 
@@ -29,6 +29,7 @@ class Image:
 
     class Resampling(enum.Enum):
         """"""
+
         LANCZOS = enum.auto()
 
     def resize(self, size: TZ2, resample: Resampling) -> K:
