@@ -56,7 +56,10 @@ class Element(Element_, Abstract):
         super().make(canvas, **star)
 
         size = self.area.local.size.value
-        self.image = tkinter.PhotoImage()
+        self.image = tkinter.PhotoImage(
+            width=200,
+            height=200,
+        )
 
         def callback() -> N:
             """"""
@@ -106,19 +109,86 @@ class Element(Element_, Abstract):
 
         # super().update(path)
 
+        def resize(img, new_width, new_height):
+            old_width = img.width()
+            old_height = img.height()
+            new_photo_image = tkinter.PhotoImage(
+                height=new_height,
+                width=new_width,
+            )
+            for x in range(new_width):
+                for y in range(new_height):
+                    x_old = int(x * old_width / new_width)
+                    y_old = int(y * old_height / new_height)
+                    rgb = '#%02x%02x%02x' % img.get(x_old, y_old)
+                    new_photo_image.put(rgb, (x, y))
+            return new_photo_image
+
         if pillow:
             photo = pillow.ImageTk.PhotoImage(image=self.image.image)
         else:
             width, height = target.size.value
-            photo = tkinter.PhotoImage(
-                file=self.path,
-                width=0,
-                height=0,
-            )
 
-        self.photo = photo
+            photo = tkinter.PhotoImage(file=self.path)
+            photo = resize(photo, 200, 200)
+            # photo = photo.subsample(4, 4)
+
+        # self.photo = photo
         # self.item.configure(image=photo)
-        self.item.configure(image=self.image)
+        # self.item.configure(image=self.image)
+
+        self.image2 = photo
+        self.item.configure(image=photo)
+        self.item.image = photo
+
+    def update_image(self, path: P, **star: R) -> N:
+        """"""
+        if pillow:
+            return
+
+        self.path = path
+        photo = tkinter.PhotoImage(file=self.path)
+
+        curent = Plane.make(photo.width(), photo.height())
+        target = Plane.make(*self.area.world.size.value)
+
+        match self.fit:
+            case Image.FILL:
+                curent.scale_to_min(target)
+            case Image.FULL:
+                curent.scale_to_max(target)
+
+        curent.center(target)
+
+        width, height = curent.size.value
+
+        img = photo
+        new_width = width
+        new_height = height
+
+        old_width = img.width()
+        old_height = img.height()
+        new_photo_image = tkinter.PhotoImage(
+            height=new_height,
+            width=new_width,
+        )
+        for x in range(new_width):
+            for y in range(new_height):
+                x_old = int(x * old_width / new_width)
+                y_old = int(y * old_height / new_height)
+                rgb = '#%02x%02x%02x' % img.get(x_old, y_old)
+                new_photo_image.put(rgb, (x, y))
+        photo = new_photo_image
+
+        # photo = photo.subsample(4, 4)
+
+        # self.photo = photo
+        # self.item.configure(image=photo)
+        # self.item.configure(image=self.image)
+
+        self.image2 = photo
+        self.item.configure(image=photo)
+        self.item.image = photo
 
     def update_text(self, text: S) -> N:
         """"""
