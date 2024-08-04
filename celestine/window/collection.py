@@ -28,8 +28,6 @@ class Dyad:
 
     _one: F
     _two: F
-    minimum: Z
-    maximum: Z
 
     @property
     def one(self) -> F:
@@ -46,20 +44,77 @@ class Dyad:
         """"""
         return (int(self._one), int(self._two))
 
+###
+
+    @classmethod
+    def clone(cls, self: K) -> K:
+        """"""
+        return cls(self._one, self._two)
+
+    def copy(self) -> K:
+        """"""
+        return self.clone(self)
+
+    @property
+    def length(self) -> Z:
+        """"""
+        return self._two - self._one
+
+    @property
+    def midpoint(self) -> Z:
+        """"""
+        return (self._one + self._two) // 2
+
+###
+
+    def __add__(self, other: K) -> K:
+        one = self._one + other._one
+        two = self._two + other._two
+        return type(self)(one, two)
+
+    def __contains__(self, item: Z) -> B:
+        return self.minimum <= item <= self.maximum
+
+    def __iadd__(self, other: F) -> K:
+        self._one += other
+        self._two += other
+        return self
+
+    def __imul__(self, other: F) -> K:
+        self._one *= other
+        self._two *= other
+        return self
+
     def __init__(self, _one: F, _two: F) -> N:
         self._one = _one
         self._two = _two
         self.minimum = min(_one, _two)
         self.maximum = max(_one, _two)
 
+    def __isub__(self, other: F) -> K:
+        self._one -= other
+        self._two -= other
+        return self
+
     def __iter__(self) -> GF:
         yield self._one
         yield self._two
 
-    def __add__(self, other: K) -> K:
-        one = self._one + other._one
-        two = self._two + other._two
+    def __itruediv__(self, other: F) -> K:
+        self._one /= other
+        self._two /= other
+        return self
+
+    def __mul__(self, other: K) -> K:
+        one = self._one * other._one
+        two = self._two * other._two
         return type(self)(one, two)
+
+    def __repr__(self):
+        return f"Dyad({repr(self._one)}, {repr(self._two)})"
+
+    def __str__(self):
+        return f"({str(self._one)}, {str(self._two)})"
 
     def __sub__(self, other: K) -> K:
         one = self._one - other._one
@@ -70,55 +125,6 @@ class Dyad:
         one = self._one / other._one
         two = self._two / other._two
         return type(self)(one, two)
-
-    def __repr__(self):
-        return f"Point({repr(self._one)}, {repr(self._two)})"
-
-    def __str__(self):
-        return f"({str(self._one)}, {str(self._two)})"
-
-    @classmethod
-    def clone(cls, self: K) -> K:
-        """"""
-        return cls(self.minimum, self.maximum)
-
-    def copy(self) -> K:
-        """"""
-        return self.clone(self)
-
-    @property
-    def length(self) -> Z:
-        """"""
-        return self.maximum - self.minimum
-
-    @property
-    def midpoint(self) -> Z:
-        """"""
-        return (self.minimum + self.maximum) // 2
-
-    def __contains__(self, item: Z) -> B:
-        return self.minimum <= item <= self.maximum
-
-    def __iadd__(self, other: Z) -> K:
-        self.minimum += other
-        self.maximum += other
-        return self
-
-    def __imul__(self, other: Z) -> K:
-        self.minimum *= other
-        self.maximum *= other
-        return self
-
-    def __isub__(self, other: Z) -> K:
-        self.minimum -= other
-        self.maximum -= other
-        return self
-
-    def __repr__(self):
-        return f"Line({repr(self.minimum)}, {repr(self.maximum)})"
-
-    def __str__(self):
-        return f"({str(self.minimum)}, {str(self.maximum)})"
 
 
 class Plane:
