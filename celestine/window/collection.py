@@ -1,7 +1,7 @@
 """"""
 
 from celestine.typed import (
-    GZ,
+    GF,
     B,
     F,
     K,
@@ -36,7 +36,7 @@ class Point:
         self._one = _one
         self._two = _two
 
-    def __iter__(self) -> GZ:
+    def __iter__(self) -> GF:
         yield self._one
         yield self._two
 

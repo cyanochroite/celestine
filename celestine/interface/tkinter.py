@@ -1,5 +1,7 @@
 """"""
 
+import math
+
 from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
@@ -22,6 +24,7 @@ from celestine.typed import (
 from celestine.window.collection import (
     Area,
     Plane,
+    Point,
 )
 from celestine.window.container import Image
 
@@ -55,7 +58,7 @@ class Element(Element_, Abstract):
         """"""
         super().make(canvas, **star)
 
-        self.area.local.size.value
+        # TODO: self.area.local.size.value
         self.image = tkinter.PhotoImage(
             width=200,
             height=200,
@@ -182,6 +185,45 @@ class Element(Element_, Abstract):
                 data = hex_string.format(*color)
                 to = (x, y)
                 image.put(data, to)
+
+        self.item.configure(image=image)
+        self.item.image = image
+
+    def update_image(self, path: P, **star: R) -> N:
+        """"""
+        if pillow:
+            return
+
+        self.path = path
+        photo = tkinter.PhotoImage(file=self.path)
+
+        old_width = photo.width()
+        old_height = photo.height()
+
+        curent = Plane.make(old_width, old_height)
+        target = Plane.make(*self.area.world.size)
+
+        match self.fit:
+            case Image.FILL:
+                curent.scale_to_min(target)
+            case Image.FULL:
+                curent.scale_to_max(target)
+
+        curent.center(target)
+
+        new_width, new_height = curent.size
+
+        old_point = Point(old_width, old_height)
+        new_point = curent.size.value
+
+        if new_width < old_width:
+            change_width = math.ceil(old_width / new_width)
+            change_height = math.ceil(old_height / new_height)
+            image = photo.subsample(change_width, change_width)
+        else:
+            change_width = math.ceil(new_width // old_width)
+            change_height = math.ceil(new_height // old_height)
+            image = photo.zoom(change_width, change_height)
 
         self.item.configure(image=image)
         self.item.image = image
