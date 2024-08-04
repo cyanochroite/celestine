@@ -3,11 +3,9 @@
 import unittest
 
 from celestine import load
-from celestine.data import (
-    call,
-)
-from celestine.literal import CELESTINE
+from celestine.data import call
 from celestine.data.directory import APPLICATION
+from celestine.literal import CELESTINE
 from celestine.typed import (
     B,
     R,

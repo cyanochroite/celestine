@@ -55,7 +55,7 @@ class Element(Element_, Abstract):
         """"""
         super().make(canvas, **star)
 
-        size = self.area.local.size.value
+        self.area.local.size.value
         self.image = tkinter.PhotoImage(
             width=200,
             height=200,
@@ -120,7 +120,7 @@ class Element(Element_, Abstract):
                 for y in range(new_height):
                     x_old = int(x * old_width / new_width)
                     y_old = int(y * old_height / new_height)
-                    rgb = '#%02x%02x%02x' % img.get(x_old, y_old)
+                    rgb = "#%02x%02x%02x" % img.get(x_old, y_old)
                     new_photo_image.put(rgb, (x, y))
             return new_photo_image
 
@@ -168,27 +168,23 @@ class Element(Element_, Abstract):
 
         old_width = img.width()
         old_height = img.height()
-        new_photo_image = tkinter.PhotoImage(
+        image = tkinter.PhotoImage(
             height=new_height,
             width=new_width,
         )
+        hex_string = "#{:02X}{:02X}{:02X}"
         for x in range(new_width):
             for y in range(new_height):
                 x_old = int(x * old_width / new_width)
                 y_old = int(y * old_height / new_height)
-                rgb = '#%02x%02x%02x' % img.get(x_old, y_old)
-                new_photo_image.put(rgb, (x, y))
-        photo = new_photo_image
+                color = img.get(x_old, y_old)
 
-        # photo = photo.subsample(4, 4)
+                data = hex_string.format(*color)
+                to = (x, y)
+                image.put(data, to)
 
-        # self.photo = photo
-        # self.item.configure(image=photo)
-        # self.item.configure(image=self.image)
-
-        self.image2 = photo
-        self.item.configure(image=photo)
-        self.item.image = photo
+        self.item.configure(image=image)
+        self.item.image = image
 
     def update_text(self, text: S) -> N:
         """"""
