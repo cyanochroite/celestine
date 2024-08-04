@@ -10,12 +10,26 @@ from celestine.typed import (
     Z,
 )
 
+# monad
+# dyad
+# triad
+# tetrad
 
-class Point:
+# Monad
+# Dyad
+# Triad
+# Tetrad
+# Pentad
+# Hexad
+
+
+class Dyad:
     """"""
 
     _one: F
     _two: F
+    minimum: Z
+    maximum: Z
 
     @property
     def one(self) -> F:
@@ -35,6 +49,8 @@ class Point:
     def __init__(self, _one: F, _two: F) -> N:
         self._one = _one
         self._two = _two
+        self.minimum = min(_one, _two)
+        self.maximum = max(_one, _two)
 
     def __iter__(self) -> GF:
         yield self._one
@@ -60,13 +76,6 @@ class Point:
 
     def __str__(self):
         return f"({str(self._one)}, {str(self._two)})"
-
-
-class Line:
-    """"""
-
-    minimum: Z
-    maximum: Z
 
     @classmethod
     def clone(cls, self: K) -> K:
@@ -100,10 +109,6 @@ class Line:
         self.maximum *= other
         return self
 
-    def __init__(self, minimum: Z, maximum: Z) -> N:
-        self.minimum = min(minimum, maximum)
-        self.maximum = max(minimum, maximum)
-
     def __isub__(self, other: Z) -> K:
         self.minimum -= other
         self.maximum -= other
@@ -119,16 +124,16 @@ class Line:
 class Plane:
     """"""
 
-    _one: Line
-    _two: Line
+    _one: Dyad
+    _two: Dyad
 
     @property
-    def one(self) -> Line:
+    def one(self) -> Dyad:
         """"""
         return self._one
 
     @property
-    def two(self) -> Line:
+    def two(self) -> Dyad:
         """"""
         return self._two
 
@@ -137,11 +142,11 @@ class Plane:
         self += other.centroid - self.centroid
 
     @property
-    def centroid(self) -> Point:
+    def centroid(self) -> Dyad:
         """"""
         _one = self._one.midpoint
         _two = self._two.midpoint
-        return Point(_one, _two)
+        return Dyad(_one, _two)
 
     def copy(self) -> K:
         """"""
@@ -159,14 +164,14 @@ class Plane:
     @classmethod
     def make(cls, width: Z, height: Z) -> K:
         """"""
-        _one = Line(0, width)
-        _two = Line(0, height)
+        _one = Dyad(0, width)
+        _two = Dyad(0, height)
         return cls(_one, _two)
 
     @property
-    def origin(self) -> Point:
+    def origin(self) -> Dyad:
         """"""
-        return Point(self._one.minimum, self._two.minimum)
+        return Dyad(self._one.minimum, self._two.minimum)
 
     def scale_to_max(self, other: K) -> N:
         """"""
@@ -177,16 +182,16 @@ class Plane:
         self *= min(other.size / self.size)
 
     @property
-    def size(self) -> Point:
+    def size(self) -> Dyad:
         """"""
-        return Point(self._one.length, self._two.length)
+        return Dyad(self._one.length, self._two.length)
 
-    def __contains__(self, item: Point) -> B:
+    def __contains__(self, item: Dyad) -> B:
         _one = item.one in self._one
         _two = item.two in self._two
         return _one and _two
 
-    def __iadd__(self, other: Point) -> K:
+    def __iadd__(self, other: Dyad) -> K:
         self._one += other.one
         self._two += other.two
         return self
@@ -196,11 +201,11 @@ class Plane:
         self._two *= other
         return self
 
-    def __init__(self, _one: Line, _two: Line) -> N:
+    def __init__(self, _one: Dyad, _two: Dyad) -> N:
         self._one = _one.copy()
         self._two = _two.copy()
 
-    def __isub__(self, other: Point) -> K:
+    def __isub__(self, other: Dyad) -> K:
         self._one -= other.one
         self._two -= other.two
         return self
@@ -218,7 +223,7 @@ class Area:
     local: Plane
     world: Plane
 
-    def __contains__(self, item: Point) -> B:
+    def __contains__(self, item: Dyad) -> B:
         return item in self.world
 
     @classmethod

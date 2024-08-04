@@ -25,9 +25,8 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Area,
-    Line,
+    Dyad,
     Plane,
-    Point,
 )
 from celestine.window.container import (
     Image,
@@ -59,7 +58,7 @@ class Abstract(Object):
     path: P  # The path to the image to use as a background.
     text: S  # Text that describes the purpose of the button's action.
 
-    def click(self, point: Point, **star: R) -> B:
+    def click(self, point: Dyad, **star: R) -> B:
         """"""
         if self.hidden:
             return False
@@ -220,7 +219,7 @@ class View(Abstract, Tree):
     height: Z
     element_item: D[S, A]
 
-    def click(self, point: Point, **star: R) -> B:
+    def click(self, point: Dyad, **star: R) -> B:
         if not super().click(point, **star):
             return False
 
@@ -268,12 +267,12 @@ class View(Abstract, Tree):
         for value in self.values():
             this = self.area.world
 
-            one = Line(0, 1)
+            one = Dyad(0, 1)
             one += index % partition_x
             one *= this.one.length // partition_x
             one += this.one.minimum
 
-            two = Line(0, 1)
+            two = Dyad(0, 1)
             two += min(index // partition_x, partition_y - 1)
             two *= this.two.length // partition_y
             two += this.two.minimum
@@ -468,7 +467,7 @@ class Window(Tree):
     ###############
     # No star functions
 
-    def click(self, point: Point) -> N:
+    def click(self, point: Dyad) -> N:
         """"""
         for value in self.values():
             value.click(point)

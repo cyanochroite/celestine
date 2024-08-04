@@ -27,8 +27,8 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Area,
+    Dyad,
     Plane,
-    Point,
 )
 from celestine.window.container import Image
 
@@ -221,7 +221,7 @@ class Window(Window_):
                     break
                 case pygame.MOUSEBUTTONDOWN:
                     if event.button == Mouse.PRIMARY:
-                        self.click(Point(*pygame.mouse.get_pos()))
+                        self.click(Dyad(*pygame.mouse.get_pos()))
                 case _:
                     pass
 

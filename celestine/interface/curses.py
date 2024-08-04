@@ -22,9 +22,8 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Area,
-    Line,
+    Dyad,
     Plane,
-    Point,
 )
 
 color_index = 8  # skip the 8 reserved colors
@@ -321,7 +320,7 @@ class Window(Window_):
                 case curses.KEY_EXIT:
                     break
                 case curses.KEY_CLICK:
-                    self.page.click(Point(self.cord_x, self.cord_y))
+                    self.page.click(Dyad(self.cord_x, self.cord_y))
 
         self.stdscr.keypad(0)
         curses.echo()
@@ -351,8 +350,8 @@ class Window(Window_):
 
         super().__init__(element, **star)
         plane = Plane(
-            Line(1, size_x - 2),
-            Line(1, size_y - 2),
+            Dyad(1, size_x - 2),
+            Dyad(1, size_y - 2),
         )
         self.area = Area(plane, plane)
         self.cord_x = 0.5
@@ -379,8 +378,8 @@ class Window(Window_):
         #
         # TODO check why repeat code from init
         plane = Plane(
-            Line(1, size_x - 2),
-            Line(1, size_y - 2),
+            Dyad(1, size_x - 2),
+            Dyad(1, size_y - 2),
         )
         self.area = Area(plane, plane)
 
