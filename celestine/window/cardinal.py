@@ -1,4 +1,5 @@
 """"""
+from typing import Mapping
 
 from celestine.typed import (
     GF,
@@ -44,44 +45,79 @@ class Cardinal:
     """"""
 
     element: LF
-    elements: LF
+
+    @staticmethod
+    def add(one: F, two: F) -> F:
+        """"""
+        return one + two
+
+    def math(self, function, other: F | K | Z) -> LF:
+        """Do math stuff."""
+        if isinstance(other, float | int):
+            element = [other] * len(self.element)
+        else:
+            element = other.element
+        result = list(map(function, self.element, element))
+        return result
+
+    @staticmethod
+    def mul(one: F, two: F) -> F:
+        """"""
+        return one + two
+
+    @staticmethod
+    def sub(one: F, two: F) -> F:
+        """"""
+        return one + two
+
+    @staticmethod
+    def truediv(one: F, two: F) -> F:
+        """"""
+        return one + two
+
+    def __init__(self, element: LF) -> N:
+        self.element = element
+
+    def __add__(self, other: F | K | Z) -> K:
+        value = self.math(self.add, other)
+        return type(self)(value)
+
+    def __mul__(self, other: F | K | Z) -> K:
+        value = self.math(self.mul, other)
+        return type(self)(value)
+
+    def __sub__(self, other: F | K | Z) -> K:
+        value = self.math(self.sub, other)
+        return type(self)(value)
+
+    def __truediv__(self, other: F | K | Z) -> K:
+        value = self.math(self.truediv, other)
+        return type(self)(value)
+
+    def __iadd__(self, other: F | K) -> K:
+        self.value += self._other(other)
+        return self
+
+    def __imul__(self, other: K) -> K:
+        self.value *= other.value
+        return self
+
+    def __isub__(self, other: K) -> K:
+        self.value -= other.value
+        return self
+
+    def __itruediv__(self, other: K) -> K:
+        self.value /= other.value
+        return self
+
+    ###
 
     def __add__(self, other: F | K) -> K:
         def function(a, b):
             return a + b
-        car = map(function, self.elements, other.elements, [1, 2, 3])
+        car = map(function, self.element, other.elements, [1, 2, 3])
         return list(car)
         return self
-
-###
-
-    @staticmethod
-    def _add(one: F, two: F) -> F:
-        return one + two
-
-    @staticmethod
-    def _mul(one: F, two: F) -> F:
-        return one * two
-
-    @staticmethod
-    def _sub(one: F, two: F) -> F:
-        return one - two
-
-    @staticmethod
-    def _truediv(one: F, two: F) -> F:
-        return one / two
-
-    def math(self, function: C[[K, F | K], K], other: F | K) -> T[F, F]:
-        """Do math stuff."""
-        if isinstance(other, F):
-            one = function(self._one, other)
-            two = function(self._one, other)
-        else:
-            one = function(self._one, other._one)
-            two = function(self._one, other._two)
-        return one, two
-
-    #
 
     def __repr__(self):
         return f"Monad({repr(self.value)})"
@@ -89,13 +125,9 @@ class Cardinal:
     def __str__(self):
         return f"({str(self.value)})"
 
-    def __init__(self, value: F) -> N:
-        self.value = value
     ###
 
     def __iadd__(self, other: F | K) -> K:
-        values = []
-        for value in self.values
         self.value += self._other(other)
         return self
 
@@ -116,24 +148,6 @@ class Cardinal:
     @staticmethod
     def _other(other: F | K) -> K:
         return other if isinstance(other, F) else other.value
-
-    def __add__(self, other: F | K) -> K:
-        values = []
-        for index in range(2):
-            self.value[index] + other.value[index]
-        return type(self)(values)
-
-    def __mul__(self, other: F | K) -> K:
-        value = self.value * other.value
-        return type(self)(value)
-
-    def __sub__(self, other: F | K) -> K:
-        value = self.value - other.value
-        return type(self)(value)
-
-    def __truediv__(self, other: F | K) -> K:
-        value = self.value / other.value
-        return type(self)(value)
 
 
 class Monad(Cardinal):
