@@ -21,7 +21,7 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Plane,
-    Dyad,
+    Point,
 )
 
 Img: TA = A
@@ -111,7 +111,7 @@ class Image:
         """"""
         return self.image.size
 
-    def resize(self, point: Dyad) -> N:
+    def resize(self, point: Point) -> N:
         """"""
         size = point.value
         resample = self.package.Image.Resampling.LANCZOS
