@@ -28,7 +28,7 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Area,
-    Dyad,
+    Point,
 )
 
 COLLECTION = _collection
@@ -63,7 +63,7 @@ class celestine_click(bpy.types.Operator):
 
         x_dot = mouse.location.x
         y_dot = mouse.location.y
-        point = Dyad(x_dot, y_dot)
+        point = Point(x_dot, y_dot)
         main("click", point=point)
 
         return {"FINISHED"}

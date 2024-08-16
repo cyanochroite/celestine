@@ -23,8 +23,8 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Area,
-    Dyad,
     Plane,
+    Point,
 )
 from celestine.window.container import Image
 
@@ -213,7 +213,7 @@ class Element(Element_, Abstract):
 
         new_width, new_height = curent.size
 
-        old_point = Dyad(old_width, old_height)
+        old_point = Point(old_width, old_height)
         new_point = curent.size.value
 
         if new_width < old_width:

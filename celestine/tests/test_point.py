@@ -3,8 +3,9 @@
 import unittest
 
 from celestine.window.collection import (
-    Dyad,
+    Line,
     Plane,
+    Point,
 )
 
 
@@ -13,15 +14,15 @@ class TestPoint(unittest.TestCase):
 
     def test_clone(self):
         """"""
-        one = Dyad(4, 3)
-        point = Dyad.clone(one)
+        one = Point(4, 3)
+        point = Point.clone(one)
 
         self.assertEqual(point.one, 4)
         self.assertEqual(point.two, 3)
 
     def test_copy(self):
         """"""
-        one = Dyad(4, 3)
+        one = Point(4, 3)
         point = one.copy()
 
         self.assertEqual(point.one, 4)
@@ -29,7 +30,7 @@ class TestPoint(unittest.TestCase):
 
     def test_quantize(self):
         """"""
-        point = Dyad(3.4, 3.5)
+        point = Point(3.4, 3.5)
         point.quantize()
 
         self.assertEqual(point.one, 3)
@@ -37,13 +38,13 @@ class TestPoint(unittest.TestCase):
 
     def test_init(self):
         """"""
-        point = Dyad(-4, -8)
+        point = Point(-4, -8)
         self.assertEqual(point.one, -4)
         self.assertEqual(point.two, -8)
 
     def test_iter(self):
         """"""
-        point = Dyad(1, 2)
+        point = Point(1, 2)
         items = iter(point)
         try:
             self.assertEqual(next(items), 1)
@@ -53,20 +54,20 @@ class TestPoint(unittest.TestCase):
 
     def test_repr(self):
         """"""
-        point = Dyad(-3, -4)
+        point = Point(-3, -4)
         string = repr(point)
         self.assertEqual(string, "Point(-3.0, -4.0)")
 
     def test_str(self):
         """"""
-        point = Dyad(-3, -4)
+        point = Point(-3, -4)
         string = str(point)
         self.assertEqual(string, "(-3.0, -4.0)")
 
     def test_sub(self):
         """"""
-        one = Dyad(1, 2)
-        two = Dyad(3, 5)
+        one = Point(1, 2)
+        two = Point(3, 5)
         point = one - two
 
         self.assertEqual(point.one, -2)
@@ -74,8 +75,8 @@ class TestPoint(unittest.TestCase):
 
     def test_truediv(self):
         """"""
-        one = Dyad(12, 6)
-        two = Dyad(3, 2)
+        one = Point(12, 6)
+        two = Point(3, 2)
         point = one / two
 
         self.assertEqual(point.one, 4)
@@ -87,15 +88,15 @@ class TestLine(unittest.TestCase):
 
     def test_clone(self):
         """"""
-        one = Dyad(3, 4)
-        line = Dyad.clone(one)
+        one = Line(3, 4)
+        line = Line.clone(one)
 
         self.assertEqual(line.minimum, 3)
         self.assertEqual(line.maximum, 4)
 
     def test_copy(self):
         """"""
-        one = Dyad(4, 3)
+        one = Line(4, 3)
         line = one.copy()
 
         self.assertEqual(line.minimum, 3)
@@ -103,7 +104,7 @@ class TestLine(unittest.TestCase):
 
     def test_quantize(self):
         """"""
-        line = Dyad(3.4, 3.5)
+        line = Line(3.4, 3.5)
         line.quantize()
 
         self.assertEqual(line.minimum, 3)
@@ -111,21 +112,21 @@ class TestLine(unittest.TestCase):
 
     def test_length(self):
         """"""
-        line = Dyad(-7, 3)
+        line = Line(-7, 3)
         length = line.length
 
         self.assertEqual(length, 10)
 
     def test_midpoint(self):
         """"""
-        line = Dyad(1, 5)
+        line = Line(1, 5)
         midpoint = line.midpoint
 
         self.assertEqual(midpoint, 3)
 
     def test_add(self):
         """"""
-        one = Dyad(1, 2)
+        one = Line(1, 2)
         two = 3
         line = one + two
 
@@ -134,7 +135,7 @@ class TestLine(unittest.TestCase):
 
     def test_contains(self):
         """"""
-        one = Dyad(1, 3)
+        one = Line(1, 3)
         two = 2
         line = two in one
 
@@ -142,7 +143,7 @@ class TestLine(unittest.TestCase):
 
     def test_iadd(self):
         """"""
-        one = Dyad(1, 2)
+        one = Line(1, 2)
         two = 3
         one += two
         line = one
@@ -152,7 +153,7 @@ class TestLine(unittest.TestCase):
 
     def test_imul(self):
         """"""
-        line = Dyad(1, 2)
+        line = Line(1, 2)
         other = 3
         line *= other
 
@@ -161,13 +162,13 @@ class TestLine(unittest.TestCase):
 
     def test_init(self):
         """"""
-        line = Dyad(-4, -8)
+        line = Line(-4, -8)
         self.assertEqual(line.minimum, -8)
         self.assertEqual(line.maximum, -4)
 
     def test_mul(self):
         """"""
-        one = Dyad(1, 2)
+        one = Line(1, 2)
         two = 3
         line = one * two
 
@@ -176,13 +177,13 @@ class TestLine(unittest.TestCase):
 
     def test_repr(self):
         """"""
-        line = Dyad(3, 4)
+        line = Line(3, 4)
         string = repr(line)
         self.assertEqual(string, "Line(3.0, 4.0)")
 
     def test_str(self):
         """"""
-        line = Dyad(3, 4)
+        line = Line(3, 4)
         string = str(line)
         self.assertEqual(string, "[3.0, 4.0]")
 
@@ -203,22 +204,22 @@ class TestPlane(unittest.TestCase):
 
     def test_centroid(self):
         """"""
-        plane = Plane(Dyad(5, 15), Dyad(15, 25))
+        plane = Plane(Line(5, 15), Line(15, 25))
         centroid = plane.centroid
 
-        point = Dyad(10.0, 20.0)
+        point = Point(10.0, 20.0)
         self.assertEqual(str(point), str(centroid))
 
     def test_clone(self):
         """"""
-        one = Plane(Dyad(1, 2), Dyad(3, 4))
+        one = Plane(Line(1, 2), Line(3, 4))
         two = Plane.clone(one)
 
         self.assertEqual(str(one), str(two))
 
     def test_copy(self):
         """"""
-        one = Plane(Dyad(1, 2), Dyad(3, 4))
+        one = Plane(Line(1, 2), Line(3, 4))
         two = one.copy()
 
         self.assertEqual(str(one), str(two))
@@ -256,8 +257,8 @@ class TestPlane(unittest.TestCase):
 
     def test_quantize(self):
         """"""
-        one = Dyad(-3.6, -3.4)
-        two = Dyad(+3.4, +3.6)
+        one = Line(-3.6, -3.4)
+        two = Line(+3.4, +3.6)
         plane = Plane(one, two)
         plane.quantize()
 
@@ -268,16 +269,16 @@ class TestPlane(unittest.TestCase):
 
     def test_size(self):
         """"""
-        plane = Plane(Dyad(1, 2), Dyad(3, 4))
+        plane = Plane(Line(1, 2), Line(3, 4))
         size = plane.size
-        point = Dyad(1, 1)
+        point = Point(1, 1)
 
         self.assertEqual(str(point), str(size))
 
     def test_add(self):
         """"""
-        one = Plane(Dyad(1, 2), Dyad(3, 4))
-        plane = one + Dyad(2, 4)
+        one = Plane(Line(1, 2), Line(3, 4))
+        plane = one + Point(2, 4)
 
         self.assertEqual(plane.one.minimum, 3)
         self.assertEqual(plane.one.maximum, 4)
@@ -286,22 +287,22 @@ class TestPlane(unittest.TestCase):
 
     def test_contains(self):
         """"""
-        one = Dyad(1, 3)
+        one = Line(1, 3)
         two = 2
         line = two in one
 
         self.assertTrue(line)
 
-        one = Plane(Dyad(2, 4), Dyad(6, 8))
-        two = Dyad(3, 7)
+        one = Plane(Line(2, 4), Line(6, 8))
+        two = Point(3, 7)
         contains = two in one
 
         self.assertTrue(contains)
 
     def test_iadd(self):
         """"""
-        plane = Plane(Dyad(1, 2), Dyad(3, 4))
-        plane += Dyad(2, 4)
+        plane = Plane(Line(1, 2), Line(3, 4))
+        plane += Point(2, 4)
 
         self.assertEqual(plane.one.minimum, 3)
         self.assertEqual(plane.one.maximum, 4)
@@ -310,7 +311,7 @@ class TestPlane(unittest.TestCase):
 
     def test_imul(self):
         """"""
-        plane = Plane(Dyad(1, 2), Dyad(3, 4))
+        plane = Plane(Line(1, 2), Line(3, 4))
         plane *= 4
 
         self.assertEqual(plane.one.minimum, 4)
@@ -320,7 +321,7 @@ class TestPlane(unittest.TestCase):
 
     def test_init(self):
         """"""
-        plane = Plane(Dyad(1, 2), Dyad(3, 4))
+        plane = Plane(Line(1, 2), Line(3, 4))
 
         self.assertEqual(plane.one.minimum, 1)
         self.assertEqual(plane.one.maximum, 2)
@@ -329,7 +330,7 @@ class TestPlane(unittest.TestCase):
 
     def test_mul(self):
         """"""
-        one = Plane(Dyad(1, 2), Dyad(3, 4))
+        one = Plane(Line(1, 2), Line(3, 4))
         two = one * 4
         plane = two
 
@@ -340,12 +341,12 @@ class TestPlane(unittest.TestCase):
 
     def test_repr(self):
         """"""
-        plane = Plane(Dyad(1, 2), Dyad(3, 4))
+        plane = Plane(Line(1, 2), Line(3, 4))
         string = "Plane(Line(1.0, 2.0), Line(3.0, 4.0))"
         self.assertEqual(string, repr(plane))
 
     def test_str(self):
         """"""
-        plane = Plane(Dyad(1, 2), Dyad(3, 4))
+        plane = Plane(Line(1, 2), Line(3, 4))
         string = str(plane)
         self.assertEqual(string, "([1.0, 2.0], [3.0, 4.0])")
