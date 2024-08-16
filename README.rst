@@ -169,6 +169,26 @@ Optional Dependencies
 +------------------------+---------------------------------------------------+
 
 
+Funding
+*******
+
+The Célestine Project does not seek funding of any kind.
+Any claims of fundraising activities in her name are fraudulent.
+Please `contact me directly <celestine@cyanochroite.com>`_ if you encounter such claims.
+
+
+Project Links
+*************
+
+* `Discord <https://discord.gg/aNmDWPXd7B>`_
+* `Documentation <https://celestine.readthedocs.io/>`_
+* `Email <celestine@cyanochroite.com>`_
+* `Libraries.io <https://libraries.io/pypi/celestine>`_
+* `PyPI <https://pypi.org/project/celestine/>`_
+* `Source <https://github.com/cyanochroite/celestine>`_
+* `Tracker <https://github.com/cyanochroite/celestine/issues>`_
+
+
 Licences
 ********
 
@@ -179,16 +199,15 @@ The licence for :code:`celestine` is the
 `European Union Public Licence <https://eupl.eu/>`_.
 
 
-Project Links
-*************
+Footnotes
+*********
 
-* `Discord <https://discord.gg/aNmDWPXd7B>`_
-* `Documentation <https://celestine.readthedocs.io/>`_
-* `Email <mem_dixy@pm.me>`_
-* `Libraries.io <https://libraries.io/pypi/celestine>`_
-* `PyPI <https://pypi.org/project/celestine/>`_
-* `Source <https://github.com/cyanochroite/celestine>`_
-* `Tracker <https://github.com/cyanochroite/celestine/issues>`_
+.. [1] Blender interface can only be run when this is installed as a Blender addon.
+.. [2] Windows does not come with Curses.
+.. [3] Not always installed. Espically on Linix.
+.. [4] Language files were translated from English using the Microsoft Azure Translator.
+.. [5] Package only needed on Windows. Unix and Linix already have Curses.
+
 
 .. _`dearpygui`: https://pypi.org/project/dearpygui/
 .. _`pillow`: https://pypi.org/project/Pillow/
@@ -200,13 +219,3 @@ Project Links
 
 .. _`blender`: https://www.blender.org/
 .. _`Blender Add-on`: https://docs.blender.org/manual/en/latest/editors/preferences/addons.html
-
-
-Footnotes
-*********
-
-.. [1] Blender interface can only be run when this is installed as a Blender addon.
-.. [2] Windows does not come with Curses.
-.. [3] Not always installed. Espically on Linix.
-.. [4] Language files were translated from English using the Microsoft Azure Translator.
-.. [5] Package only needed on Windows. Unix and Linix already have Curses.

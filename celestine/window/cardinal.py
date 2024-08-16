@@ -13,32 +13,32 @@ from celestine.typed import (
     Z,
 )
 
-# monad
-# dyad
-# triad
-# tetrad
 
-# 1	monad
-# 2	dyad
-# 3	triad
-# 4	tetrad
-# 5	pentad
-# 6	hexad
+class Math:
+    """"""
 
-# 7	heptad, hebdomad
-# 8	octad, ogdoad
-# 9	nonad, ennead
-# 10	decad, decade
-# 11	hendecad
-# 12	dodecad, duodecade	dozen
-# 1000	chiliad
+    @staticmethod
+    def add(one: F, two: F) -> F:
+        """"""
+        return one + two
 
-# Monad
-# Dyad
-# Triad
-# Tetrad
-# Pentad
-# Hexad
+    @staticmethod
+    def mul(one: F, two: F) -> F:
+        """"""
+        return one * two
+
+    @staticmethod
+    def sub(one: F, two: F) -> F:
+        """"""
+        return one - two
+
+    @staticmethod
+    def truediv(one: F, two: F) -> F:
+        """"""
+        return one / two
+
+
+type OTHER = F | K | Z
 
 
 class Cardinal:
@@ -46,12 +46,12 @@ class Cardinal:
 
     element: LF
 
-    @staticmethod
-    def add(one: F, two: F) -> F:
+    @classmethod
+    def make(cls, element: LF) -> K:
         """"""
-        return one + two
+        return cls(element)
 
-    def math(self, function, other: F | K | Z) -> LF:
+    def math(self, function, other: OTHER) -> LF:
         """Do math stuff."""
         if isinstance(other, float | int):
             element = [other] * len(self.element)
@@ -60,98 +60,80 @@ class Cardinal:
         result = list(map(function, self.element, element))
         return result
 
-    @staticmethod
-    def mul(one: F, two: F) -> F:
-        """"""
-        return one + two
-
-    @staticmethod
-    def sub(one: F, two: F) -> F:
-        """"""
-        return one + two
-
-    @staticmethod
-    def truediv(one: F, two: F) -> F:
-        """"""
-        return one + two
-
     def __init__(self, element: LF) -> N:
         self.element = element
 
-    def __add__(self, other: F | K | Z) -> K:
-        value = self.math(self.add, other)
-        return type(self)(value)
+    # binary arithmetic operations
 
-    def __mul__(self, other: F | K | Z) -> K:
-        value = self.math(self.mul, other)
-        return type(self)(value)
+    def __add__(self, other: OTHER) -> K:
+        element = self.math(Math.add, other)
+        return self.make(element)
 
-    def __sub__(self, other: F | K | Z) -> K:
-        value = self.math(self.sub, other)
-        return type(self)(value)
+    def __mul__(self, other: OTHER) -> K:
+        element = self.math(Math.mul, other)
+        return self.make(element)
 
-    def __truediv__(self, other: F | K | Z) -> K:
-        value = self.math(self.truediv, other)
-        return type(self)(value)
+    def __sub__(self, other: OTHER) -> K:
+        element = self.math(Math.sub, other)
+        return self.make(element)
 
-    def __iadd__(self, other: F | K) -> K:
-        self.value += self._other(other)
+    def __truediv__(self, other: OTHER) -> K:
+        element = self.math(Math.truediv, other)
+        return self.make(element)
+
+    # augmented arithmetic assignments
+
+    def __iadd__(self, other: OTHER) -> K:
+        self.element = self.math(Math.add, other)
         return self
 
-    def __imul__(self, other: K) -> K:
-        self.value *= other.value
+    def __imul__(self, other: OTHER) -> K:
+        self.element = self.math(Math.mul, other)
         return self
 
-    def __isub__(self, other: K) -> K:
-        self.value -= other.value
+    def __isub__(self, other: OTHER) -> K:
+        self.element = self.math(Math.sub, other)
         return self
 
-    def __itruediv__(self, other: K) -> K:
-        self.value /= other.value
+    def __itruediv__(self, other: OTHER) -> K:
+        self.element = self.math(Math.truediv, other)
         return self
 
-    ###
-
-    def __add__(self, other: F | K) -> K:
-        def function(a, b):
-            return a + b
-        car = map(function, self.element, other.elements, [1, 2, 3])
-        return list(car)
-        return self
+    # string representation of an object
 
     def __repr__(self):
         return f"Monad({repr(self.value)})"
 
     def __str__(self):
-        return f"({str(self.value)})"
-
-    ###
-
-    def __iadd__(self, other: F | K) -> K:
-        self.value += self._other(other)
-        return self
-
-    def __imul__(self, other: K) -> K:
-        self.value *= other.value
-        return self
-
-    def __isub__(self, other: K) -> K:
-        self.value -= other.value
-        return self
-
-    def __itruediv__(self, other: K) -> K:
-        self.value /= other.value
-        return self
-
-    ###
-
-    @staticmethod
-    def _other(other: F | K) -> K:
-        return other if isinstance(other, F) else other.value
+        return f"({", ".join(self.element)})"
 
 
 class Monad(Cardinal):
-    pass
+    """"""
+
+    def __init__(self, one: F) -> N:
+        super().__init__([one])
+
+
+class Dyad(Cardinal):
+    """"""
+
+    def __init__(self, one: F, two: F, three: F) -> N:
+        super().__init__([one, two, three])
+
+
+class Triad(Cardinal):
+    """"""
+
+    def __init__(self, one: F, two: F, three: F) -> N:
+        super().__init__([one, two, three])
+
+
+class Tetrad(Cardinal):
+    """"""
+
+    def __init__(self, one: F, two: F, three: F, four: F) -> N:
+        super().__init__([one, two, three, four])
 
 
 class Dyad(Cardinal):
