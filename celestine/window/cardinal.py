@@ -1,6 +1,9 @@
 """"""
-from typing import Mapping
 
+import math
+import typing
+
+from celestine.literal import FULL_STOP
 from celestine.typed import (
     GF,
     LF,
@@ -9,49 +12,89 @@ from celestine.typed import (
     F,
     K,
     N,
-    T,
+    S,
     Z,
 )
+
+Other: typing.TypeAlias = F | K | Z
 
 
 class Math:
     """"""
 
     @staticmethod
+    def lt(one: F, two: F) -> B:
+        """"""
+        result = one < two
+        return result
+
+    @staticmethod
+    def le(one: F, two: F) -> B:
+        """"""
+        result = one < two or math.isclose(one, two)
+        return result
+
+    @staticmethod
+    def eq(one: F, two: F) -> B:
+        """"""
+        result = math.isclose(one, two)
+        return result
+
+    @staticmethod
+    def ne(one: F, two: F) -> B:
+        """"""
+        result = not math.isclose(one, two)
+        return result
+
+    @staticmethod
+    def gt(one: F, two: F) -> B:
+        """"""
+        result = one > two
+        return result
+
+    @staticmethod
+    def ge(one: F, two: F) -> B:
+        """"""
+        result = one > two or math.isclose(one, two)
+        return result
+
+    @staticmethod
     def add(one: F, two: F) -> F:
         """"""
-        return one + two
+        result = one + two
+        return result
 
     @staticmethod
     def mul(one: F, two: F) -> F:
         """"""
-        return one * two
+        result = one * two
+        return result
 
     @staticmethod
     def sub(one: F, two: F) -> F:
         """"""
-        return one - two
+        result = one - two
+        return result
 
     @staticmethod
     def truediv(one: F, two: F) -> F:
         """"""
-        return one / two
-
-
-type OTHER = F | K | Z
+        result = one / two
+        return result
 
 
 class Cardinal:
     """"""
 
     element: LF
+    name: S
 
     @classmethod
     def make(cls, element: LF) -> K:
         """"""
-        return cls(element)
+        return cls(*element)
 
-    def math(self, function, other: OTHER) -> LF:
+    def math(self, function: C[[F, F], F], other: Other) -> LF:
         """Do math stuff."""
         if isinstance(other, float | int):
             element = [other] * len(self.element)
@@ -60,207 +103,155 @@ class Cardinal:
         result = list(map(function, self.element, element))
         return result
 
-    def __init__(self, element: LF) -> N:
-        self.element = element
+    # 3.3.1. Basic Customization
+
+    # class constructor
+
+    def __new__(cls, *element: F) -> K:
+        new = super().__new__(cls)
+        name = repr(cls)
+        index = name.rindex(FULL_STOP) + 1
+        new.name = name[index:-2]
+        return new
+
+    def __init__(self, *element: F) -> N:
+        self.element = [*element]
+
+    def __del__(self) -> N:
+        self.element = []
+
+    # string representation of an object
+
+    def __repr__(self):
+        result = f"{self.name}{str(self)}"
+        return result
+
+    def __str__(self):
+        element = ", ".join(map(str, self.element))
+        result = f"({element})"
+        return result
+
+    # rich comparison methods
+
+    def __lt__(self, other: K) -> B:
+        element = self.math(Math.lt, other)
+        result = all(element)
+        return result
+
+    def __le__(self, other: K) -> B:
+        element = self.math(Math.le, other)
+        result = all(element)
+        return result
+
+    def __eq__(self, other: K) -> B:
+        element = self.math(Math.eq, other)
+        result = all(element)
+        return result
+
+    def __ne__(self, other: K) -> B:
+        element = self.math(Math.ne, other)
+        result = all(element)
+        return result
+
+    def __gt__(self, other: K) -> B:
+        element = self.math(Math.gt, other)
+        result = all(element)
+        return result
+
+    def __ge__(self, other: K) -> B:
+        element = self.math(Math.ge, other)
+        result = all(element)
+        return result
+
+    def __bool__(self) -> B:
+        result = any(self.element)
+        return result
+
+    # 3.3.7. Emulating container types
+
+    def __iter__(self) -> GF:
+        yield from self.element
+
+    def __reversed__(self) -> GF:
+        yield from reversed(self.element)
+
+    def __contains__(self, item: F) -> B:
+        return any(item == element for element in self.element)
+
+    # 3.3.8. Emulating numeric types
 
     # binary arithmetic operations
 
-    def __add__(self, other: OTHER) -> K:
+    def __add__(self, other: Other) -> K:
         element = self.math(Math.add, other)
         return self.make(element)
 
-    def __mul__(self, other: OTHER) -> K:
+    def __mul__(self, other: Other) -> K:
         element = self.math(Math.mul, other)
         return self.make(element)
 
-    def __sub__(self, other: OTHER) -> K:
+    def __sub__(self, other: Other) -> K:
         element = self.math(Math.sub, other)
         return self.make(element)
 
-    def __truediv__(self, other: OTHER) -> K:
+    def __truediv__(self, other: Other) -> K:
         element = self.math(Math.truediv, other)
         return self.make(element)
 
     # augmented arithmetic assignments
 
-    def __iadd__(self, other: OTHER) -> K:
+    def __iadd__(self, other: Other) -> K:
         self.element = self.math(Math.add, other)
         return self
 
-    def __imul__(self, other: OTHER) -> K:
+    def __imul__(self, other: Other) -> K:
         self.element = self.math(Math.mul, other)
         return self
 
-    def __isub__(self, other: OTHER) -> K:
+    def __isub__(self, other: Other) -> K:
         self.element = self.math(Math.sub, other)
         return self
 
-    def __itruediv__(self, other: OTHER) -> K:
+    def __itruediv__(self, other: Other) -> K:
         self.element = self.math(Math.truediv, other)
         return self
-
-    # string representation of an object
-
-    def __repr__(self):
-        return f"Monad({repr(self.value)})"
-
-    def __str__(self):
-        return f"({", ".join(self.element)})"
 
 
 class Monad(Cardinal):
     """"""
 
+    def __new__(cls, one: F) -> K:
+        return super().__new__(cls, one)
+
     def __init__(self, one: F) -> N:
-        super().__init__([one])
+        super().__init__(one)
 
 
 class Dyad(Cardinal):
     """"""
 
-    def __init__(self, one: F, two: F, three: F) -> N:
-        super().__init__([one, two, three])
+    def __new__(cls, one: F, two: F) -> K:
+        return super().__new__(cls, one, two)
+
+    def __init__(self, one: F, two: F) -> N:
+        super().__init__(one, two)
 
 
 class Triad(Cardinal):
     """"""
 
+    def __new__(cls, one: F, two: F, three: F) -> K:
+        return super().__new__(cls, one, two, three)
+
     def __init__(self, one: F, two: F, three: F) -> N:
-        super().__init__([one, two, three])
+        super().__init__(one, two, three)
 
 
 class Tetrad(Cardinal):
     """"""
 
+    def __new__(cls, one: F, two: F, three: F, four: F) -> K:
+        return super().__new__(cls, one, two, three, four)
+
     def __init__(self, one: F, two: F, three: F, four: F) -> N:
-        super().__init__([one, two, three, four])
-
-
-class Dyad(Cardinal):
-    """"""
-
-    _one: F
-    _two: F
-
-    @property
-    def one(self) -> F:
-        """"""
-        return self._one
-
-    @property
-    def two(self) -> F:
-        """"""
-        return self._two
-
-    @property
-    def value(self) -> T[Z, Z]:
-        """"""
-        return (int(self._one), int(self._two))
-
-###
-
-    @classmethod
-    def clone(cls, self: K) -> K:
-        """"""
-        return cls(self._one, self._two)
-
-    def copy(self) -> K:
-        """"""
-        return self.clone(self)
-
-    @property
-    def length(self) -> Z:
-        """"""
-        return self._two - self._one
-
-    @property
-    def midpoint(self) -> Z:
-        """"""
-        return (self._one + self._two) // 2
-
-###
-
-    @staticmethod
-    def _add(one: F, two: F) -> F:
-        return one + two
-
-    @staticmethod
-    def _mul(one: F, two: F) -> F:
-        return one * two
-
-    @staticmethod
-    def _sub(one: F, two: F) -> F:
-        return one - two
-
-    @staticmethod
-    def _truediv(one: F, two: F) -> F:
-        return one / two
-
-    def math(self, function: C[[K, F | K], K], other: F | K) -> T[F, F]:
-        """Do math stuff."""
-        if isinstance(other, F):
-            one = function(self._one, other)
-            two = function(self._one, other)
-        else:
-            one = function(self._one, other._one)
-            two = function(self._one, other._two)
-        return one, two
-
-    def __add__(self, other: F | K) -> K:
-        one, two = self.math(self._add, other)
-        return type(self)(one, two)
-
-    ##
-    def __contains__(self, item: Z) -> B:
-        return self.minimum <= item <= self.maximum
-
-    def __iadd__(self, other: F | K) -> K:
-        self._one += other
-        self._two += other
-        return self
-
-    def __imul__(self, other: F) -> K:
-        self._one *= other
-        self._two *= other
-        return self
-
-    def __init__(self, _one: F, _two: F) -> N:
-        self._one = _one
-        self._two = _two
-        self.minimum = min(_one, _two)
-        self.maximum = max(_one, _two)
-
-    def __isub__(self, other: F) -> K:
-        self._one -= other
-        self._two -= other
-        return self
-
-    def __iter__(self) -> GF:
-        yield self._one
-        yield self._two
-
-    def __itruediv__(self, other: F) -> K:
-        self._one /= other
-        self._two /= other
-        return self
-
-    def __mul__(self, other: K) -> K:
-        one = self._one * other._one
-        two = self._two * other._two
-        return type(self)(one, two)
-
-    def __repr__(self):
-        return f"Dyad({repr(self._one)}, {repr(self._two)})"
-
-    def __str__(self):
-        return f"({str(self._one)}, {str(self._two)})"
-
-    def __sub__(self, other: K) -> K:
-        one = self._one - other._one
-        two = self._two - other._two
-        return type(self)(one, two)
-
-    def __truediv__(self, other: K) -> K:
-        one = self._one / other._one
-        two = self._two / other._two
-        return type(self)(one, two)
+        super().__init__(one, two, three, four)

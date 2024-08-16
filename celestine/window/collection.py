@@ -1,7 +1,6 @@
 """"""
 
 from celestine.typed import (
-    GF,
     B,
     F,
     K,
@@ -9,64 +8,40 @@ from celestine.typed import (
     T,
     Z,
 )
+from celestine.window.cardinal import Dyad
 
 
-class Point:
+class Point(Dyad):
     """"""
-
-    _one: F
-    _two: F
 
     @property
     def one(self) -> F:
         """"""
-        return self._one
+        return self.element[0]
 
     @property
     def two(self) -> F:
         """"""
-        return self._two
+        return self.element[1]
 
     @property
     def value(self) -> T[Z, Z]:
         """"""
-        return (int(self._one), int(self._two))
-
-    def __init__(self, _one: F, _two: F) -> N:
-        self._one = _one
-        self._two = _two
-
-    def __iter__(self) -> GF:
-        yield self._one
-        yield self._two
-
-    def __add__(self, other: K) -> K:
-        one = self._one + other._one
-        two = self._two + other._two
-        return type(self)(one, two)
-
-    def __sub__(self, other: K) -> K:
-        one = self._one - other._one
-        two = self._two - other._two
-        return type(self)(one, two)
-
-    def __truediv__(self, other: K) -> K:
-        one = self._one / other._one
-        two = self._two / other._two
-        return type(self)(one, two)
-
-    def __repr__(self):
-        return f"Point({repr(self._one)}, {repr(self._two)})"
-
-    def __str__(self):
-        return f"({str(self._one)}, {str(self._two)})"
+        return (int(self.one), int(self.two))
 
 
-class Line:
+class Line(Dyad):
     """"""
 
-    minimum: Z
-    maximum: Z
+    @property
+    def minimum(self) -> F:
+        """"""
+        return self.element[0]
+
+    @property
+    def maximum(self) -> F:
+        """"""
+        return self.element[1]
 
     @classmethod
     def clone(cls, self: K) -> K:
@@ -80,40 +55,20 @@ class Line:
     @property
     def length(self) -> Z:
         """"""
-        return self.maximum - self.minimum
+        return int(self.maximum - self.minimum)
 
     @property
     def midpoint(self) -> Z:
         """"""
-        return (self.minimum + self.maximum) // 2
+        return int(self.minimum + self.maximum) // 2
 
     def __contains__(self, item: Z) -> B:
         return self.minimum <= item <= self.maximum
 
-    def __iadd__(self, other: Z) -> K:
-        self.minimum += other
-        self.maximum += other
-        return self
-
-    def __imul__(self, other: Z) -> K:
-        self.minimum *= other
-        self.maximum *= other
-        return self
-
     def __init__(self, minimum: Z, maximum: Z) -> N:
-        self.minimum = min(minimum, maximum)
-        self.maximum = max(minimum, maximum)
-
-    def __isub__(self, other: Z) -> K:
-        self.minimum -= other
-        self.maximum -= other
-        return self
-
-    def __repr__(self):
-        return f"Line({repr(self.minimum)}, {repr(self.maximum)})"
-
-    def __str__(self):
-        return f"({str(self.minimum)}, {str(self.maximum)})"
+        minimum = min(minimum, maximum)
+        maximum = max(minimum, maximum)
+        super().__init__(minimum, maximum)
 
 
 class Plane:
