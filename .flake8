@@ -1,5 +1,4 @@
 [flake8]
 format = pylint
-ignore = E741
 max_doc_length = 72
 max_line_length = 72

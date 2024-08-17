@@ -213,8 +213,8 @@ class Element(Element_, Abstract):
 
         new_width, new_height = curent.size
 
-        old_point = Point(old_width, old_height)
-        new_point = curent.size.value
+        Point(old_width, old_height)
+        curent.size.value
 
         if new_width < old_width:
             change_width = math.ceil(old_width / new_width)
@@ -272,7 +272,8 @@ class Window(Window_):
     """"""
 
     @override
-    def extension(self) -> LS:
+    @staticmethod
+    def extension() -> LS:
         """"""
         if bool(pillow):
             return pillow.extension()
@@ -305,10 +306,12 @@ class Window(Window_):
         }
         super().__init__(element, **star)
         self.area = Area.make(1280, 1080)
+        self.area = Area.make(1200, 1000)
 
         self.canvas = tkinter.Tk()
         self.canvas.title(bank.language.APPLICATION_TITLE)
         self.canvas.geometry("1920x1080")
+        self.canvas.geometry("1900x1000")
         self.canvas.minsize(640, 480)
         self.canvas.maxsize(3840, 2160)
         self.canvas.config(bg="blue")

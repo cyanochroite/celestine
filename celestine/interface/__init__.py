@@ -21,6 +21,7 @@ from celestine.typed import (
     S,
     T,
     Z,
+    ignore,
     override,
 )
 from celestine.window.collection import (
@@ -40,6 +41,7 @@ class Object:
 
     def __init__(self, **star: R) -> N:
         """This does not pass the star parameter to the real object."""
+        ignore(self)
         super().__init__()
 
 
@@ -93,6 +95,7 @@ class Abstract(Object):
 
     def can_make(self, **star: R) -> B:
         """"""
+        ignore(self)
         return True
 
     def make(self, canvas: A, **star: R) -> N:
@@ -317,6 +320,7 @@ class View(Abstract, Tree):
         return self
 
     def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
+        ignore(self)
         if exc_type or exc_value or traceback:
             print("ERROR", exc_type, exc_value, traceback)
         return False
@@ -396,7 +400,8 @@ class Window(Tree):
 
     canvas: A
 
-    def extension(self) -> LS:
+    @staticmethod
+    def extension() -> LS:
         """"""
         return [
             ".bmp",

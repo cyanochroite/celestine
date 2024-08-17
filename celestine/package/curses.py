@@ -10,6 +10,7 @@ from celestine.typed import (
     A,
     S,
     Z,
+    ignore,
 )
 
 cbreak: A
@@ -40,6 +41,7 @@ class Package(Abstract):
         self, window, column: Z, row: Z, width: Z, height: Z
     ) -> A:
         """"""
+        ignore(self)
         nlines = height
         ncols = width
         begin_y = row

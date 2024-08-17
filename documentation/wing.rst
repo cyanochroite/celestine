@@ -43,7 +43,6 @@ Values
 
 _
 cls
-self
 star
 
 
@@ -114,7 +113,7 @@ Run after opening file = True
 
 Maximum File Size (KB) = 1000
 
-Command Line = ${WING:PYTHON} -m pylint --msg-template="{path}:{line}:{column}: {msg_id} {msg} ({symbol})" --ignored-argument-names="_|cls|hold|star|self"
+Command Line = ${WING:PYTHON} -m pylint --msg-template="{path}:{line}:{column}: {msg_id} {msg} ({symbol})" --ignored-argument-names="_|cls|star"
 
 Include Pylint Errors = True
 

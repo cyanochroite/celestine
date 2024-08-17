@@ -24,6 +24,7 @@ from celestine.typed import (
     N,
     R,
     S,
+    ignore,
     override,
 )
 from celestine.window.collection import (
@@ -58,6 +59,7 @@ class celestine_click(bpy.types.Operator):
 
     def execute(self, context):
         """"""
+        ignore(self)
         mouse = (obj for obj in bpy.data.objects if obj.name == "mouse")
         mouse = next(mouse)
 
@@ -116,7 +118,7 @@ class celestine_begin(bpy.types.Operator):
 
     def execute(self, _):
         """"""
-
+        ignore(self)
         print("begin")
         car = bpy.context.preferences.addons["celestine"].preferences
         data.begin()
@@ -136,6 +138,7 @@ class celestine_finish(bpy.types.Operator):
 
     def execute(self, _):
         """"""
+        ignore(self)
         print("finish")
         preferences.finish()
         data.finish()

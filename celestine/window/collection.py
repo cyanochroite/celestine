@@ -62,12 +62,12 @@ class Line(Dyad):
         """"""
         return int(self.minimum + self.maximum) // 2
 
-    def __contains__(self, item: Z) -> B:
+    def __contains__(self, item: F) -> B:
         return self.minimum <= item <= self.maximum
 
-    def __init__(self, minimum: Z, maximum: Z) -> N:
-        minimum = min(minimum, maximum)
-        maximum = max(minimum, maximum)
+    def __init__(self, one: F, two: F) -> N:
+        minimum = min(one, two)
+        maximum = max(one, two)
         super().__init__(minimum, maximum)
 
 
