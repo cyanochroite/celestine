@@ -165,7 +165,7 @@ write = true
 
 [tool.pylint.main]
 disable = "empty-docstring, too-few-public-methods"
-ignored-argument-names = "_|cls|star|self"
+ignored-argument-names = "_|cls|star"
 
 
 [tool.pylint.format]

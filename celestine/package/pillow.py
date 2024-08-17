@@ -34,12 +34,14 @@ class Image:
 
     def resize(self, size: TZ2, resample: Resampling) -> K:
         """"""
+        ignore(self)
         ignore(size)
         ignore(resample)
         return Image()
 
     def tobytes(self) -> bytes:
         """"""
+        ignore(self)
         return b""
 
     def __init__(self):

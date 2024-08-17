@@ -1,5 +1,7 @@
 """"""
 
+import math
+
 from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
@@ -22,6 +24,7 @@ from celestine.typed import (
 from celestine.window.collection import (
     Area,
     Plane,
+    Point,
 )
 from celestine.window.container import Image
 
@@ -55,8 +58,11 @@ class Element(Element_, Abstract):
         """"""
         super().make(canvas, **star)
 
-        size = self.area.local.size.value
-        self.image = tkinter.PhotoImage()
+        # TODO: self.area.local.size.value
+        self.image = tkinter.PhotoImage(
+            width=200,
+            height=200,
+        )
 
         def callback() -> N:
             """"""
@@ -106,19 +112,121 @@ class Element(Element_, Abstract):
 
         # super().update(path)
 
+        def resize(img, new_width, new_height):
+            old_width = img.width()
+            old_height = img.height()
+            new_photo_image = tkinter.PhotoImage(
+                height=new_height,
+                width=new_width,
+            )
+            for x in range(new_width):
+                for y in range(new_height):
+                    x_old = int(x * old_width / new_width)
+                    y_old = int(y * old_height / new_height)
+                    rgb = "#%02x%02x%02x" % img.get(x_old, y_old)
+                    new_photo_image.put(rgb, (x, y))
+            return new_photo_image
+
         if pillow:
             photo = pillow.ImageTk.PhotoImage(image=self.image.image)
         else:
             width, height = target.size.value
-            photo = tkinter.PhotoImage(
-                file=self.path,
-                width=0,
-                height=0,
-            )
 
-        self.photo = photo
+            photo = tkinter.PhotoImage(file=self.path)
+            photo = resize(photo, 200, 200)
+            # photo = photo.subsample(4, 4)
+
+        # self.photo = photo
         # self.item.configure(image=photo)
-        self.item.configure(image=self.image)
+        # self.item.configure(image=self.image)
+
+        self.image2 = photo
+        self.item.configure(image=photo)
+        self.item.image = photo
+
+    def update_image(self, path: P, **star: R) -> N:
+        """"""
+        if pillow:
+            return
+
+        self.path = path
+        photo = tkinter.PhotoImage(file=self.path)
+
+        curent = Plane.make(photo.width(), photo.height())
+        target = Plane.make(*self.area.world.size.value)
+
+        match self.fit:
+            case Image.FILL:
+                curent.scale_to_min(target)
+            case Image.FULL:
+                curent.scale_to_max(target)
+
+        curent.center(target)
+
+        width, height = curent.size.value
+
+        img = photo
+        new_width = width
+        new_height = height
+
+        old_width = img.width()
+        old_height = img.height()
+        image = tkinter.PhotoImage(
+            height=new_height,
+            width=new_width,
+        )
+        hex_string = "#{:02X}{:02X}{:02X}"
+        for x in range(new_width):
+            for y in range(new_height):
+                x_old = int(x * old_width / new_width)
+                y_old = int(y * old_height / new_height)
+                color = img.get(x_old, y_old)
+
+                data = hex_string.format(*color)
+                to = (x, y)
+                image.put(data, to)
+
+        self.item.configure(image=image)
+        self.item.image = image
+
+    def update_image(self, path: P, **star: R) -> N:
+        """"""
+        if pillow:
+            return
+
+        self.path = path
+        photo = tkinter.PhotoImage(file=self.path)
+
+        old_width = photo.width()
+        old_height = photo.height()
+
+        curent = Plane.make(old_width, old_height)
+        target = Plane.make(*self.area.world.size)
+
+        match self.fit:
+            case Image.FILL:
+                curent.scale_to_min(target)
+            case Image.FULL:
+                curent.scale_to_max(target)
+
+        curent.center(target)
+
+        new_width, new_height = curent.size
+
+        Point(old_width, old_height)
+        curent.size.value
+
+        if new_width < old_width:
+            change_width = math.ceil(old_width / new_width)
+            change_height = math.ceil(old_height / new_height)
+            image = photo.subsample(change_width, change_width)
+        else:
+            change_width = math.ceil(new_width // old_width)
+            change_height = math.ceil(new_height // old_height)
+            image = photo.zoom(change_width, change_height)
+
+        self.item.configure(image=image)
+        self.item.image = image
 
     def update_text(self, text: S) -> N:
         """"""
@@ -164,7 +272,8 @@ class Window(Window_):
     """"""
 
     @override
-    def extension(self) -> LS:
+    @staticmethod
+    def extension() -> LS:
         """"""
         if bool(pillow):
             return pillow.extension()
@@ -197,10 +306,12 @@ class Window(Window_):
         }
         super().__init__(element, **star)
         self.area = Area.make(1280, 1080)
+        self.area = Area.make(1200, 1000)
 
         self.canvas = tkinter.Tk()
         self.canvas.title(bank.language.APPLICATION_TITLE)
         self.canvas.geometry("1920x1080")
+        self.canvas.geometry("1900x1000")
         self.canvas.minsize(640, 480)
         self.canvas.maxsize(3840, 2160)
         self.canvas.config(bg="blue")

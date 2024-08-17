@@ -12,6 +12,7 @@ from celestine.typed import (
     N,
     R,
     S,
+    ignore,
 )
 
 
@@ -23,11 +24,13 @@ class Abstract:
 
     def main(self, package: M, path: S) -> N:
         """"""
+        ignore(self)
         sys.argv.append(path)
         package.main()
 
     def module(self) -> LS:
         """The 'import PACKAGE.MODULE' name."""
+        ignore(self)
         return []
 
     def run(self) -> N:
@@ -49,10 +52,12 @@ class Abstract:
         sys.argv = argv
 
     def __bool__(self) -> B:
-        return self.package is not None
+        result = self.package is not None
+        return result
 
     def __getattr__(self, name: S) -> S:
-        return getattr(self.package, name)
+        result = getattr(self.package, name)
+        return result
 
     def __init__(self, *, pypi: VS = None, **star: R) -> N:
         self.name = self.__module__.rsplit(".", maxsplit=1)[-1]
