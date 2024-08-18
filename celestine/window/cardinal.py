@@ -1,100 +1,37 @@
 """"""
 
-import math
 import typing
 
 from celestine.literal import FULL_STOP
 from celestine.typed import (
-    GF,
-    LF,
     B,
     C,
     F,
+    G,
     K,
+    L,
     N,
     S,
     Z,
+    ignore,
 )
 
-Other: typing.TypeAlias = F | K | Z
+Math: typing.TypeAlias = F | K | Z
+Function: typing.TypeAlias = C[[Math, Math], Math]
 
 
-class Math:
+class Mathinal:
     """"""
 
-    @staticmethod
-    def lt(one: F, two: F) -> B:
-        """"""
-        result = one < two
-        return result
-
-    @staticmethod
-    def le(one: F, two: F) -> B:
-        """"""
-        result = one < two or math.isclose(one, two)
-        return result
-
-    @staticmethod
-    def eq(one: F, two: F) -> B:
-        """"""
-        result = math.isclose(one, two)
-        return result
-
-    @staticmethod
-    def ne(one: F, two: F) -> B:
-        """"""
-        result = not math.isclose(one, two)
-        return result
-
-    @staticmethod
-    def gt(one: F, two: F) -> B:
-        """"""
-        result = one > two
-        return result
-
-    @staticmethod
-    def ge(one: F, two: F) -> B:
-        """"""
-        result = one > two or math.isclose(one, two)
-        return result
-
-    @staticmethod
-    def add(one: F, two: F) -> F:
-        """"""
-        result = one + two
-        return result
-
-    @staticmethod
-    def mul(one: F, two: F) -> F:
-        """"""
-        result = one * two
-        return result
-
-    @staticmethod
-    def sub(one: F, two: F) -> F:
-        """"""
-        result = one - two
-        return result
-
-    @staticmethod
-    def truediv(one: F, two: F) -> F:
-        """"""
-        result = one / two
-        return result
-
-
-class Cardinal:
-    """"""
-
-    element: LF
+    element: L[Math]
     name: S
 
     @classmethod
-    def make(cls, element: LF) -> K:
+    def make(cls, element: L[Math]) -> K:
         """"""
         return cls(*element)
 
-    def math(self, function: C[[F, F], F], other: Other) -> LF:
+    def math(self, function: Function, other: Math) -> L[Math]:
         """Do math stuff."""
         if isinstance(other, float | int):
             element = [other] * len(self.element)
@@ -107,14 +44,15 @@ class Cardinal:
 
     # class constructor
 
-    def __new__(cls, *element: F) -> K:
+    def __new__(cls, *element: Math) -> K:
+        ignore(element)
         new = super().__new__(cls)
         name = repr(cls)
         index = name.rindex(FULL_STOP) + 1
         new.name = name[index:-2]
         return new
 
-    def __init__(self, *element: F) -> N:
+    def __init__(self, *element: Math) -> N:
         self.element = [*element]
 
     def __del__(self) -> N:
@@ -123,7 +61,8 @@ class Cardinal:
     # string representation of an object
 
     def __repr__(self):
-        result = f"{self.name}{str(self)}"
+        element = ", ".join(map(repr, self.element))
+        result = f"{self.name}({element})"
         return result
 
     def __str__(self):
@@ -131,127 +70,119 @@ class Cardinal:
         result = f"({element})"
         return result
 
-    # rich comparison methods
-
-    def __lt__(self, other: K) -> B:
-        element = self.math(Math.lt, other)
-        result = all(element)
-        return result
-
-    def __le__(self, other: K) -> B:
-        element = self.math(Math.le, other)
-        result = all(element)
-        return result
-
-    def __eq__(self, other: K) -> B:
-        element = self.math(Math.eq, other)
-        result = all(element)
-        return result
-
-    def __ne__(self, other: K) -> B:
-        element = self.math(Math.ne, other)
-        result = all(element)
-        return result
-
-    def __gt__(self, other: K) -> B:
-        element = self.math(Math.gt, other)
-        result = all(element)
-        return result
-
-    def __ge__(self, other: K) -> B:
-        element = self.math(Math.ge, other)
-        result = all(element)
-        return result
-
-    def __bool__(self) -> B:
-        result = any(self.element)
-        return result
-
     # 3.3.7. Emulating container types
 
-    def __iter__(self) -> GF:
+    def __iter__(self) -> G[Math, N, N]:
         yield from self.element
 
-    def __reversed__(self) -> GF:
+    def __reversed__(self) -> G[Math, N, N]:
         yield from reversed(self.element)
 
-    def __contains__(self, item: F) -> B:
+    def __contains__(self, item: Math) -> B:
         return any(item == element for element in self.element)
 
     # 3.3.8. Emulating numeric types
 
+    @staticmethod
+    def add(one: Math, two: Math) -> Math:
+        """"""
+        result = one + two
+        return result
+
+    @staticmethod
+    def mul(one: Math, two: Math) -> Math:
+        """"""
+        result = one * two
+        return result
+
+    @staticmethod
+    def sub(one: Math, two: Math) -> Math:
+        """"""
+        result = one - two
+        return result
+
+    @staticmethod
+    def truediv(one: Math, two: Math) -> Math:
+        """"""
+        result = one / two
+        return result
+
     # binary arithmetic operations
 
-    def __add__(self, other: Other) -> K:
-        element = self.math(Math.add, other)
+    def __add__(self, other: Math) -> K:
+        element = self.math(self.add, other)
         return self.make(element)
 
-    def __mul__(self, other: Other) -> K:
-        element = self.math(Math.mul, other)
+    def __mul__(self, other: Math) -> K:
+        element = self.math(self.mul, other)
         return self.make(element)
 
-    def __sub__(self, other: Other) -> K:
-        element = self.math(Math.sub, other)
+    def __sub__(self, other: Math) -> K:
+        element = self.math(self.sub, other)
         return self.make(element)
 
-    def __truediv__(self, other: Other) -> K:
-        element = self.math(Math.truediv, other)
+    def __truediv__(self, other: Math) -> K:
+        element = self.math(self.truediv, other)
         return self.make(element)
 
     # augmented arithmetic assignments
 
-    def __iadd__(self, other: Other) -> K:
-        self.element = self.math(Math.add, other)
+    def __iadd__(self, other: Math) -> K:
+        self.element = self.math(self.add, other)
         return self
 
-    def __imul__(self, other: Other) -> K:
-        self.element = self.math(Math.mul, other)
+    def __imul__(self, other: Math) -> K:
+        self.element = self.math(self.mul, other)
         return self
 
-    def __isub__(self, other: Other) -> K:
-        self.element = self.math(Math.sub, other)
+    def __isub__(self, other: Math) -> K:
+        self.element = self.math(self.sub, other)
         return self
 
-    def __itruediv__(self, other: Other) -> K:
-        self.element = self.math(Math.truediv, other)
+    def __itruediv__(self, other: Math) -> K:
+        self.element = self.math(self.truediv, other)
         return self
 
 
-class Monad(Cardinal):
+class Monad(Mathinal):
     """"""
 
-    def __new__(cls, one: F) -> K:
+    def __new__(cls, one: Math) -> K:
         return super().__new__(cls, one)
 
-    def __init__(self, one: F) -> N:
+    def __init__(self, one: Math) -> N:
+        ignore(self)
         super().__init__(one)
 
 
-class Dyad(Cardinal):
+class Dyad(Mathinal):
     """"""
 
-    def __new__(cls, one: F, two: F) -> K:
+    def __new__(cls, one: Math, two: Math) -> K:
         return super().__new__(cls, one, two)
 
-    def __init__(self, one: F, two: F) -> N:
+    def __init__(self, one: Math, two: Math) -> N:
+        ignore(self)
         super().__init__(one, two)
 
 
-class Triad(Cardinal):
+class Triad(Mathinal):
     """"""
 
-    def __new__(cls, one: F, two: F, three: F) -> K:
-        return super().__new__(cls, one, two, three)
+    def __new__(cls, one: Math, two: Math, tri: Math) -> K:
+        return super().__new__(cls, one, two, tri)
 
-    def __init__(self, one: F, two: F, three: F) -> N:
-        super().__init__(one, two, three)
+    def __init__(self, one: Math, two: Math, tri: Math) -> N:
+        ignore(self)
+        super().__init__(one, two, tri)
 
 
-class Tetrad(Cardinal):
+class Tetrad(Mathinal):
     """"""
 
-    def __new__(cls, one: F, two: F, three: F, four: F) -> K:
-        return super().__new__(cls, one, two, three, four)
+    def __new__(cls, one: Math, two: Math, tri: Math, tet: Math) -> K:
+        return super().__new__(cls, one, two, tri, tet)
 
-    def __init__(self, one: F, two: F, three: F, four: F) -> N:
-        super().__init__(one, two, three, four)
+    def __init__(self, one: Math, two: Math, tri: Math, tet: Math) -> N:
+        ignore(self)
+        super().__init__(one, two, tri, tet)
