@@ -1,11 +1,21 @@
-""""""
+import PIL
+import PIL.Image
 
-import importlib
-import os
-import sys
+from PIL import PngImagePlugin
 
-path = os.path.dirname(sys.path[0])
-sys.path.insert(0, path)
+PIL.Image.MAX_IMAGE_PIXELS = 9331200000
 
-celestine = importlib.import_module("celestine")
-celestine.main(sys.argv[1:], True)
+image = PIL.Image.open(r"C:\Users\mem_d\cross.png")
+
+data = image.getdata()
+
+black = 0
+white = 0
+
+for value in data:
+	if value < 128:
+		black += 1
+	else:
+		white += 1
+
+print(black, white)
