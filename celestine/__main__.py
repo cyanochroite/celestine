@@ -1,21 +1,38 @@
 import PIL
 import PIL.Image
 
-from PIL import PngImagePlugin
+a = 978900
+b = 255310
+c = 221105
 
-PIL.Image.MAX_IMAGE_PIXELS = 9331200000
+ba = b / a # 0.2608131576
+ca = c / a # 0.2258708754
+cb = c / b # 0.8660256159
 
-image = PIL.Image.open(r"C:\Users\mem_d\cross.png")
+tiger = (10,0,0,0)
 
-data = image.getdata()
+for x in range(1,1000):
+	for y in range(1,1000):
+		for z in range(1,1000):
+			if z > y:
+				continue
 
-black = 0
-white = 0
+			if y > x:
+				continue
 
-for value in data:
-	if value < 128:
-		black += 1
-	else:
-		white += 1
+			yx = y/x
+			zx = z/x
+			zy = z/y
 
-print(black, white)
+			aa = abs(yx - ba)
+			bb = abs(zx - ca)
+			cc = abs(zy - cb)
+
+			all = aa + bb + cc
+			if all < tiger[0]:
+				tiger = (all, x, y, z)
+
+print(tiger)
+print("done")
+#321 145 556
+# 859 224 194
