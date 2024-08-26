@@ -7,18 +7,19 @@ width="2600" height="2600"
 
 <path 
 transform="translate(1000,1000)"
+style="fill:#2255EE;stroke:#000000;"
 d="
-M 927 0
+M 1000 0
 
-l  -927	-927
-l  -927	+927
-l  +927	+927
-l  +927	-927
+l  -1000	-1000
+l  -1000	+1000
+l  +1000	+1000
+l  +1000	-1000
 
 Z"/>
 
 <path 
-transform="translate(1000,1000)"
+transform="translate(1000,1000) rotate(45)"
 style="fill:#fcef3c;stroke:#000000;"
 d="
 M +707, +000
