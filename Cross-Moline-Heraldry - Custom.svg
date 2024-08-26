@@ -1,8 +1,28 @@
 <?xml version="1.0" standalone="yes"?>
-<svg version="2.0" xmlns="http://www.w3.org/2000/svg">
+<svg version="2.0" xmlns="http://www.w3.org/2000/svg"
+width="2600" height="2600"
+>
 <title>Heraldic Cross Moline</title>
-<path transform="translate(1000,1000) scale(1,1)" d="
-m +707, +000
+
+
+<path 
+transform="translate(1000,1000)"
+d="
+M 927 0
+
+l  -927	-927
+l  -927	+927
+l  +927	+927
+l  +927	-927
+
+Z"/>
+
+<path 
+transform="translate(1000,1000)"
+style="fill:#fcef3c;stroke:#000000;"
+d="
+M +707, +000
+
 a +127, +127 0 0, 0 +000, -220
 a +110, +110 0 0, 1 -110, +110
 h -487
@@ -27,5 +47,8 @@ v -487
 h +487
 a +110, +110 0 0, 1 +110, +110
 a +127, +127 0 0, 0 +000, -220
-z"/>
+
+Z"/>
+
+
 </svg>

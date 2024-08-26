@@ -20,6 +20,10 @@ testa = 0.0001
 testb = 0.00001
 limit = 1000
 
+testa = 0.000152
+testb = 0.0000152
+limit = 500
+
 
 tiger = (10,0,0,0)
 for x in range(1,limit):
@@ -42,7 +46,7 @@ for x in range(1,limit):
 
 			all = aa + bb
 			if aa < testa and bb < testb:
-				tiger = (aa, bb, x, y, z)
+				tiger = (all, aa, bb, x, y, z)
 				print(tiger)
 
 print("done")
