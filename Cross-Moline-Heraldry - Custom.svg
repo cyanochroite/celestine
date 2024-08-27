@@ -6,8 +6,8 @@ width="2600" height="2600"
 
 
 <path 
-transform="translate(1000,1000)"
-style="fill:#2255EE;stroke:#000000;"
+transform="translate(1000,1000) rotate(0)"
+style="fill:#2255EE;stroke:#000000;stroke-width:20;"
 d="
 M 1000 0
 
@@ -18,9 +18,11 @@ l  +1000	-1000
 
 Z"/>
 
+
+
 <path 
 transform="translate(1000,1000) rotate(45)"
-style="fill:#fcef3c;stroke:#000000;"
+style="fill:#fcef3c;stroke:#000000;stroke-width:20;"
 d="
 M +707, +000
 
@@ -51,5 +53,18 @@ a +127, +127 0 0, 0 +000, -220
 
 Z"/>
 
+
+<path 
+transform="translate(1000,1000) rotate(0)"
+style="fill:#2255EE;stroke:#000000;;stroke-width:20;"
+d="
+M 155 0
+
+l  -155	-155
+l  -155	+155
+l  +155	+155
+l  +155	-155
+
+Z"/>
 
 </svg>
