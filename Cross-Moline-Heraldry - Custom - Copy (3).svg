@@ -6,36 +6,9 @@ width="2600" height="2600"
 
 
 
-<path
-transform="translate(1350,1350) rotate(0) scale(10,10)"
-style="fill:#191970;stroke:#bfffff;stroke-width:20;fill-opacity:1;"
-d="
-
-M 1200, 0
-
-L 0, +1200
-L -1200, 0
-L 0, -1200
-L +1200, 0
-
-Z"/>
-
-<path
-transform="translate(1350,1350) rotate(0)"
-style="fill:#bfffff;stroke:#bfffff;stroke-width:20;fill-opacity:1;"
-d="
-
-M 1200, 0
-
-L 0, +1200
-L -1200, 0
-L 0, -1200
-L +1200, 0
-
-Z"/>
 <path 
 transform="translate(1350,1350) rotate(0)"
-style="fill:#191970;stroke:#bfffff;stroke-width:20;fill-opacity:1;"
+style="fill:#fcef3c;stroke:#000000;stroke-width:20;fill-opacity:0;"
 d="
 M +440, +000
 
@@ -69,7 +42,7 @@ Z"/>
 
 <path 
 transform="translate(1350,1350) rotate(45)"
-style="fill:#191970;stroke:#bfffff;stroke-width:20;fill-opacity:1;"
+style="fill:#fcef3c;stroke:#000000;stroke-width:20;fill-opacity:1;"
 d="
 M +707, +000
 
@@ -104,7 +77,7 @@ Z"/>
 
 <path
 transform="translate(1350,1350) rotate(45)"
-style="fill:#191970;stroke:#bfffff;stroke-width:20;fill-opacity:1;"
+style="fill:#f0ef3c;stroke:#000000;stroke-width:20;fill-opacity:0;"
 d="
 M 110, 110
 h +487
@@ -116,7 +89,7 @@ v -487
 Z"/>
 <path
 transform="translate(1350,1350) rotate(135)"
-style="fill:#191970;stroke:#bfffff;stroke-width:20;fill-opacity:1;"
+style="fill:#f0ef3c;stroke:#000000;stroke-width:20;fill-opacity:0;"
 d="
 M 110, 110
 h +487
@@ -128,7 +101,7 @@ v -487
 Z"/>
 <path
 transform="translate(1350,1350) rotate(225)"
-style="fill:#191970;stroke:#bfffff;stroke-width:20;fill-opacity:1;"
+style="fill:#f0ef3c;stroke:#000000;stroke-width:20;fill-opacity:0;"
 d="
 M 110, 110
 h +487
@@ -140,7 +113,7 @@ v -487
 Z"/>
 <path
 transform="translate(1350,1350) rotate(315)"
-style="fill:#191970;stroke:#bfffff;stroke-width:20;fill-opacity:1;"
+style="fill:#f0ef3c;stroke:#000000;stroke-width:20;fill-opacity:0;"
 d="
 M 110, 110
 h +487
@@ -152,7 +125,19 @@ v -487
 Z"/>
 
 
+<path
+transform="translate(1350,1350) rotate(0)"
+style="fill:#f0ef3c;stroke:#000000;stroke-width:20;fill-opacity:0;"
+d="
 
+M 1200, 0
+
+L 0, +1200
+L -1200, 0
+L 0, -1200
+L +1200, 0
+
+Z"/>
 
 
 </svg>
