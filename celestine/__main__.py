@@ -1,9 +1,14 @@
 import PIL
 import PIL.Image
+import math
 
 a = 978900
 b = 255310
 c = 221105
+
+a *= math.sqrt(2)
+b *= math.sqrt(2)
+c *= math.sqrt(2)
 
 ba = b / a # 0.2608131576
 ca = c / a # 0.2258708754
@@ -20,9 +25,9 @@ testa = 0.0001
 testb = 0.00001
 limit = 1000
 
-testa = 0.000152
-testb = 0.0000152
-limit = 500
+testa = 0.01
+testb = 0.01
+limit = 1000
 
 
 tiger = (10,0,0,0)
@@ -36,6 +41,9 @@ for x in range(1,limit):
 			if z > y:
 				break
 
+			x /= math.sqrt(2)
+			y /= math.sqrt(2)
+			z /= math.sqrt(2)
 
 			yx = y/x
 			zx = z/x
