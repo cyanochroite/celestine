@@ -8,29 +8,29 @@ width="2600" height="2600"
 
 <path
 transform="translate(1350,1350) rotate(0) scale(10,10)"
-style="fill:#191970;stroke:#bfffff;stroke-width:20;fill-opacity:1;"
+style="fill:#191970;stroke:#bfffff;stroke-width:0;fill-opacity:1;"
 d="
 
-M 1200, 0
+M 1220, 0
 
-L 0, +1200
-L -1200, 0
-L 0, -1200
-L +1200, 0
+L 0, +1220
+L -1220, 0
+L 0, -1220
+L +1220, 0
 
 Z"/>
 
 <path
 transform="translate(1350,1350) rotate(0)"
-style="fill:#bfffff;stroke:#bfffff;stroke-width:20;fill-opacity:1;"
+style="fill:#bfffff;stroke:#bfffff;stroke-width:0;fill-opacity:1;"
 d="
 
-M 1200, 0
+M 1220, 0
 
-L 0, +1200
-L -1200, 0
-L 0, -1200
-L +1200, 0
+L 0, +1220
+L -1220, 0
+L 0, -1220
+L +1220, 0
 
 Z"/>
 <path 
