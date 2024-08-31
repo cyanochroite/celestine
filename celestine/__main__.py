@@ -30,6 +30,32 @@ testb = 0.01
 limit = 1000
 
 
+elipse1 = 8.0 / math.sqrt(3)
+longer1 = 4.0 * math.pi * math.sqrt(2)
+dimond1 = 8.0 * math.sqrt(2)
+dimond2 = math.sqrt(2)
+
+lowest =  1.0 / 65536 * 1000
+lowest =  10
+
+def fix(numer):
+	return abs(round(numer) - numer)
+
+for index in range(1,1000000):
+	elipse = index * elipse1
+	longer = index * longer1
+	dimond = index * dimond1 + longer*dimond2
+
+	a = fix(elipse)
+	b = fix(longer)
+	c = fix(dimond)
+	z = a+b+c
+#	if a < lowest and b<lowest and c<lowest:
+	if z < lowest:
+		lowest = z
+		print(f"{index}\t{elipse}\t{longer}\t{dimond}\t{z}")
+
+limit = 0
 tiger = (10,0,0,0)
 for x in range(1,limit):
 	low = int(x*0.2)+1
