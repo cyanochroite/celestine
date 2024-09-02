@@ -274,12 +274,12 @@ class View(Abstract, Tree):
             one = Line(0, 1)
             one += index % partition_x
             one *= this.one.length // partition_x
-            one += this.one.minimum
+            one += this.one.one
 
             two = Line(0, 1)
             two += min(index // partition_x, partition_y - 1)
             two *= this.two.length // partition_y
-            two += this.two.minimum
+            two += this.two.one
 
             world = Plane(one, two)
 

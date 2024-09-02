@@ -92,7 +92,7 @@ class Element(Element_, Abstract):
     def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
-        target = Plane.make(*self.area.world.size.value)
+        target = Plane.create(*self.area.world.size.value)
 
         # image = pillow.open(self.path)
 
@@ -152,8 +152,8 @@ class Element(Element_, Abstract):
         self.path = path
         photo = tkinter.PhotoImage(file=self.path)
 
-        curent = Plane.make(photo.width(), photo.height())
-        target = Plane.make(*self.area.world.size.value)
+        curent = Plane.create(photo.width(), photo.height())
+        target = Plane.create(*self.area.world.size.value)
 
         match self.fit:
             case Image.FILL:
@@ -200,8 +200,8 @@ class Element(Element_, Abstract):
         old_width = photo.width()
         old_height = photo.height()
 
-        curent = Plane.make(old_width, old_height)
-        target = Plane.make(*self.area.world.size)
+        curent = Plane.create(old_width, old_height)
+        target = Plane.create(*self.area.world.size)
 
         match self.fit:
             case Image.FILL:
@@ -214,10 +214,9 @@ class Element(Element_, Abstract):
         new_width, new_height = curent.size
 
         Point(old_width, old_height)
-        curent.size.value
 
-        old_size = Plane.make(old_width, old_width)
-        new_size = Plane.make(new_width, new_height)
+        old_size = Plane.create(old_width, old_width)
+        new_size = Plane.create(new_width, new_height)
         # crazy = old_size / new_size
 
         if new_width < old_width:

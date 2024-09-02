@@ -15,37 +15,37 @@ from celestine.window.cardinal import Dyad
 class Point(Dyad):
     """"""
 
+    one: F
+    two: F
+
     @property
     def value(self) -> T[Z, Z]:
         """"""
-        return (int(self.one), int(self.two))
+        result = (int(self.one), int(self.two))
+        return result
 
 
 class Line(Dyad):
     """"""
 
-    @property
-    def minimum(self) -> F:
-        """"""
-        return self.element[0]
-
-    @property
-    def maximum(self) -> F:
-        """"""
-        return self.element[1]
+    one: F
+    two: F
 
     @property
     def length(self) -> Z:
         """"""
-        return int(self.maximum - self.minimum)
+        result = int(self.two - self.one)
+        return result
 
     @property
     def midpoint(self) -> Z:
         """"""
-        return int(self.minimum + self.maximum) // 2
+        result = int(self.one + self.two) // 2
+        return result
 
     def __contains__(self, item: F) -> B:
-        return self.minimum <= item <= self.maximum
+        result = self.one <= item <= self.two
+        return result
 
     def __init__(self, one: F, two: F) -> N:
         ignore(self)
@@ -67,30 +67,30 @@ class Plane(Dyad):
     @property
     def centroid(self) -> Point:
         """"""
-        _one = self.one.midpoint
-        _two = self.two.midpoint
-        return Point(_one, _two)
+        one = self.one.midpoint
+        two = self.two.midpoint
+        return Point(one, two)
 
     @property
     def value(self) -> T[Z, Z, Z, Z]:
         """"""
-        xmin = int(self.one.minimum)
-        ymin = int(self.two.minimum)
-        xmax = int(self.one.maximum)
-        ymax = int(self.two.maximum)
+        xmin = int(self.one.one)
+        ymin = int(self.two.one)
+        xmax = int(self.one.two)
+        ymax = int(self.two.two)
         return (xmin, ymin, xmax, ymax)
 
     @classmethod
-    def make(cls, width: Z, height: Z) -> K:
+    def create(cls, width: Z, height: Z) -> K:
         """"""
-        _one = Line(0, width)
-        _two = Line(0, height)
-        return cls(_one, _two)
+        one = Line(0, width)
+        two = Line(0, height)
+        return cls(one, two)
 
     @property
     def origin(self) -> Point:
         """"""
-        return Point(self.one.minimum, self.two.minimum)
+        return Point(self.one.one, self.two.one)
 
     def scale_to_max(self, other: K) -> N:
         """"""
@@ -105,10 +105,10 @@ class Plane(Dyad):
         """"""
         return Point(self.one.length, self.two.length)
 
-    def __contains__(self, item: Point) -> B:
-        _one = item.one in self.one
-        _two = item.two in self.two
-        return _one and _two
+    def __contains__(self, item: K) -> B:
+        one = item.one in self.one
+        two = item.two in self.two
+        return one and two
 
 
 class Area:
@@ -123,8 +123,8 @@ class Area:
     @classmethod
     def make(cls, width: Z, height: Z) -> K:
         """"""
-        local = Plane.make(width, height)
-        world = Plane.make(width, height)
+        local = Plane.create(width, height)
+        world = Plane.create(width, height)
         return cls(local, world)
 
     def __init__(self, local: Plane, world: Plane) -> N:

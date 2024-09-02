@@ -110,8 +110,8 @@ class Element(Element_, Abstract):
         # TODO got to figure out Area coordinates
         # or cache this somehow
         target = self.area.local
-        target = Plane.make(*self.area.world.size.value)
-        curent = Plane.make(width, height)
+        target = Plane.create(*self.area.world.size.value)
+        curent = Plane.create(width, height)
 
         if self.fit == Image.FILL:
             curent.scale_to_min(target)

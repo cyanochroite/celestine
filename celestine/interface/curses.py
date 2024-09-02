@@ -226,8 +226,8 @@ class Element(Element_, Abstract):
         target_length_x = length_x * 2
         target_length_y = length_y * 4
 
-        source_length = Plane.make(source_length_x, source_length_y)
-        target_length = Plane.make(target_length_x, target_length_y)
+        source_length = Plane.create(source_length_x, source_length_y)
+        target_length = Plane.create(target_length_x, target_length_y)
 
         source_length.scale_to_min(target_length)
         box = source_length.size
@@ -344,7 +344,7 @@ class Window(Window_):
         curses.start_color()
 
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.full = Plane.make(size_x, size_y)
+        self.full = Plane.create(size_x, size_y)
 
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
@@ -363,7 +363,7 @@ class Window(Window_):
         #####
 
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.full = Plane.make(size_x, size_y)
+        self.full = Plane.create(size_x, size_y)
 
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
