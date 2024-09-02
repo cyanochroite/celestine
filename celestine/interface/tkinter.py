@@ -23,6 +23,7 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Area,
+    Dyad,
     Plane,
     Point,
 )
@@ -215,9 +216,9 @@ class Element(Element_, Abstract):
 
         Point(old_width, old_height)
 
-        old_size = Plane.create(old_width, old_width)
-        new_size = Plane.create(new_width, new_height)
-        # crazy = old_size / new_size
+        old_size = Dyad(old_width, old_height)
+        new_size = Dyad(new_width, new_height)
+        old_size / new_size
 
         if new_width < old_width:
             change_width = math.ceil(old_width / new_width)

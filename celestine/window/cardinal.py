@@ -19,6 +19,9 @@ from celestine.typed import (
 Math: typing.TypeAlias = F | K | Z
 Function: typing.TypeAlias = C[[Math, Math], Math]
 
+#  nary arithmetic operations
+#  binary arithmetic operations
+
 
 class Cardinal:
     """"""
@@ -40,8 +43,13 @@ class Cardinal:
         """"""
         return cls(*element)
 
-    def math(self, function: Function, other: Math) -> L[Math]:
-        """Do math stuff."""
+    def unary(self, function: Function) -> L[Math]:
+        """Unary arithmetic operations."""
+        result = list(map(function, self.element))
+        return result
+
+    def binary(self, function: Function, other: Math) -> L[Math]:
+        """Binary arithmetic operations."""
         if isinstance(other, float | int):
             element = [other] * len(self.element)
         else:
@@ -119,37 +127,37 @@ class Cardinal:
     # binary arithmetic operations
 
     def __add__(self, other: Math) -> K:
-        element = self.math(self.add, other)
+        element = self.binary(self.add, other)
         return self.make(element)
 
     def __mul__(self, other: Math) -> K:
-        element = self.math(self.mul, other)
+        element = self.binary(self.mul, other)
         return self.make(element)
 
     def __sub__(self, other: Math) -> K:
-        element = self.math(self.sub, other)
+        element = self.binary(self.sub, other)
         return self.make(element)
 
     def __truediv__(self, other: Math) -> K:
-        element = self.math(self.truediv, other)
+        element = self.binary(self.truediv, other)
         return self.make(element)
 
     # augmented arithmetic assignments
 
     def __iadd__(self, other: Math) -> K:
-        self.element = self.math(self.add, other)
+        self.element = self.binary(self.add, other)
         return self
 
     def __imul__(self, other: Math) -> K:
-        self.element = self.math(self.mul, other)
+        self.element = self.binary(self.mul, other)
         return self
 
     def __isub__(self, other: Math) -> K:
-        self.element = self.math(self.sub, other)
+        self.element = self.binary(self.sub, other)
         return self
 
     def __itruediv__(self, other: Math) -> K:
-        self.element = self.math(self.truediv, other)
+        self.element = self.binary(self.truediv, other)
         return self
 
 

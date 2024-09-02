@@ -17,6 +17,7 @@ from typing import Dict as D
 from typing import List as L
 from typing import Literal
 from typing import Optional as V  # Void
+from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TY
 from typing import TypeAlias as TA
@@ -25,10 +26,6 @@ from typing import TypeAlias as TA
 _version = sys.version.split(".")
 _major = _version[0]
 _minor = _version[1]
-if _major == "3" and _minor == "10":
-    K: TA = typing.Any  # Python 3.10 fix.
-else:
-    from typing import Self as K
 
 
 class Star(typing.TypedDict):
