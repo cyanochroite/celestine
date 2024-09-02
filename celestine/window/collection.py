@@ -7,6 +7,7 @@ from celestine.typed import (
     N,
     T,
     Z,
+    ignore,
 )
 from celestine.window.cardinal import Dyad
 
@@ -66,12 +67,13 @@ class Line(Dyad):
         return self.minimum <= item <= self.maximum
 
     def __init__(self, one: F, two: F) -> N:
+        ignore(self)
         minimum = min(one, two)
         maximum = max(one, two)
         super().__init__(minimum, maximum)
 
 
-class Plane:
+class Plane(Dyad):
     """"""
 
     _one: Line

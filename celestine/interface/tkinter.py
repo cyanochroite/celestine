@@ -216,6 +216,10 @@ class Element(Element_, Abstract):
         Point(old_width, old_height)
         curent.size.value
 
+        old_size = Plane.make(old_width, old_width)
+        new_size = Plane.make(new_width, new_height)
+        # crazy = old_size / new_size
+
         if new_width < old_width:
             change_width = math.ceil(old_width / new_width)
             change_height = math.ceil(old_height / new_height)

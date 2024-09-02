@@ -168,7 +168,8 @@ class Window(Window_):
         pygame.display.flip()
 
     @override
-    def extension(self) -> LS:
+    @staticmethod
+    def extension() -> LS:
         return [
             ".bmp",
             ".sgi",

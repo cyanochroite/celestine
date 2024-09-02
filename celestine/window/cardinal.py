@@ -20,7 +20,7 @@ Math: typing.TypeAlias = F | K | Z
 Function: typing.TypeAlias = C[[Math, Math], Math]
 
 
-class Mathinal:
+class Cardinal:
     """"""
 
     element: L[Math]
@@ -144,7 +144,7 @@ class Mathinal:
         return self
 
 
-class Monad(Mathinal):
+class Monad(Cardinal):
     """"""
 
     def __new__(cls, one: Math) -> K:
@@ -155,7 +155,7 @@ class Monad(Mathinal):
         super().__init__(one)
 
 
-class Dyad(Mathinal):
+class Dyad(Cardinal):
     """"""
 
     def __new__(cls, one: Math, two: Math) -> K:
@@ -166,7 +166,7 @@ class Dyad(Mathinal):
         super().__init__(one, two)
 
 
-class Triad(Mathinal):
+class Triad(Cardinal):
     """"""
 
     def __new__(cls, one: Math, two: Math, tri: Math) -> K:
@@ -177,7 +177,7 @@ class Triad(Mathinal):
         super().__init__(one, two, tri)
 
 
-class Tetrad(Mathinal):
+class Tetrad(Cardinal):
     """"""
 
     def __new__(cls, one: Math, two: Math, tri: Math, tet: Math) -> K:
