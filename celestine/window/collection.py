@@ -16,16 +16,6 @@ class Point(Dyad):
     """"""
 
     @property
-    def one(self) -> F:
-        """"""
-        return self.element[0]
-
-    @property
-    def two(self) -> F:
-        """"""
-        return self.element[1]
-
-    @property
     def value(self) -> T[Z, Z]:
         """"""
         return (int(self.one), int(self.two))
@@ -43,15 +33,6 @@ class Line(Dyad):
     def maximum(self) -> F:
         """"""
         return self.element[1]
-
-    @classmethod
-    def clone(cls, self: K) -> K:
-        """"""
-        return cls(self.minimum, self.maximum)
-
-    def copy(self) -> K:
-        """"""
-        return self.clone(self)
 
     @property
     def length(self) -> Z:
@@ -76,18 +57,8 @@ class Line(Dyad):
 class Plane(Dyad):
     """"""
 
-    _one: Line
-    _two: Line
-
-    @property
-    def one(self) -> Line:
-        """"""
-        return self._one
-
-    @property
-    def two(self) -> Line:
-        """"""
-        return self._two
+    one: Line
+    two: Line
 
     def center(self, other: K) -> N:
         """"""
@@ -96,21 +67,17 @@ class Plane(Dyad):
     @property
     def centroid(self) -> Point:
         """"""
-        _one = self._one.midpoint
-        _two = self._two.midpoint
+        _one = self.one.midpoint
+        _two = self.two.midpoint
         return Point(_one, _two)
-
-    def copy(self) -> K:
-        """"""
-        return Plane(self._one, self._two)
 
     @property
     def value(self) -> T[Z, Z, Z, Z]:
         """"""
-        xmin = int(self._one.minimum)
-        ymin = int(self._two.minimum)
-        xmax = int(self._one.maximum)
-        ymax = int(self._two.maximum)
+        xmin = int(self.one.minimum)
+        ymin = int(self.two.minimum)
+        xmax = int(self.one.maximum)
+        ymax = int(self.two.maximum)
         return (xmin, ymin, xmax, ymax)
 
     @classmethod
@@ -123,7 +90,7 @@ class Plane(Dyad):
     @property
     def origin(self) -> Point:
         """"""
-        return Point(self._one.minimum, self._two.minimum)
+        return Point(self.one.minimum, self.two.minimum)
 
     def scale_to_max(self, other: K) -> N:
         """"""
@@ -136,37 +103,12 @@ class Plane(Dyad):
     @property
     def size(self) -> Point:
         """"""
-        return Point(self._one.length, self._two.length)
+        return Point(self.one.length, self.two.length)
 
     def __contains__(self, item: Point) -> B:
-        _one = item.one in self._one
-        _two = item.two in self._two
+        _one = item.one in self.one
+        _two = item.two in self.two
         return _one and _two
-
-    def __iadd__(self, other: Point) -> K:
-        self._one += other.one
-        self._two += other.two
-        return self
-
-    def __imul__(self, other: Z) -> K:
-        self._one *= other
-        self._two *= other
-        return self
-
-    def __init__(self, _one: Line, _two: Line) -> N:
-        self._one = _one.copy()
-        self._two = _two.copy()
-
-    def __isub__(self, other: Point) -> K:
-        self._one -= other.one
-        self._two -= other.two
-        return self
-
-    def __repr__(self):
-        return f"Plane({repr(self._one)}, {repr(self._two)})"
-
-    def __str__(self):
-        return f"({str(self._one)}, {str(self._two)})"
 
 
 class Area:

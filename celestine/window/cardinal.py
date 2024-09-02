@@ -27,6 +27,15 @@ class Cardinal:
     name: S
 
     @classmethod
+    def clone(cls, self: K) -> K:
+        """"""
+        return cls(*self.element)
+
+    def copy(self) -> K:
+        """"""
+        return self.clone(self)
+
+    @classmethod
     def make(cls, element: L[Math]) -> K:
         """"""
         return cls(*element)
@@ -147,6 +156,11 @@ class Cardinal:
 class Monad(Cardinal):
     """"""
 
+    @property
+    def one(self) -> Math:
+        """"""
+        return self.element[0]
+
     def __new__(cls, one: Math) -> K:
         return super().__new__(cls, one)
 
@@ -157,6 +171,16 @@ class Monad(Cardinal):
 
 class Dyad(Cardinal):
     """"""
+
+    @property
+    def one(self) -> Math:
+        """"""
+        return self.element[0]
+
+    @property
+    def two(self) -> Math:
+        """"""
+        return self.element[1]
 
     def __new__(cls, one: Math, two: Math) -> K:
         return super().__new__(cls, one, two)
@@ -169,6 +193,21 @@ class Dyad(Cardinal):
 class Triad(Cardinal):
     """"""
 
+    @property
+    def one(self) -> Math:
+        """"""
+        return self.element[0]
+
+    @property
+    def two(self) -> Math:
+        """"""
+        return self.element[1]
+
+    @property
+    def tri(self) -> Math:
+        """"""
+        return self.element[2]
+
     def __new__(cls, one: Math, two: Math, tri: Math) -> K:
         return super().__new__(cls, one, two, tri)
 
@@ -179,6 +218,26 @@ class Triad(Cardinal):
 
 class Tetrad(Cardinal):
     """"""
+
+    @property
+    def one(self) -> Math:
+        """"""
+        return self.element[0]
+
+    @property
+    def two(self) -> Math:
+        """"""
+        return self.element[1]
+
+    @property
+    def tri(self) -> Math:
+        """"""
+        return self.element[2]
+
+    @property
+    def tet(self) -> Math:
+        """"""
+        return self.element[3]
 
     def __new__(cls, one: Math, two: Math, tri: Math, tet: Math) -> K:
         return super().__new__(cls, one, two, tri, tet)
