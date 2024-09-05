@@ -26,25 +26,6 @@ class Point(Dyad):
         result = self.unary(int)
         return result
 
-    @property
-    def value2(self) -> T[Z, Z]:
-        """"""
-        tuple(map(int, self.element))
-        result = (int(self.one), int(self.two))
-        return result
-
-    @property
-    def ceil(self) -> T[Z, ...]:
-        """"""
-        result = tuple(map(math.ceil, self.element))
-        return result
-
-    @property
-    def ceil(self) -> T[Z, Z]:
-        """"""
-        result = self.unary(math.ceil)
-        return result
-
 
 class Line(Dyad):
     """"""
