@@ -1,5 +1,3 @@
-import PIL
-import PIL.Image
 import math
 
 a = 978900
@@ -38,20 +36,22 @@ longer1 = shorter1 * math.pi * math.sqrt(2)
 dimond1 = longer1 + double1 + elipse1
 
 lowest =  1.0 / 65536 * 1000
-lowest =  10
+lowest =  0.01
 
 1769
 
 def fix(numer):
 	return abs(round(numer) - numer)
 
-for index in range(1,1000000):
+for index in range(1,1024):
 	shorter = index * shorter1
 	double = index * double1
 	elipse = index * elipse1
 	oval = index * oval1
 	longer = index * longer1
 	dimond = index * dimond1 + index
+	longer = 1
+	dimond = 1
 
 	a = fix(index)
 	b = fix(shorter)
@@ -70,10 +70,11 @@ for index in range(1,1000000):
 	g1 = round(double)
 
 	z = a+b+c+d+e+f+g
+	z = c
 #	if a < lowest and b<lowest and c<lowest:
 	if z < lowest:
-		lowest = z
-		print(f"{a}\t{b}\t{c}\t{d}\t{e}\t{f}\t{g}\t{z}")
+		#lowest = z
+		print(f"{index}\t{a}\t{b}\t{c}\t{d}\t{e}\t{f}\t{g}\t{z}")
 		print(f"{a1}\t{b1}\t{c1}\t{d1}\t{e1}\t{f1}\t{g1}\t<<")
 
 limit = 0
