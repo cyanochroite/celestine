@@ -28,17 +28,18 @@ testb = 0.01
 limit = 1000
 
 
-shorter1 = 1 / math.sqrt(2)
 double1 = math.sqrt(2)
+
+shorter1 = 1 / math.sqrt(2)
 oval1 = math.sqrt(2) / math.sqrt(3)
+longer1 = math.pi
 
 
 elipse1 = shorter1 / math.sqrt(3)
-longer1 = shorter1 * math.pi * math.sqrt(2)
 dimond1 = longer1 + double1 + elipse1
 
 lowest =  1.0 / 65536 * 1000
-lowest =  1
+lowest =  0.1
 
 
 maxlen = (2048 / 2) / math.sqrt(2)
@@ -47,14 +48,13 @@ print(maxlen)
 def fix(numer):
 	return abs(round(numer) - numer)
 
-for index in range(110,170):
+for index in range(1,170):
 	shorter = index * shorter1
 	double = index * double1
 	elipse = index * elipse1
 	oval = index * oval1
 	longer = index * longer1
 	dimond = index * dimond1 + index
-	longer = 1
 	dimond = 1
 
 	a = fix(index)
@@ -73,11 +73,14 @@ for index in range(110,170):
 	f1 = round(dimond)
 	g1 = round(double)
 
+	g = 0
+	g1 = 0
 	z = a+b+c+d+e+f+g
-	z = b+d
+	z = a+b+d+g
+
 #	if a < lowest and b<lowest and c<lowest:
 	if z < lowest:
-		print(f"{index}\t{b}\t{b1}\t{d}\t{d1}\t{z}")
+		print(f"{index}\t{b}\t{b1}\t{d}\t{d1}\t{g}\t{g1}\t{z}")
 		#print(f"{index}\t{a}\t{b}\t{c}\t{d}\t{e}\t{f}\t{g}\t{z}")
 		#print(f"{a1}\t{b1}\t{c1}\t{d1}\t{e1}\t{f1}\t{g1}\t<<")
 
