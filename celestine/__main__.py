@@ -28,22 +28,26 @@ testb = 0.01
 limit = 1000
 
 
-shorter1 = 4.0
-double1 = 8.0
+shorter1 = 1 / math.sqrt(2)
+double1 = math.sqrt(2)
+oval1 = math.sqrt(2) / math.sqrt(3)
+
+
 elipse1 = shorter1 / math.sqrt(3)
-oval1 = double1 / math.sqrt(3)
 longer1 = shorter1 * math.pi * math.sqrt(2)
 dimond1 = longer1 + double1 + elipse1
 
 lowest =  1.0 / 65536 * 1000
-lowest =  0.01
+lowest =  1
 
-1769
+
+maxlen = (2048 / 2) / math.sqrt(2)
+print(maxlen)
 
 def fix(numer):
 	return abs(round(numer) - numer)
 
-for index in range(1,1024):
+for index in range(110,170):
 	shorter = index * shorter1
 	double = index * double1
 	elipse = index * elipse1
@@ -70,12 +74,12 @@ for index in range(1,1024):
 	g1 = round(double)
 
 	z = a+b+c+d+e+f+g
-	z = c
+	z = b+d
 #	if a < lowest and b<lowest and c<lowest:
 	if z < lowest:
-		#lowest = z
-		print(f"{index}\t{a}\t{b}\t{c}\t{d}\t{e}\t{f}\t{g}\t{z}")
-		print(f"{a1}\t{b1}\t{c1}\t{d1}\t{e1}\t{f1}\t{g1}\t<<")
+		print(f"{index}\t{b}\t{b1}\t{d}\t{d1}\t{z}")
+		#print(f"{index}\t{a}\t{b}\t{c}\t{d}\t{e}\t{f}\t{g}\t{z}")
+		#print(f"{a1}\t{b1}\t{c1}\t{d1}\t{e1}\t{f1}\t{g1}\t<<")
 
 limit = 0
 tiger = (10,0,0,0)
