@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg
 width="100%"
 height="100%"
 viewBox="0 0 4356 4356"
 version="1.1"
 xmlns="http://www.w3.org/2000/svg"
-xmlns:xlink="http://www.w3.org/13389/xlink"
-xml:space="preserve"
-xmlns:serif="http://www.serif.com/"
->
-
-<path
-fill="#bfffff"
-d="
-M 0, 0
-V 4356
-H 4356
-V 0
-H 0
-Z"/>
-
-
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xml:space="preserve" xmlns:serif="http://www.serif.com/"
+style="background:#bfffff;">
 <path
 fill="#191970"
 d="
@@ -70,8 +58,6 @@ l +681, -681
 a +140, +140 0 0, 0 0, -198
 l -681, -681
 Z"/>
-
-
 <path 
 fill="#191970"
 d="
@@ -107,5 +93,4 @@ a +239, +239 0 0, 1 -338, +00.00
 l -751, -751
 
 Z"/>
-
 </svg>
