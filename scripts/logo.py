@@ -90,3 +90,102 @@ for index1 in range(1, 4000):
         # print(f"{index}\t{a1}\t{b1}\t{c1}\t{d1}\t{e1}\t{f1}\t{g1}\t<<")
 
 print("done")
+
+
+""""""
+
+
+X = 338 * math.sqrt(2)
+Y = 140 * math.sqrt(2)
+
+E = X / math.sqrt(1)
+F = X / math.sqrt(2)
+G = X / math.sqrt(3)
+H = X / math.sqrt(4)
+
+J = Y / math.sqrt(1)
+K = Y / math.sqrt(2)
+L = Y / math.sqrt(4)
+M = Y / math.sqrt(8)
+
+C = H * math.pi
+D = C - M
+B = F + K + D + J + D + K
+A = B * 2
+
+print(round(E), round(F), round(G), round(H))
+print(round(J), round(K), round(L), round(M))
+print(A, B, C, D)
+
+shorter1 = 1 / math.sqrt(2)
+double1 = shorter1 * 2.0
+elipse1 = double1 / math.sqrt(3)
+oval1 = 1.0
+
+shorter1 = 1 / math.sqrt(4)
+double1 = 1 / math.sqrt(1)
+elipse1 = 1 / math.sqrt(3)
+oval1 = 1 / math.sqrt(2)
+
+oval1 = 1.0
+elipse1 = math.sqrt(2) / math.sqrt(3)
+shorter1 = math.sqrt(2) / math.sqrt(4)
+
+double1 = 0
+longer1 = 0
+dimond1 = 0
+
+mini = 0.251
+lowest = 0.5
+
+mini = 0.1
+lowest = 1
+
+
+def fix(numer: float) -> float:
+    """"""
+    return abs(round(numer) - numer)
+
+
+print("start")
+
+for index1 in range(1, 500 * 0):
+    index = index1 * math.sqrt(2)
+
+    one = index / math.sqrt(1)
+    two = index / math.sqrt(2)
+    tri = index / math.sqrt(3)
+    tet = index / math.sqrt(4)
+
+    error = fix(one) + fix(two) + fix(tri) + fix(tet)
+
+    one = round(one)
+    two = round(two)
+    tri = round(tri)
+    tet = round(tet)
+
+    if error < mini:
+        lowest = two
+        print(f"{one}\t{two}\t{tri}\t{tet}\t{error}")
+
+
+for index1 in range(1, 400):
+    index = index1 * math.sqrt(2)
+
+    one = index / math.sqrt(1)
+    two = index / math.sqrt(2)
+    tri = index / math.sqrt(4)
+    tet = index / math.sqrt(8)
+
+    error = fix(one) + fix(two) + fix(tri) + fix(tet)
+
+    one = round(one)
+    two = round(two)
+    tri = round(tri)
+    tet = round(tet)
+
+    if error < mini:
+        lowest = two
+        print(f"{one}\t{two}\t{tri}\t{tet}\t{error}")
+
+print("done")
