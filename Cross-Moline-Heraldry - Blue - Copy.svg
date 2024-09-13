@@ -1,0 +1,158 @@
+<?xml version="1.0" standalone="yes"?>
+<svg version="2.0" xmlns="http://www.w3.org/2000/svg"
+width="2600" height="2600"
+>
+<title>Heraldic Cross Moline</title>
+
+
+
+<path
+transform="translate(1350,1350) rotate(0) scale(10,10)"
+style="fill:#bfffff;stroke:#191970;stroke-width:0;fill-opacity:1;"
+d="
+
+M 1220, 0
+
+L 0, +1220
+L -1220, 0
+L 0, -1220
+L +1220, 0
+
+Z"/>
+
+<path
+transform="translate(1350,1350) rotate(0)"
+style="fill:#191970;stroke:#191970;stroke-width:0;fill-opacity:1;"
+d="
+
+M 1220, 0
+
+L 0, +1220
+L -1220, 0
+L 0, -1220
+L +1220, 0
+
+Z"/>
+<path 
+transform="translate(1350,1350) rotate(0)"
+style="fill:#bfffff;stroke:#191970;stroke-width:20;fill-opacity:1;"
+d="
+M +440, +000
+
+a +127, +127 0 0, 0 +000, -220
+a +110, +110 0 0, 1 -110, +110
+h -220
+v -220
+a +110, +110 0 0, 1 +110, -110
+a +127, +127 0 0, 0 -220, +000
+a +127, +127 0 0, 0 -220, +000
+a +110, +110 0 0, 1 +110, +110
+v +220
+h -220
+a +110, +110 0 0, 1 -110, -110
+a +127, +127 0 0, 0 +000, +220
+a +127, +127 0 0, 0 +000, +220
+a +110, +110 0 0, 1 +110, -110
+h +220
+v +220
+a +110, +110 0 0, 1 -110, +110
+a +127, +127 0 0, 0 +220, +000
+a +127, +127 0 0, 0 +220, +000
+a +110, +110 0 0, 1 -110, -110
+v -220
+h +220
+a +110, +110 0 0, 1 +110, +110
+a +127, +127 0 0, 0 +000, -220
+
+Z"/>
+
+
+<path 
+transform="translate(1350,1350) rotate(45)"
+style="fill:#bfffff;stroke:#191970;stroke-width:20;fill-opacity:1;"
+d="
+M +707, +000
+
+a +127, +127 0 0, 0 +000, -220
+a +110, +110 0 0, 1 -110, +110
+h -487
+v -487
+a +110, +110 0 0, 1 +110, -110
+a +127, +127 0 0, 0 -220, +000
+a +127, +127 0 0, 0 -220, +000
+a +110, +110 0 0, 1 +110, +110
+v +487
+h -487
+a +110, +110 0 0, 1 -110, -110
+a +127, +127 0 0, 0 +000, +220
+a +127, +127 0 0, 0 +000, +220
+a +110, +110 0 0, 1 +110, -110
+h +487
+v +487
+a +110, +110 0 0, 1 -110, +110
+a +127, +127 0 0, 0 +220, +000
+a +127, +127 0 0, 0 +220, +000
+a +110, +110 0 0, 1 -110, -110
+v -487
+h +487
+a +110, +110 0 0, 1 +110, +110
+a +127, +127 0 0, 0 +000, -220
+
+Z"/>
+
+
+
+<path
+transform="translate(1350,1350) rotate(45)"
+style="fill:#bfffff;stroke:#191970;stroke-width:20;fill-opacity:1;"
+d="
+M 110, 110
+h +487
+a +110, +110 0 0, 1 +110, +110
+v +487
+h -487
+a +110, +110 0 0, 1 -110, -110
+v -487
+Z"/>
+<path
+transform="translate(1350,1350) rotate(135)"
+style="fill:#bfffff;stroke:#191970;stroke-width:20;fill-opacity:1;"
+d="
+M 110, 110
+h +487
+a +110, +110 0 0, 1 +110, +110
+v +487
+h -487
+a +110, +110 0 0, 1 -110, -110
+v -487
+Z"/>
+<path
+transform="translate(1350,1350) rotate(225)"
+style="fill:#bfffff;stroke:#191970;stroke-width:20;fill-opacity:1;"
+d="
+M 110, 110
+h +487
+a +110, +110 0 0, 1 +110, +110
+v +487
+h -487
+a +110, +110 0 0, 1 -110, -110
+v -487
+Z"/>
+<path
+transform="translate(1350,1350) rotate(315)"
+style="fill:#bfffff;stroke:#191970;stroke-width:20;fill-opacity:1;"
+d="
+M 110, 110
+h +487
+a +110, +110 0 0, 1 +110, +110
+v +487
+h -487
+a +110, +110 0 0, 1 -110, -110
+v -487
+Z"/>
+
+
+
+
+
+</svg>

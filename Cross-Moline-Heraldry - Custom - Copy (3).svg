@@ -1,0 +1,82 @@
+<?xml version="1.0" standalone="yes"?>
+<svg
+xmlns="http://www.w3.org/2000/svg"
+version="1.1"
+width="3000px"
+height="3000px"
+viewBox="0 0 3000 3000"
+>
+<title>Heraldic Cross Moline</title>
+<desc>Example SVG file</desc>
+
+
+
+
+<path
+transform="translate(1300,1300) rotate(0)"
+style="fill:#00ff00;stroke:#bfffff;stroke-width:0;fill-opacity:1;"
+d="
+
+M 1220, 0
+
+L 0, +1220
+L -1220, 0
+L 0, -1220
+L +1220, 0
+
+Z"/>
+
+<path
+transform="translate(1300,1300) rotate(0)"
+style="fill:#bf0000;stroke:#bfffff;stroke-width:0;fill-opacity:1;"
+d="
+
+M 1000, 0
+
+L 0, +1000
+L -1000, 0
+L 0, -1000
+L +1000, 0
+
+Z"/>
+
+
+
+<path 
+transform="translate(1300,1300) rotate(45)"
+fill="#FCEF3C"
+d="
+M 707 0
+
+a +127, +127 0 0, 1 +000, +220
+a +110, +110 0 0, 0 -110, -110
+h -487
+v +487
+a +110, +110 0 0, 0 +110, +110
+a +127, +127 0 0, 1 -220, +000
+a +127, +127 0 0, 1 -220, +000
+a +110, +110 0 0, 0 +110, -110
+v -487
+h -487
+a +110, +110 0 0, 0 -110, +110
+a +127, +127 0 0, 1 +000, -220
+a +127, +127 0 0, 1 +000, -220
+a +110, +110 0 0, 0 +110, +110
+h +487
+v -487
+a +110, +110 0 0, 0 -110, -110
+a +127, +127 0 0, 1 +220, +000
+a +127, +127 0 0, 1 +220, +000
+a +110, +110 0 0, 0 -110, +110
+v +487
+h +487
+a +110, +110 0 0, 0 +110, -110
+a +127, +127 0 0, 1 +000, +220
+
+Z"/>
+
+
+
+
+
+</svg>

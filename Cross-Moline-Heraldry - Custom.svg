@@ -1,0 +1,162 @@
+<?xml version="1.0" standalone="yes"?>
+<svg
+xmlns="http://www.w3.org/2000/svg"
+version="1.1"
+width="3000px"
+height="3000px"
+viewBox="0 0 3000 3000"
+background="#FCEF3C"
+
+>
+<title>Heraldic Cross Moline</title>
+<desc>Example SVG file</desc>
+
+
+<path
+fill="#bf0000"
+d="
+M 0 0
+H 3000
+V 3000
+H 0
+V 0
+Z"/>
+
+
+
+
+<path
+transform="translate(1300,1300) rotate(0)"
+style="fill:#00ff00;stroke:#bfffff;stroke-width:0;fill-opacity:1;"
+d="
+
+M 1220, 0
+
+L 0, +1220
+L -1220, 0
+L 0, -1220
+L +1220, 0
+
+Z"/>
+
+<path
+transform="translate(1300,1300) rotate(0)"
+style="fill:#bf0000;stroke:#bfffff;stroke-width:0;fill-opacity:1;"
+d="
+
+M 1000, 0
+
+L 0, +1000
+L -1000, 0
+L 0, -1000
+L +1000, 0
+
+Z"/>
+
+
+<path
+transform="translate(1300,1300) rotate(0)"
+fill="#00ff00"
+d="
+M -862 -862
+h +1725
+v +1725
+h -1725
+v -1725
+Z"/>
+
+
+<path
+transform="translate(1300,1300) rotate(90)"
+fill="#556677"
+d="
+M 165, 165
+h +432
+a +110, +110 0 0, 1 +110, +110
+v +432
+h -432
+a +110, +110 0 0, 1 -110, -110
+v -432
+Z"/>
+<path
+transform="translate(1300,1300) rotate(180)"
+fill="#556677"
+stroke="#00ff00"
+stroke-width="55"
+d="
+M 110, 110
+h +487
+a +110, +110 0 0, 1 +110, +110
+v +487
+h -487
+a +110, +110 0 0, 1 -110, -110
+v -487
+Z"/>
+<path
+transform="translate(1300,1300) rotate(180)"
+fill="#ff6677"
+stroke="blue"
+stroke-width="0"
+d="
+M 138, 138
+h +459
+a +82, +82 0 0, 1 +82, +82
+v +459
+h -459
+a +82, +82 0 0, 1 -82, -82
+v -459
+Z"/>
+<path
+transform="translate(1300,1300) rotate(0)"
+fill="#556677"
+stroke="blue"
+stroke-width="110"
+d="
+M 110, 110
+h +487
+a +110, +110 0 0, 1 +110, +110
+v +487
+h -487
+a +110, +110 0 0, 1 -110, -110
+v -487
+Z"/>
+
+
+<path 
+transform="translate(1300,1300) rotate(0)"
+fill="#FCEF3C"
+d="
+M 707 0
+
+a +127, +127 0 0, 1 +000, +220
+a +110, +110 0 0, 0 -110, -110
+h -487
+v +487
+a +110, +110 0 0, 0 +110, +110
+a +127, +127 0 0, 1 -220, +000
+a +127, +127 0 0, 1 -220, +000
+a +110, +110 0 0, 0 +110, -110
+v -487
+h -487
+a +110, +110 0 0, 0 -110, +110
+a +127, +127 0 0, 1 +000, -220
+a +127, +127 0 0, 1 +000, -220
+a +110, +110 0 0, 0 +110, +110
+h +487
+v -487
+a +110, +110 0 0, 0 -110, -110
+a +127, +127 0 0, 1 +220, +000
+a +127, +127 0 0, 1 +220, +000
+a +110, +110 0 0, 0 -110, +110
+v +487
+h +487
+a +110, +110 0 0, 0 +110, -110
+a +127, +127 0 0, 1 +000, +220
+
+Z"/>
+
+
+
+
+
+</svg>
