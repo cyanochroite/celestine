@@ -1,20 +1,29 @@
+""""""
+
+
 import math
 
-
 X = 338 * math.sqrt(2)
-Y = 140
+Y = 140 * math.sqrt(2)
 
-A = X / math.sqrt(1)
-B = X / math.sqrt(2)
-C = X / math.sqrt(3)
-D = X / math.sqrt(4)
-E = Y * math.sqrt(2)
-F = Y / math.sqrt(1)
-G = Y / math.sqrt(2)
-H = Y / math.sqrt(4)
+E = X / math.sqrt(1)
+F = X / math.sqrt(2)
+G = X / math.sqrt(3)
+H = X / math.sqrt(4)
 
-print(round(A),round(B),round(C),round(D))
-print(round(E),round(F),round(G),round(H))
+J = Y / math.sqrt(1)
+K = Y / math.sqrt(2)
+L = Y / math.sqrt(4)
+M = Y / math.sqrt(8)
+
+C = H * math.pi
+D = C - M
+B = F + K + D + J + D + K
+A = B * 2
+
+print(round(E), round(F), round(G), round(H))
+print(round(J), round(K), round(L), round(M))
+print(A, B, C, D)
 
 shorter1 = 1 / math.sqrt(2)
 double1 = shorter1 * 2.0
@@ -40,43 +49,44 @@ lowest = 0.5
 mini = 0.05
 lowest = 0.1
 
+
 def fix(numer: float) -> float:
-	return abs(round(numer) - numer)
+    return abs(round(numer) - numer)
 
 
-for index1 in range(1,4000):
-	index = index1
-	shorter = index * shorter1
-	double = index * double1
-	elipse = index * elipse1
-	oval = index * oval1
-	longer = index * longer1
-	dimond = index * dimond1
+for index1 in range(1, 4000):
+    index = index1
+    shorter = index * shorter1
+    double = index * double1
+    elipse = index * elipse1
+    oval = index * oval1
+    longer = index * longer1
+    dimond = index * dimond1
 
-	a = fix(index)
-	b = fix(shorter)
-	c = fix(double)
-	d = fix(elipse)
-	e = fix(oval)
-	f = fix(longer)
-	g = fix(dimond)
+    a = fix(index)
+    b = fix(shorter)
+    c = fix(double)
+    d = fix(elipse)
+    e = fix(oval)
+    f = fix(longer)
+    g = fix(dimond)
 
-	a1 = round(index)
-	b1 = round(shorter)
-	c1 = round(double)
-	d1 = round(elipse)
-	e1 = round(oval)
-	f1 = round(longer)
-	g1 = round(dimond)
+    a1 = round(index)
+    b1 = round(shorter)
+    c1 = round(double)
+    d1 = round(elipse)
+    e1 = round(oval)
+    f1 = round(longer)
+    g1 = round(dimond)
 
-	z = a+b+c+d+e+f+g
+    z = a + b + c + d + e + f + g
 
 
-#	if a < lowest and b<lowest and c<lowest:
-	if b < lowest and z < mini:
-		#lowest = z
-		print(f"{e1}\t{d1}\t{b1}\t{e}\t{d}\t{b}\t{z}\t<<")
-		#print(f"{index1}\t{a}\t{b}\t{c}\t{d}\t{e}\t{f}\t{g}\t{z}")
-		#print(f"{index}\t{a1}\t{b1}\t{c1}\t{d1}\t{e1}\t{f1}\t{g1}\t<<")
+# if a < lowest and b<lowest and c<lowest:
+    if b < lowest and z < mini:
+        # lowest = z
+        print(f"{e1}\t{d1}\t{b1}\t{e}\t{d}\t{b}\t{z}\t<<")
+        # print(f"{index1}\t{a}\t{b}\t{c}\t{d}\t{e}\t{f}\t{g}\t{z}")
+        # print(f"{index}\t{a1}\t{b1}\t{c1}\t{d1}\t{e1}\t{f1}\t{g1}\t<<")
 
 print("done")

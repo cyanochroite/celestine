@@ -13,13 +13,19 @@ from celestine.typed import (
     N,
     S,
     ignore,
-    Z, F,
+    Z,
+    F,
+    A,
 )
 
+# Math: typing.TypeAlias = typing.Union["Cardinal" | int | float]
+# Unary: typing.TypeAlias = C[[Math], Math]
+# Binary: typing.TypeAlias = C[[Math, Math], Math]
 
-Math: typing.TypeAlias = typing.Union["Cardinal" | int | float]
-Unary: typing.TypeAlias = C[[Math], Math]
-Binary: typing.TypeAlias = C[[Math, Math], Math]
+
+type Math = A
+type Unary = A
+type Binary = A
 
 
 class Cardinal:
