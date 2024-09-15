@@ -44,15 +44,7 @@ def main(limit: int) -> None:
         two: list[float] = []
         two.append(one[3] * math.pi)
         two.append(two[0] - one[7])
-        two.append(
-            one[1] +
-            one[5] +
-            two[1] +
-            one[4] +
-            two[1] +
-            one[5] +
-            0
-        )
+        two.append(one[1] + one[5] + two[1] + one[4] + two[1] + one[5])
         two.append(round(two[2]) * 2)
         two = list(map(round, two))
 
