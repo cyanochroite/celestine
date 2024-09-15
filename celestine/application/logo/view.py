@@ -10,14 +10,11 @@ from celestine.typed import N
 def main(view: View) -> N:
     """"""
     with view.span("main_head") as line:
-        line.label(
-            "main_title",
-            text="Logo generation functions."
-        )
+        line.label("main_title", text="Logo generation functions.")
     with view.span("main_body") as line:
         line.button(
             "main_L",
-            "version",
+            "sizes",
             text=language.CLEAN_MAIN_VERSION,
         )
         line.button(
