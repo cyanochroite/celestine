@@ -21,59 +21,47 @@ def fix(numer: float) -> float:
     return abs(round(numer) - numer)
 
 
-def find(a: float, b: float, c: float, d: float, limit: int) -> float:
+def main(limit: int) -> None:
     """"""
+    lowest = 4.0
+    for index in range(7, limit):
+        major = index * math.sqrt(2)
+        minor = major / (1 + math.sqrt(2))
 
-    result = 0.0
-    lowest = 2.0
-    for index in range(1, limit):
-        number = index * math.sqrt(2)
+        one = [
+            major / math.sqrt(1),
+            major / math.sqrt(2),
+            major / math.sqrt(3),
+            major / math.sqrt(4),
+            minor / math.sqrt(1),
+            minor / math.sqrt(2),
+            minor / math.sqrt(4),
+            minor / math.sqrt(8),
+        ]
+        error = sum(map(fix, one))
+        one = list(map(round, one))
 
-        one = number / a
-        two = number / b
-        tri = number / c
-        tet = number / d
-
-        error = fix(one) + fix(two) + fix(tri) + fix(tet)
-
-        one = round(one)
-        two = round(two)
-        tri = round(tri)
-        tet = round(tet)
+        two: list[float] = []
+        two.append(one[3] * math.pi)
+        two.append(two[0] - one[7])
+        two.append(
+            one[1] +
+            one[5] +
+            two[1] +
+            one[4] +
+            two[1] +
+            one[5] +
+            0
+        )
+        two.append(round(two[2]) * 2)
+        two = list(map(round, two))
 
         if error < lowest:
             lowest = error
-            result = number
-            print(f"{one}\t{two}\t{tri}\t{tet}\t{error}")
-
-    return result
-
-
-def show(number: float) -> int:
-    """"""
-    result = round(number)
-    print(result)
-    return result
+            number = [*one, *two]
+            number.sort()
+            print(error, index, number)
 
 
-print("start")
-X = find(math.sqrt(1), math.sqrt(2), math.sqrt(3), math.sqrt(4), 3000)
-print("next")
-Y = find(math.sqrt(1), math.sqrt(2), math.sqrt(4), math.sqrt(8), 300)
-print("done")
-
-
-E = show(X / math.sqrt(1))
-F = show(X / math.sqrt(2))
-G = show(X / math.sqrt(3))
-H = show(X / math.sqrt(4))
-
-J = show(Y / math.sqrt(1))
-K = show(Y / math.sqrt(2))
-L = show(Y / math.sqrt(4))
-M = show(Y / math.sqrt(8))
-
-C = show(H * math.pi)
-D = show(C - M)
-B = show(F + K + D + J + D + K)
-A = show(B * 2)
+if __name__ == "__main__":
+    main(3500)
