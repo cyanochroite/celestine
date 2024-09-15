@@ -127,6 +127,7 @@ class _Fix:
 
     def _override(self) -> N:
         """"""
+        ignore(self)
 
 
 class _ImportNotUsed(_Fix):
@@ -135,6 +136,7 @@ class _ImportNotUsed(_Fix):
     @override
     def _override(self) -> N:
         # TODO: Remove this once we drop Python 3.11.
+        ignore(self)
         print(override)
 
     def _self(self) -> K:
