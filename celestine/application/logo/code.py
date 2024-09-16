@@ -7,6 +7,9 @@ from celestine.typed import (
     B,
     F,
     R,
+    LF,
+    S,
+    N,
 )
 
 
@@ -52,6 +55,110 @@ def sizes(**star: R) -> B:
     return True
 
 
+def calculate(index: F) -> LF:
+    """"""
+    major = index * math.sqrt(2)
+    minor = major / (1 + math.sqrt(2))
+
+    one = [
+        major / math.sqrt(1),
+        major / math.sqrt(2),
+        major / math.sqrt(3),
+        major / math.sqrt(4),
+        minor / math.sqrt(1),
+        minor / math.sqrt(2),
+        minor / math.sqrt(4),
+        minor / math.sqrt(8),
+    ]
+    two: list[F] = []
+    two.append(one[3] * math.pi)
+    two.append(two[0] - one[7])
+    two.append(one[1] + one[5] + two[1] + one[4] + two[1] + one[5])
+    two.append(round(two[2]) * 2)
+    two = list(map(round, two))
+    number = [*one, *two]
+    number.sort()
+    return number
+
+
+def more(index: F, color: S) -> N:
+    """"""
+    axis = calculate(index)
+    yield f'<path fill="{color}" d="'
+    yield 'M 2178 2178'
+    yield f'm +{axis[7]} +000'
+    yield f'l +{axis[8]} +{axis[8]}'
+    yield f'a +{axis[2]} +{axis[2]} 0 0 0 +{axis[3]} 0'
+    yield f'l +{axis[8]} -{axis[8]}'
+    yield f'l -{axis[8]} -{axis[8]}'
+    yield f'a +{axis[2]} +{axis[2]} 0 0 0 -{axis[3]} 0'
+    yield f'l -{axis[8]} +{axis[8]}'
+    yield 'Z"'
+    yield '/>'
+    yield f'<path fill="{color}" d="'
+    yield 'M 2178 2178'
+    yield f'm +000 -{axis[7]}'
+    yield f'l +{axis[8]} -{axis[8]}'
+    yield f'a +{axis[2]} +{axis[2]} 0 0 0 0 -{axis[3]}'
+    yield f'l -{axis[8]} -{axis[8]}'
+    yield f'l -{axis[8]} +{axis[8]}'
+    yield f'a +{axis[2]} +{axis[2]} 0 0 0 0 +{axis[3]}'
+    yield f'l +{axis[8]} +{axis[8]}'
+    yield 'Z"'
+    yield '/>'
+    yield f'<path fill="{color}" d="'
+    yield 'M 2178 2178'
+    yield f'm -{axis[7]} -000'
+    yield f'l -{axis[8]} -{axis[8]}'
+    yield f'a +{axis[2]} +{axis[2]} 0 0 0 -{axis[3]} 0'
+    yield f'l -{axis[8]} +{axis[8]}'
+    yield f'l +{axis[8]} +{axis[8]}'
+    yield f'a +{axis[2]} +{axis[2]} 0 0 0 +{axis[3]} 0'
+    yield f'l +{axis[8]} -{axis[8]}'
+    yield 'Z"'
+    yield '/>'
+    yield f'<path fill="{color}" d="'
+    yield 'M 2178 2178'
+    yield f'm -000 +{axis[7]}'
+    yield f'l -{axis[8]} +{axis[8]}'
+    yield f'a +{axis[2]} +{axis[2]} 0 0 0 0 +{axis[3]}'
+    yield f'l +{axis[8]} +{axis[8]}'
+    yield f'l +{axis[8]} -{axis[8]}'
+    yield f'a +{axis[2]} +{axis[2]} 0 0 0 0 -{axis[3]}'
+    yield f'l -{axis[8]} -{axis[8]}'
+    yield 'Z"'
+    yield '/>'
+    yield f'<path fill="{color}" d="'
+    yield 'M 2178 2178'
+    yield f'm +{axis[6]} +000'
+    yield f'l +{axis[9]} -{axis[9]}'
+    yield f'a +{axis[4]} +{axis[4]} 0 0 1 +{axis[6]} -000'
+    yield f'a +{axis[5]} +{axis[5]} 0 0 0 -{axis[6]} -{axis[6]}'
+    yield f'a +{axis[5]} +{axis[5]} 0 0 0 -{axis[6]} -{axis[6]}'
+    yield f'a +{axis[4]} +{axis[4]} 0 0 1 -000 +{axis[6]}'
+    yield f'l -{axis[9]} +{axis[9]}'
+    yield f'l -{axis[9]} -{axis[9]}'
+    yield f'a +{axis[4]} +{axis[4]} 0 0 1 -000 -{axis[6]}'
+    yield f'a +{axis[5]} +{axis[5]} 0 0 0 -{axis[6]} +{axis[6]}'
+    yield f'a +{axis[5]} +{axis[5]} 0 0 0 -{axis[6]} +{axis[6]}'
+    yield f'a +{axis[4]} +{axis[4]} 0 0 1 +{axis[6]} +000'
+    yield f'l +{axis[9]} +{axis[9]}'
+    yield f'l -{axis[9]} +{axis[9]}'
+    yield f'a +{axis[4]} +{axis[4]} 0 0 1 -{axis[6]} +000'
+    yield f'a +{axis[5]} +{axis[5]} 0 0 0 +{axis[6]} +{axis[6]}'
+    yield f'a +{axis[5]} +{axis[5]} 0 0 0 +{axis[6]} +{axis[6]}'
+    yield f'a +{axis[4]} +{axis[4]} 0 0 1 +000 -{axis[6]}'
+    yield f'l +{axis[9]} -{axis[9]}'
+    yield f'l +{axis[9]} +{axis[9]}'
+    yield f'a +{axis[4]} +{axis[4]} 0 0 1 +000 +{axis[6]}'
+    yield f'a +{axis[5]} +{axis[5]} 0 0 0 +{axis[6]} -{axis[6]}'
+    yield f'a +{axis[5]} +{axis[5]} 0 0 0 +{axis[6]} -{axis[6]}'
+    yield f'a +{axis[4]} +{axis[4]} 0 0 1 -{axis[6]} -000'
+    yield f'l -{axis[9]} -{axis[9]}'
+    yield 'Z"'
+    yield '/>'
+
+
 def printer():
     """"""
     yield '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'
@@ -67,7 +174,10 @@ def printer():
     yield '    xml:space="preserve"'
     yield '    xmlns:serif="http://www.serif.com/"'
     yield '    style="background-color:#B2FFFF;"'
-    yield ">    "
+    yield ">"
+    yield from more(338, '#191970')
+    yield from more(123, '#448822')
+    yield "</svg>"
 
 
 @call
