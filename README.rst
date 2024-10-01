@@ -169,14 +169,6 @@ Optional Dependencies
 +------------------------+---------------------------------------------------+
 
 
-Funding
-*******
-
-The Célestine Project does not seek funding of any kind.
-Any claims of fundraising activities in her name are fraudulent.
-Please `contact me directly <celestine@cyanochroite.com>`_ if you encounter such claims.
-
-
 Project Links
 *************
 
@@ -189,8 +181,48 @@ Project Links
 * `Tracker <https://github.com/cyanochroite/celestine/issues>`_
 
 
+Disclosures
+***********
+
+Donations and Funding
+^^^^^^^^^^^^^^^^^^^^^
+
+The Célestine Project does not seek funding of any kind.
+Any claims of fundraising activities (for this project) are fraudulent.
+
+This project is Free and Open Source software, forever.
+
+I also generally do not accept gifts or donations.
+The only exception I can think of is Discord's rent-seeking Nitro Boosts.
+
+
+Cryptocurrency
+^^^^^^^^^^^^^^
+
+This project does not use, support, or endorse any cryptocurrencies or Non-Fungible Tokens.
+
+
+Artificial Intelligence
+^^^^^^^^^^^^^^^^^^^^^^^
+
+I use Artificial Intelligence to help me develop this project.
+I do not plan to include any form of Artificial Intelligence in the final product.
+Right now some of my optional development tools are embebded into the project,
+so I will need to someday seperate them into their own projects.
+
+I use the Microsoft Azure Translator to translate all English text into different languages.
+I have no way of verifying that the output is correct.
+
+I use Microsoft Copilot to help me write documentation, come up with up with variable names,
+look up python libraries, and to generate example code that I can expand upon.
+It might give some good ideas, but most of its suggestions are fairly useless.
+
+In the future I plan to use OpenAI to help me generate the documentation and write the unit tests.
+I don't expect it to be all that usefull here either.
+
+
 Licences
-********
+^^^^^^^^
 
 The licence for :code:`Cascadia Code` is the
 `SIL Open Font License <https://scripts.sil.org/OFL>`_.
