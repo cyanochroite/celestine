@@ -1,31 +1,26 @@
 """"""
 
 import typing
-import math
 
 from celestine.literal import FULL_STOP
 from celestine.typed import (
     B,
     C,
+    F,
     G,
     K,
     L,
     N,
     S,
-    ignore,
     Z,
-    F,
-    A,
+    ignore,
 )
 
-# Math: typing.TypeAlias = typing.Union["Cardinal" | int | float]
-# Unary: typing.TypeAlias = C[[Math], Math]
-# Binary: typing.TypeAlias = C[[Math, Math], Math]
+Math: typing.TypeAlias = F | K | Z
+Function: typing.TypeAlias = C[[Math, Math], Math]
 
-
-type Math = A
-type Unary = A
-type Binary = A
+#  nary arithmetic operations
+#  binary arithmetic operations
 
 
 class Cardinal:
@@ -48,21 +43,17 @@ class Cardinal:
         """"""
         return cls(*element)
 
-    def unary(self, function: Unary) -> L[Math]:
+    def unary(self, function: Function) -> L[Math]:
         """Unary arithmetic operations."""
         result = list(map(function, self.element))
         return result
 
-    def binary(self, function: Binary, other: Math) -> L[Math]:
+    def binary(self, function: Function, other: Math) -> L[Math]:
         """Binary arithmetic operations."""
-        if isinstance(other, float):
-            element = [1, 2, 3]
-            return
-        if isinstance(other, int):
-            element = [1, 2, 3]
-            return
-
-        element = other.element
+        if isinstance(other, float | int):
+            element = [other] * len(self.element)
+        else:
+            element = other.element
         result = list(map(function, self.element, element))
         return result
 
@@ -132,48 +123,6 @@ class Cardinal:
         """"""
         result = one / two
         return result
-
-    @staticmethod
-    def round(one: Math) -> Math:
-        """"""
-        result = round(one)
-        return result
-
-    @staticmethod
-    def trunc(one: Math) -> Math:
-        """"""
-        result = math.trunc(one)
-        return result
-
-    @staticmethod
-    def floor(one: Math) -> Math:
-        """"""
-        result = math.floor(one)
-        return result
-
-    @staticmethod
-    def ceil(one: Math) -> Math:
-        """"""
-        result = math.ceil(one)
-        return result
-
-    # unary arithmetic operations
-
-    def __round__(self) -> K:
-        element = self.unary(self.round)
-        return self.make(element)
-
-    def __trunc__(self) -> K:
-        element = self.unary(self.trunc)
-        return self.make(element)
-
-    def __floor__(self) -> K:
-        element = self.unary(self.floor)
-        return self.make(element)
-
-    def __ceil__(self) -> K:
-        element = self.unary(self.ceil)
-        return self.make(element)
 
     # binary arithmetic operations
 
