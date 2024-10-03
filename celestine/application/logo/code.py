@@ -4,12 +4,12 @@ import math
 
 from celestine.data import call
 from celestine.typed import (
+    LF,
     B,
     F,
-    R,
-    LF,
-    S,
     N,
+    R,
+    S,
 )
 
 
@@ -85,78 +85,78 @@ def more(index: F, color: S) -> N:
     """"""
     axis = calculate(index)
     yield f'<path fill="{color}" d="'
-    yield 'M 2178 2178'
-    yield f'm +{axis[7]} +000'
-    yield f'l +{axis[8]} +{axis[8]}'
-    yield f'a +{axis[2]} +{axis[2]} 0 0 0 +{axis[3]} 0'
-    yield f'l +{axis[8]} -{axis[8]}'
-    yield f'l -{axis[8]} -{axis[8]}'
-    yield f'a +{axis[2]} +{axis[2]} 0 0 0 -{axis[3]} 0'
-    yield f'l -{axis[8]} +{axis[8]}'
+    yield "M 2178 2178"
+    yield f"m +{axis[7]} +000"
+    yield f"l +{axis[8]} +{axis[8]}"
+    yield f"a +{axis[2]} +{axis[2]} 0 0 0 +{axis[3]} 0"
+    yield f"l +{axis[8]} -{axis[8]}"
+    yield f"l -{axis[8]} -{axis[8]}"
+    yield f"a +{axis[2]} +{axis[2]} 0 0 0 -{axis[3]} 0"
+    yield f"l -{axis[8]} +{axis[8]}"
     yield 'Z"'
-    yield '/>'
+    yield "/>"
     yield f'<path fill="{color}" d="'
-    yield 'M 2178 2178'
-    yield f'm +000 -{axis[7]}'
-    yield f'l +{axis[8]} -{axis[8]}'
-    yield f'a +{axis[2]} +{axis[2]} 0 0 0 0 -{axis[3]}'
-    yield f'l -{axis[8]} -{axis[8]}'
-    yield f'l -{axis[8]} +{axis[8]}'
-    yield f'a +{axis[2]} +{axis[2]} 0 0 0 0 +{axis[3]}'
-    yield f'l +{axis[8]} +{axis[8]}'
+    yield "M 2178 2178"
+    yield f"m +000 -{axis[7]}"
+    yield f"l +{axis[8]} -{axis[8]}"
+    yield f"a +{axis[2]} +{axis[2]} 0 0 0 0 -{axis[3]}"
+    yield f"l -{axis[8]} -{axis[8]}"
+    yield f"l -{axis[8]} +{axis[8]}"
+    yield f"a +{axis[2]} +{axis[2]} 0 0 0 0 +{axis[3]}"
+    yield f"l +{axis[8]} +{axis[8]}"
     yield 'Z"'
-    yield '/>'
+    yield "/>"
     yield f'<path fill="{color}" d="'
-    yield 'M 2178 2178'
-    yield f'm -{axis[7]} -000'
-    yield f'l -{axis[8]} -{axis[8]}'
-    yield f'a +{axis[2]} +{axis[2]} 0 0 0 -{axis[3]} 0'
-    yield f'l -{axis[8]} +{axis[8]}'
-    yield f'l +{axis[8]} +{axis[8]}'
-    yield f'a +{axis[2]} +{axis[2]} 0 0 0 +{axis[3]} 0'
-    yield f'l +{axis[8]} -{axis[8]}'
+    yield "M 2178 2178"
+    yield f"m -{axis[7]} -000"
+    yield f"l -{axis[8]} -{axis[8]}"
+    yield f"a +{axis[2]} +{axis[2]} 0 0 0 -{axis[3]} 0"
+    yield f"l -{axis[8]} +{axis[8]}"
+    yield f"l +{axis[8]} +{axis[8]}"
+    yield f"a +{axis[2]} +{axis[2]} 0 0 0 +{axis[3]} 0"
+    yield f"l +{axis[8]} -{axis[8]}"
     yield 'Z"'
-    yield '/>'
+    yield "/>"
     yield f'<path fill="{color}" d="'
-    yield 'M 2178 2178'
-    yield f'm -000 +{axis[7]}'
-    yield f'l -{axis[8]} +{axis[8]}'
-    yield f'a +{axis[2]} +{axis[2]} 0 0 0 0 +{axis[3]}'
-    yield f'l +{axis[8]} +{axis[8]}'
-    yield f'l +{axis[8]} -{axis[8]}'
-    yield f'a +{axis[2]} +{axis[2]} 0 0 0 0 -{axis[3]}'
-    yield f'l -{axis[8]} -{axis[8]}'
+    yield "M 2178 2178"
+    yield f"m -000 +{axis[7]}"
+    yield f"l -{axis[8]} +{axis[8]}"
+    yield f"a +{axis[2]} +{axis[2]} 0 0 0 0 +{axis[3]}"
+    yield f"l +{axis[8]} +{axis[8]}"
+    yield f"l +{axis[8]} -{axis[8]}"
+    yield f"a +{axis[2]} +{axis[2]} 0 0 0 0 -{axis[3]}"
+    yield f"l -{axis[8]} -{axis[8]}"
     yield 'Z"'
-    yield '/>'
+    yield "/>"
     yield f'<path fill="{color}" d="'
-    yield 'M 2178 2178'
-    yield f'm +{axis[6]} +000'
-    yield f'l +{axis[9]} -{axis[9]}'
-    yield f'a +{axis[4]} +{axis[4]} 0 0 1 +{axis[6]} -000'
-    yield f'a +{axis[5]} +{axis[5]} 0 0 0 -{axis[6]} -{axis[6]}'
-    yield f'a +{axis[5]} +{axis[5]} 0 0 0 -{axis[6]} -{axis[6]}'
-    yield f'a +{axis[4]} +{axis[4]} 0 0 1 -000 +{axis[6]}'
-    yield f'l -{axis[9]} +{axis[9]}'
-    yield f'l -{axis[9]} -{axis[9]}'
-    yield f'a +{axis[4]} +{axis[4]} 0 0 1 -000 -{axis[6]}'
-    yield f'a +{axis[5]} +{axis[5]} 0 0 0 -{axis[6]} +{axis[6]}'
-    yield f'a +{axis[5]} +{axis[5]} 0 0 0 -{axis[6]} +{axis[6]}'
-    yield f'a +{axis[4]} +{axis[4]} 0 0 1 +{axis[6]} +000'
-    yield f'l +{axis[9]} +{axis[9]}'
-    yield f'l -{axis[9]} +{axis[9]}'
-    yield f'a +{axis[4]} +{axis[4]} 0 0 1 -{axis[6]} +000'
-    yield f'a +{axis[5]} +{axis[5]} 0 0 0 +{axis[6]} +{axis[6]}'
-    yield f'a +{axis[5]} +{axis[5]} 0 0 0 +{axis[6]} +{axis[6]}'
-    yield f'a +{axis[4]} +{axis[4]} 0 0 1 +000 -{axis[6]}'
-    yield f'l +{axis[9]} -{axis[9]}'
-    yield f'l +{axis[9]} +{axis[9]}'
-    yield f'a +{axis[4]} +{axis[4]} 0 0 1 +000 +{axis[6]}'
-    yield f'a +{axis[5]} +{axis[5]} 0 0 0 +{axis[6]} -{axis[6]}'
-    yield f'a +{axis[5]} +{axis[5]} 0 0 0 +{axis[6]} -{axis[6]}'
-    yield f'a +{axis[4]} +{axis[4]} 0 0 1 -{axis[6]} -000'
-    yield f'l -{axis[9]} -{axis[9]}'
+    yield "M 2178 2178"
+    yield f"m +{axis[6]} +000"
+    yield f"l +{axis[9]} -{axis[9]}"
+    yield f"a +{axis[4]} +{axis[4]} 0 0 1 +{axis[6]} -000"
+    yield f"a +{axis[5]} +{axis[5]} 0 0 0 -{axis[6]} -{axis[6]}"
+    yield f"a +{axis[5]} +{axis[5]} 0 0 0 -{axis[6]} -{axis[6]}"
+    yield f"a +{axis[4]} +{axis[4]} 0 0 1 -000 +{axis[6]}"
+    yield f"l -{axis[9]} +{axis[9]}"
+    yield f"l -{axis[9]} -{axis[9]}"
+    yield f"a +{axis[4]} +{axis[4]} 0 0 1 -000 -{axis[6]}"
+    yield f"a +{axis[5]} +{axis[5]} 0 0 0 -{axis[6]} +{axis[6]}"
+    yield f"a +{axis[5]} +{axis[5]} 0 0 0 -{axis[6]} +{axis[6]}"
+    yield f"a +{axis[4]} +{axis[4]} 0 0 1 +{axis[6]} +000"
+    yield f"l +{axis[9]} +{axis[9]}"
+    yield f"l -{axis[9]} +{axis[9]}"
+    yield f"a +{axis[4]} +{axis[4]} 0 0 1 -{axis[6]} +000"
+    yield f"a +{axis[5]} +{axis[5]} 0 0 0 +{axis[6]} +{axis[6]}"
+    yield f"a +{axis[5]} +{axis[5]} 0 0 0 +{axis[6]} +{axis[6]}"
+    yield f"a +{axis[4]} +{axis[4]} 0 0 1 +000 -{axis[6]}"
+    yield f"l +{axis[9]} -{axis[9]}"
+    yield f"l +{axis[9]} +{axis[9]}"
+    yield f"a +{axis[4]} +{axis[4]} 0 0 1 +000 +{axis[6]}"
+    yield f"a +{axis[5]} +{axis[5]} 0 0 0 +{axis[6]} -{axis[6]}"
+    yield f"a +{axis[5]} +{axis[5]} 0 0 0 +{axis[6]} -{axis[6]}"
+    yield f"a +{axis[4]} +{axis[4]} 0 0 1 -{axis[6]} -000"
+    yield f"l -{axis[9]} -{axis[9]}"
     yield 'Z"'
-    yield '/>'
+    yield "/>"
 
 
 def printer():
@@ -175,8 +175,8 @@ def printer():
     yield '    xmlns:serif="http://www.serif.com/"'
     yield '    style="background-color:#B2FFFF;"'
     yield ">"
-    yield from more(338, '#191970')
-    yield from more(123, '#448822')
+    yield from more(338, "#191970")
+    yield from more(123, "#448822")
     yield "</svg>"
 
 

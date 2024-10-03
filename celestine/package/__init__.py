@@ -10,6 +10,7 @@ from celestine.typed import (
     B,
     M,
     N,
+    P,
     R,
     S,
     ignore,
@@ -22,10 +23,11 @@ class Abstract:
     name: S
     package: M | N
 
-    def main(self, package: M, path: S) -> N:
+    def main(self, package: M, path: P) -> N:
         """"""
         ignore(self)
-        sys.argv.append(path)
+        root = str(path)
+        sys.argv.append(root)
         package.main()
 
     def module(self) -> LS:
@@ -41,8 +43,9 @@ class Abstract:
 
         argv = sys.argv
 
-        path = str(load.project_path())
-        sys.argv = [path, path]
+        path = load.project_path()
+        root = str(path)
+        sys.argv = [root, root]
         try:
             module = load.package(self.name, *self.module())
             self.main(module, path)

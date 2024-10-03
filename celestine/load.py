@@ -21,7 +21,6 @@ from celestine.typed import (
     CN,
     GM,
     GP,
-    LP,
     LS,
     A,
     B,
@@ -245,13 +244,14 @@ def walk(*path: S) -> G[T[S, LS, LS], N, N]:
     yield from os.walk(top, topdown, onerror, followlinks)
 
 
-def walk_file(top: P, include: LS, exclude: LS) -> GP:
+def walk_file(path: P, include: LS, exclude: LS) -> GP:
     """
     Item 'name_exclude': a list of directory names to exclude.
 
     Item 'suffix_include': a list of file name suffix to include
     if none, it ignores it.
     """
+    top = str(path)
     included = set(include)
     excluded = set(exclude)
 
@@ -267,7 +267,7 @@ def walk_file(top: P, include: LS, exclude: LS) -> GP:
                 yield path
 
 
-def walk_python(top: P, include: LS, exclude: LS) -> LP:
+def walk_python(path: P, include: LS, exclude: LS) -> GP:
     """"""
     include = [".py", *include]
     exclude = [
@@ -276,7 +276,7 @@ def walk_python(top: P, include: LS, exclude: LS) -> LP:
         "__pycache__",
         *exclude,
     ]
-    return walk_file(top, include, exclude)
+    yield from walk_file(path, include, exclude)
 
 
 ########################################################################
