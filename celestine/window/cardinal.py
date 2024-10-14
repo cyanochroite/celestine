@@ -16,11 +16,9 @@ from celestine.typed import (
     ignore,
 )
 
-Math: typing.TypeAlias = F | K | Z
-Function: typing.TypeAlias = C[[Math, Math], Math]
-
-#  nary arithmetic operations
-#  binary arithmetic operations
+type Math = typing.Union["Cardinal", F, Z]
+type Unary = C[[Math], Math]
+type Binary = C[[Math, Math], Math]
 
 
 class Cardinal:
@@ -43,18 +41,19 @@ class Cardinal:
         """"""
         return cls(*element)
 
-    def unary(self, function: Function) -> L[Math]:
+    def unary(self, unary: Unary) -> L[Math]:
         """Unary arithmetic operations."""
-        result = list(map(function, self.element))
+        result = list(map(unary, self.element))
         return result
 
-    def binary(self, function: Function, other: Math) -> L[Math]:
+    def binary(self, bnary: Binary, other: Math) -> L[Math]:
         """Binary arithmetic operations."""
+        element: L[Math]
         if isinstance(other, float | int):
             element = [other] * len(self.element)
         else:
             element = other.element
-        result = list(map(function, self.element, element))
+        result = list(map(bnary, self.element, element))
         return result
 
     # 3.3.1. Basic Customization
@@ -103,25 +102,25 @@ class Cardinal:
     @staticmethod
     def add(one: Math, two: Math) -> Math:
         """"""
-        result = one + two
+        result = float(one) + float(two)
         return result
 
     @staticmethod
     def mul(one: Math, two: Math) -> Math:
         """"""
-        result = one * two
+        result = float(one) * float(two)
         return result
 
     @staticmethod
     def sub(one: Math, two: Math) -> Math:
         """"""
-        result = one - two
+        result = float(one) - float(two)
         return result
 
     @staticmethod
     def truediv(one: Math, two: Math) -> Math:
         """"""
-        result = one / two
+        result = float(one) / float(two)
         return result
 
     # binary arithmetic operations
@@ -159,6 +158,11 @@ class Cardinal:
     def __itruediv__(self, other: Math) -> K:
         self.element = self.binary(self.truediv, other)
         return self
+
+    def __float__(self) -> F:
+        element = map(float, self.element)
+        result = sum(element)
+        return result
 
 
 class Monad(Cardinal):

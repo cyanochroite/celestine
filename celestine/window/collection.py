@@ -103,7 +103,9 @@ class Plane(Dyad):
     @property
     def size(self) -> Point:
         """"""
-        return Point(self.one.length, self.two.length)
+        one = self.one
+        two = self.two
+        return Point(one.length, two.length)
 
     def __contains__(self, item: K) -> B:
         one = item.one in self.one

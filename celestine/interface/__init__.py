@@ -19,7 +19,6 @@ from celestine.typed import (
     P,
     R,
     S,
-    T,
     Z,
     ignore,
     override,
@@ -39,10 +38,30 @@ from celestine.window.container import (
 class Object:
     """"""
 
+    star: R
+
+    def pull(self, name: S, cast: TY[A] = str, default: A = None) -> A:
+        """Extracts keyword arguments from star object and returns."""
+        try:
+            pop = self.star.pop(name)
+            value = cast(pop)
+        except KeyError:
+            value = default
+        return value
+
+    def warp(self, name: S, cast: TY[A] = str, default: A = None) -> N:
+        """Extracts keyword arguments from star object and saves."""
+        try:
+            pop = self.star.pop(name)
+            value = cast(pop)
+        except KeyError:
+            value = default
+        setattr(self, name, value)
+
     def __init__(self, **star: R) -> N:
-        """This does not pass the star parameter to the real object."""
-        ignore(self)
         super().__init__()
+        ignore(self)
+        self.star = star
 
 
 class Abstract(Object):
@@ -122,27 +141,19 @@ class Abstract(Object):
 
         # Contains all remaining keyword arguments.
 
-        def warp(name: S, cast: TY = str, default: A = None) -> N:
-            try:
-                pop = star.pop(name)
-                value = cast(pop)
-            except KeyError:
-                value = default
-            setattr(self, name, value)
-
-        warp("action")
+        self.warp("action")
         # The action to perform when the user triggers the button.
 
-        warp("fit", Image, Image.FILL)
+        self.warp("fit", Image, Image.FILL)
         # The way the image scales to fit the view space.
 
-        warp("goto")
+        self.warp("goto")
         # The page to go to when clicked.
 
-        warp("path", pathlib.Path)
+        self.warp("path", pathlib.Path)
         # The path to the image to use as a background.
 
-        warp("text")
+        self.warp("text")
         # Text that describes the purpose of the button's action.
 
 
@@ -197,7 +208,7 @@ class Tree(Object):
         self._children[item.name] = item
         return item
 
-    def values(self) -> G[T[S, Abstract], N, N]:
+    def values(self) -> G[Abstract, N, N]:
         """"""
         iterator = iter(self._children.values())
         yield from iterator
@@ -296,7 +307,7 @@ class View(Abstract, Tree):
         *,
         mode: Zone = Zone.NONE,
         **star: R,
-    ) -> K:
+    ) -> Abstract:
         """"""
         return self.set(
             self._view(
@@ -308,11 +319,11 @@ class View(Abstract, Tree):
             )
         )
 
-    def drop(self, name: S, **star: R) -> K:
+    def drop(self, name: S, **star: R) -> Abstract:
         """"""
         return self.zone(name, mode=Zone.DROP, **star)
 
-    def span(self, name: S, **star: R) -> K:
+    def span(self, name: S, **star: R) -> Abstract:
         """"""
         return self.zone(name, mode=Zone.SPAN, **star)
 
@@ -331,17 +342,16 @@ class View(Abstract, Tree):
         element_item: D[S, A],
         *,
         mode: Zone = Zone.NONE,
-        row: Z = 0,
-        col: Z = 0,
         **star: R,
     ) -> N:
-        #
+        super().__init__(name, **star)
+        row = self.pull("row", int, 0)
+        col = self.pull("col", int, 0)
+
         self.element_item = element_item
         self._element = element_item["element"]
         self._view = element_item["view"]
         self._window = element_item["window"]
-
-        super().__init__(name, **star)
 
         self.width = col
         self.height = row
@@ -433,7 +443,7 @@ class Window(Tree):
         self,
         name: S,
         **star: R,
-    ) -> K:
+    ) -> Abstract:
         """"""
         return self.set(
             self.element_item["view"](
@@ -496,6 +506,7 @@ class Window(Tree):
         self.draw(**star)
 
     def run(self) -> N:
+        """"""
         self.spot(self.area)
         self.make()
 

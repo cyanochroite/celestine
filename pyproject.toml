@@ -37,7 +37,6 @@ classifiers = [
     "Natural Language :: Spanish",
     "Natural Language :: Swedish",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
@@ -66,7 +65,7 @@ keywords = [
     "image-viewer",
 ]
 readme = "README.rst"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 version = "2024.6.9"
 
 

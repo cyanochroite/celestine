@@ -84,7 +84,7 @@ Run after opening file = True
 
 Maximum File Size (KB) = 1000
 
-Command Line = ${WING:PYTHON} -m mypy --show-column-numbers
+Command Line = ${WING:PYTHON} -m mypy --show-column-numbers --enable-incomplete-feature=NewGenericSyntax
 
 
 Pep8

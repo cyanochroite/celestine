@@ -8,7 +8,6 @@ Generator[YieldType, SendType, ReturnType]
 
 import io
 import pathlib
-import sys
 import types
 import typing
 from collections.abc import Callable as C
@@ -21,11 +20,6 @@ from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TY
 from typing import TypeAlias as TA
-
-#  TODO: Remove after Python 3.10.
-_version = sys.version.split(".")
-_major = _version[0]
-_minor = _version[1]
 
 
 class Star(typing.TypedDict):
