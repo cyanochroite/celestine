@@ -19,7 +19,6 @@ from typing import Optional as V  # Void
 from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TY
-from typing import TypeAlias as TA
 
 
 class Star(typing.TypedDict):
@@ -28,72 +27,72 @@ class Star(typing.TypedDict):
     # TODO: Figure out how to map this to the R type.
 
 
-A: TA = typing.Any
-B: TA = bool
-# C: TA = collections.abc.Callable
-# D: TA = typing.Dict
-# E: TA = typing.Any  # Unused
-F: TA = float
-# G: TA = collections.abc.Generator
-# H: TA = typing.Any  # Unused
-# I: TA = typing.Any  # Ambiguous variable name.
-J: TA = object
-# K: TA = typing.Self  # "Self" is not valid in this context.
-# L: TA = typing.List
-M: TA = types.ModuleType
-N: TA = None
-# O: TA = typing.Any  # Ambiguous variable name.
-P: TA = pathlib.Path
-# Q: TA = typing.Any  # Unused
-R: TA = typing.Any  # Star.
-S: TA = str
-# T: TA = typing.Tuple
-# U: TA = typing.Any  # Unused  # Union?
-# V: TA = typing.Any  # Unused
-# W: TA = typing.Any  # Unused
-# X: TA = typing.Any  # Unused
-# Y: TA = typing.Any  # Unused
-Z: TA = int  # Set of Integers Symbol ℤ.
+type A = typing.Any
+type B = bool
+# type C =collections.abc.Callable
+# type D =typing.Dict
+# type E = typing.Any  # Unused # Enum?
+type F = float
+# type G =collections.abc.Generator
+# type H = typing.Any  # Unused
+# type I = typing.Any  # Ambiguous variable name.
+type J = object
+# type K =typing.Self  # "Self" is not valid in this context.
+# type L =typing.List
+type M = types.ModuleType
+type N = None
+# type O = typing.Any  # Ambiguous variable name.
+type P = pathlib.Path
+# type Q = typing.Any  # Unused
+type R = typing.Any  # Star.
+type S = str
+# type T =typing.Tuple
+# type U = typing.Any  # Unused  # Union?
+# type V = typing.Any  # Unused
+# type W = typing.Any  # Unused
+# type X = typing.Any  # Unused
+# type Y = typing.Any  # Unused
+type Z = int  # Set of Integers Symbol ℤ.
 
-BF: TA = Literal[False]
-BT: TA = Literal[True]
+type BF = Literal[False]
+type BT = Literal[True]
 
-CN: TA = C[[N], N]
+type CN = C[[N], N]
 
-DA: TA = D[S, A]
-DB: TA = D[S, B]
-DF: TA = D[S, F]
-DM: TA = D[S, M]
-DP: TA = D[S, P]
-DS: TA = D[S, S]
-DZ: TA = D[S, Z]
+type DA = D[S, A]
+type DB = D[S, B]
+type DF = D[S, F]
+type DM = D[S, M]
+type DP = D[S, P]
+type DS = D[S, S]
+type DZ = D[S, Z]
 
-GA: TA = G[A, N, N]
-GB: TA = G[B, N, N]
-GF: TA = G[F, N, N]
-GM: TA = G[M, N, N]
-GP: TA = G[P, N, N]
-GS: TA = G[S, N, N]
-GZ: TA = G[Z, N, N]
+type GA = G[A, N, N]
+type GB = G[B, N, N]
+type GF = G[F, N, N]
+type GM = G[M, N, N]
+type GP = G[P, N, N]
+type GS = G[S, N, N]
+type GZ = G[Z, N, N]
 
-LA: TA = L[A]
-LB: TA = L[B]
-LF: TA = L[F]
-LM: TA = L[M]
-LP: TA = L[P]
-LS: TA = L[S]
-LZ: TA = L[Z]
+type LA = L[A]
+type LB = L[B]
+type LF = L[F]
+type LM = L[M]
+type LP = L[P]
+type LS = L[S]
+type LZ = L[Z]
 
-VA: TA = V[A]
-VB: TA = V[B]
-VF: TA = V[F]
-VM: TA = V[M]
-VP: TA = V[P]
-VS: TA = V[S]
-VZ: TA = V[Z]
+type VA = V[A]
+type VB = V[B]
+type VF = V[F]
+type VM = V[M]
+type VP = V[P]
+type VS = V[S]
+type VZ = V[Z]
 
-TZ2: TA = T[Z, Z]
-TZ3: TA = T[Z, Z, Z]
+type TZ2 = T[Z, Z]
+type TZ3 = T[Z, Z, Z]
 
 
 def ignore(_: A) -> N:
@@ -103,6 +102,7 @@ def ignore(_: A) -> N:
 def override(function: A) -> A:
     """Used so earlier Python wont fail when using @override."""
     # TODO: Remove this once we drop Python 3.11.
+    # Also, nothing seems to support this, so keeping it in for now.
     return function
 
 
@@ -115,23 +115,8 @@ def string(*characters: S) -> S:
     return value
 
 
-# TODO: Remove this once we drop Python 3.11.
-class _Fix:
+class _ImportNotUsed:
     """"""
-
-    def _override(self) -> N:
-        """"""
-        ignore(self)
-
-
-class _ImportNotUsed(_Fix):
-    """"""
-
-    @override
-    def _override(self) -> N:
-        # TODO: Remove this once we drop Python 3.11.
-        ignore(self)
-        print(override)
 
     def _self(self) -> K:
         """"""
@@ -142,5 +127,8 @@ class _ImportNotUsed(_Fix):
         return (0, 0)
 
     @staticmethod
-    def _type() -> TY:
+    def _type() -> TY[A]:
         return str
+
+
+_ImportNotUsed()

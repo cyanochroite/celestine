@@ -52,7 +52,7 @@ class Cardinal:
         if isinstance(other, float | int):
             element = [other] * len(self.element)
         else:
-            element = other.element
+            element = getattr(other, "element")
         result = list(map(bnary, self.element, element))
         return result
 

@@ -13,12 +13,12 @@ from celestine.typed import (
 )
 
 #  These types might not be right.
-application: M = None
-attribute: LS = None
-configuration: P = None
-directory: P = None
-interface: M = None
-language: M = None
+application: M
+attribute: LS
+configuration: P
+directory: P
+interface: M
+language: M
 window: Window
 
 _queue: L[T[C[..., N], A, A]] = []

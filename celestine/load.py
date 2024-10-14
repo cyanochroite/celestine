@@ -152,20 +152,15 @@ def package_dependency(name: S, fail: M) -> M:
 # Dictionary stuff
 
 
-def _dictionary_items(_module: M) -> T[S, A]:
-    _dictionary: D[S, A] = vars(_module)
-    _items = _dictionary.items()
-    return _items
-
-
 def functions(_module: M) -> D[S, CN]:
     """Load from module all functions and turn them into dictionary."""
 
     def test(value: S) -> B:
         return FUNCTION in repr(value)
 
-    _dictionary = _dictionary_items(_module)
-    mapping = {key: value for key, value in _dictionary if test(value)}
+    _dictionary: D[S, A] = vars(_module)
+    _items = _dictionary.items()
+    mapping = {key: value for key, value in _items if test(value)}
     return mapping
 
 
@@ -175,20 +170,22 @@ def dictionary(_module: M) -> D[S, CN]:
     def test(value: S) -> B:
         return not value.startswith(LOW_LINE)
 
-    _dictionary = _dictionary_items(_module)
-    mapping = {key: value for key, value in _dictionary if test(key)}
+    _dictionary: D[S, A] = vars(_module)
+    _items = _dictionary.items()
+    mapping = {key: value for key, value in _items if test(key)}
     return mapping
 
 
 def decorators2(_module: M, name: S) -> D[S, CN]:
     """Load from module all functions and turn them into dictionary."""
-    _dictionary = _dictionary_items(_module)
+    _dictionary: D[S, A] = vars(_module)
+    _items = _dictionary.items()
     text = string(FUNCTION, name, FULL_STOP)
 
     def test(value: S) -> B:
         return text in repr(value)
 
-    iterable = {key: value for key, value in _dictionary if test(value)}
+    iterable = {key: value for key, value in _items if test(value)}
     return iterable
 
 
@@ -199,8 +196,8 @@ def decorators(*path: S) -> D[S, D[S, C]]:
 
     pattern = re.compile(r"<function (\w*)\.")
 
-    for module in modules(*path):
-        items = vars(module).items()
+    for _module in modules(*path):
+        items = vars(_module).items()
 
         for key, value in items:
             _string = repr(value)
@@ -363,7 +360,7 @@ def argument(*path: S) -> LS:
 #########
 
 
-def asset(file: S) -> P:
+def asset(file: S) -> importlib.resources.abc.Traversable:
     """"""
     data = "celestine.data"
     item = importlib.resources.files(data).joinpath(file)
