@@ -29,11 +29,11 @@ from celestine.session.data import (
 )
 from celestine.typed import (
     DA,
-    ignore,
     A,
     M,
     S,
     T,
+    ignore,
 )
 
 from . import default

@@ -102,25 +102,25 @@ class Cardinal:
     @staticmethod
     def add(one: Math, two: Math) -> Math:
         """"""
-        result = float(one) + float(two)
+        result = one + two
         return result
 
     @staticmethod
     def mul(one: Math, two: Math) -> Math:
         """"""
-        result = float(one) * float(two)
+        result = one * two
         return result
 
     @staticmethod
     def sub(one: Math, two: Math) -> Math:
         """"""
-        result = float(one) - float(two)
+        result = one - two
         return result
 
     @staticmethod
     def truediv(one: Math, two: Math) -> Math:
         """"""
-        result = float(one) / float(two)
+        result = one / two
         return result
 
     # binary arithmetic operations

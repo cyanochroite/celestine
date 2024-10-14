@@ -20,13 +20,13 @@ from celestine.session.data import Values
 from celestine.typed import (
     DA,
     LS,
-    ignore,
     A,
     B,
     D,
     L,
     N,
     S,
+    ignore,
 )
 
 from .data import SESSION

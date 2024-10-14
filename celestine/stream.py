@@ -16,8 +16,8 @@ from celestine.typed import (
     B,
     N,
     P,
-    ignore,
     S,
+    ignore,
     override,
 )
 
