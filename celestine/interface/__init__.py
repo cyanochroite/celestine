@@ -169,7 +169,7 @@ class Element(Abstract):
         self.item = None
 
 
-class Tree(Object):
+class Tree[Type](Object):
     """"""
 
     # TODO Python 3.12: Make class Tree[TYPE] and replace ANY.
@@ -233,6 +233,7 @@ class View(Abstract, Tree):
     width: Z
     height: Z
     element_item: D[S, A]
+    tree: Tree[K]
 
     def click(self, point: Point, **star: R) -> B:
         if not super().click(point, **star):
@@ -307,7 +308,7 @@ class View(Abstract, Tree):
         *,
         mode: Zone = Zone.NONE,
         **star: R,
-    ) -> Abstract:
+    ) -> K:
         """"""
         return self.set(
             self._view(
@@ -319,11 +320,11 @@ class View(Abstract, Tree):
             )
         )
 
-    def drop(self, name: S, **star: R) -> Abstract:
+    def drop(self, name: S, **star: R) -> K:
         """"""
         return self.zone(name, mode=Zone.DROP, **star)
 
-    def span(self, name: S, **star: R) -> Abstract:
+    def span(self, name: S, **star: R) -> K:
         """"""
         return self.zone(name, mode=Zone.SPAN, **star)
 

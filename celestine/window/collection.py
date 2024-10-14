@@ -19,9 +19,11 @@ class Point(Dyad):
     two: F
 
     @property
-    def value(self) -> T[Z, ...]:
+    def value(self) -> T[Z, Z]:
         """"""
-        result = self.unary(int)
+        one = int(self.one)
+        two = int(self.two)
+        result = (one, two)
         return result
 
 

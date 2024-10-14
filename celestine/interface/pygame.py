@@ -79,7 +79,7 @@ class Element(Element_, Abstract):
         super().make(canvas, **star)
         self.font = star.pop("font")
 
-        size = self.area.local.size.value
+        size = self.area.local.size
         self.image = pygame.Surface(size)
 
         if self.path:
