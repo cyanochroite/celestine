@@ -172,7 +172,6 @@ Optional Dependencies
 Project Links
 *************
 
-* `Discord <https://discord.gg/aNmDWPXd7B>`_
 * `Documentation <https://celestine.readthedocs.io/>`_
 * `Email <celestine@cyanochroite.com>`_
 * `Libraries.io <https://libraries.io/pypi/celestine>`_

@@ -102,13 +102,11 @@ gui = [
     "windows-curses; platform_system=='Windows'",
 ]
 
+
 [project.urls]
-Changelog = "https://github.com/cyanochroite/celestine/blob/main/changelog.rst"
-Discord = "https://discord.gg/aNmDWPXd7B"
 Documentation = "https://celestine.readthedocs.io/"
 Source = "https://github.com/cyanochroite/celestine"
 Tracker = "https://github.com/cyanochroite/celestine/issues"
-
 
 
 [tool.autoflake]
@@ -159,7 +157,6 @@ split-summary-body = true
 strip-whitespaces = true
 style = ["pep257"]
 write = true
-
 
 
 [tool.pylint.main]

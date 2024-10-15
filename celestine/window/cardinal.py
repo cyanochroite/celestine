@@ -1,5 +1,6 @@
 """"""
 
+import math
 import typing
 
 from celestine.literal import FULL_STOP
@@ -46,14 +47,14 @@ class Cardinal:
         result = list(map(unary, self.element))
         return result
 
-    def binary(self, bnary: Binary, other: Math) -> L[Math]:
+    def binary(self, binary: Binary, other: Math) -> L[Math]:
         """Binary arithmetic operations."""
         element: L[Math]
         if isinstance(other, float | int):
             element = [other] * len(self.element)
         else:
             element = getattr(other, "element")
-        result = list(map(bnary, self.element, element))
+        result = list(map(binary, self.element, element))
         return result
 
     # 3.3.1. Basic Customization
@@ -84,6 +85,48 @@ class Cardinal:
     def __str__(self):
         element = ", ".join(map(str, self.element))
         result = f"({element})"
+        return result
+
+    #  rich comparison methods
+
+    def __lt__(self, other: Math) -> B:
+        one = float(self)
+        two = float(other)
+        result = one < two
+        return result
+
+    def __le__(self, other: Math) -> B:
+        one = float(self)
+        two = float(other)
+        result = one <= two
+        return result
+
+    def __eq__(self, other: object) -> B:
+        if not isinstance(other, Cardinal):
+            return False
+        one = float(self)
+        two = float(other)
+        result = math.isclose(one, two)
+        return result
+
+    def __ne__(self, other: object) -> B:
+        if not isinstance(other, Cardinal):
+            return True
+        one = float(self)
+        two = float(other)
+        result = not math.isclose(one, two)
+        return result
+
+    def __gt__(self, other: Math) -> B:
+        one = float(self)
+        two = float(other)
+        result = one > two
+        return result
+
+    def __ge__(self, other: Math) -> B:
+        one = float(self)
+        two = float(other)
+        result = one >= two
         return result
 
     # 3.3.7. Emulating container types
@@ -123,41 +166,82 @@ class Cardinal:
         result = one / two
         return result
 
+    @staticmethod
+    def neg(one: Math) -> Math:
+        """"""
+        result = -one
+        return result
+
+    @staticmethod
+    def pos(one: Math) -> Math:
+        """"""
+        result = +one
+        return result
+
     # binary arithmetic operations
 
-    def __add__(self, other: Math) -> K:
-        element = self.binary(self.add, other)
+    def _arithmetic(self, other: Math, binary: Binary) -> K:
+        element = self.binary(binary, other)
         return self.make(element)
+
+    def __add__(self, other: Math) -> K:
+        return self._arithmetic(other, self.add)
 
     def __mul__(self, other: Math) -> K:
-        element = self.binary(self.mul, other)
-        return self.make(element)
+        return self._arithmetic(other, self.mul)
 
     def __sub__(self, other: Math) -> K:
-        element = self.binary(self.sub, other)
-        return self.make(element)
+        return self._arithmetic(other, self.sub)
 
     def __truediv__(self, other: Math) -> K:
-        element = self.binary(self.truediv, other)
-        return self.make(element)
+        return self._arithmetic(other, self.truediv)
+
+    # binary arithmetic operations with reflected operands
+
+    def __radd__(self, other: Math) -> K:
+        return self._arithmetic(other, self.add)
+
+    def __rmul__(self, other: Math) -> K:
+        return self._arithmetic(other, self.mul)
+
+    def __rsub__(self, other: Math) -> K:
+        return self._arithmetic(other, self.sub)
+
+    def __rtruediv__(self, other: Math) -> K:
+        return self.__truediv__(other)
 
     # augmented arithmetic assignments
 
-    def __iadd__(self, other: Math) -> K:
-        self.element = self.binary(self.add, other)
+    def _augmented(self, other: Math, binary: Binary) -> K:
+        self.element = self.binary(binary, other)
         return self
+
+    def __iadd__(self, other: Math) -> K:
+        return self._augmented(other, self.add)
 
     def __imul__(self, other: Math) -> K:
-        self.element = self.binary(self.mul, other)
-        return self
+        return self._augmented(other, self.mul)
 
     def __isub__(self, other: Math) -> K:
-        self.element = self.binary(self.sub, other)
-        return self
+        return self._augmented(other, self.sub)
 
     def __itruediv__(self, other: Math) -> K:
-        self.element = self.binary(self.truediv, other)
+        return self._augmented(other, self.truediv)
+
+    # unary arithmetic operations
+
+    def __neg__(self) -> K:
+        self.element = self.unary(self.neg)
         return self
+
+    def __pos__(self) -> K:
+        self.element = self.unary(self.pos)
+        return self
+
+    def __int__(self) -> Z:
+        element = map(int, self.element)
+        result = sum(element)
+        return result
 
     def __float__(self) -> F:
         element = map(float, self.element)
