@@ -19,11 +19,11 @@ from celestine.literal import (
 )
 from celestine.typed import (
     CN,
-    GM,
     GP,
     LS,
     A,
     B,
+    GS,
     C,
     D,
     G,
@@ -34,8 +34,6 @@ from celestine.typed import (
     T,
 )
 
-type Function = C[[A], A]
-type Decorator = D[S, Function]
 
 ########################################################################
 
@@ -63,27 +61,10 @@ def module(*path: S) -> M:
 
 def package(base: S, *path: S) -> M:
     """Load an external package from the system path."""
-    iterable = [base, *path]
+    iterable = [base, *filter(None, path)]
     name = FULL_STOP.join(iterable)
     result = importlib.import_module(name)
     return result
-
-
-def packages(base: S, *path: S) -> GM:
-    """Load an external package from the system path."""
-    find = importlib.import_module(base)
-    spec = find.__spec__
-    info = spec.origin if spec else project_path()
-    spot = pathlib.Path(str(info))
-    root = spot.parent
-    top = pathlib.Path(root, *path)
-    walked = walk_python(top, [], [])
-    for file in walked:
-        with_name = file.with_name(file.stem)
-        relative_to = with_name.relative_to(root)
-        parts = relative_to.parts
-        strip = parts[:-1] if parts[-1] == INIT else parts
-        yield package(base, *strip)
 
 
 ########################################################################
@@ -175,7 +156,12 @@ def decorators(*path: S) -> D[S, D[S, C[..., B]]]:
 
     pattern = re.compile(r"<function (\w+)\.")
 
-    for _module in packages(*path):
+    base = FULL_STOP.join(path)
+    walked = walk_package(base)
+    for file in walked:
+
+        _module = package(base, file)
+
         items = vars(_module).items()
 
         for key, value in items:
@@ -189,7 +175,9 @@ def decorators(*path: S) -> D[S, D[S, C[..., B]]]:
             if name not in result:
                 result[name] = {}
 
-            result[name][key] = value
+            item = FULL_STOP.join((base, key))
+            item = key
+            result[name][item] = value
 
     return result
 
@@ -249,6 +237,27 @@ def walk_python(path: P, include: LS, exclude: LS) -> GP:
         *exclude,
     ]
     yield from walk_file(path, include, exclude)
+
+
+def walk_package(base) -> GS:
+    """Load all decorated functions from all modules found in path."""
+    find = importlib.import_module(base)
+    spec = find.__spec__
+    if not spec:
+        raise NotImplementedError("Why is your spec None?")
+    if not spec.origin:
+        raise NotImplementedError("Why is your spec origin also None?")
+    spot = pathlib.Path(spec.origin)
+    root = spot.parent
+    walked = walk_python(root, [], [])
+    for file in walked:
+        with_name = file.with_name(file.stem)
+        # relative to what though?
+        relative_to = with_name.relative_to(root)
+        parts = relative_to.parts
+        strip = parts[:-1] if parts[-1] == INIT else parts
+        name = FULL_STOP.join(strip)
+        yield name
 
 
 ########################################################################
