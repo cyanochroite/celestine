@@ -32,8 +32,10 @@ from celestine.typed import (
     P,
     S,
     T,
-    string,
 )
+
+type Function = C[[A], A]
+type Decorator = D[S, Function]
 
 ########################################################################
 
@@ -59,11 +61,6 @@ def module(*path: S) -> M:
     return package(CELESTINE, *path)
 
 
-def modules(*path: S) -> GM:
-    """Load an internal module from anywhere in the application."""
-    yield from packages(CELESTINE, *path)
-
-
 def package(base: S, *path: S) -> M:
     """Load an external package from the system path."""
     iterable = [base, *path]
@@ -79,13 +76,9 @@ def packages(base: S, *path: S) -> GM:
     info = spec.origin if spec else project_path()
     spot = pathlib.Path(str(info))
     root = spot.parent
-
-    root = project_path()
     top = pathlib.Path(root, *path)
-
     walked = walk_python(top, [], [])
-    walker = [top, *walked]
-    for file in walker:
+    for file in walked:
         with_name = file.with_name(file.stem)
         relative_to = with_name.relative_to(root)
         parts = relative_to.parts
@@ -176,47 +169,29 @@ def dictionary(_module: M) -> D[S, CN]:
     return mapping
 
 
-def decorators2(_module: M, name: S) -> D[S, CN]:
-    """Load from module all functions and turn them into dictionary."""
-    _dictionary: D[S, A] = vars(_module)
-    _items = _dictionary.items()
-    text = string(FUNCTION, name, FULL_STOP)
-
-    def test(value: S) -> B:
-        return text in repr(value)
-
-    iterable = {key: value for key, value in _items if test(value)}
-    return iterable
-
-
-def decorators(*path: S) -> D[S, D[S, C]]:
+def decorators(*path: S) -> D[S, D[S, C[..., B]]]:
     """Load all decorated functions from all modules found in path."""
+    result: D[S, D[S, C[..., B]]] = {}
 
-    _dictionary: D[S, D[S, C]] = {}
+    pattern = re.compile(r"<function (\w+)\.")
 
-    pattern = re.compile(r"<function (\w*)\.")
-
-    for _module in modules(*path):
+    for _module in packages(*path):
         items = vars(_module).items()
 
         for key, value in items:
-            _string = repr(value)
-            match = pattern.search(_string)
+            match = pattern.match(repr(value))
 
             if not match:
                 continue
 
-            try:
-                name = match[1]
-            except IndexError:
-                continue
+            name = match[1]
 
-            if not _dictionary.get(name):
-                _dictionary[name] = {}
+            if name not in result:
+                result[name] = {}
 
-            _dictionary[name][key] = value
+            result[name][key] = value
 
-    return _dictionary
+    return result
 
 
 ########
@@ -360,8 +335,9 @@ def argument(*path: S) -> LS:
 #########
 
 
-def asset(file: S) -> importlib.resources.abc.Traversable:
+def asset(file: S) -> P:
     """"""
     data = "celestine.data"
     item = importlib.resources.files(data).joinpath(file)
-    return item
+    path = pathlib.Path(str(item))
+    return path

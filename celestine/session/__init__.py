@@ -105,7 +105,7 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
         **star,
     )
 
-    decorators = load.decorators(APPLICATION, application)
+    decorators = load.decorators(CELESTINE, APPLICATION, application)
     call = decorators.get("call", {})
     draw = decorators.get("draw", {})
     main = decorators.get("main", {})
