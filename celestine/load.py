@@ -23,6 +23,7 @@ from celestine.typed import (
     LS,
     A,
     B,
+    GM,
     GS,
     C,
     D,
@@ -158,10 +159,7 @@ def decorators(*path: S) -> D[S, D[S, C[..., B]]]:
 
     base = FULL_STOP.join(path)
     walked = walk_package(base)
-    for file in walked:
-
-        _module = package(base, file)
-
+    for _module in walked:
         items = vars(_module).items()
 
         for key, value in items:
@@ -176,7 +174,7 @@ def decorators(*path: S) -> D[S, D[S, C[..., B]]]:
                 result[name] = {}
 
             item = FULL_STOP.join((base, key))
-            item = key
+            item = key  # undo above until it works
             result[name][item] = value
 
     return result
@@ -239,7 +237,7 @@ def walk_python(path: P, include: LS, exclude: LS) -> GP:
     yield from walk_file(path, include, exclude)
 
 
-def walk_package(base) -> GS:
+def walk_package(base) -> GM:
     """Load all decorated functions from all modules found in path."""
     find = importlib.import_module(base)
     spec = find.__spec__
@@ -248,6 +246,10 @@ def walk_package(base) -> GS:
     if not spec.origin:
         raise NotImplementedError("Why is your spec origin also None?")
     spot = pathlib.Path(spec.origin)
+    if spot.stem != INIT:
+        yield find
+        return
+
     root = spot.parent
     walked = walk_python(root, [], [])
     for file in walked:
@@ -256,8 +258,8 @@ def walk_package(base) -> GS:
         relative_to = with_name.relative_to(root)
         parts = relative_to.parts
         strip = parts[:-1] if parts[-1] == INIT else parts
-        name = FULL_STOP.join(strip)
-        yield name
+        name = FULL_STOP.join((base, *strip))
+        yield importlib.import_module(name)
 
 
 ########################################################################

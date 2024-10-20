@@ -1,5 +1,6 @@
 """"""
 
+import collections.abc
 import math
 import pathlib
 
@@ -10,6 +11,7 @@ from celestine.typed import (
     GS,
     LS,
     TY,
+    IT,
     A,
     B,
     D,
@@ -169,7 +171,7 @@ class Element(Abstract):
         self.item = None
 
 
-class Tree[Type](Object):
+class Tree[X](Object):
     """"""
 
     # TODO Python 3.12: Make class Tree[TYPE] and replace ANY.
@@ -401,13 +403,38 @@ class View(Abstract, Tree):
         self.element(name, text=text, **star)
 
 
+class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
+    """"""
+
+    dictionary: D[X, Y]
+
+    def __delitem__(self, key: X) -> N:
+        del self.dictionary[key]
+
+    def __getitem__(self, key: X) -> Y:
+        result = self.dictionary[key]
+        return result
+
+    def __init__(self) -> N:
+        self.dictionary = {}
+
+    def __iter__(self) -> IT[X]:
+        return iter(self.dictionary)
+
+    def __len__(self) -> Z:
+        return len(self.dictionary)
+
+    def __setitem__(self, key: X, value: Y) -> N:
+        self.dictionary[key] = value
+
+
 class Window(Tree):
     """"""
 
     page: View
     main: S
-    code: D[S, A]  # function
-    view: D[S, View]
+    code: Dictionary[S, A]  # function
+    view: Dictionary[S, View]
 
     canvas: A
 
@@ -520,7 +547,7 @@ class Window(Tree):
         super().__init__(**star)
         self.main = ""
         self.area = Area.make(0, 0)
-        self.code = {}
-        self.view = {}
+        self.code = Dictionary()
+        self.view = Dictionary()
         self.element_item = element_item
         self.page = View("", element_item, parent=None)

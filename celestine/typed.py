@@ -13,9 +13,10 @@ import typing
 from collections.abc import Callable as C
 from collections.abc import Generator as G
 from typing import Dict as D
+from typing import Iterator as IT
 from typing import List as L
 from typing import Literal
-from typing import Optional as V  # Void
+from typing import Optional as V
 from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TY
@@ -29,29 +30,29 @@ class Star(typing.TypedDict):
 
 type A = typing.Any
 type B = bool
-# type C =collections.abc.Callable
-# type D =typing.Dict
+# type C = collections.abc.Callable
+# type D = typing.Dict
 # type E = typing.Any  # Unused # Enum?
 type F = float
-# type G =collections.abc.Generator
+# type G = collections.abc.Generator
 # type H = typing.Any  # Unused
 # type I = typing.Any  # Ambiguous variable name.
 type J = object
-# type K =typing.Self  # "Self" is not valid in this context.
-# type L =typing.List
+# type K = typing.Self
+# type L = typing.List
 type M = types.ModuleType
 type N = None
 # type O = typing.Any  # Ambiguous variable name.
 type P = pathlib.Path
 # type Q = typing.Any  # Unused
-type R = typing.Any  # Star.
+type R = typing.Any  # Future star type.
 type S = str
-# type T =typing.Tuple
+# type T = typing.Tuple
 # type U = typing.Any  # Unused  # Union?
-# type V = typing.Any  # Unused
+# type V = typing.Optional  # Void like type.
 # type W = typing.Any  # Unused
-# type X = typing.Any  # Unused
-# type Y = typing.Any  # Unused
+# type X = typing.Type  # Primary type variable.
+# type Y = typing.Type  # Secondary type variable.
 type Z = int  # Set of Integers Symbol ℤ.
 
 type BF = Literal[False]
@@ -115,8 +116,12 @@ def string(*characters: S) -> S:
     return value
 
 
-class _ImportNotUsed:
-    """"""
+class _Typing:
+    """Hides all the "unused-import" erros."""
+
+    @staticmethod
+    def _iterator() -> IT[A]:
+        return iter([])
 
     def _self(self) -> K:
         """"""
@@ -131,4 +136,4 @@ class _ImportNotUsed:
         return str
 
 
-_ImportNotUsed()
+_Typing()
