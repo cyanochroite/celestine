@@ -11,6 +11,7 @@ from celestine.typed import (
     K,
     N,
     T,
+    V,
     Z,
     ignore,
 )
@@ -152,6 +153,20 @@ class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
 
     dictionary: D[X, Y]
 
+    def copy(self) -> K:
+        """"""
+        return self.echo(self)
+
+    @classmethod
+    def echo(cls, self: K) -> K:
+        """"""
+        return cls(self.dictionary)
+
+    @classmethod
+    def make(cls, dictionary: V[D[X, Y]] = None) -> K:
+        """"""
+        return cls(dictionary)
+
     def __delitem__(self, key: X) -> N:
         del self.dictionary[key]
 
@@ -161,8 +176,8 @@ class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
         result = self.dictionary[key]
         return result
 
-    def __init__(self) -> N:
-        self.dictionary = {}
+    def __init__(self, dictionary: V[D[X, Y]] = None) -> N:
+        self.dictionary = dictionary or {}
 
     def __iter__(self) -> IT[X]:
         return iter(self.dictionary)
@@ -172,3 +187,23 @@ class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
 
     def __setitem__(self, key: X, value: Y) -> N:
         self.dictionary[key] = value
+
+    def __or__(self, other: K) -> K:
+        if not isinstance(other, Dictionary):
+            return NotImplemented
+
+        result = self.make(self.dictionary)
+        result.dictionary.update(other.dictionary)
+        return result
+
+    def __ror__(self, other: K) -> K:
+        if not isinstance(other, Dictionary):
+            return NotImplemented
+
+        result = self.make(self.dictionary)
+        result.dictionary.update(self.dictionary)
+        return result
+
+    def __ior__(self, other: K) -> K:
+        self.dictionary.update(other.dictionary)
+        return self

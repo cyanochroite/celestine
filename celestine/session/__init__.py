@@ -19,12 +19,11 @@ from celestine.typed import (
     LS,
     A,
     B,
-    C,
-    D,
     N,
     R,
     S,
 )
+from celestine.window.collection import Dictionary
 
 from . import default
 from .magic import Magic
@@ -101,9 +100,13 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> A:
     return bank.window, bank.application.name
 
 
-def decorators(*path: S) -> D[S, D[S, C[..., B]]]:
+# type Decorator = Dictionary[S, C[..., B]]
+type Decorator = Dictionary[S, A]
+
+
+def decorators(*path: S) -> Decorator:
     """Load all decorated functions from all modules found in path."""
-    result: D[S, D[S, C[..., B]]] = {}
+    result: Decorator = {}
 
     pattern = re.compile(r"<function (\w+)\.")
 
@@ -121,7 +124,7 @@ def decorators(*path: S) -> D[S, D[S, C[..., B]]]:
             name = match[1]
 
             if name not in result:
-                result[name] = {}
+                result[name] = Dictionary()
 
             item = FULL_STOP.join((base, key))
             result[name][item] = value
@@ -138,9 +141,9 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     )
 
     decorator = decorators(CELESTINE, APPLICATION, application)
-    call = decorator.get("call", {})
-    draw = decorator.get("draw", {})
-    main = decorator.get("main", {})
+    call: Decorator = decorator.get("call", Dictionary())
+    draw = decorator.get("draw", Dictionary())
+    main = decorator.get("main", Dictionary())
     draw |= main
 
     def find_main() -> S:

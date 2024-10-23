@@ -29,13 +29,13 @@ class Cardinal:
     name: S
 
     @classmethod
-    def clone(cls, self: K) -> K:
+    def echo(cls, self: K) -> K:
         """"""
         return cls(*self.element)
 
     def copy(self) -> K:
         """"""
-        return self.clone(self)
+        return self.echo(self)
 
     @classmethod
     def make(cls, element: L[Math]) -> K:

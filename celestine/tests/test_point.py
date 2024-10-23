@@ -15,7 +15,7 @@ class TestPoint(unittest.TestCase):
     def test_clone(self):
         """"""
         one = Point(4, 3)
-        point = Point.clone(one)
+        point = Point.echo(one)
 
         self.assertEqual(point.one, 4)
         self.assertEqual(point.two, 3)
@@ -89,7 +89,7 @@ class TestLine(unittest.TestCase):
     def test_clone(self):
         """"""
         one = Line(3, 4)
-        line = Line.clone(one)
+        line = Line.echo(one)
 
         self.assertEqual(line.minimum, 3)
         self.assertEqual(line.maximum, 4)
@@ -213,7 +213,7 @@ class TestPlane(unittest.TestCase):
     def test_clone(self):
         """"""
         one = Plane(Line(1, 2), Line(3, 4))
-        two = Plane.clone(one)
+        two = Plane.echo(one)
 
         self.assertEqual(str(one), str(two))
 
