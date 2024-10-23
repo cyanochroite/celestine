@@ -12,8 +12,8 @@ import types
 import typing
 from collections.abc import Callable as C
 from collections.abc import Generator as G
+from collections.abc import Iterator as IT
 from typing import Dict as D
-from typing import Iterator as IT
 from typing import List as L
 from typing import Literal
 from typing import Optional as V

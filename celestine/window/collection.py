@@ -1,7 +1,12 @@
 """"""
 
+import collections.abc
+
 from celestine.typed import (
+    IT,
+    A,
     B,
+    D,
     F,
     K,
     N,
@@ -140,3 +145,30 @@ class Area:
 
     def __str__(self):
         return f"({self.local}, {self.world})"
+
+
+class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
+    """"""
+
+    dictionary: D[X, Y]
+
+    def __delitem__(self, key: X) -> N:
+        del self.dictionary[key]
+
+    def __getitem__(self, key: X) -> Y:
+        if "." not in key:
+            key = f"celestine.application.clean.{str(key)}"
+        result = self.dictionary[key]
+        return result
+
+    def __init__(self) -> N:
+        self.dictionary = {}
+
+    def __iter__(self) -> IT[X]:
+        return iter(self.dictionary)
+
+    def __len__(self) -> Z:
+        return len(self.dictionary)
+
+    def __setitem__(self, key: X, value: Y) -> N:
+        self.dictionary[key] = value

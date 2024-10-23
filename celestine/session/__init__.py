@@ -1,6 +1,7 @@
 """"""
 
 import importlib
+import re
 
 from celestine import (
     bank,
@@ -9,6 +10,7 @@ from celestine import (
 from celestine.literal import (
     APPLICATION,
     CELESTINE,
+    FULL_STOP,
     INTERFACE,
     LANGUAGE,
     PACKAGE,
@@ -17,6 +19,8 @@ from celestine.typed import (
     LS,
     A,
     B,
+    C,
+    D,
     N,
     R,
     S,
@@ -97,6 +101,34 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> A:
     return bank.window, bank.application.name
 
 
+def decorators(*path: S) -> D[S, D[S, C[..., B]]]:
+    """Load all decorated functions from all modules found in path."""
+    result: D[S, D[S, C[..., B]]] = {}
+
+    pattern = re.compile(r"<function (\w+)\.")
+
+    base = FULL_STOP.join(path)
+    walked = load.walk_package(base)
+    for _module in walked:
+        items = vars(_module).items()
+
+        for key, value in items:
+            match = pattern.match(repr(value))
+
+            if not match:
+                continue
+
+            name = match[1]
+
+            if name not in result:
+                result[name] = {}
+
+            item = FULL_STOP.join((base, key))
+            result[name][item] = value
+
+    return result
+
+
 def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     """"""
     window, application = begin_session(
@@ -105,10 +137,10 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
         **star,
     )
 
-    decorators = load.decorators(CELESTINE, APPLICATION, application)
-    call = decorators.get("call", {})
-    draw = decorators.get("draw", {})
-    main = decorators.get("main", {})
+    decorator = decorators(CELESTINE, APPLICATION, application)
+    call = decorator.get("call", {})
+    draw = decorator.get("draw", {})
+    main = decorator.get("main", {})
     draw |= main
 
     def find_main() -> S:

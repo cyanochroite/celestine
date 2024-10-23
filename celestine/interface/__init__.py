@@ -1,6 +1,5 @@
 """"""
 
-import collections.abc
 import math
 import pathlib
 
@@ -11,7 +10,6 @@ from celestine.typed import (
     GS,
     LS,
     TY,
-    IT,
     A,
     B,
     D,
@@ -27,6 +25,7 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Area,
+    Dictionary,
     Line,
     Plane,
     Point,
@@ -401,31 +400,6 @@ class View(Abstract, Tree):
     def label(self, name: S, /, text: S, **star: R) -> N:
         """"""
         self.element(name, text=text, **star)
-
-
-class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
-    """"""
-
-    dictionary: D[X, Y]
-
-    def __delitem__(self, key: X) -> N:
-        del self.dictionary[key]
-
-    def __getitem__(self, key: X) -> Y:
-        result = self.dictionary[key]
-        return result
-
-    def __init__(self) -> N:
-        self.dictionary = {}
-
-    def __iter__(self) -> IT[X]:
-        return iter(self.dictionary)
-
-    def __len__(self) -> Z:
-        return len(self.dictionary)
-
-    def __setitem__(self, key: X, value: Y) -> N:
-        self.dictionary[key] = value
 
 
 class Window(Tree):
