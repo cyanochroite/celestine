@@ -4,6 +4,7 @@ import importlib
 import importlib.resources
 import os
 import pathlib
+import re
 import sys
 
 from celestine.literal import (
@@ -147,6 +148,34 @@ def dictionary(_module: M) -> D[S, CN]:
     return mapping
 
 
+def decorators(*path: S) -> D[S, D[S, S]]:
+    """Load all decorated functions from all modules found in path."""
+    result: D[S, D[S, S]] = {}
+
+    pattern = re.compile(r"<function (\w+)\.")
+
+    base = FULL_STOP.join(path)
+    walked = walk_package(base)
+    for _module in walked:
+        items = vars(_module).items()
+
+        for key, value in items:
+            match = pattern.match(repr(value))
+
+            if not match:
+                continue
+
+            name = match[1]
+
+            if name not in result:
+                result[name] = {}
+
+            item = FULL_STOP.join((base, key))
+            result[name][item] = value
+
+    return result
+
+
 ########
 
 
@@ -204,7 +233,7 @@ def walk_python(path: P, include: LS, exclude: LS) -> GP:
     yield from walk_file(path, include, exclude)
 
 
-def walk_package(base) -> GM:
+def walk_package(base: S) -> GM:
     """Load all decorated functions from all modules found in path."""
     find = importlib.import_module(base)
     spec = find.__spec__

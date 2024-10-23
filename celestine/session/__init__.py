@@ -1,7 +1,6 @@
 """"""
 
 import importlib
-import re
 
 from celestine import (
     bank,
@@ -10,7 +9,6 @@ from celestine import (
 from celestine.literal import (
     APPLICATION,
     CELESTINE,
-    FULL_STOP,
     INTERFACE,
     LANGUAGE,
     PACKAGE,
@@ -23,7 +21,6 @@ from celestine.typed import (
     R,
     S,
 )
-from celestine.window.collection import Dictionary
 
 from . import default
 from .magic import Magic
@@ -100,38 +97,6 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> A:
     return bank.window, bank.application.name
 
 
-# type Decorator = Dictionary[S, C[..., B]]
-type Decorator = Dictionary[S, A]
-
-
-def decorators(*path: S) -> Decorator:
-    """Load all decorated functions from all modules found in path."""
-    result: Decorator = {}
-
-    pattern = re.compile(r"<function (\w+)\.")
-
-    base = FULL_STOP.join(path)
-    walked = load.walk_package(base)
-    for _module in walked:
-        items = vars(_module).items()
-
-        for key, value in items:
-            match = pattern.match(repr(value))
-
-            if not match:
-                continue
-
-            name = match[1]
-
-            if name not in result:
-                result[name] = Dictionary()
-
-            item = FULL_STOP.join((base, key))
-            result[name][item] = value
-
-    return result
-
-
 def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     """"""
     window, application = begin_session(
@@ -140,10 +105,10 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
         **star,
     )
 
-    decorator = decorators(CELESTINE, APPLICATION, application)
-    call: Decorator = decorator.get("call", Dictionary())
-    draw = decorator.get("draw", Dictionary())
-    main = decorator.get("main", Dictionary())
+    decorators = load.decorators(CELESTINE, APPLICATION, application)
+    call = decorators.get("call", {})
+    draw = decorators.get("draw", {})
+    main = decorators.get("main", {})
     draw |= main
 
     def find_main() -> S:
@@ -153,8 +118,9 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
         except StopIteration:
             pass
 
-        if draw.get("main"):
-            return "main"
+        for key in draw:
+            if "main" in key:
+                return key
 
         try:
             return next(iter(draw))

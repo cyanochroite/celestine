@@ -2,17 +2,43 @@
 Define types here.
 
 Generator[YieldType, SendType, ReturnType]
+
+A: typing.Any
+B: bool
+C: collections.abc.Callable
+D: typing.Dict
+E: typing.Any  # Unused # Enum?
+F: float
+G: collections.abc.Generator
+H: typing.Any  # Unused
+I: typing.Any  # Ambiguous variable name.
+J: object
+K: typing.Self
+L: typing.List
+M: types.ModuleType
+N: None
+O: typing.Any  # Ambiguous variable name.
+P: pathlib.Path
+Q: typing.Any  # Unused
+R: typing.Any  # Future star type.
+S: str
+T: typing.Tuple
+U: typing.Any  # Unused  # Union?
+V: typing.Optional  # Void like type.
+W: typing.Any  # Unused
+X: typing.Type  # Primary type variable.
+Y: typing.Type  # Secondary type variable.
+Z: int  # Set of Integers Symbol ℤ.
 """
 
-# TODO: Replace all this with 'type' after python 3.12 and mypy support.
-
+import abc
 import io
-import pathlib
-import types
-import typing
 from collections.abc import Callable as C
 from collections.abc import Generator as G
 from collections.abc import Iterator as IT
+from pathlib import Path as P
+from types import ModuleType as M
+from typing import Any as A
 from typing import Dict as D
 from typing import List as L
 from typing import Literal
@@ -20,39 +46,33 @@ from typing import Optional as V
 from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TY
+from typing import TypedDict as TD
 
 
-class Star(typing.TypedDict):
+class R(TD):
     """The global Star object."""
 
     # TODO: Figure out how to map this to the R type.
 
 
-type A = typing.Any
-type B = bool
-# type C = collections.abc.Callable
-# type D = typing.Dict
 # type E = typing.Any  # Unused # Enum?
-type F = float
+
 # type G = collections.abc.Generator
-# type H = typing.Any  # Unused
 # type I = typing.Any  # Ambiguous variable name.
-type J = object
-# type K = typing.Self
-# type L = typing.List
-type M = types.ModuleType
-type N = None
 # type O = typing.Any  # Ambiguous variable name.
-type P = pathlib.Path
 # type Q = typing.Any  # Unused
-type R = typing.Any  # Future star type.
-type S = str
-# type T = typing.Tuple
+# type R = typing.Any  # Future star type.
+
 # type U = typing.Any  # Unused  # Union?
-# type V = typing.Optional  # Void like type.
 # type W = typing.Any  # Unused
 # type X = typing.Type  # Primary type variable.
 # type Y = typing.Type  # Secondary type variable.
+
+type B = bool
+type F = float
+type J = object
+type N = None
+type S = str
 type Z = int  # Set of Integers Symbol ℤ.
 
 type BF = Literal[False]
@@ -114,6 +134,56 @@ def string(*characters: S) -> S:
         buffer.write(character)
     value = buffer.getvalue()
     return value
+
+
+class Object(abc.ABC):
+    """"""
+
+    star: D[S, R]
+
+    def copy(self) -> K:
+        """"""
+        return self.echo(self)
+
+    @abc.abstractmethod
+    def data(self) -> LA:
+        """"""
+        ignore(self)
+        raise NotImplementedError
+
+    @classmethod
+    def echo(cls, self: K) -> K:
+        """"""
+        return cls(*self.data())
+
+    @classmethod
+    def make(cls, *data: A) -> K:
+        """"""
+        return cls(*data)
+
+    def pull(self, name: S, cast: TY[A] = str, default: A = None) -> A:
+        """Extracts keyword arguments from star object and returns."""
+        try:
+            pop = self.star.pop(name)
+            value = cast(pop)
+        except KeyError:
+            value = default
+        return value
+
+    def warp(self, name: S, cast: TY[A] = str, default: A = None) -> N:
+        """Extracts keyword arguments from star object and saves."""
+        try:
+            pop = self.star.pop(name)
+            value = cast(pop)
+        except KeyError:
+            value = default
+        setattr(self, name, value)
+
+    def __init__(self, *data: A, **star: R) -> N:
+        super().__init__()
+        ignore(self)
+        ignore(data)
+        self.star = star
 
 
 class _Typing:
