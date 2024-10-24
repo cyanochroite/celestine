@@ -139,27 +139,22 @@ def string(*characters: S) -> S:
 class Object(abc.ABC):
     """"""
 
+    data: T[A, ...]
     star: D[S, R]
 
     def copy(self) -> K:
         """"""
         return self.echo(self)
 
-    @abc.abstractmethod
-    def data(self) -> LA:
-        """"""
-        ignore(self)
-        raise NotImplementedError
-
     @classmethod
     def echo(cls, self: K) -> K:
         """"""
-        return cls(*self.data())
+        return cls(*self.data, **self.star)
 
     @classmethod
-    def build(cls, *data: A) -> K:
+    def make(cls, *data: A, **star: R) -> K:
         """"""
-        return cls(*data)
+        return cls(*data, **star)
 
     def pull(self, name: S, cast: TY[A] = str, default: A = None) -> A:
         """Extracts keyword arguments from star object and returns."""
@@ -182,7 +177,7 @@ class Object(abc.ABC):
     def __init__(self, *data: A, **star: R) -> N:
         super().__init__()
         ignore(self)
-        ignore(data)
+        self.data = data
         self.star = star
 
 

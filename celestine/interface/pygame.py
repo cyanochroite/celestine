@@ -236,7 +236,7 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.build(1920, 1080)
+        self.area = Area.fast(1920, 1080)
 
         value = self.area.world.size.value
         self.canvas = pygame.display.set_mode(value)

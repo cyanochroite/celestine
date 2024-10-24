@@ -10,6 +10,7 @@ from celestine.typed import (
     F,
     K,
     N,
+    Object,
     T,
     V,
     Z,
@@ -121,7 +122,7 @@ class Plane(Dyad):
         return one and two
 
 
-class Area:
+class Area(Object):
     """"""
 
     local: Plane
@@ -131,7 +132,7 @@ class Area:
         return item in self.world
 
     @classmethod
-    def build(cls, width: Z, height: Z) -> K:
+    def fast(cls, width: Z, height: Z) -> K:
         """"""
         local = Plane.create(width, height)
         world = Plane.create(width, height)
@@ -140,6 +141,7 @@ class Area:
     def __init__(self, local: Plane, world: Plane) -> N:
         self.local = local.copy()
         self.world = world.copy()
+        super().__init__(self.local, self.world)
 
     def __repr__(self):
         return f"Area({self.local}, {self.world})"
@@ -163,7 +165,7 @@ class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
         return cls(self.dictionary)
 
     @classmethod
-    def build(cls, dictionary: V[D[X, Y]] = None) -> K:
+    def make(cls, dictionary: V[D[X, Y]] = None) -> K:
         """"""
         return cls(dictionary)
 
@@ -192,7 +194,7 @@ class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
         if not isinstance(other, Dictionary):
             return NotImplemented
 
-        result = self.build(self.dictionary)
+        result = self.make(self.dictionary)
         result.dictionary.update(other.dictionary)
         return result
 
@@ -200,7 +202,7 @@ class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
         if not isinstance(other, Dictionary):
             return NotImplemented
 
-        result = self.build(self.dictionary)
+        result = self.make(self.dictionary)
         result.dictionary.update(self.dictionary)
         return result
 

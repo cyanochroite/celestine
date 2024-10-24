@@ -309,8 +309,8 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.build(1280, 1080)
-        self.area = Area.build(1200, 1000)
+        self.area = Area.fast(1280, 1080)
+        self.area = Area.fast(1200, 1000)
 
         self.canvas = tkinter.Tk()
         self.canvas.title(bank.language.APPLICATION_TITLE)

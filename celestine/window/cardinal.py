@@ -12,6 +12,7 @@ from celestine.typed import (
     K,
     L,
     N,
+    Object,
     S,
     Z,
     ignore,
@@ -22,25 +23,11 @@ type Unary = C[[Math], Math]
 type Binary = C[[Math, Math], Math]
 
 
-class Cardinal:
+class Cardinal(Object):
     """"""
 
     element: L[Math]
     name: S
-
-    @classmethod
-    def echo(cls, self: K) -> K:
-        """"""
-        return cls(*self.element)
-
-    def copy(self) -> K:
-        """"""
-        return self.echo(self)
-
-    @classmethod
-    def build(cls, element: L[Math]) -> K:
-        """"""
-        return cls(*element)
 
     def unary(self, unary: Unary) -> L[Math]:
         """Unary arithmetic operations."""
@@ -70,6 +57,7 @@ class Cardinal:
         return new
 
     def __init__(self, *element: Math) -> N:
+        super().__init__(*element)
         self.element = [*element]
 
     def __del__(self) -> N:
@@ -182,7 +170,7 @@ class Cardinal:
 
     def _arithmetic(self, other: Math, binary: Binary) -> K:
         element = self.binary(binary, other)
-        return self.build(element)
+        return self.make(*element)
 
     def __add__(self, other: Math) -> K:
         return self._arithmetic(other, self.add)

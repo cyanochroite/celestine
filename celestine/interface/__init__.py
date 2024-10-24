@@ -133,7 +133,7 @@ class Abstract(Object):
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(**star)
         self.parent = parent
-        self.area = Area.build(0, 0)
+        self.area = Area.fast(0, 0)
         self.canvas = None
         self.hidden = False
         self.name = name
@@ -520,7 +520,7 @@ class Window(Tree):
     def __init__(self, element_item: D[S, A], **star: R) -> N:
         super().__init__(**star)
         self.main = ""
-        self.area = Area.build(0, 0)
+        self.area = Area.fast(0, 0)
         self.code = Dictionary()
         self.view = Dictionary()
         self.element_item = element_item
