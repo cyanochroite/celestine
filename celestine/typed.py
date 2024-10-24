@@ -73,7 +73,7 @@ type F = float
 type J = object
 type N = None
 type S = str
-type Z = int  # Set of Integers Symbol ℤ.
+type Z = int
 
 type BF = Literal[False]
 type BT = Literal[True]
@@ -157,7 +157,7 @@ class Object(abc.ABC):
         return cls(*self.data())
 
     @classmethod
-    def make(cls, *data: A) -> K:
+    def build(cls, *data: A) -> K:
         """"""
         return cls(*data)
 

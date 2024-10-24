@@ -38,7 +38,7 @@ class Cardinal:
         return self.echo(self)
 
     @classmethod
-    def make(cls, element: L[Math]) -> K:
+    def build(cls, element: L[Math]) -> K:
         """"""
         return cls(*element)
 
@@ -182,7 +182,7 @@ class Cardinal:
 
     def _arithmetic(self, other: Math, binary: Binary) -> K:
         element = self.binary(binary, other)
-        return self.make(element)
+        return self.build(element)
 
     def __add__(self, other: Math) -> K:
         return self._arithmetic(other, self.add)

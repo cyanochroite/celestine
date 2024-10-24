@@ -74,9 +74,9 @@ class Element(Element_, Abstract):
         return True
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
-        super().make(canvas, **star)
+        super().build(canvas, **star)
         self.font = star.pop("font")
 
         size = self.area.local.size.value
@@ -128,7 +128,7 @@ class Element(Element_, Abstract):
     def update_text(self, text: S) -> N:
         """"""
         if not self.font:
-            # TODO: Is there a way to make font not none in init?
+            # TODO: Is there a way to build font not none in init?
             return
 
         self.text = text
@@ -197,9 +197,9 @@ class Window(Window_):
         ]
 
     @override
-    def make(self, **star: R) -> N:
+    def build(self, **star: R) -> N:
         """"""
-        super().make(font=self.font, **star)
+        super().build(font=self.font, **star)
 
     @override
     def run(self) -> N:
@@ -236,7 +236,7 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.make(1920, 1080)
+        self.area = Area.build(1920, 1080)
 
         value = self.area.world.size.value
         self.canvas = pygame.display.set_mode(value)

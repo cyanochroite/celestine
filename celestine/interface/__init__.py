@@ -113,12 +113,12 @@ class Abstract(Object):
         """"""
         self.hidden = True
 
-    def can_make(self, **star: R) -> B:
+    def can_build(self, **star: R) -> B:
         """"""
         ignore(self)
         return True
 
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
         self.canvas = canvas
 
@@ -133,7 +133,7 @@ class Abstract(Object):
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(**star)
         self.parent = parent
-        self.area = Area.make(0, 0)
+        self.area = Area.build(0, 0)
         self.canvas = None
         self.hidden = False
         self.name = name
@@ -255,10 +255,10 @@ class View(Abstract, Tree):
             value.draw(**star)
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
         for value in self.values():
-            value.make(canvas, **star)
+            value.build(canvas, **star)
 
     @override
     def spot(self, area: Area) -> N:
@@ -466,10 +466,10 @@ class Window(Tree):
         for value in self.values():
             value.draw(**star)
 
-    def make(self, **star: R) -> N:
+    def build(self, **star: R) -> N:
         """"""
         for value in self.values():
-            value.make(self.canvas, **star)
+            value.build(self.canvas, **star)
 
     def turn(self, page: S, **star: R) -> N:
         """"""
@@ -510,7 +510,7 @@ class Window(Tree):
     def run(self) -> N:
         """"""
         self.spot(self.area)
-        self.make()
+        self.build()
 
         for value in self.values():
             value.hide()
@@ -520,7 +520,7 @@ class Window(Tree):
     def __init__(self, element_item: D[S, A], **star: R) -> N:
         super().__init__(**star)
         self.main = ""
-        self.area = Area.make(0, 0)
+        self.area = Area.build(0, 0)
         self.code = Dictionary()
         self.view = Dictionary()
         self.element_item = element_item

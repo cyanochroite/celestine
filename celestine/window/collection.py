@@ -131,7 +131,7 @@ class Area:
         return item in self.world
 
     @classmethod
-    def make(cls, width: Z, height: Z) -> K:
+    def build(cls, width: Z, height: Z) -> K:
         """"""
         local = Plane.create(width, height)
         world = Plane.create(width, height)
@@ -163,7 +163,7 @@ class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
         return cls(self.dictionary)
 
     @classmethod
-    def make(cls, dictionary: V[D[X, Y]] = None) -> K:
+    def build(cls, dictionary: V[D[X, Y]] = None) -> K:
         """"""
         return cls(dictionary)
 
@@ -192,7 +192,7 @@ class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
         if not isinstance(other, Dictionary):
             return NotImplemented
 
-        result = self.make(self.dictionary)
+        result = self.build(self.dictionary)
         result.dictionary.update(other.dictionary)
         return result
 
@@ -200,7 +200,7 @@ class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
         if not isinstance(other, Dictionary):
             return NotImplemented
 
-        result = self.make(self.dictionary)
+        result = self.build(self.dictionary)
         result.dictionary.update(self.dictionary)
         return result
 

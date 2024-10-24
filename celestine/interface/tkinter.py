@@ -55,9 +55,9 @@ class Element(Element_, Abstract):
         self.item.place_forget()
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
-        super().make(canvas, **star)
+        super().build(canvas, **star)
 
         # TODO: self.area.local.size.value
         self.image = tkinter.PhotoImage(
@@ -97,8 +97,8 @@ class Element(Element_, Abstract):
 
         # image = pillow.open(self.path)
 
-        # curent = Plane.make(image.image.width, image.image.height)
-        # target = Plane.make(*self.area.world.size.value)
+        # curent = Plane.build(image.image.width, image.image.height)
+        # target = Plane.build(*self.area.world.size.value)
 
         # match self.fit:
         #    case Image.FILL:
@@ -246,7 +246,7 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
         self.canvas = tkinter.Frame(
             canvas,
@@ -257,7 +257,7 @@ class View(View_, Abstract):
             height=1080,
         )
         self.place(self.canvas)
-        super().make(self.canvas)
+        super().build(self.canvas)
 
     @override
     def hide(self) -> N:
@@ -309,8 +309,8 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.make(1280, 1080)
-        self.area = Area.make(1200, 1000)
+        self.area = Area.build(1280, 1080)
+        self.area = Area.build(1200, 1000)
 
         self.canvas = tkinter.Tk()
         self.canvas.title(bank.language.APPLICATION_TITLE)
