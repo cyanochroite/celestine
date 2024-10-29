@@ -14,8 +14,10 @@ from celestine.typed import (
     N,
     Object,
     S,
+    W,
     Z,
     ignore,
+    override,
 )
 
 type Math = typing.Union["Cardinal", F, Z]
@@ -28,6 +30,12 @@ class Cardinal(Object):
 
     element: L[Math]
     name: S
+
+    @property
+    @override
+    def data(self) -> W:
+        """"""
+        return tuple(self.element)
 
     def unary(self, unary: Unary) -> L[Math]:
         """Unary arithmetic operations."""

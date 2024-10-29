@@ -7,10 +7,10 @@ A: typing.Any
 B: bool
 C: collections.abc.Callable
 D: typing.Dict
-E: typing.Any  # Unused # Enum?
+E: typing.Any  # Unused  # Enum?
 F: float
 G: collections.abc.Generator
-H: typing.Any  # Unused
+H: typing.Any  # Unused  # Hash?
 I: typing.Any  # Ambiguous variable name.
 J: object
 K: typing.Self
@@ -19,13 +19,13 @@ M: types.ModuleType
 N: None
 O: typing.Any  # Ambiguous variable name.
 P: pathlib.Path
-Q: typing.Any  # Unused
+Q: typing.Any  # Unused  # Queue? Sequence?
 R: typing.Any  # Future star type.
 S: str
 T: typing.Tuple
 U: typing.Any  # Unused  # Union?
 V: typing.Optional  # Void like type.
-W: typing.Any  # Unused
+W: T[A, ...]  # Self data for __init__ call.
 X: typing.Type  # Primary type variable.
 Y: typing.Type  # Secondary type variable.
 Z: int  # Set of Integers Symbol ℤ.
@@ -47,6 +47,7 @@ from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TY
 from typing import TypedDict as TD
+from typing import override
 
 
 class R(TD):
@@ -55,18 +56,7 @@ class R(TD):
     # TODO: Figure out how to map this to the R type.
 
 
-# type E = typing.Any  # Unused # Enum?
-
-# type G = collections.abc.Generator
-# type I = typing.Any  # Ambiguous variable name.
-# type O = typing.Any  # Ambiguous variable name.
-# type Q = typing.Any  # Unused
-# type R = typing.Any  # Future star type.
-
-# type U = typing.Any  # Unused  # Union?
-# type W = typing.Any  # Unused
-# type X = typing.Type  # Primary type variable.
-# type Y = typing.Type  # Secondary type variable.
+type W = T[A, ...]
 
 type B = bool
 type F = float
@@ -120,13 +110,6 @@ def ignore(_: A) -> N:
     """An empty function used to hide unused variable warnings."""
 
 
-def override(function: A) -> A:
-    """Used so earlier Python wont fail when using @override."""
-    # TODO: Remove this once we drop Python 3.11.
-    # Also, nothing seems to support this, so keeping it in for now.
-    return function
-
-
 def string(*characters: S) -> S:
     """A simple utility for joining together a series of strings."""
     buffer = io.StringIO()
@@ -139,8 +122,14 @@ def string(*characters: S) -> S:
 class Object(abc.ABC):
     """"""
 
-    data: T[A, ...]
     star: D[S, R]
+
+    @property
+    def data(self) -> W:
+        """"""
+        ignore(self)
+        result: W = ()
+        return result
 
     def copy(self) -> K:
         """"""
@@ -177,16 +166,29 @@ class Object(abc.ABC):
     def __init__(self, *data: A, **star: R) -> N:
         super().__init__()
         ignore(self)
-        self.data = data
+        ignore(data)
         self.star = star
 
 
-class _Typing:
+class _Override:
+    """"""
+
+    def _override(self) -> N:
+        """"""
+        ignore(self)
+
+
+class _Typing(_Override):
     """Hides all the "unused-import" erros."""
 
     @staticmethod
     def _iterator() -> IT[A]:
         return iter([])
+
+    @override
+    def _override(self) -> N:
+        """"""
+        ignore(self)
 
     def _self(self) -> K:
         """"""
