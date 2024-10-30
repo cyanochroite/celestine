@@ -173,9 +173,9 @@ class Object(abc.ABC):
 class _Override:
     """"""
 
-    def _override(self) -> N:
+    def _override(self) -> K:
         """"""
-        ignore(self)
+        return self
 
 
 class _Typing(_Override):
@@ -186,21 +186,9 @@ class _Typing(_Override):
         return iter([])
 
     @override
-    def _override(self) -> N:
-        """"""
-        ignore(self)
-
-    def _self(self) -> K:
+    def _override(self) -> K:
         """"""
         return self
-
-    @staticmethod
-    def _tuple() -> T[Z, Z]:
-        return (0, 0)
-
-    @staticmethod
-    def _type() -> TY[A]:
-        return str
 
 
 _Typing()

@@ -13,10 +13,12 @@ from celestine.typed import (
     Object,
     T,
     V,
+    S,
     Z,
     ignore,
 )
 from celestine.window.cardinal import Dyad
+from celestine.literal import FULL_STOP, NONE
 
 
 class Point(Dyad):
@@ -150,10 +152,10 @@ class Area(Object):
         return f"({self.local}, {self.world})"
 
 
-class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
+class Dictionary[X](collections.abc.MutableMapping[S, A]):
     """"""
 
-    dictionary: D[X, Y]
+    dictionary: D[S, X]
 
     def copy(self) -> K:
         """"""
@@ -165,29 +167,40 @@ class Dictionary[X, Y](collections.abc.MutableMapping[A, A]):
         return cls(self.dictionary)
 
     @classmethod
-    def make(cls, dictionary: V[D[X, Y]] = None) -> K:
+    def make(cls, dictionary: V[D[S, X]] = None) -> K:
         """"""
         return cls(dictionary)
 
-    def __delitem__(self, key: X) -> N:
+    def __delitem__(self, key: S) -> N:
         del self.dictionary[key]
 
-    def __getitem__(self, key: X) -> Y:
-        if "." not in key:
-            key = f"celestine.application.clean.{str(key)}"
-        result = self.dictionary[key]
+    def __getitem__(self, key: S) -> X:
+        a, b = key.split("::")
+
+        if not a:
+            result = self.dictionary[b]
+        else:
+            c = a.split(FULL_STOP)
+            add = NONE
+            for e in c:
+                add += e
+                cow = f"{add}{FULL_STOP}{b}"
+                if cow in self.dictionary:
+                    result = self.dictionary[cow]
+                    break
+                add += FULL_STOP
         return result
 
-    def __init__(self, dictionary: V[D[X, Y]] = None) -> N:
+    def __init__(self, dictionary: V[D[S, X]] = None) -> N:
         self.dictionary = dictionary or {}
 
-    def __iter__(self) -> IT[X]:
+    def __iter__(self) -> IT[S]:
         return iter(self.dictionary)
 
     def __len__(self) -> Z:
         return len(self.dictionary)
 
-    def __setitem__(self, key: X, value: Y) -> N:
+    def __setitem__(self, key: S, value: X) -> N:
         self.dictionary[key] = value
 
     def __or__(self, other: K) -> K:

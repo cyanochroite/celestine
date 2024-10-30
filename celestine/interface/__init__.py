@@ -473,7 +473,8 @@ class Window(Tree):
 
     def turn(self, page: S, **star: R) -> N:
         """"""
-        view = self.view.get(page)
+        key = f"{self.page.name}::{page}"
+        view = self.view.get(key)
         if not view:
             return
 
