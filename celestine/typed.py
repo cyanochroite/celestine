@@ -2,117 +2,112 @@
 Define types here.
 
 Generator[YieldType, SendType, ReturnType]
+
+A: typing.Any
+B: bool
+C: collections.abc.Callable
+D: typing.Dict
+E: typing.Any  # Unused  # Enum?
+F: float
+G: collections.abc.Generator
+H: typing.Any  # Unused  # Hash?
+I: typing.Any  # Ambiguous variable name.
+J: object
+K: typing.Self
+L: typing.List
+M: types.ModuleType
+N: None
+O: typing.Any  # Ambiguous variable name.
+P: pathlib.Path
+Q: typing.Any  # Unused  # Queue? Sequence?
+R: typing.Any  # Future star type.
+S: str
+T: typing.Tuple
+U: typing.Any  # Unused  # Union?
+V: typing.Optional  # Void like type.
+W: T[A, ...]  # Self data for __init__ call.
+X: typing.Type  # Primary type variable.
+Y: typing.Type  # Secondary type variable.
+Z: int  # Set of Integers Symbol ℤ.
 """
 
-# TODO: Replace all this with 'type' after python 3.12 and mypy support.
-
+import abc
 import io
-import pathlib
-import sys
-import types
-import typing
 from collections.abc import Callable as C
 from collections.abc import Generator as G
+from collections.abc import Iterator as IT
+from pathlib import Path as P
+from types import ModuleType as M
+from typing import Any as A
 from typing import Dict as D
 from typing import List as L
 from typing import Literal
-from typing import Optional as V  # Void
+from typing import Optional as V
+from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TY
-from typing import TypeAlias as TA
-
-#  TODO: Remove after Python 3.10.
-_version = sys.version.split(".")
-_major = _version[0]
-_minor = _version[1]
-if _major == "3" and _minor == "10":
-    K: TA = typing.Any  # Python 3.10 fix.
-else:
-    from typing import Self as K
+from typing import TypedDict as TD
+from typing import override
 
 
-class Star(typing.TypedDict):
+class R(TD):
     """The global Star object."""
 
     # TODO: Figure out how to map this to the R type.
 
 
-A: TA = typing.Any
-B: TA = bool
-# C: TA = collections.abc.Callable
-# D: TA = typing.Dict
-# E: TA = typing.Any  # Unused
-F: TA = float
-# G: TA = collections.abc.Generator
-# H: TA = typing.Any  # Unused
-# I: TA = typing.Any  # Ambiguous variable name.
-J: TA = object
-# K: TA = typing.Self  # "Self" is not valid in this context.
-# L: TA = typing.List
-M: TA = types.ModuleType
-N: TA = None
-# O: TA = typing.Any  # Ambiguous variable name.
-P: TA = pathlib.Path
-# Q: TA = typing.Any  # Unused
-R: TA = typing.Any  # Star.
-S: TA = str
-# T: TA = typing.Tuple
-# U: TA = typing.Any  # Unused  # Union?
-# V: TA = typing.Any  # Unused
-# W: TA = typing.Any  # Unused
-# X: TA = typing.Any  # Unused
-# Y: TA = typing.Any  # Unused
-Z: TA = int  # Set of Integers Symbol ℤ.
+type W = T[A, ...]
 
-BF: TA = Literal[False]
-BT: TA = Literal[True]
+type B = bool
+type F = float
+type J = object
+type N = None
+type S = str
+type Z = int
 
-CN: TA = C[[N], N]
+type BF = Literal[False]
+type BT = Literal[True]
 
-DA: TA = D[S, A]
-DB: TA = D[S, B]
-DF: TA = D[S, F]
-DM: TA = D[S, M]
-DP: TA = D[S, P]
-DS: TA = D[S, S]
-DZ: TA = D[S, Z]
+type CN = C[[N], N]
 
-GA: TA = G[A, N, N]
-GB: TA = G[B, N, N]
-GF: TA = G[F, N, N]
-GM: TA = G[M, N, N]
-GP: TA = G[P, N, N]
-GS: TA = G[S, N, N]
-GZ: TA = G[Z, N, N]
+type DA = D[S, A]
+type DB = D[S, B]
+type DF = D[S, F]
+type DM = D[S, M]
+type DP = D[S, P]
+type DS = D[S, S]
+type DZ = D[S, Z]
 
-LA: TA = L[A]
-LB: TA = L[B]
-LF: TA = L[F]
-LM: TA = L[M]
-LP: TA = L[P]
-LS: TA = L[S]
-LZ: TA = L[Z]
+type GA = G[A, N, N]
+type GB = G[B, N, N]
+type GF = G[F, N, N]
+type GM = G[M, N, N]
+type GP = G[P, N, N]
+type GS = G[S, N, N]
+type GZ = G[Z, N, N]
 
-VA: TA = V[A]
-VB: TA = V[B]
-VF: TA = V[F]
-VM: TA = V[M]
-VP: TA = V[P]
-VS: TA = V[S]
-VZ: TA = V[Z]
+type LA = L[A]
+type LB = L[B]
+type LF = L[F]
+type LM = L[M]
+type LP = L[P]
+type LS = L[S]
+type LZ = L[Z]
 
-TZ2: TA = T[Z, Z]
-TZ3: TA = T[Z, Z, Z]
+type VA = V[A]
+type VB = V[B]
+type VF = V[F]
+type VM = V[M]
+type VP = V[P]
+type VS = V[S]
+type VZ = V[Z]
+
+type TZ2 = T[Z, Z]
+type TZ3 = T[Z, Z, Z]
 
 
 def ignore(_: A) -> N:
     """An empty function used to hide unused variable warnings."""
-
-
-def override(function: A) -> A:
-    """Used so earlier Python wont fail when using @override."""
-    # TODO: Remove this once we drop Python 3.11.
-    return function
 
 
 def string(*characters: S) -> S:
@@ -124,30 +119,76 @@ def string(*characters: S) -> S:
     return value
 
 
-# TODO: Remove this once we drop Python 3.11.
-class _Fix:
+class Object(abc.ABC):
     """"""
 
-    def _override(self) -> N:
+    star: D[S, R]
+
+    @property
+    def data(self) -> W:
         """"""
+        ignore(self)
+        result: W = ()
+        return result
+
+    def copy(self) -> K:
+        """"""
+        return self.echo(self)
+
+    @classmethod
+    def echo(cls, self: K) -> K:
+        """"""
+        return cls(*self.data, **self.star)
+
+    @classmethod
+    def make(cls, *data: A, **star: R) -> K:
+        """"""
+        return cls(*data, **star)
+
+    def pull(self, name: S, cast: TY[A] = str, default: A = None) -> A:
+        """Extracts keyword arguments from star object and returns."""
+        try:
+            pop = self.star.pop(name)
+            value = cast(pop)
+        except KeyError:
+            value = default
+        return value
+
+    def warp(self, name: S, cast: TY[A] = str, default: A = None) -> N:
+        """Extracts keyword arguments from star object and saves."""
+        try:
+            pop = self.star.pop(name)
+            value = cast(pop)
+        except KeyError:
+            value = default
+        setattr(self, name, value)
+
+    def __init__(self, *data: A, **star: R) -> N:
+        super().__init__()
+        ignore(self)
+        ignore(data)
+        self.star = star
 
 
-class _ImportNotUsed(_Fix):
+class _Override:
     """"""
 
-    @override
-    def _override(self) -> N:
-        # TODO: Remove this once we drop Python 3.11.
-        print(override)
-
-    def _self(self) -> K:
+    def _override(self) -> K:
         """"""
         return self
 
-    @staticmethod
-    def _tuple() -> T[Z, Z]:
-        return (0, 0)
+
+class _Typing(_Override):
+    """Hides all the "unused-import" erros."""
 
     @staticmethod
-    def _type() -> TY:
-        return str
+    def _iterator() -> IT[A]:
+        return iter([])
+
+    @override
+    def _override(self) -> K:
+        """"""
+        return self
+
+
+_Typing()

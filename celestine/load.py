@@ -21,11 +21,9 @@ from celestine.typed import (
     CN,
     GM,
     GP,
-    LP,
     LS,
     A,
     B,
-    C,
     D,
     G,
     M,
@@ -33,7 +31,6 @@ from celestine.typed import (
     P,
     S,
     T,
-    string,
 )
 
 ########################################################################
@@ -60,38 +57,12 @@ def module(*path: S) -> M:
     return package(CELESTINE, *path)
 
 
-def modules(*path: S) -> GM:
-    """Load an internal module from anywhere in the application."""
-    yield from packages(CELESTINE, *path)
-
-
 def package(base: S, *path: S) -> M:
     """Load an external package from the system path."""
-    iterable = [base, *path]
+    iterable = [base, *filter(None, path)]
     name = FULL_STOP.join(iterable)
     result = importlib.import_module(name)
     return result
-
-
-def packages(base: S, *path: S) -> GM:
-    """Load an external package from the system path."""
-    find = importlib.import_module(base)
-    spec = find.__spec__
-    info = spec.origin if spec else project_path()
-    spot = pathlib.Path(str(info))
-    root = spot.parent
-
-    root = project_path()
-    top = pathlib.Path(root, *path)
-
-    walked = walk_python(top, [], [])
-    walker = [top, *walked]
-    for file in walker:
-        with_name = file.with_name(file.stem)
-        relative_to = with_name.relative_to(root)
-        parts = relative_to.parts
-        strip = parts[:-1] if parts[-1] == INIT else parts
-        yield package(base, *strip)
 
 
 ########################################################################
@@ -153,20 +124,15 @@ def package_dependency(name: S, fail: M) -> M:
 # Dictionary stuff
 
 
-def _dictionary_items(_module: M) -> T[S, A]:
-    _dictionary: D[S, A] = vars(_module)
-    _items = _dictionary.items()
-    return _items
-
-
 def functions(_module: M) -> D[S, CN]:
     """Load from module all functions and turn them into dictionary."""
 
     def test(value: S) -> B:
         return FUNCTION in repr(value)
 
-    _dictionary = _dictionary_items(_module)
-    mapping = {key: value for key, value in _dictionary if test(value)}
+    _dictionary: D[S, A] = vars(_module)
+    _items = _dictionary.items()
+    mapping = {key: value for key, value in _items if test(value)}
     return mapping
 
 
@@ -176,51 +142,38 @@ def dictionary(_module: M) -> D[S, CN]:
     def test(value: S) -> B:
         return not value.startswith(LOW_LINE)
 
-    _dictionary = _dictionary_items(_module)
-    mapping = {key: value for key, value in _dictionary if test(key)}
+    _dictionary: D[S, A] = vars(_module)
+    _items = _dictionary.items()
+    mapping = {key: value for key, value in _items if test(key)}
     return mapping
 
 
-def decorators2(_module: M, name: S) -> D[S, CN]:
-    """Load from module all functions and turn them into dictionary."""
-    _dictionary = _dictionary_items(_module)
-    text = string(FUNCTION, name, FULL_STOP)
-
-    def test(value: S) -> B:
-        return text in repr(value)
-
-    iterable = {key: value for key, value in _dictionary if test(value)}
-    return iterable
-
-
-def decorators(*path: S) -> D[S, D[S, C]]:
+def decorators(*path: S) -> D[S, D[S, S]]:
     """Load all decorated functions from all modules found in path."""
+    result: D[S, D[S, S]] = {}
 
-    _dictionary: D[S, D[S, C]] = {}
+    pattern = re.compile(r"<function (\w+)\.")
 
-    pattern = re.compile(r"<function (\w*)\.")
-
-    for module in modules(*path):
-        items = vars(module).items()
+    base = FULL_STOP.join(path)
+    walked = walk_package(base)
+    for _module in walked:
+        items = vars(_module).items()
 
         for key, value in items:
-            _string = repr(value)
-            match = pattern.search(_string)
+            match = pattern.match(repr(value))
 
             if not match:
                 continue
 
-            try:
-                name = match[1]
-            except IndexError:
-                continue
+            name = match[1]
 
-            if not _dictionary.get(name):
-                _dictionary[name] = {}
+            if name not in result:
+                result[name] = {}
 
-            _dictionary[name][key] = value
+            item = FULL_STOP.join((base, key))
+            result[name][item] = value
 
-    return _dictionary
+    return result
 
 
 ########
@@ -245,13 +198,14 @@ def walk(*path: S) -> G[T[S, LS, LS], N, N]:
     yield from os.walk(top, topdown, onerror, followlinks)
 
 
-def walk_file(top: P, include: LS, exclude: LS) -> GP:
+def walk_file(path: P, include: LS, exclude: LS) -> GP:
     """
     Item 'name_exclude': a list of directory names to exclude.
 
     Item 'suffix_include': a list of file name suffix to include
     if none, it ignores it.
     """
+    top = str(path)
     included = set(include)
     excluded = set(exclude)
 
@@ -267,7 +221,7 @@ def walk_file(top: P, include: LS, exclude: LS) -> GP:
                 yield path
 
 
-def walk_python(top: P, include: LS, exclude: LS) -> LP:
+def walk_python(path: P, include: LS, exclude: LS) -> GP:
     """"""
     include = [".py", *include]
     exclude = [
@@ -276,7 +230,32 @@ def walk_python(top: P, include: LS, exclude: LS) -> LP:
         "__pycache__",
         *exclude,
     ]
-    return walk_file(top, include, exclude)
+    yield from walk_file(path, include, exclude)
+
+
+def walk_package(base: S) -> GM:
+    """Load all decorated functions from all modules found in path."""
+    find = importlib.import_module(base)
+    spec = find.__spec__
+    if not spec:
+        raise NotImplementedError("Why is your spec None?")
+    if not spec.origin:
+        raise NotImplementedError("Why is your spec origin also None?")
+    spot = pathlib.Path(spec.origin)
+    if spot.stem != INIT:
+        yield find
+        return
+
+    root = spot.parent
+    walked = walk_python(root, [], [])
+    for file in walked:
+        with_name = file.with_name(file.stem)
+        # relative to what though?
+        relative_to = with_name.relative_to(root)
+        parts = relative_to.parts
+        strip = parts[:-1] if parts[-1] == INIT else parts
+        name = FULL_STOP.join((base, *strip))
+        yield importlib.import_module(name)
 
 
 ########################################################################
@@ -367,4 +346,5 @@ def asset(file: S) -> P:
     """"""
     data = "celestine.data"
     item = importlib.resources.files(data).joinpath(file)
-    return item
+    path = pathlib.Path(str(item))
+    return path

@@ -8,5 +8,5 @@ keep_warnings = True
 
 html_theme = "alabaster"
 
-html_logo = "logo.png"
+html_logo = "celestine.svg"
 html_favicon = "favicon.ico"

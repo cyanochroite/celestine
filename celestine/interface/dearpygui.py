@@ -43,7 +43,7 @@ class Element(Element_, Abstract):
         bank.dequeue()
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """
         Draw the image to screen.
 
@@ -53,7 +53,7 @@ class Element(Element_, Abstract):
         channels = image[2]
         photo = image[3]
         """
-        super().make(canvas)
+        super().build(canvas)
 
         if self.action or self.goto:
             dearpygui.add_button(
@@ -170,13 +170,13 @@ class Window(Window_):
         ]
 
     @override
-    def make(self, **star: R) -> N:
+    def build(self, **star: R) -> N:
         """"""
         for name, item in self.items():
             item.canvas = dearpygui.window(tag=name)
             with item.canvas:
                 dearpygui.configure_item(item.name, show=False)
-                item.make(None)
+                item.build(None)
 
     @override
     def turn(self, page: S, **star: R) -> N:
@@ -202,7 +202,7 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.make(1280, 1080)
+        self.area = Area.build(1280, 1080)
         self.tag = "window"
 
         self.canvas = None

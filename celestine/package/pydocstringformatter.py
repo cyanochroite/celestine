@@ -9,7 +9,9 @@ from celestine.typed import (
     CN,
     M,
     N,
-    S,
+    P,
+    ignore,
+    override,
 )
 
 run: CN
@@ -18,7 +20,8 @@ run: CN
 class Package(Abstract):
     """"""
 
-    def main(self, package: M, path: S) -> N:
+    @override
+    def main(self, package: M, path: P) -> N:
         """
         This package is troublesome.
 
@@ -26,6 +29,7 @@ class Package(Abstract):
         Exclude argument simply does not work.
         Manually feeding it files works.
         """
+        ignore(self)
         location = os.getcwd()
         os.chdir(sys.path[0])
 

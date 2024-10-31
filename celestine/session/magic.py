@@ -20,13 +20,13 @@ from celestine.session.data import Values
 from celestine.typed import (
     DA,
     LS,
-    TA,
     A,
     B,
     D,
     L,
     N,
     S,
+    ignore,
 )
 
 from .data import SESSION
@@ -44,6 +44,7 @@ class SessionParse:
     @classmethod
     def dictionary(cls) -> DA:
         """"""
+        ignore(cls)
         return {}
 
 
@@ -53,7 +54,7 @@ TRANSLATE_THIS = "unrecognized arguments"
 
 # ADI: typing.TypeAlias = typing.Iterable[typing.Tuple[str, Argument]]
 # APD: TA = D[U[Argument, T[Argument]], U[AP, AG]]
-APD: TA = D[A, A]
+type APD = D[A, A]
 
 
 class Magic:

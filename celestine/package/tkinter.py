@@ -4,10 +4,10 @@ from celestine.package import Abstract
 from celestine.typed import A
 
 Button: A
-Label: A
 Frame: A
-Tk: A
+Label: A
 PhotoImage: A
+Tk: A
 
 
 class Package(Abstract):

@@ -5,8 +5,8 @@ from celestine.typed import (
     A,
     N,
     R,
-    S,
     ignore,
+    override,
 )
 
 add_button: A
@@ -32,13 +32,7 @@ window: A
 class Package(Abstract):
     """"""
 
-    def tag_root(self, tag: S) -> S:
-        """"""
-        ignore(self)
-        root = tag.split("_")[0]
-        combine = f"{root}"
-        return combine
-
+    @override
     def __init__(self, **star: R) -> N:
         ignore(self)
         super().__init__(pypi="dearpygui.dearpygui")

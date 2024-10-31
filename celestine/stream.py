@@ -12,18 +12,18 @@ from typing import (
 
 from celestine import load
 from celestine.typed import (
-    TA,
     A,
     B,
     N,
     P,
     S,
+    ignore,
     override,
 )
 
-FILE: TA = IO[A]
-LZMA: TA = lzma.LZMAFile | TextIO
-PATH: TA = P | S
+type Flie = IO[A]
+type Lzma = lzma.LZMAFile | TextIO
+type Path = P | S
 
 MAXIMUM_LINE_LENGTH = 72
 SECTION_BREAK = "######################################################\
@@ -92,7 +92,7 @@ class File(abc.ABC):
 
     directory: P
 
-    def _file(self, strict: B, *path: PATH) -> P:
+    def _file(self, strict: B, *path: Path) -> P:
         root = self.directory
 
         join: S = os.path.join(root, *path)
@@ -107,23 +107,29 @@ class File(abc.ABC):
         file = pathlib.Path(*path)
         return file
 
-    def load(self, *path: PATH) -> S:
+    def load(self, *path: Path) -> S:
         """"""
         with self.reader(*path) as file:
             return file.read()
 
     @abc.abstractmethod
-    def reader(self, *path: PATH) -> FILE:
+    def reader(self, *path: Path) -> Flie:
         """"""
+        ignore(self)
+        ignore(path)
+        raise NotImplementedError()
 
-    def save(self, data: S, *path: PATH) -> N:
+    def save(self, data: S, *path: Path) -> N:
         """"""
         with self.writer(*path) as file:
             file.write(data)
 
     @abc.abstractmethod
-    def writer(self, *path: PATH) -> FILE:
+    def writer(self, *path: Path) -> Flie:
         """"""
+        ignore(self)
+        ignore(path)
+        raise NotImplementedError()
 
     def __init__(self, path: P) -> N:
         self.directory = path
@@ -133,7 +139,7 @@ class Binary(File):
     """"""
 
     @override
-    def reader(self, *path: PATH) -> FILE:
+    def reader(self, *path: Path) -> Flie:
         """"""
         return open(
             self._file(True, *path),
@@ -142,7 +148,7 @@ class Binary(File):
         )
 
     @override
-    def writer(self, *path: PATH) -> FILE:
+    def writer(self, *path: Path) -> Flie:
         """"""
         return open(
             self._file(False, *path),
@@ -155,7 +161,7 @@ class Compress(File):
     """"""
 
     @override
-    def reader(self, *path: PATH) -> LZMA:
+    def reader(self, *path: Path) -> Lzma:
         """"""
         return lzma.open(
             self._file(True, *path),
@@ -163,7 +169,7 @@ class Compress(File):
         )
 
     @override
-    def writer(self, *path: PATH) -> LZMA:
+    def writer(self, *path: Path) -> Lzma:
         """"""
         return lzma.open(
             self._file(False, *path),
@@ -178,7 +184,7 @@ class Text(File):
     """"""
 
     @override
-    def reader(self, *path: PATH) -> FILE:
+    def reader(self, *path: Path) -> Flie:
         """"""
         return open(
             self._file(True, *path),
@@ -189,7 +195,7 @@ class Text(File):
         )
 
     @override
-    def writer(self, *path: PATH) -> FILE:
+    def writer(self, *path: Path) -> Flie:
         """"""
         return open(
             self._file(False, *path),
@@ -204,15 +210,17 @@ class Module(Text):
     """"""
 
     @override
-    def reader(self, *path: PATH) -> FILE:
+    def reader(self, *path: Path) -> Flie:
         """"""
+        ignore(self)
         paths = list(map(str, path))
         file = load.python(*paths)
         return super().reader(file)
 
     @override
-    def writer(self, *path: PATH) -> FILE:
+    def writer(self, *path: Path) -> Flie:
         """"""
+        ignore(self)
         paths = list(map(str, path))
         file = load.python(*paths)
         return super().writer(file)

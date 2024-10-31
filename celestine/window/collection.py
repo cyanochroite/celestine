@@ -1,12 +1,26 @@
 """"""
 
+import collections.abc
+
+from celestine.literal import (
+    FULL_STOP,
+    KEY,
+    NONE,
+)
 from celestine.typed import (
+    IT,
+    A,
     B,
+    D,
     F,
     K,
     N,
+    Object,
+    S,
     T,
+    V,
     Z,
+    ignore,
 )
 from celestine.window.cardinal import Dyad
 
@@ -14,78 +28,52 @@ from celestine.window.cardinal import Dyad
 class Point(Dyad):
     """"""
 
-    @property
-    def one(self) -> F:
-        """"""
-        return self.element[0]
-
-    @property
-    def two(self) -> F:
-        """"""
-        return self.element[1]
+    one: F
+    two: F
 
     @property
     def value(self) -> T[Z, Z]:
         """"""
-        return (int(self.one), int(self.two))
+        one = int(self.one)
+        two = int(self.two)
+        result = (one, two)
+        return result
 
 
 class Line(Dyad):
     """"""
 
-    @property
-    def minimum(self) -> F:
-        """"""
-        return self.element[0]
-
-    @property
-    def maximum(self) -> F:
-        """"""
-        return self.element[1]
-
-    @classmethod
-    def clone(cls, self: K) -> K:
-        """"""
-        return cls(self.minimum, self.maximum)
-
-    def copy(self) -> K:
-        """"""
-        return self.clone(self)
+    one: F
+    two: F
 
     @property
     def length(self) -> Z:
         """"""
-        return int(self.maximum - self.minimum)
+        result = int(self.two - self.one)
+        return result
 
     @property
     def midpoint(self) -> Z:
         """"""
-        return int(self.minimum + self.maximum) // 2
+        result = int(self.one + self.two) // 2
+        return result
 
     def __contains__(self, item: F) -> B:
-        return self.minimum <= item <= self.maximum
+        result = self.one <= item <= self.two
+        return result
 
     def __init__(self, one: F, two: F) -> N:
+        ignore(self)
         minimum = min(one, two)
         maximum = max(one, two)
         super().__init__(minimum, maximum)
 
 
-class Plane:
+class Plane(Dyad):
     """"""
 
-    _one: Line
-    _two: Line
-
-    @property
-    def one(self) -> Line:
-        """"""
-        return self._one
-
-    @property
-    def two(self) -> Line:
-        """"""
-        return self._two
+    one: Line
+    two: Line
 
     def center(self, other: K) -> N:
         """"""
@@ -94,34 +82,30 @@ class Plane:
     @property
     def centroid(self) -> Point:
         """"""
-        _one = self._one.midpoint
-        _two = self._two.midpoint
-        return Point(_one, _two)
-
-    def copy(self) -> K:
-        """"""
-        return Plane(self._one, self._two)
+        one = self.one.midpoint
+        two = self.two.midpoint
+        return Point(one, two)
 
     @property
     def value(self) -> T[Z, Z, Z, Z]:
         """"""
-        xmin = int(self._one.minimum)
-        ymin = int(self._two.minimum)
-        xmax = int(self._one.maximum)
-        ymax = int(self._two.maximum)
+        xmin = int(self.one.one)
+        ymin = int(self.two.one)
+        xmax = int(self.one.two)
+        ymax = int(self.two.two)
         return (xmin, ymin, xmax, ymax)
 
     @classmethod
-    def make(cls, width: Z, height: Z) -> K:
+    def create(cls, width: Z, height: Z) -> K:
         """"""
-        _one = Line(0, width)
-        _two = Line(0, height)
-        return cls(_one, _two)
+        one = Line(0, width)
+        two = Line(0, height)
+        return cls(one, two)
 
     @property
     def origin(self) -> Point:
         """"""
-        return Point(self._one.minimum, self._two.minimum)
+        return Point(self.one.one, self.two.one)
 
     def scale_to_max(self, other: K) -> N:
         """"""
@@ -134,40 +118,17 @@ class Plane:
     @property
     def size(self) -> Point:
         """"""
-        return Point(self._one.length, self._two.length)
+        one = self.one
+        two = self.two
+        return Point(one.length, two.length)
 
-    def __contains__(self, item: Point) -> B:
-        _one = item.one in self._one
-        _two = item.two in self._two
-        return _one and _two
-
-    def __iadd__(self, other: Point) -> K:
-        self._one += other.one
-        self._two += other.two
-        return self
-
-    def __imul__(self, other: Z) -> K:
-        self._one *= other
-        self._two *= other
-        return self
-
-    def __init__(self, _one: Line, _two: Line) -> N:
-        self._one = _one.copy()
-        self._two = _two.copy()
-
-    def __isub__(self, other: Point) -> K:
-        self._one -= other.one
-        self._two -= other.two
-        return self
-
-    def __repr__(self):
-        return f"Plane({repr(self._one)}, {repr(self._two)})"
-
-    def __str__(self):
-        return f"({str(self._one)}, {str(self._two)})"
+    def __contains__(self, item: K) -> B:
+        one = item.one in self.one
+        two = item.two in self.two
+        return one and two
 
 
-class Area:
+class Area(Object):
     """"""
 
     local: Plane
@@ -177,18 +138,94 @@ class Area:
         return item in self.world
 
     @classmethod
-    def make(cls, width: Z, height: Z) -> K:
+    def fast(cls, width: Z, height: Z) -> K:
         """"""
-        local = Plane.make(width, height)
-        world = Plane.make(width, height)
+        local = Plane.create(width, height)
+        world = Plane.create(width, height)
         return cls(local, world)
 
     def __init__(self, local: Plane, world: Plane) -> N:
         self.local = local.copy()
         self.world = world.copy()
+        super().__init__(self.local, self.world)
 
     def __repr__(self):
         return f"Area({self.local}, {self.world})"
 
     def __str__(self):
         return f"({self.local}, {self.world})"
+
+
+class Dictionary[X](collections.abc.MutableMapping[S, A]):
+    """"""
+
+    dictionary: D[S, X]
+
+    def copy(self) -> K:
+        """"""
+        return self.echo(self)
+
+    @classmethod
+    def echo(cls, self: K) -> K:
+        """"""
+        return cls(self.dictionary)
+
+    def key(self, key: S) -> S:
+        """Expands short keys to full keys."""
+        result = NONE
+        add = NONE
+        one, two = key.split(KEY)
+        names = one.split(FULL_STOP)
+        for name in names:
+            result = add + two
+            if result in self.dictionary:
+                break
+            add += name + FULL_STOP
+        return result
+
+    @classmethod
+    def make(cls, dictionary: V[D[S, X]] = None) -> K:
+        """"""
+        return cls(dictionary)
+
+    def __delitem__(self, key: S) -> N:
+        index = self.key(key)
+        del self.dictionary[index]
+
+    def __getitem__(self, key: S) -> X:
+        index = self.key(key)
+        result = self.dictionary[index]
+        return result
+
+    def __init__(self, dictionary: V[D[S, X]] = None) -> N:
+        self.dictionary = dictionary or {}
+
+    def __iter__(self) -> IT[S]:
+        return iter(self.dictionary)
+
+    def __len__(self) -> Z:
+        return len(self.dictionary)
+
+    def __setitem__(self, key: S, value: X) -> N:
+        index = self.key(key)
+        self.dictionary[index] = value
+
+    def __or__(self, other: K) -> K:
+        if not isinstance(other, Dictionary):
+            return NotImplemented
+
+        result = self.make(self.dictionary)
+        result.dictionary.update(other.dictionary)
+        return result
+
+    def __ror__(self, other: K) -> K:
+        if not isinstance(other, Dictionary):
+            return NotImplemented
+
+        result = self.make(self.dictionary)
+        result.dictionary.update(self.dictionary)
+        return result
+
+    def __ior__(self, other: K) -> K:
+        self.dictionary.update(other.dictionary)
+        return self

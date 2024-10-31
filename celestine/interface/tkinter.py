@@ -23,6 +23,7 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Area,
+    Dyad,
     Plane,
     Point,
 )
@@ -54,9 +55,9 @@ class Element(Element_, Abstract):
         self.item.place_forget()
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
-        super().make(canvas, **star)
+        super().build(canvas, **star)
 
         # TODO: self.area.local.size.value
         self.image = tkinter.PhotoImage(
@@ -92,12 +93,12 @@ class Element(Element_, Abstract):
     def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
-        target = Plane.make(*self.area.world.size.value)
+        target = Plane.create(*self.area.world.size.value)
 
         # image = pillow.open(self.path)
 
-        # curent = Plane.make(image.image.width, image.image.height)
-        # target = Plane.make(*self.area.world.size.value)
+        # curent = Plane.build(image.image.width, image.image.height)
+        # target = Plane.build(*self.area.world.size.value)
 
         # match self.fit:
         #    case Image.FILL:
@@ -152,8 +153,8 @@ class Element(Element_, Abstract):
         self.path = path
         photo = tkinter.PhotoImage(file=self.path)
 
-        curent = Plane.make(photo.width(), photo.height())
-        target = Plane.make(*self.area.world.size.value)
+        curent = Plane.create(photo.width(), photo.height())
+        target = Plane.create(*self.area.world.size.value)
 
         match self.fit:
             case Image.FILL:
@@ -200,8 +201,8 @@ class Element(Element_, Abstract):
         old_width = photo.width()
         old_height = photo.height()
 
-        curent = Plane.make(old_width, old_height)
-        target = Plane.make(*self.area.world.size)
+        curent = Plane.create(old_width, old_height)
+        target = Plane.create(*self.area.world.size)
 
         match self.fit:
             case Image.FILL:
@@ -214,7 +215,10 @@ class Element(Element_, Abstract):
         new_width, new_height = curent.size
 
         Point(old_width, old_height)
-        curent.size.value
+
+        old_size = Dyad(old_width, old_height)
+        new_size = Dyad(new_width, new_height)
+        old_size / new_size
 
         if new_width < old_width:
             change_width = math.ceil(old_width / new_width)
@@ -242,7 +246,7 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
         self.canvas = tkinter.Frame(
             canvas,
@@ -253,7 +257,7 @@ class View(View_, Abstract):
             height=1080,
         )
         self.place(self.canvas)
-        super().make(self.canvas)
+        super().build(self.canvas)
 
     @override
     def hide(self) -> N:
@@ -305,8 +309,8 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.make(1280, 1080)
-        self.area = Area.make(1200, 1000)
+        self.area = Area.fast(1280, 1080)
+        self.area = Area.fast(1200, 1000)
 
         self.canvas = tkinter.Tk()
         self.canvas.title(bank.language.APPLICATION_TITLE)

@@ -7,7 +7,9 @@ from celestine.typed import (
     LS,
     M,
     N,
-    S,
+    P,
+    ignore,
+    override,
 )
 
 run: CN
@@ -16,12 +18,15 @@ run: CN
 class Package(Abstract):
     """"""
 
-    def main(self, package: M, path: S) -> N:
+    @override
+    def main(self, package: M, path: P) -> N:
         """
         This package has no configuration file options.
 
         Since no way to configure exclude files, we do it ourself.
         """
+        ignore(self)
+
         # TODO: This is breaking the language files. Find out why.
         files = load.walk_python(path, [], ["language"])
 
@@ -29,6 +34,8 @@ class Package(Abstract):
         argv = [*file, "--py311-plus"]
         package.main(argv)
 
+    @override
     def module(self) -> LS:
         """"""
+        ignore(self)
         return ["_main"]

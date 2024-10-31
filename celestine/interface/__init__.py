@@ -19,13 +19,13 @@ from celestine.typed import (
     P,
     R,
     S,
-    T,
     Z,
     ignore,
     override,
 )
 from celestine.window.collection import (
     Area,
+    Dictionary,
     Line,
     Plane,
     Point,
@@ -39,10 +39,30 @@ from celestine.window.container import (
 class Object:
     """"""
 
+    star: R
+
+    def pull(self, name: S, cast: TY[A] = str, default: A = None) -> A:
+        """Extracts keyword arguments from star object and returns."""
+        try:
+            pop = self.star.pop(name)
+            value = cast(pop)
+        except KeyError:
+            value = default
+        return value
+
+    def warp(self, name: S, cast: TY[A] = str, default: A = None) -> N:
+        """Extracts keyword arguments from star object and saves."""
+        try:
+            pop = self.star.pop(name)
+            value = cast(pop)
+        except KeyError:
+            value = default
+        setattr(self, name, value)
+
     def __init__(self, **star: R) -> N:
-        """This does not pass the star parameter to the real object."""
-        ignore(self)
         super().__init__()
+        ignore(self)
+        self.star = star
 
 
 class Abstract(Object):
@@ -93,12 +113,12 @@ class Abstract(Object):
         """"""
         self.hidden = True
 
-    def can_make(self, **star: R) -> B:
+    def can_build(self, **star: R) -> B:
         """"""
         ignore(self)
         return True
 
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
         self.canvas = canvas
 
@@ -113,7 +133,7 @@ class Abstract(Object):
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(**star)
         self.parent = parent
-        self.area = Area.make(0, 0)
+        self.area = Area.fast(0, 0)
         self.canvas = None
         self.hidden = False
         self.name = name
@@ -122,27 +142,19 @@ class Abstract(Object):
 
         # Contains all remaining keyword arguments.
 
-        def warp(name: S, cast: TY = str, default: A = None) -> N:
-            try:
-                pop = star.pop(name)
-                value = cast(pop)
-            except KeyError:
-                value = default
-            setattr(self, name, value)
-
-        warp("action")
+        self.warp("action")
         # The action to perform when the user triggers the button.
 
-        warp("fit", Image, Image.FILL)
+        self.warp("fit", Image, Image.FILL)
         # The way the image scales to fit the view space.
 
-        warp("goto")
+        self.warp("goto")
         # The page to go to when clicked.
 
-        warp("path", pathlib.Path)
+        self.warp("path", pathlib.Path)
         # The path to the image to use as a background.
 
-        warp("text")
+        self.warp("text")
         # Text that describes the purpose of the button's action.
 
 
@@ -158,7 +170,7 @@ class Element(Abstract):
         self.item = None
 
 
-class Tree(Object):
+class Tree[X](Object):
     """"""
 
     # TODO Python 3.12: Make class Tree[TYPE] and replace ANY.
@@ -197,7 +209,7 @@ class Tree(Object):
         self._children[item.name] = item
         return item
 
-    def values(self) -> G[T[S, Abstract], N, N]:
+    def values(self) -> G[Abstract, N, N]:
         """"""
         iterator = iter(self._children.values())
         yield from iterator
@@ -222,6 +234,7 @@ class View(Abstract, Tree):
     width: Z
     height: Z
     element_item: D[S, A]
+    tree: Tree[K]
 
     def click(self, point: Point, **star: R) -> B:
         if not super().click(point, **star):
@@ -242,10 +255,10 @@ class View(Abstract, Tree):
             value.draw(**star)
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
         for value in self.values():
-            value.make(canvas, **star)
+            value.build(canvas, **star)
 
     @override
     def spot(self, area: Area) -> N:
@@ -274,12 +287,12 @@ class View(Abstract, Tree):
             one = Line(0, 1)
             one += index % partition_x
             one *= this.one.length // partition_x
-            one += this.one.minimum
+            one += this.one.one
 
             two = Line(0, 1)
             two += min(index // partition_x, partition_y - 1)
             two *= this.two.length // partition_y
-            two += this.two.minimum
+            two += this.two.one
 
             world = Plane(one, two)
 
@@ -331,17 +344,16 @@ class View(Abstract, Tree):
         element_item: D[S, A],
         *,
         mode: Zone = Zone.NONE,
-        row: Z = 0,
-        col: Z = 0,
         **star: R,
     ) -> N:
-        #
+        super().__init__(name, **star)
+        row = self.pull("row", int, 0)
+        col = self.pull("col", int, 0)
+
         self.element_item = element_item
         self._element = element_item["element"]
         self._view = element_item["view"]
         self._window = element_item["window"]
-
-        super().__init__(name, **star)
 
         self.width = col
         self.height = row
@@ -395,8 +407,8 @@ class Window(Tree):
 
     page: View
     main: S
-    code: D[S, A]  # function
-    view: D[S, View]
+    code: Dictionary[A]  # function
+    view: Dictionary[View]
 
     canvas: A
 
@@ -433,7 +445,7 @@ class Window(Tree):
         self,
         name: S,
         **star: R,
-    ) -> K:
+    ) -> Abstract:
         """"""
         return self.set(
             self.element_item["view"](
@@ -454,14 +466,15 @@ class Window(Tree):
         for value in self.values():
             value.draw(**star)
 
-    def make(self, **star: R) -> N:
+    def build(self, **star: R) -> N:
         """"""
         for value in self.values():
-            value.make(self.canvas, **star)
+            value.build(self.canvas, **star)
 
     def turn(self, page: S, **star: R) -> N:
         """"""
-        view = self.view.get(page)
+        key = f"{self.page.name}::{page}"
+        view = self.view.get(key)
         if not view:
             return
 
@@ -488,7 +501,8 @@ class Window(Tree):
 
     def work(self, code: S, **star: R) -> N:
         """"""
-        caller = self.code.get(code)
+        key = f"{self.page.name}::{code}"
+        caller = self.code.get(key)
         if not caller:
             return
 
@@ -496,19 +510,21 @@ class Window(Tree):
         self.draw(**star)
 
     def run(self) -> N:
+        """"""
         self.spot(self.area)
-        self.make()
+        self.build()
 
         for value in self.values():
             value.hide()
 
+        self.page.name = self.main
         self.turn(self.main)
 
     def __init__(self, element_item: D[S, A], **star: R) -> N:
         super().__init__(**star)
         self.main = ""
-        self.area = Area.make(0, 0)
-        self.code = {}
-        self.view = {}
+        self.area = Area.fast(0, 0)
+        self.code = Dictionary()
+        self.view = Dictionary()
         self.element_item = element_item
         self.page = View("", element_item, parent=None)

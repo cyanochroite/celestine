@@ -17,10 +17,12 @@ from celestine.typed import (
     LS,
     A,
     B,
+    D,
     N,
     R,
     S,
 )
+from celestine.window.collection import Dictionary
 
 from . import default
 from .magic import Magic
@@ -105,7 +107,7 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
         **star,
     )
 
-    decorators = load.decorators(APPLICATION, application)
+    decorators = load.decorators(CELESTINE, APPLICATION, application)
     call = decorators.get("call", {})
     draw = decorators.get("draw", {})
     main = decorators.get("main", {})
@@ -118,8 +120,9 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
         except StopIteration:
             pass
 
-        if draw.get("main"):
-            return "main"
+        for key in draw:
+            if "main" in key:
+                return key
 
         try:
             return next(iter(draw))
@@ -130,12 +133,19 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
 
     window.main = find_main()
 
+    # TODO wrong type?
+    _code: D[S, A] = {}
+    _view: D[S, A] = {}
+
     for name, function in call.items():
-        window.code[name] = function
+        _code[name] = function
 
     for name, function in draw.items():
         view = window.drop(name)
         function(view)
-        window.view[name] = view
+        _view[name] = view
 
+    # TODO init this better?
+    window.code = Dictionary(_code)
+    window.view = Dictionary(_view)
     window.run()
