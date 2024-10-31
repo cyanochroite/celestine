@@ -407,8 +407,8 @@ class Window(Tree):
 
     page: View
     main: S
-    code: Dictionary[S, A]  # function
-    view: Dictionary[S, View]
+    code: Dictionary[A]  # function
+    view: Dictionary[View]
 
     canvas: A
 
@@ -501,7 +501,8 @@ class Window(Tree):
 
     def work(self, code: S, **star: R) -> N:
         """"""
-        caller = self.code.get(code)
+        key = f"{self.page.name}::{code}"
+        caller = self.code.get(key)
         if not caller:
             return
 
@@ -516,6 +517,7 @@ class Window(Tree):
         for value in self.values():
             value.hide()
 
+        self.page.name = self.main
         self.turn(self.main)
 
     def __init__(self, element_item: D[S, A], **star: R) -> N:

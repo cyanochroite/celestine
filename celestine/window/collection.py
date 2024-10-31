@@ -2,6 +2,11 @@
 
 import collections.abc
 
+from celestine.literal import (
+    FULL_STOP,
+    KEY,
+    NONE,
+)
 from celestine.typed import (
     IT,
     A,
@@ -11,14 +16,13 @@ from celestine.typed import (
     K,
     N,
     Object,
+    S,
     T,
     V,
-    S,
     Z,
     ignore,
 )
 from celestine.window.cardinal import Dyad
-from celestine.literal import FULL_STOP, NONE
 
 
 class Point(Dyad):
@@ -166,29 +170,31 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
         """"""
         return cls(self.dictionary)
 
+    def key(self, key: S) -> S:
+        """Expands short keys to full keys."""
+        result = NONE
+        add = NONE
+        one, two = key.split(KEY)
+        names = one.split(FULL_STOP)
+        for name in names:
+            result = add + two
+            if result in self.dictionary:
+                break
+            add += name + FULL_STOP
+        return result
+
     @classmethod
     def make(cls, dictionary: V[D[S, X]] = None) -> K:
         """"""
         return cls(dictionary)
 
     def __delitem__(self, key: S) -> N:
-        del self.dictionary[key]
+        index = self.key(key)
+        del self.dictionary[index]
 
     def __getitem__(self, key: S) -> X:
-        a, b = key.split("::")
-
-        if not a:
-            result = self.dictionary[b]
-        else:
-            c = a.split(FULL_STOP)
-            add = NONE
-            for e in c:
-                add += e
-                cow = f"{add}{FULL_STOP}{b}"
-                if cow in self.dictionary:
-                    result = self.dictionary[cow]
-                    break
-                add += FULL_STOP
+        index = self.key(key)
+        result = self.dictionary[index]
         return result
 
     def __init__(self, dictionary: V[D[S, X]] = None) -> N:
@@ -201,7 +207,8 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
         return len(self.dictionary)
 
     def __setitem__(self, key: S, value: X) -> N:
-        self.dictionary[key] = value
+        index = self.key(key)
+        self.dictionary[index] = value
 
     def __or__(self, other: K) -> K:
         if not isinstance(other, Dictionary):

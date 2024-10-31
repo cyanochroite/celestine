@@ -158,6 +158,10 @@ INIT = join(
     LOW_LINE,
     LOW_LINE,
 )
+KEY = join(
+    COLON,
+    COLON,
+)
 PYTHON_EXTENSION = join(
     FULL_STOP,
     LATIN_SMALL_LETTER_P,

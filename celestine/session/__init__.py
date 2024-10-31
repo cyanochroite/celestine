@@ -17,10 +17,12 @@ from celestine.typed import (
     LS,
     A,
     B,
+    D,
     N,
     R,
     S,
 )
+from celestine.window.collection import Dictionary
 
 from . import default
 from .magic import Magic
@@ -131,12 +133,19 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
 
     window.main = find_main()
 
+    # TODO wrong type?
+    _code: D[S, A] = {}
+    _view: D[S, A] = {}
+
     for name, function in call.items():
-        window.code[name] = function
+        _code[name] = function
 
     for name, function in draw.items():
         view = window.drop(name)
         function(view)
-        window.view[name] = view
+        _view[name] = view
 
+    # TODO init this better?
+    window.code = Dictionary(_code)
+    window.view = Dictionary(_view)
     window.run()
