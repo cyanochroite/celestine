@@ -22,10 +22,10 @@ from celestine.typed import (
     Z,
     ignore,
 )
-from celestine.window.cardinal import Dyad
+from celestine.window.cardinal import Dyad, Cardinal
 
 
-class Point(Dyad[F]):
+class Point(Dyad[F], Cardinal):
     """"""
 
     @property
@@ -37,7 +37,7 @@ class Point(Dyad[F]):
         return result
 
 
-class Line(Dyad[F]):
+class Line(Dyad[F], Cardinal):
     """"""
 
     @property
@@ -63,7 +63,7 @@ class Line(Dyad[F]):
         super().__init__(minimum, maximum)
 
 
-class Plane(Dyad[Line]):
+class Plane(Dyad[Line], Cardinal):
     """"""
 
     def center(self, other: K) -> N:
