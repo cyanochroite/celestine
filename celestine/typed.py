@@ -25,8 +25,8 @@ S: str
 T: typing.Tuple
 U: typing.Any  # Unused  # Union?
 V: typing.Optional  # Void like type.
-W: T[A, ...]  # Self data for __init__ call.
-X: typing.Type  # Primary type variable.
+W: typing.Any  # Unused  # self.data()?
+X: typing.TypeVar("X")  # Primary type variable.
 Y: typing.Type  # Secondary type variable.
 Z: int  # Set of Integers Symbol ℤ.
 """
@@ -47,6 +47,7 @@ from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TY
 from typing import TypedDict as TD
+from typing import TypeVar as TV
 from typing import override
 
 
@@ -56,14 +57,15 @@ class R(TD):
     # TODO: Figure out how to map this to the R type.
 
 
-type W = T[A, ...]
-
 type B = bool
 type F = float
 type J = object
 type N = None
 type S = str
+X = TV("X")
+Y = TV("Y")
 type Z = int
+
 
 type BF = Literal[False]
 type BT = Literal[True]
@@ -125,10 +127,10 @@ class Object(abc.ABC):
     star: D[S, R]
 
     @property
-    def data(self) -> W:
+    def data(self) -> LA:
         """"""
         ignore(self)
-        result: W = ()
+        result: LA = []
         return result
 
     def copy(self) -> K:
