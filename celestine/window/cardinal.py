@@ -2,6 +2,7 @@
 
 # pylint: disable=undefined-variable
 
+import abc
 import math
 import typing
 
@@ -29,24 +30,26 @@ type Unary = C[[Math], Math]
 type Binary = C[[Math, Math], Math]
 
 
-class Cardinal[Math: int](Object):
+class Cardinal[Math: int](Object, abc.ABC):
     """"""
 
     name: S
 
-    @property
-    def element(self) -> L[Math]:
-        """"""
-        return self.element
+    @abc.abstractmethod
+    def _get(self) -> L[Math]:
+        ignore(self)
+        return []
 
-    @element.setter
-    def element(self, value) -> L[Math]:
-        """"""
-        self.element = value
+    @abc.abstractmethod
+    def _set(self, value: L[Math]) -> N:
+        ignore(self)
+        ignore(value)
 
-    @element.deleter
-    def element(self):
-        del self._x
+    @abc.abstractmethod
+    def _del(self) -> N:
+        ignore(self)
+
+    element = property(_get, _set, _del, "I'm the 'x' property.")
 
     @property
     @override
@@ -264,13 +267,32 @@ class Cardinal[Math: int](Object):
 
 class Monad[X](Cardinal):
     """"""
+
     __slots__ = ["one"]
+
+    one: X
 
     @property
     @override
     def data(self) -> L[X]:
         """"""
         return [self.one]
+
+    @override
+    def _del(self) -> N:
+        del self.one
+
+    @override
+    def _get(self) -> L[X]:
+        return [
+            self.one,
+        ]
+
+    @override
+    def _set(self, value: L[X]) -> N:
+        self.one = value[0]
+
+    element = property(_get, _set, _del)
 
     def __init__(self, one: X) -> N:
         super().__init__(one)
@@ -279,29 +301,36 @@ class Monad[X](Cardinal):
 
 class Dyad[X](Cardinal):
     """"""
+
     __slots__ = ["one", "two"]
 
-    @property
-    def element(self) -> L[Math]:
-        """"""
-        return [self.one, self.two]
-
-    @element.setter
-    def element(self, value: L[Math]) -> L[Math]:
-        """"""
-        self.one = value[0]
-        self.two = value[1]
-
-    @element.deleter
-    def element(self):
-        del self.one
-        del self.two
+    one: X
+    two: X
 
     @property
     @override
     def data(self) -> L[X]:
         """"""
         return [self.one, self.two]
+
+    @override
+    def _del(self) -> N:
+        del self.one
+        del self.two
+
+    @override
+    def _get(self) -> L[X]:
+        return [
+            self.one,
+            self.two,
+        ]
+
+    @override
+    def _set(self, value: L[X]) -> N:
+        self.one = value[0]
+        self.two = value[1]
+
+    element = property(_get, _set, _del)
 
     def __init__(self, one: X, two: X) -> N:
         super().__init__(one, two)
@@ -311,13 +340,40 @@ class Dyad[X](Cardinal):
 
 class Triad[X](Object):
     """"""
+
     __slots__ = ["one", "two", "tri"]
+
+    one: X
+    two: X
+    tri: X
 
     @property
     @override
     def data(self) -> L[X]:
         """"""
         return [self.one, self.two, self.tri]
+
+    @override
+    def _del(self) -> N:
+        del self.one
+        del self.two
+        del self.tri
+
+    @override
+    def _get(self) -> L[X]:
+        return [
+            self.one,
+            self.two,
+            self.tri,
+        ]
+
+    @override
+    def _set(self, value: L[X]) -> N:
+        self.one = value[0]
+        self.two = value[1]
+        self.tri = value[2]
+
+    element = property(_get, _set, _del)
 
     def __init__(self, one: X, two: X, tri: X) -> N:
         super().__init__(one, two, tri)
@@ -326,10 +382,15 @@ class Triad[X](Object):
         self.tri = tri
 
 
-class Tetrad[X](Object):
+class Tetrad[X](Cardinal[Math]):
     """"""
 
     __slots__ = ["one", "two", "tri", "tet"]
+
+    one: X
+    two: X
+    tri: X
+    tet: X
 
     @property
     @override
@@ -337,12 +398,38 @@ class Tetrad[X](Object):
         """"""
         return [self.one, self.two, self.tri, self.tet]
 
+    @override
+    def _del(self) -> N:
+        del self.one
+        del self.two
+        del self.tri
+        del self.tet
+
+    @override
+    def _get(self) -> L[X]:
+        return [
+            self.one,
+            self.two,
+            self.tri,
+            self.tet,
+        ]
+
+    @override
+    def _set(self, value: L[X]) -> N:
+        self.one = value[0]
+        self.two = value[1]
+        self.tri = value[2]
+        self.tet = value[3]
+
+    element = property(_get, _set, _del)
+
     def __init__(self, one: X, two: X, tri: X, tet: X) -> N:
         super().__init__(one, two, tri, tet)
         self.one = one
         self.two = two
         self.tri = tri
         self.tet = tet
+
 
 #    def __new__(cls, one: Math, two: Math, tri: Math, tet: Math) -> K:
 #        return super().__new__(cls, one, two, tri, tet)
