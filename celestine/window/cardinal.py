@@ -4,14 +4,15 @@
 
 import abc
 import math
+import typing
 
 from celestine.literal import FULL_STOP
 from celestine.typed import (
+    A,
     B,
     C,
     F,
     G,
-    A,
     K,
     L,
     N,
@@ -22,7 +23,95 @@ from celestine.typed import (
 )
 
 
-class Cardinal[X: int](abc.ABC):
+class Math2[X](typing.Protocol):
+    """"""
+
+    def __neg__(self) -> X:
+        raise NotImplementedError(self)
+
+    def __pos__(self) -> X:
+        raise NotImplementedError(self)
+
+    def __add__(self, other: X) -> X:
+        ignore(self)
+        return other
+
+    def __float__(self) -> F:
+        ignore(self)
+        return 0
+
+    def __mul__(self, other: X) -> X:
+        ignore(self)
+        return other
+
+    def __sub__(self, other: X) -> X:
+        ignore(self)
+        return other
+
+    def __truediv__(self, other: X) -> X:
+        ignore(self)
+        return other
+
+    def __radd__(self, other: X) -> X:
+        ignore(self)
+        return other
+
+    def __rmul__(self, other: X) -> X:
+        ignore(self)
+        return other
+
+    def __rsub__(self, other: X) -> X:
+        ignore(self)
+        return other
+
+    def __rtruediv__(self, other: X) -> X:
+        ignore(self)
+        return other
+
+
+class Math:
+    """"""
+
+    # 3.3.8. Emulating numeric types
+
+    @staticmethod
+    def add(one: Math2, two: Math2) -> Math2:
+        """"""
+        result: Math2 = one + two
+        return result
+
+    @staticmethod
+    def mul(one: Math2, two: Math2) -> Math2:
+        """"""
+        result = one * two
+        return result
+
+    @staticmethod
+    def sub(one: Math2, two: Math2) -> Math2:
+        """"""
+        result = one - two
+        return result
+
+    @staticmethod
+    def truediv(one: Math2, two: Math2) -> Math2:
+        """"""
+        result = one / two
+        return result
+
+    @staticmethod
+    def neg(one: Math2) -> Math2:
+        """"""
+        result = -one
+        return result
+
+    @staticmethod
+    def pos(one: Math2) -> Math2:
+        """"""
+        result = +one
+        return result
+
+
+class Cardinal[X: Math2](abc.ABC):
     """"""
 
     name: S
@@ -155,44 +244,6 @@ class Cardinal[X: int](abc.ABC):
     def __contains__(self, item: X) -> B:
         return any(item == element for element in self.element)
 
-    # 3.3.8. Emulating numeric types
-
-    @staticmethod
-    def add(one: X, two: X) -> X:
-        """"""
-        result = one + two
-        return result
-
-    @staticmethod
-    def mul(one: X, two: X) -> X:
-        """"""
-        result = one * two
-        return result
-
-    @staticmethod
-    def sub(one: X, two: X) -> X:
-        """"""
-        result = one - two
-        return result
-
-    @staticmethod
-    def truediv(one: X, two: X) -> X:
-        """"""
-        result = one / two
-        return result
-
-    @staticmethod
-    def neg(one: X) -> X:
-        """"""
-        result = -one
-        return result
-
-    @staticmethod
-    def pos(one: X) -> X:
-        """"""
-        result = +one
-        return result
-
     # binary arithmetic operations
 
     def _arithmetic(self, other: X, binary: C[[X, X], X]) -> K:
@@ -200,27 +251,27 @@ class Cardinal[X: int](abc.ABC):
         return self.make(*element)
 
     def __add__(self, other: X) -> K:
-        return self._arithmetic(other, self.add)
+        return self._arithmetic(other, Math.add)
 
     def __mul__(self, other: X) -> K:
-        return self._arithmetic(other, self.mul)
+        return self._arithmetic(other, Math.mul)
 
     def __sub__(self, other: X) -> K:
-        return self._arithmetic(other, self.sub)
+        return self._arithmetic(other, Math.sub)
 
     def __truediv__(self, other: X) -> K:
-        return self._arithmetic(other, self.truediv)
+        return self._arithmetic(other, Math.truediv)
 
     # binary arithmetic operations with reflected operands
 
     def __radd__(self, other: X) -> K:
-        return self._arithmetic(other, self.add)
+        return self._arithmetic(other, Math.add)
 
     def __rmul__(self, other: X) -> K:
-        return self._arithmetic(other, self.mul)
+        return self._arithmetic(other, Math.mul)
 
     def __rsub__(self, other: X) -> K:
-        return self._arithmetic(other, self.sub)
+        return self._arithmetic(other, Math.sub)
 
     def __rtruediv__(self, other: X) -> K:
         return self.__truediv__(other)
@@ -232,25 +283,25 @@ class Cardinal[X: int](abc.ABC):
         return self
 
     def __iadd__(self, other: X) -> K:
-        return self._augmented(other, self.add)
+        return self._augmented(other, Math.add)
 
     def __imul__(self, other: X) -> K:
-        return self._augmented(other, self.mul)
+        return self._augmented(other, Math.mul)
 
     def __isub__(self, other: X) -> K:
-        return self._augmented(other, self.sub)
+        return self._augmented(other, Math.sub)
 
     def __itruediv__(self, other: X) -> K:
-        return self._augmented(other, self.truediv)
+        return self._augmented(other, Math.truediv)
 
     # unary arithmetic operations
 
     def __neg__(self) -> K:
-        self.element = self.unary(self.neg)
+        self.element = self.unary(Math.neg)
         return self
 
     def __pos__(self) -> K:
-        self.element = self.unary(self.pos)
+        self.element = self.unary(Math.pos)
         return self
 
     def __int__(self) -> Z:
@@ -264,10 +315,73 @@ class Cardinal[X: int](abc.ABC):
         return result
 
 
-class Monad[X](Cardinal[A]):
+class Nomad[X](Cardinal[X]):
+    """"""
+
+    __slots__ = []
+
+    @override
+    def _del(self) -> N:
+        del self.one
+
+    @override
+    def _get(self) -> L[X]:
+        return [
+            self.one,
+        ]
+
+    @override
+    def _set(self, value: L[X]) -> N:
+        self.one = value[0]
+
+    element = property(_get, _set, _del)
+
+    def __new__(cls, *element: Math2) -> K:
+        ignore(element)
+        new = super().__new__(cls)
+        name = repr(cls)
+        index = name.rindex(FULL_STOP) + 1
+        new.name = name[index:-2]
+        return new
+
+    def __init__(self, *element: Math2) -> N:
+        self.element = [*element]
+
+
+class Monad[X](Nomad[X]):
     """"""
 
     __slots__ = ["one"]
+
+    def copy(self) -> K:
+        """"""
+        return self.echo(self)
+
+    @classmethod
+    def echo(cls, self: K) -> K:
+        """"""
+        return cls(*self.element)
+
+    @classmethod
+    def make(cls, *element: X) -> K:
+        """"""
+        return cls(*element)
+
+    @abc.abstractmethod
+    def _get(self) -> L[X]:
+        ignore(self)
+        return []
+
+    @abc.abstractmethod
+    def _set(self, value: L[X]) -> N:
+        ignore(self)
+        ignore(value)
+
+    @abc.abstractmethod
+    def _del(self) -> N:
+        ignore(self)
+
+    element = property(_get, _set, _del, "I'm the 'x' property.")
 
     one: X
 
@@ -295,7 +409,7 @@ class Monad[X](Cardinal[A]):
         return super().__new__(cls, one)
 
 
-class Dyad[X](Cardinal[A]):
+class Dyad[X](Nomad[X]):
     """"""
 
     __slots__ = ["one", "two"]
@@ -331,7 +445,7 @@ class Dyad[X](Cardinal[A]):
         return super().__new__(cls, one, two)
 
 
-class Triad[X](Cardinal[A]):
+class Triad[X](Nomad[X]):
     """"""
 
     __slots__ = ["one", "two", "tri"]
@@ -362,6 +476,20 @@ class Triad[X](Cardinal[A]):
 
     element = property(_get, _set, _del)
 
+    def copy(self) -> K:
+        """"""
+        return self.echo(self)
+
+    @classmethod
+    def echo(cls, self: K) -> K:
+        """"""
+        return cls(*self.element)
+
+    @classmethod
+    def make(cls, *element: Math2) -> K:
+        """"""
+        return cls(*element)
+
     def __init__(self, one: X, two: X, tri: X) -> N:
         super().__init__(one, two, tri)
         self.one = one
@@ -372,7 +500,7 @@ class Triad[X](Cardinal[A]):
         return super().__new__(cls, one, two, tri)
 
 
-class Tetrad[X](Cardinal[A]):
+class Tetrad[X](Nomad[X]):
     """"""
 
     __slots__ = ["one", "two", "tri", "tet"]
