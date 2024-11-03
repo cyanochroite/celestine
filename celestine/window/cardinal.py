@@ -8,7 +8,6 @@ import typing
 
 from celestine.literal import FULL_STOP
 from celestine.typed import (
-    A,
     B,
     C,
     F,
@@ -17,14 +16,24 @@ from celestine.typed import (
     L,
     N,
     S,
+    LS,
     Z,
     ignore,
     override,
 )
 
 
-class Math2[X](typing.Protocol):
+class Numb[X](typing.Protocol):
     """"""
+
+    def __add__(self, other: X) -> X:
+        raise NotImplementedError(self, other)
+
+    def __float__(self) -> F:
+        raise NotImplementedError(self)
+
+    def __mul__(self, other: X) -> X:
+        raise NotImplementedError(self, other)
 
     def __neg__(self) -> X:
         raise NotImplementedError(self)
@@ -32,41 +41,23 @@ class Math2[X](typing.Protocol):
     def __pos__(self) -> X:
         raise NotImplementedError(self)
 
-    def __add__(self, other: X) -> X:
-        ignore(self)
-        return other
-
-    def __float__(self) -> F:
-        ignore(self)
-        return 0
-
-    def __mul__(self, other: X) -> X:
-        ignore(self)
-        return other
-
-    def __sub__(self, other: X) -> X:
-        ignore(self)
-        return other
-
-    def __truediv__(self, other: X) -> X:
-        ignore(self)
-        return other
-
     def __radd__(self, other: X) -> X:
-        ignore(self)
-        return other
+        raise NotImplementedError(self, other)
 
     def __rmul__(self, other: X) -> X:
-        ignore(self)
-        return other
+        raise NotImplementedError(self, other)
 
     def __rsub__(self, other: X) -> X:
-        ignore(self)
-        return other
+        raise NotImplementedError(self, other)
 
     def __rtruediv__(self, other: X) -> X:
-        ignore(self)
-        return other
+        raise NotImplementedError(self, other)
+
+    def __sub__(self, other: X) -> X:
+        raise NotImplementedError(self, other)
+
+    def __truediv__(self, other: X) -> X:
+        raise NotImplementedError(self, other)
 
 
 class Math:
@@ -75,43 +66,43 @@ class Math:
     # 3.3.8. Emulating numeric types
 
     @staticmethod
-    def add(one: Math2, two: Math2) -> Math2:
+    def add(one: Numb, two: Numb) -> Numb:
         """"""
-        result: Math2 = one + two
+        result: Numb = one + two
         return result
 
     @staticmethod
-    def mul(one: Math2, two: Math2) -> Math2:
+    def mul(one: Numb, two: Numb) -> Numb:
         """"""
         result = one * two
         return result
 
     @staticmethod
-    def sub(one: Math2, two: Math2) -> Math2:
+    def sub(one: Numb, two: Numb) -> Numb:
         """"""
         result = one - two
         return result
 
     @staticmethod
-    def truediv(one: Math2, two: Math2) -> Math2:
+    def truediv(one: Numb, two: Numb) -> Numb:
         """"""
         result = one / two
         return result
 
     @staticmethod
-    def neg(one: Math2) -> Math2:
+    def neg(one: Numb) -> Numb:
         """"""
         result = -one
         return result
 
     @staticmethod
-    def pos(one: Math2) -> Math2:
+    def pos(one: Numb) -> Numb:
         """"""
         result = +one
         return result
 
 
-class Cardinal[X: Math2](abc.ABC):
+class Cardinal[X: Numb](abc.ABC):
     """"""
 
     name: S
@@ -164,14 +155,6 @@ class Cardinal[X: Math2](abc.ABC):
     # 3.3.1. Basic Customization
 
     # class constructor
-
-    def __new__(cls, *element: X) -> K:
-        ignore(element)
-        new = super().__new__(cls)
-        name = repr(cls)
-        index = name.rindex(FULL_STOP) + 1
-        new.name = name[index:-2]
-        return new
 
     def __init__(self, *element: X) -> N:
         self.element = [*element]
@@ -315,43 +298,12 @@ class Cardinal[X: Math2](abc.ABC):
         return result
 
 
-class Nomad[X](Cardinal[X]):
+class Nomad[X]:
     """"""
 
-    __slots__ = []
+    __slots__: LS = []
 
-    @override
-    def _del(self) -> N:
-        del self.one
-
-    @override
-    def _get(self) -> L[X]:
-        return [
-            self.one,
-        ]
-
-    @override
-    def _set(self, value: L[X]) -> N:
-        self.one = value[0]
-
-    element = property(_get, _set, _del)
-
-    def __new__(cls, *element: Math2) -> K:
-        ignore(element)
-        new = super().__new__(cls)
-        name = repr(cls)
-        index = name.rindex(FULL_STOP) + 1
-        new.name = name[index:-2]
-        return new
-
-    def __init__(self, *element: Math2) -> N:
-        self.element = [*element]
-
-
-class Monad[X](Nomad[X]):
-    """"""
-
-    __slots__ = ["one"]
+    name: S
 
     def copy(self) -> K:
         """"""
@@ -381,7 +333,24 @@ class Monad[X](Nomad[X]):
     def _del(self) -> N:
         ignore(self)
 
-    element = property(_get, _set, _del, "I'm the 'x' property.")
+    element = property(_get, _set, _del)
+
+    def __init__(self, *element: X) -> N:
+        self.element = [*element]
+
+    def __new__(cls, *element: X) -> K:
+        ignore(element)
+        new = super().__new__(cls)
+        name = repr(cls)
+        index = name.rindex(FULL_STOP) + 1
+        new.name = name[index:-2]
+        return new
+
+
+class Monad[X](Nomad[X]):
+    """"""
+
+    __slots__: LS = ["one"]
 
     one: X
 
@@ -412,7 +381,7 @@ class Monad[X](Nomad[X]):
 class Dyad[X](Nomad[X]):
     """"""
 
-    __slots__ = ["one", "two"]
+    __slots__: LS = ["one", "two"]
 
     one: X
     two: X
@@ -448,7 +417,7 @@ class Dyad[X](Nomad[X]):
 class Triad[X](Nomad[X]):
     """"""
 
-    __slots__ = ["one", "two", "tri"]
+    __slots__: LS = ["one", "two", "tri"]
 
     one: X
     two: X
@@ -476,20 +445,6 @@ class Triad[X](Nomad[X]):
 
     element = property(_get, _set, _del)
 
-    def copy(self) -> K:
-        """"""
-        return self.echo(self)
-
-    @classmethod
-    def echo(cls, self: K) -> K:
-        """"""
-        return cls(*self.element)
-
-    @classmethod
-    def make(cls, *element: Math2) -> K:
-        """"""
-        return cls(*element)
-
     def __init__(self, one: X, two: X, tri: X) -> N:
         super().__init__(one, two, tri)
         self.one = one
@@ -503,7 +458,7 @@ class Triad[X](Nomad[X]):
 class Tetrad[X](Nomad[X]):
     """"""
 
-    __slots__ = ["one", "two", "tri", "tet"]
+    __slots__: LS = ["one", "two", "tri", "tet"]
 
     one: X
     two: X
