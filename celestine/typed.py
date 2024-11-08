@@ -32,7 +32,6 @@ Z: int  # Set of Integers Symbol ℤ.
 """
 
 import abc
-import io
 from collections.abc import Callable as C
 from collections.abc import Generator as G
 from collections.abc import Iterator as IT
@@ -127,13 +126,9 @@ def ignore(_: A) -> N:
     """An empty function used to hide unused variable warnings."""
 
 
-def string(*characters: S) -> S:
+def string(*iterable: S) -> S:
     """A simple utility for joining together a series of strings."""
-    buffer = io.StringIO()
-    for character in characters:
-        buffer.write(character)
-    value = buffer.getvalue()
-    return value
+    return "".join(iterable)
 
 
 class Object(abc.ABC):

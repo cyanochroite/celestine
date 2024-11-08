@@ -1,5 +1,7 @@
 """Central place for text strings."""
 
+from celestine.typed import string
+
 NONE = ""
 NULL = chr(0)
 START_OF_HEADING = chr(1)
@@ -130,13 +132,9 @@ RIGHT_CURLY_BRACKET = chr(125)
 TILDE = chr(126)
 DELETE = chr(127)
 
+########################################################################
 
-def join(*iterable: str) -> str:
-    """"""
-    return NONE.join(iterable)
-
-
-FUNCTION = join(
+FUNCTION = string(
     LESS_THAN_SIGN,
     LATIN_SMALL_LETTER_F,
     LATIN_SMALL_LETTER_U,
@@ -148,7 +146,8 @@ FUNCTION = join(
     LATIN_SMALL_LETTER_N,
     SPACE,
 )
-INIT = join(
+
+INIT = string(
     LOW_LINE,
     LOW_LINE,
     LATIN_SMALL_LETTER_I,
@@ -158,17 +157,21 @@ INIT = join(
     LOW_LINE,
     LOW_LINE,
 )
-KEY = join(
+
+KEY = string(
     COLON,
     COLON,
 )
-PYTHON_EXTENSION = join(
+
+PYTHON_EXTENSION = string(
     FULL_STOP,
     LATIN_SMALL_LETTER_P,
     LATIN_SMALL_LETTER_Y,
 )
+
 ########################################################################
-APPLICATION = join(
+
+APPLICATION = string(
     LATIN_SMALL_LETTER_A,
     LATIN_SMALL_LETTER_P,
     LATIN_SMALL_LETTER_P,
@@ -181,7 +184,8 @@ APPLICATION = join(
     LATIN_SMALL_LETTER_O,
     LATIN_SMALL_LETTER_N,
 )
-BLENDER = join(
+
+BLENDER = string(
     LATIN_SMALL_LETTER_B,
     LATIN_SMALL_LETTER_L,
     LATIN_SMALL_LETTER_E,
@@ -190,7 +194,8 @@ BLENDER = join(
     LATIN_SMALL_LETTER_E,
     LATIN_SMALL_LETTER_R,
 )
-CELESTINE = join(
+
+CELESTINE = string(
     LATIN_SMALL_LETTER_C,
     LATIN_SMALL_LETTER_E,
     LATIN_SMALL_LETTER_L,
@@ -201,7 +206,8 @@ CELESTINE = join(
     LATIN_SMALL_LETTER_N,
     LATIN_SMALL_LETTER_E,
 )
-CONFIGURATION = join(
+
+CONFIGURATION = string(
     LATIN_SMALL_LETTER_C,
     LATIN_SMALL_LETTER_O,
     LATIN_SMALL_LETTER_N,
@@ -216,7 +222,8 @@ CONFIGURATION = join(
     LATIN_SMALL_LETTER_O,
     LATIN_SMALL_LETTER_N,
 )
-DIRECTORY = join(
+
+DIRECTORY = string(
     LATIN_SMALL_LETTER_D,
     LATIN_SMALL_LETTER_I,
     LATIN_SMALL_LETTER_R,
@@ -227,7 +234,8 @@ DIRECTORY = join(
     LATIN_SMALL_LETTER_R,
     LATIN_SMALL_LETTER_Y,
 )
-INTERFACE = join(
+
+INTERFACE = string(
     LATIN_SMALL_LETTER_I,
     LATIN_SMALL_LETTER_N,
     LATIN_SMALL_LETTER_T,
@@ -238,7 +246,8 @@ INTERFACE = join(
     LATIN_SMALL_LETTER_C,
     LATIN_SMALL_LETTER_E,
 )
-LANGUAGE = join(
+
+LANGUAGE = string(
     LATIN_SMALL_LETTER_L,
     LATIN_SMALL_LETTER_A,
     LATIN_SMALL_LETTER_N,
@@ -248,7 +257,8 @@ LANGUAGE = join(
     LATIN_SMALL_LETTER_G,
     LATIN_SMALL_LETTER_E,
 )
-PACKAGE = join(
+
+PACKAGE = string(
     LATIN_SMALL_LETTER_P,
     LATIN_SMALL_LETTER_A,
     LATIN_SMALL_LETTER_C,
@@ -259,4 +269,5 @@ PACKAGE = join(
 )
 
 ########################################################################
+
 VERSION_NUMBER = "2024.6.9"

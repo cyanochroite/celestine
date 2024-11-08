@@ -5,9 +5,7 @@
 import math
 import typing
 
-from celestine.literal import FULL_STOP
 from celestine.typed import (
-    TS,
     B,
     C,
     F,
@@ -15,10 +13,6 @@ from celestine.typed import (
     K,
     L,
     N,
-    S,
-    Struct,
-    T,
-    ignore,
 )
 
 
@@ -103,155 +97,7 @@ class Math:
         return result
 
 
-class Nomad[X](Struct):
-    """"""
-
-    __slots__: TS = ("name",)
-
-    name: S
-
-    def __del__(self) -> N:
-        super().__del__()
-        del self.name
-
-    def __new__(cls, *data: X) -> K:
-        ignore(data)
-        new = super().__new__(cls)
-        name = repr(cls)
-        index = name.rindex(FULL_STOP) + 1
-        new.name = name[index:-2]
-        return new
-
-
-class Monad[X](Nomad[X]):
-    """"""
-
-    __slots__: TS = ("one",)
-
-    one: X
-
-    def _del(self) -> N:
-        del self.one
-
-    def _get(self) -> T[X]:
-        return (self.one,)
-
-    def _set(self, value: T[X]) -> N:
-        self.one = value[0]
-
-    def __init__(self, one: X) -> N:
-        super().__init__(one)
-        self.one = one
-
-    def __new__(cls, one: X) -> K:
-        return super().__new__(cls, one)
-
-    data = property(_get, _set, _del)
-
-
-class Dyad[X](Nomad[X]):
-    """"""
-
-    __slots__: TS = ("one", "two")
-
-    one: X
-    two: X
-
-    def _del(self) -> N:
-        del self.one
-        del self.two
-
-    def _get(self) -> T[X, X]:
-        return (self.one, self.two)
-
-    def _set(self, value: T[X, X]) -> N:
-        self.one = value[0]
-        self.two = value[1]
-
-    def __init__(self, one: X, two: X) -> N:
-        super().__init__(one, two)
-        self.one = one
-        self.two = two
-
-    def __new__(cls, one: X, two: X) -> K:
-        return super().__new__(cls, one, two)
-
-    data = property(_get, _set, _del)
-
-
-class Triad[X](Nomad[X]):
-    """"""
-
-    __slots__: TS = ("one", "two", "tri")
-
-    one: X
-    two: X
-    tri: X
-
-    def _del(self) -> N:
-        del self.one
-        del self.two
-        del self.tri
-
-    def _get(self) -> T[X, X, X]:
-        return (self.one, self.two, self.tri)
-
-    def _set(self, value: T[X, X, X]) -> N:
-        self.one = value[0]
-        self.two = value[1]
-        self.tri = value[2]
-
-    def __init__(self, one: X, two: X, tri: X) -> N:
-        super().__init__(one, two, tri)
-        self.one = one
-        self.two = two
-        self.tri = tri
-
-    def __new__(cls, one: X, two: X, tri: X) -> K:
-        return super().__new__(cls, one, two, tri)
-
-    data = property(_get, _set, _del)
-
-
-class Tetrad[X](Nomad[X]):
-    """"""
-
-    __slots__: TS = ("one", "two", "tri", "tet")
-
-    one: X
-    two: X
-    tri: X
-    tet: X
-
-    def _del(self) -> N:
-        del self.one
-        del self.two
-        del self.tri
-        del self.tet
-
-    def _get(self) -> T[X, X, X, X]:
-        return (self.one, self.two, self.tri, self.tet)
-
-    def _set(self, value: T[X, X, X, X]) -> N:
-        self.one = value[0]
-        self.two = value[1]
-        self.tri = value[2]
-        self.tet = value[3]
-
-    def __init__(self, one: X, two: X, tri: X, tet: X) -> N:
-        super().__init__(one, two, tri, tet)
-        self.one = one
-        self.two = two
-        self.tri = tri
-        self.tet = tet
-
-    def __new__(cls, one: X, two: X, tri: X, tet: X) -> K:
-        return super().__new__(cls, one, two, tri, tet)
-
-    data = property(_get, _set, _del)
-
-
-class Cardinal(Nomad[Float]):
+class Cardinal:
     """"""
 
     def unary(self, unary: Unary) -> L[Float]:
