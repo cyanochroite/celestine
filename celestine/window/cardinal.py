@@ -2,24 +2,23 @@
 
 # pylint: disable=undefined-variable
 
-import abc
 import math
 import typing
 
 from celestine.literal import FULL_STOP
 from celestine.typed import (
+    TS,
     B,
     C,
     F,
     G,
     K,
     L,
-    TS,
     N,
     S,
-    ignore,
     Struct,
-    override,
+    T,
+    ignore,
 )
 
 
@@ -107,33 +106,16 @@ class Math:
 class Nomad[X](Struct):
     """"""
 
+    __slots__: TS = ("name",)
+
     name: S
 
-    @abc.abstractmethod
-    def _get(self) -> L[X]:
-        ignore(self)
-        return []
-
-    @abc.abstractmethod
-    def _set(self, value: L[X]) -> N:
-        ignore(self)
-        ignore(value)
-
-    @abc.abstractmethod
-    def _del(self) -> N:
-        ignore(self)
-
-    element = property(_get, _set, _del)
-
     def __del__(self) -> N:
-        del self.element
+        super().__del__()
+        del self.name
 
-    def __init__(self, *element: X) -> N:
-        super().__init__(*element)
-        self.element = [*element]
-
-    def __new__(cls, *element: X) -> K:
-        ignore(element)
+    def __new__(cls, *data: X) -> K:
+        ignore(data)
         new = super().__new__(cls)
         name = repr(cls)
         index = name.rindex(FULL_STOP) + 1
@@ -144,23 +126,18 @@ class Nomad[X](Struct):
 class Monad[X](Nomad[X]):
     """"""
 
-    __slots__: TS = ("one", )
+    __slots__: TS = ("one",)
 
     one: X
 
-    @override
     def _del(self) -> N:
         del self.one
 
-    @override
-    def _get(self) -> L[X]:
-        return [self.one]
+    def _get(self) -> T[X]:
+        return (self.one,)
 
-    @override
-    def _set(self, value: L[X]) -> N:
+    def _set(self, value: T[X]) -> N:
         self.one = value[0]
-
-    element = property(_get, _set, _del)
 
     def __init__(self, one: X) -> N:
         super().__init__(one)
@@ -168,6 +145,8 @@ class Monad[X](Nomad[X]):
 
     def __new__(cls, one: X) -> K:
         return super().__new__(cls, one)
+
+    data = property(_get, _set, _del)
 
 
 class Dyad[X](Nomad[X]):
@@ -178,21 +157,16 @@ class Dyad[X](Nomad[X]):
     one: X
     two: X
 
-    @override
     def _del(self) -> N:
         del self.one
         del self.two
 
-    @override
-    def _get(self) -> L[X]:
-        return [self.one, self.two]
+    def _get(self) -> T[X, X]:
+        return (self.one, self.two)
 
-    @override
-    def _set(self, value: L[X]) -> N:
+    def _set(self, value: T[X, X]) -> N:
         self.one = value[0]
         self.two = value[1]
-
-    element = property(_get, _set, _del)
 
     def __init__(self, one: X, two: X) -> N:
         super().__init__(one, two)
@@ -201,6 +175,8 @@ class Dyad[X](Nomad[X]):
 
     def __new__(cls, one: X, two: X) -> K:
         return super().__new__(cls, one, two)
+
+    data = property(_get, _set, _del)
 
 
 class Triad[X](Nomad[X]):
@@ -212,23 +188,18 @@ class Triad[X](Nomad[X]):
     two: X
     tri: X
 
-    @override
     def _del(self) -> N:
         del self.one
         del self.two
         del self.tri
 
-    @override
-    def _get(self) -> L[X]:
-        return [self.one, self.two, self.tri]
+    def _get(self) -> T[X, X, X]:
+        return (self.one, self.two, self.tri)
 
-    @override
-    def _set(self, value: L[X]) -> N:
+    def _set(self, value: T[X, X, X]) -> N:
         self.one = value[0]
         self.two = value[1]
         self.tri = value[2]
-
-    element = property(_get, _set, _del)
 
     def __init__(self, one: X, two: X, tri: X) -> N:
         super().__init__(one, two, tri)
@@ -238,6 +209,8 @@ class Triad[X](Nomad[X]):
 
     def __new__(cls, one: X, two: X, tri: X) -> K:
         return super().__new__(cls, one, two, tri)
+
+    data = property(_get, _set, _del)
 
 
 class Tetrad[X](Nomad[X]):
@@ -250,25 +223,20 @@ class Tetrad[X](Nomad[X]):
     tri: X
     tet: X
 
-    @override
     def _del(self) -> N:
         del self.one
         del self.two
         del self.tri
         del self.tet
 
-    @override
-    def _get(self) -> L[X]:
-        return [self.one, self.two, self.tri, self.tet]
+    def _get(self) -> T[X, X, X, X]:
+        return (self.one, self.two, self.tri, self.tet)
 
-    @override
-    def _set(self, value: L[X]) -> N:
+    def _set(self, value: T[X, X, X, X]) -> N:
         self.one = value[0]
         self.two = value[1]
         self.tri = value[2]
         self.tet = value[3]
-
-    element = property(_get, _set, _del)
 
     def __init__(self, one: X, two: X, tri: X, tet: X) -> N:
         super().__init__(one, two, tri, tet)
@@ -280,23 +248,25 @@ class Tetrad[X](Nomad[X]):
     def __new__(cls, one: X, two: X, tri: X, tet: X) -> K:
         return super().__new__(cls, one, two, tri, tet)
 
+    data = property(_get, _set, _del)
+
 
 class Cardinal(Nomad[Float]):
     """"""
 
     def unary(self, unary: Unary) -> L[Float]:
         """Unary arithmetic operations."""
-        result = list(map(unary, self.element))
+        result = list(map(unary, self.data))
         return result
 
     def binary(self, binary: Binary, other: Float) -> L[Float]:
         """Binary arithmetic operations."""
-        element: L[Float]
+        data: L[Float]
         if isinstance(other, float | int):
-            element = [other] * len(self.element)
+            data = [other] * len(self.data)
         else:
-            element = getattr(other, "element")
-        result = list(map(binary, self.element, element))
+            data = getattr(other, "data")
+        result = list(map(binary, self.data, data))
         return result
 
     # 3.3.1. Basic Customization
@@ -304,13 +274,13 @@ class Cardinal(Nomad[Float]):
     # string representation of an object
 
     def __repr__(self):
-        element = ", ".join(map(repr, self.element))
-        result = f"{self.name}({element})"
+        data = ", ".join(map(repr, self.data))
+        result = f"{self.name}({data})"
         return result
 
     def __str__(self):
-        element = ", ".join(map(str, self.element))
-        result = f"({element})"
+        data = ", ".join(map(str, self.data))
+        result = f"({data})"
         return result
 
     #  rich comparison methods
@@ -358,19 +328,19 @@ class Cardinal(Nomad[Float]):
     # 3.3.7. Emulating container types
 
     def __iter__(self) -> G[Float, N, N]:
-        yield from self.element
+        yield from self.data
 
     def __reversed__(self) -> G[Float, N, N]:
-        yield from reversed(self.element)
+        yield from reversed(self.data)
 
     def __contains__(self, item: Float) -> B:
-        return any(item == element for element in self.element)
+        return any(item == data for data in self.data)
 
     # binary arithmetic operations
 
     def _arithmetic(self, other: Float, binary: Binary) -> K:
-        element = self.binary(binary, other)
-        return self.make(*element)
+        data = self.binary(binary, other)
+        return self.make(*data)
 
     def __add__(self, other: Float) -> K:
         return self._arithmetic(other, Math.add)
@@ -401,7 +371,7 @@ class Cardinal(Nomad[Float]):
     # augmented arithmetic assignments
 
     def _augmented(self, other: Float, binary: Binary) -> K:
-        self.element = self.binary(binary, other)
+        self.data = self.binary(binary, other)
         return self
 
     def __iadd__(self, other: Float) -> K:
@@ -419,14 +389,14 @@ class Cardinal(Nomad[Float]):
     # unary arithmetic operations
 
     def __neg__(self) -> K:
-        self.element = self.unary(Math.neg)
+        self.data = self.unary(Math.neg)
         return self
 
     def __pos__(self) -> K:
-        self.element = self.unary(Math.pos)
+        self.data = self.unary(Math.pos)
         return self
 
     def __float__(self) -> F:
-        element = map(float, self.element)
-        result = sum(element)
+        data = map(float, self.data)
+        result = sum(data)
         return result
