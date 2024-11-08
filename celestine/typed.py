@@ -103,6 +103,14 @@ type LP = L[P]
 type LS = L[S]
 type LZ = L[Z]
 
+type TA = T[A, ...]
+type TB = T[B, ...]
+type TF = T[F, ...]
+type TM = T[M, ...]
+type TP = T[P, ...]
+type TS = T[S, ...]
+type TZ = T[Z, ...]
+
 type VA = V[A]
 type VB = V[B]
 type VF = V[F]
@@ -133,16 +141,16 @@ class Object(abc.ABC):
 
     star: D[S, R]
 
+    def copy(self) -> K:
+        """"""
+        return self.echo(self)
+
     @property
     def data(self) -> LA:
         """"""
         ignore(self)
         result: LA = []
         return result
-
-    def copy(self) -> K:
-        """"""
-        return self.echo(self)
 
     @classmethod
     def echo(cls, self: K) -> K:
@@ -177,6 +185,43 @@ class Object(abc.ABC):
         ignore(self)
         ignore(data)
         self.star = star
+
+
+class Struct:
+    """"""
+
+    __slots__: TS = ()
+
+    def copy(self) -> K:
+        """"""
+        return self.__class__(*self.data)
+
+    @classmethod
+    def echo(cls, self: K) -> K:
+        """"""
+        return cls(*self.data)
+
+    @classmethod
+    def make(cls, *data: A) -> K:
+        """"""
+        return cls(*data)
+
+    def _del(self) -> N:
+        ignore(self)
+
+    def _get(self) -> TA:
+        ignore(self)
+        return ()
+
+    def _set(self, value: TA) -> N:
+        ignore(self)
+        ignore(value)
+
+    def __init__(self, *data: A) -> N:
+        ignore(self)
+        self.data = data
+
+    data = property(_get, _set, _del)
 
 
 ignore(IT)

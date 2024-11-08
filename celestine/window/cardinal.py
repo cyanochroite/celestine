@@ -8,16 +8,17 @@ import typing
 
 from celestine.literal import FULL_STOP
 from celestine.typed import (
-    LS,
     B,
     C,
     F,
     G,
     K,
     L,
+    TS,
     N,
     S,
     ignore,
+    Struct,
     override,
 )
 
@@ -103,26 +104,10 @@ class Math:
         return result
 
 
-class Nomad[X](abc.ABC):
+class Nomad[X](Struct):
     """"""
 
-    __slots__: LS = []
-
     name: S
-
-    def copy(self) -> K:
-        """"""
-        return self.echo(self)
-
-    @classmethod
-    def echo(cls, self: K) -> K:
-        """"""
-        return cls(*self.element)
-
-    @classmethod
-    def make(cls, *element: X) -> K:
-        """"""
-        return cls(*element)
 
     @abc.abstractmethod
     def _get(self) -> L[X]:
@@ -144,6 +129,7 @@ class Nomad[X](abc.ABC):
         del self.element
 
     def __init__(self, *element: X) -> N:
+        super().__init__(*element)
         self.element = [*element]
 
     def __new__(cls, *element: X) -> K:
@@ -158,7 +144,7 @@ class Nomad[X](abc.ABC):
 class Monad[X](Nomad[X]):
     """"""
 
-    __slots__: LS = ["one"]
+    __slots__: TS = ("one", )
 
     one: X
 
@@ -187,7 +173,7 @@ class Monad[X](Nomad[X]):
 class Dyad[X](Nomad[X]):
     """"""
 
-    __slots__: LS = ["one", "two"]
+    __slots__: TS = ("one", "two")
 
     one: X
     two: X
@@ -220,7 +206,7 @@ class Dyad[X](Nomad[X]):
 class Triad[X](Nomad[X]):
     """"""
 
-    __slots__: LS = ["one", "two", "tri"]
+    __slots__: TS = ("one", "two", "tri")
 
     one: X
     two: X
@@ -257,7 +243,7 @@ class Triad[X](Nomad[X]):
 class Tetrad[X](Nomad[X]):
     """"""
 
-    __slots__: LS = ["one", "two", "tri", "tet"]
+    __slots__: TS = ("one", "two", "tri", "tet")
 
     one: X
     two: X
