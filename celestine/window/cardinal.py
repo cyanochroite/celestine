@@ -103,8 +103,10 @@ class Math:
         return result
 
 
-class Cardinal(abc.ABC):
+class Nomad[X](abc.ABC):
     """"""
+
+    __slots__: LS = []
 
     name: S
 
@@ -118,17 +120,17 @@ class Cardinal(abc.ABC):
         return cls(*self.element)
 
     @classmethod
-    def make(cls, *element: Float) -> K:
+    def make(cls, *element: X) -> K:
         """"""
         return cls(*element)
 
     @abc.abstractmethod
-    def _get(self) -> L[Float]:
+    def _get(self) -> L[X]:
         ignore(self)
         return []
 
     @abc.abstractmethod
-    def _set(self, value: L[Float]) -> N:
+    def _set(self, value: L[X]) -> N:
         ignore(self)
         ignore(value)
 
@@ -136,7 +138,165 @@ class Cardinal(abc.ABC):
     def _del(self) -> N:
         ignore(self)
 
-    element = property(_get, _set, _del, "I'm the 'x' property.")
+    element = property(_get, _set, _del)
+
+    def __del__(self) -> N:
+        del self.element
+
+    def __init__(self, *element: X) -> N:
+        self.element = [*element]
+
+    def __new__(cls, *element: X) -> K:
+        ignore(element)
+        new = super().__new__(cls)
+        name = repr(cls)
+        index = name.rindex(FULL_STOP) + 1
+        new.name = name[index:-2]
+        return new
+
+
+class Monad[X](Nomad[X]):
+    """"""
+
+    __slots__: LS = ["one"]
+
+    one: X
+
+    @override
+    def _del(self) -> N:
+        del self.one
+
+    @override
+    def _get(self) -> L[X]:
+        return [self.one]
+
+    @override
+    def _set(self, value: L[X]) -> N:
+        self.one = value[0]
+
+    element = property(_get, _set, _del)
+
+    def __init__(self, one: X) -> N:
+        super().__init__(one)
+        self.one = one
+
+    def __new__(cls, one: X) -> K:
+        return super().__new__(cls, one)
+
+
+class Dyad[X](Nomad[X]):
+    """"""
+
+    __slots__: LS = ["one", "two"]
+
+    one: X
+    two: X
+
+    @override
+    def _del(self) -> N:
+        del self.one
+        del self.two
+
+    @override
+    def _get(self) -> L[X]:
+        return [self.one, self.two]
+
+    @override
+    def _set(self, value: L[X]) -> N:
+        self.one = value[0]
+        self.two = value[1]
+
+    element = property(_get, _set, _del)
+
+    def __init__(self, one: X, two: X) -> N:
+        super().__init__(one, two)
+        self.one = one
+        self.two = two
+
+    def __new__(cls, one: X, two: X) -> K:
+        return super().__new__(cls, one, two)
+
+
+class Triad[X](Nomad[X]):
+    """"""
+
+    __slots__: LS = ["one", "two", "tri"]
+
+    one: X
+    two: X
+    tri: X
+
+    @override
+    def _del(self) -> N:
+        del self.one
+        del self.two
+        del self.tri
+
+    @override
+    def _get(self) -> L[X]:
+        return [self.one, self.two, self.tri]
+
+    @override
+    def _set(self, value: L[X]) -> N:
+        self.one = value[0]
+        self.two = value[1]
+        self.tri = value[2]
+
+    element = property(_get, _set, _del)
+
+    def __init__(self, one: X, two: X, tri: X) -> N:
+        super().__init__(one, two, tri)
+        self.one = one
+        self.two = two
+        self.tri = tri
+
+    def __new__(cls, one: X, two: X, tri: X) -> K:
+        return super().__new__(cls, one, two, tri)
+
+
+class Tetrad[X](Nomad[X]):
+    """"""
+
+    __slots__: LS = ["one", "two", "tri", "tet"]
+
+    one: X
+    two: X
+    tri: X
+    tet: X
+
+    @override
+    def _del(self) -> N:
+        del self.one
+        del self.two
+        del self.tri
+        del self.tet
+
+    @override
+    def _get(self) -> L[X]:
+        return [self.one, self.two, self.tri, self.tet]
+
+    @override
+    def _set(self, value: L[X]) -> N:
+        self.one = value[0]
+        self.two = value[1]
+        self.tri = value[2]
+        self.tet = value[3]
+
+    element = property(_get, _set, _del)
+
+    def __init__(self, one: X, two: X, tri: X, tet: X) -> N:
+        super().__init__(one, two, tri, tet)
+        self.one = one
+        self.two = two
+        self.tri = tri
+        self.tet = tet
+
+    def __new__(cls, one: X, two: X, tri: X, tet: X) -> K:
+        return super().__new__(cls, one, two, tri, tet)
+
+
+class Cardinal(Nomad[Float]):
+    """"""
 
     def unary(self, unary: Unary) -> L[Float]:
         """Unary arithmetic operations."""
@@ -154,14 +314,6 @@ class Cardinal(abc.ABC):
         return result
 
     # 3.3.1. Basic Customization
-
-    # class constructor
-
-    def __init__(self, *element: Float) -> N:
-        self.element = [*element]
-
-    def __del__(self) -> N:
-        del self.element
 
     # string representation of an object
 
@@ -292,206 +444,3 @@ class Cardinal(abc.ABC):
         element = map(float, self.element)
         result = sum(element)
         return result
-
-
-class Nomad[X]:
-    """"""
-
-    __slots__: LS = []
-
-    name: S
-
-    def copy(self) -> K:
-        """"""
-        return self.echo(self)
-
-    @classmethod
-    def echo(cls, self: K) -> K:
-        """"""
-        return cls(*self.element)
-
-    @classmethod
-    def make(cls, *element: X) -> K:
-        """"""
-        return cls(*element)
-
-    @abc.abstractmethod
-    def _get(self) -> L[X]:
-        ignore(self)
-        return []
-
-    @abc.abstractmethod
-    def _set(self, value: L[X]) -> N:
-        ignore(self)
-        ignore(value)
-
-    @abc.abstractmethod
-    def _del(self) -> N:
-        ignore(self)
-
-    element = property(_get, _set, _del)
-
-    def __init__(self, *element: X) -> N:
-        self.element = [*element]
-
-    def __new__(cls, *element: X) -> K:
-        ignore(element)
-        new = super().__new__(cls)
-        name = repr(cls)
-        index = name.rindex(FULL_STOP) + 1
-        new.name = name[index:-2]
-        return new
-
-
-class Monad[X](Nomad[X]):
-    """"""
-
-    __slots__: LS = ["one"]
-
-    one: X
-
-    @override
-    def _del(self) -> N:
-        del self.one
-
-    @override
-    def _get(self) -> L[X]:
-        return [
-            self.one,
-        ]
-
-    @override
-    def _set(self, value: L[X]) -> N:
-        self.one = value[0]
-
-    element = property(_get, _set, _del)
-
-    def __init__(self, one: X) -> N:
-        super().__init__(one)
-        self.one = one
-
-    def __new__(cls, one: X) -> K:
-        return super().__new__(cls, one)
-
-
-class Dyad[X](Nomad[X]):
-    """"""
-
-    __slots__: LS = ["one", "two"]
-
-    one: X
-    two: X
-
-    @override
-    def _del(self) -> N:
-        del self.one
-        del self.two
-
-    @override
-    def _get(self) -> L[X]:
-        return [
-            self.one,
-            self.two,
-        ]
-
-    @override
-    def _set(self, value: L[X]) -> N:
-        self.one = value[0]
-        self.two = value[1]
-
-    element = property(_get, _set, _del)
-
-    def __init__(self, one: X, two: X) -> N:
-        super().__init__(one, two)
-        self.one = one
-        self.two = two
-
-    def __new__(cls, one: X, two: X) -> K:
-        return super().__new__(cls, one, two)
-
-
-class Triad[X](Nomad[X]):
-    """"""
-
-    __slots__: LS = ["one", "two", "tri"]
-
-    one: X
-    two: X
-    tri: X
-
-    @override
-    def _del(self) -> N:
-        del self.one
-        del self.two
-        del self.tri
-
-    @override
-    def _get(self) -> L[X]:
-        return [
-            self.one,
-            self.two,
-            self.tri,
-        ]
-
-    @override
-    def _set(self, value: L[X]) -> N:
-        self.one = value[0]
-        self.two = value[1]
-        self.tri = value[2]
-
-    element = property(_get, _set, _del)
-
-    def __init__(self, one: X, two: X, tri: X) -> N:
-        super().__init__(one, two, tri)
-        self.one = one
-        self.two = two
-        self.tri = tri
-
-    def __new__(cls, one: X, two: X, tri: X) -> K:
-        return super().__new__(cls, one, two, tri)
-
-
-class Tetrad[X](Nomad[X]):
-    """"""
-
-    __slots__: LS = ["one", "two", "tri", "tet"]
-
-    one: X
-    two: X
-    tri: X
-    tet: X
-
-    @override
-    def _del(self) -> N:
-        del self.one
-        del self.two
-        del self.tri
-        del self.tet
-
-    @override
-    def _get(self) -> L[X]:
-        return [
-            self.one,
-            self.two,
-            self.tri,
-            self.tet,
-        ]
-
-    @override
-    def _set(self, value: L[X]) -> N:
-        self.one = value[0]
-        self.two = value[1]
-        self.tri = value[2]
-        self.tet = value[3]
-
-    element = property(_get, _set, _del)
-
-    def __init__(self, one: X, two: X, tri: X, tet: X) -> N:
-        super().__init__(one, two, tri, tet)
-        self.one = one
-        self.two = two
-        self.tri = tri
-        self.tet = tet
-
-    def __new__(cls, one: X, two: X, tri: X, tet: X) -> K:
-        return super().__new__(cls, one, two, tri, tet)
