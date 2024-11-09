@@ -22,7 +22,10 @@ from celestine.typed import (
     Z,
     ignore,
 )
-from celestine.window.cardinal import Cardinal
+from celestine.window.cardinal import (
+    Cardinal,
+    Float,
+)
 from celestine.window.nomad import Dyad
 
 
@@ -53,8 +56,8 @@ class Line(Dyad[F], Cardinal):
         result = int(self.one + self.two) // 2
         return result
 
-    def __contains__(self, item: F) -> B:
-        result = self.one <= item <= self.two
+    def __contains__(self, item: Float) -> B:
+        result = self.one <= float(item) <= self.two
         return result
 
     def __init__(self, one: F, two: F) -> N:
@@ -114,7 +117,7 @@ class Plane(Dyad[Line], Cardinal):
         two = self.two
         return Point(one.length, two.length)
 
-    def __contains__(self, item: K) -> B:
+    def __contains__(self, item: Float) -> B:
         one = item.one in self.one
         two = item.two in self.two
         return one and two
@@ -203,18 +206,12 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
         self.dictionary[index] = value
 
     def __or__(self, other: K) -> K:
-        if not isinstance(other, Dictionary):
-            return NotImplemented
-
         result = self.make(self.dictionary)
         result.dictionary.update(other.dictionary)
         return result
 
     def __ror__(self, other: K) -> K:
-        if not isinstance(other, Dictionary):
-            return NotImplemented
-
-        result = self.make(self.dictionary)
+        result = self.make(other.dictionary)
         result.dictionary.update(self.dictionary)
         return result
 

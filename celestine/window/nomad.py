@@ -16,6 +16,7 @@ from celestine.typed import (
     S,
     Struct,
     T,
+    ignore,
     override,
 )
 
@@ -70,8 +71,8 @@ class Monad[X](Nomad):
         self.one = value[0]
 
     def __init__(self, one: X) -> N:
+        ignore(self)
         super().__init__(one)
-        self.one = one
 
     def __new__(cls, one: X) -> K:
         return super().__new__(cls, one)
@@ -102,9 +103,8 @@ class Dyad[X](Nomad):
         self.two = value[1]
 
     def __init__(self, one: X, two: X) -> N:
+        ignore(self)
         super().__init__(one, two)
-        self.one = one
-        self.two = two
 
     def __new__(cls, one: X, two: X) -> K:
         return super().__new__(cls, one, two)
@@ -138,10 +138,8 @@ class Triad[X](Nomad):
         self.tri = value[2]
 
     def __init__(self, one: X, two: X, tri: X) -> N:
+        ignore(self)
         super().__init__(one, two, tri)
-        self.one = one
-        self.two = two
-        self.tri = tri
 
     def __new__(cls, one: X, two: X, tri: X) -> K:
         return super().__new__(cls, one, two, tri)
@@ -178,11 +176,8 @@ class Tetrad[X](Nomad):
         self.tet = value[3]
 
     def __init__(self, one: X, two: X, tri: X, tet: X) -> N:
+        ignore(self)
         super().__init__(one, two, tri, tet)
-        self.one = one
-        self.two = two
-        self.tri = tri
-        self.tet = tet
 
     def __new__(cls, one: X, two: X, tri: X, tet: X) -> K:
         return super().__new__(cls, one, two, tri, tet)

@@ -9,13 +9,13 @@ from celestine.typed import (
     GA,
     GS,
     LS,
-    TY,
     A,
     B,
     D,
     G,
     K,
     N,
+    Object,
     P,
     R,
     S,
@@ -34,35 +34,6 @@ from celestine.window.container import (
     Image,
     Zone,
 )
-
-
-class Object:
-    """"""
-
-    star: R
-
-    def pull(self, name: S, cast: TY[A] = str, default: A = None) -> A:
-        """Extracts keyword arguments from star object and returns."""
-        try:
-            pop = self.star.pop(name)
-            value = cast(pop)
-        except KeyError:
-            value = default
-        return value
-
-    def warp(self, name: S, cast: TY[A] = str, default: A = None) -> N:
-        """Extracts keyword arguments from star object and saves."""
-        try:
-            pop = self.star.pop(name)
-            value = cast(pop)
-        except KeyError:
-            value = default
-        setattr(self, name, value)
-
-    def __init__(self, **star: R) -> N:
-        super().__init__()
-        ignore(self)
-        self.star = star
 
 
 class Abstract(Object):
@@ -246,13 +217,15 @@ class View(Abstract, Tree):
         return True
 
     @override
-    def draw(self, **star: R) -> N:
+    def draw(self, **star: R) -> B:
         """"""
         if self.hidden:
-            return
+            return False
 
         for value in self.values():
             value.draw(**star)
+
+        return True
 
     @override
     def build(self, canvas: A, **star: R) -> N:

@@ -1,7 +1,5 @@
 """"""
 
-# pylint: disable=undefined-variable
-
 import math
 import typing
 
@@ -14,6 +12,7 @@ from celestine.typed import (
     L,
     N,
 )
+from celestine.window.nomad import Nomad
 
 
 class Float(typing.Protocol):
@@ -22,14 +21,32 @@ class Float(typing.Protocol):
     def __add__(self, other: K) -> K:
         raise NotImplementedError(self, other)
 
+    def __eq__(self, other: object) -> B:
+        raise NotImplementedError(self, other)
+
     def __float__(self) -> F:
         raise NotImplementedError(self)
+
+    def __ge__(self, other: K) -> B:
+        raise NotImplementedError(self, other)
+
+    def __gt__(self, other: K) -> B:
+        raise NotImplementedError(self, other)
+
+    def __le__(self, other: K) -> B:
+        raise NotImplementedError(self, other)
+
+    def __lt__(self, other: K) -> B:
+        raise NotImplementedError(self, other)
 
     def __mul__(self, other: K) -> K:
         raise NotImplementedError(self, other)
 
     def __neg__(self) -> K:
         raise NotImplementedError(self)
+
+    def __ne__(self, other: object) -> B:
+        raise NotImplementedError(self, other)
 
     def __pos__(self) -> K:
         raise NotImplementedError(self)
@@ -97,7 +114,7 @@ class Math:
         return result
 
 
-class Cardinal:
+class Cardinal(Nomad):
     """"""
 
     def unary(self, unary: Unary) -> L[Float]:
@@ -116,18 +133,6 @@ class Cardinal:
         return result
 
     # 3.3.1. Basic Customization
-
-    # string representation of an object
-
-    def __repr__(self):
-        data = ", ".join(map(repr, self.data))
-        result = f"{self.name}({data})"
-        return result
-
-    def __str__(self):
-        data = ", ".join(map(str, self.data))
-        result = f"({data})"
-        return result
 
     #  rich comparison methods
 

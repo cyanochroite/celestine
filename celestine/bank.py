@@ -1,6 +1,5 @@
 """Package wide global variables."""
 
-from celestine.interface import Window
 from celestine.typed import (
     LS,
     A,
@@ -19,7 +18,7 @@ configuration: P
 directory: P
 interface: M
 language: M
-window: Window
+window: A  # Window
 
 _queue: L[T[C[..., N], A, A]] = []
 
