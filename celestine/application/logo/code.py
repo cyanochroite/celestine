@@ -4,10 +4,10 @@ import math
 
 from celestine.data import call
 from celestine.typed import (
+    GS,
     LF,
     B,
     F,
-    N,
     R,
     S,
 )
@@ -81,7 +81,7 @@ def calculate(index: F) -> LF:
     return number
 
 
-def more(index: F, color: S) -> N:
+def more(index: F, color: S) -> GS:
     """"""
     axis = calculate(index)
     yield f'<path fill="{color}" d="'
@@ -159,7 +159,7 @@ def more(index: F, color: S) -> N:
     yield "/>"
 
 
-def printer():
+def printer() -> GS:
     """"""
     yield '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'
     yield '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"'

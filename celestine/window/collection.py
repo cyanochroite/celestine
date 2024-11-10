@@ -22,14 +22,12 @@ from celestine.typed import (
     Z,
     ignore,
 )
-from celestine.window.cardinal import Dyad
+from celestine.window.cardinal import Cardinal
+from celestine.window.nomad import Dyad
 
 
-class Point(Dyad):
+class Point(Dyad[F], Cardinal):
     """"""
-
-    one: F
-    two: F
 
     @property
     def value(self) -> T[Z, Z]:
@@ -40,11 +38,8 @@ class Point(Dyad):
         return result
 
 
-class Line(Dyad):
+class Line(Dyad[F], Cardinal):
     """"""
-
-    one: F
-    two: F
 
     @property
     def length(self) -> Z:
@@ -59,7 +54,7 @@ class Line(Dyad):
         return result
 
     def __contains__(self, item: F) -> B:
-        result = self.one <= item <= self.two
+        result = self.one <= float(item) <= self.two
         return result
 
     def __init__(self, one: F, two: F) -> N:
@@ -69,11 +64,8 @@ class Line(Dyad):
         super().__init__(minimum, maximum)
 
 
-class Plane(Dyad):
+class Plane(Dyad[Line], Cardinal):
     """"""
-
-    one: Line
-    two: Line
 
     def center(self, other: K) -> N:
         """"""
@@ -122,7 +114,7 @@ class Plane(Dyad):
         two = self.two
         return Point(one.length, two.length)
 
-    def __contains__(self, item: K) -> B:
+    def __contains__(self, item: Point) -> B:
         one = item.one in self.one
         two = item.two in self.two
         return one and two
@@ -211,18 +203,12 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
         self.dictionary[index] = value
 
     def __or__(self, other: K) -> K:
-        if not isinstance(other, Dictionary):
-            return NotImplemented
-
         result = self.make(self.dictionary)
         result.dictionary.update(other.dictionary)
         return result
 
     def __ror__(self, other: K) -> K:
-        if not isinstance(other, Dictionary):
-            return NotImplemented
-
-        result = self.make(self.dictionary)
+        result = self.make(other.dictionary)
         result.dictionary.update(self.dictionary)
         return result
 

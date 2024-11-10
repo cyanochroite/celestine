@@ -25,14 +25,13 @@ S: str
 T: typing.Tuple
 U: typing.Any  # Unused  # Union?
 V: typing.Optional  # Void like type.
-W: T[A, ...]  # Self data for __init__ call.
-X: typing.Type  # Primary type variable.
+W: typing.Any  # Unused  # self.data()?
+X: typing.TypeVar("X")  # Primary type variable.
 Y: typing.Type  # Secondary type variable.
 Z: int  # Set of Integers Symbol ℤ.
 """
 
 import abc
-import io
 from collections.abc import Callable as C
 from collections.abc import Generator as G
 from collections.abc import Iterator as IT
@@ -44,9 +43,17 @@ from typing import List as L
 from typing import Literal
 from typing import Optional as V
 from typing import Self as K
+from typing import SupportsAbs as SA
+from typing import SupportsBytes as SB
+from typing import SupportsComplex as SC
+from typing import SupportsFloat as SF
+from typing import SupportsIndex as SI
+from typing import SupportsInt as SZ
+from typing import SupportsRound as SR
 from typing import Tuple as T
 from typing import Type as TY
 from typing import TypedDict as TD
+from typing import TypeVar as TV
 from typing import override
 
 
@@ -56,14 +63,15 @@ class R(TD):
     # TODO: Figure out how to map this to the R type.
 
 
-type W = T[A, ...]
-
 type B = bool
 type F = float
 type J = object
 type N = None
 type S = str
+X = TV("X")
+Y = TV("Y")
 type Z = int
+
 
 type BF = Literal[False]
 type BT = Literal[True]
@@ -94,6 +102,14 @@ type LP = L[P]
 type LS = L[S]
 type LZ = L[Z]
 
+type TA = T[A, ...]
+type TB = T[B, ...]
+type TF = T[F, ...]
+type TM = T[M, ...]
+type TP = T[P, ...]
+type TS = T[S, ...]
+type TZ = T[Z, ...]
+
 type VA = V[A]
 type VB = V[B]
 type VF = V[F]
@@ -110,13 +126,9 @@ def ignore(_: A) -> N:
     """An empty function used to hide unused variable warnings."""
 
 
-def string(*characters: S) -> S:
+def string(*iterable: S) -> S:
     """A simple utility for joining together a series of strings."""
-    buffer = io.StringIO()
-    for character in characters:
-        buffer.write(character)
-    value = buffer.getvalue()
-    return value
+    return "".join(iterable)
 
 
 class Object(abc.ABC):
@@ -124,16 +136,16 @@ class Object(abc.ABC):
 
     star: D[S, R]
 
-    @property
-    def data(self) -> W:
-        """"""
-        ignore(self)
-        result: W = ()
-        return result
-
     def copy(self) -> K:
         """"""
         return self.echo(self)
+
+    @property
+    def data(self) -> LA:
+        """"""
+        ignore(self)
+        result: LA = []
+        return result
 
     @classmethod
     def echo(cls, self: K) -> K:
@@ -170,25 +182,52 @@ class Object(abc.ABC):
         self.star = star
 
 
-class _Override:
+class Struct:
     """"""
 
-    def _override(self) -> K:
+    __slots__: TS = ()
+
+    def copy(self) -> K:
         """"""
-        return self
+        return self.__class__(*self.data)
 
-
-class _Typing(_Override):
-    """Hides all the "unused-import" erros."""
-
-    @staticmethod
-    def _iterator() -> IT[A]:
-        return iter([])
-
-    @override
-    def _override(self) -> K:
+    @classmethod
+    def echo(cls, self: K) -> K:
         """"""
-        return self
+        return cls(*self.data)
+
+    @classmethod
+    def make(cls, *data: A) -> K:
+        """"""
+        return cls(*data)
+
+    def _del(self) -> N:
+        ignore(self)
+
+    def _get(self) -> TA:
+        ignore(self)
+        return ()
+
+    def _set(self, value: TA) -> N:
+        ignore(self)
+        ignore(value)
+
+    def __del__(self) -> N:
+        del self.data
+
+    def __init__(self, *data: A) -> N:
+        ignore(self)
+        self.data = data
+
+    data = property(_get, _set, _del)
 
 
-_Typing()
+ignore(IT)
+ignore(SA)
+ignore(SB)
+ignore(SC)
+ignore(SF)
+ignore(SI)
+ignore(SZ)
+ignore(SR)
+ignore(override)
