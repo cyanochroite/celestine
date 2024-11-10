@@ -184,9 +184,6 @@ class Cardinal(Nomad):
     def __reversed__(self) -> G[Float, N, N]:
         yield from reversed(self.data)
 
-    def __contains__(self, item: Float) -> B:
-        return any(item == data for data in self.data)
-
     # binary arithmetic operations
 
     def _arithmetic(self, other: Float, binary: Binary) -> K:

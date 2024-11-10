@@ -22,10 +22,7 @@ from celestine.typed import (
     Z,
     ignore,
 )
-from celestine.window.cardinal import (
-    Cardinal,
-    Float,
-)
+from celestine.window.cardinal import Cardinal
 from celestine.window.nomad import Dyad
 
 
@@ -56,7 +53,7 @@ class Line(Dyad[F], Cardinal):
         result = int(self.one + self.two) // 2
         return result
 
-    def __contains__(self, item: Float) -> B:
+    def __contains__(self, item: F) -> B:
         result = self.one <= float(item) <= self.two
         return result
 
@@ -117,7 +114,7 @@ class Plane(Dyad[Line], Cardinal):
         two = self.two
         return Point(one.length, two.length)
 
-    def __contains__(self, item: Float) -> B:
+    def __contains__(self, item: Point) -> B:
         one = item.one in self.one
         two = item.two in self.two
         return one and two
