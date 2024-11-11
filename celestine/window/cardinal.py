@@ -11,6 +11,7 @@ from celestine.typed import (
     K,
     L,
     N,
+    Z,
 )
 from celestine.window.nomad import Nomad
 
@@ -32,6 +33,9 @@ class Float(typing.Protocol):
 
     def __gt__(self, other: K) -> B:
         raise NotImplementedError(self, other)
+
+    def __hash__(self) -> Z:
+        raise NotImplementedError(self)
 
     def __le__(self, other: K) -> B:
         raise NotImplementedError(self, other)
@@ -117,10 +121,7 @@ class Math:
 class Cardinal(Nomad):
     """"""
 
-    def unary(self, unary: Unary) -> L[Float]:
-        """Unary arithmetic operations."""
-        result = list(map(unary, self.data))
-        return result
+    __slots__ = ()
 
     def binary(self, binary: Binary, other: Float) -> L[Float]:
         """Binary arithmetic operations."""
@@ -130,6 +131,17 @@ class Cardinal(Nomad):
         else:
             data = getattr(other, "data")
         result = list(map(binary, self.data, data))
+        return result
+
+    def unary(self, unary: Unary) -> L[Float]:
+        """Unary arithmetic operations."""
+        result = list(map(unary, self.data))
+        return result
+
+    def __hash__(self) -> Z:
+        number = map(float, self.data)
+        count = sum(number)
+        result = hash(count)
         return result
 
     # 3.3.1. Basic Customization
