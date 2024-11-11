@@ -35,10 +35,11 @@ from celestine.window.container import (
 )
 
 
-class Tree(collections.abc.MutableMapping[S, A]):
+class Tree(Object, collections.abc.MutableMapping[S, A]):
     """"""
 
-    tree: D[S, K]
+    children: D[S, K]
+    name: S  # The key to use to find this in the window dictionary.
 
     def find(self, name: S) -> K:
         """"""
@@ -55,30 +56,31 @@ class Tree(collections.abc.MutableMapping[S, A]):
 
     def set(self, item: K) -> K:
         """"""
-        self.tree[item.name] = item
+        self.children[item.name] = item
         return item
 
     def __delitem__(self, key: S) -> N:
-        del self.tree[key]
+        del self.children[key]
 
     def __getitem__(self, key: S) -> K:
-        return self.tree[key]
+        return self.children[key]
 
-    def __init__(self) -> N:
-        super().__init__()
-        self.tree = {}
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(**star)
+        self.name = name
+        self.children = {}
 
     def __iter__(self) -> IT[S]:
-        return iter(self.tree)
+        return iter(self.children)
 
     def __len__(self) -> Z:
-        return len(self.tree)
+        return len(self.children)
 
     def __setitem__(self, key: S, value: A) -> N:
-        self.tree[key] = value
+        self.children[key] = value
 
 
-class Abstract(Object, Tree):
+class Abstract(Tree):
     """"""
 
     parent: K
@@ -86,7 +88,6 @@ class Abstract(Object, Tree):
     area: Area
     canvas: A
     hidden: B
-    name: S  # The key to use to find this in the window dictionary.
 
     action: S  # The action to perform when the user clicks the button.
     fit: Image  # The way the image scales to fit the view space.
@@ -135,19 +136,6 @@ class Abstract(Object, Tree):
         """"""
         self.canvas = canvas
 
-    def find(self, name: S) -> K:
-        """"""
-        for key, value in self.tree.items():
-            if key == name:
-                return value
-            try:
-                return value.find(name)
-            except AttributeError:
-                pass
-            except KeyError:
-                pass
-        raise KeyError(name)
-
     def show(self) -> N:
         """"""
         self.hidden = False
@@ -157,12 +145,11 @@ class Abstract(Object, Tree):
         self.area = area
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
-        super().__init__(**star)
+        super().__init__(name, **star)
         self.parent = parent
         self.area = Area.fast(0, 0)
         self.canvas = None
         self.hidden = False
-        self.name = name
 
         self.star = star
 
@@ -202,7 +189,7 @@ class View(Abstract):
     item: D[S, Abstract]
     width: Z
     height: Z
-    element_item: D[S, A]
+    element_item: D[S, Abstract]
 
     def click(self, point: Point, **star: R) -> B:
         if not super().click(point, **star):
@@ -411,11 +398,7 @@ class Window(Tree):
             ".png",
         ]
 
-    def drop(
-        self,
-        name: S,
-        **star: R,
-    ) -> Abstract:
+    def drop(self, name: S, **star: R) -> Tree:
         """"""
         return self.set(
             self.element_item["view"](
@@ -491,7 +474,7 @@ class Window(Tree):
         self.turn(self.main)
 
     def __init__(self, element_item: D[S, A], **star: R) -> N:
-        super().__init__(**star)
+        super().__init__("window", **star)
         self.main = ""
         self.area = Area.fast(0, 0)
         self.code = Dictionary()

@@ -57,7 +57,7 @@ from typing import TypeVar as TV
 from typing import override
 
 
-class R(TD):
+class Star(TD):
     """The global Star object."""
 
     # TODO: Figure out how to map this to the R type.
@@ -67,6 +67,7 @@ type B = bool
 type F = float
 type J = object
 type N = None
+type R = A
 type S = str
 X = TV("X")
 Y = TV("Y")
