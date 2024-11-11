@@ -1,18 +1,17 @@
 """"""
 
+import collections.abc
 import math
 import pathlib
 
 from celestine import bank
 from celestine.typed import (
     BF,
-    GA,
-    GS,
+    IT,
     LS,
     A,
     B,
     D,
-    G,
     K,
     N,
     Object,
@@ -36,7 +35,50 @@ from celestine.window.container import (
 )
 
 
-class Abstract(Object):
+class Tree(collections.abc.MutableMapping[S, A]):
+    """"""
+
+    tree: D[S, K]
+
+    def find(self, name: S) -> K:
+        """"""
+        for key, value in self.items():
+            if key == name:
+                return value
+            try:
+                return value.find(name)
+            except AttributeError:
+                pass
+            except KeyError:
+                pass
+        raise KeyError(name)
+
+    def set(self, item: K) -> K:
+        """"""
+        self.tree[item.name] = item
+        return item
+
+    def __delitem__(self, key: S) -> N:
+        del self.tree[key]
+
+    def __getitem__(self, key: S) -> K:
+        return self.tree[key]
+
+    def __init__(self) -> N:
+        super().__init__()
+        self.tree = {}
+
+    def __iter__(self) -> IT[S]:
+        return iter(self.tree)
+
+    def __len__(self) -> Z:
+        return len(self.tree)
+
+    def __setitem__(self, key: S, value: A) -> N:
+        self.tree[key] = value
+
+
+class Abstract(Object, Tree):
     """"""
 
     parent: K
@@ -93,6 +135,19 @@ class Abstract(Object):
         """"""
         self.canvas = canvas
 
+    def find(self, name: S) -> K:
+        """"""
+        for key, value in self.tree.items():
+            if key == name:
+                return value
+            try:
+                return value.find(name)
+            except AttributeError:
+                pass
+            except KeyError:
+                pass
+        raise KeyError(name)
+
     def show(self) -> N:
         """"""
         self.hidden = False
@@ -141,71 +196,13 @@ class Element(Abstract):
         self.item = None
 
 
-class Tree[X](Object):
-    """"""
-
-    # TODO Python 3.12: Make class Tree[TYPE] and replace ANY.
-    _children: D[S, Abstract]
-
-    def find(self, name: S) -> Abstract:
-        """"""
-        for key, value in self.items():
-            if key == name:
-                return value
-            try:
-                return value.find(name)
-            except AttributeError:
-                pass
-            except KeyError:
-                pass
-        raise KeyError(name)
-
-    def get(self, name: S) -> Abstract:
-        """"""
-        result = self._children[name]
-        return result
-
-    def items(self) -> GA:
-        """"""
-        iterator = iter(self._children.items())
-        yield from iterator
-
-    def keys(self) -> GS:
-        """"""
-        iterator = iter(self._children.keys())
-        yield from iterator
-
-    def set(self, item: Abstract) -> Abstract:
-        """"""
-        self._children[item.name] = item
-        return item
-
-    def values(self) -> G[Abstract, N, N]:
-        """"""
-        iterator = iter(self._children.values())
-        yield from iterator
-
-    def __bool__(self) -> B:
-        boolean = bool(self._children)
-        return boolean
-
-    def __init__(self, **star: R) -> N:
-        self._children = {}
-        super().__init__(**star)
-
-    def __len__(self) -> Z:
-        length = len(self._children)
-        return length
-
-
-class View(Abstract, Tree):
+class View(Abstract):
     """"""
 
     item: D[S, Abstract]
     width: Z
     height: Z
     element_item: D[S, A]
-    tree: Tree[K]
 
     def click(self, point: Point, **star: R) -> B:
         if not super().click(point, **star):
