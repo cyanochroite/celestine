@@ -1,6 +1,7 @@
 """Python Imaging Library (Fork)."""
 
 import enum
+import typing
 
 from celestine import load
 from celestine.package import Abstract
@@ -11,21 +12,19 @@ from celestine.typed import (
     P,
     R,
     S,
-    ignore,
 )
 
 
-class Image:
+class Image(typing.Protocol):
     """"""
 
     mode: S
     size: TZ2
 
-    @staticmethod
-    def open(fp: P) -> K:
+    @classmethod
+    def open(cls, fp: P) -> K:
         """"""
-        ignore(fp)
-        return Image()
+        raise NotImplementedError(cls, fp)
 
     class Resampling(enum.Enum):
         """"""
@@ -34,18 +33,11 @@ class Image:
 
     def resize(self, size: TZ2, resample: Resampling) -> K:
         """"""
-        ignore(self)
-        ignore(size)
-        ignore(resample)
-        return Image()
+        raise NotImplementedError(self, size, resample)
 
     def tobytes(self) -> bytes:
         """"""
-        ignore(self)
-        return b""
-
-    def __init__(self):
-        self.size = (0, 0)
+        raise NotImplementedError(self)
 
 
 class Package(Abstract):

@@ -54,6 +54,7 @@ class Element(Element_, Abstract):
 
     image: pygame.Surface
     text_item: A
+    font: pygame.font.Font
 
     @override
     def draw(self, **star: R) -> B:
@@ -77,7 +78,10 @@ class Element(Element_, Abstract):
     def build(self, canvas: A, **star: R) -> N:
         """"""
         super().build(canvas, **star)
+        # self.warp("font")
         self.font = star.pop("font")
+
+        self.text_item = None
 
         size = self.area.local.size.value
         self.image = pygame.Surface(size)
@@ -144,10 +148,8 @@ class Element(Element_, Abstract):
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
-        self.path = star.pop("path", "")
         self.color = (255, 0, 255)
         self.font = None
-
         self.text_item = None
 
 
@@ -157,6 +159,10 @@ class View(View_, Abstract):
 
 class Window(Window_):
     """"""
+
+    area: Area
+    canvas: pygame.display
+    font: pygame.font.Font
 
     @override
     def draw(self, **star: R) -> N:
