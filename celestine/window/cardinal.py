@@ -16,7 +16,7 @@ from celestine.typed import (
 from celestine.window.nomad import Nomad
 
 
-class Float(typing.Protocol):
+class Number(typing.Protocol):
     """"""
 
     def __add__(self, other: K) -> K:
@@ -74,6 +74,7 @@ class Float(typing.Protocol):
         raise NotImplementedError(self, other)
 
 
+type Float = Number | F | Z
 type Unary = C[[Float], Float]
 type Binary = C[[Float, Float], Float]
 

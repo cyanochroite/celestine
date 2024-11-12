@@ -316,16 +316,6 @@ class View(Abstract):
         self.height = row
         self.mode = mode
 
-        for range_y in range(row):
-            for range_x in range(col):
-                name = f"{self.name}_{range_x}-{range_y}"
-                self.set(
-                    Abstract(
-                        name,
-                        self,
-                    )
-                )
-
     def element(self, name: S, **star: R) -> N:
         """"""
         self.set(
