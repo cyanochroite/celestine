@@ -182,6 +182,12 @@ class Object(abc.ABC):
         ignore(data)
         self.star = star
 
+    def __iter__(self) -> GA:
+        yield from self.data
+
+    def __reversed__(self) -> GA:
+        yield from reversed(self.data)
+
 
 class Struct:
     """"""
@@ -219,6 +225,12 @@ class Struct:
     def __init__(self, *data: A) -> N:
         ignore(self)
         self.data = data
+
+    def __iter__(self) -> GA:
+        yield from self.data
+
+    def __reversed__(self) -> GA:
+        yield from reversed(self.data)
 
     data = property(_get, _set, _del)
 
