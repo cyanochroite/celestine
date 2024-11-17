@@ -28,95 +28,27 @@ from celestine.typed import (
     override,
 )
 
+type Nomad = typing.Union["Cardinal", F, Z]
+type Unary = C[[Nomad], Nomad]
+type Binary = C[[Nomad, Nomad], Nomad]
 
-class Nomad(Struct):
+
+class Cardinal(Struct):
     """"""
 
     __slots__: TS = ("name",)
 
     name: S
 
-    def __del__(self) -> N:
-        super().__del__()
-        del self.name
-
-    def __new__(cls, *_: A) -> K:
-        new = super().__new__(cls)
-        name = repr(cls)
-        index = name.rindex(FULL_STOP) + 1
-        new.name = name[index:-2]
-        return new
-
-    def __repr__(self):
-        data = self.__str__()
-        result = string(self.name, data)
-        return result
-
-    def __str__(self):
-        comma = string(COMMA, SPACE)
-        data = comma.join(map(repr, self.data))
-        result = string(LEFT_PARENTHESIS, data, RIGHT_PARENTHESIS)
-        return result
-
-
-type Float = typing.Union["Cardinal", F, Z]
-type Unary = C[[Float], Float]
-type Binary = C[[Float, Float], Float]
-
-
-class Cardinal(Nomad):
-    """"""
-
-    __slots__: TS = ()
-
-    ##
-
-    @classmethod
-    def add(cls, one: Float, two: Float) -> Float:
+    @staticmethod
+    def add(one: Nomad, two: Nomad) -> Nomad:
         """"""
-        ignore(cls)
         result = one + two
         return result
 
-    @classmethod
-    def mul(cls, one: Float, two: Float) -> Float:
-        """"""
-        ignore(cls)
-        result = one * two
-        return result
-
-    @classmethod
-    def neg(cls, one: Float) -> Float:
-        """"""
-        ignore(cls)
-        result = -one
-        return result
-
-    @classmethod
-    def pos(cls, one: Float) -> Float:
-        """"""
-        ignore(cls)
-        result = +one
-        return result
-
-    @classmethod
-    def sub(cls, one: Float, two: Float) -> Float:
-        """"""
-        ignore(cls)
-        result = one - two
-        return result
-
-    @classmethod
-    def truediv(cls, one: Float, two: Float) -> Float:
-        """"""
-        ignore(cls)
-        result = one / two
-        return result
-
-    ##
-    def binary(self, binary: Binary, other: Float) -> L[Float]:
+    def binary(self, binary: Binary, other: Nomad) -> L[Nomad]:
         """Binary arithmetic operations."""
-        data: L[Float]
+        data: L[Nomad]
         if isinstance(other, float | int):
             data = [other] * len(self.data)
         else:
@@ -124,22 +56,55 @@ class Cardinal(Nomad):
         result = list(map(binary, self.data, data))
         return result
 
-    def unary(self, unary: Unary) -> L[Float]:
+    @staticmethod
+    def mul(one: Nomad, two: Nomad) -> Nomad:
+        """"""
+        result = one * two
+        return result
+
+    @staticmethod
+    def neg(one: Nomad) -> Nomad:
+        """"""
+        result = -one
+        return result
+
+    @staticmethod
+    def pos(one: Nomad) -> Nomad:
+        """"""
+        result = +one
+        return result
+
+    @staticmethod
+    def sub(one: Nomad, two: Nomad) -> Nomad:
+        """"""
+        result = one - two
+        return result
+
+    @staticmethod
+    def truediv(one: Nomad, two: Nomad) -> Nomad:
+        """"""
+        result = one / two
+        return result
+
+    def unary(self, unary: Unary) -> L[Nomad]:
         """Unary arithmetic operations."""
         result = list(map(unary, self.data))
         return result
 
-    def _arithmetic(self, other: Float, binary: Binary) -> K:
+    def _arithmetic(self, other: Nomad, binary: Binary) -> K:
         data = self.binary(binary, other)
         return self.make(*data)
 
-    def _augmented(self, other: Float, binary: Binary) -> K:
+    def _augmented(self, other: Nomad, binary: Binary) -> K:
         self.data = self.binary(binary, other)
         return self
-#######
 
-    def __add__(self, other: Float) -> K:
+    def __add__(self, other: Nomad) -> K:
         return self._arithmetic(other, self.add)
+
+    def __del__(self) -> N:
+        super().__del__()
+        del self.name
 
     def __eq__(self, other: object) -> B:
         if not isinstance(other, Cardinal):
@@ -154,13 +119,13 @@ class Cardinal(Nomad):
         result = sum(data)
         return result
 
-    def __ge__(self, other: Float) -> B:
+    def __ge__(self, other: Nomad) -> B:
         one = float(self)
         two = float(other)
         result = one >= two
         return result
 
-    def __gt__(self, other: Float) -> B:
+    def __gt__(self, other: Nomad) -> B:
         one = float(self)
         two = float(other)
         result = one > two
@@ -172,36 +137,43 @@ class Cardinal(Nomad):
         result = hash(count)
         return result
 
-    def __iadd__(self, other: Float) -> K:
+    def __iadd__(self, other: Nomad) -> K:
         return self._augmented(other, self.add)
 
-    def __imul__(self, other: Float) -> K:
+    def __imul__(self, other: Nomad) -> K:
         return self._augmented(other, self.mul)
 
-    def __isub__(self, other: Float) -> K:
+    def __isub__(self, other: Nomad) -> K:
         return self._augmented(other, self.sub)
 
-    def __itruediv__(self, other: Float) -> K:
+    def __itruediv__(self, other: Nomad) -> K:
         return self._augmented(other, self.truediv)
 
-    def __le__(self, other: Float) -> B:
+    def __le__(self, other: Nomad) -> B:
         one = float(self)
         two = float(other)
         result = one <= two
         return result
 
-    def __lt__(self, other: Float) -> B:
+    def __lt__(self, other: Nomad) -> B:
         one = float(self)
         two = float(other)
         result = one < two
         return result
 
-    def __mul__(self, other: Float) -> K:
+    def __mul__(self, other: Nomad) -> K:
         return self._arithmetic(other, self.mul)
 
     def __neg__(self) -> K:
         self.data = self.unary(self.neg)
         return self
+
+    def __new__(cls, *_: A) -> K:
+        new = super().__new__(cls)
+        name = repr(cls)
+        index = name.rindex(FULL_STOP) + 1
+        new.name = name[index:-2]
+        return new
 
     def __ne__(self, other: object) -> B:
         if not isinstance(other, Cardinal):
@@ -215,22 +187,33 @@ class Cardinal(Nomad):
         self.data = self.unary(self.pos)
         return self
 
-    def __radd__(self, other: Float) -> K:
+    def __radd__(self, other: Nomad) -> K:
         return self._arithmetic(other, self.add)
 
-    def __rmul__(self, other: Float) -> K:
+    def __repr__(self):
+        data = self.__str__()
+        result = string(self.name, data)
+        return result
+
+    def __rmul__(self, other: Nomad) -> K:
         return self._arithmetic(other, self.mul)
 
-    def __rsub__(self, other: Float) -> K:
+    def __rsub__(self, other: Nomad) -> K:
         return self._arithmetic(other, self.sub)
 
-    def __rtruediv__(self, other: Float) -> K:
+    def __rtruediv__(self, other: Nomad) -> K:
         return self.__truediv__(other)
 
-    def __sub__(self, other: Float) -> K:
+    def __str__(self):
+        comma = string(COMMA, SPACE)
+        data = comma.join(map(repr, self.data))
+        result = string(LEFT_PARENTHESIS, data, RIGHT_PARENTHESIS)
+        return result
+
+    def __sub__(self, other: Nomad) -> K:
         return self._arithmetic(other, self.sub)
 
-    def __truediv__(self, other: Float) -> K:
+    def __truediv__(self, other: Nomad) -> K:
         return self._arithmetic(other, self.truediv)
 
 
