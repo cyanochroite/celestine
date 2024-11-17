@@ -59,119 +59,9 @@ class Nomad(Struct):
         return result
 
 
-class Number(typing.Protocol):
-    """"""
-
-    def __add__(self, other: K) -> K:
-        raise NotImplementedError(self, other)
-
-    def __eq__(self, other: object) -> B:
-        raise NotImplementedError(self, other)
-
-    def __float__(self) -> F:
-        raise NotImplementedError(self)
-
-    def __ge__(self, other: K) -> B:
-        raise NotImplementedError(self, other)
-
-    def __gt__(self, other: K) -> B:
-        raise NotImplementedError(self, other)
-
-    def __hash__(self) -> Z:
-        raise NotImplementedError(self)
-
-    def __iadd__(self, other: K) -> K:
-        raise NotImplementedError(self, other)
-
-    def __imul__(self, other: K) -> K:
-        raise NotImplementedError(self, other)
-
-    def __isub__(self, other: K) -> K:
-        raise NotImplementedError(self, other)
-
-    def __itruediv__(self, other: K) -> K:
-        raise NotImplementedError(self, other)
-
-    def __le__(self, other: K) -> B:
-        raise NotImplementedError(self, other)
-
-    def __lt__(self, other: K) -> B:
-        raise NotImplementedError(self, other)
-
-    def __mul__(self, other: K) -> K:
-        raise NotImplementedError(self, other)
-
-    def __neg__(self) -> K:
-        raise NotImplementedError(self)
-
-    def __ne__(self, other: object) -> B:
-        raise NotImplementedError(self, other)
-
-    def __pos__(self) -> K:
-        raise NotImplementedError(self)
-
-    def __radd__(self, other: K) -> K:
-        raise NotImplementedError(self, other)
-
-    def __rmul__(self, other: K) -> K:
-        raise NotImplementedError(self, other)
-
-    def __rsub__(self, other: K) -> K:
-        raise NotImplementedError(self, other)
-
-    def __rtruediv__(self, other: K) -> K:
-        raise NotImplementedError(self, other)
-
-    def __sub__(self, other: K) -> K:
-        raise NotImplementedError(self, other)
-
-    def __truediv__(self, other: K) -> K:
-        raise NotImplementedError(self, other)
-
-
-type Float = Number
+type Float = typing.Union["Cardinal", F, Z]
 type Unary = C[[Float], Float]
 type Binary = C[[Float, Float], Float]
-
-
-class Math:
-    """"""
-
-    @staticmethod
-    def add(one: Float, two: Float) -> Float:
-        """"""
-        result: Float = one + two
-        return result
-
-    @staticmethod
-    def mul(one: Float, two: Float) -> Float:
-        """"""
-        result = one * two
-        return result
-
-    @staticmethod
-    def neg(one: Float) -> Float:
-        """"""
-        result = -one
-        return result
-
-    @staticmethod
-    def pos(one: Float) -> Float:
-        """"""
-        result = +one
-        return result
-
-    @staticmethod
-    def sub(one: Float, two: Float) -> Float:
-        """"""
-        result = one - two
-        return result
-
-    @staticmethod
-    def truediv(one: Float, two: Float) -> Float:
-        """"""
-        result = one / two
-        return result
 
 
 class Cardinal(Nomad):
@@ -179,16 +69,51 @@ class Cardinal(Nomad):
 
     __slots__: TS = ()
 
-    def binary2(self, binary: Binary, other: Float) -> L[Float]:
-        """Binary arithmetic operations."""
-        data: L[Float]
-        if isinstance(other, float | int):
-            data = [other] * len(self.data)
-        else:
-            data = getattr(other, "data")
-        result = list(map(binary, self.data, data))
+    ##
+
+    @classmethod
+    def add(cls, one: Float, two: Float) -> Float:
+        """"""
+        ignore(cls)
+        result = one + two
         return result
 
+    @classmethod
+    def mul(cls, one: Float, two: Float) -> Float:
+        """"""
+        ignore(cls)
+        result = one * two
+        return result
+
+    @classmethod
+    def neg(cls, one: Float) -> Float:
+        """"""
+        ignore(cls)
+        result = -one
+        return result
+
+    @classmethod
+    def pos(cls, one: Float) -> Float:
+        """"""
+        ignore(cls)
+        result = +one
+        return result
+
+    @classmethod
+    def sub(cls, one: Float, two: Float) -> Float:
+        """"""
+        ignore(cls)
+        result = one - two
+        return result
+
+    @classmethod
+    def truediv(cls, one: Float, two: Float) -> Float:
+        """"""
+        ignore(cls)
+        result = one / two
+        return result
+
+    ##
     def binary(self, binary: Binary, other: Float) -> L[Float]:
         """Binary arithmetic operations."""
         data: L[Float]
@@ -214,7 +139,7 @@ class Cardinal(Nomad):
 #######
 
     def __add__(self, other: Float) -> K:
-        return self._arithmetic(other, Math.add)
+        return self._arithmetic(other, self.add)
 
     def __eq__(self, other: object) -> B:
         if not isinstance(other, Cardinal):
@@ -248,16 +173,16 @@ class Cardinal(Nomad):
         return result
 
     def __iadd__(self, other: Float) -> K:
-        return self._augmented(other, Math.add)
+        return self._augmented(other, self.add)
 
     def __imul__(self, other: Float) -> K:
-        return self._augmented(other, Math.mul)
+        return self._augmented(other, self.mul)
 
     def __isub__(self, other: Float) -> K:
-        return self._augmented(other, Math.sub)
+        return self._augmented(other, self.sub)
 
     def __itruediv__(self, other: Float) -> K:
-        return self._augmented(other, Math.truediv)
+        return self._augmented(other, self.truediv)
 
     def __le__(self, other: Float) -> B:
         one = float(self)
@@ -272,10 +197,10 @@ class Cardinal(Nomad):
         return result
 
     def __mul__(self, other: Float) -> K:
-        return self._arithmetic(other, Math.mul)
+        return self._arithmetic(other, self.mul)
 
     def __neg__(self) -> K:
-        self.data = self.unary(Math.neg)
+        self.data = self.unary(self.neg)
         return self
 
     def __ne__(self, other: object) -> B:
@@ -287,26 +212,26 @@ class Cardinal(Nomad):
         return result
 
     def __pos__(self) -> K:
-        self.data = self.unary(Math.pos)
+        self.data = self.unary(self.pos)
         return self
 
     def __radd__(self, other: Float) -> K:
-        return self._arithmetic(other, Math.add)
+        return self._arithmetic(other, self.add)
 
     def __rmul__(self, other: Float) -> K:
-        return self._arithmetic(other, Math.mul)
+        return self._arithmetic(other, self.mul)
 
     def __rsub__(self, other: Float) -> K:
-        return self._arithmetic(other, Math.sub)
+        return self._arithmetic(other, self.sub)
 
     def __rtruediv__(self, other: Float) -> K:
         return self.__truediv__(other)
 
     def __sub__(self, other: Float) -> K:
-        return self._arithmetic(other, Math.sub)
+        return self._arithmetic(other, self.sub)
 
     def __truediv__(self, other: Float) -> K:
-        return self._arithmetic(other, Math.truediv)
+        return self._arithmetic(other, self.truediv)
 
 
 class Monad[X](Cardinal):
