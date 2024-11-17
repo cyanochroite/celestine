@@ -22,8 +22,10 @@ from celestine.typed import (
     Z,
     ignore,
 )
-from celestine.window.cardinal import Cardinal
-from celestine.window.nomad import Dyad
+from celestine.window.cardinal import (
+    Cardinal,
+    Dyad,
+)
 
 
 class Point(Dyad[F], Cardinal):
