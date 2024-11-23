@@ -23,14 +23,13 @@ ignore(image)
 ignore(mouse)
 ignore(Surface)
 ignore(transform)
-
 MOUSEBUTTONDOWN: Z
 QUIT: Z
 
 
-def quit() -> N:  # pylint: disable=redefined-builtin
+class Package(Abstract):
     """"""
 
 
-class Package(Abstract):
+def quit() -> N:  # pylint: disable=redefined-builtin
     """"""

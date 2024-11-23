@@ -149,7 +149,7 @@ class Element(Element_, Abstract):
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
         self.color = (255, 0, 255)
-        self.font = pygame.font.Font()
+        self.font = pygame.font.Font()  # file_path=None, size=12
         self.text_item = None
 
 

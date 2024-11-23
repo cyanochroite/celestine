@@ -1,6 +1,13 @@
 """"""
 
-from celestine.package.pygame.abstract import Event
+from celestine.typed import Z
+
+
+class Event:
+    """"""
+
+    type: Z
+    button: Z
 
 
 def wait() -> Event:

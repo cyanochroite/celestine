@@ -1,7 +1,5 @@
 """"""
 
-import typing
-
 from celestine.package.pygame.abstract import Surface
 from celestine.typed import (
     TZ3,
@@ -13,12 +11,8 @@ from celestine.typed import (
 )
 
 
-class Font(typing.Protocol):
+class Font:
     """"""
-
-    def __init__(self, file_path: P, size: Z) -> N:
-        """"""
-        raise NotImplementedError(self, file_path, size)
 
     def render(
         self,
@@ -35,6 +29,10 @@ class Font(typing.Protocol):
             color,
             background,
         )
+
+    def __init__(self, file_path: P, size: Z) -> N:
+        """"""
+        raise NotImplementedError(self, file_path, size)
 
 
 def init() -> N:
