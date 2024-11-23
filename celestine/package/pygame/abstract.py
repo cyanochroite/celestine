@@ -67,6 +67,7 @@ class Surface:
         self.width = 0
 
 
+#  TODO: Delete?
 EVENT = Event()
 SURFACE = Surface((0, 0))
 SIZE = (0, 0)

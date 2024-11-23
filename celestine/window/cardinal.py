@@ -52,6 +52,8 @@ class Cardinal(Struct):
         if isinstance(other, float | int):
             data = [other] * len(self.data)
         else:
+            # TODO: What happens when lists have differnt lengths?
+            # Bigger worry is when SELF is longer and gets cropped.
             data = getattr(other, "data")
         result = list(map(binary, self.data, data))
         return result

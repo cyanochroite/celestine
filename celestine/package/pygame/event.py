@@ -1,11 +1,8 @@
 """"""
 
-from celestine.package.pygame.abstract import (
-    EVENT,
-    Event,
-)
+from celestine.package.pygame.abstract import Event
 
 
 def wait() -> Event:
     """"""
-    return EVENT
+    raise NotImplementedError()

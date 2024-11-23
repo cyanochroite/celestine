@@ -1,17 +1,9 @@
 """"""
 
-from celestine.package.pygame.abstract import (
-    SURFACE,
-    Surface,
-)
-from celestine.typed import (
-    TZ2,
-    ignore,
-)
+from celestine.package.pygame.abstract import Surface
+from celestine.typed import TZ2
 
 
 def smoothscale(surface: Surface, size: TZ2) -> Surface:
     """"""
-    ignore(surface)
-    ignore(size)
-    return SURFACE
+    raise NotImplementedError(surface, size)
