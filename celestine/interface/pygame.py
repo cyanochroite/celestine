@@ -53,7 +53,7 @@ class Element(Element_, Abstract):
     """"""
 
     image: pygame.Surface
-    text_item: A
+    text_item: pygame.Surface
     font: pygame.font.Font
 
     @override
@@ -78,10 +78,10 @@ class Element(Element_, Abstract):
     def build(self, canvas: A, **star: R) -> N:
         """"""
         super().build(canvas, **star)
+
+        self.color = (255, 0, 255)
         # self.warp("font")
         self.font = star.pop("font")
-
-        self.text_item = None
 
         size = self.area.local.size.value
         self.image = pygame.Surface(size)
@@ -131,26 +131,16 @@ class Element(Element_, Abstract):
 
     def update_text(self, text: S) -> N:
         """"""
-        if not self.font:
-            # TODO: Is there a way to build font not none in init?
-            return
-
         self.text = text
         antialias = True
         color = self.color
-        background = None
-        self.text_item = self.font.render(
-            text,
-            antialias,
-            color,
-            background,
-        )
+        self.text_item = self.font.render(text, antialias, color)
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
-        self.color = (255, 0, 255)
-        self.font = pygame.font.Font()  # file_path=None, size=12
-        self.text_item = None
+        self.color = (0, 0, 0)
+        self.font = pygame.font.Font()
+        self.text_item = pygame.Surface((0, 0))
 
 
 class View(View_, Abstract):
@@ -161,7 +151,7 @@ class Window(Window_):
     """"""
 
     area: Area
-    canvas: pygame.display
+    canvas: pygame.Surface
     font: pygame.font.Font
 
     @override

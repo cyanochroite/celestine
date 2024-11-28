@@ -1,7 +1,6 @@
 """Python Imaging Library (Fork)."""
 
 import enum
-import typing
 
 from celestine import load
 from celestine.package import Abstract
@@ -15,7 +14,7 @@ from celestine.typed import (
 )
 
 
-class Image(typing.Protocol):
+class Image:
     """"""
 
     mode: S

@@ -3,34 +3,22 @@
 from celestine.package.pygame.abstract import Surface
 from celestine.typed import (
     TZ3,
+    VP,
+    VZ,
     B,
     N,
-    P,
     S,
-    Z,
 )
 
 
 class Font:
     """"""
 
-    def render(
-        self,
-        text: S,
-        antialias: B,
-        color: TZ3,
-        background: Surface,
-    ) -> Surface:
+    def render(self, text: S, antialias: B, color: TZ3) -> Surface:
         """"""
-        raise NotImplementedError(
-            self,
-            text,
-            antialias,
-            color,
-            background,
-        )
+        raise NotImplementedError(self, text, antialias, color)
 
-    def __init__(self, file_path: P, size: Z) -> N:
+    def __init__(self, file_path: VP = None, size: VZ = None) -> N:
         """"""
         raise NotImplementedError(self, file_path, size)
 
