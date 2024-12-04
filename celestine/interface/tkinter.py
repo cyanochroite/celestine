@@ -21,11 +21,11 @@ from celestine.typed import (
     S,
     override,
 )
+from celestine.window.cardinal import Cardinal
 from celestine.window.collection import (
     Area,
     Dyad,
     Plane,
-    Point,
 )
 from celestine.window.container import Image
 
@@ -214,17 +214,16 @@ class Element(Element_, Abstract):
 
         new_width, new_height = curent.size
 
-        Point(old_width, old_height)
-
         old_size = Dyad(old_width, old_height)
         new_size = Dyad(new_width, new_height)
 
         if new_width < old_width:
-            change = math.ceil(old_size / new_size)
+            change = old_size / new_size
+            change.ceil()
             image = photo.subsample(change.one, change.two)
         else:
-            change = math.floor(new_size / old_size)
-            image = photo.zoom(change.one, change.two)
+            change2 = Cardinal.floor(new_size / old_size)
+            image = photo.zoom(change2.one, change2.two)
 
         self.item.configure(image=image)
         self.item.image = image
