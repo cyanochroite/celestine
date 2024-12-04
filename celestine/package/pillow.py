@@ -5,6 +5,7 @@ import enum
 from celestine import load
 from celestine.package import Abstract
 from celestine.typed import (
+    LS,
     TZ2,
     K,
     N,
@@ -47,3 +48,8 @@ class Package(Abstract):
         if self.package:
             # TODO: Check for tkinter import as well.
             setattr(self, "ImageTk", load.package("PIL", "ImageTk"))
+
+
+def extension() -> LS:
+    """"""
+    raise NotImplementedError()

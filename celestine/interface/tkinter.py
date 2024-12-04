@@ -218,16 +218,13 @@ class Element(Element_, Abstract):
 
         old_size = Dyad(old_width, old_height)
         new_size = Dyad(new_width, new_height)
-        old_size / new_size
 
         if new_width < old_width:
-            change_width = math.ceil(old_width / new_width)
-            change_height = math.ceil(old_height / new_height)
-            image = photo.subsample(change_width, change_width)
+            change = math.ceil(old_size / new_size)
+            image = photo.subsample(change.one, change.two)
         else:
-            change_width = math.ceil(new_width // old_width)
-            change_height = math.ceil(new_height // old_height)
-            image = photo.zoom(change_width, change_height)
+            change = math.floor(new_size / old_size)
+            image = photo.zoom(change.one, change.two)
 
         self.item.configure(image=image)
         self.item.image = image

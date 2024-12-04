@@ -54,7 +54,10 @@ from typing import Tuple as T
 from typing import Type as TY
 from typing import TypedDict as TD
 from typing import TypeVar as TV
-from typing import override
+from typing import (
+    cast,
+    override,
+)
 
 
 class Star(TD):
@@ -190,17 +193,20 @@ class Struct:
 
     def copy(self) -> K:
         """"""
-        return self.__class__(*self.data)
+        result = self.__class__(*self.data)
+        return result
 
     @classmethod
     def echo(cls, self: K) -> K:
         """"""
-        return cls(*self.data)
+        result = cls(*self.data)
+        return result
 
     @classmethod
     def make(cls, *data: A) -> K:
         """"""
-        return cls(*data)
+        result = cls(*data)
+        return result
 
     def _del(self) -> N:
         ignore(self)
@@ -237,4 +243,5 @@ ignore(SF)
 ignore(SI)
 ignore(SZ)
 ignore(SR)
+ignore(cast)
 ignore(override)
