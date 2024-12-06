@@ -43,13 +43,6 @@ from typing import List as L
 from typing import Literal
 from typing import Optional as V
 from typing import Self as K
-from typing import SupportsAbs as SA
-from typing import SupportsBytes as SB
-from typing import SupportsComplex as SC
-from typing import SupportsFloat as SF
-from typing import SupportsIndex as SI
-from typing import SupportsInt as SZ
-from typing import SupportsRound as SR
 from typing import Tuple as T
 from typing import Type as TY
 from typing import TypedDict as TD
@@ -236,12 +229,5 @@ class Struct:
 
 
 ignore(IT)
-ignore(SA)
-ignore(SB)
-ignore(SC)
-ignore(SF)
-ignore(SI)
-ignore(SZ)
-ignore(SR)
 ignore(cast)
 ignore(override)

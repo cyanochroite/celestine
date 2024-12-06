@@ -2,6 +2,7 @@
 
 import math
 import typing
+import itertools
 
 from celestine.literal import (
     COMMA,
@@ -121,14 +122,6 @@ class Cardinal(Struct):
         result = list(map(binary, self.data, data))
         return result
 
-    def ceil(self) -> K:
-        """"""
-        # TODO make unary return a new copy.
-        #  makes this a unary function instead
-        data = math.ceil(self)
-        result = self.make(*data)
-        return result
-
     def unary(self, unary: Unary) -> L[Nomad]:
         """Unary arithmetic operations."""
         result = list(map(unary, self.data))
@@ -143,13 +136,18 @@ class Cardinal(Struct):
         self.data = self.binary(binary, other)
         return self
 
+    def _inplace(self, unary: Unary) -> K:
+        data = self.unary(unary)
+        result = self.make(*data)
+        return result
+
     def __add__(self, other: Nomad) -> K:
         result = self._arithmetic(other, Math.add)
         return result
 
     def __ceil__(self) -> K:
-        self.data = self.unary(Math.ceil)
-        return self
+        result = self._inplace(Math.ceil)
+        return result
 
     def __del__(self) -> N:
         super().__del__()
@@ -169,8 +167,8 @@ class Cardinal(Struct):
         return result
 
     def __floor__(self) -> K:
-        self.data = self.unary(Math.floor)
-        return self
+        result = self._inplace(Math.floor)
+        return result
 
     def __ge__(self, other: Nomad) -> B:
         one = float(self)
@@ -221,8 +219,8 @@ class Cardinal(Struct):
         return self._arithmetic(other, Math.mul)
 
     def __neg__(self) -> K:
-        self.data = self.unary(Math.neg)
-        return self
+        result = self._inplace(Math.neg)
+        return result
 
     def __new__(cls, *_: A) -> K:
         new = super().__new__(cls)
@@ -240,8 +238,8 @@ class Cardinal(Struct):
         return result
 
     def __pos__(self) -> K:
-        self.data = self.unary(Math.pos)
-        return self
+        result = self._inplace(Math.pos)
+        return result
 
     def __radd__(self, other: Nomad) -> K:
         result = self._arithmetic(other, Math.add)
@@ -257,8 +255,10 @@ class Cardinal(Struct):
         return result
 
     def __round__(self, ndigits: VZ = None) -> K:
-        self.data = self.unary(Math.round)
-        return self
+        other = itertools.repeat(ndigits)
+        data = list(map(Math.round, self.data, other))
+        result = self.make(*data)
+        return result
 
     def __rsub__(self, other: Nomad) -> K:
         result = self._arithmetic(other, Math.sub)
@@ -283,8 +283,8 @@ class Cardinal(Struct):
         return result
 
     def __trunc__(self) -> K:
-        self.data = self.unary(Math.trunc)
-        return self
+        result = self._inplace(Math.trunc)
+        return result
 
 
 class Monad[X](Cardinal):

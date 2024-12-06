@@ -10,7 +10,9 @@ from celestine.typed import (
     K,
     N,
     P,
+    VP,
     R,
+    Z,
     S,
 )
 
@@ -38,6 +40,24 @@ class Image:
     def tobytes(self) -> bytes:
         """"""
         raise NotImplementedError(self)
+
+
+class ImageTk:
+    """"""
+    class PhotoImage:
+        """"""
+
+        def height(self) -> Z:
+            """"""
+            raise NotImplementedError(self)
+
+        def width(self) -> Z:
+            """"""
+            raise NotImplementedError(self)
+
+        def __init__(self, image: VP = None) -> N:
+            """"""
+            raise NotImplementedError(self, image)
 
 
 class Package(Abstract):

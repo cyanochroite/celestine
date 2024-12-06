@@ -14,7 +14,8 @@ class Package(Abstract):
     @property
     def directory(self) -> P:
         """"""
-        path = self.package.user_data_dir(
+        user_data_dir = getattr(self.package, "user_data_dir")
+        path = user_data_dir(
             appname="celestine",
             appauthor=False,
             version=None,

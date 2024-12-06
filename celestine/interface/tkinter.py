@@ -18,10 +18,11 @@ from celestine.typed import (
     N,
     P,
     R,
+    Z,
     S,
+    cast,
     override,
 )
-from celestine.window.cardinal import Cardinal
 from celestine.window.collection import (
     Area,
     Dyad,
@@ -93,110 +94,12 @@ class Element(Element_, Abstract):
     def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
-        target = Plane.create(*self.area.world.size.value)
-
-        # image = pillow.open(self.path)
-
-        # curent = Plane.build(image.image.width, image.image.height)
-        # target = Plane.build(*self.area.world.size.value)
-
-        # match self.fit:
-        #    case Image.FILL:
-        #        result = curent.scale_to_min(target)
-        #    case Image.FULL:
-        #        result = curent.scale_to_max(target)
-
-        # result.center(target)
-
-        # image.resize(result.size)
-        # self.image.paste(image, result)
-
-        # super().update(path)
-
-        def resize(img, new_width, new_height):
-            old_width = img.width()
-            old_height = img.height()
-            new_photo_image = tkinter.PhotoImage(
-                height=new_height,
-                width=new_width,
-            )
-            for x in range(new_width):
-                for y in range(new_height):
-                    x_old = int(x * old_width / new_width)
-                    y_old = int(y * old_height / new_height)
-                    rgb = "#%02x%02x%02x" % img.get(x_old, y_old)
-                    new_photo_image.put(rgb, (x, y))
-            return new_photo_image
-
-        if pillow:
+        if bool(pillow):
             photo = pillow.ImageTk.PhotoImage(image=self.image.image)
+            self.item.configure(image=photo)
+            self.item.image = photo
         else:
-            width, height = target.size.value
-
             photo = tkinter.PhotoImage(file=self.path)
-            photo = resize(photo, 200, 200)
-            # photo = photo.subsample(4, 4)
-
-        # self.photo = photo
-        # self.item.configure(image=photo)
-        # self.item.configure(image=self.image)
-
-        self.image2 = photo
-        self.item.configure(image=photo)
-        self.item.image = photo
-
-    def update_image(self, path: P, **star: R) -> N:
-        """"""
-        if pillow:
-            return
-
-        self.path = path
-        photo = tkinter.PhotoImage(file=self.path)
-
-        curent = Plane.create(photo.width(), photo.height())
-        target = Plane.create(*self.area.world.size.value)
-
-        match self.fit:
-            case Image.FILL:
-                curent.scale_to_min(target)
-            case Image.FULL:
-                curent.scale_to_max(target)
-
-        curent.center(target)
-
-        width, height = curent.size.value
-
-        img = photo
-        new_width = width
-        new_height = height
-
-        old_width = img.width()
-        old_height = img.height()
-        image = tkinter.PhotoImage(
-            height=new_height,
-            width=new_width,
-        )
-        hex_string = "#{:02X}{:02X}{:02X}"
-        for x in range(new_width):
-            for y in range(new_height):
-                x_old = int(x * old_width / new_width)
-                y_old = int(y * old_height / new_height)
-                color = img.get(x_old, y_old)
-
-                data = hex_string.format(*color)
-                to = (x, y)
-                image.put(data, to)
-
-        self.item.configure(image=image)
-        self.item.image = image
-
-    def update_image(self, path: P, **star: R) -> N:
-        """"""
-        if pillow:
-            return
-
-        self.path = path
-        photo = tkinter.PhotoImage(file=self.path)
 
         old_width = photo.width()
         old_height = photo.height()
@@ -204,12 +107,10 @@ class Element(Element_, Abstract):
         curent = Plane.create(old_width, old_height)
         target = Plane.create(*self.area.world.size)
 
-        match self.fit:
-            case Image.FILL:
-                curent.scale_to_min(target)
-            case Image.FULL:
-                curent.scale_to_max(target)
-
+        if self.fit == Image.FILL:
+            curent.scale_to_min(target)
+        elif self.fit == Image.FULL:
+            curent.scale_to_max(target)
         curent.center(target)
 
         new_width, new_height = curent.size
@@ -218,12 +119,11 @@ class Element(Element_, Abstract):
         new_size = Dyad(new_width, new_height)
 
         if new_width < old_width:
-            change = old_size / new_size
-            change.ceil()
+            change = cast(Dyad[Z], math.ceil(old_size / new_size))
             image = photo.subsample(change.one, change.two)
         else:
-            change2 = Cardinal.floor(new_size / old_size)
-            image = photo.zoom(change2.one, change2.two)
+            change = cast(Dyad[Z], math.floor(new_size / old_size))
+            image = photo.zoom(change.one, change.two)
 
         self.item.configure(image=image)
         self.item.image = image
