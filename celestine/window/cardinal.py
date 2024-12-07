@@ -1,8 +1,8 @@
 """"""
 
+import itertools
 import math
 import typing
-import itertools
 
 from celestine.literal import (
     COMMA,

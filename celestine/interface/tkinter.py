@@ -18,8 +18,8 @@ from celestine.typed import (
     N,
     P,
     R,
-    Z,
     S,
+    Z,
     cast,
     override,
 )

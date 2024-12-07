@@ -15,8 +15,9 @@ from celestine.package import (
     pillow,
 )
 from celestine.typed import (
-    B,
+    LS,
     N,
+    P,
     R,
     override,
 )
@@ -168,7 +169,7 @@ class Element(Element_, Abstract):
 
     def draw_old(self, **star: R):
         """"""
-
+        self.path = P()
         if not pillow:
             self.render(self.path.name, **star)
             return
@@ -209,7 +210,7 @@ class Element(Element_, Abstract):
 
     def draw(self, **star: R):
         """"""
-
+        self.path = P()
         if not pillow:
             self.render(self.path.name, **star)
             return
@@ -257,7 +258,7 @@ class Window(Window_):
     """"""
 
     @override
-    def draw(self, **star: R) -> B:
+    def draw(self, **star: R) -> N:
         """"""
 
         # Do normal draw stuff.
@@ -279,22 +280,19 @@ class Window(Window_):
         color_table = {}
 
     @override
-    def extension(self):
+    @staticmethod
+    def extension() -> LS:
         """"""
-        if pillow:
+        if bool(pillow):
             return pillow.extension()
 
         return []
 
     @override
-    def setup(self, name):
-        """"""
-
-        return curses.window(*self.area.int)
-
-    @override
     def run(self) -> N:
         super().run()
+
+        self.stdscr.addstr("hello world")
 
         while True:
             bank.dequeue()
@@ -310,6 +308,8 @@ class Window(Window_):
                             self.cord_x -= 1
                         case curses.KEY_RIGHT:
                             self.cord_x += 1
+                        case _:
+                            pass
 
                     size_x, size_y = self.full.size
                     self.cord_x %= size_x
@@ -322,10 +322,12 @@ class Window(Window_):
                     break
                 case curses.KEY_CLICK:
                     self.page.click(Point(self.cord_x, self.cord_y))
+                case _:
+                    pass
 
-        self.stdscr.keypad(0)
-        curses.echo()
+        self.stdscr.keypad(False)
         curses.nocbreak()
+        curses.echo()
         curses.endwin()
 
     @override
@@ -335,12 +337,12 @@ class Window(Window_):
             "view": View,
             "window": self,
         }
+        super().__init__(element, **star)
 
         self.stdscr = curses.initscr()
-
         curses.noecho()
         curses.cbreak()
-        self.stdscr.keypad(1)
+        self.stdscr.keypad(True)
         curses.start_color()
 
         (size_y, size_x) = self.stdscr.getmaxyx()
@@ -349,7 +351,6 @@ class Window(Window_):
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
 
-        super().__init__(element, **star)
         plane = Plane(
             Line(1, size_x - 2),
             Line(1, size_y - 2),
@@ -362,12 +363,6 @@ class Window(Window_):
 
         #####
 
-        (size_y, size_x) = self.stdscr.getmaxyx()
-        self.full = Plane.create(size_x, size_y)
-
-        self.background = curses.window(0, 0, size_x, size_y)
-        self.background.box()
-
         header_box = (0, 0, size_x, 1)
         header = curses.subwindow(self.background, *header_box)
         header.addstr(0, 1, bank.language.APPLICATION_TITLE)
@@ -375,28 +370,3 @@ class Window(Window_):
         footer_box = (0, size_y - 1, size_x, 1)
         footer = curses.subwindow(self.background, *footer_box)
         footer.addstr(0, 1, bank.language.CURSES_EXIT)
-
-        #
-        # TODO check why repeat code from init
-        plane = Plane(
-            Line(1, size_x - 2),
-            Line(1, size_y - 2),
-        )
-        self.area = Area(plane, plane)
-
-        # hold this for later
-        return
-
-        if bool(pillow):
-            size = curent.size.value
-            resample = pillow.Image.Resampling.LANCZOS
-            self.image = image_pillow.resize(size, resample)
-
-            buffer = image_pillow.tobytes()
-            size = image_pillow.size
-            format_ = image_pillow.mode
-            source = pygame.image.frombuffer(buffer, size, format_)
-        else:
-            surface = image_pygame
-            size = curent.size.value
-            source = pygame.transform.smoothscale(surface, size)

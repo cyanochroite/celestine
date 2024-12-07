@@ -7,13 +7,13 @@ from celestine.package import Abstract
 from celestine.typed import (
     LS,
     TZ2,
+    VP,
     K,
     N,
     P,
-    VP,
     R,
-    Z,
     S,
+    Z,
 )
 
 
@@ -44,6 +44,7 @@ class Image:
 
 class ImageTk:
     """"""
+
     class PhotoImage:
         """"""
 
