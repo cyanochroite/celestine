@@ -8,9 +8,10 @@ from celestine.literal import (
 from celestine.package import Abstract
 from celestine.typed import (
     A,
+    K,
+    N,
     S,
     Z,
-    ignore,
 )
 
 cbreak: A
@@ -30,31 +31,27 @@ KEY_UP: A
 nocbreak: A
 noecho: A
 start_color: A
-subwindow: A
-window: A
+
+
+class Window:
+    """"""
+
+    def box(self) -> N:
+        """"""
+        raise NotImplementedError(self)
+
+    def subwin(self, nlines: Z, ncols: Z, begin_y: Z, begin_x: Z) -> K:
+        """"""
+        raise NotImplementedError(self, nlines, ncols, begin_y, begin_x)
+
+
+def newwin(nlines: Z, ncols: Z, begin_y: Z, begin_x: Z) -> Window:
+    """"""
+    raise NotImplementedError(nlines, ncols, begin_y, begin_x)
 
 
 class Package(Abstract):
     """"""
-
-    def subwindow(
-        self, window, column: Z, row: Z, width: Z, height: Z
-    ) -> A:
-        """"""
-        ignore(self)
-        nlines = height
-        ncols = width
-        begin_y = row
-        begin_x = column
-        return window.subwin(nlines, ncols, begin_y, begin_x)
-
-    def window(self, column: Z, row: Z, width: Z, height: Z) -> A:
-        """"""
-        nlines = height
-        ncols = width
-        begin_y = row
-        begin_x = column
-        return self.package.newwin(nlines, ncols, begin_y, begin_x)
 
     def __getattr__(self, name: S) -> A:
         result = None

@@ -292,7 +292,21 @@ class Window(Window_):
     def run(self) -> N:
         super().run()
 
-        self.stdscr.addstr("hello world")
+        (size_y, size_x) = self.stdscr.getmaxyx()
+
+        self.stdscr.addstr(1, 1, "hello world")
+        self.stdscr.addstr(5, 5, "A")
+        self.stdscr.addstr(6, 6, "B")
+        self.stdscr.addstr(7, 7, "C")
+        self.stdscr.box()
+
+        header = self.stdscr.subwin(0, size_x, 0, 0)
+        header.addstr(0, 1, bank.language.APPLICATION_TITLE)
+        header.refresh()
+
+        footer = self.stdscr.subwin(1, size_x, size_y - 1, 0)
+        footer.addstr(0, 1, bank.language.CURSES_EXIT)
+        footer.refresh()
 
         while True:
             bank.dequeue()
@@ -312,11 +326,11 @@ class Window(Window_):
                             pass
 
                     size_x, size_y = self.full.size
-                    self.cord_x %= size_x
-                    self.cord_y %= size_y
+                    self.cord_x %= size_x - 2
+                    self.cord_y %= size_y - 2
                     self.stdscr.move(
-                        math.floor(self.cord_y),
-                        math.floor(self.cord_x),
+                        math.floor(1 + self.cord_y),
+                        math.floor(1 + self.cord_x),
                     )
                 case curses.KEY_EXIT:
                     break
@@ -348,7 +362,7 @@ class Window(Window_):
         (size_y, size_x) = self.stdscr.getmaxyx()
         self.full = Plane.create(size_x, size_y)
 
-        self.background = curses.window(0, 0, size_x, size_y)
+        self.background = curses.newwin(size_y - 2, size_x - 2, 1, 1)
         self.background.box()
 
         plane = Plane(
@@ -360,13 +374,3 @@ class Window(Window_):
         self.cord_y = 0.5
 
         self.canvas = self.background
-
-        #####
-
-        header_box = (0, 0, size_x, 1)
-        header = curses.subwindow(self.background, *header_box)
-        header.addstr(0, 1, bank.language.APPLICATION_TITLE)
-
-        footer_box = (0, size_y - 1, size_x, 1)
-        footer = curses.subwindow(self.background, *footer_box)
-        footer.addstr(0, 1, bank.language.CURSES_EXIT)
