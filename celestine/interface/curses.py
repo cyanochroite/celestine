@@ -16,6 +16,7 @@ from celestine.package import (
 )
 from celestine.typed import (
     LS,
+    B,
     N,
     P,
     R,
@@ -73,7 +74,7 @@ class Abstract(Abstract_):
 
         Text length need be size-1 long.
         """
-        self.canvas.addstr(y_dot - 1, x_dot - 1, text, *extra)
+        self.canvas.addstr(y_dot, x_dot, text, *extra)
 
     def render(self, item, **star: R) -> N:
         """"""
@@ -208,8 +209,20 @@ class Element(Element_, Abstract):
         item = self.output()
         self.render(item, **star)
 
-    def draw(self, **star: R):
+    @override
+    def draw(self, **star: R) -> B:
         """"""
+        if not super().draw(**star):
+            return False
+
+        x, y = self.area.world.origin.value
+
+        # text
+        canvas = star.pop("canvas")
+        canvas.addstr(y, x, self.text)
+
+        return
+
         self.path = P()
         if not pillow:
             self.render(self.path.name, **star)
@@ -264,9 +277,13 @@ class Window(Window_):
         # Do normal draw stuff.
 
         self.canvas.erase()
+
+        (size_y, size_x) = self.stdscr.getmaxyx()
+        canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
+        # canvas = curses.newwin(size_y - 2, size_x - 2, 1, 1)
         # canvas = curses.window(*self.area.value)
 
-        super().draw(**star)
+        super().draw(canvas=canvas, **star)
 
         self.stdscr.noutrefresh()
         self.background.noutrefresh()
@@ -294,10 +311,6 @@ class Window(Window_):
 
         (size_y, size_x) = self.stdscr.getmaxyx()
 
-        self.stdscr.addstr(1, 1, "hello world")
-        self.stdscr.addstr(5, 5, "A")
-        self.stdscr.addstr(6, 6, "B")
-        self.stdscr.addstr(7, 7, "C")
         self.stdscr.box()
 
         header = self.stdscr.subwin(0, size_x, 0, 0)
@@ -325,9 +338,9 @@ class Window(Window_):
                         case _:
                             pass
 
-                    size_x, size_y = self.full.size
-                    self.cord_x %= size_x - 2
-                    self.cord_y %= size_y - 2
+                    size_x, size_y = self.area.local.size
+                    self.cord_x %= size_x
+                    self.cord_y %= size_y
                     self.stdscr.move(
                         math.floor(1 + self.cord_y),
                         math.floor(1 + self.cord_x),
@@ -366,8 +379,8 @@ class Window(Window_):
         self.background.box()
 
         plane = Plane(
-            Line(1, size_x - 2),
-            Line(1, size_y - 2),
+            Line(0, size_x - 2),
+            Line(0, size_y - 2),
         )
         self.area = Area(plane, plane)
         self.cord_x = 0.5
