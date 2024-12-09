@@ -23,7 +23,8 @@ class Package(Abstract):
         """
         This package has no configuration file options.
 
-        Since no way to configure exclude files, we do it ourself.
+        Since there is no way to configure the exclude files,
+        we do it ourself.
         """
         ignore(self)
 

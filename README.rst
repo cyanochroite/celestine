@@ -42,15 +42,14 @@ My new realization is that, since this is still in Alpha, it is okay that it is 
 So I'm going to be releasing it "AS IS" for a while until Beta, where everything should be functioning as expected.
 (The idea being that pushing out a semi-working package is better then leaving up a totaly broken package.)
 
-Curently "pillow" and "platformdirs" are required dependencies because I have not made the workarounds yet.
-Blender just dropped support for Python 3.10 and so I am going to be as well.
-I would have liked to have a functioning Python 3.10 version so anyone who downloads this wont get errors, but it just hasn't happened yet.
+This package uses Python 3.12 now.
+Because Blender is still on Python 3.11, it is currently disabled.
+Also because "pillow" and "platformdirs" are required dependencies and I have not made the workarounds yet.
+(It was having issues drawing images properly anyways.)
 
 In todays build, only pygame and tkinter are fully functional, using the "demo" and "viewer" applications.
-(Unless there is another issue with the font file, then pygame wont work.)
-Blender fails because it can't find the Pillow package, and it was having issues drawing images properly anyways.
-Curses was having issues with windows-curses for a while, so I have not worked on it recently.
 The DearPyGui Package seems to be nearly abandoned so I have not spent the time keeping it up to date.
+Curses has fallen behind in support, but I am trying to get it back up and running again.
 
 
 Commands

@@ -26,7 +26,8 @@ def train(**star: R) -> B:
     maximum: D[S, S] = {}
     language = load.argument("language")
     for lang in language:
-        dictionary = load.dictionary("language", lang)
+        module = load.module("language", lang)
+        dictionary = load.dictionary(module)
         for key, value in dictionary.items():
             length = len(value)
             minimum[key] = min(length, minimum.get(key, 256))

@@ -1,6 +1,5 @@
 """"""
 
-import os
 import sys
 
 from celestine import load
@@ -65,28 +64,14 @@ class Abstract:
     def __init__(self, *, pypi: VS = None, **star: R) -> N:
         self.name = self.__module__.rsplit(".", maxsplit=1)[-1]
         self.pypi = pypi or self.name
-
-        # pygame prints an anoying message on import
-        # so this here to hide any messages a package may print
-        # when being imported
-        sys_stdout = sys.stdout
-
-        with open(
-            os.devnull,
-            "w",
-            encoding="utf-8",
-        ) as stdout:
-            sys.stdout = stdout
-            try:
-                self.package = load.package(self.pypi)
-            except ValueError:
-                #  Name was none.
-                self.package = None
-            except ModuleNotFoundError:
-                self.package = None
-                found = f"Package '{self.name}' not found."
-                install = f"Install with 'pip install {self.pypi}'."
-                message = f"{found} {install}"
-                print(message)
-
-        sys.stdout = sys_stdout
+        try:
+            self.package = load.package(self.pypi)
+        except ValueError:
+            #  Name was none.
+            self.package = None
+        except ModuleNotFoundError:
+            self.package = None
+            found = f"Package '{self.name}' not found."
+            install = f"Install with 'pip install {self.pypi}'."
+            message = f"{found} {install}"
+            print(message)

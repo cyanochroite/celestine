@@ -43,21 +43,17 @@ from typing import List as L
 from typing import Literal
 from typing import Optional as V
 from typing import Self as K
-from typing import SupportsAbs as SA
-from typing import SupportsBytes as SB
-from typing import SupportsComplex as SC
-from typing import SupportsFloat as SF
-from typing import SupportsIndex as SI
-from typing import SupportsInt as SZ
-from typing import SupportsRound as SR
 from typing import Tuple as T
 from typing import Type as TY
 from typing import TypedDict as TD
 from typing import TypeVar as TV
-from typing import override
+from typing import (
+    cast,
+    override,
+)
 
 
-class R(TD):
+class Star(TD):
     """The global Star object."""
 
     # TODO: Figure out how to map this to the R type.
@@ -67,6 +63,7 @@ type B = bool
 type F = float
 type J = object
 type N = None
+type R = A
 type S = str
 X = TV("X")
 Y = TV("Y")
@@ -189,17 +186,20 @@ class Struct:
 
     def copy(self) -> K:
         """"""
-        return self.__class__(*self.data)
+        result = self.__class__(*self.data)
+        return result
 
     @classmethod
     def echo(cls, self: K) -> K:
         """"""
-        return cls(*self.data)
+        result = cls(*self.data)
+        return result
 
     @classmethod
     def make(cls, *data: A) -> K:
         """"""
-        return cls(*data)
+        result = cls(*data)
+        return result
 
     def _del(self) -> N:
         ignore(self)
@@ -219,15 +219,15 @@ class Struct:
         ignore(self)
         self.data = data
 
+    def __iter__(self) -> GA:
+        yield from self.data
+
+    def __reversed__(self) -> GA:
+        yield from reversed(self.data)
+
     data = property(_get, _set, _del)
 
 
 ignore(IT)
-ignore(SA)
-ignore(SB)
-ignore(SC)
-ignore(SF)
-ignore(SI)
-ignore(SZ)
-ignore(SR)
+ignore(cast)
 ignore(override)

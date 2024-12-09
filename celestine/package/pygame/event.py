@@ -1,11 +1,15 @@
 """"""
 
-from celestine.package.pygame.abstract import (
-    EVENT,
-    Event,
-)
+from celestine.typed import Z
+
+
+class Event:
+    """"""
+
+    type: Z
+    button: Z
 
 
 def wait() -> Event:
     """"""
-    return EVENT
+    raise NotImplementedError()

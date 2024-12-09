@@ -13,13 +13,15 @@ from celestine.typed import (
 class Code(Protocol):
     """Type for code functions."""
 
-    def __call__(self, **star: R) -> B: ...
+    def __call__(self, **star: R) -> B:
+        raise NotImplementedError(self, star)
 
 
 class Draw(Protocol):
     """Type for code functions."""
 
-    def __call__(self, view: View) -> N: ...
+    def __call__(self, view: View) -> N:
+        raise NotImplementedError(self, view)
 
 
 def call(function: Code) -> Code:

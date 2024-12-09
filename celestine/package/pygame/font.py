@@ -1,21 +1,28 @@
 """"""
 
+from celestine.package.pygame.abstract import Surface
 from celestine.typed import (
+    TZ3,
+    VP,
+    VZ,
+    B,
     N,
-    P,
-    Z,
-    ignore,
+    S,
 )
 
 
 class Font:
     """"""
 
-    def __init__(self, file_path: P, size: Z) -> N:
+    def render(self, text: S, antialias: B, color: TZ3) -> Surface:
         """"""
-        ignore(file_path)
-        ignore(size)
+        raise NotImplementedError(self, text, antialias, color)
+
+    def __init__(self, file_path: VP = None, size: VZ = None) -> N:
+        """"""
+        raise NotImplementedError(self, file_path, size)
 
 
 def init() -> N:
     """"""
+    raise NotImplementedError()

@@ -9,17 +9,6 @@ from celestine.typed import (
 )
 
 
-class Event:
-    """"""
-
-    type: Z
-    button: Z
-
-
-class Font:
-    """"""
-
-
 class Rect:
     """"""
 
@@ -65,8 +54,3 @@ class Surface:
         self.size = size
         self.source = self
         self.width = 0
-
-
-EVENT = Event()
-SURFACE = Surface((0, 0))
-SIZE = (0, 0)

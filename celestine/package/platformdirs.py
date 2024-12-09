@@ -14,12 +14,13 @@ class Package(Abstract):
     @property
     def directory(self) -> P:
         """"""
-        directory = self.package.user_data_dir(
+        user_data_dir = getattr(self.package, "user_data_dir")
+        path = user_data_dir(
             appname="celestine",
             appauthor=False,
             version=None,
             roaming=False,
             ensure_exists=True,
         )
-        path = pathlib.Path(directory)
-        return path
+        result = pathlib.Path(path)
+        return result

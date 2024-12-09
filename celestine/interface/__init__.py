@@ -1,18 +1,17 @@
 """"""
 
+import collections.abc
 import math
 import pathlib
 
 from celestine import bank
 from celestine.typed import (
     BF,
-    GA,
-    GS,
+    IT,
     LS,
     A,
     B,
     D,
-    G,
     K,
     N,
     Object,
@@ -36,7 +35,52 @@ from celestine.window.container import (
 )
 
 
-class Abstract(Object):
+class Tree(Object, collections.abc.MutableMapping[S, A]):
+    """"""
+
+    children: D[S, K]
+    name: S  # The key to use to find this in the window dictionary.
+
+    def find(self, name: S) -> K:
+        """"""
+        for key, value in self.items():
+            if key == name:
+                return value
+            try:
+                return value.find(name)
+            except AttributeError:
+                pass
+            except KeyError:
+                pass
+        raise KeyError(name)
+
+    def set(self, item: K) -> K:
+        """"""
+        self.children[item.name] = item
+        return item
+
+    def __delitem__(self, key: S) -> N:
+        del self.children[key]
+
+    def __getitem__(self, key: S) -> K:
+        return self.children[key]
+
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(**star)
+        self.name = name
+        self.children = {}
+
+    def __iter__(self) -> IT[S]:
+        return iter(self.children)
+
+    def __len__(self) -> Z:
+        return len(self.children)
+
+    def __setitem__(self, key: S, value: A) -> N:
+        self.children[key] = value
+
+
+class Abstract(Tree):
     """"""
 
     parent: K
@@ -44,7 +88,6 @@ class Abstract(Object):
     area: Area
     canvas: A
     hidden: B
-    name: S  # The key to use to find this in the window dictionary.
 
     action: S  # The action to perform when the user clicks the button.
     fit: Image  # The way the image scales to fit the view space.
@@ -102,12 +145,11 @@ class Abstract(Object):
         self.area = area
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
-        super().__init__(**star)
+        super().__init__(name, **star)
         self.parent = parent
         self.area = Area.fast(0, 0)
         self.canvas = None
         self.hidden = False
-        self.name = name
 
         self.star = star
 
@@ -141,71 +183,13 @@ class Element(Abstract):
         self.item = None
 
 
-class Tree[X](Object):
-    """"""
-
-    # TODO Python 3.12: Make class Tree[TYPE] and replace ANY.
-    _children: D[S, Abstract]
-
-    def find(self, name: S) -> Abstract:
-        """"""
-        for key, value in self.items():
-            if key == name:
-                return value
-            try:
-                return value.find(name)
-            except AttributeError:
-                pass
-            except KeyError:
-                pass
-        raise KeyError(name)
-
-    def get(self, name: S) -> Abstract:
-        """"""
-        result = self._children[name]
-        return result
-
-    def items(self) -> GA:
-        """"""
-        iterator = iter(self._children.items())
-        yield from iterator
-
-    def keys(self) -> GS:
-        """"""
-        iterator = iter(self._children.keys())
-        yield from iterator
-
-    def set(self, item: Abstract) -> Abstract:
-        """"""
-        self._children[item.name] = item
-        return item
-
-    def values(self) -> G[Abstract, N, N]:
-        """"""
-        iterator = iter(self._children.values())
-        yield from iterator
-
-    def __bool__(self) -> B:
-        boolean = bool(self._children)
-        return boolean
-
-    def __init__(self, **star: R) -> N:
-        self._children = {}
-        super().__init__(**star)
-
-    def __len__(self) -> Z:
-        length = len(self._children)
-        return length
-
-
-class View(Abstract, Tree):
+class View(Abstract):
     """"""
 
     item: D[S, Abstract]
     width: Z
     height: Z
-    element_item: D[S, A]
-    tree: Tree[K]
+    element_item: D[S, Abstract]
 
     def click(self, point: Point, **star: R) -> B:
         if not super().click(point, **star):
@@ -332,16 +316,6 @@ class View(Abstract, Tree):
         self.height = row
         self.mode = mode
 
-        for range_y in range(row):
-            for range_x in range(col):
-                name = f"{self.name}_{range_x}-{range_y}"
-                self.set(
-                    Abstract(
-                        name,
-                        self,
-                    )
-                )
-
     def element(self, name: S, **star: R) -> N:
         """"""
         self.set(
@@ -414,11 +388,7 @@ class Window(Tree):
             ".png",
         ]
 
-    def drop(
-        self,
-        name: S,
-        **star: R,
-    ) -> Abstract:
+    def drop(self, name: S, **star: R) -> Tree:
         """"""
         return self.set(
             self.element_item["view"](
@@ -494,7 +464,7 @@ class Window(Tree):
         self.turn(self.main)
 
     def __init__(self, element_item: D[S, A], **star: R) -> N:
-        super().__init__(**star)
+        super().__init__("window", **star)
         self.main = ""
         self.area = Area.fast(0, 0)
         self.code = Dictionary()

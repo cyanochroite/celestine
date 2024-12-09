@@ -1,32 +1,28 @@
 """"""
 
-from celestine.package.pygame.abstract import (
-    SURFACE,
-    Surface,
-)
+from celestine.package.pygame.abstract import Surface
 from celestine.typed import (
     TZ2,
     N,
     S,
-    ignore,
 )
 
 
 def flip() -> N:
     """"""
+    raise NotImplementedError()
 
 
 def set_caption(title: S) -> N:
     """"""
-    ignore(title)
+    raise NotImplementedError(title)
 
 
 def set_icon(surface: Surface) -> N:
     """"""
-    ignore(surface)
+    raise NotImplementedError(surface)
 
 
 def set_mode(size: TZ2) -> Surface:
     """"""
-    ignore(size)
-    return SURFACE
+    raise NotImplementedError(size)
