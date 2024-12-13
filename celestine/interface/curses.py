@@ -273,20 +273,10 @@ class Window(Window_):
     @override
     def draw(self, **star: R) -> N:
         """"""
-
-        # Do normal draw stuff.
-
         self.canvas.erase()
-
-        (size_y, size_x) = self.stdscr.getmaxyx()
-        canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
-        # canvas = curses.newwin(size_y - 2, size_x - 2, 1, 1)
-        # canvas = curses.window(*self.area.value)
-
-        super().draw(canvas=canvas, **star)
+        super().draw(canvas=self.canvas, **star)
 
         self.stdscr.noutrefresh()
-        self.background.noutrefresh()
         self.canvas.noutrefresh()
         curses.doupdate()
 
@@ -310,8 +300,6 @@ class Window(Window_):
         super().run()
 
         (size_y, size_x) = self.stdscr.getmaxyx()
-
-        self.stdscr.box()
 
         header = self.stdscr.subwin(0, size_x, 0, 0)
         header.addstr(0, 1, bank.language.APPLICATION_TITLE)
@@ -345,9 +333,9 @@ class Window(Window_):
                         math.floor(1 + self.cord_y),
                         math.floor(1 + self.cord_x),
                     )
-                case curses.KEY_EXIT:
+                case 0x1B:  # ESCAPE
                     break
-                case curses.KEY_CLICK:
+                case 0x20:  # SPACE
                     self.page.click(Point(self.cord_x, self.cord_y))
                 case _:
                     pass
@@ -372,12 +360,9 @@ class Window(Window_):
         self.stdscr.keypad(True)
         curses.start_color()
 
+        self.stdscr.box()
+
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.full = Plane.create(size_x, size_y)
-
-        self.background = curses.newwin(size_y - 2, size_x - 2, 1, 1)
-        self.background.box()
-
         plane = Plane(
             Line(0, size_x - 2),
             Line(0, size_y - 2),
@@ -386,4 +371,4 @@ class Window(Window_):
         self.cord_x = 0.5
         self.cord_y = 0.5
 
-        self.canvas = self.background
+        self.canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
