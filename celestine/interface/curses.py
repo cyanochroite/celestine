@@ -309,34 +309,36 @@ class Window(Window_):
         footer.addstr(0, 1, bank.language.CURSES_EXIT)
         footer.refresh()
 
+        def move():
+            size_x, size_y = self.area.local.size
+            self.cord_x %= size_x
+            self.cord_y %= size_y
+            self.stdscr.move(
+                math.floor(1 + self.cord_y),
+                math.floor(1 + self.cord_x),
+            )
+
         while True:
             bank.dequeue()
             event = self.stdscr.getch()
             match event:
-                case 258 | 259 | 260 | 261 as key:
-                    match key:
-                        case curses.KEY_UP:
-                            self.cord_y -= 1
-                        case curses.KEY_DOWN:
-                            self.cord_y += 1
-                        case curses.KEY_LEFT:
-                            self.cord_x -= 1
-                        case curses.KEY_RIGHT:
-                            self.cord_x += 1
-                        case _:
-                            pass
-
-                    size_x, size_y = self.area.local.size
-                    self.cord_x %= size_x
-                    self.cord_y %= size_y
-                    self.stdscr.move(
-                        math.floor(1 + self.cord_y),
-                        math.floor(1 + self.cord_x),
-                    )
-                case 0x1B:  # ESCAPE
+                case 27:  # ESCAPE
                     break
-                case 0x20:  # SPACE
-                    self.page.click(Point(self.cord_x, self.cord_y))
+                case 32:  # SPACE
+                    point = Point(self.cord_x, self.cord_y)
+                    self.page.click(point)
+                case 258:  # KEY_DOWN
+                    self.cord_y += 1
+                    move()
+                case 259:  # KEY_UP
+                    self.cord_y -= 1
+                    move()
+                case 260:  # KEY_LEFT
+                    self.cord_x -= 1
+                    move()
+                case 261:  # KEY_RIGHT
+                    self.cord_x += 1
+                    move()
                 case _:
                     pass
 

@@ -16,12 +16,6 @@ endwin: A
 init_color: A
 init_pair: A
 initscr: A
-KEY_CLICK: A
-KEY_DOWN: A
-KEY_EXIT: A
-KEY_LEFT: A
-KEY_RIGHT: A
-KEY_UP: A
 nocbreak: A
 noecho: A
 start_color: A
