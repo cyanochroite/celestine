@@ -35,12 +35,48 @@ color_table = {}
 COLORS = 15
 
 
+def brightwing(image):
+    """
+    Brightwing no like the dark colors.
+
+    Make image bright.
+    """
+    def brighter(pixel):
+        invert = (255 - pixel) / 255
+        boost = invert * 64
+        shift = pixel + boost
+        return shift
+
+    hue, saturation, value = image.convert("HSV").split()
+    new_value = value.point(brighter)
+
+    bands = (hue, saturation, new_value)
+
+    return pillow.Image.merge("HSV", bands).convert("RGB")
+
+
+def convert(image, mode):
+    """"""
+
+    matrix = None  # Unused default.
+    dither = pillow.Image.Dither.FLOYDSTEINBERG
+    palette = pillow.Image.Palette.WEB  # Unused default.
+    colors = 256  # Unused default.
+
+    hold = image.convert(mode, matrix, dither, palette, colors)
+    image = hold
+    return image
+
+
 def get_colors(curses, image):
     """Fails after being called 16 times."""
     global color_index
     global color_table
 
     colors = image.getcolors()
+    if not colors:
+        print("Yo where my color go?")
+        return
     for color in colors:
         (count, pixel) = color
         (red, green, blue) = pixel
@@ -219,21 +255,24 @@ class Element(Element_, Abstract):
 
         # text
         canvas = star.pop("canvas")
-        canvas.addstr(y, x, self.text)
 
-        return
+        if self.text:
+            canvas.addstr(y, x, self.text)
+            return
 
-        self.path = P()
         if not pillow:
             self.render(self.path.name, **star)
             return
 
-        self.cache = self.image
+        self.cache = pillow.Image.open(self.path)
+        self.color = pillow.Image.open(self.path)
+        self.color.convert("RGBA")
+
+        # self.cache = self.image
         self.color = self.cache.copy()
 
         # Crop box.
-        source_length_x = self.cache.image.width
-        source_length_y = self.cache.image.height
+        source_length_x, source_length_y = self.cache.size
 
         length_x, length_y = self.area.world.size
 
@@ -247,17 +286,17 @@ class Element(Element_, Abstract):
         box = source_length.size
         # Done.
 
-        self.color.brightwing()
+        self.color = brightwing(self.color)
 
         self.cache.resize(target_length.size)
         self.color.resize(self.area.local.size)
 
         self.color.quantize()
 
-        self.cache.convert_to_mono()
-        self.color.convert_to_color()
+        self.cache = convert(self.cache, "1")
+        self.color = convert(self.color, "RGB")
 
-        get_colors(curses, self.color.image)
+        get_colors(curses, self.color)
 
         item = self.output()
         self.render(item, **star)
