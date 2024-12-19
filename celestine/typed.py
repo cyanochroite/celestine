@@ -99,13 +99,49 @@ type LP = L[P]
 type LS = L[S]
 type LZ = L[Z]
 
+
 type TA = T[A, ...]
+type TA1 = T[A]
+type TA2 = T[A, A]
+type TA3 = T[A, A, A]
+type TA4 = T[A, A, A, A]
+
 type TB = T[B, ...]
+type TB1 = T[B]
+type TB2 = T[B, B]
+type TB3 = T[B, B, B]
+type TB4 = T[B, B, B, B]
+
 type TF = T[F, ...]
+type TF1 = T[F]
+type TF2 = T[F, F]
+type TF3 = T[F, F, F]
+type TF4 = T[F, F, F, F]
+
 type TM = T[M, ...]
+type TM1 = T[M]
+type TM2 = T[M, M]
+type TM3 = T[M, M, M]
+type TM4 = T[M, M, M, M]
+
 type TP = T[P, ...]
+type TP1 = T[P]
+type TP2 = T[P, P]
+type TP3 = T[P, P, P]
+type TP4 = T[P, P, P, P]
+
 type TS = T[S, ...]
+type TS1 = T[S]
+type TS2 = T[S, S]
+type TS3 = T[S, S, S]
+type TS4 = T[S, S, S, S]
+
 type TZ = T[Z, ...]
+type TZ1 = T[Z]
+type TZ2 = T[Z, Z]
+type TZ3 = T[Z, Z, Z]
+type TZ4 = T[Z, Z, Z, Z]
+
 
 type VA = V[A]
 type VB = V[B]
@@ -114,9 +150,6 @@ type VM = V[M]
 type VP = V[P]
 type VS = V[S]
 type VZ = V[Z]
-
-type TZ2 = T[Z, Z]
-type TZ3 = T[Z, Z, Z]
 
 
 def ignore(_: A) -> N:

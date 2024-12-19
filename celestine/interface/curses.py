@@ -17,9 +17,12 @@ from celestine.package import (
 from celestine.typed import (
     LS,
     B,
+    F,
     N,
     P,
     R,
+    S,
+    Z,
     override,
 )
 from celestine.window.collection import (
@@ -35,12 +38,40 @@ color_table = {}
 COLORS = 15
 
 
+def convert(image: pillow.Image, mode: S) -> pillow.Image:
+    """"""
+    matrix = None
+    dither = pillow.Image.Dither.FLOYDSTEINBERG
+
+    result = image.convert(mode, matrix, dither)
+    return result
+
+
+def resize(image: pillow.Image, width: F, height: F) -> pillow.Image:
+    """"""
+
+    def validate(number: F) -> Z:
+        integer = round(number)
+        result = max(1, integer)
+        return result
+
+    size = (validate(width), validate(height))
+    resample = pillow.Image.Resampling.LANCZOS
+
+    result = image.resize(size, resample)
+    return result
+
+
+#######
+
+
 def brightwing(image):
     """
     Brightwing no like the dark colors.
 
     Make image bright.
     """
+
     def brighter(pixel):
         invert = (255 - pixel) / 255
         boost = invert * 64
@@ -53,19 +84,6 @@ def brightwing(image):
     bands = (hue, saturation, new_value)
 
     return pillow.Image.merge("HSV", bands).convert("RGB")
-
-
-def convert(image, mode):
-    """"""
-
-    matrix = None  # Unused default.
-    dither = pillow.Image.Dither.FLOYDSTEINBERG
-    palette = pillow.Image.Palette.WEB  # Unused default.
-    colors = 256  # Unused default.
-
-    hold = image.convert(mode, matrix, dither, palette, colors)
-    image = hold
-    return image
 
 
 def get_colors(curses, image):
@@ -281,6 +299,17 @@ class Element(Element_, Abstract):
 
         source_length = Plane.create(source_length_x, source_length_y)
         target_length = Plane.create(target_length_x, target_length_y)
+
+        # self.color = resize(
+        #    self.color,
+        #    length_x,
+        #    length_y,
+        # )
+        self.cache = resize(
+            self.cache,
+            target_length_x,
+            target_length_y,
+        )
 
         source_length.scale_to_min(target_length)
         box = source_length.size

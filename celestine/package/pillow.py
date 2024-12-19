@@ -28,10 +28,24 @@ class Image:
         """"""
         raise NotImplementedError(cls, fp)
 
+    class Dither(enum.Enum):
+        """"""
+
+        FLOYDSTEINBERG = enum.auto()
+
+    class Palette(enum.Enum):
+        """"""
+
+        WEB = enum.auto()
+
     class Resampling(enum.Enum):
         """"""
 
         LANCZOS = enum.auto()
+
+    def convert(self, mode: S, matrix: N, dither: Dither) -> K:
+        """"""
+        raise NotImplementedError(self, mode, matrix, dither)
 
     def resize(self, size: TZ2, resample: Resampling) -> K:
         """"""
