@@ -22,6 +22,7 @@ from celestine.typed import (
     P,
     R,
     S,
+    K,
     Z,
     override,
 )
@@ -38,7 +39,7 @@ color_table = {}
 COLORS = 15
 
 
-def convert(image: pillow.Image, mode: S) -> pillow.Image:
+def _convert(image: pillow.Image, mode: S) -> pillow.Image:
     """"""
     matrix = None
     dither = pillow.Image.Dither.FLOYDSTEINBERG
@@ -47,7 +48,7 @@ def convert(image: pillow.Image, mode: S) -> pillow.Image:
     return result
 
 
-def resize(image: pillow.Image, width: F, height: F) -> pillow.Image:
+def _resize(image: pillow.Image, width: F, height: F) -> pillow.Image:
     """"""
 
     def validate(number: F) -> Z:
@@ -63,6 +64,85 @@ def resize(image: pillow.Image, width: F, height: F) -> pillow.Image:
 
 
 #######
+
+def resize(image, size, box=None):
+    """"""
+    size_x, size_y = size
+
+    size_x = max(1, round(size_x))
+    size_y = max(1, round(size_y))
+
+    size = (size_x, size_y)
+    resample = pillow.Image.Resampling.LANCZOS
+    reducing_gap = None
+
+    hold = image.resize(size, resample, box, reducing_gap)
+    return hold
+
+
+def convert(image, mode):
+    """"""
+    matrix = None  # Unused default.
+    dither = pillow.Image.Dither.FLOYDSTEINBERG
+    palette = pillow.Image.Palette.WEB  # Unused default.
+    colors = 256  # Unused default.
+
+    hold = image.convert(mode, matrix, dither, palette, colors)
+    return hold
+
+
+def convert_to_alpha(image):
+    """"""
+    return convert(image, "RGBA")
+
+
+def convert_to_color(image):
+    """"""
+    return convert(image, "RGB")
+
+
+def convert_to_mono(image):
+    """"""
+    return convert(image, "1")
+
+
+def image_load(path):
+    """"""
+    mode = "r"
+    formats = None
+    image = pillow.Image.open(path, mode, formats)
+
+    # Highest mode for median cut.
+    mode = "RGBA"
+    matrix = None
+    dither = pillow.Image.Dither.NONE
+    palette = pillow.Image.Palette.ADAPTIVE
+    colors = 256
+    image = image.convert(mode, matrix, dither, palette, colors)
+
+    return image
+
+
+def crop(source_length, target_length):
+    """"""
+
+    (source_length_x, source_length_y) = source_length
+    (target_length_x, target_length_y) = target_length
+
+    source_ratio = source_length_x / source_length_y
+    target_ratio = target_length_x / target_length_y
+
+    if source_ratio < target_ratio:
+        length = round(source_length_x / target_ratio)
+        offset = round((source_length_y - length) / 2)
+        return (0, 0 + offset, source_length_x, length + offset)
+
+    if source_ratio > target_ratio:
+        length = round(source_length_y * target_ratio)
+        offset = round((source_length_x - length) / 2)
+        return (0 + offset, 0, length + offset, source_length_y)
+
+    return (0, 0, source_length_x, source_length_y)
 
 
 def brightwing(image):
@@ -109,6 +189,9 @@ def get_colors(curses, image):
 
         if red >= 920 or green >= 920 or blue >= 920:
             print(red, green, blue)
+
+        if pixel in color_table:
+            continue
 
         curses.init_color(color_index, red, green, blue)
         curses.init_pair(color_index, color_index, 0)
@@ -185,7 +268,7 @@ class Element(Element_, Abstract):
         value = value[0:-1]
         return value.split(LINE_FEED)
 
-    def render(self, item, **star: R):
+    def render(self, item: LS, **star: R) -> N:
         """"""
 
         (x_dot, y_dot) = self.area.world.origin
@@ -204,11 +287,11 @@ class Element(Element_, Abstract):
         for row_text in item:
             index_x = 0
             for col_text in row_text:
-                width, height = self.color.size
+                width, _ = self.color.size
                 index = index_y * width + index_x
 
                 (red, green, blue) = color[index]
-                table = color_table[(red, green, blue)]
+                table = color_table.get((red, green, blue), 2)
                 extra = curses.color_pair(table)
 
                 self.add_string(
@@ -282,53 +365,45 @@ class Element(Element_, Abstract):
             self.render(self.path.name, **star)
             return
 
-        self.cache = pillow.Image.open(self.path)
-        self.color = pillow.Image.open(self.path)
-        self.color.convert("RGBA")
-
-        # self.cache = self.image
-        self.color = self.cache.copy()
+        self.cache = image_load(self.path)
+        self.color = image_load(self.path)
 
         # Crop box.
-        source_length_x, source_length_y = self.cache.size
+        source_length_x = self.cache.width
+        source_length_y = self.cache.height
 
         length_x, length_y = self.area.world.size
 
         target_length_x = length_x * 2
         target_length_y = length_y * 4
 
-        source_length = Plane.create(source_length_x, source_length_y)
-        target_length = Plane.create(target_length_x, target_length_y)
+        source_length = (source_length_x, source_length_y)
+        target_length = (target_length_x, target_length_y)
 
-        # self.color = resize(
-        #    self.color,
-        #    length_x,
-        #    length_y,
-        # )
-        self.cache = resize(
-            self.cache,
-            target_length_x,
-            target_length_y,
-        )
-
-        source_length.scale_to_min(target_length)
-        box = source_length.size
+        box = crop(source_length, target_length)
         # Done.
 
         self.color = brightwing(self.color)
 
-        self.cache.resize(target_length.size)
-        self.color.resize(self.area.local.size)
+        target_length = (target_length_x, target_length_y)
+        self.cache = resize(self.cache, target_length, box)
+        self.color = resize(self.color, self.area.world.size, box)
 
         self.color.quantize()
 
-        self.cache = convert(self.cache, "1")
-        self.color = convert(self.color, "RGB")
+        self.cache = convert_to_mono(self.cache)
+        self.color = convert_to_color(self.color)
 
         get_colors(curses, self.color)
 
         item = self.output()
         self.render(item, **star)
+
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
+        self.photo = None
+        self.cache = None
+        self.color = None
 
 
 class View(View_, Abstract):
