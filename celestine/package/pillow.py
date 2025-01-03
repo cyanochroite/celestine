@@ -23,29 +23,34 @@ class Image:
     mode: S
     size: TZ2
 
-    @classmethod
-    def open(cls, fp: P, mode: S, formats: N) -> K:
-        """"""
-        raise NotImplementedError(cls, fp, mode, formats)
-
     class Dither(enum.Enum):
         """"""
 
         FLOYDSTEINBERG = enum.auto()
+        NONE = enum.auto()
+        ORDERED = enum.auto()
+        RASTERIZE = enum.auto()
 
     class Palette(enum.Enum):
         """"""
 
+        ADAPTIVE = enum.auto()
         WEB = enum.auto()
 
     class Resampling(enum.Enum):
         """"""
 
+        BOX = enum.auto()
+        BICUBIC = enum.auto()
+        BILINEAR = enum.auto()
+        HAMMING = enum.auto()
         LANCZOS = enum.auto()
+        NEAREST = enum.auto()
 
-    def convert(self, mode: S, matrix: N, dither: Dither) -> K:
+    @classmethod
+    def open(cls, fp: P, mode: S, formats: N) -> K:
         """"""
-        raise NotImplementedError(self, mode, matrix, dither)
+        raise NotImplementedError(cls, fp, mode, formats)
 
     def resize(
         self,
@@ -62,6 +67,43 @@ class Image:
             box,
             reducing_gap,
         )
+
+    @property
+    def height(self) -> Z:
+        result = self.image.height
+        return result
+
+    def resize(self, size: TZ2, box) -> N:
+        """"""
+        # TODO check if box should be set
+        size_x, size_y = size
+
+        size_x = max(1, round(size_x))
+        size_y = max(1, round(size_y))
+        size = (size_x, size_y)
+
+        resample = pillow.Image.Resampling.LANCZOS
+        # box = None
+        reducing_gap = None
+
+        result = self.image.resize(size, resample, box, reducing_gap)
+        self.image = result
+
+    @property
+    def size(self) -> TZ2:
+        result = self.image.size
+        return result
+
+    @property
+    def width(self) -> Z:
+        result = self.image.width
+        return result
+
+    ###
+
+    def convert(self, mode: S, matrix: N, dither: Dither) -> K:
+        """"""
+        raise NotImplementedError(self, mode, matrix, dither)
 
     def tobytes(self) -> bytes:
         """"""

@@ -7,14 +7,21 @@ from celestine.typed import (
     K,
     N,
     P,
+    Z,
 )
 
 
 class Image:
     """"""
+
     image: pillow.Image
 
-    def resize(self, size: TZ2) -> N:
+    @property()
+    def height(self) -> Z:
+        result = self.image.height
+        return result
+
+    def resize(self, size: TZ2, box) -> N:
         """"""
         # TODO check if box should be set
         size_x, size_y = size
@@ -24,11 +31,21 @@ class Image:
         size = (size_x, size_y)
 
         resample = pillow.Image.Resampling.LANCZOS
-        box = None
+        # box = None
         reducing_gap = None
 
         result = self.image.resize(size, resample, box, reducing_gap)
         self.image = result
+
+    @property()
+    def size(self) -> TZ2:
+        result = self.image.size
+        return result
+
+    @property()
+    def width(self) -> Z:
+        result = self.image.width
+        return result
 
     ###
 

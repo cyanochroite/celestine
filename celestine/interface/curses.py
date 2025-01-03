@@ -66,21 +66,6 @@ def _resize(image: pillow.Image, width: F, height: F) -> pillow.Image:
 #######
 
 
-def resize(image, size, box=None):
-    """"""
-    size_x, size_y = size
-
-    size_x = max(1, round(size_x))
-    size_y = max(1, round(size_y))
-
-    size = (size_x, size_y)
-    resample = pillow.Image.Resampling.LANCZOS
-    reducing_gap = None
-
-    hold = image.resize(size, resample, box, reducing_gap)
-    return hold
-
-
 def convert(image, mode):
     """"""
     matrix = None  # Unused default.
@@ -112,7 +97,7 @@ def image_load(path):
 
     image = Image.open(path)
     image.convert()
-    return image.image
+    return image
 
 
 def crop(source_length, target_length):
@@ -321,8 +306,8 @@ class Element(Element_, Abstract):
         self.color = image_load(self.path)
 
         # Crop box.
-        source_length_x = self.cache.width
-        source_length_y = self.cache.height
+        source_length_x = self.cache.image.width
+        source_length_y = self.cache.image.height
 
         length_x, length_y = self.area.world.size
 
@@ -335,18 +320,18 @@ class Element(Element_, Abstract):
         box = crop(source_length, target_length)
         # Done.
 
-        self.color = brightwing(self.color)
+        # self.color = brightwing(self.color)
 
         target_length = (target_length_x, target_length_y)
-        self.cache = resize(self.cache, target_length, box)
-        self.color = resize(self.color, self.area.world.size, box)
+        self.cache.resize(target_length, box)
+        self.color.resize(self.area.world.size, box)
 
-        self.color.quantize()
+        self.color.image.quantize()
 
-        self.cache = convert_to_mono(self.cache)
-        self.color = convert_to_color(self.color)
+        self.cache.image = convert_to_mono(self.cache.image)
+        self.color.image = convert_to_color(self.color.image)
 
-        get_colors(curses, self.color)
+        get_colors(curses, self.color.image)
 
         item = self.output()
         self.render(item, **star)
