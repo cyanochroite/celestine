@@ -1,7 +1,5 @@
 """Python Imaging Library (Fork)."""
 
-import enum
-
 from celestine import load
 from celestine.package import Abstract
 from celestine.typed import (
@@ -20,37 +18,35 @@ from celestine.typed import (
 class Image:
     """"""
 
-    mode: S
-    size: TZ2
-
-    class Dither(enum.Enum):
+    class Dither:
         """"""
 
-        FLOYDSTEINBERG = enum.auto()
-        NONE = enum.auto()
-        ORDERED = enum.auto()
-        RASTERIZE = enum.auto()
+        FLOYDSTEINBERG = 0
+        NONE = 0
+        ORDERED = 0
+        RASTERIZE = 0
 
-    class Palette(enum.Enum):
+    class Palette:
         """"""
 
-        ADAPTIVE = enum.auto()
-        WEB = enum.auto()
+        ADAPTIVE = 0
+        WEB = 0
 
-    class Resampling(enum.Enum):
+    class Resampling:
         """"""
 
-        BOX = enum.auto()
-        BICUBIC = enum.auto()
-        BILINEAR = enum.auto()
-        HAMMING = enum.auto()
-        LANCZOS = enum.auto()
-        NEAREST = enum.auto()
+        BICUBIC = 0
+        BILINEAR = 0
+        BOX = 0
+        HAMMING = 0
+        LANCZOS = 0
+        NEAREST = 0
+
+    @property
+    def height(self) -> Z: ...
 
     @classmethod
-    def open(cls, fp: P, mode: S, formats: N) -> K:
-        """"""
-        raise NotImplementedError(cls, fp, mode, formats)
+    def open(cls, fp: P, mode: S, formats: N) -> K: ...
 
     def resize(
         self,
@@ -58,56 +54,18 @@ class Image:
         resample: Resampling,
         box: N,
         reducing_gap: N,
-    ) -> K:
-        """"""
-        raise NotImplementedError(
-            self,
-            size,
-            resample,
-            box,
-            reducing_gap,
-        )
+    ) -> K: ...
 
     @property
-    def height(self) -> Z:
-        result = self.image.height
-        return result
-
-    def resize(self, size: TZ2, box) -> N:
-        """"""
-        # TODO check if box should be set
-        size_x, size_y = size
-
-        size_x = max(1, round(size_x))
-        size_y = max(1, round(size_y))
-        size = (size_x, size_y)
-
-        resample = pillow.Image.Resampling.LANCZOS
-        # box = None
-        reducing_gap = None
-
-        result = self.image.resize(size, resample, box, reducing_gap)
-        self.image = result
+    def size(self) -> TZ2: ...
 
     @property
-    def size(self) -> TZ2:
-        result = self.image.size
-        return result
-
-    @property
-    def width(self) -> Z:
-        result = self.image.width
-        return result
+    def width(self) -> Z: ...
 
     ###
+    def convert(self, mode: S, matrix: N, dither: Dither) -> K: ...
 
-    def convert(self, mode: S, matrix: N, dither: Dither) -> K:
-        """"""
-        raise NotImplementedError(self, mode, matrix, dither)
-
-    def tobytes(self) -> bytes:
-        """"""
-        raise NotImplementedError(self)
+    def tobytes(self) -> bytes: ...
 
 
 class ImageTk:
@@ -116,17 +74,9 @@ class ImageTk:
     class PhotoImage:
         """"""
 
-        def height(self) -> Z:
-            """"""
-            raise NotImplementedError(self)
-
-        def width(self) -> Z:
-            """"""
-            raise NotImplementedError(self)
-
-        def __init__(self, image: VP = None) -> N:
-            """"""
-            raise NotImplementedError(self, image)
+        def height(self) -> Z: ...
+        def width(self) -> Z: ...
+        def __init__(self, image: VP = None) -> N: ...
 
 
 class Package(Abstract):
@@ -139,6 +89,4 @@ class Package(Abstract):
             setattr(self, "ImageTk", load.package("PIL", "ImageTk"))
 
 
-def extension() -> LS:
-    """"""
-    raise NotImplementedError()
+def extension() -> LS: ...

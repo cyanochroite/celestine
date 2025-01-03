@@ -4,6 +4,7 @@ from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import pillow
 from celestine.typed import (
     TZ2,
+    A,
     K,
     N,
     P,
@@ -16,12 +17,13 @@ class Image:
 
     image: pillow.Image
 
-    @property()
+    @property
     def height(self) -> Z:
+        """"""
         result = self.image.height
         return result
 
-    def resize(self, size: TZ2, box) -> N:
+    def resize(self, size: TZ2, box: A) -> N:
         """"""
         # TODO check if box should be set
         size_x, size_y = size
@@ -37,13 +39,15 @@ class Image:
         result = self.image.resize(size, resample, box, reducing_gap)
         self.image = result
 
-    @property()
+    @property
     def size(self) -> TZ2:
+        """"""
         result = self.image.size
         return result
 
-    @property()
+    @property
     def width(self) -> Z:
+        """"""
         result = self.image.width
         return result
 

@@ -188,22 +188,10 @@ Project Links
 Disclosures
 ***********
 
-Donations and Funding
-^^^^^^^^^^^^^^^^^^^^^
-
-The Célestine Project does not seek funding of any kind.
-Any claims of fundraising activities (for this project) are fraudulent.
-
-This project is Free and Open Source software, forever.
-
-I also generally do not accept gifts or donations.
-The only exception I can think of is Discord's rent-seeking Nitro Boosts.
-
-
-Cryptocurrency
-^^^^^^^^^^^^^^
-
-This project does not use, support, or endorse any cryptocurrencies or Non-Fungible Tokens.
+* This project is Free and Open Source software.
+* This project does not solicit or accept any financial contributions.
+* This project does not use, support, or endorse any form of cryptocurreny.
+* Any claims of fundraising activities (for this project) are fraudulent.
 
 
 Artificial Intelligence

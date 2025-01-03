@@ -306,8 +306,8 @@ class Element(Element_, Abstract):
         self.color = image_load(self.path)
 
         # Crop box.
-        source_length_x = self.cache.image.width
-        source_length_y = self.cache.image.height
+        source_length_x = self.cache.width
+        source_length_y = self.cache.height
 
         length_x, length_y = self.area.world.size
 
