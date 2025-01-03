@@ -18,11 +18,10 @@ from celestine.typed import (
     LS,
     B,
     F,
+    K,
     N,
-    P,
     R,
     S,
-    K,
     Z,
     override,
 )
@@ -32,6 +31,7 @@ from celestine.window.collection import (
     Plane,
     Point,
 )
+from celestine.window.pillow import Image
 
 color_index = 8  # skip the 8 reserved colors
 color_table = {}
@@ -64,6 +64,7 @@ def _resize(image: pillow.Image, width: F, height: F) -> pillow.Image:
 
 
 #######
+
 
 def resize(image, size, box=None):
     """"""
@@ -108,19 +109,10 @@ def convert_to_mono(image):
 
 def image_load(path):
     """"""
-    mode = "r"
-    formats = None
-    image = pillow.Image.open(path, mode, formats)
 
-    # Highest mode for median cut.
-    mode = "RGBA"
-    matrix = None
-    dither = pillow.Image.Dither.NONE
-    palette = pillow.Image.Palette.ADAPTIVE
-    colors = 256
-    image = image.convert(mode, matrix, dither, palette, colors)
-
-    return image
+    image = Image.open(path)
+    image.convert()
+    return image.image
 
 
 def crop(source_length, target_length):
@@ -227,6 +219,7 @@ class Element(Element_, Abstract):
     """"""
 
     def output(self):
+        """"""
         width, height = self.cache.size
 
         pixels = list(self.cache.getdata())
@@ -305,47 +298,6 @@ class Element(Element_, Abstract):
 
             index_y += 1
 
-    def draw_old(self, **star: R):
-        """"""
-        self.path = P()
-        if not pillow:
-            self.render(self.path.name, **star)
-            return
-
-        self.cache = pillow.open(self.path)
-        self.color = self.cache.copy()
-
-        # Crop box.
-        source_length_x = self.cache.image.width
-        source_length_y = self.cache.image.height
-
-        length_x, length_y = self.area.size
-
-        target_length_x = length_x * 2
-        target_length_y = length_y * 4
-
-        source_length = (source_length_x, source_length_y)
-        target_length = (target_length_x, target_length_y)
-
-        box = self.crop(source_length, target_length)
-        # Done.
-
-        self.color.brightwing()
-
-        target_length = (target_length_x, target_length_y)
-        self.cache.resize(target_length, box)
-        self.color.resize(self.area.size, box)
-
-        self.color.quantize()
-
-        self.cache.convert_to_mono()
-        self.color.convert_to_color()
-
-        get_colors(curses, self.color.image)
-
-        item = self.output()
-        self.render(item, **star)
-
     @override
     def draw(self, **star: R) -> B:
         """"""
@@ -359,11 +311,11 @@ class Element(Element_, Abstract):
 
         if self.text:
             canvas.addstr(y, x, self.text)
-            return
+            return True
 
         if not pillow:
             self.render(self.path.name, **star)
-            return
+            return True
 
         self.cache = image_load(self.path)
         self.color = image_load(self.path)
@@ -398,6 +350,7 @@ class Element(Element_, Abstract):
 
         item = self.output()
         self.render(item, **star)
+        return True
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)

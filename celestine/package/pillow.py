@@ -24,9 +24,9 @@ class Image:
     size: TZ2
 
     @classmethod
-    def open(cls, fp: P) -> K:
+    def open(cls, fp: P, mode: S, formats: N) -> K:
         """"""
-        raise NotImplementedError(cls, fp)
+        raise NotImplementedError(cls, fp, mode, formats)
 
     class Dither(enum.Enum):
         """"""
@@ -47,9 +47,21 @@ class Image:
         """"""
         raise NotImplementedError(self, mode, matrix, dither)
 
-    def resize(self, size: TZ2, resample: Resampling) -> K:
+    def resize(
+        self,
+        size: TZ2,
+        resample: Resampling,
+        box: N,
+        reducing_gap: N,
+    ) -> K:
         """"""
-        raise NotImplementedError(self, size, resample)
+        raise NotImplementedError(
+            self,
+            size,
+            resample,
+            box,
+            reducing_gap,
+        )
 
     def tobytes(self) -> bytes:
         """"""
