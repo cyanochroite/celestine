@@ -27,7 +27,7 @@ U: typing.Any  # Unused  # Union?
 V: typing.Optional  # Void like type.
 W: typing.Any  # Unused  # self.data()?
 X: typing.TypeVar("X")  # Primary type variable.
-Y: typing.Type  # Secondary type variable.
+Y: bytes
 Z: int  # Set of Integers Symbol ℤ.
 """
 
@@ -66,7 +66,7 @@ type N = None
 type R = A
 type S = str
 X = TV("X")
-Y = TV("Y")
+type Y = bytes
 type Z = int
 
 
@@ -187,20 +187,20 @@ class Object(abc.ABC):
         """"""
         return cls(*data, **star)
 
-    def pull(self, name: S, cast: TY[A] = str, default: A = None) -> A:
+    def pull(self, name: S, _cast: TY[A] = str, default: A = None) -> A:
         """Extracts keyword arguments from star object and returns."""
         try:
             pop = self.star.pop(name)
-            value = cast(pop)
+            value = _cast(pop)
         except KeyError:
             value = default
         return value
 
-    def warp(self, name: S, cast: TY[A] = str, default: A = None) -> N:
+    def warp(self, name: S, _cast: TY[A] = str, default: A = None) -> N:
         """Extracts keyword arguments from star object and saves."""
         try:
             pop = self.star.pop(name)
-            value = cast(pop)
+            value = _cast(pop)
         except KeyError:
             value = default
         setattr(self, name, value)

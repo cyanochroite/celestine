@@ -95,7 +95,7 @@ def convert_to_mono(image):
 def image_load(path):
     """"""
 
-    image = Image.open(path)
+    image = Image.open(path, None)
     image.convert()
     return image
 

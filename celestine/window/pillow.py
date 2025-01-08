@@ -3,6 +3,7 @@
 from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import pillow
 from celestine.typed import (
+    LS,
     TZ2,
     A,
     K,
@@ -23,20 +24,17 @@ class Image:
         result = self.image.height
         return result
 
-    def resize(self, size: TZ2, box: A) -> N:
+    def resize(self, sizes: TZ2, box: A) -> N:
         """"""
-        # TODO check if box should be set
-        size_x, size_y = size
+        size_x, size_y = sizes
 
         size_x = max(1, round(size_x))
         size_y = max(1, round(size_y))
+
         size = (size_x, size_y)
-
         resample = pillow.Image.Resampling.LANCZOS
-        # box = None
-        reducing_gap = None
 
-        result = self.image.resize(size, resample, box, reducing_gap)
+        result = self.image.resize(size, resample)
         self.image = result
 
     @property
@@ -57,18 +55,16 @@ class Image:
         """"""
         mode = "RGBA"
         matrix = None
-        dither = pillow.Image.Dither.NONE
-        palette = pillow.Image.Palette.ADAPTIVE
-        colors = 256
-        hold = self.image.convert(mode, matrix, dither, palette, colors)
+        dither = pillow.Image.Dither.NONE  # TODO: Erase?
+        hold = self.image.convert(mode, matrix, dither)
         self.image = hold
 
     @classmethod
-    def open(cls, path: P) -> K:
+    def open(cls, path: P, format: LS) -> K:
         """"""
         fp = path
         mode = LATIN_SMALL_LETTER_R
-        formats = None
+        formats = format
         image = pillow.Image.open(fp, mode, formats)
         result = cls(image)
         return result

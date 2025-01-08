@@ -11,6 +11,7 @@ from celestine.typed import (
     P,
     R,
     S,
+    Y,
     Z,
 )
 
@@ -21,51 +22,44 @@ class Image:
     class Dither:
         """"""
 
-        FLOYDSTEINBERG = 0
-        NONE = 0
-        ORDERED = 0
-        RASTERIZE = 0
+        FLOYDSTEINBERG = 1
+        NONE = 2
+        ORDERED = 3
+        RASTERIZE = 4
 
     class Palette:
         """"""
 
-        ADAPTIVE = 0
-        WEB = 0
+        ADAPTIVE = 1
+        WEB = 2
 
     class Resampling:
         """"""
 
-        BICUBIC = 0
-        BILINEAR = 0
-        BOX = 0
-        HAMMING = 0
-        LANCZOS = 0
-        NEAREST = 0
+        BICUBIC = 1
+        BILINEAR = 2
+        BOX = 3
+        HAMMING = 4
+        LANCZOS = 5
+        NEAREST = 6
+
+    def convert(self, mode: S, matrix: N, dither: Dither) -> K: ...
 
     @property
     def height(self) -> Z: ...
 
     @classmethod
-    def open(cls, fp: P, mode: S, formats: N) -> K: ...
+    def open(cls, fp: P, mode: S, formats: LS) -> K: ...
 
-    def resize(
-        self,
-        size: TZ2,
-        resample: Resampling,
-        box: N,
-        reducing_gap: N,
-    ) -> K: ...
+    def resize(self, size: TZ2, resample: Resampling) -> K: ...
 
     @property
     def size(self) -> TZ2: ...
 
+    def tobytes(self) -> Y: ...
+
     @property
     def width(self) -> Z: ...
-
-    ###
-    def convert(self, mode: S, matrix: N, dither: Dither) -> K: ...
-
-    def tobytes(self) -> bytes: ...
 
 
 class ImageTk:
