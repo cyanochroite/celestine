@@ -39,7 +39,8 @@ def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
     sys_stdout = sys.stdout
     with open(os.devnull, "w", encoding="utf-8") as stdout:
         sys.stdout = stdout
-        for name in load.argument("package"):
+        argument = load.argument("package")
+        for name in argument:
             value = load.instance("package", name, "Package")
             setattr(package, name, value)
     sys.stdout = sys_stdout

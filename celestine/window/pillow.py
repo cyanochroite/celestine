@@ -60,7 +60,7 @@ class Image:
         self.image = hold
 
     @classmethod
-    def open(cls, path: P, format: LS) -> K:
+    def open(cls, path: P, format: A) -> K:  # TODO: fix format type
         """"""
         fp = path
         mode = LATIN_SMALL_LETTER_R

@@ -19,6 +19,7 @@ from celestine.typed import (
 class Abstract:
     """"""
 
+    local: M | N
     name: S
     package: M | N
 
@@ -58,12 +59,14 @@ class Abstract:
         return result
 
     def __getattr__(self, name: S) -> S:
+        gets = getattr(self.local, name)
         result = getattr(self.package, name)
         return result
 
     def __init__(self, *, pypi: VS = None, **star: R) -> N:
         self.name = self.__module__.rsplit(".", maxsplit=1)[-1]
         self.pypi = pypi or self.name
+        self.local = load.module("package", self.name)
         try:
             self.package = load.package(self.pypi)
         except ValueError:
