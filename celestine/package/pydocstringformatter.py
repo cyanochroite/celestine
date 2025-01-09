@@ -6,15 +6,12 @@ import sys
 from celestine import load
 from celestine.package import Abstract
 from celestine.typed import (
-    CN,
     M,
     N,
     P,
     ignore,
     override,
 )
-
-run: CN
 
 
 class Package(Abstract):
@@ -40,3 +37,7 @@ class Package(Abstract):
         package.run_docstring_formatter(argv)
 
         os.chdir(location)
+
+
+def run() -> N:
+    """"""

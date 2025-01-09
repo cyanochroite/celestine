@@ -25,32 +25,24 @@ class Surface:
 
     def blit(self, source: K, dest: TZ2) -> Rect:
         """"""
-        self.source = source
-        self.dest = dest
-        return Rect()
+        raise NotImplementedError(self, source, dest)
 
     def convert_alpha(self) -> K:
         """"""
-        return self
+        raise NotImplementedError(self)
 
     def fill(self, color: TZ3) -> Rect:
         """"""
-        self.color = color
-        return Rect()
+        raise NotImplementedError(self, color)
 
     def get_height(self) -> Z:
         """"""
-        return self.height
+        raise NotImplementedError(self)
 
     def get_width(self) -> Z:
         """"""
-        return self.width
+        raise NotImplementedError(self)
 
     def __init__(self, size: TZ2) -> N:
         """"""
-        self.color = (0, 0, 0)
-        self.dest = (0, 0)
-        self.height = 0
-        self.size = size
-        self.source = self
-        self.width = 0
+        raise NotImplementedError(self, size)
