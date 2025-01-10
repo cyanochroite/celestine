@@ -1,7 +1,6 @@
 """Python Game Development."""
 
-import re
-from celestine import bank
+from celestine.data import stub
 from celestine.package import Abstract
 from celestine.package.pygame import (
     event,
@@ -10,66 +9,75 @@ from celestine.package.pygame import (
     mouse,
     transform,
 )
-from celestine.package.pygame.abstract import Surface
 from celestine.typed import (
-    A,
     TZ2,
-    B,
     N,
-    Protocol,
-    R,
     S,
     Z,
     ignore,
+    TZ2,
+    TZ3,
+    K,
+    N,
+    Z,
 )
 
 ignore(event)
 ignore(font)
 ignore(image)
 ignore(mouse)
-ignore(Surface)
 ignore(transform)
+
 MOUSEBUTTONDOWN: Z
 QUIT: Z
-
-NAME = "pygame"
-
-from celestine import regex, load
-
-
-class Code(Protocol):
-    """Type for code functions."""
-
-    def __call__(self, **star: R) -> B:
-        raise NotImplementedError(self, star)
-
-
-def stub(function: Code) -> Code:
-    """"""
-    cache = None
-
-    def decorator(self, *data: A, **star: R) -> A:
-        nonlocal cache
-        if not cache:
-            pattern = r"<function ([\w\.]+) "
-            string = repr(function)
-            name = regex.match(pattern, string)
-
-            source = bank.package[NAME].package
-            cache = load.find_function(source, name)
-
-        try:
-            result = function(self, *data, **star)
-        except NotImplementedError:
-            result = cache(*data, **star)
-
-        return result
-
-    return decorator
 
 
 class Package(Abstract):
     """"""
+
+
+class Rect:
+    """"""
+
+
+class Surface:
+    """"""
+
+    color: TZ3
+    dest: TZ2
+    height: Z
+    size: TZ2
+    source: K
+    width: Z
+
+    @stub(__name__)
+    def blit(self, source: K, dest: TZ2) -> Rect:
+        """"""
+        raise NotImplementedError(self, source, dest)
+
+    @stub(__name__)
+    def convert_alpha(self) -> K:
+        """"""
+        raise NotImplementedError(self)
+
+    @stub(__name__)
+    def fill(self, color: TZ3) -> Rect:
+        """"""
+        raise NotImplementedError(self, color)
+
+    @stub(__name__)
+    def get_height(self) -> Z:
+        """"""
+        raise NotImplementedError(self)
+
+    @stub(__name__)
+    def get_width(self) -> Z:
+        """"""
+        raise NotImplementedError(self)
+
+    def __init__(self, size: TZ2) -> N:
+        """"""
+        raise NotImplementedError(self, size)
 
 
 def quit() -> N:  # pylint: disable=redefined-builtin
@@ -80,21 +88,25 @@ class display:  # pylint: disable=invalid-name
     """"""
 
     @staticmethod
+    @stub(__name__)
     def flip() -> N:
         """"""
         raise NotImplementedError()
 
     @staticmethod
+    @stub(__name__)
     def set_caption(title: S) -> N:
         """"""
         raise NotImplementedError(title)
 
     @staticmethod
+    @stub(__name__)
     def set_icon(surface: Surface) -> N:
         """"""
         raise NotImplementedError(surface)
 
-    @stub
-    def set_mode(self, size: TZ2) -> Surface:
+    @staticmethod
+    @stub(__name__)
+    def set_mode(size: TZ2) -> Surface:
         """"""
-        raise NotImplementedError(self, size)
+        raise NotImplementedError(size)

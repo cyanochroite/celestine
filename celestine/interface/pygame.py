@@ -100,7 +100,7 @@ class Element(Element_, Abstract):
         self.image.fill((0, 0, 0))
 
         if bool(pillow):
-            image = pillow.Image.open(self.path)
+            image = pillow.Image.open(self.path, "r", ["png", "jpg"])
             buffer = image.tobytes()
             size = image.size
             format_ = image.mode

@@ -5,7 +5,7 @@ Generator[YieldType, SendType, ReturnType]
 
 A: typing.Any
 B: bool
-C: collections.abc.Callable
+C: collections.abc.Callable  # Callable[[int], str]
 D: typing.Dict
 E: typing.Any  # Unused  # Enum?
 F: float
@@ -30,6 +30,9 @@ X: typing.TypeVar("X")  # Primary type variable.
 Y: bytes
 Z: int  # Set of Integers Symbol ℤ.
 """
+
+# pylint: disable=invalid-name
+
 
 import abc
 from collections.abc import Callable as C

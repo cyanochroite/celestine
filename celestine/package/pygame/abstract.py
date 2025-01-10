@@ -42,7 +42,3 @@ class Surface:
     def get_width(self) -> Z:
         """"""
         raise NotImplementedError(self)
-
-    def __init__(self, size: TZ2) -> N:
-        """"""
-        raise NotImplementedError(self, size)

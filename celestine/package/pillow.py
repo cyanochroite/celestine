@@ -1,6 +1,7 @@
 """Python Imaging Library (Fork)."""
 
-from celestine import load
+from celestine.data import stub
+from celestine import load, bank
 from celestine.package import (
     Abstract,
     tkinter,
@@ -16,6 +17,7 @@ from celestine.typed import (
     S,
     Y,
     Z,
+    ignore,
 )
 
 
@@ -55,10 +57,12 @@ class Image:
         """"""
         raise NotImplementedError(self)
 
-    @classmethod
-    def open(cls, fp: P, mode: S, formats: LS) -> K:
+    @staticmethod
+    @stub(__name__)
+    def open(fp: P, mode: S, formats: LS) -> K:
         """"""
-        raise NotImplementedError(cls, fp, mode, formats)
+        package = bank.package["pillow"].package
+        return package.Image.open(fp, mode, formats)
 
     def resize(self, size: TZ2, resample: Resampling) -> K:
         """"""

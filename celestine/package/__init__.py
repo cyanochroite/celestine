@@ -62,9 +62,10 @@ class Abstract:
         return result
 
     def __getattr__(self, name: S) -> S:
-        gets = self.local.get(name)
-        if gets:
-            return gets
+        if name != "Surface":
+            gets = self.local.get(name)
+            if gets:
+                return gets
 
         result = getattr(self.package, name)
         return result
@@ -85,20 +86,12 @@ class Abstract:
         _dictionary: D[S, A] = vars(module)
         _items = _dictionary.items()
         result = {key: value for key, value in _items if test(value)}
-        for key, value in result.items():
-            try:
-                result[key] = value()
-            except TypeError:
-                pass
-
         return result
 
     def __init__(self, *, pypi: VS = None, **star: R) -> N:
         self.name = self.__module__.rsplit(".", maxsplit=1)[-1]
         self.pypi = pypi or self.name
         local = load.module("package", self.name)
-        if self.name == "pygame":
-            pass
         self.local = self.functions(local)
         try:
             self.package = load.package(self.pypi)
