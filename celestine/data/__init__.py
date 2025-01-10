@@ -1,12 +1,11 @@
 """"""
 
-from typing import Protocol
-
 from celestine.interface import View
 from celestine.typed import (
     B,
     N,
     R,
+    Protocol,
 )
 
 
@@ -18,7 +17,7 @@ class Code(Protocol):
 
 
 class Draw(Protocol):
-    """Type for code functions."""
+    """Type for draw functions."""
 
     def __call__(self, view: View) -> N:
         raise NotImplementedError(self, view)

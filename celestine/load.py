@@ -35,6 +35,15 @@ from celestine.typed import (
 ########################################################################
 
 
+def find_function(source: M, name: S) -> A:
+    """Finds the named function from the source file."""
+    result = source
+    items = name.split(FULL_STOP)
+    for item in items:
+        result = getattr(result, item)
+    return result
+
+
 def function(*path: S) -> A:
     """Functions like the 'from package import item' syntax."""
     iterable = [*path]
@@ -129,7 +138,9 @@ def functions(_module: M) -> D[S, CN]:
     """Load from module all functions and turn them into dictionary."""
 
     def test(value: S) -> B:
-        return FUNCTION in repr(value)
+        name = repr(value)
+        result = name.startswith(FUNCTION)
+        return result
 
     _dictionary: D[S, A] = vars(_module)
     _items = _dictionary.items()

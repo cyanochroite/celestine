@@ -42,6 +42,7 @@ from typing import Dict as D
 from typing import List as L
 from typing import Literal
 from typing import Optional as V
+from typing import Protocol
 from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TY
@@ -262,5 +263,6 @@ class Struct:
 
 
 ignore(IT)
+ignore(Protocol)
 ignore(cast)
 ignore(override)

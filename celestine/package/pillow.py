@@ -1,7 +1,10 @@
 """Python Imaging Library (Fork)."""
 
 from celestine import load
-from celestine.package import Abstract, tkinter
+from celestine.package import (
+    Abstract,
+    tkinter,
+)
 from celestine.typed import (
     LS,
     TZ2,

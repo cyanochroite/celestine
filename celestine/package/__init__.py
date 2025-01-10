@@ -4,9 +4,12 @@ import sys
 
 from celestine import load
 from celestine.typed import (
+    CN,
     LS,
     VS,
+    A,
     B,
+    D,
     M,
     N,
     P,
@@ -19,7 +22,7 @@ from celestine.typed import (
 class Abstract:
     """"""
 
-    local: M | N
+    local: D[S, A]  # TODO: Not ANY
     name: S
     package: M | N
 
@@ -59,14 +62,44 @@ class Abstract:
         return result
 
     def __getattr__(self, name: S) -> S:
-        gets = getattr(self.local, name)
+        gets = self.local.get(name)
+        if gets:
+            return gets
+
         result = getattr(self.package, name)
+        return result
+
+    def functions(self, module: M) -> D[S, CN]:
+        """"""
+        path = f"celestine.package.{self.name}"
+
+        def test(value: S) -> B:
+            name = repr(value)
+            one = name.startswith("<function ")
+            two = name.startswith("<class ")
+            three = path in name
+            four = "Package" not in name
+            result = (one or two) and three and four
+            return result
+
+        _dictionary: D[S, A] = vars(module)
+        _items = _dictionary.items()
+        result = {key: value for key, value in _items if test(value)}
+        for key, value in result.items():
+            try:
+                result[key] = value()
+            except TypeError:
+                pass
+
         return result
 
     def __init__(self, *, pypi: VS = None, **star: R) -> N:
         self.name = self.__module__.rsplit(".", maxsplit=1)[-1]
         self.pypi = pypi or self.name
-        self.local = load.module("package", self.name)
+        local = load.module("package", self.name)
+        if self.name == "pygame":
+            pass
+        self.local = self.functions(local)
         try:
             self.package = load.package(self.pypi)
         except ValueError:
