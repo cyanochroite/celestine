@@ -1,9 +1,12 @@
 """"""
 
+from celestine.data import wrapper
 from celestine.typed import (
     TZ2,
     TZ3,
     K,
+    R,
+    N,
     Z,
 )
 
@@ -22,22 +25,31 @@ class Surface:
     source: K
     width: Z
 
-    def blit(self, source: K, dest: TZ2) -> Rect:
+    @wrapper(__name__)
+    def blit(self, source: K, dest: TZ2, **star: R) -> Rect:
         """"""
         raise NotImplementedError(self, source, dest)
 
-    def convert_alpha(self) -> K:
+    @wrapper(__name__)
+    def convert_alpha(self, **star: R) -> K:
         """"""
         raise NotImplementedError(self)
 
-    def fill(self, color: TZ3) -> Rect:
+    @wrapper(__name__)
+    def fill(self, color: TZ3, **star: R) -> Rect:
         """"""
         raise NotImplementedError(self, color)
 
-    def get_height(self) -> Z:
+    @wrapper(__name__)
+    def get_height(self, **star: R) -> Z:
         """"""
         raise NotImplementedError(self)
 
-    def get_width(self) -> Z:
+    @wrapper(__name__)
+    def get_width(self, **star: R) -> Z:
         """"""
         raise NotImplementedError(self)
+
+    def __init__(self, size: TZ2) -> N:
+        """"""
+        raise NotImplementedError(self, size)

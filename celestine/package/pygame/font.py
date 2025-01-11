@@ -1,5 +1,6 @@
 """"""
 
+from celestine.data import wrapper
 from celestine.package.pygame.abstract import Surface
 from celestine.typed import (
     TZ3,
@@ -7,6 +8,7 @@ from celestine.typed import (
     VZ,
     B,
     N,
+    R,
     S,
 )
 
@@ -14,7 +16,14 @@ from celestine.typed import (
 class Font:
     """"""
 
-    def render(self, text: S, antialias: B, color: TZ3) -> Surface:
+    @wrapper(__name__)
+    def render(
+        self,
+        text: S,
+        antialias: B,
+        color: TZ3,
+        **star: R,
+    ) -> Surface:
         """"""
         raise NotImplementedError(self, text, antialias, color)
 
@@ -23,6 +32,7 @@ class Font:
         raise NotImplementedError(self, file_path, size)
 
 
-def init() -> N:
+@wrapper(__name__)
+def init(**star: R) -> N:
     """"""
     raise NotImplementedError()

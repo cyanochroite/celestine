@@ -1,28 +1,34 @@
 """"""
 
+from celestine.data import wrapper
 from celestine.package.pygame.abstract import Surface
 from celestine.typed import (
     TZ2,
     N,
+    R,
     S,
 )
 
 
-def flip() -> N:
+@wrapper(__name__)
+def flip(**star: R) -> N:
     """"""
     raise NotImplementedError()
 
 
-def set_caption(title: S) -> N:
+@wrapper(__name__)
+def set_caption(title: S, **star: R) -> N:
     """"""
     raise NotImplementedError(title)
 
 
-def set_icon(surface: Surface) -> N:
+@wrapper(__name__)
+def set_icon(surface: Surface, **star: R) -> N:
     """"""
     raise NotImplementedError(surface)
 
 
-def set_mode(size: TZ2) -> Surface:
+@wrapper(__name__)
+def set_mode(size: TZ2, **star: R) -> Surface:
     """"""
     raise NotImplementedError(size)

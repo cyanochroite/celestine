@@ -1,6 +1,10 @@
 """"""
 
-from celestine.typed import Z
+from celestine.data import wrapper
+from celestine.typed import (
+    R,
+    Z,
+)
 
 
 class Event:
@@ -10,6 +14,7 @@ class Event:
     button: Z
 
 
-def wait() -> Event:
+@wrapper(__name__)
+def wait(**star: R) -> Event:
     """"""
     raise NotImplementedError()
