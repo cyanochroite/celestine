@@ -58,15 +58,5 @@ class Image:
         hold = self.image.convert(mode, matrix, dither)
         self.image = hold
 
-    @classmethod
-    def open(cls, path: P, format: A) -> K:  # TODO: fix format type
-        """"""
-        fp = path
-        mode = LATIN_SMALL_LETTER_R
-        formats = format
-        image = pillow.Image.open(fp, mode, formats)
-        result = cls(image)
-        return result
-
     def __init__(self, image: pillow.Image) -> N:
         self.image = image

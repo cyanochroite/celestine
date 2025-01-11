@@ -1,7 +1,7 @@
 """Python Game Development."""
 
 from celestine.data import (
-    Stub,
+    Call,
     stub,
 )
 from celestine.package import Abstract
@@ -89,24 +89,24 @@ class display:  # pylint: disable=invalid-name
 
     @staticmethod
     @stub(__name__)
-    def flip(*, call: Stub) -> N:
+    def flip(*, call: Call) -> N:
         """"""
         raise NotImplementedError(call)
 
     @staticmethod
     @stub(__name__)
-    def set_caption(title: S, *, call: Stub) -> N:
+    def set_caption(title: S, *, call: Call) -> N:
         """"""
         raise NotImplementedError(title, call)
 
     @staticmethod
     @stub(__name__)
-    def set_icon(surface: Surface, *, call: Stub) -> N:
+    def set_icon(surface: Surface, *, call: Call) -> N:
         """"""
         raise NotImplementedError(surface, call)
 
     @staticmethod
     @stub(__name__)
-    def set_mode(size: TZ2, *, call: Stub) -> Surface:
+    def set_mode(size: TZ2, *, call: Call) -> Surface:
         """"""
         raise NotImplementedError(size, call)

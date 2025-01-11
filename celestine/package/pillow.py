@@ -4,11 +4,12 @@ from celestine import (
     bank,
     load,
 )
-from celestine.data import stub
+from celestine.data import stub, Call
 from celestine.package import (
     Abstract,
     tkinter,
 )
+from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.typed import (
     LS,
     TZ2,
@@ -18,9 +19,11 @@ from celestine.typed import (
     N,
     P,
     R,
+    A,
     S,
     Y,
     Z,
+    ignore,
 )
 
 
@@ -62,10 +65,13 @@ class Image:
 
     @staticmethod
     @stub(__name__)
-    def open(fp: P, mode: S, formats: LS, call: M) -> K:
+    def open(path: P, call: Call = ignore) -> A:
         """"""
-        package = bank.package["pillow"].package
-        return package.Image.open(fp, mode, formats)
+        fp = path
+        mode = LATIN_SMALL_LETTER_R
+        formats = bank.window.formats()
+        result = call(fp, mode, formats)
+        return result
 
     def resize(self, size: TZ2, resample: Resampling) -> K:
         """"""

@@ -388,6 +388,53 @@ class Window(Tree):
             ".png",
         ]
 
+    @staticmethod
+    def formats() -> LS:
+        """Pillow Image Formats"""
+        return [
+            "BLP",
+            "BMP",
+            "BUFR",
+            "CUR",
+            "DCX",
+            "DDS",
+            "DIB",
+            "EPS",
+            "FITS",
+            "FLI",
+            "FTEX",
+            "GBR",
+            "GIF",
+            "GRIB",
+            "HDF5",
+            "ICNS",
+            "ICO",
+            "IM",
+            "IPTC",
+            "JPEG",
+            "JPEG2000",
+            "MPEG",
+            "MPO",
+            "MSP",
+            "PALM",
+            "PCD",
+            "PCX",
+            "PDF",
+            "PIXAR",
+            "PNG",
+            "PPM",
+            "PSD",
+            "QOI",
+            "SGI",
+            "SUN",
+            "TGA",
+            "TIFF",
+            "WEBP",
+            "WMF",
+            "XBM",
+            "XPM",
+        ]
+
     def drop(self, name: S, **star: R) -> Tree:
         """"""
         return self.set(

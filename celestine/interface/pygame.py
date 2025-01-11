@@ -100,7 +100,7 @@ class Element(Element_, Abstract):
         self.image.fill((0, 0, 0))
 
         if bool(pillow):
-            image = pillow.Image.open(self.path, "r", ["png", "jpg"])
+            image = pillow.Image.open(self.path)
             buffer = image.tobytes()
             size = image.size
             format_ = image.mode
@@ -162,6 +162,27 @@ class Window(Window_):
         super().draw(font=self.font, **star)
 
         pygame.display.flip()
+
+    @override
+    @staticmethod
+    def formats() -> LS:
+        return [
+            "bmp",
+            "dib",
+            "gif",
+            "jpeg",
+            "pcx",
+            "png",
+            "pnm",
+            "ppm",
+            "tga",
+            "tif",
+            "tiff",
+            "vda",
+            "vst",
+            "webp",
+            "xpm",
+        ]
 
     @override
     @staticmethod

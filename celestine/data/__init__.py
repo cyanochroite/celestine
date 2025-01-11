@@ -32,7 +32,7 @@ class Draw(Protocol):
         raise NotImplementedError(self, view)
 
 
-class Stub(Protocol):
+class Call(Protocol):
     """Type for code functions."""
 
     def __call__(self, *data: A, **star: R) -> A:
@@ -66,10 +66,10 @@ def main(function: Draw) -> Draw:
     return decorator
 
 
-def stub(name: S) -> C[[Stub], Stub]:
+def stub(name: S) -> C[[Call], Call]:
     """"""
 
-    def wrapper(function: Stub) -> Stub:
+    def wrapper(function: Call) -> Call:
 
         cache = None
 
