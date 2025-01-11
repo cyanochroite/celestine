@@ -11,6 +11,7 @@ from celestine.typed import (
     A,
     B,
     C,
+    H,
     N,
     Protocol,
     R,
@@ -30,13 +31,6 @@ class Draw(Protocol):
 
     def __call__(self, view: View) -> N:
         raise NotImplementedError(self, view)
-
-
-class Call(Protocol):
-    """Type for code functions."""
-
-    def __call__(self, *data: A, **star: R) -> A:
-        raise NotImplementedError(self, data, star)
 
 
 def call(function: Code) -> Code:
@@ -66,16 +60,16 @@ def main(function: Draw) -> Draw:
     return decorator
 
 
-def stub(name: S) -> C[[Call], Call]:
+def stub(name: S) -> C[[H], H]:
     """"""
 
-    def wrapper(function: Call) -> Call:
+    def wrapper(function: H) -> H:
 
-        cache = None
+        host = None
 
         def decorator(*data: A, **star: R) -> A:
-            nonlocal cache
-            if not cache:
+            nonlocal host
+            if not host:
                 pattern = r"<function ([\w\.]+) "
                 string = repr(function)
                 find = regex.match(pattern, string)
@@ -83,12 +77,12 @@ def stub(name: S) -> C[[Call], Call]:
                 split = name.split(FULL_STOP)
                 index = split[-1]
                 source = bank.package[index].package
-                cache = load.find_function(source, find)
+                host = load.find_function(source, find)
 
             try:
-                result = function(*data, call=cache, **star)
+                result = function(*data, host=host, **star)
             except NotImplementedError:
-                result = cache(*data, **star)
+                result = host(*data, **star)
 
             return result
 

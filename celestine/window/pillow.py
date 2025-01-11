@@ -1,13 +1,10 @@
 """Python Imaging Library (Fork)."""
 
-from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import pillow
 from celestine.typed import (
     TZ2,
     A,
-    K,
     N,
-    P,
     Z,
 )
 

@@ -1,9 +1,6 @@
 """Python Game Development."""
 
-from celestine.data import (
-    Call,
-    stub,
-)
+from celestine.data import stub
 from celestine.package import Abstract
 from celestine.package.pygame import (
     event,
@@ -15,6 +12,7 @@ from celestine.package.pygame import (
 from celestine.typed import (
     TZ2,
     TZ3,
+    H,
     K,
     N,
     S,
@@ -89,24 +87,24 @@ class display:  # pylint: disable=invalid-name
 
     @staticmethod
     @stub(__name__)
-    def flip(*, call: Call) -> N:
+    def flip(host: H = H) -> N:
         """"""
-        raise NotImplementedError(call)
+        raise NotImplementedError(host)
 
     @staticmethod
     @stub(__name__)
-    def set_caption(title: S, *, call: Call) -> N:
+    def set_caption(title: S, host: H = H) -> N:
         """"""
-        raise NotImplementedError(title, call)
+        raise NotImplementedError(title, host)
 
     @staticmethod
     @stub(__name__)
-    def set_icon(surface: Surface, *, call: Call) -> N:
+    def set_icon(surface: Surface, host: H = H) -> N:
         """"""
-        raise NotImplementedError(surface, call)
+        raise NotImplementedError(surface, host)
 
     @staticmethod
     @stub(__name__)
-    def set_mode(size: TZ2, *, call: Call) -> Surface:
+    def set_mode(size: TZ2, host: H = H) -> Surface:
         """"""
-        raise NotImplementedError(size, call)
+        raise NotImplementedError(size, host)

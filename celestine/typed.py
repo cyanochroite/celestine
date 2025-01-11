@@ -10,7 +10,7 @@ D: typing.Dict
 E: typing.Any  # Unused  # Enum?
 F: float
 G: collections.abc.Generator
-H: typing.Any  # Unused  # Hash?
+H: type = Host  # Callable[[*typing.Any, **typing.Any], typing.Any]
 I: typing.Any  # Ambiguous variable name.
 J: object
 K: typing.Self
@@ -163,6 +163,13 @@ def ignore(_: A) -> N:
 def string(*iterable: S) -> S:
     """A simple utility for joining together a series of strings."""
     return "".join(iterable)
+
+
+class H(Protocol):
+    """Used for calling functions in the host package."""
+
+    def __call__(self, *data: A, **star: R) -> A:
+        raise NotImplementedError(self, data, star)
 
 
 class Object(abc.ABC):

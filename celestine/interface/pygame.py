@@ -155,6 +155,11 @@ class Window(Window_):
     font: pygame.font.Font
 
     @override
+    def build(self, **star: R) -> N:
+        """"""
+        super().build(font=self.font, **star)
+
+    @override
     def draw(self, **star: R) -> N:
         """"""
         self.canvas.fill((0, 0, 0))
@@ -162,27 +167,6 @@ class Window(Window_):
         super().draw(font=self.font, **star)
 
         pygame.display.flip()
-
-    @override
-    @staticmethod
-    def formats() -> LS:
-        return [
-            "bmp",
-            "dib",
-            "gif",
-            "jpeg",
-            "pcx",
-            "png",
-            "pnm",
-            "ppm",
-            "tga",
-            "tif",
-            "tiff",
-            "vda",
-            "vst",
-            "webp",
-            "xpm",
-        ]
 
     @override
     @staticmethod
@@ -214,9 +198,22 @@ class Window(Window_):
         ]
 
     @override
-    def build(self, **star: R) -> N:
-        """"""
-        super().build(font=self.font, **star)
+    @staticmethod
+    def formats() -> LS:
+        return [
+            "BMP",
+            "DIB",
+            "GIF",
+            "JPEG",
+            "PCX",
+            "PNG",
+            "PPM",
+            "TGA",
+            "TIFF",
+            "TGA",
+            "WEBP",
+            "XPM",
+        ]
 
     @override
     def run(self) -> N:

@@ -4,26 +4,25 @@ from celestine import (
     bank,
     load,
 )
-from celestine.data import stub, Call
+from celestine.data import stub
+from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import (
     Abstract,
     tkinter,
 )
-from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.typed import (
     LS,
     TZ2,
     VP,
+    A,
+    H,
     K,
-    M,
     N,
     P,
     R,
-    A,
     S,
     Y,
     Z,
-    ignore,
 )
 
 
@@ -65,12 +64,12 @@ class Image:
 
     @staticmethod
     @stub(__name__)
-    def open(path: P, call: Call = ignore) -> A:
+    def open(path: P, host: H = H) -> A:
         """"""
         fp = path
         mode = LATIN_SMALL_LETTER_R
         formats = bank.window.formats()
-        result = call(fp, mode, formats)
+        result = host(fp, mode, formats)
         return result
 
     def resize(self, size: TZ2, resample: Resampling) -> K:

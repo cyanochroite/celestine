@@ -390,7 +390,7 @@ class Window(Tree):
 
     @staticmethod
     def formats() -> LS:
-        """Pillow Image Formats"""
+        """Pillow Image Formats."""
         return [
             "BLP",
             "BMP",
@@ -414,12 +414,9 @@ class Window(Tree):
             "JPEG",
             "JPEG2000",
             "MPEG",
-            "MPO",
             "MSP",
-            "PALM",
             "PCD",
             "PCX",
-            "PDF",
             "PIXAR",
             "PNG",
             "PPM",
