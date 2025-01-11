@@ -11,11 +11,11 @@ from celestine.typed import (
     A,
     B,
     C,
-    H,
     N,
     Protocol,
     R,
     S,
+    W,
 )
 
 
@@ -60,16 +60,16 @@ def main(function: Draw) -> Draw:
     return decorator
 
 
-def stub(name: S) -> C[[H], H]:
+def wrapper(name: S) -> C[[W], W]:
     """"""
 
-    def wrapper(function: H) -> H:
+    def rapper(function: W) -> W:
 
-        host = None
+        wrap = None
 
         def decorator(*data: A, **star: R) -> A:
-            nonlocal host
-            if not host:
+            nonlocal wrap
+            if not wrap:
                 pattern = r"<function ([\w\.]+) "
                 string = repr(function)
                 find = regex.match(pattern, string)
@@ -77,15 +77,15 @@ def stub(name: S) -> C[[H], H]:
                 split = name.split(FULL_STOP)
                 index = split[-1]
                 source = bank.package[index].package
-                host = load.find_function(source, find)
+                wrap = load.find_function(source, find)
 
             try:
-                result = function(*data, host=host, **star)
+                result = function(*data, **star, wrap=wrap)
             except NotImplementedError:
-                result = host(*data, **star)
+                result = wrap(*data, **star)
 
             return result
 
         return decorator
 
-    return wrapper
+    return rapper

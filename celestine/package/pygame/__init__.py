@@ -1,6 +1,6 @@
 """Python Game Development."""
 
-from celestine.data import stub
+from celestine.data import wrapper
 from celestine.package import Abstract
 from celestine.package.pygame import (
     event,
@@ -12,10 +12,10 @@ from celestine.package.pygame import (
 from celestine.typed import (
     TZ2,
     TZ3,
-    H,
     K,
     N,
     S,
+    W,
     Z,
     ignore,
 )
@@ -48,27 +48,27 @@ class Surface:
     source: K
     width: Z
 
-    @stub(__name__)
+    @wrapper(__name__)
     def blit(self, source: K, dest: TZ2) -> Rect:
         """"""
         raise NotImplementedError(self, source, dest)
 
-    @stub(__name__)
+    @wrapper(__name__)
     def convert_alpha(self) -> K:
         """"""
         raise NotImplementedError(self)
 
-    @stub(__name__)
+    @wrapper(__name__)
     def fill(self, color: TZ3) -> Rect:
         """"""
         raise NotImplementedError(self, color)
 
-    @stub(__name__)
+    @wrapper(__name__)
     def get_height(self) -> Z:
         """"""
         raise NotImplementedError(self)
 
-    @stub(__name__)
+    @wrapper(__name__)
     def get_width(self) -> Z:
         """"""
         raise NotImplementedError(self)
@@ -86,25 +86,25 @@ class display:  # pylint: disable=invalid-name
     """"""
 
     @staticmethod
-    @stub(__name__)
-    def flip(host: H = H) -> N:
+    @wrapper(__name__)
+    def flip(wrap: W = W) -> N:
         """"""
-        raise NotImplementedError(host)
+        raise NotImplementedError(wrap)
 
     @staticmethod
-    @stub(__name__)
-    def set_caption(title: S, host: H = H) -> N:
+    @wrapper(__name__)
+    def set_caption(title: S, wrap: W = W) -> N:
         """"""
-        raise NotImplementedError(title, host)
+        raise NotImplementedError(title, wrap)
 
     @staticmethod
-    @stub(__name__)
-    def set_icon(surface: Surface, host: H = H) -> N:
+    @wrapper(__name__)
+    def set_icon(surface: Surface, wrap: W = W) -> N:
         """"""
-        raise NotImplementedError(surface, host)
+        raise NotImplementedError(surface, wrap)
 
     @staticmethod
-    @stub(__name__)
-    def set_mode(size: TZ2, host: H = H) -> Surface:
+    @wrapper(__name__)
+    def set_mode(size: TZ2, wrap: W = W) -> Surface:
         """"""
-        raise NotImplementedError(size, host)
+        raise NotImplementedError(size, wrap)

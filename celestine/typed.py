@@ -10,7 +10,7 @@ D: typing.Dict
 E: typing.Any  # Unused  # Enum?
 F: float
 G: collections.abc.Generator
-H: type = Host  # Callable[[*typing.Any, **typing.Any], typing.Any]
+H: typing.Any  # Unused  # Hash?
 I: typing.Any  # Ambiguous variable name.
 J: object
 K: typing.Self
@@ -25,7 +25,7 @@ S: str
 T: typing.Tuple
 U: typing.Any  # Unused  # Union?
 V: typing.Optional  # Void like type.
-W: typing.Any  # Unused  # self.data()?
+W: type = Wrap  # Callable[[*typing.Any, **typing.Any], typing.Any]
 X: typing.TypeVar("X")  # Primary type variable.
 Y: bytes
 Z: int  # Set of Integers Symbol ℤ.
@@ -165,8 +165,8 @@ def string(*iterable: S) -> S:
     return "".join(iterable)
 
 
-class H(Protocol):
-    """Used for calling functions in the host package."""
+class W(Protocol):
+    """Wrapper function for calling functions in the parent package."""
 
     def __call__(self, *data: A, **star: R) -> A:
         raise NotImplementedError(self, data, star)

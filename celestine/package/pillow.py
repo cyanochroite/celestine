@@ -4,7 +4,7 @@ from celestine import (
     bank,
     load,
 )
-from celestine.data import stub
+from celestine.data import wrapper
 from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import (
     Abstract,
@@ -15,12 +15,12 @@ from celestine.typed import (
     TZ2,
     VP,
     A,
-    H,
     K,
     N,
     P,
     R,
     S,
+    W,
     Y,
     Z,
 )
@@ -63,13 +63,13 @@ class Image:
         raise NotImplementedError(self)
 
     @staticmethod
-    @stub(__name__)
-    def open(path: P, host: H = H) -> A:
+    @wrapper(__name__)
+    def open(path: P, wrap: W = W) -> A:
         """"""
         fp = path
         mode = LATIN_SMALL_LETTER_R
         formats = bank.window.formats()
-        result = host(fp, mode, formats)
+        result = wrap(fp, mode, formats)
         return result
 
     def resize(self, size: TZ2, resample: Resampling) -> K:
