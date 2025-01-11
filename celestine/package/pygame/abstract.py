@@ -4,7 +4,6 @@ from celestine.typed import (
     TZ2,
     TZ3,
     K,
-    N,
     Z,
 )
 

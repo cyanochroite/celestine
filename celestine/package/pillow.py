@@ -1,7 +1,10 @@
 """Python Imaging Library (Fork)."""
 
+from celestine import (
+    bank,
+    load,
+)
 from celestine.data import stub
-from celestine import load, bank
 from celestine.package import (
     Abstract,
     tkinter,
@@ -11,13 +14,13 @@ from celestine.typed import (
     TZ2,
     VP,
     K,
+    M,
     N,
     P,
     R,
     S,
     Y,
     Z,
-    ignore,
 )
 
 
@@ -59,7 +62,7 @@ class Image:
 
     @staticmethod
     @stub(__name__)
-    def open(fp: P, mode: S, formats: LS) -> K:
+    def open(fp: P, mode: S, formats: LS, call: M) -> K:
         """"""
         package = bank.package["pillow"].package
         return package.Image.open(fp, mode, formats)

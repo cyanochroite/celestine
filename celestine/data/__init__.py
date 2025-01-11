@@ -11,12 +11,10 @@ from celestine.typed import (
     A,
     B,
     C,
-    J,
     N,
     Protocol,
     R,
     S,
-    J,
 )
 
 
@@ -88,7 +86,7 @@ def stub(name: S) -> C[[Stub], Stub]:
                 cache = load.find_function(source, find)
 
             try:
-                result = function(*data, **star)
+                result = function(*data, call=cache, **star)
             except NotImplementedError:
                 result = cache(*data, **star)
 
