@@ -165,10 +165,10 @@ def string(*iterable: S) -> S:
     return "".join(iterable)
 
 
-class W(Protocol):
+class W[X](Protocol):
     """Wrapper function for calling functions in the parent package."""
 
-    def __call__(self, *data: A, **star: R) -> A:
+    def __call__(self, *data: A, **star: R) -> X:
         raise NotImplementedError(self, data, star)
 
 

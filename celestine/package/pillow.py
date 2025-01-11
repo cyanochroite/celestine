@@ -14,17 +14,25 @@ from celestine.typed import (
     LS,
     TZ2,
     VP,
-    A,
     K,
     N,
+    W,
     P,
     R,
     S,
-    W,
     Y,
     Z,
+    V,
+    A,
 )
 
+class Wish[X]:
+    """Wrapper function for calling functions in the parent package."""
+
+    def __call__(self, *data: A, **star: R) -> X:
+        raise NotImplementedError(self, data, star)
+
+wish =Wish[A]()
 
 class Image:
     """"""
@@ -62,10 +70,12 @@ class Image:
         """"""
         raise NotImplementedError(self)
 
-    @staticmethod
+    @classmethod
     @wrapper(__name__)
-    def open(path: P, wrap: W = W) -> A:
+    def open(cls, path: P, wrap: W[K] = wish) -> K:
         """"""
+        if not wrap:
+            return cls()
         fp = path
         mode = LATIN_SMALL_LETTER_R
         formats = bank.window.formats()

@@ -60,10 +60,10 @@ def main(function: Draw) -> Draw:
     return decorator
 
 
-def wrapper(name: S) -> C[[W], W]:
+def wrapper(name: S) -> C[[W[A]], A]:
     """"""
 
-    def rapper(function: W) -> W:
+    def rapper(function: W[A]) -> W[A]:
 
         wrap = None
 

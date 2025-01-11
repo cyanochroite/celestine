@@ -253,6 +253,10 @@ class Window(Window_):
         self.area = Area.fast(1920, 1080)
 
         value = self.area.world.size.value
+        one = pygame
+        two = pygame.display
+        three = pygame.display.set_mode
+        print(one, two, three)
         self.canvas = pygame.display.set_mode(value)
 
         caption = bank.language.APPLICATION_TITLE
