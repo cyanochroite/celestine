@@ -5,36 +5,19 @@ from celestine.package import (
     Abstract,
     tkinter,
 )
-from celestine.package.pillow import Image
+from celestine.package.pillow import (
+    Image,
+    ImageTk,
+)
 from celestine.typed import (
     LS,
-    VP,
     N,
     R,
-    Z,
     ignore,
 )
 
 ignore(Image)
-
-
-class ImageTk:
-    """"""
-
-    class PhotoImage:
-        """"""
-
-        def height(self) -> Z:
-            """"""
-            raise NotImplementedError(self)
-
-        def width(self) -> Z:
-            """"""
-            raise NotImplementedError(self)
-
-        def __init__(self, image: VP = None) -> N:
-            """"""
-            raise NotImplementedError(self, image)
+ignore(ImageTk)
 
 
 class Package(Abstract):

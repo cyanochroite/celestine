@@ -95,7 +95,7 @@ class Element(Element_, Abstract):
     def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
-        if bool(pillow) and False:
+        if bool(pillow):
             image = pillow.Image.open(self.path)
             photo = pillow.ImageTk.PhotoImage(image=image)
             self.item.configure(image=photo)

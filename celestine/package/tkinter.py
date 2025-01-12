@@ -7,8 +7,11 @@ Button: A
 Frame: A
 Label: A
 PhotoImage: A
-Tk: A
 
 
 class Package(Abstract):
+    """"""
+
+
+class Tk:
     """"""
