@@ -39,7 +39,7 @@ color_table = {}
 COLORS = 15
 
 
-def _convert(image: pillow.Image, mode: S) -> pillow.Image:
+def _convert(image: pillow.Image.Image, mode: S) -> pillow.Image.Image:
     """"""
     matrix = None
     dither = pillow.Image.Dither.FLOYDSTEINBERG
@@ -48,7 +48,9 @@ def _convert(image: pillow.Image, mode: S) -> pillow.Image:
     return result
 
 
-def _resize(image: pillow.Image, width: F, height: F) -> pillow.Image:
+def _resize(
+    image: pillow.Image.Image, width: F, height: F
+) -> pillow.Image.Image:
     """"""
 
     def validate(number: F) -> Z:

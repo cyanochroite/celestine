@@ -25,7 +25,7 @@ S: str
 T: typing.Tuple
 U: typing.Any  # Unused  # Union?
 V: typing.Optional  # Void like type.
-W: type = Wrap  # Callable[[*typing.Any, **typing.Any], typing.Any]
+W: typing.Any  # Unused  # self.data()? warp?
 X: typing.TypeVar("X")  # Primary type variable.
 Y: bytes
 Z: int  # Set of Integers Symbol ℤ.
@@ -163,13 +163,6 @@ def ignore(_: A) -> N:
 def string(*iterable: S) -> S:
     """A simple utility for joining together a series of strings."""
     return "".join(iterable)
-
-
-class W[X](Protocol):
-    """Wrapper function for calling functions in the parent package."""
-
-    def __call__(self, *data: A, **star: R) -> X:
-        raise NotImplementedError(self, data, star)
 
 
 class Object(abc.ABC):

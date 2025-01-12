@@ -359,9 +359,10 @@ class Window(Tree):
 
     canvas: A
 
-    @staticmethod
-    def extension() -> LS:
+    @classmethod
+    def extension(cls) -> LS:
         """"""
+        ignore(cls)
         return [
             ".bmp",
             ".sgi",
@@ -388,9 +389,10 @@ class Window(Tree):
             ".png",
         ]
 
-    @staticmethod
-    def formats() -> LS:
+    @classmethod
+    def formats(cls) -> LS:
         """Pillow Image Formats."""
+        ignore(cls)
         return [
             "BLP",
             "BMP",

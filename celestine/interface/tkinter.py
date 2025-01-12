@@ -21,6 +21,7 @@ from celestine.typed import (
     S,
     Z,
     cast,
+    ignore,
     override,
 )
 from celestine.window.collection import (
@@ -94,8 +95,9 @@ class Element(Element_, Abstract):
     def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
-        if bool(pillow):
-            photo = pillow.ImageTk.PhotoImage(image=self.image.image)
+        if bool(pillow) and False:
+            image = pillow.Image.open(self.path)
+            photo = pillow.ImageTk.PhotoImage(image=image)
             self.item.configure(image=photo)
             self.item.image = photo
         else:
@@ -172,11 +174,11 @@ class Window(Window_):
     """"""
 
     @override
-    @staticmethod
-    def extension() -> LS:
-        """"""
+    @classmethod
+    def extension(cls) -> LS:
+        ignore(cls)
         if bool(pillow):
-            return pillow.extension()
+            return super().extension()
 
         return [
             # ".pbm",

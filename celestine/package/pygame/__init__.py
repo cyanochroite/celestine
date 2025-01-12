@@ -13,9 +13,9 @@ from celestine.package.pygame import (
 from celestine.package.pygame.abstract import Surface
 from celestine.typed import (
     N,
+    R,
     Z,
     ignore,
-    R,
 )
 
 ignore(Surface)

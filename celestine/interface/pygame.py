@@ -23,6 +23,7 @@ from celestine.typed import (
     P,
     R,
     S,
+    ignore,
     override,
 )
 from celestine.window.collection import (
@@ -169,8 +170,9 @@ class Window(Window_):
         pygame.display.flip()
 
     @override
-    @staticmethod
-    def extension() -> LS:
+    @classmethod
+    def extension(cls) -> LS:
+        ignore(cls)
         return [
             ".bmp",
             ".sgi",
@@ -198,8 +200,9 @@ class Window(Window_):
         ]
 
     @override
-    @staticmethod
-    def formats() -> LS:
+    @classmethod
+    def formats(cls) -> LS:
+        ignore(cls)
         return [
             "BMP",
             "DIB",
@@ -253,10 +256,6 @@ class Window(Window_):
         self.area = Area.fast(1920, 1080)
 
         value = self.area.world.size.value
-        one = pygame
-        two = pygame.display
-        three = pygame.display.set_mode
-        print(one, two, three)
         self.canvas = pygame.display.set_mode(value)
 
         caption = bank.language.APPLICATION_TITLE

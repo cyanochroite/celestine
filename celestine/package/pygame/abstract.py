@@ -5,8 +5,8 @@ from celestine.typed import (
     TZ2,
     TZ3,
     K,
-    R,
     N,
+    R,
     Z,
 )
 

@@ -15,7 +15,6 @@ from celestine.typed import (
     Protocol,
     R,
     S,
-    W,
 )
 
 
@@ -31,6 +30,13 @@ class Draw(Protocol):
 
     def __call__(self, view: View) -> N:
         raise NotImplementedError(self, view)
+
+
+class Wrapper(Protocol):
+    """Wrapper function for calling functions in the parent package."""
+
+    def __call__(self, *data: A, **star: R) -> A:
+        raise NotImplementedError(self, data, star)
 
 
 def call(function: Code) -> Code:
@@ -60,10 +66,10 @@ def main(function: Draw) -> Draw:
     return decorator
 
 
-def wrapper(name: S) -> C[[W[A]], A]:
+def wrapper(name: S) -> C[[Wrapper], A]:
     """"""
 
-    def rapper(function: W[A]) -> W[A]:
+    def rapper(function: Wrapper) -> Wrapper:
 
         wrap = None
 

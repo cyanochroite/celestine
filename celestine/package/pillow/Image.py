@@ -45,6 +45,8 @@ class Resampling:
 class Image:
     """"""
 
+    mode: S
+
     def convert(self, mode: S, matrix: N, dither: "Dither") -> K:
         """"""
         raise NotImplementedError(self, mode, matrix, dither)
