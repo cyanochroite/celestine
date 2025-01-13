@@ -76,14 +76,16 @@ def wrapper(name: S) -> C[[Wrapper], A]:
         def decorator(*data: A, **star: R) -> A:
             nonlocal wrap
             if not wrap:
-                pattern = r"<function ([\w\.]+) "
-                string = repr(function)
-                find = regex.match(pattern, string)
-
-                split = name.split(FULL_STOP)
-                index = split[-1]
-                source = bank.package[index].package
-                wrap = load.find_function(source, find)
+                represent = repr(function)
+                find = regex.match(
+                    r"<function ([\w\.]+) ",
+                    represent,
+                )
+                base = regex.match(
+                    r"celestine\.package\.(.*)",
+                    name,
+                )
+                wrap = load.find_function(base, find)
 
             try:
                 result = function(*data, **star, wrap=wrap)

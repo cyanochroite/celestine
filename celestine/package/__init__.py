@@ -62,37 +62,52 @@ class Abstract:
         return result
 
     def __getattr__(self, name: S) -> S:
-        if name != "Surface":
-            gets = self.local.get(name)
-            if gets:
-                return gets
-
-        result = getattr(self.package, name)
+        result = self.local.get(name)
+        if not result:
+            message = f"'{self.name}' object has no attribute '{name}'"
+            raise AttributeError(message)
         return result
 
-    def functions(self, module: M) -> D[S, CN]:
+    def functions(self) -> D[S, CN]:
         """"""
-        path = f"celestine.package.{self.name}"
+        dictionary: D[S, A] = {}
+        base = f"celestine.package.{self.name}"
+        modules = load.walk_package(base)
+        for module in modules:
+            var = vars(module)
+            dictionary.update(var)
 
         def test(value: S) -> B:
             name = repr(value)
-            one = name.startswith("<function ")
-            two = name.startswith("<class ")
-            three = path in name
-            four = "Package" not in name
-            result = (one or two) and three and four
+
+            class_ = name.startswith("<class ")
+            function_ = name.startswith("<function ")
+            module_ = name.startswith("<module ")
+            important = class_ or function_ or module_
+
+            child = self.name in name
+
+            abstract = "abstract" in name and module_
+            package = "Package" in name
+            excluded = abstract or package
+
+            result = important and child and not excluded
             return result
 
-        _dictionary: D[S, A] = vars(module)
-        _items = _dictionary.items()
-        result = {key: value for key, value in _items if test(value)}
+        items = dictionary.items()
+        result = {key: value for key, value in items if test(value)}
         return result
 
     def __init__(self, *, pypi: VS = None, **star: R) -> N:
         self.name = self.__module__.rsplit(".", maxsplit=1)[-1]
         self.pypi = pypi or self.name
-        local = load.module("package", self.name)
-        self.local = self.functions(local)
+        if self.name == "blender":
+            #  TODO: Remove this bypass once blender is working.
+            self.local = {}
+        else:
+            self.local = self.functions()
+        if self.name == "pillow":
+            pass
         try:
             self.package = load.package(self.pypi)
         except ValueError:

@@ -35,9 +35,9 @@ from celestine.typed import (
 ########################################################################
 
 
-def find_function(source: M, name: S) -> A:
+def find_function(base: S, name: S) -> A:
     """Finds the named function from the source file."""
-    result = source
+    result = package(base)
     items = name.split(FULL_STOP)
     for item in items:
         result = getattr(result, item)
