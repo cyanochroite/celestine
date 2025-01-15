@@ -11,8 +11,8 @@ from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.literal import LINE_FEED
 from celestine.package import (
-    curses,
     PIL,
+    curses,
 )
 from celestine.typed import (
     LS,
@@ -98,7 +98,9 @@ def _convert(image: PIL.Image.Image, mode: S) -> PIL.Image.Image:
     return result
 
 
-def _resize(image: PIL.Image.Image, width: F, height: F) -> PIL.Image.Image:
+def _resize(
+    image: PIL.Image.Image, width: F, height: F
+) -> PIL.Image.Image:
     """"""
 
     def validate(number: F) -> Z:

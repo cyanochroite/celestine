@@ -1,19 +1,18 @@
 """"""
 
 import importlib
+
 from celestine import (
-    regex,
     load,
+    regex,
 )
 from celestine.interface import View
-from celestine.literal import FULL_STOP
 from celestine.typed import (
     A,
     B,
     C,
-    N,
     M,
-    C,
+    N,
     Protocol,
     R,
     S,
@@ -72,22 +71,49 @@ def wrapper(name: S) -> C[[Wrapper], A]:
     """"""
 
     def rapper(function: Wrapper) -> Wrapper:
-        pattern = r"celestine\.package\.(.*)"
-        if "abstract" in name:
-            pattern += r"\.abstract"
-        base = regex.match(pattern, name)
         represent = repr(function)
-        find = regex.match(
-            r"<function ([\w\.]+) ",
-            represent,
-        )
-        module = importlib.import_module(base)
-        wrap = load.attribute(module, find)
+
+        def module() -> M:
+            pattern = r"celestine\.package\.(.*)"
+            if "abstract" in name:
+                pattern += r"\.abstract"
+            find = regex.match(pattern, name)
+            result = importlib.import_module(find)
+            return result
+
+        def class_attribute() -> S:
+            find = regex.match(
+                r"<class '([\w\.]+)'>",
+                represent,
+            )
+            length = len(name) + 1
+            result = find[length:]
+            return result
+
+        def function_attribute() -> S:
+            result = regex.match(
+                r"<function ([\w\.]+) ",
+                represent,
+            )
+            return result
+
+        def attribute() -> S:
+            result = ""
+            if "class" in represent:
+                result = class_attribute()
+            if "function" in represent:
+                result = function_attribute()
+            return result
+
+        wrap = load.attribute(module(), attribute())
 
         def decorator(*data: A, **star: R) -> A:
             try:
                 result = function(*data, **star, wrap=wrap)
             except NotImplementedError:
+                result = wrap(*data, **star)
+            except TypeError:
+                #  Tried to call __init__
                 result = wrap(*data, **star)
 
             return result

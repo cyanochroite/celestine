@@ -15,6 +15,7 @@ class Rect:
     """"""
 
 
+@wrapper(__name__)
 class Surface:
     """"""
 

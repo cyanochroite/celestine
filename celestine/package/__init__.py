@@ -61,8 +61,16 @@ class Abstract:
         result = self.package is not None
         return result
 
+    def exempt(self) -> LS:
+        """"""
+        ignore(self)
+        return []
+
     def __getattr__(self, name: S) -> S:
-        result = self.local.get(name)
+        if name in self.exempt():
+            result = getattr(self.package, name)
+        else:
+            result = self.local.get(name)
         if not result:
             message = f"'{self.name}' object has no attribute '{name}'"
             raise AttributeError(message)
@@ -79,7 +87,6 @@ class Abstract:
 
         def test(value: S) -> B:
             name = repr(value)
-
             class_ = name.startswith("<class ")
             function_ = name.startswith("<function ")
             module_ = name.startswith("<module ")
@@ -92,6 +99,7 @@ class Abstract:
             excluded = abstract or package
 
             result = important and child and not excluded
+            result = True  # Try disable of function filter.
             return result
 
         items = dictionary.items()
@@ -106,8 +114,7 @@ class Abstract:
             self.local = {}
         else:
             self.local = self.functions()
-        if self.name == "PIL":
-            pass
+
         try:
             self.package = load.package(self.pypi)
         except ValueError:

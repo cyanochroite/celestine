@@ -13,6 +13,7 @@ from celestine.typed import (
 )
 
 
+@wrapper(__name__)
 class Font:
     """"""
 
@@ -27,7 +28,9 @@ class Font:
         """"""
         raise NotImplementedError(self, text, antialias, color)
 
-    def __init__(self, file_path: VP = None, size: VZ = None) -> N:
+    def __init__(
+        self, file_path: VP = None, size: VZ = None, **star: R
+    ) -> N:
         """"""
         raise NotImplementedError(self, file_path, size)
 

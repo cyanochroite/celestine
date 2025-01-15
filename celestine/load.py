@@ -17,12 +17,12 @@ from celestine.literal import (
     PYTHON_EXTENSION,
 )
 from celestine.typed import (
+    CA,
     CN,
     GM,
     GP,
     LS,
     A,
-    CA,
     B,
     D,
     G,
@@ -47,7 +47,6 @@ def attribute(module_: M, name: S) -> CA:
     if not result:
         raise AttributeError(module_, name)
     return result
-
 
 
 def function(*path: S) -> A:
