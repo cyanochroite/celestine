@@ -12,7 +12,7 @@ from celestine.interface import Window as Window_
 from celestine.literal import LINE_FEED
 from celestine.package import (
     curses,
-    pillow,
+    PIL,
 )
 from celestine.typed import (
     LS,
@@ -31,7 +31,7 @@ from celestine.window.collection import (
     Plane,
     Point,
 )
-from celestine.window.pillow import Image
+from celestine.window.PIL import Image
 
 color_index = 8  # skip the 8 reserved colors
 color_table = {}
@@ -42,7 +42,7 @@ COLORS = 15
 class Image:
     """"""
 
-    image: pillow.Image
+    image: PIL.Image
 
     @property
     def height(self) -> Z:
@@ -58,7 +58,7 @@ class Image:
         size_y = max(1, round(size_y))
 
         size = (size_x, size_y)
-        resample = pillow.Image.Resampling.LANCZOS
+        resample = PIL.Image.Resampling.LANCZOS
 
         result = self.image.resize(size, resample)
         self.image = result
@@ -81,26 +81,24 @@ class Image:
         """"""
         mode = "RGBA"
         matrix = None
-        dither = pillow.Image.Dither.NONE  # TODO: Erase?
+        dither = PIL.Image.Dither.NONE  # TODO: Erase?
         hold = self.image.convert(mode, matrix, dither)
         self.image = hold
 
-    def __init__(self, image: pillow.Image) -> N:
+    def __init__(self, image: PIL.Image) -> N:
         self.image = image
 
 
-def _convert(image: pillow.Image.Image, mode: S) -> pillow.Image.Image:
+def _convert(image: PIL.Image.Image, mode: S) -> PIL.Image.Image:
     """"""
     matrix = None
-    dither = pillow.Image.Dither.FLOYDSTEINBERG
+    dither = PIL.Image.Dither.FLOYDSTEINBERG
 
     result = image.convert(mode, matrix, dither)
     return result
 
 
-def _resize(
-    image: pillow.Image.Image, width: F, height: F
-) -> pillow.Image.Image:
+def _resize(image: PIL.Image.Image, width: F, height: F) -> PIL.Image.Image:
     """"""
 
     def validate(number: F) -> Z:
@@ -109,7 +107,7 @@ def _resize(
         return result
 
     size = (validate(width), validate(height))
-    resample = pillow.Image.Resampling.LANCZOS
+    resample = PIL.Image.Resampling.LANCZOS
 
     result = image.resize(size, resample)
     return result
@@ -121,8 +119,8 @@ def _resize(
 def convert(image, mode):
     """"""
     matrix = None  # Unused default.
-    dither = pillow.Image.Dither.FLOYDSTEINBERG
-    palette = pillow.Image.Palette.WEB  # Unused default.
+    dither = PIL.Image.Dither.FLOYDSTEINBERG
+    palette = PIL.Image.Palette.WEB  # Unused default.
     colors = 256  # Unused default.
 
     hold = image.convert(mode, matrix, dither, palette, colors)
@@ -192,7 +190,7 @@ def brightwing(image):
 
     bands = (hue, saturation, new_value)
 
-    return pillow.Image.merge("HSV", bands).convert("RGB")
+    return PIL.Image.merge("HSV", bands).convert("RGB")
 
 
 def get_colors(curses, image):
@@ -303,7 +301,7 @@ class Element(Element_, Abstract):
 
         (x_dot, y_dot) = self.area.world.origin
 
-        if not pillow:
+        if not PIL:
             self.add_string(
                 x_dot,
                 y_dot,
@@ -350,7 +348,7 @@ class Element(Element_, Abstract):
             canvas.addstr(y, x, self.text)
             return True
 
-        if not pillow:
+        if not PIL:
             self.render(self.path.name, **star)
             return True
 
@@ -423,8 +421,8 @@ class Window(Window_):
     @staticmethod
     def extension() -> LS:
         """"""
-        if bool(pillow):
-            return pillow.extension()
+        if bool(PIL):
+            return PIL.extension()
 
         return []
 

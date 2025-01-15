@@ -1,9 +1,9 @@
 """"""
 
+import importlib
 from celestine import (
-    bank,
-    load,
     regex,
+    load,
 )
 from celestine.interface import View
 from celestine.literal import FULL_STOP
@@ -12,6 +12,8 @@ from celestine.typed import (
     B,
     C,
     N,
+    M,
+    C,
     Protocol,
     R,
     S,
@@ -70,23 +72,19 @@ def wrapper(name: S) -> C[[Wrapper], A]:
     """"""
 
     def rapper(function: Wrapper) -> Wrapper:
-
-        wrap = None
+        pattern = r"celestine\.package\.(.*)"
+        if "abstract" in name:
+            pattern += r"\.abstract"
+        base = regex.match(pattern, name)
+        represent = repr(function)
+        find = regex.match(
+            r"<function ([\w\.]+) ",
+            represent,
+        )
+        module = importlib.import_module(base)
+        wrap = load.attribute(module, find)
 
         def decorator(*data: A, **star: R) -> A:
-            nonlocal wrap
-            if not wrap:
-                represent = repr(function)
-                find = regex.match(
-                    r"<function ([\w\.]+) ",
-                    represent,
-                )
-                base = regex.match(
-                    r"celestine\.package\.(.*)",
-                    name,
-                )
-                wrap = load.find_function(base, find)
-
             try:
                 result = function(*data, **star, wrap=wrap)
             except NotImplementedError:

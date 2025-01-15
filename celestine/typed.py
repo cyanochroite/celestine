@@ -77,6 +77,7 @@ type Z = int
 type BF = Literal[False]
 type BT = Literal[True]
 
+type CA = C[..., A]
 type CN = C[[N], N]
 
 type DA = D[S, A]

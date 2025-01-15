@@ -106,7 +106,7 @@ class Abstract:
             self.local = {}
         else:
             self.local = self.functions()
-        if self.name == "pillow":
+        if self.name == "PIL":
             pass
         try:
             self.package = load.package(self.pypi)

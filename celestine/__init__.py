@@ -3,10 +3,7 @@
 import os
 import sys
 
-from celestine import (
-    bank,
-    load,
-)
+from celestine import load
 from celestine.typed import (
     LS,
     B,
@@ -46,7 +43,6 @@ def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
         for name in argument:
             value = load.instance("package", name, "Package")
             setattr(package, name, value)
-            bank.package[name] = value
     sys.stdout = sys_stdout
 
     begin_main = load.function("session", "begin_main")

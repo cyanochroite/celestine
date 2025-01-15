@@ -4,12 +4,10 @@ from celestine.typed import (
     LS,
     A,
     C,
-    D,
     L,
     M,
     N,
     P,
-    S,
     T,
 )
 
@@ -20,7 +18,6 @@ configuration: P
 directory: P
 interface: M
 language: M
-package: D[S, M] = {}
 window: A  # Window
 
 _queue: L[T[C[..., N], A, A]] = []

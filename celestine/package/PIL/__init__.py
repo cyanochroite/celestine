@@ -5,7 +5,7 @@ from celestine.package import (
     Abstract,
     tkinter,
 )
-from celestine.package.pillow import (
+from celestine.package.PIL import (
     Image,
     ImageTk,
 )

@@ -22,6 +22,7 @@ from celestine.typed import (
     GP,
     LS,
     A,
+    CA,
     B,
     D,
     G,
@@ -35,13 +36,18 @@ from celestine.typed import (
 ########################################################################
 
 
-def find_function(base: S, name: S) -> A:
-    """Finds the named function from the source file."""
-    result = package(base)
+def attribute(module_: M, name: S) -> CA:
+    """Finds the named attribute from the module."""
+    result = None
+    object_: M | CA = module_
     items = name.split(FULL_STOP)
     for item in items:
-        result = getattr(result, item)
+        result = getattr(object_, item)
+        object_ = result
+    if not result:
+        raise AttributeError(module_, name)
     return result
+
 
 
 def function(*path: S) -> A:
@@ -99,9 +105,9 @@ def module_fallback(*path: S) -> M:
     return result
 
 
-def module_to_name(_module: M) -> S:
+def module_to_name(module_: M) -> S:
     """"""
-    text = repr(_module)
+    text = repr(module_)
     array = text.split("'")
     name = array[1]
     split = name.split(".")
@@ -134,7 +140,7 @@ def package_dependency(name: S, fail: M) -> M:
 # Dictionary stuff
 
 
-def functions(_module: M) -> D[S, CN]:
+def functions(module_: M) -> D[S, CN]:
     """Load from module all functions and turn them into dictionary."""
 
     def test(value: S) -> B:
@@ -142,19 +148,19 @@ def functions(_module: M) -> D[S, CN]:
         result = name.startswith(FUNCTION)
         return result
 
-    _dictionary: D[S, A] = vars(_module)
+    _dictionary: D[S, A] = vars(module_)
     _items = _dictionary.items()
     result = {key: value for key, value in _items if test(value)}
     return result
 
 
-def dictionary(_module: M) -> D[S, CN]:
+def dictionary(module_: M) -> D[S, CN]:
     """Load from module all key value pairs and make it a dictionary."""
 
     def test(value: S) -> B:
         return not value.startswith(LOW_LINE)
 
-    _dictionary: D[S, A] = vars(_module)
+    _dictionary: D[S, A] = vars(module_)
     _items = _dictionary.items()
     result = {key: value for key, value in _items if test(key)}
     return result
@@ -163,9 +169,9 @@ def dictionary(_module: M) -> D[S, CN]:
 ########
 
 
-def function_page(_module: M) -> LS:
+def function_page(module_: M) -> LS:
     """Load from module all functions and turn them into dictionary."""
-    _dictionary = functions(_module)
+    _dictionary = functions(module_)
     result = [key for key, _ in _dictionary.items()]
     return result
 

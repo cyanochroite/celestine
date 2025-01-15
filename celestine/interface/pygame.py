@@ -11,7 +11,7 @@ from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.package import (
-    pillow,
+    PIL,
     pygame,
 )
 from celestine.typed import (
@@ -100,8 +100,8 @@ class Element(Element_, Abstract):
         # reset image
         self.image.fill((0, 0, 0))
 
-        if bool(pillow):
-            image = pillow.Image.open(self.path)
+        if bool(PIL):
+            image = PIL.Image.open(self.path)
             buffer = image.tobytes()
             size = image.size
             format_ = image.mode

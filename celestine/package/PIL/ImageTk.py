@@ -1,6 +1,6 @@
 """"""
 
-from celestine.package.pillow.Image import Image
+from celestine.package.PIL.Image import Image
 from celestine.typed import (
     N,
     Z,
