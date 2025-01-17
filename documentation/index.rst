@@ -1,5 +1,5 @@
-The Celestine Image Viewer
-##########################
+Célestine
+#########
 
 .. toctree::
     :maxdepth: 2

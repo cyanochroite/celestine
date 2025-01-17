@@ -1,5 +1,6 @@
 """Python Game Development."""
 
+from celestine.data import wrapper
 from celestine.package import Abstract
 from celestine.package.pygame import (
     display,
@@ -12,17 +13,20 @@ from celestine.package.pygame import (
 from celestine.package.pygame.abstract import Surface
 from celestine.typed import (
     N,
+    R,
     Z,
     ignore,
 )
 
+ignore(Surface)
 ignore(display)
 ignore(event)
 ignore(font)
 ignore(image)
 ignore(mouse)
-ignore(Surface)
 ignore(transform)
+
+
 MOUSEBUTTONDOWN: Z
 QUIT: Z
 
@@ -31,5 +35,11 @@ class Package(Abstract):
     """"""
 
 
-def quit() -> N:  # pylint: disable=redefined-builtin
+class Rect:
     """"""
+
+
+@wrapper(__name__)
+def quit(**star: R) -> N:  # pylint: disable=redefined-builtin
+    """"""
+    raise NotImplementedError()

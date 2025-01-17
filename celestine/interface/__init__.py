@@ -359,9 +359,10 @@ class Window(Tree):
 
     canvas: A
 
-    @staticmethod
-    def extension() -> LS:
+    @classmethod
+    def extension(cls) -> LS:
         """"""
+        ignore(cls)
         return [
             ".bmp",
             ".sgi",
@@ -386,6 +387,51 @@ class Window(Tree):
             ".pnm",
             ".gif",
             ".png",
+        ]
+
+    @classmethod
+    def formats(cls) -> LS:
+        """Pillow Image Formats."""
+        ignore(cls)
+        return [
+            "BLP",
+            "BMP",
+            "BUFR",
+            "CUR",
+            "DCX",
+            "DDS",
+            "DIB",
+            "EPS",
+            "FITS",
+            "FLI",
+            "FTEX",
+            "GBR",
+            "GIF",
+            "GRIB",
+            "HDF5",
+            "ICNS",
+            "ICO",
+            "IM",
+            "IPTC",
+            "JPEG",
+            "JPEG2000",
+            "MPEG",
+            "MSP",
+            "PCD",
+            "PCX",
+            "PIXAR",
+            "PNG",
+            "PPM",
+            "PSD",
+            "QOI",
+            "SGI",
+            "SUN",
+            "TGA",
+            "TIFF",
+            "WEBP",
+            "WMF",
+            "XBM",
+            "XPM",
         ]
 
     def drop(self, name: S, **star: R) -> Tree:

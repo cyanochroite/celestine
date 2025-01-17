@@ -11,7 +11,7 @@ from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.package import (
-    pillow,
+    PIL,
     pygame,
 )
 from celestine.typed import (
@@ -23,6 +23,7 @@ from celestine.typed import (
     P,
     R,
     S,
+    ignore,
     override,
 )
 from celestine.window.collection import (
@@ -99,8 +100,8 @@ class Element(Element_, Abstract):
         # reset image
         self.image.fill((0, 0, 0))
 
-        if bool(pillow):
-            image = pillow.Image.open(self.path)
+        if bool(PIL):
+            image = PIL.Image.open(self.path)
             buffer = image.tobytes()
             size = image.size
             format_ = image.mode
@@ -155,6 +156,11 @@ class Window(Window_):
     font: pygame.font.Font
 
     @override
+    def build(self, **star: R) -> N:
+        """"""
+        super().build(font=self.font, **star)
+
+    @override
     def draw(self, **star: R) -> N:
         """"""
         self.canvas.fill((0, 0, 0))
@@ -164,8 +170,9 @@ class Window(Window_):
         pygame.display.flip()
 
     @override
-    @staticmethod
-    def extension() -> LS:
+    @classmethod
+    def extension(cls) -> LS:
+        ignore(cls)
         return [
             ".bmp",
             ".sgi",
@@ -193,9 +200,23 @@ class Window(Window_):
         ]
 
     @override
-    def build(self, **star: R) -> N:
-        """"""
-        super().build(font=self.font, **star)
+    @classmethod
+    def formats(cls) -> LS:
+        ignore(cls)
+        return [
+            "BMP",
+            "DIB",
+            "GIF",
+            "JPEG",
+            "PCX",
+            "PNG",
+            "PPM",
+            "TGA",
+            "TIFF",
+            "TGA",
+            "WEBP",
+            "XPM",
+        ]
 
     @override
     def run(self) -> N:

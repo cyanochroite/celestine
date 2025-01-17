@@ -17,6 +17,7 @@ from celestine.literal import (
     PYTHON_EXTENSION,
 )
 from celestine.typed import (
+    CA,
     CN,
     GM,
     GP,
@@ -33,6 +34,19 @@ from celestine.typed import (
 )
 
 ########################################################################
+
+
+def attribute(module_: M, name: S) -> CA:
+    """Finds the named attribute from the module."""
+    result = None
+    object_: M | CA = module_
+    items = name.split(FULL_STOP)
+    for item in items:
+        result = getattr(object_, item)
+        object_ = result
+    if not result:
+        raise AttributeError(module_, name)
+    return result
 
 
 def function(*path: S) -> A:
@@ -53,7 +67,8 @@ def instance(*path: S) -> A:
 
 def module(*path: S) -> M:
     """Load an internal module from anywhere in the application."""
-    return package(CELESTINE, *path)
+    result = package(CELESTINE, *path)
+    return result
 
 
 def package(base: S, *path: S) -> M:
@@ -71,10 +86,10 @@ def attempt(*path: S) -> B:
     """Attempt to load a package and return the result."""
     try:
         module(*path)
-        return True
+        result = True
     except ModuleNotFoundError:
-        pass
-    return False
+        result = False
+    return result
 
 
 def module_fallback(*path: S) -> M:
@@ -85,18 +100,18 @@ def module_fallback(*path: S) -> M:
     """
     iterable = [*path]
     pop = iterable.pop(-1)
-    fallback = module(*path) if pop else module(*iterable)
-    return fallback
+    result = module(*path) if pop else module(*iterable)
+    return result
 
 
-def module_to_name(_module: M) -> S:
+def module_to_name(module_: M) -> S:
     """"""
-    text = repr(_module)
+    text = repr(module_)
     array = text.split("'")
     name = array[1]
     split = name.split(".")
-    section = split[-1]
-    return section
+    result = split[-1]
+    return result
 
 
 ####
@@ -104,7 +119,8 @@ def module_to_name(_module: M) -> S:
 
 def method(name: S, *path: S):
     """"""
-    return getattr(module(*path), name)
+    result = getattr(module(*path), name)
+    return result
 
 
 ####
@@ -113,48 +129,50 @@ def method(name: S, *path: S):
 def package_dependency(name: S, fail: M) -> M:
     """Attempt to make loading packages easier."""
     try:
-        flag = package(CELESTINE, PACKAGE, name)
+        result = package(CELESTINE, PACKAGE, name)
     except ModuleNotFoundError:
-        flag = fail
-    return flag
+        result = fail
+    return result
 
 
 ########################################################################
 # Dictionary stuff
 
 
-def functions(_module: M) -> D[S, CN]:
+def functions(module_: M) -> D[S, CN]:
     """Load from module all functions and turn them into dictionary."""
 
     def test(value: S) -> B:
-        return FUNCTION in repr(value)
+        name = repr(value)
+        result = name.startswith(FUNCTION)
+        return result
 
-    _dictionary: D[S, A] = vars(_module)
+    _dictionary: D[S, A] = vars(module_)
     _items = _dictionary.items()
-    mapping = {key: value for key, value in _items if test(value)}
-    return mapping
+    result = {key: value for key, value in _items if test(value)}
+    return result
 
 
-def dictionary(_module: M) -> D[S, CN]:
+def dictionary(module_: M) -> D[S, CN]:
     """Load from module all key value pairs and make it a dictionary."""
 
     def test(value: S) -> B:
         return not value.startswith(LOW_LINE)
 
-    _dictionary: D[S, A] = vars(_module)
+    _dictionary: D[S, A] = vars(module_)
     _items = _dictionary.items()
-    mapping = {key: value for key, value in _items if test(key)}
-    return mapping
+    result = {key: value for key, value in _items if test(key)}
+    return result
 
 
 ########
 
 
-def function_page(_module: M) -> LS:
+def function_page(module_: M) -> LS:
     """Load from module all functions and turn them into dictionary."""
-    _dictionary = functions(_module)
-    iterable = [key for key, _ in _dictionary.items()]
-    return iterable
+    _dictionary = functions(module_)
+    result = [key for key, _ in _dictionary.items()]
+    return result
 
 
 ########################################################################
@@ -234,22 +252,24 @@ def walk_package(base: S) -> GM:
 
 def project_root() -> P:
     """When running as a package, sys.path[0] is wrong."""
+    result = pathlib.Path(os.curdir)
     for path in sys.path:
         directory = pathlib.Path(path, CELESTINE)
         if directory.is_dir():
-            return pathlib.Path(path)
-    directory = pathlib.Path(os.curdir)
-    return directory
+            result = pathlib.Path(path)
+            break
+    return result
 
 
 def project_path() -> P:
     """When running as a package, sys.path[0] is wrong."""
+    result = pathlib.Path(os.curdir)
     for path in sys.path:
         directory = pathlib.Path(path, CELESTINE)
         if directory.is_dir():
-            return directory
-    directory = pathlib.Path(os.curdir)
-    return directory
+            result = directory
+            break
+    return result
 
 
 def safe_path(*path: S) -> P:
@@ -266,26 +286,30 @@ def safe_path(*path: S) -> P:
     if not os.path.samefile(root, safe):
         raise RuntimeError()
 
-    return pathlib.Path(realpath)
+    result = pathlib.Path(realpath)
+    return result
 
 
 def pathway(*path: S) -> P:
     """"""
     _package = project_path()
-    return pathlib.Path(_package, *path)
+    result = pathlib.Path(_package, *path)
+    return result
 
 
 def pathway_root(*path: S) -> P:
     """"""
     _package = project_root()
-    return pathlib.Path(_package, *path)
+    result = pathlib.Path(_package, *path)
+    return result
 
 
 def python(*path: S) -> P:
     """"""
     base = pathway(*path)
     join = NONE.join([str(base), PYTHON_EXTENSION])
-    return pathlib.Path(join)
+    result = pathlib.Path(join)
+    return result
 
 
 def argument(*path: S) -> LS:
@@ -317,5 +341,5 @@ def asset(file: S) -> P:
     """"""
     data = "celestine.data"
     item = importlib.resources.files(data).joinpath(file)
-    path = pathlib.Path(str(item))
-    return path
+    result = pathlib.Path(str(item))
+    return result

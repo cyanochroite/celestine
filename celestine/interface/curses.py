@@ -11,15 +11,18 @@ from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.literal import LINE_FEED
 from celestine.package import (
+    PIL,
     curses,
-    pillow,
 )
 from celestine.typed import (
     LS,
     B,
+    F,
+    K,
     N,
-    P,
     R,
+    S,
+    Z,
     override,
 )
 from celestine.window.collection import (
@@ -28,11 +31,168 @@ from celestine.window.collection import (
     Plane,
     Point,
 )
+from celestine.window.PIL import Image
 
 color_index = 8  # skip the 8 reserved colors
 color_table = {}
 
 COLORS = 15
+
+
+class Image:
+    """"""
+
+    image: PIL.Image
+
+    @property
+    def height(self) -> Z:
+        """"""
+        result = self.image.height
+        return result
+
+    def resize(self, sizes: TZ2, box: A) -> N:
+        """"""
+        size_x, size_y = sizes
+
+        size_x = max(1, round(size_x))
+        size_y = max(1, round(size_y))
+
+        size = (size_x, size_y)
+        resample = PIL.Image.Resampling.LANCZOS
+
+        result = self.image.resize(size, resample)
+        self.image = result
+
+    @property
+    def size(self) -> TZ2:
+        """"""
+        result = self.image.size
+        return result
+
+    @property
+    def width(self) -> Z:
+        """"""
+        result = self.image.width
+        return result
+
+    ###
+
+    def convert(self) -> N:
+        """"""
+        mode = "RGBA"
+        matrix = None
+        dither = PIL.Image.Dither.NONE  # TODO: Erase?
+        hold = self.image.convert(mode, matrix, dither)
+        self.image = hold
+
+    def __init__(self, image: PIL.Image) -> N:
+        self.image = image
+
+
+def _convert(image: PIL.Image.Image, mode: S) -> PIL.Image.Image:
+    """"""
+    matrix = None
+    dither = PIL.Image.Dither.FLOYDSTEINBERG
+
+    result = image.convert(mode, matrix, dither)
+    return result
+
+
+def _resize(
+    image: PIL.Image.Image, width: F, height: F
+) -> PIL.Image.Image:
+    """"""
+
+    def validate(number: F) -> Z:
+        integer = round(number)
+        result = max(1, integer)
+        return result
+
+    size = (validate(width), validate(height))
+    resample = PIL.Image.Resampling.LANCZOS
+
+    result = image.resize(size, resample)
+    return result
+
+
+#######
+
+
+def convert(image, mode):
+    """"""
+    matrix = None  # Unused default.
+    dither = PIL.Image.Dither.FLOYDSTEINBERG
+    palette = PIL.Image.Palette.WEB  # Unused default.
+    colors = 256  # Unused default.
+
+    hold = image.convert(mode, matrix, dither, palette, colors)
+    return hold
+
+
+def convert_to_alpha(image):
+    """"""
+    return convert(image, "RGBA")
+
+
+def convert_to_color(image):
+    """"""
+    return convert(image, "RGB")
+
+
+def convert_to_mono(image):
+    """"""
+    return convert(image, "1")
+
+
+def image_load(path):
+    """"""
+
+    image = Image.open(path, None)
+    image.convert()
+    return image
+
+
+def crop(source_length, target_length):
+    """"""
+
+    (source_length_x, source_length_y) = source_length
+    (target_length_x, target_length_y) = target_length
+
+    source_ratio = source_length_x / source_length_y
+    target_ratio = target_length_x / target_length_y
+
+    if source_ratio < target_ratio:
+        length = round(source_length_x / target_ratio)
+        offset = round((source_length_y - length) / 2)
+        return (0, 0 + offset, source_length_x, length + offset)
+
+    if source_ratio > target_ratio:
+        length = round(source_length_y * target_ratio)
+        offset = round((source_length_x - length) / 2)
+        return (0 + offset, 0, length + offset, source_length_y)
+
+    return (0, 0, source_length_x, source_length_y)
+
+
+def brightwing(image):
+    """
+    Brightwing no like the dark colors.
+
+    Make image bright.
+    """
+
+    def brighter(pixel):
+        invert = (255 - pixel) / 255
+        boost = invert * 64
+        shift = pixel + boost
+        return shift
+
+    hue, saturation, value = image.convert("HSV").split()
+    new_value = value.point(brighter)
+
+    bands = (hue, saturation, new_value)
+
+    return PIL.Image.merge("HSV", bands).convert("RGB")
 
 
 def get_colors(curses, image):
@@ -41,6 +201,9 @@ def get_colors(curses, image):
     global color_table
 
     colors = image.getcolors()
+    if not colors:
+        print("Yo where my color go?")
+        return
     for color in colors:
         (count, pixel) = color
         (red, green, blue) = pixel
@@ -55,6 +218,9 @@ def get_colors(curses, image):
 
         if red >= 920 or green >= 920 or blue >= 920:
             print(red, green, blue)
+
+        if pixel in color_table:
+            continue
 
         curses.init_color(color_index, red, green, blue)
         curses.init_pair(color_index, color_index, 0)
@@ -90,6 +256,7 @@ class Element(Element_, Abstract):
     """"""
 
     def output(self):
+        """"""
         width, height = self.cache.size
 
         pixels = list(self.cache.getdata())
@@ -131,12 +298,12 @@ class Element(Element_, Abstract):
         value = value[0:-1]
         return value.split(LINE_FEED)
 
-    def render(self, item, **star: R):
+    def render(self, item: LS, **star: R) -> N:
         """"""
 
         (x_dot, y_dot) = self.area.world.origin
 
-        if not pillow:
+        if not PIL:
             self.add_string(
                 x_dot,
                 y_dot,
@@ -150,11 +317,11 @@ class Element(Element_, Abstract):
         for row_text in item:
             index_x = 0
             for col_text in row_text:
-                width, height = self.color.size
+                width, _ = self.color.size
                 index = index_y * width + index_x
 
                 (red, green, blue) = color[index]
-                table = color_table[(red, green, blue)]
+                table = color_table.get((red, green, blue), 2)
                 extra = curses.color_pair(table)
 
                 self.add_string(
@@ -168,47 +335,6 @@ class Element(Element_, Abstract):
 
             index_y += 1
 
-    def draw_old(self, **star: R):
-        """"""
-        self.path = P()
-        if not pillow:
-            self.render(self.path.name, **star)
-            return
-
-        self.cache = pillow.open(self.path)
-        self.color = self.cache.copy()
-
-        # Crop box.
-        source_length_x = self.cache.image.width
-        source_length_y = self.cache.image.height
-
-        length_x, length_y = self.area.size
-
-        target_length_x = length_x * 2
-        target_length_y = length_y * 4
-
-        source_length = (source_length_x, source_length_y)
-        target_length = (target_length_x, target_length_y)
-
-        box = self.crop(source_length, target_length)
-        # Done.
-
-        self.color.brightwing()
-
-        target_length = (target_length_x, target_length_y)
-        self.cache.resize(target_length, box)
-        self.color.resize(self.area.size, box)
-
-        self.color.quantize()
-
-        self.cache.convert_to_mono()
-        self.color.convert_to_color()
-
-        get_colors(curses, self.color.image)
-
-        item = self.output()
-        self.render(item, **star)
-
     @override
     def draw(self, **star: R) -> B:
         """"""
@@ -219,48 +345,55 @@ class Element(Element_, Abstract):
 
         # text
         canvas = star.pop("canvas")
-        canvas.addstr(y, x, self.text)
 
-        return
+        if self.text:
+            canvas.addstr(y, x, self.text)
+            return True
 
-        self.path = P()
-        if not pillow:
+        if not PIL:
             self.render(self.path.name, **star)
-            return
+            return True
 
-        self.cache = self.image
-        self.color = self.cache.copy()
+        self.cache = image_load(self.path)
+        self.color = image_load(self.path)
 
         # Crop box.
-        source_length_x = self.cache.image.width
-        source_length_y = self.cache.image.height
+        source_length_x = self.cache.width
+        source_length_y = self.cache.height
 
         length_x, length_y = self.area.world.size
 
         target_length_x = length_x * 2
         target_length_y = length_y * 4
 
-        source_length = Plane.create(source_length_x, source_length_y)
-        target_length = Plane.create(target_length_x, target_length_y)
+        source_length = (source_length_x, source_length_y)
+        target_length = (target_length_x, target_length_y)
 
-        source_length.scale_to_min(target_length)
-        box = source_length.size
+        box = crop(source_length, target_length)
         # Done.
 
-        self.color.brightwing()
+        # self.color = brightwing(self.color)
 
-        self.cache.resize(target_length.size)
-        self.color.resize(self.area.local.size)
+        target_length = (target_length_x, target_length_y)
+        self.cache.resize(target_length, box)
+        self.color.resize(self.area.world.size, box)
 
-        self.color.quantize()
+        self.color.image.quantize()
 
-        self.cache.convert_to_mono()
-        self.color.convert_to_color()
+        self.cache.image = convert_to_mono(self.cache.image)
+        self.color.image = convert_to_color(self.color.image)
 
         get_colors(curses, self.color.image)
 
         item = self.output()
         self.render(item, **star)
+        return True
+
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
+        self.photo = None
+        self.cache = None
+        self.color = None
 
 
 class View(View_, Abstract):
@@ -273,20 +406,10 @@ class Window(Window_):
     @override
     def draw(self, **star: R) -> N:
         """"""
-
-        # Do normal draw stuff.
-
         self.canvas.erase()
-
-        (size_y, size_x) = self.stdscr.getmaxyx()
-        canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
-        # canvas = curses.newwin(size_y - 2, size_x - 2, 1, 1)
-        # canvas = curses.window(*self.area.value)
-
-        super().draw(canvas=canvas, **star)
+        super().draw(canvas=self.canvas, **star)
 
         self.stdscr.noutrefresh()
-        self.background.noutrefresh()
         self.canvas.noutrefresh()
         curses.doupdate()
 
@@ -300,8 +423,8 @@ class Window(Window_):
     @staticmethod
     def extension() -> LS:
         """"""
-        if bool(pillow):
-            return pillow.extension()
+        if bool(PIL):
+            return PIL.extension()
 
         return []
 
@@ -311,8 +434,6 @@ class Window(Window_):
 
         (size_y, size_x) = self.stdscr.getmaxyx()
 
-        self.stdscr.box()
-
         header = self.stdscr.subwin(0, size_x, 0, 0)
         header.addstr(0, 1, bank.language.APPLICATION_TITLE)
         header.refresh()
@@ -321,34 +442,36 @@ class Window(Window_):
         footer.addstr(0, 1, bank.language.CURSES_EXIT)
         footer.refresh()
 
+        def move():
+            size_x, size_y = self.area.local.size
+            self.cord_x %= size_x
+            self.cord_y %= size_y
+            self.stdscr.move(
+                math.floor(1 + self.cord_y),
+                math.floor(1 + self.cord_x),
+            )
+
         while True:
             bank.dequeue()
             event = self.stdscr.getch()
             match event:
-                case 258 | 259 | 260 | 261 as key:
-                    match key:
-                        case curses.KEY_UP:
-                            self.cord_y -= 1
-                        case curses.KEY_DOWN:
-                            self.cord_y += 1
-                        case curses.KEY_LEFT:
-                            self.cord_x -= 1
-                        case curses.KEY_RIGHT:
-                            self.cord_x += 1
-                        case _:
-                            pass
-
-                    size_x, size_y = self.area.local.size
-                    self.cord_x %= size_x
-                    self.cord_y %= size_y
-                    self.stdscr.move(
-                        math.floor(1 + self.cord_y),
-                        math.floor(1 + self.cord_x),
-                    )
-                case curses.KEY_EXIT:
+                case 27:  # ESCAPE
                     break
-                case curses.KEY_CLICK:
-                    self.page.click(Point(self.cord_x, self.cord_y))
+                case 32:  # SPACE
+                    point = Point(self.cord_x, self.cord_y)
+                    self.page.click(point)
+                case 258:  # KEY_DOWN
+                    self.cord_y += 1
+                    move()
+                case 259:  # KEY_UP
+                    self.cord_y -= 1
+                    move()
+                case 260:  # KEY_LEFT
+                    self.cord_x -= 1
+                    move()
+                case 261:  # KEY_RIGHT
+                    self.cord_x += 1
+                    move()
                 case _:
                     pass
 
@@ -372,12 +495,9 @@ class Window(Window_):
         self.stdscr.keypad(True)
         curses.start_color()
 
+        self.stdscr.box()
+
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.full = Plane.create(size_x, size_y)
-
-        self.background = curses.newwin(size_y - 2, size_x - 2, 1, 1)
-        self.background.box()
-
         plane = Plane(
             Line(0, size_x - 2),
             Line(0, size_y - 2),
@@ -386,4 +506,4 @@ class Window(Window_):
         self.cord_x = 0.5
         self.cord_y = 0.5
 
-        self.canvas = self.background
+        self.canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)

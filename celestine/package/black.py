@@ -4,15 +4,12 @@ import sys
 
 from celestine.package import Abstract
 from celestine.typed import (
-    CN,
     M,
     N,
     P,
     ignore,
     override,
 )
-
-run: CN
 
 
 class Package(Abstract):
@@ -25,3 +22,7 @@ class Package(Abstract):
         root = str(path)
         sys.argv.append(root)
         package.patched_main()
+
+
+def run() -> N:
+    """"""

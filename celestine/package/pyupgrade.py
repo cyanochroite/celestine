@@ -3,7 +3,6 @@
 from celestine import load
 from celestine.package import Abstract
 from celestine.typed import (
-    CN,
     LS,
     M,
     N,
@@ -11,8 +10,6 @@ from celestine.typed import (
     ignore,
     override,
 )
-
-run: CN
 
 
 class Package(Abstract):
@@ -40,3 +37,7 @@ class Package(Abstract):
         """"""
         ignore(self)
         return ["_main"]
+
+
+def run() -> N:
+    """"""

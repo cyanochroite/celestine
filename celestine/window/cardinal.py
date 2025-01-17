@@ -14,6 +14,10 @@ from celestine.literal import (
 )
 from celestine.typed import (
     TS,
+    TS1,
+    TS2,
+    TS3,
+    TS4,
     VZ,
     A,
     B,
@@ -290,7 +294,7 @@ class Cardinal(Struct):
 class Monad[X](Cardinal):
     """"""
 
-    __slots__: T[S] = ("one",)
+    __slots__: TS1 = ("one",)
 
     one: X
 
@@ -319,7 +323,7 @@ class Monad[X](Cardinal):
 class Dyad[X](Cardinal):
     """"""
 
-    __slots__: T[S, S] = ("one", "two")
+    __slots__: TS2 = ("one", "two")
 
     one: X
     two: X
@@ -351,7 +355,7 @@ class Dyad[X](Cardinal):
 class Triad[X](Cardinal):
     """"""
 
-    __slots__: T[S, S, S] = ("one", "two", "tri")
+    __slots__: TS3 = ("one", "two", "tri")
 
     one: X
     two: X
@@ -386,7 +390,7 @@ class Triad[X](Cardinal):
 class Tetrad[X](Cardinal):
     """"""
 
-    __slots__: T[S, S, S, S] = ("one", "two", "tri", "tet")
+    __slots__: TS4 = ("one", "two", "tri", "tet")
 
     one: X
     two: X
