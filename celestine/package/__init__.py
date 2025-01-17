@@ -4,7 +4,6 @@ import sys
 
 from celestine import load
 from celestine.typed import (
-    CN,
     LS,
     VS,
     A,
@@ -23,6 +22,7 @@ class Abstract:
     """"""
 
     local: D[S, A]  # TODO: Not ANY
+    exempt: D[S, A]  # TODO: Not ANY
     name: S
     package: M | N
 
@@ -61,13 +61,8 @@ class Abstract:
         result = self.package is not None
         return result
 
-    def exempt(self) -> LS:
-        """"""
-        ignore(self)
-        return []
-
     def __getattr__(self, name: S) -> S:
-        if name in self.exempt():
+        if name in self.exempt:
             result = getattr(self.package, name)
         else:
             result = self.local.get(name)
@@ -76,14 +71,17 @@ class Abstract:
             raise AttributeError(message)
         return result
 
-    def functions(self) -> D[S, CN]:
+    def functions(self) -> N:
         """"""
-        dictionary: D[S, A] = {}
+        local: D[S, A] = {}
+        exempt: D[S, A] = {}
         base = f"celestine.package.{self.name}"
         modules = load.walk_package(base)
         for module in modules:
             var = vars(module)
-            dictionary.update(var)
+            local.update(var)
+            annotations = var.get("__annotations__", {})
+            exempt.update(annotations)
 
         def test(value: S) -> B:
             name = repr(value)
@@ -102,9 +100,9 @@ class Abstract:
             result = True  # Try disable of function filter.
             return result
 
-        items = dictionary.items()
-        result = {key: value for key, value in items if test(value)}
-        return result
+        items = local.items()
+        self.local = {key: value for key, value in items if test(value)}
+        self.exempt = exempt
 
     def __init__(self, *, pypi: VS = None, **star: R) -> N:
         self.name = self.__module__.rsplit(".", maxsplit=1)[-1]
@@ -112,8 +110,9 @@ class Abstract:
         if self.name == "blender":
             #  TODO: Remove this bypass once blender is working.
             self.local = {}
+            self.exempt = {}
         else:
-            self.local = self.functions()
+            self.functions()
 
         try:
             self.package = load.package(self.pypi)

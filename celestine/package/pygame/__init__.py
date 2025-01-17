@@ -12,12 +12,10 @@ from celestine.package.pygame import (
 )
 from celestine.package.pygame.abstract import Surface
 from celestine.typed import (
-    LS,
     N,
     R,
     Z,
     ignore,
-    override,
 )
 
 ignore(Surface)
@@ -35,12 +33,6 @@ QUIT: Z
 
 class Package(Abstract):
     """"""
-
-    @override
-    def exempt(self) -> LS:
-        """"""
-        ignore(self)
-        return ["MOUSEBUTTONDOWN", "QUIT"]
 
 
 class Rect:
