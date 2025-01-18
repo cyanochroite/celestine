@@ -67,6 +67,13 @@ def main(function: Draw) -> Draw:
     return decorator
 
 
+def wrap(*data: A, **star: R) -> A:
+    """Builtins.KeyError: 'wrap' = You forgot '**star'."""
+    function = star.pop("wrap")
+    result = function(*data, **star)
+    return result
+
+
 def wrapper(name: S) -> C[[Wrapper], A]:
     """"""
 
@@ -105,16 +112,16 @@ def wrapper(name: S) -> C[[Wrapper], A]:
                 result = function_attribute()
             return result
 
-        wrap = load.attribute(module(), attribute())
+        _wrap = load.attribute(module(), attribute())
 
         def decorator(*data: A, **star: R) -> A:
             try:
                 result = function(*data, **star, wrap=wrap)
             except NotImplementedError:
-                result = wrap(*data, **star)
+                result = _wrap(*data, **star)
             except TypeError:
                 #  Tried to call __init__
-                result = wrap(*data, **star)
+                result = _wrap(*data, **star)
 
             return result
 

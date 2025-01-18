@@ -1,7 +1,10 @@
 """"""
 
 from celestine import bank
-from celestine.data import wrapper
+from celestine.data import (
+    wrap,
+    wrapper,
+)
 from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.typed import (
     TZ2,
@@ -79,12 +82,8 @@ class Image:
 # pylint: disable-next=redefined-builtin
 def open(path: P, **star: R) -> Image:
     """"""
-    wrap = star.get("warp")
-    if not wrap:
-        raise NotImplementedError(path)
-
     fp = path
     mode = LATIN_SMALL_LETTER_R
     formats = bank.window.formats()
-    result = wrap(fp, mode, formats)
+    result = wrap(fp, mode, formats, **star)
     return result
