@@ -116,7 +116,7 @@ def wrapper(name: S) -> C[[Wrapper], A]:
 
         def decorator(*data: A, **star: R) -> A:
             try:
-                result = function(*data, **star, wrap=wrap)
+                result = function(*data, **star, wrap=_wrap)
             except NotImplementedError:
                 result = _wrap(*data, **star)
             except TypeError:
