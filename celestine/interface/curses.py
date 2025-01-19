@@ -16,10 +16,13 @@ from celestine.package import (
 )
 from celestine.typed import (
     LS,
+    TZ2,
+    A,
     B,
     F,
     K,
     N,
+    P,
     R,
     S,
     Z,
@@ -31,7 +34,6 @@ from celestine.window.collection import (
     Plane,
     Point,
 )
-from celestine.window.PIL import Image
 
 color_index = 8  # skip the 8 reserved colors
 color_table = {}
@@ -147,7 +149,7 @@ def convert_to_mono(image):
 def image_load(path):
     """"""
 
-    image = Image.open(path, None)
+    image = PIL.Image.open(path)
     image.convert()
     return image
 
@@ -354,6 +356,14 @@ class Element(Element_, Abstract):
             self.render(self.path.name, **star)
             return True
 
+        self.update_image(self.path)
+
+        return True
+
+    def update_image(self, path: P, **star: R) -> N:
+        """"""
+        self.path = path
+
         self.cache = image_load(self.path)
         self.color = image_load(self.path)
 
@@ -366,6 +376,9 @@ class Element(Element_, Abstract):
         target_length_x = length_x * 2
         target_length_y = length_y * 4
 
+        target_length_x = 16
+        target_length_y = 16
+
         source_length = (source_length_x, source_length_y)
         target_length = (target_length_x, target_length_y)
 
@@ -375,19 +388,20 @@ class Element(Element_, Abstract):
         # self.color = brightwing(self.color)
 
         target_length = (target_length_x, target_length_y)
-        self.cache.resize(target_length, box)
-        self.color.resize(self.area.world.size, box)
+        # self.cache.resize(target_length, box)
+        # self.color.resize(self.area.world.size, box)
+        self.cache = self.cache.resize(target_length)
+        self.color = self.color.resize(self.area.world.size)
 
-        self.color.image.quantize()
+        self.color.quantize()
 
-        self.cache.image = convert_to_mono(self.cache.image)
-        self.color.image = convert_to_color(self.color.image)
+        self.cache = convert_to_mono(self.cache)
+        self.color = convert_to_color(self.color)
 
-        get_colors(curses, self.color.image)
+        # get_colors(curses, self.color)
 
         item = self.output()
         self.render(item, **star)
-        return True
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
@@ -424,7 +438,32 @@ class Window(Window_):
     def extension() -> LS:
         """"""
         if bool(PIL):
-            return PIL.extension()
+            # return PIL.Image.registered_extensions()
+            return [
+                ".bmp",
+                ".sgi",
+                ".rgb",
+                ".bw",
+                ".png",
+                ".jpg",
+                ".jpeg",
+                ".jp2",
+                ".j2c",
+                ".tga",
+                ".cin",
+                ".dpx",
+                ".exr",
+                ".hdr",
+                ".tif",
+                ".tiff",
+                ".webp",
+                ".pbm",
+                ".pgm",
+                ".ppm",
+                ".pnm",
+                ".gif",
+                ".png",
+            ]
 
         return []
 

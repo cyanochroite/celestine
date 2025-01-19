@@ -77,6 +77,11 @@ class Image:
         """"""
         raise NotImplementedError(self)
 
+    @property
+    def registered_extensions(self):
+        """"""
+        raise NotImplementedError(self)
+
 
 @wrapper(__name__)
 # pylint: disable-next=redefined-builtin
