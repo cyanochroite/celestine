@@ -51,6 +51,6 @@ class Surface:
         """"""
         raise NotImplementedError(self)
 
-    def __init__(self, size: TZ2) -> N:
+    def __init__(self, size: TZ2, **star: R) -> N:
         """"""
         raise NotImplementedError(self, size)

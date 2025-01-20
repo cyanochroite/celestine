@@ -41,85 +41,6 @@ color_table = {}
 COLORS = 15
 
 
-class Image:
-    """"""
-
-    image: PIL.Image
-
-    @property
-    def height(self) -> Z:
-        """"""
-        result = self.image.height
-        return result
-
-    def resize(self, sizes: TZ2, box: A) -> N:
-        """"""
-        size_x, size_y = sizes
-
-        size_x = max(1, round(size_x))
-        size_y = max(1, round(size_y))
-
-        size = (size_x, size_y)
-        resample = PIL.Image.Resampling.LANCZOS
-
-        result = self.image.resize(size, resample)
-        self.image = result
-
-    @property
-    def size(self) -> TZ2:
-        """"""
-        result = self.image.size
-        return result
-
-    @property
-    def width(self) -> Z:
-        """"""
-        result = self.image.width
-        return result
-
-    ###
-
-    def convert(self) -> N:
-        """"""
-        mode = "RGBA"
-        matrix = None
-        dither = PIL.Image.Dither.NONE  # TODO: Erase?
-        hold = self.image.convert(mode, matrix, dither)
-        self.image = hold
-
-    def __init__(self, image: PIL.Image) -> N:
-        self.image = image
-
-
-def _convert(image: PIL.Image.Image, mode: S) -> PIL.Image.Image:
-    """"""
-    matrix = None
-    dither = PIL.Image.Dither.FLOYDSTEINBERG
-
-    result = image.convert(mode, matrix, dither)
-    return result
-
-
-def _resize(
-    image: PIL.Image.Image, width: F, height: F
-) -> PIL.Image.Image:
-    """"""
-
-    def validate(number: F) -> Z:
-        integer = round(number)
-        result = max(1, integer)
-        return result
-
-    size = (validate(width), validate(height))
-    resample = PIL.Image.Resampling.LANCZOS
-
-    result = image.resize(size, resample)
-    return result
-
-
-#######
-
-
 def convert(image, mode):
     """"""
     matrix = None  # Unused default.
@@ -144,14 +65,6 @@ def convert_to_color(image):
 def convert_to_mono(image):
     """"""
     return convert(image, "1")
-
-
-def image_load(path):
-    """"""
-
-    image = PIL.Image.open(path)
-    image.convert()
-    return image
 
 
 def crop(source_length, target_length):
@@ -364,8 +277,11 @@ class Element(Element_, Abstract):
         """"""
         self.path = path
 
-        self.cache = image_load(self.path)
-        self.color = image_load(self.path)
+        image = PIL.Image.open(path)
+        image.convert()
+
+        self.cache = image.copy()
+        self.color = image
 
         # Crop box.
         source_length_x = self.cache.width
@@ -398,7 +314,7 @@ class Element(Element_, Abstract):
         self.cache = convert_to_mono(self.cache)
         self.color = convert_to_color(self.color)
 
-        # get_colors(curses, self.color)
+        get_colors(curses, self.color)
 
         item = self.output()
         self.render(item, **star)
