@@ -1,12 +1,8 @@
 """"""
 
+import colorsys
 import io
 import math
-import colorsys
-import math
-
-import PIL
-import PIL.Image
 
 from celestine import bank
 from celestine.data.notational_systems import BRAILLE_PATTERNS
@@ -21,17 +17,15 @@ from celestine.package import (
 )
 from celestine.typed import (
     LS,
-    TZ2,
-    TZ3,
-    A,
+    LZ,
+    TF3,
     B,
-    F,
     K,
+    L,
     N,
     P,
     R,
     S,
-    Z,
     override,
 )
 from celestine.window.collection import (
@@ -41,22 +35,21 @@ from celestine.window.collection import (
     Point,
 )
 
-
 COLORS = 15
 
 
 ###########
 
 
-colours = set()
+colours: L[TF3] = []
 
-for index in range(16):
-    value = index / 15
-    color = colorsys.hsv_to_rgb(0.0, 0.0, value)
-    colours.add(color)
+for index_finger in range(16):
+    hsv_val = index_finger / 15
+    color_crayon = colorsys.hsv_to_rgb(0.0, 0.0, hsv_val)
+    colours.append(color_crayon)
 
 for values in range(1, 5):
-    value = math.sqrt(values / 4)
+    hsv_val = math.sqrt(values / 4)
 
     for saturations in range(1, 5):
         saturation = math.sqrt(saturations / 4)
@@ -65,34 +58,33 @@ for values in range(1, 5):
         options = values * 6
         for hues in range(0, options):
             hue = hues / options
-            color = colorsys.hsv_to_rgb(hue, saturation, value)
-            colours.add(color)
+            color_crayon = colorsys.hsv_to_rgb(hue, saturation, hsv_val)
+            colours.append(color_crayon)
 
+colours.sort()
 
-colony = []
-for item in list(colours):
-    r, g, b = item
+colony: LZ = []
+for item_index in colours:
+    r, g, b = item_index
     colony.append(round(r * 255))
     colony.append(round(g * 255))
     colony.append(round(b * 255))
 
 palimage = PIL.Image.new("P", (16, 16))
-
-
-data = colony
-rawmode = "RGB"
-palimage.putpalette(data, rawmode)
+palimage.putpalette(colony, "RGB")
 
 
 ###
 
-color_index = 8  # skip the 8 reserved colors
+
 color_table = {}
 
 
 def set_colors() -> N:
-    global color_index
+    """"""
     global color_table
+
+    color_index = 8  # skip the 8 reserved colors
 
     curses_colour = set(colours)
     curses_colour.remove((0.0, 0.0, 0.0))
@@ -107,16 +99,16 @@ def set_colors() -> N:
     curses_list = list(curses_colour)
     curses_list.sort()
 
-    for color in curses_list:
-        red = round(color[0] * 1000)
-        green = round(color[1] * 1000)
-        blue = round(color[2] * 1000)
+    for colorado in curses_list:
+        red = round(colorado[0] * 1000)
+        green = round(colorado[1] * 1000)
+        blue = round(colorado[2] * 1000)
         curses.init_color(color_index, red, green, blue)
         curses.init_pair(color_index, color_index, 0)
 
-        red = round(color[0] * 255)
-        green = round(color[1] * 255)
-        blue = round(color[2] * 255)
+        red = round(colorado[0] * 255)
+        green = round(colorado[1] * 255)
+        blue = round(colorado[2] * 255)
         pixel = (red, green, blue)
         color_table[pixel] = color_index
 
@@ -172,61 +164,6 @@ def crop(source_length, target_length):
         return (0 + offset, 0, length + offset, source_length_y)
 
     return (0, 0, source_length_x, source_length_y)
-
-
-def brightwing(image):
-    """
-    Brightwing no like the dark colors.
-
-    Make image bright.
-    """
-
-    def brighter(pixel):
-        invert = (255 - pixel) / 255
-        boost = invert * 64
-        shift = pixel + boost
-        return shift
-
-    hue, saturation, value = image.convert("HSV").split()
-    new_value = value.point(brighter)
-
-    bands = (hue, saturation, new_value)
-
-    return PIL.Image.merge("HSV", bands).convert("RGB")
-
-
-def get_colors(curses, image):
-    """Fails after being called 16 times."""
-    global color_index
-    global color_table
-
-    colors = image.getcolors()
-    if not colors:
-        print("Yo where my color go?")
-        return
-    for color in colors:
-        (count, pixel) = color
-        (red, green, blue) = pixel
-
-        red *= 1000
-        green *= 1000
-        blue *= 1000
-
-        red //= 255
-        green //= 255
-        blue //= 255
-
-        if red >= 920 or green >= 920 or blue >= 920:
-            print(red, green, blue)
-
-        if pixel in color_table:
-            continue
-
-        curses.init_color(color_index, red, green, blue)
-        curses.init_pair(color_index, color_index, 0)
-
-        color_table[pixel] = color_index
-        color_index += 1
 
 
 class Abstract(Abstract_):
@@ -386,8 +323,6 @@ class Element(Element_, Abstract):
         box = crop(source_length, target_length)
         # Done.
 
-        # self.color = brightwing(self.color)
-
         target_length = (target_length_x, target_length_y)
         # self.cache.resize(target_length, box)
         # self.color.resize(self.area.world.size, box)
@@ -398,8 +333,6 @@ class Element(Element_, Abstract):
 
         self.cache = convert_to_mono(self.cache)
         self.color = convert_to_color(self.color)
-
-        # set_colors(curses, self.color)
 
         item = self.output()
         self.render(item, **star)
@@ -427,12 +360,6 @@ class Window(Window_):
         self.stdscr.noutrefresh()
         self.canvas.noutrefresh()
         curses.doupdate()
-
-        # Reset the global color counter.
-        global color_index
-        global color_table
-        color_index = 8
-        color_table = {}
 
     @override
     @staticmethod

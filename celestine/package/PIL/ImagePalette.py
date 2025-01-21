@@ -1,10 +1,11 @@
 """"""
 
-from celestine.data import wrapper, wrap
-from celestine.package.PIL.Image import Image
+from celestine.data import (
+    wrap,
+    wrapper,
+)
 from celestine.typed import (
     N,
-    Z,
     R,
     ignore,
 )
@@ -17,6 +18,6 @@ class ImagePalette:
     def __init__(self, **star: R) -> N:
         """"""
         ignore(self)
-        mode: str = 'RGB'
+        mode: str = "RGB"
         palette = [125, 123, 188]
         wrap(mode, palette, **star)

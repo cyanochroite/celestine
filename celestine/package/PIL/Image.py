@@ -7,6 +7,7 @@ from celestine.data import (
 )
 from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.typed import (
+    LZ,
     TZ2,
     K,
     N,
@@ -49,6 +50,10 @@ class Image:
     """"""
 
     mode: S
+
+    def putpalette(self, data: LZ, rawmode: S) -> N:
+        """"""
+        raise NotImplementedError(self, data, rawmode)
 
     def convert(self, mode: S, matrix: N, dither: "Dither") -> K:
         """"""
