@@ -1,28 +1,39 @@
-#!/usr/bin/env python3
-from PIL import Image
+import PIL
+from PIL import Image, ImagePalette
+
+import PIL
+import PIL.Image
 
 
-def quantizetopalette(silf, palette, dither=False):
-    """Convert an RGB or L mode image to use a given P image's palette."""
-
-    silf.load()
-
-    # use palette from reference image
-    palette.load()
-
-    colors = 256
-    method = Image.Quantize.MEDIANCUT
-    kmeans = 0
-    # palette: Image | None = None
-    dither = Image.Dither.NONE
-
-    return silf.quantize(colors, method, kmeans, palette, dither)
+size = 1024
+wide = size
+tall = size
+image = PIL.Image.new("RGB", (wide, tall))
 
 
-# putpalette() input is a sequence of [r, g, b, r, g, b, ...]
-# The data chosen for this particular answer represent
-# the four gray values in a game console's palette
-palettedata = [0, 0, 0, 102, 102, 102, 176, 176, 176, 255, 255, 255]
+for y in range(tall):
+    for x in range(wide):
+        xx = x // 4
+        yy = y // 4
+        boost = 32
+        zz = (xx // boost) * boost
+        image.putpixel((x, y), (zz, zz, zz))
+
+# image = image.convert(mode="1", dither=PIL.Image.Dither.NONE)
+image.show()
+
+
+image = PIL.Image.new("RGB", (1024, 1024))
+
+
+for y in range(1024):
+    for x in range(1024):
+        image.putpixel((x, y), (x // 4, y // 4, 0))
+
+image = image.convert(mode="1", dither=PIL.Image.Dither.NONE)
+image.show()
+
+
 palettedata = []
 for index in range(128):
     array = [index * 2, index * 2, index * 2]
@@ -36,13 +47,27 @@ palettedata.extend(
     palettedata[:num_bands]
     * (NUM_ENTRIES_IN_PILLOW_PALETTE - num_entries_in_palettedata)
 )
-# Create a palette image whose size does not matter
-arbitrary_size = 16, 16
-palimage = Image.new('P', arbitrary_size)
-palimage.putpalette(palettedata)
+
+mode = "P"
+size = (16, 16)
+color = 0
+palimage = PIL.Image.new(mode, size, color)
+
+
+data = palettedata
+rawmode = "RGB"
+palimage.putpalette(data, rawmode)
+
+
+# palimage = ImagePalette.ImagePalette(palettedata)
 
 # Perform the conversion
 oldimage = Image.open("D:\\done\\1unknown.png")
 oldimage = oldimage.convert(mode="RGB")
-newimage = quantizetopalette(oldimage, palimage, dither=False)
+
+
+#
+
+
+newimage = oldimage.quantize(palette=palimage)
 newimage.show()
