@@ -2,6 +2,11 @@
 
 import io
 import math
+import colorsys
+import math
+
+import PIL
+import PIL.Image
 
 from celestine import bank
 from celestine.data.notational_systems import BRAILLE_PATTERNS
@@ -17,6 +22,7 @@ from celestine.package import (
 from celestine.typed import (
     LS,
     TZ2,
+    TZ3,
     A,
     B,
     F,
@@ -35,10 +41,89 @@ from celestine.window.collection import (
     Point,
 )
 
+
+COLORS = 15
+
+
+###########
+
+
+colours = set()
+
+for index in range(16):
+    value = index / 15
+    color = colorsys.hsv_to_rgb(0.0, 0.0, value)
+    colours.add(color)
+
+for values in range(1, 5):
+    value = math.sqrt(values / 4)
+
+    for saturations in range(1, 5):
+        saturation = math.sqrt(saturations / 4)
+        # saturation = saturations / 4
+
+        options = values * 6
+        for hues in range(0, options):
+            hue = hues / options
+            color = colorsys.hsv_to_rgb(hue, saturation, value)
+            colours.add(color)
+
+
+colony = []
+for item in list(colours):
+    r, g, b = item
+    colony.append(round(r * 255))
+    colony.append(round(g * 255))
+    colony.append(round(b * 255))
+
+palimage = PIL.Image.new("P", (16, 16))
+
+
+data = colony
+rawmode = "RGB"
+palimage.putpalette(data, rawmode)
+
+
+###
+
 color_index = 8  # skip the 8 reserved colors
 color_table = {}
 
-COLORS = 15
+
+def set_colors() -> N:
+    global color_index
+    global color_table
+
+    curses_colour = set(colours)
+    curses_colour.remove((0.0, 0.0, 0.0))
+    curses_colour.remove((1.0, 0.0, 0.0))
+    curses_colour.remove((0.0, 1.0, 0.0))
+    curses_colour.remove((0.0, 0.0, 1.0))
+    curses_colour.remove((0.0, 1.0, 1.0))
+    curses_colour.remove((1.0, 0.0, 1.0))
+    curses_colour.remove((1.0, 1.0, 0.0))
+    curses_colour.remove((1.0, 1.0, 1.0))
+
+    curses_list = list(curses_colour)
+    curses_list.sort()
+
+    for color in curses_list:
+        red = round(color[0] * 1000)
+        green = round(color[1] * 1000)
+        blue = round(color[2] * 1000)
+        curses.init_color(color_index, red, green, blue)
+        curses.init_pair(color_index, color_index, 0)
+
+        red = round(color[0] * 255)
+        green = round(color[1] * 255)
+        blue = round(color[2] * 255)
+        pixel = (red, green, blue)
+        color_table[pixel] = color_index
+
+        color_index += 1
+
+
+#############
 
 
 def convert(image, mode):
@@ -281,7 +366,7 @@ class Element(Element_, Abstract):
         image.convert()
 
         self.cache = image.copy()
-        self.color = image
+        self.color = image.convert(mode="RGB")
 
         # Crop box.
         source_length_x = self.cache.width
@@ -309,12 +394,12 @@ class Element(Element_, Abstract):
         self.cache = self.cache.resize(target_length)
         self.color = self.color.resize(self.area.world.size)
 
-        self.color.quantize()
+        self.color.quantize(palette=palimage)
 
         self.cache = convert_to_mono(self.cache)
         self.color = convert_to_color(self.color)
 
-        get_colors(curses, self.color)
+        # set_colors(curses, self.color)
 
         item = self.output()
         self.render(item, **star)
@@ -462,3 +547,5 @@ class Window(Window_):
         self.cord_y = 0.5
 
         self.canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
+
+        set_colors()

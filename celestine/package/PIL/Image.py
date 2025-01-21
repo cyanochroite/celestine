@@ -84,6 +84,13 @@ class Image:
 
 
 @wrapper(__name__)
+def new(mode: S, size: TZ2, **star: R) -> Image:
+    color = 0
+    result = wrap(mode, size, color, **star)
+    return result
+
+
+@wrapper(__name__)
 # pylint: disable-next=redefined-builtin
 def open(path: P, **star: R) -> Image:
     """"""
