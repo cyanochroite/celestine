@@ -10,7 +10,6 @@ from celestine.package.PIL import (
     ImageTk,
 )
 from celestine.typed import (
-    LS,
     N,
     R,
     ignore,
@@ -27,8 +26,3 @@ class Package(Abstract):
         super().__init__(pypi="PIL")
         if self.package and bool(tkinter):
             setattr(self, "ImageTk", load.package("PIL", "ImageTk"))
-
-
-def extension() -> LS:
-    """"""
-    raise NotImplementedError()

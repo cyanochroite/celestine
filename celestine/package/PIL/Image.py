@@ -1,9 +1,13 @@
 """"""
 
 from celestine import bank
-from celestine.data import wrapper
+from celestine.data import (
+    wrap,
+    wrapper,
+)
 from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.typed import (
+    LZ,
     TZ2,
     K,
     N,
@@ -47,6 +51,10 @@ class Image:
 
     mode: S
 
+    def putpalette(self, data: LZ, rawmode: S) -> N:
+        """"""
+        raise NotImplementedError(self, data, rawmode)
+
     def convert(self, mode: S, matrix: N, dither: "Dither") -> K:
         """"""
         raise NotImplementedError(self, mode, matrix, dither)
@@ -74,17 +82,25 @@ class Image:
         """"""
         raise NotImplementedError(self)
 
+    @property
+    def registered_extensions(self):
+        """"""
+        raise NotImplementedError(self)
+
+
+@wrapper(__name__)
+def new(mode: S, size: TZ2, **star: R) -> Image:
+    color = 0
+    result = wrap(mode, size, color, **star)
+    return result
+
 
 @wrapper(__name__)
 # pylint: disable-next=redefined-builtin
 def open(path: P, **star: R) -> Image:
     """"""
-    wrap = star.get("warp")
-    if not wrap:
-        raise NotImplementedError(path)
-
     fp = path
     mode = LATIN_SMALL_LETTER_R
     formats = bank.window.formats()
-    result = wrap(fp, mode, formats)
+    result = wrap(fp, mode, formats, **star)
     return result

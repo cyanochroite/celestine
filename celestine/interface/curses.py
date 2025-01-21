@@ -1,5 +1,6 @@
 """"""
 
+import colorsys
 import io
 import math
 
@@ -16,13 +17,15 @@ from celestine.package import (
 )
 from celestine.typed import (
     LS,
+    LZ,
+    TF3,
     B,
-    F,
     K,
+    L,
     N,
+    P,
     R,
     S,
-    Z,
     override,
 )
 from celestine.window.collection import (
@@ -31,91 +34,88 @@ from celestine.window.collection import (
     Plane,
     Point,
 )
-from celestine.window.PIL import Image
-
-color_index = 8  # skip the 8 reserved colors
-color_table = {}
 
 COLORS = 15
 
 
-class Image:
+###########
+
+
+colours: L[TF3] = []
+
+for index_finger in range(16):
+    hsv_val = index_finger / 15
+    color_crayon = colorsys.hsv_to_rgb(0.0, 0.0, hsv_val)
+    colours.append(color_crayon)
+
+for values in range(1, 5):
+    hsv_val = math.sqrt(values / 4)
+
+    for saturations in range(1, 5):
+        saturation = math.sqrt(saturations / 4)
+        # saturation = saturations / 4
+
+        options = values * 6
+        for hues in range(0, options):
+            hue = hues / options
+            color_crayon = colorsys.hsv_to_rgb(hue, saturation, hsv_val)
+            colours.append(color_crayon)
+
+colours.sort()
+
+colony: LZ = []
+for item_index in colours:
+    r, g, b = item_index
+    colony.append(round(r * 255))
+    colony.append(round(g * 255))
+    colony.append(round(b * 255))
+
+palimage = PIL.Image.new("P", (16, 16))
+palimage.putpalette(colony, "RGB")
+
+
+###
+
+
+color_table = {}
+
+
+def set_colors() -> N:
     """"""
+    global color_table
 
-    image: PIL.Image
+    color_index = 8  # skip the 8 reserved colors
 
-    @property
-    def height(self) -> Z:
-        """"""
-        result = self.image.height
-        return result
+    curses_colour = set(colours)
+    curses_colour.remove((0.0, 0.0, 0.0))
+    curses_colour.remove((1.0, 0.0, 0.0))
+    curses_colour.remove((0.0, 1.0, 0.0))
+    curses_colour.remove((0.0, 0.0, 1.0))
+    curses_colour.remove((0.0, 1.0, 1.0))
+    curses_colour.remove((1.0, 0.0, 1.0))
+    curses_colour.remove((1.0, 1.0, 0.0))
+    curses_colour.remove((1.0, 1.0, 1.0))
 
-    def resize(self, sizes: TZ2, box: A) -> N:
-        """"""
-        size_x, size_y = sizes
+    curses_list = list(curses_colour)
+    curses_list.sort()
 
-        size_x = max(1, round(size_x))
-        size_y = max(1, round(size_y))
+    for colorado in curses_list:
+        red = round(colorado[0] * 1000)
+        green = round(colorado[1] * 1000)
+        blue = round(colorado[2] * 1000)
+        curses.init_color(color_index, red, green, blue)
+        curses.init_pair(color_index, color_index, 0)
 
-        size = (size_x, size_y)
-        resample = PIL.Image.Resampling.LANCZOS
+        red = round(colorado[0] * 255)
+        green = round(colorado[1] * 255)
+        blue = round(colorado[2] * 255)
+        pixel = (red, green, blue)
+        color_table[pixel] = color_index
 
-        result = self.image.resize(size, resample)
-        self.image = result
-
-    @property
-    def size(self) -> TZ2:
-        """"""
-        result = self.image.size
-        return result
-
-    @property
-    def width(self) -> Z:
-        """"""
-        result = self.image.width
-        return result
-
-    ###
-
-    def convert(self) -> N:
-        """"""
-        mode = "RGBA"
-        matrix = None
-        dither = PIL.Image.Dither.NONE  # TODO: Erase?
-        hold = self.image.convert(mode, matrix, dither)
-        self.image = hold
-
-    def __init__(self, image: PIL.Image) -> N:
-        self.image = image
+        color_index += 1
 
 
-def _convert(image: PIL.Image.Image, mode: S) -> PIL.Image.Image:
-    """"""
-    matrix = None
-    dither = PIL.Image.Dither.FLOYDSTEINBERG
-
-    result = image.convert(mode, matrix, dither)
-    return result
-
-
-def _resize(
-    image: PIL.Image.Image, width: F, height: F
-) -> PIL.Image.Image:
-    """"""
-
-    def validate(number: F) -> Z:
-        integer = round(number)
-        result = max(1, integer)
-        return result
-
-    size = (validate(width), validate(height))
-    resample = PIL.Image.Resampling.LANCZOS
-
-    result = image.resize(size, resample)
-    return result
-
-
-#######
+#############
 
 
 def convert(image, mode):
@@ -144,14 +144,6 @@ def convert_to_mono(image):
     return convert(image, "1")
 
 
-def image_load(path):
-    """"""
-
-    image = Image.open(path, None)
-    image.convert()
-    return image
-
-
 def crop(source_length, target_length):
     """"""
 
@@ -172,61 +164,6 @@ def crop(source_length, target_length):
         return (0 + offset, 0, length + offset, source_length_y)
 
     return (0, 0, source_length_x, source_length_y)
-
-
-def brightwing(image):
-    """
-    Brightwing no like the dark colors.
-
-    Make image bright.
-    """
-
-    def brighter(pixel):
-        invert = (255 - pixel) / 255
-        boost = invert * 64
-        shift = pixel + boost
-        return shift
-
-    hue, saturation, value = image.convert("HSV").split()
-    new_value = value.point(brighter)
-
-    bands = (hue, saturation, new_value)
-
-    return PIL.Image.merge("HSV", bands).convert("RGB")
-
-
-def get_colors(curses, image):
-    """Fails after being called 16 times."""
-    global color_index
-    global color_table
-
-    colors = image.getcolors()
-    if not colors:
-        print("Yo where my color go?")
-        return
-    for color in colors:
-        (count, pixel) = color
-        (red, green, blue) = pixel
-
-        red *= 1000
-        green *= 1000
-        blue *= 1000
-
-        red //= 255
-        green //= 255
-        blue //= 255
-
-        if red >= 920 or green >= 920 or blue >= 920:
-            print(red, green, blue)
-
-        if pixel in color_table:
-            continue
-
-        curses.init_color(color_index, red, green, blue)
-        curses.init_pair(color_index, color_index, 0)
-
-        color_table[pixel] = color_index
-        color_index += 1
 
 
 class Abstract(Abstract_):
@@ -354,8 +291,19 @@ class Element(Element_, Abstract):
             self.render(self.path.name, **star)
             return True
 
-        self.cache = image_load(self.path)
-        self.color = image_load(self.path)
+        self.update_image(self.path)
+
+        return True
+
+    def update_image(self, path: P, **star: R) -> N:
+        """"""
+        self.path = path
+
+        image = PIL.Image.open(path)
+        image.convert()
+
+        self.cache = image.copy()
+        self.color = image.convert(mode="RGB")
 
         # Crop box.
         source_length_x = self.cache.width
@@ -366,28 +314,28 @@ class Element(Element_, Abstract):
         target_length_x = length_x * 2
         target_length_y = length_y * 4
 
+        target_length_x = 16
+        target_length_y = 16
+
         source_length = (source_length_x, source_length_y)
         target_length = (target_length_x, target_length_y)
 
         box = crop(source_length, target_length)
         # Done.
 
-        # self.color = brightwing(self.color)
-
         target_length = (target_length_x, target_length_y)
-        self.cache.resize(target_length, box)
-        self.color.resize(self.area.world.size, box)
+        # self.cache.resize(target_length, box)
+        # self.color.resize(self.area.world.size, box)
+        self.cache = self.cache.resize(target_length)
+        self.color = self.color.resize(self.area.world.size)
 
-        self.color.image.quantize()
+        self.color.quantize(palette=palimage)
 
-        self.cache.image = convert_to_mono(self.cache.image)
-        self.color.image = convert_to_color(self.color.image)
-
-        get_colors(curses, self.color.image)
+        self.cache = convert_to_mono(self.cache)
+        self.color = convert_to_color(self.color)
 
         item = self.output()
         self.render(item, **star)
-        return True
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
@@ -413,18 +361,37 @@ class Window(Window_):
         self.canvas.noutrefresh()
         curses.doupdate()
 
-        # Reset the global color counter.
-        global color_index
-        global color_table
-        color_index = 8
-        color_table = {}
-
     @override
     @staticmethod
     def extension() -> LS:
         """"""
         if bool(PIL):
-            return PIL.extension()
+            # return PIL.Image.registered_extensions()
+            return [
+                ".bmp",
+                ".sgi",
+                ".rgb",
+                ".bw",
+                ".png",
+                ".jpg",
+                ".jpeg",
+                ".jp2",
+                ".j2c",
+                ".tga",
+                ".cin",
+                ".dpx",
+                ".exr",
+                ".hdr",
+                ".tif",
+                ".tiff",
+                ".webp",
+                ".pbm",
+                ".pgm",
+                ".ppm",
+                ".pnm",
+                ".gif",
+                ".png",
+            ]
 
         return []
 
@@ -507,3 +474,5 @@ class Window(Window_):
         self.cord_y = 0.5
 
         self.canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
+
+        set_colors()

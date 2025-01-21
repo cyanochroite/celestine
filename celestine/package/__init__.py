@@ -38,8 +38,12 @@ class Abstract:
         ignore(self)
         return []
 
-    def run(self) -> N:
-        """"""
+    def run(self, terminate: B = False) -> N:
+        """
+        Run the package as if from the command line.
+
+        Catch the SystemExit calls that the package may throw.
+        """
 
         if not self.package:
             return
@@ -52,8 +56,9 @@ class Abstract:
         try:
             module = load.package(self.name, *self.module())
             self.main(module, path)
-        except SystemExit:
-            pass
+        except SystemExit as exception:
+            if terminate:
+                raise exception
 
         sys.argv = argv
 

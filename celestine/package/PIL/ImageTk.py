@@ -1,5 +1,6 @@
 """"""
 
+from celestine.data import wrapper
 from celestine.package.PIL.Image import Image
 from celestine.typed import (
     N,
@@ -7,13 +8,16 @@ from celestine.typed import (
 )
 
 
+@wrapper(__name__)
 class PhotoImage:
     """"""
 
+    @wrapper(__name__)
     def height(self) -> Z:
         """"""
         raise NotImplementedError(self)
 
+    @wrapper(__name__)
     def width(self) -> Z:
         """"""
         raise NotImplementedError(self)

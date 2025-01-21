@@ -95,7 +95,7 @@ class Element(Element_, Abstract):
     def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
-        if bool(PIL):
+        if bool(PIL) and False:
             image = PIL.Image.open(self.path)
             photo = PIL.ImageTk.PhotoImage(image=image)
             self.item.configure(image=photo)
