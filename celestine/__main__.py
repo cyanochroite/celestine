@@ -1,73 +1,60 @@
-import PIL
-from PIL import Image, ImagePalette
+""""""
+
+import colorsys
+import math
 
 import PIL
 import PIL.Image
 
+type F = float
+type Z = int
+type TZ3 = (int, int, int)
 
-size = 1024
-wide = size
-tall = size
-image = PIL.Image.new("RGB", (wide, tall))
-
-
-for y in range(tall):
-    for x in range(wide):
-        xx = x // 4
-        yy = y // 4
-        boost = 32
-        zz = (xx // boost) * boost
-        image.putpixel((x, y), (zz, zz, zz))
-
-# image = image.convert(mode="1", dither=PIL.Image.Dither.NONE)
-image.show()
+image = PIL.Image.new("L", (16, 16))
+image.putpixel((0, 0), 30000000)
 
 
-image = PIL.Image.new("RGB", (1024, 1024))
+def hsv_to_rgb(hue: F, saturation: F, value: F) -> TZ3:
+    """"""
+    channels = colorsys.hsv_to_rgb(hue, saturation, value)
+
+    def convert(channel: Z) -> Z:
+        """"""
+        color = channels[channel]
+        number = color * 255
+        result = round(number)
+        return result
+
+    red = convert(0)
+    green = convert(1)
+    blue = convert(2)
+    result = (red, green, blue)
+    return result
 
 
-for y in range(1024):
-    for x in range(1024):
-        image.putpixel((x, y), (x // 4, y // 4, 0))
+hues = [math.sqrt(index / 5) for index in range(1, 6)]
+saturations = [index / 4 for index in range(1, 5)]
 
-image = image.convert(mode="1", dither=PIL.Image.Dither.NONE)
-image.show()
+print(hues)
+print(saturations)
+hues = []
+saturations = []
 
+addit = 0
+for hues in range(1, 5):
+    hue = math.sqrt(hues) / 2
 
-palettedata = []
-for index in range(128):
-    array = [index * 2, index * 2, index * 2]
-    palettedata.extend(array)
-# Fill the entire palette so that no entries in Pillow's
-# default palette for P images can interfere with conversion
-NUM_ENTRIES_IN_PILLOW_PALETTE = 128
-num_bands = len("RGB")
-num_entries_in_palettedata = len(palettedata) // num_bands
-palettedata.extend(
-    palettedata[:num_bands]
-    * (NUM_ENTRIES_IN_PILLOW_PALETTE - num_entries_in_palettedata)
-)
+    for saturations in range(1, 5):
+        saturation = saturations / 4
 
-mode = "P"
-size = (16, 16)
-color = 0
-palimage = PIL.Image.new(mode, size, color)
+        colors = hues * 6
+        for values in range(0, colors):
+            addit += 1
+            value = values / colors
+            # print(hue, saturation, value)
+            print(value, value * colors)
 
 
-data = palettedata
-rawmode = "RGB"
-palimage.putpalette(data, rawmode)
-
-
-# palimage = ImagePalette.ImagePalette(palettedata)
-
-# Perform the conversion
-oldimage = Image.open("D:\\done\\1unknown.png")
-oldimage = oldimage.convert(mode="RGB")
-
-
-#
-
-
-newimage = oldimage.quantize(palette=palimage)
-newimage.show()
+print(hues)
+print(saturations)
+print(addit)
