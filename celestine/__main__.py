@@ -10,9 +10,6 @@ type F = float
 type Z = int
 type TZ3 = (int, int, int)
 
-image = PIL.Image.new("L", (16, 16))
-image.putpixel((0, 0), 30000000)
-
 
 def hsv_to_rgb(hue: F, saturation: F, value: F) -> TZ3:
     """"""
@@ -32,29 +29,66 @@ def hsv_to_rgb(hue: F, saturation: F, value: F) -> TZ3:
     return result
 
 
-hues = [math.sqrt(index / 5) for index in range(1, 6)]
-saturations = [index / 4 for index in range(1, 5)]
+colours = set()
 
-print(hues)
-print(saturations)
-hues = []
-saturations = []
+for index in range(16):
+    value = index / 15
+    color = hsv_to_rgb(0.0, 0.0, value)
+    colours.add(color)
 
-addit = 0
-for hues in range(1, 5):
-    hue = math.sqrt(hues) / 2
+for values in range(1, 5):
+    value = math.sqrt(values / 4)
 
     for saturations in range(1, 5):
-        saturation = saturations / 4
+        saturation = math.sqrt(saturations / 4)
+        # saturation = saturations / 4
 
-        colors = hues * 6
-        for values in range(0, colors):
-            addit += 1
-            value = values / colors
-            # print(hue, saturation, value)
-            print(value, value * colors)
+        options = values * 6
+        for hues in range(0, options):
+            hue = hues / options
+            color = hsv_to_rgb(hue, saturation, value)
+            colours.add(color)
 
 
-print(hues)
-print(saturations)
-print(addit)
+print(len(colours))
+for colour in colours:
+    print(colour)
+
+# colours.remove((0, 0, 0))
+# colours.remove((255, 0, 0))
+# colours.remove((0, 255, 0))
+# colours.remove((0, 0, 255))
+# colours.remove((255, 255, 0))
+# colours.remove((255, 0, 255))
+# colours.remove((0, 255, 255))
+# colours.remove((255, 255, 255))
+
+print(len(colours))
+
+
+colours = list(colours)
+colours.sort()
+
+image = PIL.Image.new("RGB", (1024, 1024))
+for y in range(1024):
+    for x in range(1024):
+        xx = x // 4
+        yy = y // 4
+        colour = colours[xx]
+        image.putpixel((x, y), colour)
+
+image.show()
+
+image = PIL.Image.new("RGB", (864, 864))
+for y in range(864):
+    for x in range(864):
+        xx = x // 4
+        yy = y // 4
+        color = (
+            (xx % 6) * 42,
+            ((xx // 6) % 6) * 42,
+            (xx // 36) * 42,
+        )
+        image.putpixel((x, y), color)
+
+image.show()
