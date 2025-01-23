@@ -12,25 +12,6 @@ choices = [index * 256 / 7 for index in range(8)]
 crayola = []
 
 
-def sorter(value):
-    h0, s0, v0 = value
-    croma1 = max(h0, s0, v0) - min(h0, s0, v0)
-    h1, s1, v1 = colorsys.rgb_to_hls(
-        h0 / 256,
-        s0 / 256,
-        s0 / 256,
-    )
-    h2 = round(h1, 2)
-    s2 = round(s1, 2)
-    v2 = round(v1, 2)
-    cr2 = round(croma1 / 256, 2)
-    cat = f"{v2}_{cr2}_{h2}"
-    cat = f"{v2 * cr2* cr2}_{h2}"
-    magic0 = round(1000 * (v2 * cr2 * cr2) + (360 * v2))
-    magic = str(magic0).zfill(5)
-    return magic
-
-
 limit = 8
 
 red = []
@@ -111,42 +92,29 @@ print(len(magenta))
 print(len(yellow))
 print(len(cyan))
 print(len(grey))
-print(3 / 0)
-for red in choices:
-    for green in choices:
-        for blue in choices:
-            big = max(red, green, blue)
-            small = min(red, green, blue)
-            croma = big - small
-            hh, ss, vv = colorsys.rgb_to_hls(
-                red / 256,
-                green / 256,
-                blue / 256,
-            )
-            colours.append((hh, ss, vv))
-            valuess = red + green + blue
-            print(valuess)
-            if red + green + blue < 400:
-                continue
-            crayola.append(
-                (
-                    round(red),
-                    round(green),
-                    round(blue),
-                )
-            )
 
-crayola.sort(key=sorter)
+grouphug = []
+grouphug.extend(red)
+grouphug.extend(green)
+grouphug.extend(blue)
+grouphug.extend(magenta)
+grouphug.extend(yellow)
+grouphug.extend(cyan)
+grouphug.extend(grey)
 
 
-print(len(colours), len(crayola))
-length = len(crayola) - 1
+length = len(grouphug) - 1
 image = PIL.Image.new("RGB", (1024, 1024))
 for y in range(1024):
     for x in range(1024):
         xx = x // 4
         yy = min(xx, length)
-        colour = crayola[yy]
+        picker = grouphug[yy]
+        colour = (
+            round(choices[picker[0]]),
+            round(choices[picker[1]]),
+            round(choices[picker[2]]),
+        )
         image.putpixel((x, y), colour)
 
 image.show()
