@@ -126,6 +126,23 @@ class Cardinal(Struct):
         result = list(map(binary, self.data, data))
         return result
 
+    def ceil(self) -> K:
+        """"""
+        result = self._inplace(Math.ceil)
+        return result
+
+    def floor(self) -> K:
+        """"""
+        result = self._inplace(Math.floor)
+        return result
+
+    def round(self, ndigits: VZ = None) -> K:
+        """"""
+        other = itertools.repeat(ndigits)
+        data = list(map(Math.round, self.data, other))
+        result = self.make(*data)
+        return result
+
     def unary(self, unary: Unary) -> L[Nomad]:
         """Unary arithmetic operations."""
         result = list(map(unary, self.data))
@@ -150,7 +167,7 @@ class Cardinal(Struct):
         return result
 
     def __ceil__(self) -> K:
-        result = self._inplace(Math.ceil)
+        result = self.ceil()
         return result
 
     def __del__(self) -> N:
@@ -171,7 +188,7 @@ class Cardinal(Struct):
         return result
 
     def __floor__(self) -> K:
-        result = self._inplace(Math.floor)
+        result = self.floor()
         return result
 
     def __ge__(self, other: Nomad) -> B:
@@ -259,9 +276,7 @@ class Cardinal(Struct):
         return result
 
     def __round__(self, ndigits: VZ = None) -> K:
-        other = itertools.repeat(ndigits)
-        data = list(map(Math.round, self.data, other))
-        result = self.make(*data)
+        result = self.round(ndigits)
         return result
 
     def __rsub__(self, other: Nomad) -> K:
