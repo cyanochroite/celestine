@@ -126,6 +126,23 @@ class Cardinal(Struct):
         result = list(map(binary, self.data, data))
         return result
 
+    def ceil(self) -> K:
+        """"""
+        result = self._inplace(Math.ceil)
+        return result
+
+    def floor(self) -> K:
+        """"""
+        result = self._inplace(Math.floor)
+        return result
+
+    def round(self, ndigits: VZ = None) -> K:
+        """"""
+        other = itertools.repeat(ndigits)
+        data = list(map(Math.round, self.data, other))
+        result = self.make(*data)
+        return result
+
     def unary(self, unary: Unary) -> L[Nomad]:
         """Unary arithmetic operations."""
         result = list(map(unary, self.data))
@@ -150,7 +167,7 @@ class Cardinal(Struct):
         return result
 
     def __ceil__(self) -> K:
-        result = self._inplace(Math.ceil)
+        result = self.ceil()
         return result
 
     def __del__(self) -> N:
@@ -171,7 +188,7 @@ class Cardinal(Struct):
         return result
 
     def __floor__(self) -> K:
-        result = self._inplace(Math.floor)
+        result = self.floor()
         return result
 
     def __ge__(self, other: Nomad) -> B:
@@ -259,9 +276,7 @@ class Cardinal(Struct):
         return result
 
     def __round__(self, ndigits: VZ = None) -> K:
-        other = itertools.repeat(ndigits)
-        data = list(map(Math.round, self.data, other))
-        result = self.make(*data)
+        result = self.round(ndigits)
         return result
 
     def __rsub__(self, other: Nomad) -> K:
@@ -427,54 +442,27 @@ class Tetrad[X](Cardinal):
 
 #######
 
-from celestine.typed import Z, TF3
+from celestine.typed import Z, TF3, G
 import colorsys
 import math
 import PIL
 import PIL.Image
 
-type Z = int
-
-colours = []
-
-choices = [index * 256 / 6 for index in range(7)]
-crayola = []
-
 type PIXELS = L[TF3]
+type Make = G[Triad, N, N]
+type PIXEL = Triad[F, F, F]
 
 
-def makeit(limit: Z) -> PIXELS:
+def add_greys(greys: Z) -> Make:
     """"""
-    result: PIXELS = []
-    step = limit / 15
-    for index in range(16):
-        scale = index * step
-        number = round(scale)
-        pixel = (number, number, number)
-        result.append(pixel)
-    return result
-
-
-candy1 = makeit(255)
-candy2 = makeit(1000)
-
-limit = 7
-
-
-def add_greys(greys: Z) -> PIXELS:
-    """"""
-    result: PIXELS = []
     for grey in range(greys):
         pixel = Triad(grey, grey, grey)
-        result.append(pixel)
-
-    return result
+        yield pixel
 
 
-def add_colours(colours: Z) -> PIXELS:
+def add_colours(colours: Z) -> Make:
     """"""
     cutoff = math.floor(colours / 2 - 1)
-    result: PIXELS = []
     for red in range(colours):
         for green in range(colours):
             for blue in range(colours):
@@ -483,51 +471,61 @@ def add_colours(colours: Z) -> PIXELS:
                 minimum = min(pixel)
                 chroma = maximum - minimum
                 if chroma > cutoff:
-                    result.append(pixel)
-
-    return result
+                    yield pixel
 
 
-def add_pixels(function, limit: Z) -> PIXELS:
+def add_pixels(function, limit: Z) -> Make:
     """"""
-
-    def scale(pixel: Triad) -> TF3:
-        result = pixel / (limit - 1)
-        return result
-
     pixels = function(limit)
-    scale = map(scale, pixels)
-    result = list(scale)
-    return result
+    for pixel in pixels:
+        result = pixel / (limit - 1)
+        yield result
 
 
-def add_all(function, limit: Z) -> PIXELS:
+def add_all() -> Make:
     """"""
-    result: PIXELS = []
-    greys = add_pixels(add_greys, 16)
-    colours = add_pixels(add_colours, 7)
-    result.extend(greys)
-    result.extend(colours)
+    yield from add_pixels(add_greys, 16)
+    yield from add_pixels(add_colours, 7)
+
+
+def _curses(pixel: PIXEL) -> PIXEL:
+    """"""
+    scale = pixel * 1000
+    result = scale.round()
     return result
 
 
-doggy = add_all(add_greys, 16)
-print(doggy)
+def _pillow(pixel: PIXEL) -> PIXEL:
+    """"""
+    scale = pixel * 255
+    result = scale.ceil()
+    return result
 
-crayola = list(set(crayola))
 
+def _table(function) -> PIXELS:
+    """"""
+    result = []
+    pixels = add_all()
+    for pixel in pixels:
+        triad = function(pixel)
+        data = triad.data
+        result.append(data)
+
+    return result
+
+
+curses_table = _table(_curses)
+pillow_table = _table(_pillow)
+
+
+crayola = list(set(pillow_table))
 length = len(crayola) - 1
 image = PIL.Image.new("RGB", (1024, 1024))
 for y in range(1024):
     for x in range(1024):
         xx = x // 4
         yy = min(xx, length)
-        picker = crayola[yy]
-        colour = (
-            round(choices[picker[0]]),
-            round(choices[picker[1]]),
-            round(choices[picker[2]]),
-        )
+        colour = crayola[yy]
         image.putpixel((x, y), colour)
 
 image.show()
