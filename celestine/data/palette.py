@@ -2,29 +2,28 @@
 
 import math
 
-import PIL
-import PIL.Image
-
 from celestine.typed import (
-    TF3,
+    F,
     G,
+    L,
+    N,
     Z,
 )
 from celestine.window.cardinal import Triad
 
-type PIXELS = L[TF3]
-type Make = G[Triad, N, N]
-type PIXEL = Triad[F, F, F]
+type Pixel = Triad[F] | Triad[Z]
+type Pixels = L[Pixel]
+type Make = G[Pixel, N, N]
 
 
-def add_greys(greys: Z) -> Make:
+def _greys(greys: Z) -> Make:
     """"""
     for grey in range(greys):
         pixel = Triad(grey, grey, grey)
         yield pixel
 
 
-def add_colours(colours: Z) -> Make:
+def _colours(colours: Z) -> Make:
     """"""
     cutoff = math.floor(colours / 2 - 1)
     for red in range(colours):
@@ -38,7 +37,7 @@ def add_colours(colours: Z) -> Make:
                     yield pixel
 
 
-def add_pixels(function, limit: Z) -> Make:
+def _pixels(function, limit: Z) -> Make:
     """"""
     pixels = function(limit)
     for pixel in pixels:
@@ -46,30 +45,30 @@ def add_pixels(function, limit: Z) -> Make:
         yield result
 
 
-def add_all() -> Make:
+def _all() -> Make:
     """"""
-    yield from add_pixels(add_greys, 16)
-    yield from add_pixels(add_colours, 7)
+    yield from _pixels(_greys, 16)
+    yield from _pixels(_colours, 7)
 
 
-def _curses(pixel: PIXEL) -> PIXEL:
+def _curses(pixel: Pixel) -> Pixel:
     """"""
     scale = pixel * 1000
     result = scale.round()
     return result
 
 
-def _pillow(pixel: PIXEL) -> PIXEL:
+def _pillow(pixel: Pixel) -> Pixel:
     """"""
     scale = pixel * 255
     result = scale.ceil()
     return result
 
 
-def _table(function) -> PIXELS:
+def _table(function) -> Pixels:
     """"""
     result = []
-    pixels = add_all()
+    pixels = _all()
     for pixel in pixels:
         triad = function(pixel)
         data = triad.data
@@ -80,16 +79,3 @@ def _table(function) -> PIXELS:
 
 curses_table = _table(_curses)
 pillow_table = _table(_pillow)
-
-
-crayola = list(set(pillow_table))
-length = len(crayola) - 1
-image = PIL.Image.new("RGB", (1024, 1024))
-for y in range(1024):
-    for x in range(1024):
-        xx = x // 4
-        yy = min(xx, length)
-        colour = crayola[yy]
-        image.putpixel((x, y), colour)
-
-image.show()

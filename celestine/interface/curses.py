@@ -1,11 +1,15 @@
 """"""
 
-import colorsys
 import io
+import itertools
 import math
 
 from celestine import bank
 from celestine.data.notational_systems import BRAILLE_PATTERNS
+from celestine.data.palette import (
+    curses_table,
+    pillow_table,
+)
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
@@ -17,11 +21,8 @@ from celestine.package import (
 )
 from celestine.typed import (
     LS,
-    LZ,
-    TF3,
     B,
     K,
-    L,
     N,
     P,
     R,
@@ -35,49 +36,11 @@ from celestine.window.collection import (
     Point,
 )
 
-COLORS = 15
-
-
-###########
-
-
-colours: L[TF3] = []
-
-for index_finger in range(16):
-    hsv_val = index_finger / 15
-    color_crayon = colorsys.hsv_to_rgb(0.0, 0.0, hsv_val)
-    colours.append(color_crayon)
-
-for values in range(1, 5):
-    hsv_val = math.sqrt(values / 4)
-
-    for saturations in range(1, 5):
-        saturation = math.sqrt(saturations / 4)
-        # saturation = saturations / 4
-
-        options = values * 6
-        for hues in range(0, options):
-            hue = hues / options
-            color_crayon = colorsys.hsv_to_rgb(hue, saturation, hsv_val)
-            colours.append(color_crayon)
-
-colours.sort()
-
-colony: LZ = []
-for item_index in colours:
-    r, g, b = item_index
-    colony.append(round(r * 255))
-    colony.append(round(g * 255))
-    colony.append(round(b * 255))
+color_table = {}
 
 palimage = PIL.Image.new("P", (16, 16))
-palimage.putpalette(colony, "RGB")
-
-
-###
-
-
-color_table = {}
+pillow_palette = itertools.chain.from_iterable(pillow_table)
+palimage.putpalette(pillow_palette)
 
 
 def set_colors() -> N:
@@ -86,33 +49,13 @@ def set_colors() -> N:
 
     color_index = 8  # skip the 8 reserved colors
 
-    curses_colour = set(colours)
-    curses_colour.remove((0.0, 0.0, 0.0))
-    curses_colour.remove((1.0, 0.0, 0.0))
-    curses_colour.remove((0.0, 1.0, 0.0))
-    curses_colour.remove((0.0, 0.0, 1.0))
-    curses_colour.remove((0.0, 1.0, 1.0))
-    curses_colour.remove((1.0, 0.0, 1.0))
-    curses_colour.remove((1.0, 1.0, 0.0))
-    curses_colour.remove((1.0, 1.0, 1.0))
+    for index in range(8, 256):
+        red, green, blue = curses_table[index]
+        curses.init_color(index, red, green, blue)
+        curses.init_pair(index, index, 0)
 
-    curses_list = list(curses_colour)
-    curses_list.sort()
-
-    for colorado in curses_list:
-        red = round(colorado[0] * 1000)
-        green = round(colorado[1] * 1000)
-        blue = round(colorado[2] * 1000)
-        curses.init_color(color_index, red, green, blue)
-        curses.init_pair(color_index, color_index, 0)
-
-        red = round(colorado[0] * 255)
-        green = round(colorado[1] * 255)
-        blue = round(colorado[2] * 255)
-        pixel = (red, green, blue)
-        color_table[pixel] = color_index
-
-        color_index += 1
+        pixel = pillow_table[index]
+        color_table[pixel] = index
 
 
 #############
