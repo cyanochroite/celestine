@@ -39,8 +39,24 @@ from celestine.window.collection import (
 color_table = {}
 
 palimage = PIL.Image.new("P", (16, 16))
-pillow_palette = itertools.chain.from_iterable(pillow_table)
+pillow_palette = list(itertools.chain.from_iterable(pillow_table))
 palimage.putpalette(pillow_palette)
+
+
+from PIL import Image
+
+oldimage = Image.open("D:\\done\\stefan-radenkovic-final.jpg")
+oldimage = oldimage.convert(mode="RGB")
+newimage = Image.new("P", (16, 16))
+newimage.putpalette(pillow_palette)
+moreee = oldimage.quantize(
+    colors=256,
+    method=None,
+    kmeans=0,
+    palette=newimage,
+)
+oldimage.show()
+moreee.show()
 
 
 def set_colors() -> N:
