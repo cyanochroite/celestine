@@ -27,6 +27,8 @@ def main(view: View) -> N:
     name = "grid"
     row = 2
     col = 4
+    row = 1
+    col = 1
     with view.zone(name, row=row, col=col, mode=Zone.GRID) as grid:
         for range_y in range(row):
             for range_x in range(col):

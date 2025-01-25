@@ -38,25 +38,9 @@ from celestine.window.collection import (
 
 color_table = {}
 
-palimage = PIL.Image.new("P", (16, 16))
+palette_image = PIL.Image.new("P", (16, 16))
 pillow_palette = list(itertools.chain.from_iterable(pillow_table))
-palimage.putpalette(pillow_palette)
-
-
-from PIL import Image
-
-oldimage = Image.open("D:\\done\\stefan-radenkovic-final.jpg")
-oldimage = oldimage.convert(mode="RGB")
-newimage = Image.new("P", (16, 16))
-newimage.putpalette(pillow_palette)
-moreee = oldimage.quantize(
-    colors=256,
-    method=None,
-    kmeans=0,
-    palette=newimage,
-)
-oldimage.show()
-moreee.show()
+palette_image.putpalette(pillow_palette)
 
 
 def set_colors() -> N:
@@ -207,18 +191,16 @@ class Element(Element_, Abstract):
             )
             return
 
-        color = list(self.color.getdata())
+        colors = list(self.color.getdata())
 
         index_y = 0
         for row_text in item:
+            width = len(row_text)
             index_x = 0
             for col_text in row_text:
-                width, _ = self.color.size
                 index = index_y * width + index_x
-
-                (red, green, blue) = color[index]
-                table = color_table.get((red, green, blue), 2)
-                extra = curses.color_pair(table)
+                color = colors[index]
+                extra = curses.color_pair(color)
 
                 self.add_string(
                     x_dot + index_x,
@@ -259,10 +241,10 @@ class Element(Element_, Abstract):
         self.path = path
 
         image = PIL.Image.open(path)
-        image.convert()
+        image = image.convert(mode="RGB")
 
         self.cache = image.copy()
-        self.color = image.convert(mode="RGB")
+        self.color = image.copy()
 
         # Crop box.
         source_length_x = self.cache.width
@@ -273,8 +255,8 @@ class Element(Element_, Abstract):
         target_length_x = length_x * 2
         target_length_y = length_y * 4
 
-        target_length_x = 16
-        target_length_y = 16
+        target_length_x = 56
+        target_length_y = 56
 
         source_length = (source_length_x, source_length_y)
         target_length = (target_length_x, target_length_y)
@@ -283,15 +265,23 @@ class Element(Element_, Abstract):
         # Done.
 
         target_length = (target_length_x, target_length_y)
+        target_length2 = (target_length_x // 2, target_length_y // 4)
         # self.cache.resize(target_length, box)
         # self.color.resize(self.area.world.size, box)
         self.cache = self.cache.resize(target_length)
-        self.color = self.color.resize(self.area.world.size)
+        self.color = self.color.resize(target_length2)
+        # self.color = self.color.resize(self.area.world.size)
 
-        self.color.quantize(palette=palimage)
+        self.color = self.color.quantize(
+            colors=256,
+            method=None,
+            kmeans=0,
+            palette=palette_image,
+        )
+        self.cache = self.cache.convert("1")
 
-        self.cache = convert_to_mono(self.cache)
-        self.color = convert_to_color(self.color)
+        # self.cache.show()
+        # self.color.show()
 
         item = self.output()
         self.render(item, **star)
