@@ -180,6 +180,40 @@ class Element(Element_, Abstract):
             return
 
         colors = list(self.color.getdata())
+        colors = [
+            206,
+            206,
+            206,
+            206,
+            34,
+            34,
+            34,
+            34,
+            206,
+            206,
+            0,
+            0,
+            0,
+            0,
+            34,
+            34,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            246,
+            246,
+            4,
+            4,
+            4,
+            4,
+            246,
+            246,
+            246,
+            246,
+        ]
 
         batman = []
         index_y = 0
@@ -252,8 +286,8 @@ class Element(Element_, Abstract):
         target_length_x = length_x * 2
         target_length_y = length_y * 4
 
-        target_length_x = 56
-        target_length_y = 56
+        target_length_x = 16
+        target_length_y = 16
 
         source_length = (source_length_x, source_length_y)
         target_length = (target_length_x, target_length_y)

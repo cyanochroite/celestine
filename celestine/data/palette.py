@@ -25,9 +25,10 @@ def _pixels() -> Make:
                 maximum = max(pixel)
                 minimum = min(pixel)
                 chroma = maximum - minimum
-                if chroma < 1 or 2 < chroma:
-                    result = pixel / 6
-                    yield result
+                if 1 <= chroma <= 2:
+                    continue
+                result = pixel / 6
+                yield result
 
 
 def _curses(pixel: Pixel) -> Pixel:
