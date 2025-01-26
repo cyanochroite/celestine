@@ -36,26 +36,14 @@ from celestine.window.collection import (
     Point,
 )
 
-color_table = {}
+# Color pair 0 is hard-wired to white on black, and cannot be changed.
+# 0:black, 1:red, 2:green, 3:yellow,
+# 4:blue, 5:magenta, 6:cyan, and 7:white
+
 
 palette_image = PIL.Image.new("P", (16, 16))
 pillow_palette = list(itertools.chain.from_iterable(pillow_table))
 palette_image.putpalette(pillow_palette)
-
-
-def set_colors() -> N:
-    """"""
-    global color_table
-
-    color_index = 8  # skip the 8 reserved colors
-
-    for index in range(8, 256):
-        red, green, blue = curses_table[index]
-        curses.init_color(index, red, green, blue)
-        curses.init_pair(index, index, 0)
-
-        pixel = pillow_table[index]
-        color_table[pixel] = index
 
 
 #############
@@ -193,14 +181,20 @@ class Element(Element_, Abstract):
 
         colors = list(self.color.getdata())
 
+        batman = []
         index_y = 0
         for row_text in item:
             width = len(row_text)
             index_x = 0
+            sparrow = []
             for col_text in row_text:
                 index = index_y * width + index_x
                 color = colors[index]
+                # color = index
                 extra = curses.color_pair(color)
+
+                sparrow.append(color)
+                col_text = "⣿"
 
                 self.add_string(
                     x_dot + index_x,
@@ -211,7 +205,10 @@ class Element(Element_, Abstract):
 
                 index_x += 1
 
+            batman.append(sparrow)
             index_y += 1
+
+        print(batman)
 
     @override
     def draw(self, **star: R) -> B:
@@ -273,15 +270,12 @@ class Element(Element_, Abstract):
         # self.color = self.color.resize(self.area.world.size)
 
         self.color = self.color.quantize(
-            colors=256,
+            colors=247,
             method=None,
             kmeans=0,
             palette=palette_image,
         )
         self.cache = self.cache.convert("1")
-
-        # self.cache.show()
-        # self.color.show()
 
         item = self.output()
         self.render(item, **star)
@@ -424,4 +418,7 @@ class Window(Window_):
 
         self.canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
 
-        set_colors()
+        for index in range(247):
+            red, green, blue = curses_table[index]
+            curses.init_color(index, red, green, blue)
+            curses.init_pair(index, index, 0)
