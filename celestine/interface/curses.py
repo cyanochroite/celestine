@@ -180,55 +180,15 @@ class Element(Element_, Abstract):
             return
 
         colors = list(self.color.getdata())
-        colors = [
-            206,
-            206,
-            206,
-            206,
-            34,
-            34,
-            34,
-            34,
-            206,
-            206,
-            0,
-            0,
-            0,
-            0,
-            34,
-            34,
-            4,
-            4,
-            0,
-            0,
-            0,
-            0,
-            246,
-            246,
-            4,
-            4,
-            4,
-            4,
-            246,
-            246,
-            246,
-            246,
-        ]
 
-        batman = []
         index_y = 0
         for row_text in item:
             width = len(row_text)
             index_x = 0
-            sparrow = []
             for col_text in row_text:
                 index = index_y * width + index_x
                 color = colors[index]
-                # color = index
                 extra = curses.color_pair(color)
-
-                sparrow.append(color)
-                col_text = "⣿"
 
                 self.add_string(
                     x_dot + index_x,
@@ -239,10 +199,7 @@ class Element(Element_, Abstract):
 
                 index_x += 1
 
-            batman.append(sparrow)
             index_y += 1
-
-        print(batman)
 
     @override
     def draw(self, **star: R) -> B:
@@ -286,8 +243,8 @@ class Element(Element_, Abstract):
         target_length_x = length_x * 2
         target_length_y = length_y * 4
 
-        target_length_x = 16
-        target_length_y = 16
+        target_length_x = 56
+        target_length_y = 56
 
         source_length = (source_length_x, source_length_y)
         target_length = (target_length_x, target_length_y)
