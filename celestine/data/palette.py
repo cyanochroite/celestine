@@ -1,7 +1,5 @@
 """"""
 
-import math
-
 from celestine.typed import (
     F,
     G,

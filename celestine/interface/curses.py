@@ -35,6 +35,7 @@ from celestine.window.collection import (
     Plane,
     Point,
 )
+from celestine.window.container import Image
 
 # Color pair 0 is hard-wired to white on black, and cannot be changed.
 # 0:black, 1:red, 2:green, 3:yellow,
@@ -224,49 +225,57 @@ class Element(Element_, Abstract):
 
         return True
 
-    def update_image(self, path: P, **star: R) -> N:
+    def pillow_size(self, image: PIL.Image.Image) -> Point:
         """"""
-        self.path = path
-
-        image = PIL.Image.open(path)
-        image = image.convert(mode="RGB")
-
-        self.cache = image.copy()
-        self.color = image.copy()
-
-        # Crop box.
-        source_length_x = self.cache.width
-        source_length_y = self.cache.height
+        source_length_x = image.width
+        source_length_y = image.height
 
         length_x, length_y = self.area.world.size
+        target = Point(length_x, length_y)
 
-        target_length_x = length_x * 2
-        target_length_y = length_y * 4
+        target = Plane.create(*self.area.world.size.value)
+        curent = Plane.create(source_length_x, source_length_y)
 
-        target_length_x = 56
-        target_length_y = 56
+        self.fit = Image.FILL
+        if self.fit == Image.FILL:
+            curent.scale_to_min(target)
+        elif self.fit == Image.FULL:
+            curent.scale_to_max(target)
+        curent.center(target)
 
-        source_length = (source_length_x, source_length_y)
-        target_length = (target_length_x, target_length_y)
+        result = curent.size
+        return result
 
-        box = crop(source_length, target_length)
-        # Done.
+    def pillow_cache(self, image: PIL.Image.Image) -> PIL.Image.Image:
+        """"""
+        size = self.pillow_size(image)
+        size *= Point(2, 4)
+        image = image.resize(size.value)
+        image = image.convert("1")
 
-        target_length = (target_length_x, target_length_y)
-        target_length2 = (target_length_x // 2, target_length_y // 4)
-        # self.cache.resize(target_length, box)
-        # self.color.resize(self.area.world.size, box)
-        self.cache = self.cache.resize(target_length)
-        self.color = self.color.resize(target_length2)
-        # self.color = self.color.resize(self.area.world.size)
+        return image
 
-        self.color = self.color.quantize(
+    def pillow_color(self, image: PIL.Image.Image) -> PIL.Image.Image:
+        """"""
+        size = self.pillow_size(image)
+        image = image.resize(size.value)
+        image = image.quantize(
             colors=247,
             method=None,
             kmeans=0,
             palette=palette_image,
         )
-        self.cache = self.cache.convert("1")
+        return image
+
+    def update_image(self, path: P, **star: R) -> N:
+        """"""
+        self.path = path
+
+        image = PIL.Image.open(self.path)
+        image = image.convert(mode="RGB")
+
+        self.cache = self.pillow_cache(image)
+        self.color = self.pillow_color(image)
 
         item = self.output()
         self.render(item, **star)

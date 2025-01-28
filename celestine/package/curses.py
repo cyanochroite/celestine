@@ -1,6 +1,5 @@
 """Terminal handling for character-cell displays."""
 
-from celestine import bank
 from celestine.data import (
     wrap,
     wrapper,
