@@ -260,10 +260,11 @@ class Element(Element_, Abstract):
         size = self.pillow_size(image)
         image = image.resize(size.value)
         image = image.quantize(
-            colors=247,
+            colors=255,
             method=None,
             kmeans=0,
             palette=palette_image,
+            dither=PIL.Image.Dither.FLOYDSTEINBERG,
         )
         return image
 
@@ -418,7 +419,7 @@ class Window(Window_):
 
         self.canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
 
-        for index in range(247):
+        for index in range(255):
             red, green, blue = curses_table[index]
             curses.init_color(index, red, green, blue)
             curses.init_pair(index, index, 0)

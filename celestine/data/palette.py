@@ -16,17 +16,17 @@ type Make = G[Pixel, N, N]
 
 def _pixels() -> Make:
     """"""
-    for red in range(7):
-        for green in range(7):
-            for blue in range(7):
+    for red in range(9):
+        for green in range(9):
+            for blue in range(9):
                 pixel = Triad(red, green, blue)
                 maximum = max(pixel)
                 minimum = min(pixel)
                 chroma = maximum - minimum
-                if 1 <= chroma <= 2:
-                    continue
-                result = pixel / 6
-                yield result
+                total = red + green + blue
+                if total % 4 == 0 or total % 9 == 4 or chroma == 0:
+                    result = pixel / 8
+                    yield result
 
 
 def _curses(pixel: Pixel) -> Pixel:
