@@ -250,6 +250,7 @@ class Element(Element_, Abstract):
         """"""
         size = self.pillow_size(image)
         size *= Point(2, 4)
+
         image = image.resize(size.value)
         image = image.convert("1")
 
@@ -274,6 +275,24 @@ class Element(Element_, Abstract):
 
         image = PIL.Image.open(self.path)
         image = image.convert(mode="RGB")
+
+        size = self.pillow_size(image)
+        resize = image.resize(size.value)
+        resize = resize.convert("1")
+
+        def binary(a):
+            return 1 if a else 0
+
+        pixels = size.one * size.two
+        data = resize.getdata()
+        data = map(binary, data)
+        count = sum(data)
+        ratio = count / pixels
+        ratio1 = 1 / 3 - ratio
+        ratio2 = max(0, ratio1)
+        factor = 1 + ratio2 * 6
+        image = PIL.ImageEnhance.Brightness(image)
+        image = image.enhance(factor)
 
         self.cache = self.pillow_cache(image)
         self.color = self.pillow_color(image)

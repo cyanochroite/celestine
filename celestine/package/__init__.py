@@ -72,6 +72,9 @@ class Abstract:
         else:
             result = self.local.get(name)
         if not result:
+            result = getattr(self.package, name)
+            return result
+
             message = f"'{self.name}' object has no attribute '{name}'"
             raise AttributeError(message)
         return result
