@@ -26,6 +26,11 @@ class Abstract:
     name: S
     package: M | N
 
+    def attribute(self, name: S) -> N:
+        """"""
+        package = load.package(self.pypi, name)
+        setattr(self, name, package)
+
     def main(self, package: M, path: P) -> N:
         """"""
         ignore(self)
@@ -72,9 +77,6 @@ class Abstract:
         else:
             result = self.local.get(name)
         if not result:
-            result = getattr(self.package, name)
-            return result
-
             message = f"'{self.name}' object has no attribute '{name}'"
             raise AttributeError(message)
         return result

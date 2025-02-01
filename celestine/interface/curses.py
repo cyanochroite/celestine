@@ -329,32 +329,7 @@ class Window(Window_):
     def extension() -> LS:
         """"""
         if bool(PIL):
-            # return PIL.Image.registered_extensions()
-            return [
-                ".bmp",
-                ".sgi",
-                ".rgb",
-                ".bw",
-                ".png",
-                ".jpg",
-                ".jpeg",
-                ".jp2",
-                ".j2c",
-                ".tga",
-                ".cin",
-                ".dpx",
-                ".exr",
-                ".hdr",
-                ".tif",
-                ".tiff",
-                ".webp",
-                ".pbm",
-                ".pgm",
-                ".ppm",
-                ".pnm",
-                ".gif",
-                ".png",
-            ]
+            return PIL.Image.registered_extensions()
 
         return []
 
