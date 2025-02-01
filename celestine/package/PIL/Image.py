@@ -17,6 +17,7 @@ from celestine.typed import (
     S,
     Y,
     Z,
+    ignore,
 )
 
 
@@ -54,11 +55,6 @@ class Image:
     mode: S
 
     @wrapper(__name__)
-    def putpalette(self, data: LZ, rawmode: S) -> N:
-        """"""
-        raise NotImplementedError(self, data, rawmode)
-
-    @wrapper(__name__)
     def convert(self, mode: S, matrix: N, dither: "Dither") -> K:
         """"""
         raise NotImplementedError(self, mode, matrix, dither)
@@ -68,6 +64,19 @@ class Image:
     def height(self) -> Z:
         """"""
         raise NotImplementedError(self)
+
+    @wrapper(__name__)
+    def putpalette(self, data: LZ, rawmode: S) -> N:
+        """"""
+        raise NotImplementedError(self, data, rawmode)
+
+    @wrapper(__name__)
+    def quantize(self, *, palette, **star: R) -> Y:
+        """"""
+        # TODO local class not being called
+        ignore(self)
+        result = wrap(colors=255, palette=palette, **star)
+        return result
 
     @wrapper(__name__)
     def resize(self, size: TZ2, resample: Resampling) -> K:

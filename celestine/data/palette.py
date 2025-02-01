@@ -1,6 +1,8 @@
 """"""
 
 from celestine.typed import (
+    TZ3,
+    C,
     F,
     G,
     L,
@@ -10,7 +12,7 @@ from celestine.typed import (
 from celestine.window.cardinal import Triad
 
 type Pixel = Triad[F] | Triad[Z]
-type Pixels = L[Pixel]
+type Pixels = L[TZ3]
 type Make = G[Pixel, N, N]
 
 
@@ -43,9 +45,9 @@ def _pillow(pixel: Pixel) -> Pixel:
     return result
 
 
-def _table(function) -> Pixels:
+def _table(function: C[[Pixel], Pixel]) -> Pixels:
     """"""
-    result = []
+    result: Pixels = []
     pixels = _pixels()
     for pixel in pixels:
         triad = function(pixel)

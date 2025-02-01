@@ -6,6 +6,8 @@ from celestine.package import (
 )
 from celestine.package.PIL import (
     Image,
+    ImageEnhance,
+    ImagePalette,
     ImageTk,
 )
 from celestine.typed import (
@@ -15,6 +17,8 @@ from celestine.typed import (
 )
 
 ignore(Image)
+ignore(ImageEnhance)
+ignore(ImagePalette)
 ignore(ImageTk)
 
 
@@ -23,6 +27,5 @@ class Package(Abstract):
 
     def __init__(self, **star: R) -> N:
         super().__init__(pypi="PIL")
-        self.attribute("ImageEnhance")
         if self.package and bool(tkinter):
             self.attribute("ImageTk")

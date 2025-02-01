@@ -27,6 +27,8 @@ from celestine.typed import (
     P,
     R,
     S,
+    Z,
+    ignore,
     override,
 )
 from celestine.window.collection import (
@@ -50,58 +52,10 @@ palette_image.putpalette(pillow_palette)
 #############
 
 
-def convert(image, mode):
-    """"""
-    matrix = None  # Unused default.
-    dither = PIL.Image.Dither.FLOYDSTEINBERG
-    palette = PIL.Image.Palette.WEB  # Unused default.
-    colors = 256  # Unused default.
-
-    hold = image.convert(mode, matrix, dither, palette, colors)
-    return hold
-
-
-def convert_to_alpha(image):
-    """"""
-    return convert(image, "RGBA")
-
-
-def convert_to_color(image):
-    """"""
-    return convert(image, "RGB")
-
-
-def convert_to_mono(image):
-    """"""
-    return convert(image, "1")
-
-
-def crop(source_length, target_length):
-    """"""
-
-    (source_length_x, source_length_y) = source_length
-    (target_length_x, target_length_y) = target_length
-
-    source_ratio = source_length_x / source_length_y
-    target_ratio = target_length_x / target_length_y
-
-    if source_ratio < target_ratio:
-        length = round(source_length_x / target_ratio)
-        offset = round((source_length_y - length) / 2)
-        return (0, 0 + offset, source_length_x, length + offset)
-
-    if source_ratio > target_ratio:
-        length = round(source_length_y * target_ratio)
-        offset = round((source_length_x - length) / 2)
-        return (0 + offset, 0, length + offset, source_length_y)
-
-    return (0, 0, source_length_x, source_length_y)
-
-
 class Abstract(Abstract_):
     """"""
 
-    def add_string(self, x_dot, y_dot, text, *extra):
+    def add_string(self, x_dot: Z, y_dot: Z, text: S, *extra: Z) -> N:
         """
         Curses swaps x and y.
 
@@ -131,7 +85,7 @@ class Element(Element_, Abstract):
         pixels = list(self.cache.getdata())
         string = io.StringIO()
 
-        def shift(offset_x, offset_y):
+        def shift(offset_x: Z, offset_y: Z) -> N:
             nonlocal braille
             nonlocal range_x
             nonlocal range_y
@@ -172,14 +126,6 @@ class Element(Element_, Abstract):
 
         (x_dot, y_dot) = self.area.world.origin
 
-        if not PIL:
-            self.add_string(
-                x_dot,
-                y_dot,
-                item,
-            )
-            return
-
         colors = list(self.color.getdata())
 
         index_y = 0
@@ -218,8 +164,12 @@ class Element(Element_, Abstract):
             return True
 
         if not PIL:
-            self.render(self.path.name, **star)
-            return True
+            (x_dot, y_dot) = self.area.world.origin
+            self.add_string(
+                x_dot,
+                y_dot,
+                self.path.name,
+            )
 
         self.update_image(self.path)
 
@@ -280,8 +230,8 @@ class Element(Element_, Abstract):
         resize = image.resize(size.value)
         resize = resize.convert("1")
 
-        def binary(a):
-            return 1 if a else 0
+        def binary(number: Z) -> Z:
+            return 1 if number else 0
 
         pixels = size.one * size.two
         data = resize.getdata()
@@ -303,8 +253,8 @@ class Element(Element_, Abstract):
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
         self.photo = None
-        self.cache = None
-        self.color = None
+        self.cache = PIL.Image.Image()
+        self.color = PIL.Image.Image()
 
 
 class View(View_, Abstract):
@@ -325,9 +275,11 @@ class Window(Window_):
         curses.doupdate()
 
     @override
-    @staticmethod
-    def extension() -> LS:
+    @classmethod
+    def extension(cls) -> LS:
         """"""
+        ignore(cls)
+
         if bool(PIL):
             return PIL.Image.registered_extensions()
 
