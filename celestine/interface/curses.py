@@ -94,7 +94,10 @@ class Element(Element_, Abstract):
             index_y = range_y + offset_y
 
             index = index_y * width + index_x
-            pixel = pixels[index] // 255
+            try:
+                pixel = 1 if pixels[index] > 127 else 0
+            except IndexError:
+                pixel = 0
 
             braille <<= 1
             braille |= pixel
@@ -134,7 +137,10 @@ class Element(Element_, Abstract):
             index_x = 0
             for col_text in row_text:
                 index = index_y * width + index_x
-                color = colors[index]
+                try:
+                    color = colors[index]
+                except IndexError:
+                    color = 0
                 extra = curses.color_pair(color)
 
                 self.add_string(
@@ -177,14 +183,23 @@ class Element(Element_, Abstract):
 
     def pillow_size(self, image: PIL.Image.Image) -> Point:
         """"""
-        source_length_x = image.width
-        source_length_y = image.height
-
-        length_x, length_y = self.area.world.size
-        target = Point(length_x, length_y)
-
         target = Plane.create(*self.area.world.size.value)
-        curent = Plane.create(source_length_x, source_length_y)
+        curent = Plane.create(*image.size)
+
+        self.fit = Image.FILL
+        if self.fit == Image.FILL:
+            curent.scale_to_min(target)
+        elif self.fit == Image.FULL:
+            curent.scale_to_max(target)
+        curent.center(target)
+
+        result = curent.size
+        return result
+
+    def pillow_size1(self, image: PIL.Image.Image, size: Point) -> Point:
+        """"""
+        target = Plane.create(*size.value)
+        curent = Plane.create(*image.size)
 
         self.fit = Image.FILL
         if self.fit == Image.FILL:
@@ -198,18 +213,64 @@ class Element(Element_, Abstract):
 
     def pillow_cache(self, image: PIL.Image.Image) -> PIL.Image.Image:
         """"""
-        size = self.pillow_size(image)
-        size *= Point(2, 4)
+        self.fit = Image.FILL
+        if self.fit == Image.FILL:
+            size = self.area.world.size
+            size *= Point(2, 4)
 
-        image = image.resize(size.value)
-        image = image.convert("1")
+            target = Plane.create(*size.value)
+            curent = Plane.create(*image.size)
+
+            curent.scale_to_min(target)
+            curent.center(target)
+
+            size = curent.size
+            # size *= Point(2, 4)
+
+            image = image.resize(size.value)
+            image = image.convert("1")
+
+        elif self.fit == Image.FULL:
+            source_length_x = image.width
+            source_length_y = image.height
+
+            length_x, length_y = self.area.world.size
+            target = Point(length_x, length_y)
+
+            target = Plane.create(*self.area.world.size.value)
+            curent = Plane.create(source_length_x, source_length_y)
+
+            curent.scale_to_max(target)
+
+            curent.center(target)
+
+            size = curent.size
+            size *= Point(2, 4)
+
+            image = image.resize(size.value)
+            image = image.convert("1")
 
         return image
 
     def pillow_color(self, image: PIL.Image.Image) -> PIL.Image.Image:
         """"""
-        size = self.pillow_size(image)
-        image = image.resize(size.value)
+
+        target = Plane.create(*self.area.world.size.value)
+        curent = Plane.create(*image.size)
+
+        self.fit = Image.FULL
+        if self.fit == Image.FILL:
+            curent.scale_to_min(target)
+            curent.center(target)
+            image = image.resize(curent.size.value)
+        elif self.fit == Image.FULL:
+            target = Plane.create(*self.area.world.size.value)
+            curent = Plane.create(*image.size)
+            target.scale_to_min(curent)
+            target.center(target)
+            image.crop(target.value)
+            image = image.resize(curent.size.value)
+
         image = image.quantize(
             colors=255,
             method=None,

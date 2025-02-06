@@ -111,7 +111,8 @@ class Plane(Dyad[Line]):
         """"""
         one = self.one
         two = self.two
-        return Point(one.length, two.length)
+        result = Point(one.length, two.length)
+        return result
 
     def __contains__(self, item: Point) -> B:
         one = item.one in self.one
