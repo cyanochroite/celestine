@@ -21,6 +21,7 @@ from celestine.package import (
 )
 from celestine.typed import (
     LS,
+    TZ2,
     B,
     K,
     N,
@@ -181,27 +182,11 @@ class Element(Element_, Abstract):
 
         return True
 
-    def pillow_size(self, image: PIL.Image.Image) -> Point:
+    def pillow_size(self, one: TZ2, two: TZ2) -> Point:
         """"""
-        target = Plane.create(*self.area.world.size.value)
-        curent = Plane.create(*image.size)
+        curent = Plane.create(*one)
+        target = Plane.create(*two)
 
-        self.fit = Image.FILL
-        if self.fit == Image.FILL:
-            curent.scale_to_min(target)
-        elif self.fit == Image.FULL:
-            curent.scale_to_max(target)
-        curent.center(target)
-
-        result = curent.size
-        return result
-
-    def pillow_size1(self, image: PIL.Image.Image, size: Point) -> Point:
-        """"""
-        target = Plane.create(*size.value)
-        curent = Plane.create(*image.size)
-
-        self.fit = Image.FILL
         if self.fit == Image.FILL:
             curent.scale_to_min(target)
         elif self.fit == Image.FULL:
@@ -213,19 +198,12 @@ class Element(Element_, Abstract):
 
     def pillow_cache(self, image: PIL.Image.Image) -> PIL.Image.Image:
         """"""
-        self.fit = Image.FILL
         if self.fit == Image.FILL:
-            size = self.area.world.size
-            size *= Point(2, 4)
+            one = image.size
+            two = self.area.world.size
+            two *= Point(2, 4)
 
-            target = Plane.create(*size.value)
-            curent = Plane.create(*image.size)
-
-            curent.scale_to_min(target)
-            curent.center(target)
-
-            size = curent.size
-            # size *= Point(2, 4)
+            size = self.pillow_size(one, two.value)
 
             image = image.resize(size.value)
             image = image.convert("1")
@@ -254,23 +232,10 @@ class Element(Element_, Abstract):
 
     def pillow_color(self, image: PIL.Image.Image) -> PIL.Image.Image:
         """"""
-
-        target = Plane.create(*self.area.world.size.value)
-        curent = Plane.create(*image.size)
-
-        self.fit = Image.FULL
-        if self.fit == Image.FILL:
-            curent.scale_to_min(target)
-            curent.center(target)
-            image = image.resize(curent.size.value)
-        elif self.fit == Image.FULL:
-            target = Plane.create(*self.area.world.size.value)
-            curent = Plane.create(*image.size)
-            target.scale_to_min(curent)
-            target.center(target)
-            image.crop(target.value)
-            image = image.resize(curent.size.value)
-
+        size = Point(*self.cache.size)
+        size /= Point(2, 4)
+        size = size.ceil()
+        image = image.resize(size.value)
         image = image.quantize(
             colors=255,
             method=None,
@@ -287,7 +252,10 @@ class Element(Element_, Abstract):
         image = PIL.Image.open(self.path)
         image = image.convert(mode="RGB")
 
-        size = self.pillow_size(image)
+        self.fit = Image.FILL
+        one = self.area.world.size.value
+        two = image.size
+        size = self.pillow_size(one, two)
         resize = image.resize(size.value)
         resize = resize.convert("1")
 
