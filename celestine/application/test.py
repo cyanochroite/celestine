@@ -2,29 +2,41 @@
 
 import unittest
 
-from celestine import load
-from celestine.data import call
+from celestine import (
+    language,
+    load,
+)
+from celestine.data import (
+    call,
+    draw,
+)
 from celestine.data.directory import APPLICATION
+from celestine.interface import View
 from celestine.literal import CELESTINE
+from celestine.session.session import SuperSession
 from celestine.typed import (
     B,
+    N,
     R,
 )
 
-from .data import (
-    ERROR,
-    TESTS,
-)
+ERROR = "error"
+MODULE = "module"
+TARGET = "_test.py"
+TESTS = "test"
+
+
+class Session(SuperSession):
+    """"""
 
 
 @call
-def main(**star: R) -> B:
+def code(**star: R) -> B:
     """Run the unittest library."""
     module = load.module(APPLICATION, TESTS)
     top = load.pathway()
     files = load.walk_python(top, [], [])
-    files = list(files)
-    paths = [file for file in files if file.name.startswith("test")]
+    paths = [file for file in files if file.stem.endswith("test")]
     for path in paths:
         #  This is a really bad hack to convert path names.
         text = str(path)
@@ -53,3 +65,14 @@ def main(**star: R) -> B:
     )
 
     return True
+
+
+@draw
+def main(view: View) -> N:
+    """"""
+    with view.zone("main") as line:
+        line.button(
+            "button",
+            "code",
+            text=language.TRANSLATOR_MAIN_BUTTON,
+        )
