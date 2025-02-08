@@ -157,7 +157,7 @@ type VS = V[S]
 type VZ = V[Z]
 
 
-def ignore(_: A) -> N:
+def ignore(*_: A) -> N:
     """An empty function used to hide unused variable warnings."""
 
 
@@ -211,9 +211,8 @@ class Object(abc.ABC):
         setattr(self, name, value)
 
     def __init__(self, *data: A, **star: R) -> N:
+        ignore(self, data)
         super().__init__()
-        ignore(self)
-        ignore(data)
         self.star = star
 
 
@@ -224,13 +223,15 @@ class Struct:
 
     def copy(self) -> K:
         """"""
-        result = self.__class__(*self.data)
+        data = self.data
+        result = self.__class__(*data)
         return result
 
     @classmethod
     def echo(cls, self: K) -> K:
         """"""
-        result = cls(*self.data)
+        data = self.data
+        result = cls(*data)
         return result
 
     @classmethod
@@ -247,8 +248,7 @@ class Struct:
         return ()
 
     def _set(self, value: TA) -> N:
-        ignore(self)
-        ignore(value)
+        ignore(self, value)
 
     def __del__(self) -> N:
         del self.data
@@ -266,7 +266,4 @@ class Struct:
     data = property(_get, _set, _del)
 
 
-ignore(IT)
-ignore(Protocol)
-ignore(cast)
-ignore(override)
+ignore(IT, Protocol, cast, override)

@@ -73,8 +73,8 @@ class Image:
     @wrapper(__name__)
     def quantize(self, *, palette, **star: R) -> Y:
         """"""
-        # TODO local class not being called
         ignore(self)
+        # TODO local class not being called
         result = wrap(colors=255, palette=palette, **star)
         return result
 

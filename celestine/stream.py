@@ -115,8 +115,7 @@ class File(abc.ABC):
     @abc.abstractmethod
     def reader(self, *path: Path) -> Flie:
         """"""
-        ignore(self)
-        ignore(path)
+        ignore(self, path)
         raise NotImplementedError()
 
     def save(self, data: S, *path: Path) -> N:
@@ -127,8 +126,7 @@ class File(abc.ABC):
     @abc.abstractmethod
     def writer(self, *path: Path) -> Flie:
         """"""
-        ignore(self)
-        ignore(path)
+        ignore(self, path)
         raise NotImplementedError()
 
     def __init__(self, path: P) -> N:

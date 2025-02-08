@@ -16,10 +16,7 @@ from celestine.typed import (
     ignore,
 )
 
-ignore(Image)
-ignore(ImageEnhance)
-ignore(ImagePalette)
-ignore(ImageTk)
+ignore(Image, ImageEnhance, ImagePalette, ImageTk)
 
 
 class Package(Abstract):
