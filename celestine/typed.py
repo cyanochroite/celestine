@@ -19,7 +19,7 @@ M: types.ModuleType
 N: None
 O: typing.Any  # Ambiguous variable name.
 P: pathlib.Path
-Q: typing.Any  # Unused  # Queue? Sequence?
+Q: collections.abc.Sequence
 R: typing.Any  # Future star type.
 S: str
 T: typing.Tuple
@@ -37,6 +37,7 @@ Z: int  # Set of Integers Symbol ℤ.
 import abc
 from collections.abc import Callable as C
 from collections.abc import Generator as G
+from collections.abc import Sequence as Q
 from collections.abc import Iterator as IT
 from pathlib import Path as P
 from types import ModuleType as M
@@ -266,4 +267,4 @@ class Struct:
     data = property(_get, _set, _del)
 
 
-ignore(IT, Protocol, cast, override)
+ignore(IT, Protocol, Q, cast, override)

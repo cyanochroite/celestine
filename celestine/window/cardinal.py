@@ -26,6 +26,7 @@ from celestine.typed import (
     K,
     L,
     N,
+    Q,
     S,
     Struct,
     T,
@@ -36,6 +37,7 @@ from celestine.typed import (
 )
 
 type Nomad = typing.Union["Cardinal", F, Z]
+type Nomad2 = typing.Union["Cardinal", F, Z, Q[F], Q[Z]]
 type Unary = C[[Nomad], Nomad]
 type Binary = C[[Nomad, Nomad], Nomad]
 
@@ -114,7 +116,7 @@ class Cardinal(Struct):
 
     name: S
 
-    def binary(self, binary: Binary, other: Nomad) -> L[Nomad]:
+    def binary2(self, binary: Binary, other: Nomad) -> L[Nomad]:
         """Binary arithmetic operations."""
         data: L[Nomad]
         if isinstance(other, float | int):
@@ -123,6 +125,26 @@ class Cardinal(Struct):
             # TODO: What happens when lists have differnt lengths?
             # Bigger worry is when SELF is longer and gets cropped.
             data = getattr(other, "data")
+        result = list(map(binary, self.data, data))
+        return result
+
+    def binary(self, binary: Binary, other: Nomad) -> L[Nomad]:
+        """Binary arithmetic operations."""
+
+        length = len(self.data)
+        data: L[Nomad]
+        # iterable: L[Nomad]
+
+        try:
+            iterable = other.data
+            print(iterable)
+        except AttributeError:
+            if isinstance(other, float | int):
+                iterable = [other]
+            else:
+                iterable = [*other]
+        data = iterable * length
+        #        data = itertools.repeat(iterable, length)
         result = list(map(binary, self.data, data))
         return result
 

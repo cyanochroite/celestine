@@ -45,8 +45,8 @@ def code(**star: R) -> B:
         replace = split[1].replace("\\", "/")
         iterable = replace.split("/")
         done = filter(None, iterable)
-        module = load.module(*done)
-        dictionary = load.dictionary(module)
+        _module = load.module(*done)
+        dictionary = load.dictionary(_module)
         for item, value in dictionary.items():
             setattr(module, item, value)
 
