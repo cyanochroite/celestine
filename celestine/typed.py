@@ -37,8 +37,8 @@ Z: int  # Set of Integers Symbol ℤ.
 import abc
 from collections.abc import Callable as C
 from collections.abc import Generator as G
-from collections.abc import Sequence as Q
 from collections.abc import Iterator as IT
+from collections.abc import Sequence as Q
 from pathlib import Path as P
 from types import ModuleType as M
 from typing import Any as A

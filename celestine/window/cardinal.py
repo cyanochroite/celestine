@@ -36,76 +36,76 @@ from celestine.typed import (
     override,
 )
 
-type Nomad = typing.Union["Cardinal", F, Z]
-type Nomad2 = typing.Union["Cardinal", F, Z, Q[F], Q[Z]]
-type Unary = C[[Nomad], Nomad]
-type Binary = C[[Nomad, Nomad], Nomad]
+type Number = typing.Union["Cardinal", F, Z]
+type Unary = C[[Number], Number]
+type Binary = C[[Number, Number], Number]
+type Nomad = typing.Union[Number, Q[F], Q[Z]]
 
 
 class Math(Struct):
     """"""
 
     @staticmethod
-    def add(one: Nomad, two: Nomad) -> Nomad:
+    def add(one: Number, two: Number) -> Number:
         """"""
         result = one + two
         return result
 
     @staticmethod
-    def ceil(one: Nomad) -> Nomad:
+    def ceil(one: Number) -> Number:
         """"""
         value = math.ceil(one)
-        result = cast(Nomad, value)
+        result = cast(Number, value)
         return result
 
     @staticmethod
-    def floor(one: Nomad) -> Nomad:
+    def floor(one: Number) -> Number:
         """"""
         value = math.floor(one)
-        result = cast(Nomad, value)
+        result = cast(Number, value)
         return result
 
     @staticmethod
-    def mul(one: Nomad, two: Nomad) -> Nomad:
+    def mul(one: Number, two: Number) -> Number:
         """"""
         result = one * two
         return result
 
     @staticmethod
-    def neg(one: Nomad) -> Nomad:
+    def neg(one: Number) -> Number:
         """"""
         result = -one
         return result
 
     @staticmethod
-    def pos(one: Nomad) -> Nomad:
+    def pos(one: Number) -> Number:
         """"""
         result = +one
         return result
 
     @staticmethod
-    def round(one: Nomad, ndigits: VZ = None) -> Nomad:
+    def round(one: Number, ndigits: VZ = None) -> Number:
         """"""
         result = round(one, ndigits)
         return result
 
     @staticmethod
-    def sub(one: Nomad, two: Nomad) -> Nomad:
+    def sub(one: Number, two: Number) -> Number:
         """"""
         result = one - two
         return result
 
     @staticmethod
-    def truediv(one: Nomad, two: Nomad) -> Nomad:
+    def truediv(one: Number, two: Number) -> Number:
         """"""
         result = one / two
         return result
 
     @staticmethod
-    def trunc(one: Nomad) -> Nomad:
+    def trunc(one: Number) -> Number:
         """"""
         value = math.trunc(one)
-        result = cast(Nomad, value)
+        result = cast(Number, value)
         return result
 
 
@@ -116,36 +116,18 @@ class Cardinal(Struct):
 
     name: S
 
-    def binary2(self, binary: Binary, other: Nomad) -> L[Nomad]:
+    def binary(self, binary: Binary, other: Nomad) -> L[Number]:
         """Binary arithmetic operations."""
-        data: L[Nomad]
-        if isinstance(other, float | int):
-            data = [other] * len(self.data)
+        if isinstance(other, Cardinal):
+            array = other.data
+        elif isinstance(other, float | int):
+            array = [other]
         else:
-            # TODO: What happens when lists have differnt lengths?
-            # Bigger worry is when SELF is longer and gets cropped.
-            data = getattr(other, "data")
-        result = list(map(binary, self.data, data))
-        return result
-
-    def binary(self, binary: Binary, other: Nomad) -> L[Nomad]:
-        """Binary arithmetic operations."""
-
-        length = len(self.data)
-        data: L[Nomad]
-        # iterable: L[Nomad]
-
-        try:
-            iterable = other.data
-            print(iterable)
-        except AttributeError:
-            if isinstance(other, float | int):
-                iterable = [other]
-            else:
-                iterable = [*other]
-        data = iterable * length
-        #        data = itertools.repeat(iterable, length)
-        result = list(map(binary, self.data, data))
+            array = [*other]
+        iterable = itertools.repeat(array)
+        data = itertools.chain.from_iterable(iterable)
+        skymap = map(binary, self.data, data)
+        result = list(skymap)
         return result
 
     def ceil(self) -> K:
@@ -165,17 +147,17 @@ class Cardinal(Struct):
         result = self.make(*data)
         return result
 
-    def unary(self, unary: Unary) -> L[Nomad]:
+    def unary(self, unary: Unary) -> L[Number]:
         """Unary arithmetic operations."""
         result = list(map(unary, self.data))
         return result
 
-    def _arithmetic(self, other: Nomad, binary: Binary) -> K:
+    def _arithmetic(self, binary: Binary, other: Nomad) -> K:
         data = self.binary(binary, other)
         result = self.make(*data)
         return result
 
-    def _augmented(self, other: Nomad, binary: Binary) -> K:
+    def _augmented(self, binary: Binary, other: Nomad) -> K:
         self.data = self.binary(binary, other)
         return self
 
@@ -185,7 +167,7 @@ class Cardinal(Struct):
         return result
 
     def __add__(self, other: Nomad) -> K:
-        result = self._arithmetic(other, Math.add)
+        result = self._arithmetic(Math.add, other)
         return result
 
     def __ceil__(self) -> K:
@@ -213,13 +195,13 @@ class Cardinal(Struct):
         result = self.floor()
         return result
 
-    def __ge__(self, other: Nomad) -> B:
+    def __ge__(self, other: Number) -> B:
         one = float(self)
         two = float(other)
         result = one >= two
         return result
 
-    def __gt__(self, other: Nomad) -> B:
+    def __gt__(self, other: Number) -> B:
         one = float(self)
         two = float(other)
         result = one > two
@@ -232,34 +214,35 @@ class Cardinal(Struct):
         return result
 
     def __iadd__(self, other: Nomad) -> K:
-        result = self._augmented(other, Math.add)
+        result = self._augmented(Math.add, other)
         return result
 
     def __imul__(self, other: Nomad) -> K:
-        result = self._augmented(other, Math.mul)
+        result = self._augmented(Math.mul, other)
         return result
 
     def __isub__(self, other: Nomad) -> K:
-        return self._augmented(other, Math.sub)
-
-    def __itruediv__(self, other: Nomad) -> K:
-        result = self._augmented(other, Math.truediv)
+        result = self._augmented(Math.sub, other)
         return result
 
-    def __le__(self, other: Nomad) -> B:
+    def __itruediv__(self, other: Nomad) -> K:
+        result = self._augmented(Math.truediv, other)
+        return result
+
+    def __le__(self, other: Number) -> B:
         one = float(self)
         two = float(other)
         result = one <= two
         return result
 
-    def __lt__(self, other: Nomad) -> B:
+    def __lt__(self, other: Number) -> B:
         one = float(self)
         two = float(other)
         result = one < two
         return result
 
     def __mul__(self, other: Nomad) -> K:
-        return self._arithmetic(other, Math.mul)
+        return self._arithmetic(Math.mul, other)
 
     def __neg__(self) -> K:
         result = self._inplace(Math.neg)
@@ -285,7 +268,7 @@ class Cardinal(Struct):
         return result
 
     def __radd__(self, other: Nomad) -> K:
-        result = self._arithmetic(other, Math.add)
+        result = self._arithmetic(Math.add, other)
         return result
 
     def __repr__(self):
@@ -294,7 +277,7 @@ class Cardinal(Struct):
         return result
 
     def __rmul__(self, other: Nomad) -> K:
-        result = self._arithmetic(other, Math.mul)
+        result = self._arithmetic(Math.mul, other)
         return result
 
     def __round__(self, ndigits: VZ = None) -> K:
@@ -302,7 +285,7 @@ class Cardinal(Struct):
         return result
 
     def __rsub__(self, other: Nomad) -> K:
-        result = self._arithmetic(other, Math.sub)
+        result = self._arithmetic(Math.sub, other)
         return result
 
     def __rtruediv__(self, other: Nomad) -> K:
@@ -316,11 +299,11 @@ class Cardinal(Struct):
         return result
 
     def __sub__(self, other: Nomad) -> K:
-        result = self._arithmetic(other, Math.sub)
+        result = self._arithmetic(Math.sub, other)
         return result
 
     def __truediv__(self, other: Nomad) -> K:
-        result = self._arithmetic(other, Math.truediv)
+        result = self._arithmetic(Math.truediv, other)
         return result
 
     def __trunc__(self) -> K:

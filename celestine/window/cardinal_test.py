@@ -4,12 +4,11 @@ import unittest
 
 from celestine.typed import N
 from celestine.window.cardinal import (
-    Math,
-    Cardinal,
-    Monad,
     Dyad,
-    Triad,
+    Math,
+    Monad,
     Tetrad,
+    Triad,
 )
 
 
