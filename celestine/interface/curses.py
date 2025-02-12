@@ -199,17 +199,6 @@ class Element(Element_, Abstract):
         result = curent.size
         return result
 
-    def pillow_size2(self, curent: Plane, target: Plane) -> Point:
-        """"""
-        if self.fit == Image.FILL:
-            curent.scale_to_min(target)
-        elif self.fit == Image.FULL:
-            curent.scale_to_max(target)
-        curent.center(target)
-
-        result = curent.size
-        return result
-
     def pillow_cache(self, image: PIL.Image.Image) -> PIL.Image.Image:
         """"""
         current = Plane.create(*image.size)
@@ -222,42 +211,22 @@ class Element(Element_, Abstract):
             current.scale_to_max(target)
         current.center(target)
 
-        if self.fit == Image.FILL:
-            image = image.resize(current.size.value)
-            image = image.convert("1")
+        image = image.resize(current.size.value)
+        image = image.convert("1")
 
-            hold = PIL.Image.new("1", target.size.value)
+        hold = PIL.Image.new("1", target.size.value)
 
-            im = image
-            box = current.value
-            # box = None
-            hold.paste(im, box)
-            image = hold
-
-        elif self.fit == Image.FULL:
-            source_length_x = image.width
-            source_length_y = image.height
-
-            length_x, length_y = self.area.world.size
-            target = Point(length_x, length_y)
-
-            target = Plane.create(*self.area.world.size.value)
-            curent = Plane.create(source_length_x, source_length_y)
-
-            curent.scale_to_max(target)
-
-            curent.center(target)
-
-            size = curent.size
-            size *= Point(2, 4)
-
-            image = image.resize(size.value)
-            image = image.convert("1")
+        im = image
+        box = current.value
+        # box = None
+        hold.paste(im, box)
+        image = hold
 
         return image
 
     def pillow_color(self, image: PIL.Image.Image) -> PIL.Image.Image:
         """"""
+
         size = Point(*self.cache.size)
         size /= Point(2, 4)
         size = size.ceil()
@@ -271,18 +240,11 @@ class Element(Element_, Abstract):
         )
         return image
 
-    def update_image(self, path: P, **star: R) -> N:
-        """"""
-        self.path = path
-
-        image = PIL.Image.open(self.path)
-        image = image.convert(mode="RGB")
-
-        self.fit = Image.FILL
-        one = self.area.world.size.value
-        two = image.size
+    def brightwing(self, image: PIL.Image.Image) -> PIL.Image.Image:
+        one = image.size
+        two = self.area.world.size.value
         size = self.pillow_size(one, two)
-        resize = image.resize(size.value)
+        resize = image.resize((size.value))
         resize = resize.convert("1")
 
         def binary(number: Z) -> Z:
@@ -298,6 +260,15 @@ class Element(Element_, Abstract):
         factor = 1 + ratio2 * 6
         image = PIL.ImageEnhance.Brightness(image)
         image = image.enhance(factor)
+        return image
+
+    def update_image(self, path: P, **star: R) -> N:
+        """"""
+        self.path = path
+
+        image = PIL.Image.open(self.path)
+        image = image.convert(mode="RGB")
+        image = self.brightwing(image)
 
         self.cache = self.pillow_cache(image)
         self.color = self.pillow_color(image)
