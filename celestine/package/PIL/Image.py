@@ -10,6 +10,7 @@ from celestine.typed import (
     LS,
     LZ,
     TZ2,
+    TZ4,
     K,
     N,
     P,
@@ -64,6 +65,11 @@ class Image:
     def height(self) -> Z:
         """"""
         raise NotImplementedError(self)
+
+    @wrapper(__name__)
+    def paste(self, im: K, box: TZ4) -> K:
+        """"""
+        raise NotImplementedError(self, im, box)
 
     @wrapper(__name__)
     def putpalette(self, data: LZ, rawmode: S) -> N:

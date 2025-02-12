@@ -64,6 +64,9 @@ class Abstract(Abstract_):
 
         Text length need be size-1 long.
         """
+        if y_dot == 27 and x_dot == 117:
+            # TODO: figure out why last pixel returns ERROR
+            return
         self.canvas.addstr(y_dot, x_dot, text, *extra)
 
     def render(self, item, **star: R) -> N:
@@ -196,17 +199,40 @@ class Element(Element_, Abstract):
         result = curent.size
         return result
 
-    def pillow_cache(self, image: PIL.Image.Image) -> PIL.Image.Image:
+    def pillow_size2(self, curent: Plane, target: Plane) -> Point:
         """"""
         if self.fit == Image.FILL:
-            one = image.size
-            two = self.area.world.size
-            two *= Point(2, 4)
+            curent.scale_to_min(target)
+        elif self.fit == Image.FULL:
+            curent.scale_to_max(target)
+        curent.center(target)
 
-            size = self.pillow_size(one, two.value)
+        result = curent.size
+        return result
 
-            image = image.resize(size.value)
+    def pillow_cache(self, image: PIL.Image.Image) -> PIL.Image.Image:
+        """"""
+        current = Plane.create(*image.size)
+        target = Plane.create(*self.area.world.size)
+        target *= (2, 4)
+
+        if self.fit == Image.FILL:
+            current.scale_to_min(target)
+        elif self.fit == Image.FULL:
+            current.scale_to_max(target)
+        current.center(target)
+
+        if self.fit == Image.FILL:
+            image = image.resize(current.size.value)
             image = image.convert("1")
+
+            hold = PIL.Image.new("1", target.size.value)
+
+            im = image
+            box = current.value
+            # box = None
+            hold.paste(im, box)
+            image = hold
 
         elif self.fit == Image.FULL:
             source_length_x = image.width
