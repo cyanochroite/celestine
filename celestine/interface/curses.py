@@ -114,58 +114,6 @@ class Element(Element_, Abstract):
         result = curent.size
         return result
 
-    def pillow_cache(self, image: PIL.Image.Image) -> PIL.Image.Image:
-        """"""
-        current = Plane.create(*image.size)
-        target = Plane.create(*self.area.world.size)
-        target *= (2, 4)
-
-        if self.fit == Image.FILL:
-            current.scale_to_min(target)
-        elif self.fit == Image.FULL:
-            current.scale_to_max(target)
-        current.center(target)
-
-        image = image.resize(current.size.value)
-        image = image.convert("1")
-
-        hold = PIL.Image.new("1", target.size.value)
-
-        im = image
-        box = current.value
-        # box = None
-        hold.paste(im, box)
-        image = hold
-
-        return image
-
-    def pillow_color(self, image: PIL.Image.Image) -> PIL.Image.Image:
-        """"""
-        current = Plane.create(*image.size)
-        target = Plane.create(*self.area.world.size)
-        target *= (2, 4)
-        if self.fit == Image.FILL:
-            current.scale_to_min(target)
-        elif self.fit == Image.FULL:
-            current.scale_to_max(target)
-        current.center(target)
-        target = Plane.create(*current.size.value)
-        target /= Point(2, 4)
-        target = target.ceil()
-
-        size = Point(*self.cache.size)
-        size /= Point(2, 4)
-        size = size.ceil()
-        image = image.resize(size.value)
-        image = image.quantize(
-            colors=255,
-            method=None,
-            kmeans=0,
-            palette=palette_image,
-            dither=PIL.Image.Dither.FLOYDSTEINBERG,
-        )
-        return image
-
     def brightwing(self, image: PIL.Image.Image) -> PIL.Image.Image:
         """"""
         one = image.size
@@ -197,34 +145,49 @@ class Element(Element_, Abstract):
         image = image.convert(mode="RGB")
         image = self.brightwing(image)
 
-        self.cache = self.pillow_cache(image)
-        self.color = self.pillow_color(image)
-
-        (x_dot1, y_dot1) = self.area.world.origin
-
-        colors = list(self.color.getdata())
-
         width, height = self.cache.size
 
         width, height = self.area.world.size.value
         length = width * height
 
+        #
+        current = Plane.create(*image.size)
+        target = Plane.create(*self.area.world.size)
+        target *= (2, 4)
+
+        if self.fit == Image.FILL:
+            current.scale_to_min(target)
+        elif self.fit == Image.FULL:
+            current.scale_to_max(target)
+        current.center(target)
+
+        large = image.resize(target.size.value)
+        small = image.resize(current.size.value)
+
+        #
+        origin = self.area.world.origin
+
         def dot_x():
             for index in range(length):
                 local = index % width
-                world = local + x_dot1
+                world = local + origin.one
                 yield world
 
         def dot_y():
             for index in range(length):
                 local = index // width
-                world = local + y_dot1
+                world = local + origin.two
                 yield world
 
-        def eat():
-            width, height = self.cache.size
+        def luma():
+            hippo = PIL.Image.new("1", target.size.value)
+            im = image.resize(current.size.value)
+            box = current.value
+            hippo.paste(im, box)
 
-            pixels = list(self.cache.getdata())
+            cache = hippo.convert("1")
+            pixels = list(cache.getdata())
+            width, height = cache.size
 
             def shift(offset_x: Z, offset_y: Z) -> N:
                 nonlocal braille
@@ -259,13 +222,35 @@ class Element(Element_, Abstract):
                     text = BRAILLE_PATTERNS[braille]
                     yield text
 
-        def feet():
+        def hue():
+            size1 = Point(*target.size.value)
+            size1 /= Point(2, 4)
+            size1 = size1.ceil()
+            hippo = PIL.Image.new("RGB", size1.value)
+
+            size2 = Point(*target.size.value)
+            size2 /= Point(2, 4)
+            size2 = size2.ceil()
+            im = image.resize(size2.value)
+            im = im.convert("RGB")
+            box = current.value
+            hippo.paste(im, (0, 0))
+
+            colour = hippo.quantize(
+                colors=255,
+                method=None,
+                kmeans=0,
+                palette=palette_image,
+                dither=PIL.Image.Dither.FLOYDSTEINBERG,
+            )
+
+            colors = list(colour.getdata())
             for index in range(length):
                 color = colors[index]
                 pair = curses.color_pair(color)
                 yield pair
 
-        button = zip(dot_x(), dot_y(), eat(), feet())
+        button = zip(dot_x(), dot_y(), luma(), hue())
         for x_dot, y_dot, text, extra in button:
             self.add_string(x_dot, y_dot, text, extra)
 
