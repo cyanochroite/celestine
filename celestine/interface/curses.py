@@ -69,94 +69,9 @@ class Abstract(Abstract_):
             return
         self.canvas.addstr(y_dot, x_dot, text, *extra)
 
-    def render(self, item, **star: R) -> N:
-        """"""
-        if self.hidden:
-            return
-
-        text = item
-        (x_dot, y_dot) = self.area.origin.int
-        self.add_string(x_dot, y_dot, text)
-
 
 class Element(Element_, Abstract):
     """"""
-
-    def output(self):
-        """"""
-        width, height = self.cache.size
-
-        pixels = list(self.cache.getdata())
-        string = io.StringIO()
-
-        def shift(offset_x: Z, offset_y: Z) -> N:
-            nonlocal braille
-            nonlocal range_x
-            nonlocal range_y
-
-            index_x = range_x + offset_x
-            index_y = range_y + offset_y
-
-            index = index_y * width + index_x
-            try:
-                pixel = 1 if pixels[index] > 127 else 0
-            except IndexError:
-                pixel = 0
-
-            braille <<= 1
-            braille |= pixel
-
-        for range_y in range(0, height, 4):
-            for range_x in range(0, width, 2):
-                braille = 0
-
-                shift(0, 0)
-                shift(1, 0)
-                shift(0, 1)
-                shift(1, 1)
-                shift(0, 2)
-                shift(1, 2)
-                shift(0, 3)
-                shift(1, 3)
-
-                text = BRAILLE_PATTERNS[braille]
-                string.write(text)
-
-            string.write(LINE_FEED)
-
-        value = string.getvalue()
-        value = value[0:-1]
-        return value.split(LINE_FEED)
-
-    def render(self, item: LS, **star: R) -> N:
-        """"""
-
-        (x_dot, y_dot) = self.area.world.origin
-
-        colors = list(self.color.getdata())
-
-        index_y = 0
-        for row_text in item:
-            width = len(row_text)
-            index_x = 0
-            for col_text in row_text:
-                index = index_y * width + index_x
-                try:
-                    color = colors[index]
-                except IndexError:
-                    color = 0
-                extra = curses.color_pair(color)
-
-                self.add_string(
-                    x_dot + index_x,
-                    y_dot + index_y,
-                    col_text,
-                    extra,
-                )
-
-                index_x += 1
-
-            index_y += 1
 
     @override
     def draw(self, **star: R) -> B:
@@ -226,6 +141,17 @@ class Element(Element_, Abstract):
 
     def pillow_color(self, image: PIL.Image.Image) -> PIL.Image.Image:
         """"""
+        current = Plane.create(*image.size)
+        target = Plane.create(*self.area.world.size)
+        target *= (2, 4)
+        if self.fit == Image.FILL:
+            current.scale_to_min(target)
+        elif self.fit == Image.FULL:
+            current.scale_to_max(target)
+        current.center(target)
+        target = Plane.create(*current.size.value)
+        target /= Point(2, 4)
+        target = target.ceil()
 
         size = Point(*self.cache.size)
         size /= Point(2, 4)
@@ -241,6 +167,7 @@ class Element(Element_, Abstract):
         return image
 
     def brightwing(self, image: PIL.Image.Image) -> PIL.Image.Image:
+        """"""
         one = image.size
         two = self.area.world.size.value
         size = self.pillow_size(one, two)
@@ -273,8 +200,74 @@ class Element(Element_, Abstract):
         self.cache = self.pillow_cache(image)
         self.color = self.pillow_color(image)
 
-        item = self.output()
-        self.render(item, **star)
+        (x_dot1, y_dot1) = self.area.world.origin
+
+        colors = list(self.color.getdata())
+
+        width, height = self.cache.size
+
+        width, height = self.area.world.size.value
+        length = width * height
+
+        def dot_x():
+            for index in range(length):
+                local = index % width
+                world = local + x_dot1
+                yield world
+
+        def dot_y():
+            for index in range(length):
+                local = index // width
+                world = local + y_dot1
+                yield world
+
+        def eat():
+            width, height = self.cache.size
+
+            pixels = list(self.cache.getdata())
+
+            def shift(offset_x: Z, offset_y: Z) -> N:
+                nonlocal braille
+                nonlocal range_x
+                nonlocal range_y
+
+                index_x = range_x + offset_x
+                index_y = range_y + offset_y
+
+                index = index_y * width + index_x
+                try:
+                    pixel = 1 if pixels[index] > 127 else 0
+                except IndexError:
+                    pixel = 0
+
+                braille <<= 1
+                braille |= pixel
+
+            for range_y in range(0, height, 4):
+                for range_x in range(0, width, 2):
+                    braille = 0
+
+                    shift(0, 0)
+                    shift(1, 0)
+                    shift(0, 1)
+                    shift(1, 1)
+                    shift(0, 2)
+                    shift(1, 2)
+                    shift(0, 3)
+                    shift(1, 3)
+
+                    text = BRAILLE_PATTERNS[braille]
+                    yield text
+
+        def feet():
+            for index in range(length):
+                color = colors[index]
+                pair = curses.color_pair(color)
+                yield pair
+
+        button = zip(dot_x(), dot_y(), eat(), feet())
+        for x_dot, y_dot, text, extra in button:
+            self.add_string(x_dot, y_dot, text, extra)
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
