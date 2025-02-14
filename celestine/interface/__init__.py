@@ -496,6 +496,7 @@ class Window(Tree):
             return
 
         caller(**star)
+        # TODO: Sometimes this is called when nothing is changed.
         self.draw(**star)
 
     def run(self) -> N:

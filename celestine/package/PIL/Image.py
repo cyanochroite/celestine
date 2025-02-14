@@ -7,8 +7,10 @@ from celestine.data import (
 )
 from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.typed import (
+    LS,
     LZ,
     TZ2,
+    TZ4,
     K,
     N,
     P,
@@ -16,6 +18,7 @@ from celestine.typed import (
     S,
     Y,
     Z,
+    ignore,
 )
 
 
@@ -46,50 +49,67 @@ class Resampling:
     NEAREST = 6
 
 
+@wrapper(__name__)
 class Image:
     """"""
 
     mode: S
 
-    def putpalette(self, data: LZ, rawmode: S) -> N:
-        """"""
-        raise NotImplementedError(self, data, rawmode)
-
+    @wrapper(__name__)
     def convert(self, mode: S, matrix: N, dither: "Dither") -> K:
         """"""
         raise NotImplementedError(self, mode, matrix, dither)
 
     @property
+    @wrapper(__name__)
     def height(self) -> Z:
         """"""
         raise NotImplementedError(self)
 
+    @wrapper(__name__)
+    def paste(self, im: K, box: TZ4) -> K:
+        """"""
+        raise NotImplementedError(self, im, box)
+
+    @wrapper(__name__)
+    def putpalette(self, data: LZ, rawmode: S) -> N:
+        """"""
+        raise NotImplementedError(self, data, rawmode)
+
+    @wrapper(__name__)
+    def quantize(self, *, palette, **star: R) -> Y:
+        """"""
+        ignore(self)
+        # TODO local class not being called
+        result = wrap(colors=255, palette=palette, **star)
+        return result
+
+    @wrapper(__name__)
     def resize(self, size: TZ2, resample: Resampling) -> K:
         """"""
         raise NotImplementedError(self, size, resample)
 
     @property
+    @wrapper(__name__)
     def size(self) -> TZ2:
         """"""
         raise NotImplementedError(self)
 
+    @wrapper(__name__)
     def tobytes(self) -> Y:
         """"""
         raise NotImplementedError(self)
 
     @property
+    @wrapper(__name__)
     def width(self) -> Z:
-        """"""
-        raise NotImplementedError(self)
-
-    @property
-    def registered_extensions(self):
         """"""
         raise NotImplementedError(self)
 
 
 @wrapper(__name__)
 def new(mode: S, size: TZ2, **star: R) -> Image:
+    """"""
     color = 0
     result = wrap(mode, size, color, **star)
     return result
@@ -104,3 +124,9 @@ def open(path: P, **star: R) -> Image:
     formats = bank.window.formats()
     result = wrap(fp, mode, formats, **star)
     return result
+
+
+@wrapper(__name__)
+def registered_extensions() -> LS:
+    """"""
+    raise NotImplementedError()

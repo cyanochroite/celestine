@@ -18,13 +18,7 @@ from celestine.typed import (
     ignore,
 )
 
-ignore(Surface)
-ignore(display)
-ignore(event)
-ignore(font)
-ignore(image)
-ignore(mouse)
-ignore(transform)
+ignore(Surface, display, event, font, image, mouse, transform)
 
 
 MOUSEBUTTONDOWN: Z

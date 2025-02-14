@@ -26,6 +26,11 @@ class Abstract:
     name: S
     package: M | N
 
+    def attribute(self, name: S) -> N:
+        """"""
+        package = load.package(self.pypi, name)
+        setattr(self, name, package)
+
     def main(self, package: M, path: P) -> N:
         """"""
         ignore(self)
