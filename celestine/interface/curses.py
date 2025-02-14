@@ -100,55 +100,11 @@ class Element(Element_, Abstract):
 
         return True
 
-    def pillow_size(self, one: TZ2, two: TZ2) -> Point:
-        """"""
-        curent = Plane.create(*one)
-        target = Plane.create(*two)
-
-        if self.fit == Image.FILL:
-            curent.scale_to_min(target)
-        elif self.fit == Image.FULL:
-            curent.scale_to_max(target)
-        curent.center(target)
-
-        result = curent.size
-        return result
-
-    def brightwing(self, image: PIL.Image.Image) -> PIL.Image.Image:
-        """"""
-        one = image.size
-        two = self.area.world.size.value
-        size = self.pillow_size(one, two)
-        resize = image.resize((size.value))
-        resize = resize.convert("1")
-
-        def binary(number: Z) -> Z:
-            return 1 if number else 0
-
-        pixels = size.one * size.two
-        data = resize.getdata()
-        data = map(binary, data)
-        count = sum(data)
-        ratio = count / pixels
-        ratio1 = 1 / 3 - ratio
-        ratio2 = max(0, ratio1)
-        factor = 1 + ratio2 * 6
-        image = PIL.ImageEnhance.Brightness(image)
-        image = image.enhance(factor)
-        return image
-
     def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
-
         image = PIL.Image.open(self.path)
         image = image.convert(mode="RGB")
-        image = self.brightwing(image)
-
-        width, height = self.cache.size
-
-        width, height = self.area.world.size.value
-        length = width * height
 
         #
         current = Plane.create(*image.size)
@@ -161,10 +117,27 @@ class Element(Element_, Abstract):
             current.scale_to_max(target)
         current.center(target)
 
-        large = image.resize(target.size.value)
-        small = image.resize(current.size.value)
+        width, height = self.area.world.size.value
+        length = width * height
+
+        image = image.resize(current.size.value)
+        resize = image.convert("1")
+
+        def binary(number: Z) -> Z:
+            return 1 if number else 0
+
+        data = resize.getdata()
+        data = map(binary, data)
+        count = sum(data)
+        ratio = count / length
+        ratio1 = 1 / 3 - ratio
+        ratio2 = max(0, ratio1)
+        factor = 1 + ratio2 * 6
+        image = PIL.ImageEnhance.Brightness(image)
+        image = image.enhance(factor)
 
         #
+
         origin = self.area.world.origin
 
         def dot_x():
@@ -181,7 +154,7 @@ class Element(Element_, Abstract):
 
         def luma():
             hippo = PIL.Image.new("1", target.size.value)
-            im = image.resize(current.size.value)
+            im = image
             box = current.value
             hippo.paste(im, box)
 
@@ -223,18 +196,22 @@ class Element(Element_, Abstract):
                     yield text
 
         def hue():
-            size1 = Point(*target.size.value)
-            size1 /= Point(2, 4)
-            size1 = size1.ceil()
-            hippo = PIL.Image.new("RGB", size1.value)
+            nonlocal image
+            current = Plane.create(*image.size)
+            target = Plane.create(*self.area.world.size)
 
-            size2 = Point(*target.size.value)
-            size2 /= Point(2, 4)
-            size2 = size2.ceil()
-            im = image.resize(size2.value)
-            im = im.convert("RGB")
+            if self.fit == Image.FILL:
+                current.scale_to_min(target)
+            elif self.fit == Image.FULL:
+                current.scale_to_max(target)
+            current.center(target)
+
+            image = image.resize(current.size.value)
+            hippo = PIL.Image.new("RGB", target.size.value)
+
+            im = image
             box = current.value
-            hippo.paste(im, (0, 0))
+            hippo.paste(im, box)
 
             colour = hippo.quantize(
                 colors=255,
