@@ -29,6 +29,7 @@ from celestine.typed import (
     ignore,
     override,
 )
+from celestine.window.cardinal import Round
 from celestine.window.collection import (
     Area,
     Line,
@@ -194,8 +195,7 @@ class Element(Element_, Abstract):
 
         def hue():
             plane = current / (2, 4)
-            plane = plane.round()
-            # plane = plane.floor()
+            plane = plane.inplace(Round.increase)
 
             canvas = PIL.Image.new("RGB", self.area.world.size.value)
             im = image.resize(plane.size.value)

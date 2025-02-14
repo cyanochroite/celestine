@@ -9,7 +9,10 @@ from celestine.typed import (
     N,
     Z,
 )
-from celestine.window.cardinal import Triad
+from celestine.window.cardinal import (
+    Round,
+    Triad,
+)
 
 type Pixel = Triad[F] | Triad[Z]
 type Pixels = L[TZ3]
@@ -41,7 +44,7 @@ def _curses(pixel: Pixel) -> Pixel:
 def _pillow(pixel: Pixel) -> Pixel:
     """"""
     scale = pixel * 255
-    result = scale.ceil()
+    result = scale.inplace(Round.positive)
     return result
 
 

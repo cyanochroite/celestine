@@ -143,21 +143,6 @@ class Cardinal(Struct):
         result = list(skymap)
         return result
 
-    def away(self) -> K:
-        """"""
-        result = self._inplace(Round.increase)
-        return result
-
-    def ceil(self) -> K:
-        """"""
-        result = self._inplace(Round.positive)
-        return result
-
-    def floor(self) -> K:
-        """"""
-        result = self._inplace(Round.negative)
-        return result
-
     def round(self, ndigits: VZ = None) -> K:
         """"""
         other = itertools.repeat(ndigits)
@@ -179,7 +164,8 @@ class Cardinal(Struct):
         self.data = self.binary(binary, other)
         return self
 
-    def _inplace(self, unary: Unary) -> K:
+    def inplace(self, unary: Unary) -> K:
+        """"""
         data = self.unary(unary)
         result = self.make(*data)
         return result
@@ -189,7 +175,7 @@ class Cardinal(Struct):
         return result
 
     def __ceil__(self) -> K:
-        result = self._inplace(Round.positive)
+        result = self.inplace(Round.positive)
         return result
 
     def __del__(self) -> N:
@@ -210,7 +196,7 @@ class Cardinal(Struct):
         return result
 
     def __floor__(self) -> K:
-        result = self._inplace(Round.negative)
+        result = self.inplace(Round.negative)
         return result
 
     def __ge__(self, other: Number) -> B:
@@ -263,7 +249,7 @@ class Cardinal(Struct):
         return self._arithmetic(Math.mul, other)
 
     def __neg__(self) -> K:
-        result = self._inplace(Math.neg)
+        result = self.inplace(Math.neg)
         return result
 
     def __new__(cls, *_: A) -> K:
@@ -282,7 +268,7 @@ class Cardinal(Struct):
         return result
 
     def __pos__(self) -> K:
-        result = self._inplace(Math.pos)
+        result = self.inplace(Math.pos)
         return result
 
     def __radd__(self, other: Nomad) -> K:
@@ -325,7 +311,7 @@ class Cardinal(Struct):
         return result
 
     def __trunc__(self) -> K:
-        result = self._inplace(Round.decrease)
+        result = self.inplace(Round.decrease)
         return result
 
 

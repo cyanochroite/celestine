@@ -7,6 +7,7 @@ from celestine.window.cardinal import (
     Dyad,
     Math,
     Monad,
+    Round,
     Tetrad,
     Triad,
 )
@@ -24,10 +25,23 @@ class TestMath(unittest.TestCase):
 
     def test_rounding(self) -> N:
         """"""
-        self.assertEqual(Math.ceil(1.5), 2)
-        self.assertEqual(Math.floor(1.5), 1)
-        self.assertEqual(Math.round(1.5), 2)
-        self.assertEqual(Math.trunc(1.5), 1)
+
+        self.assertEqual(Round.decrease(+1.5), +1.0)
+        self.assertEqual(Round.decrease(-1.5), -1.0)
+
+        self.assertEqual(Round.increase(+1.5), +2.0)
+        self.assertEqual(Round.increase(-1.5), -2.0)
+
+        self.assertEqual(Round.negative(+1.5), +1.0)
+        self.assertEqual(Round.negative(-1.5), -2.0)
+
+        self.assertEqual(Round.positive(+1.5), +2.0)
+        self.assertEqual(Round.positive(-1.5), -1.0)
+
+        self.assertEqual(Round.round(+1.75), +2.0)
+        self.assertEqual(Round.round(+1.25), +1.0)
+        self.assertEqual(Round.round(-1.25), -1.0)
+        self.assertEqual(Round.round(-1.75), -2.0)
 
 
 class TestCardinal(unittest.TestCase):
@@ -68,8 +82,8 @@ class TestCardinal(unittest.TestCase):
         """"""
         c = Dyad(1.5, 2.5)
         self.assertEqual(float(c), 4.0)
-        self.assertEqual(float(c.ceil()), 5.0)
-        self.assertEqual(float(c.floor()), 3.0)
+        self.assertEqual(float(c.inplace(Round.positive)), 5.0)
+        self.assertEqual(float(c.inplace(Round.negative)), 3.0)
 
 
 class TestMonad(unittest.TestCase):
