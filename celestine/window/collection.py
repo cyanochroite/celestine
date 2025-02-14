@@ -47,9 +47,9 @@ class Line(Dyad[F]):
         return result
 
     @property
-    def midpoint(self) -> Z:
+    def midpoint(self) -> F:
         """"""
-        result = int(self.one + self.two) // 2
+        result = (self.one + self.two) / 2
         return result
 
     def __contains__(self, item: F) -> B:
@@ -68,14 +68,16 @@ class Plane(Dyad[Line]):
 
     def center(self, other: K) -> N:
         """"""
-        self += other.centroid - self.centroid
+        result = other.centroid - self.centroid
+        self += result
 
     @property
     def centroid(self) -> Point:
         """"""
         one = self.one.midpoint
         two = self.two.midpoint
-        return Point(one, two)
+        result = Point(one, two)
+        return result
 
     @property
     def value(self) -> T[Z, Z, Z, Z]:
@@ -84,27 +86,32 @@ class Plane(Dyad[Line]):
         ymin = int(self.two.one)
         xmax = int(self.one.two)
         ymax = int(self.two.two)
-        return (xmin, ymin, xmax, ymax)
+        result = (xmin, ymin, xmax, ymax)
+        return result
 
     @classmethod
     def create(cls, width: Z, height: Z) -> K:
         """"""
         one = Line(0, width)
         two = Line(0, height)
-        return cls(one, two)
+        result = cls(one, two)
+        return result
 
     @property
     def origin(self) -> Point:
         """"""
-        return Point(self.one.one, self.two.one)
+        result = Point(self.one.one, self.two.one)
+        return result
 
     def scale_to_max(self, other: K) -> N:
         """"""
-        self *= max(other.size / self.size)
+        result = max(other.size / self.size)
+        self *= result
 
     def scale_to_min(self, other: K) -> N:
         """"""
-        self *= min(other.size / self.size)
+        result = min(other.size / self.size)
+        self *= result
 
     @property
     def size(self) -> Point:
@@ -117,7 +124,8 @@ class Plane(Dyad[Line]):
     def __contains__(self, item: Point) -> B:
         one = item.one in self.one
         two = item.two in self.two
-        return one and two
+        result = one and two
+        return result
 
 
 class Area(Object):
@@ -127,14 +135,16 @@ class Area(Object):
     world: Plane
 
     def __contains__(self, item: Point) -> B:
-        return item in self.world
+        result = item in self.world
+        return result
 
     @classmethod
     def fast(cls, width: Z, height: Z) -> K:
         """"""
         local = Plane.create(width, height)
         world = Plane.create(width, height)
-        return cls(local, world)
+        result = cls(local, world)
+        return result
 
     def __init__(self, local: Plane, world: Plane) -> N:
         self.local = local.copy()
@@ -142,10 +152,12 @@ class Area(Object):
         super().__init__(self.local, self.world)
 
     def __repr__(self):
-        return f"Area({self.local}, {self.world})"
+        result = f"Area({self.local}, {self.world})"
+        return result
 
     def __str__(self):
-        return f"({self.local}, {self.world})"
+        result = f"({self.local}, {self.world})"
+        return result
 
 
 class Dictionary[X](collections.abc.MutableMapping[S, A]):

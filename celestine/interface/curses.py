@@ -1,6 +1,5 @@
 """"""
 
-import io
 import itertools
 import math
 
@@ -14,14 +13,12 @@ from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
-from celestine.literal import LINE_FEED
 from celestine.package import (
     PIL,
     curses,
 )
 from celestine.typed import (
     LS,
-    TZ2,
     B,
     K,
     N,
@@ -196,24 +193,16 @@ class Element(Element_, Abstract):
                     yield text
 
         def hue():
-            nonlocal image
-            current = Plane.create(*image.size)
-            target = Plane.create(*self.area.world.size)
+            plane = current / (2, 4)
+            plane = plane.round()
+            # plane = plane.floor()
 
-            if self.fit == Image.FILL:
-                current.scale_to_min(target)
-            elif self.fit == Image.FULL:
-                current.scale_to_max(target)
-            current.center(target)
+            canvas = PIL.Image.new("RGB", self.area.world.size.value)
+            im = image.resize(plane.size.value)
+            box = plane.value
+            canvas.paste(im, box)
 
-            image = image.resize(current.size.value)
-            hippo = PIL.Image.new("RGB", target.size.value)
-
-            im = image
-            box = current.value
-            hippo.paste(im, box)
-
-            colour = hippo.quantize(
+            colour = canvas.quantize(
                 colors=255,
                 method=None,
                 kmeans=0,

@@ -42,6 +42,46 @@ type Binary = C[[Number, Number], Number]
 type Nomad = typing.Union[Number, Q[F], Q[Z]]
 
 
+class Round:
+    """"""
+
+    @staticmethod
+    def decrease(one: Number) -> Number:
+        """"""
+        value = math.trunc(one)
+        result = cast(Number, value)
+        return result
+
+    @staticmethod
+    def increase(one: Number) -> Number:
+        """"""
+        negative = math.floor(one)
+        positive = math.ceil(one)
+        value = positive if one >= 0 else negative
+        result = cast(Number, value)
+        return result
+
+    @staticmethod
+    def negative(one: Number) -> Number:
+        """"""
+        value = math.floor(one)
+        result = cast(Number, value)
+        return result
+
+    @staticmethod
+    def positive(one: Number) -> Number:
+        """"""
+        value = math.ceil(one)
+        result = cast(Number, value)
+        return result
+
+    @staticmethod
+    def round(one: Number, ndigits: VZ = None) -> Number:
+        """"""
+        result = round(one, ndigits)
+        return result
+
+
 class Math(Struct):
     """"""
 
@@ -49,20 +89,6 @@ class Math(Struct):
     def add(one: Number, two: Number) -> Number:
         """"""
         result = one + two
-        return result
-
-    @staticmethod
-    def ceil(one: Number) -> Number:
-        """"""
-        value = math.ceil(one)
-        result = cast(Number, value)
-        return result
-
-    @staticmethod
-    def floor(one: Number) -> Number:
-        """"""
-        value = math.floor(one)
-        result = cast(Number, value)
         return result
 
     @staticmethod
@@ -84,12 +110,6 @@ class Math(Struct):
         return result
 
     @staticmethod
-    def round(one: Number, ndigits: VZ = None) -> Number:
-        """"""
-        result = round(one, ndigits)
-        return result
-
-    @staticmethod
     def sub(one: Number, two: Number) -> Number:
         """"""
         result = one - two
@@ -99,13 +119,6 @@ class Math(Struct):
     def truediv(one: Number, two: Number) -> Number:
         """"""
         result = one / two
-        return result
-
-    @staticmethod
-    def trunc(one: Number) -> Number:
-        """"""
-        value = math.trunc(one)
-        result = cast(Number, value)
         return result
 
 
@@ -130,20 +143,25 @@ class Cardinal(Struct):
         result = list(skymap)
         return result
 
+    def away(self) -> K:
+        """"""
+        result = self._inplace(Round.increase)
+        return result
+
     def ceil(self) -> K:
         """"""
-        result = self._inplace(Math.ceil)
+        result = self._inplace(Round.positive)
         return result
 
     def floor(self) -> K:
         """"""
-        result = self._inplace(Math.floor)
+        result = self._inplace(Round.negative)
         return result
 
     def round(self, ndigits: VZ = None) -> K:
         """"""
         other = itertools.repeat(ndigits)
-        data = list(map(Math.round, self.data, other))
+        data = list(map(Round.round, self.data, other))
         result = self.make(*data)
         return result
 
@@ -171,7 +189,7 @@ class Cardinal(Struct):
         return result
 
     def __ceil__(self) -> K:
-        result = self.ceil()
+        result = self._inplace(Round.positive)
         return result
 
     def __del__(self) -> N:
@@ -192,7 +210,7 @@ class Cardinal(Struct):
         return result
 
     def __floor__(self) -> K:
-        result = self.floor()
+        result = self._inplace(Round.negative)
         return result
 
     def __ge__(self, other: Number) -> B:
@@ -307,7 +325,7 @@ class Cardinal(Struct):
         return result
 
     def __trunc__(self) -> K:
-        result = self._inplace(Math.trunc)
+        result = self._inplace(Round.decrease)
         return result
 
 
