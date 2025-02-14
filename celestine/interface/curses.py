@@ -62,7 +62,10 @@ class Abstract(Abstract_):
 
         Text length need be size-1 long.
         """
-        if y_dot == 27 and x_dot == 117:
+
+        size = self.area.local.size.copy()
+        size -= (1, 1)
+        if x_dot == size.one and y_dot == size.two:
             # TODO: figure out why last pixel returns ERROR
             return
         self.canvas.addstr(y_dot, x_dot, text, *extra)
@@ -151,9 +154,12 @@ class Element(Element_, Abstract):
                 yield world
 
         def luma():
+            plane = current.round()
+
             hippo = PIL.Image.new("1", target.size.value)
-            im = image
-            box = current.value
+            im = image.resize(plane.size.value)
+            box = plane.value
+
             hippo.paste(im, box)
 
             cache = hippo.convert("1")
@@ -195,7 +201,7 @@ class Element(Element_, Abstract):
 
         def hue():
             plane = current / (2, 4)
-            plane = plane.inplace(Round.increase)
+            plane = plane.round()
 
             canvas = PIL.Image.new("RGB", self.area.world.size.value)
             im = image.resize(plane.size.value)
