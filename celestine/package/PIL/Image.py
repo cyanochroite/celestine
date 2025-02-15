@@ -13,7 +13,9 @@ from celestine.typed import (
     TZ4,
     K,
     N,
+    L,
     P,
+    TZ3,
     R,
     S,
     Y,
@@ -59,6 +61,11 @@ class Image:
     def convert(self, mode: S, matrix: N, dither: "Dither") -> K:
         """"""
         raise NotImplementedError(self, mode, matrix, dither)
+
+    @wrapper(__name__)
+    def getdata(self, im: K, box: TZ4) -> L[Z] | L[TZ3]:
+        """"""
+        raise NotImplementedError(self, im, box)
 
     @property
     @wrapper(__name__)

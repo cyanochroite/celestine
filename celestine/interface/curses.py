@@ -25,7 +25,6 @@ from celestine.typed import (
     P,
     R,
     S,
-    Z,
     GS,
     GZ,
     ignore,
@@ -96,93 +95,30 @@ class Element(Element_, Abstract):
             current.scale_to_max(target)
         current.center(target)
 
-        width, height = self.area.world.size.value
-        length = width * height
-
         image = image.resize(current.size.value)
 
         image = brightness(image)
 
-        #
-
-        self.area.world.size
-        origin = self.area.world.origin
-        one = int(origin.one)
-        two = int(origin.two)
-
         world = self.area.world
 
-        def luma() -> GS:
-            plane = current.round()
+        #
 
-            hippo = PIL.Image.new("1", target.size.value)
-            im = image.resize(plane.size.value)
-            box = plane.value
-
-            hippo.paste(im, box)
-
-            cache = hippo.convert("1")
-            pixels = list(cache.getdata())
-            width, height = cache.size
-
-            def shift(offset_x: Z, offset_y: Z) -> N:
-                nonlocal braille
-                nonlocal range_x
-                nonlocal range_y
-
-                index_x = range_x + offset_x
-                index_y = range_y + offset_y
-
-                index = index_y * width + index_x
-                try:
-                    pixel = 1 if pixels[index] > 127 else 0
-                except IndexError:
-                    pixel = 0
-
-                braille <<= 1
-                braille |= pixel
-
-            for range_y in range(0, height, 4):
-                for range_x in range(0, width, 2):
-                    braille = 0
-
-                    shift(0, 0)
-                    shift(1, 0)
-                    shift(0, 1)
-                    shift(1, 1)
-                    shift(0, 2)
-                    shift(1, 2)
-                    shift(0, 3)
-                    shift(1, 3)
-
-                    text = BRAILLE_PATTERNS[braille]
-                    yield text
-
-        def hue() -> GZ:
-            plane = current / (2, 4)
+        def shat(plane: Plane, size: Point, mode: S) -> PIL.Image.Image:
             plane = plane.round()
-
-            canvas = PIL.Image.new("RGB", self.area.world.size.value)
+            hippo = PIL.Image.new(mode, size.value)
             im = image.resize(plane.size.value)
             box = plane.value
-            canvas.paste(im, box)
+            hippo.paste(im, box)
+            return hippo
 
-            colour = canvas.quantize(
-                colors=255,
-                method=None,
-                kmeans=0,
-                palette=palette_image,
-                dither=PIL.Image.Dither.FLOYDSTEINBERG,
-            )
+        cache = shat(current, target.size, "1")
 
-            colors = list(colour.getdata())
-            for color in colors:
-                pair = curses.color_pair(color)
-                yield pair
+        plane = current / (2, 4)
+        cat = shat(plane, self.area.world.size, "RGB")
 
         size = self.area.local.size.copy()
         size -= (1, 1)
-        button = zip(dot_x(world), dot_y(world), luma(), hue())
+        button = zip(dot_x(world), dot_y(world), luma(cache), hue(cat))
         for x_dot, y_dot, text, extra in button:
             if x_dot == size.one and y_dot == size.two:
                 continue  # TODO: figure out why last pixel causes ERROR
@@ -352,3 +288,40 @@ def dot_y(world: Plane) -> GZ:
         local = index // width
         result = local + offset
         yield result
+
+
+def hue(image: PIL.Image.Image) -> GZ:
+    """"""
+    pixels = image.quantize(
+        colors=255,
+        method=None,
+        kmeans=0,
+        palette=palette_image,
+        dither=PIL.Image.Dither.FLOYDSTEINBERG,
+    )
+    colors = pixels.getdata()
+    for color in colors:
+        result = curses.color_pair(color)
+        yield result
+
+
+def luma(image: PIL.Image.Image) -> GS:
+    """"""
+    pixels = image.getdata()
+    width, height = image.size
+    for range_y in range(0, height, 4):
+        for range_x in range(0, width, 2):
+            braille = 0
+            for offset_y in range(4):
+                for offset_x in range(2):
+                    index_x = range_x + offset_x
+                    index_y = range_y + offset_y
+                    index = index_y * width + index_x
+                    try:
+                        pixel = 1 if pixels[index] > 127 else 0
+                    except IndexError:
+                        pixel = 0
+                    braille <<= 1
+                    braille |= pixel
+            result = BRAILLE_PATTERNS[braille]
+            yield result
