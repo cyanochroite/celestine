@@ -26,10 +26,11 @@ from celestine.typed import (
     R,
     S,
     Z,
+    GS,
+    GZ,
     ignore,
     override,
 )
-from celestine.window.cardinal import Round
 from celestine.window.collection import (
     Area,
     Line,
@@ -48,27 +49,8 @@ pillow_palette = list(itertools.chain.from_iterable(pillow_table))
 palette_image.putpalette(pillow_palette)
 
 
-#############
-
-
 class Abstract(Abstract_):
     """"""
-
-    def add_string(self, x_dot: Z, y_dot: Z, text: S, *extra: Z) -> N:
-        """
-        Curses swaps x and y.
-
-        Also minus the window border to get local location.
-
-        Text length need be size-1 long.
-        """
-
-        size = self.area.local.size.copy()
-        size -= (1, 1)
-        if x_dot == size.one and y_dot == size.two:
-            # TODO: figure out why last pixel returns ERROR
-            return
-        self.canvas.addstr(y_dot, x_dot, text, *extra)
 
 
 class Element(Element_, Abstract):
@@ -91,11 +73,7 @@ class Element(Element_, Abstract):
 
         if not PIL:
             (x_dot, y_dot) = self.area.world.origin
-            self.add_string(
-                x_dot,
-                y_dot,
-                self.path.name,
-            )
+            self.canvas.addstr(y_dot, x_dot, self.path.name)
 
         self.update_image(self.path)
 
@@ -122,38 +100,19 @@ class Element(Element_, Abstract):
         length = width * height
 
         image = image.resize(current.size.value)
-        resize = image.convert("1")
 
-        def binary(number: Z) -> Z:
-            return 1 if number else 0
-
-        data = resize.getdata()
-        data = map(binary, data)
-        count = sum(data)
-        ratio = count / length
-        ratio1 = 1 / 3 - ratio
-        ratio2 = max(0, ratio1)
-        factor = 1 + ratio2 * 6
-        image = PIL.ImageEnhance.Brightness(image)
-        image = image.enhance(factor)
+        image = brightness(image)
 
         #
 
+        self.area.world.size
         origin = self.area.world.origin
+        one = int(origin.one)
+        two = int(origin.two)
 
-        def dot_x():
-            for index in range(length):
-                local = index % width
-                world = local + origin.one
-                yield world
+        world = self.area.world
 
-        def dot_y():
-            for index in range(length):
-                local = index // width
-                world = local + origin.two
-                yield world
-
-        def luma():
+        def luma() -> GS:
             plane = current.round()
 
             hippo = PIL.Image.new("1", target.size.value)
@@ -199,7 +158,7 @@ class Element(Element_, Abstract):
                     text = BRAILLE_PATTERNS[braille]
                     yield text
 
-        def hue():
+        def hue() -> GZ:
             plane = current / (2, 4)
             plane = plane.round()
 
@@ -217,14 +176,17 @@ class Element(Element_, Abstract):
             )
 
             colors = list(colour.getdata())
-            for index in range(length):
-                color = colors[index]
+            for color in colors:
                 pair = curses.color_pair(color)
                 yield pair
 
-        button = zip(dot_x(), dot_y(), luma(), hue())
+        size = self.area.local.size.copy()
+        size -= (1, 1)
+        button = zip(dot_x(world), dot_y(world), luma(), hue())
         for x_dot, y_dot, text, extra in button:
-            self.add_string(x_dot, y_dot, text, extra)
+            if x_dot == size.one and y_dot == size.two:
+                continue  # TODO: figure out why last pixel causes ERROR
+            self.canvas.addstr(y_dot, x_dot, text, extra)
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
@@ -345,3 +307,48 @@ class Window(Window_):
             red, green, blue = curses_table[index]
             curses.init_color(index, red, green, blue)
             curses.init_pair(index, index, 0)
+
+
+def brightness(image: PIL.Image.Image) -> PIL.Image.Image:
+    """
+    Makes dark images brighter.
+
+    If less then 1/3 of pixels are bright, brighten the image up to x3.
+    Otherwise, brighten the image by x1, which does nothing.
+
+    factor: 1 + max(0, 1 / 3 - 0) * 6 = 3
+    factor: 1 + max(0, 1 / 3 - 1 / 3) * 6 = 1
+    factor: 1 + max(0, 1 / 3 - 1) * 6 = 1
+    """
+    convert = image.convert("1")
+    data = convert.getdata()
+    binary = (pixel // 255 for pixel in data)
+    count = sum(binary)
+    length = image.width * image.height
+    ratio = count / length
+    factor = 1 + max(0, 1 / 3 - ratio) * 6
+    enhance = PIL.ImageEnhance.Brightness(image)
+    result = enhance.enhance(factor)
+    return result
+
+
+def dot_x(world: Plane) -> GZ:
+    """"""
+    width, height = world.size.value
+    length = width * height
+    offset = int(world.origin.one)
+    for index in range(length):
+        local = index % width
+        result = local + offset
+        yield result
+
+
+def dot_y(world: Plane) -> GZ:
+    """"""
+    width, height = world.size.value
+    length = width * height
+    offset = int(world.origin.two)
+    for index in range(length):
+        local = index // width
+        result = local + offset
+        yield result
