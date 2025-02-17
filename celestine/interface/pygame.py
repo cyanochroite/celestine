@@ -28,10 +28,8 @@ from celestine.typed import (
 )
 from celestine.window.collection import (
     Area,
-    Plane,
     Point,
 )
-from celestine.window.container import Image
 
 
 class Mouse(enum.IntEnum):
@@ -114,20 +112,12 @@ class Element(Element_, Abstract):
 
         # TODO got to figure out Area coordinates
         # or cache this somehow
-        target = self.area.local
-        target = Plane.create(*self.area.world.size.value)
-        curent = Plane.create(width, height)
+        image_size = self.image_size((width, height))
 
-        if self.fit == Image.FILL:
-            curent.scale_to_min(target)
-        elif self.fit == Image.FULL:
-            curent.scale_to_max(target)
-        curent.center(target)
-
-        size = curent.size.value
+        size = image_size.size.value
         source = pygame.transform.smoothscale(surface, size)
 
-        dest = curent.origin.value
+        dest = image_size.origin.value
         self.image.blit(source, dest)
 
     def update_text(self, text: S) -> N:

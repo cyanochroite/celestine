@@ -18,6 +18,8 @@ from celestine.package import (
     curses,
 )
 from celestine.typed import (
+    GS,
+    GZ,
     LS,
     B,
     K,
@@ -25,8 +27,6 @@ from celestine.typed import (
     P,
     R,
     S,
-    GS,
-    GZ,
     ignore,
     override,
 )
@@ -36,16 +36,16 @@ from celestine.window.collection import (
     Plane,
     Point,
 )
-from celestine.window.container import Image
 
 # Color pair 0 is hard-wired to white on black, and cannot be changed.
 # 0:black, 1:red, 2:green, 3:yellow,
 # 4:blue, 5:magenta, 6:cyan, and 7:white
 
 
-palette_image = PIL.Image.new("P", (16, 16))
-pillow_palette = list(itertools.chain.from_iterable(pillow_table))
-palette_image.putpalette(pillow_palette)
+if bool(PIL):
+    palette_image = PIL.Image.new("P", (16, 16))
+    pillow_palette = list(itertools.chain.from_iterable(pillow_table))
+    palette_image.putpalette(pillow_palette)
 
 
 class Abstract(Abstract_):
@@ -70,10 +70,6 @@ class Element(Element_, Abstract):
             canvas.addstr(y, x, self.text)
             return True
 
-        if not PIL:
-            (x_dot, y_dot) = self.area.world.origin
-            self.canvas.addstr(y_dot, x_dot, self.path.name)
-
         self.update_image(self.path)
 
         return True
@@ -81,44 +77,47 @@ class Element(Element_, Abstract):
     def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
+        if not bool(PIL):
+            (x_dot, y_dot) = self.area.world.origin
+            self.canvas.addstr(y_dot, x_dot, self.path.name)
+            return
+
         image = PIL.Image.open(self.path)
         image = image.convert(mode="RGB")
 
         #
-        current = Plane.create(*image.size)
-        target = Plane.create(*self.area.world.size)
-        target *= (2, 4)
 
-        if self.fit == Image.FILL:
-            current.scale_to_min(target)
-        elif self.fit == Image.FULL:
-            current.scale_to_max(target)
-        current.center(target)
+        image_size = self.image_size(image.size, (2, 4))
 
-        image = image.resize(current.size.value)
+        image = image.resize(image_size.size.value)
 
         image = brightness(image)
 
-        world = self.area.world
+        def work(plane: Plane, size: Point, mode: S) -> PIL.Image.Image:
+            """"""
+            plane = plane.round()
+            result = PIL.Image.new(mode, size.value)
+            im = image.resize(plane.size.value)
+            box = plane.value
+            result.paste(im, box)
+            return result
 
         #
 
-        def shat(plane: Plane, size: Point, mode: S) -> PIL.Image.Image:
-            plane = plane.round()
-            hippo = PIL.Image.new(mode, size.value)
-            im = image.resize(plane.size.value)
-            box = plane.value
-            hippo.paste(im, box)
-            return hippo
+        target = Plane.create(*self.area.world.size)
+        target *= (2, 4)
+        cache = work(image_size, target.size, "1")
 
-        cache = shat(current, target.size, "1")
+        plane = image_size / (2, 4)
+        cat = work(plane, self.area.world.size, "RGB")
+        self.render(cache, cat)
 
-        plane = current / (2, 4)
-        cat = shat(plane, self.area.world.size, "RGB")
-
+    def render(self, one: PIL.Image.Image, two: PIL.Image.Image) -> N:
+        """"""
         size = self.area.local.size.copy()
         size -= (1, 1)
-        button = zip(dot_x(world), dot_y(world), luma(cache), hue(cat))
+        world = self.area.world
+        button = zip(dot_x(world), dot_y(world), luma(one), hue(two))
         for x_dot, y_dot, text, extra in button:
             if x_dot == size.one and y_dot == size.two:
                 continue  # TODO: figure out why last pixel causes ERROR

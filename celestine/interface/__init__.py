@@ -9,6 +9,7 @@ from celestine.typed import (
     BF,
     IT,
     LS,
+    TZ2,
     A,
     B,
     D,
@@ -143,6 +144,20 @@ class Abstract(Tree):
     def spot(self, area: Area) -> N:
         """"""
         self.area = area
+
+    def image_size(self, size: TZ2, scale: TZ2 = (1, 1)) -> Plane:
+        """"""
+        result = Plane.create(*size)
+        target = Plane.create(*self.area.world.size)
+        target *= scale
+
+        if self.fit == Image.FILL:
+            result.scale_to_min(target)
+        elif self.fit == Image.FULL:
+            result.scale_to_max(target)
+
+        result.center(target)
+        return result
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, **star)

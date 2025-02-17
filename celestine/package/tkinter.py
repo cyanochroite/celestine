@@ -4,7 +4,9 @@ from celestine.data import wrapper
 from celestine.package import Abstract
 from celestine.typed import (
     A,
+    K,
     N,
+    R,
     S,
     Z,
 )
@@ -12,7 +14,6 @@ from celestine.typed import (
 Button: A
 Frame: A
 Label: A
-PhotoImage: A
 
 
 class Package(Abstract):
@@ -53,3 +54,34 @@ class Tk:
     def title(self, string: S) -> N:
         """"""
         raise NotImplementedError(self, string)
+
+
+@wrapper(__name__)
+class PhotoImage:
+    """"""
+
+    # TODO check names.
+
+    @wrapper(__name__)
+    def height(self) -> K:
+        """"""
+        raise NotImplementedError(self)
+
+    @wrapper(__name__)
+    def subsample(self, x: Z, y: Z) -> K:
+        """"""
+        raise NotImplementedError(self, x, y)
+
+    @wrapper(__name__)
+    def width(self) -> Z:
+        """"""
+        raise NotImplementedError(self)
+
+    @wrapper(__name__)
+    def zoom(self, x: Z, y: Z) -> K:
+        """"""
+        raise NotImplementedError(self, x, y)
+
+    def __init__(self, **star: R) -> N:
+        """"""
+        raise NotImplementedError(self, star)
