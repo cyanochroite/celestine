@@ -44,8 +44,12 @@ Project Update
 
 In this release, curses is back online.
 Tkinter, Curses, and Pygame should all have a functioning image viewer.
-It is currently recommended to install the Pillow package for the best results.
+For the best results, use Pygame.
+[MacOS is having trouble with tkinter and Windows wont run curses natively.]
 
+On Windows, it is recommended to install the Pillow package for the best results.
+
+On MacOS, it is recommended to NOT install the Pillow package because of an unknown issue with the wrapper class. 
 Blender support is something I still care about, but it is going to take a lot of work to fix it.
 The only real issue is that I need to wait until Blender has Python 3.12 before I can work on it again.
 

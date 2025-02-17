@@ -70,7 +70,8 @@ class Element(Element_, Abstract):
             canvas.addstr(y, x, self.text)
             return True
 
-        self.update_image(self.path)
+        if self.path:
+            self.update_image(self.path)
 
         return True
 

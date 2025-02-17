@@ -34,7 +34,6 @@ def main(view: View) -> N:
                 grid.element(
                     key,
                     action="see",
-                    path=r"D:\done\unknown.png",
                     fit=Image.FULL,
                     goto="picture",
                 )
