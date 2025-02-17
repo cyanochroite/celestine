@@ -27,9 +27,7 @@ from celestine.typed import (
 from celestine.window.collection import (
     Area,
     Dyad,
-    Plane,
 )
-from celestine.window.container import Image
 
 
 class Abstract(Abstract_):
@@ -95,27 +93,23 @@ class Element(Element_, Abstract):
     def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
-        if bool(PIL) and False:
+        if bool(PIL):
             image = PIL.Image.open(self.path)
-            photo = PIL.ImageTk.PhotoImage(image=image)
-            self.item.configure(image=photo)
-            self.item.image = photo
-        else:
-            photo = tkinter.PhotoImage(file=self.path)
+            image = image.convert(mode="RGB")
+            image_size = self.image_size(image.size)
+            image = image.resize(image_size.size.value)
+            pil_photo = PIL.ImageTk.PhotoImage(image=image)
+            self.item.configure(image=pil_photo)
+            self.item.image = pil_photo
+            return
+
+        photo = tkinter.PhotoImage(file=self.path)
 
         old_width = photo.width()
         old_height = photo.height()
 
-        curent = Plane.create(old_width, old_height)
-        target = Plane.create(*self.area.world.size)
-
-        if self.fit == Image.FILL:
-            curent.scale_to_min(target)
-        elif self.fit == Image.FULL:
-            curent.scale_to_max(target)
-        curent.center(target)
-
-        new_width, new_height = curent.size
+        image_size = self.image_size((old_width, old_height))
+        new_width, new_height = image_size.size
 
         old_size = Dyad(old_width, old_height)
         new_size = Dyad(new_width, new_height)

@@ -38,7 +38,7 @@ classifiers = [
     "Natural Language :: Swedish",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
+#    "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
     "Topic :: Software Development :: User Interfaces",
     "Typing :: Typed",
@@ -66,7 +66,7 @@ keywords = [
 ]
 readme = "README.rst"
 requires-python = ">=3.12"
-version = "2024.6.9"
+version = "2025.2.17"
 
 
 [project.optional-dependencies]
@@ -107,6 +107,7 @@ gui = [
 Documentation = "https://celestine.readthedocs.io/"
 Source = "https://github.com/cyanochroite/celestine"
 Tracker = "https://github.com/cyanochroite/celestine/issues"
+Discord = "https://discord.gg/aNmDWPXd7B"
 
 
 [tool.autoflake]

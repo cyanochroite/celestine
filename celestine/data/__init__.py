@@ -16,6 +16,7 @@ from celestine.typed import (
     Protocol,
     R,
     S,
+    ignore,
 )
 
 
@@ -112,7 +113,10 @@ def wrapper(name: S) -> C[[Wrapper], A]:
                 result = function_attribute()
             return result
 
-        _wrap = load.attribute(module(), attribute())
+        try:
+            _wrap = load.attribute(module(), attribute())
+        except ModuleNotFoundError:
+            _wrap = ignore
 
         def decorator(*data: A, **star: R) -> A:
             try:

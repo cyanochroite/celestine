@@ -199,6 +199,10 @@ class Cardinal(Struct):
         result = self.inplace(Round.negative)
         return result
 
+    def __getitem__(self, key: S) -> A:
+        result = list(self.data)[int(key)]
+        return result
+
     def __ge__(self, other: Number) -> B:
         one = float(self)
         two = float(other)

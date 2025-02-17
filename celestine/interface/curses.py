@@ -18,6 +18,8 @@ from celestine.package import (
     curses,
 )
 from celestine.typed import (
+    GS,
+    GZ,
     LS,
     B,
     K,
@@ -25,50 +27,29 @@ from celestine.typed import (
     P,
     R,
     S,
-    Z,
     ignore,
     override,
 )
-from celestine.window.cardinal import Round
 from celestine.window.collection import (
     Area,
     Line,
     Plane,
     Point,
 )
-from celestine.window.container import Image
 
 # Color pair 0 is hard-wired to white on black, and cannot be changed.
 # 0:black, 1:red, 2:green, 3:yellow,
 # 4:blue, 5:magenta, 6:cyan, and 7:white
 
 
-palette_image = PIL.Image.new("P", (16, 16))
-pillow_palette = list(itertools.chain.from_iterable(pillow_table))
-palette_image.putpalette(pillow_palette)
-
-
-#############
+if bool(PIL):
+    palette_image = PIL.Image.new("P", (16, 16))
+    pillow_palette = list(itertools.chain.from_iterable(pillow_table))
+    palette_image.putpalette(pillow_palette)
 
 
 class Abstract(Abstract_):
     """"""
-
-    def add_string(self, x_dot: Z, y_dot: Z, text: S, *extra: Z) -> N:
-        """
-        Curses swaps x and y.
-
-        Also minus the window border to get local location.
-
-        Text length need be size-1 long.
-        """
-
-        size = self.area.local.size.copy()
-        size -= (1, 1)
-        if x_dot == size.one and y_dot == size.two:
-            # TODO: figure out why last pixel returns ERROR
-            return
-        self.canvas.addstr(y_dot, x_dot, text, *extra)
 
 
 class Element(Element_, Abstract):
@@ -89,14 +70,6 @@ class Element(Element_, Abstract):
             canvas.addstr(y, x, self.text)
             return True
 
-        if not PIL:
-            (x_dot, y_dot) = self.area.world.origin
-            self.add_string(
-                x_dot,
-                y_dot,
-                self.path.name,
-            )
-
         self.update_image(self.path)
 
         return True
@@ -104,127 +77,51 @@ class Element(Element_, Abstract):
     def update_image(self, path: P, **star: R) -> N:
         """"""
         self.path = path
+        if not bool(PIL):
+            (x_dot, y_dot) = self.area.world.origin
+            self.canvas.addstr(y_dot, x_dot, self.path.name)
+            return
+
         image = PIL.Image.open(self.path)
         image = image.convert(mode="RGB")
 
         #
-        current = Plane.create(*image.size)
-        target = Plane.create(*self.area.world.size)
-        target *= (2, 4)
 
-        if self.fit == Image.FILL:
-            current.scale_to_min(target)
-        elif self.fit == Image.FULL:
-            current.scale_to_max(target)
-        current.center(target)
+        image_size = self.image_size(image.size, (2, 4))
 
-        width, height = self.area.world.size.value
-        length = width * height
+        image = image.resize(image_size.size.value)
 
-        image = image.resize(current.size.value)
-        resize = image.convert("1")
+        image = brightness(image)
 
-        def binary(number: Z) -> Z:
-            return 1 if number else 0
-
-        data = resize.getdata()
-        data = map(binary, data)
-        count = sum(data)
-        ratio = count / length
-        ratio1 = 1 / 3 - ratio
-        ratio2 = max(0, ratio1)
-        factor = 1 + ratio2 * 6
-        image = PIL.ImageEnhance.Brightness(image)
-        image = image.enhance(factor)
+        def work(plane: Plane, size: Point, mode: S) -> PIL.Image.Image:
+            """"""
+            plane = plane.round()
+            result = PIL.Image.new(mode, size.value)
+            im = image.resize(plane.size.value)
+            box = plane.value
+            result.paste(im, box)
+            return result
 
         #
 
-        origin = self.area.world.origin
+        target = Plane.create(*self.area.world.size)
+        target *= (2, 4)
+        cache = work(image_size, target.size, "1")
 
-        def dot_x():
-            for index in range(length):
-                local = index % width
-                world = local + origin.one
-                yield world
+        plane = image_size / (2, 4)
+        cat = work(plane, self.area.world.size, "RGB")
+        self.render(cache, cat)
 
-        def dot_y():
-            for index in range(length):
-                local = index // width
-                world = local + origin.two
-                yield world
-
-        def luma():
-            plane = current.round()
-
-            hippo = PIL.Image.new("1", target.size.value)
-            im = image.resize(plane.size.value)
-            box = plane.value
-
-            hippo.paste(im, box)
-
-            cache = hippo.convert("1")
-            pixels = list(cache.getdata())
-            width, height = cache.size
-
-            def shift(offset_x: Z, offset_y: Z) -> N:
-                nonlocal braille
-                nonlocal range_x
-                nonlocal range_y
-
-                index_x = range_x + offset_x
-                index_y = range_y + offset_y
-
-                index = index_y * width + index_x
-                try:
-                    pixel = 1 if pixels[index] > 127 else 0
-                except IndexError:
-                    pixel = 0
-
-                braille <<= 1
-                braille |= pixel
-
-            for range_y in range(0, height, 4):
-                for range_x in range(0, width, 2):
-                    braille = 0
-
-                    shift(0, 0)
-                    shift(1, 0)
-                    shift(0, 1)
-                    shift(1, 1)
-                    shift(0, 2)
-                    shift(1, 2)
-                    shift(0, 3)
-                    shift(1, 3)
-
-                    text = BRAILLE_PATTERNS[braille]
-                    yield text
-
-        def hue():
-            plane = current / (2, 4)
-            plane = plane.round()
-
-            canvas = PIL.Image.new("RGB", self.area.world.size.value)
-            im = image.resize(plane.size.value)
-            box = plane.value
-            canvas.paste(im, box)
-
-            colour = canvas.quantize(
-                colors=255,
-                method=None,
-                kmeans=0,
-                palette=palette_image,
-                dither=PIL.Image.Dither.FLOYDSTEINBERG,
-            )
-
-            colors = list(colour.getdata())
-            for index in range(length):
-                color = colors[index]
-                pair = curses.color_pair(color)
-                yield pair
-
-        button = zip(dot_x(), dot_y(), luma(), hue())
+    def render(self, one: PIL.Image.Image, two: PIL.Image.Image) -> N:
+        """"""
+        size = self.area.local.size.copy()
+        size -= (1, 1)
+        world = self.area.world
+        button = zip(dot_x(world), dot_y(world), luma(one), hue(two))
         for x_dot, y_dot, text, extra in button:
-            self.add_string(x_dot, y_dot, text, extra)
+            if x_dot == size.one and y_dot == size.two:
+                continue  # TODO: figure out why last pixel causes ERROR
+            self.canvas.addstr(y_dot, x_dot, text, extra)
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
@@ -345,3 +242,85 @@ class Window(Window_):
             red, green, blue = curses_table[index]
             curses.init_color(index, red, green, blue)
             curses.init_pair(index, index, 0)
+
+
+def brightness(image: PIL.Image.Image) -> PIL.Image.Image:
+    """
+    Makes dark images brighter.
+
+    If less then 1/3 of pixels are bright, brighten the image up to x3.
+    Otherwise, brighten the image by x1, which does nothing.
+
+    factor: 1 + max(0, 1 / 3 - 0) * 6 = 3
+    factor: 1 + max(0, 1 / 3 - 1 / 3) * 6 = 1
+    factor: 1 + max(0, 1 / 3 - 1) * 6 = 1
+    """
+    convert = image.convert("1")
+    data = convert.getdata()
+    binary = (pixel // 255 for pixel in data)
+    count = sum(binary)
+    length = image.width * image.height
+    ratio = count / length
+    factor = 1 + max(0, 1 / 3 - ratio) * 6
+    enhance = PIL.ImageEnhance.Brightness(image)
+    result = enhance.enhance(factor)
+    return result
+
+
+def dot_x(world: Plane) -> GZ:
+    """"""
+    width, height = world.size.value
+    length = width * height
+    offset = int(world.origin.one)
+    for index in range(length):
+        local = index % width
+        result = local + offset
+        yield result
+
+
+def dot_y(world: Plane) -> GZ:
+    """"""
+    width, height = world.size.value
+    length = width * height
+    offset = int(world.origin.two)
+    for index in range(length):
+        local = index // width
+        result = local + offset
+        yield result
+
+
+def hue(image: PIL.Image.Image) -> GZ:
+    """"""
+    pixels = image.quantize(
+        colors=255,
+        method=None,
+        kmeans=0,
+        palette=palette_image,
+        dither=PIL.Image.Dither.FLOYDSTEINBERG,
+    )
+    colors = pixels.getdata()
+    for color in colors:
+        result = curses.color_pair(color)
+        yield result
+
+
+def luma(image: PIL.Image.Image) -> GS:
+    """"""
+    pixels = image.getdata()
+    width, height = image.size
+    for range_y in range(0, height, 4):
+        for range_x in range(0, width, 2):
+            braille = 0
+            for offset_y in range(4):
+                for offset_x in range(2):
+                    index_x = range_x + offset_x
+                    index_y = range_y + offset_y
+                    index = index_y * width + index_x
+                    try:
+                        pixel = 1 if pixels[index] > 127 else 0
+                    except IndexError:
+                        pixel = 0
+                    braille <<= 1
+                    braille |= pixel
+            result = BRAILLE_PATTERNS[braille]
+            yield result

@@ -6,8 +6,8 @@ from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.package import (
+    PIL,
     dearpygui,
-    pillow,
 )
 from celestine.typed import (
     LF,
@@ -17,6 +17,7 @@ from celestine.typed import (
     P,
     R,
     S,
+    ignore,
     override,
 )
 from celestine.window.collection import Area
@@ -97,8 +98,8 @@ class Element(Element_, Abstract):
 
         photo: LF = []
 
-        if pillow and itertools:
-            image = pillow.open(self.path)
+        if PIL and itertools:
+            image = PIL.Image.open(self.path)
             image.resize(self.area.local.size)
             data = image.getdata()
             flat = itertools.flatten(data)
@@ -153,8 +154,10 @@ class Window(Window_):
     """"""
 
     @override
-    def extension(self) -> LS:
+    @classmethod
+    def extension(cls) -> LS:
         """"""
+        ignore(cls)
         return [
             ".jpg",
             ".jpeg",

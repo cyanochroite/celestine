@@ -42,32 +42,28 @@ Note that Blender is an isolated environment, so other packages can not be used 
 Project Update
 ^^^^^^^^^^^^^^
 
-It seems that every release is broken in some form or another.
-My plan of "just fix everything and then release it" has not been working out.
-My new realization is that, since this is still in Alpha, it is okay that it is not perfect.
-So I'm going to be releasing it "AS IS" for a while until Beta, where everything should be functioning as expected.
-(The idea being that pushing out a semi-working package is better then leaving up a totaly broken package.)
+In this release, curses is back online.
+Tkinter, Curses, and Pygame should all have a functioning image viewer.
+It is currently recommended to install the Pillow package for the best results.
 
-This package uses Python 3.12 now.
-Because Blender is still on Python 3.11, it is currently disabled.
-Also because "pillow" and "platformdirs" are required dependencies and I have not made the workarounds yet.
-(It was having issues drawing images properly anyways.)
+Blender support is something I still care about, but it is going to take a lot of work to fix it.
+The only real issue is that I need to wait until Blender has Python 3.12 before I can work on it again.
 
-In todays build, only pygame and tkinter are fully functional, using the "demo" and "viewer" applications.
-The DearPyGui Package seems to be nearly abandoned so I have not spent the time keeping it up to date.
-Curses has fallen behind in support, but I am trying to get it back up and running again.
+I might drop support for DearPyGui because that is what the package author seems to be doing.
+Though I could replace it with their new package, pilotlight.
 
 
 Commands
 ********
 
-Comand line arguments to use when launching the application.
+Command line arguments to use when launching the application.
 
 
 Applications
 ^^^^^^^^^^^^
 
 Built in application to try out.
+[The Translator application is probably broken.]
 
 +-------------+-------------------------+------------------------------------------------------------------+
 | Application | Command                 | Information                                                      |
@@ -87,6 +83,9 @@ Caution: By default the viewer application will try to load every image it finds
 Graphical User Interfaces
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
+[Blender is not working because the current version of Blender still runs on Python 3.11.]
+[DearPyGui is not working because I have not kept up its maintenance either.]
+
 +--------------+------------------------------+--------------+
 | Interface    | Source                       | Command      |
 +==============+==============================+==============+
@@ -104,6 +103,8 @@ Graphical User Interfaces
 
 Natural Languages
 ^^^^^^^^^^^^^^^^^
+
+[These translations might only be partially working because I have not updated them in a while.]
 
 +------------+------------------+---------+
 | Language   | Translation [4]_ | Command |
@@ -161,6 +162,8 @@ Natural Languages
 Optional Dependencies
 *********************
 
+[Right now the Pillow package is almost required since I have not tested the non Pillow paths very much.]
+
 +------------------------+---------------------------------------------------+
 | Package                | Description                                       |
 +========================+===================================================+
@@ -183,34 +186,18 @@ Project Links
 * `PyPI <https://pypi.org/project/celestine/>`_
 * `Source <https://github.com/cyanochroite/celestine>`_
 * `Tracker <https://github.com/cyanochroite/celestine/issues>`_
+* `Discord <https://discord.gg/aNmDWPXd7B>`_
 
 
 Disclosures
 ***********
 
 * This project is Free and Open Source software.
-* This project does not solicit or accept any financial contributions.
-* This project does not use, support, or endorse any form of cryptocurreny.
+* This project used Microsoft Copilot to aid in its development.
+* This project used Microsoft Azure Translator for its language translations.
+* We do not solicit or accept any financial contributions.
+* We do not use, support, or endorse any form of cryptocurrency.
 * Any claims of fundraising activities (for this project) are fraudulent.
-
-
-Artificial Intelligence
-^^^^^^^^^^^^^^^^^^^^^^^
-
-I use Artificial Intelligence to help me develop this project.
-I do not plan to include any form of Artificial Intelligence in the final product.
-Right now some of my optional development tools are embebded into the project,
-so I will need to someday seperate them into their own projects.
-
-I use the Microsoft Azure Translator to translate all English text into different languages.
-I have no way of verifying that the output is correct.
-
-I use Microsoft Copilot to help me write documentation, come up with up with variable names,
-look up python libraries, and to generate example code that I can expand upon.
-It might give some good ideas, but most of its suggestions are fairly useless.
-
-In the future I plan to use OpenAI to help me generate the documentation and write the unit tests.
-I don't expect it to be all that usefull here either.
 
 
 Licences

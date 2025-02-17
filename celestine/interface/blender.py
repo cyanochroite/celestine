@@ -325,8 +325,10 @@ class Window(Window_):
         super().build(first=first, **star)
 
     @override
-    def extension(self) -> LS:
+    @classmethod
+    def extension(cls) -> LS:
         """"""
+        ignore(cls)
         return [
             ".bmp",
             ".sgi",
