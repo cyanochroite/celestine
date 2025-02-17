@@ -102,15 +102,15 @@ def licence(**star: R) -> B:
     location = load.pathway("licence")
     files = load.walk_file(location, [], [])
     for file in files:
-        string = io.StringIO()
+        string_builder = io.StringIO()
         with stream.text.reader(file) as lines:
             for line in lines:
                 character = normalize.characters(line)
                 wrap = normalize.wrap_text(character)
                 for text in wrap:
-                    string.write(text)
+                    string_builder.write(text)
         with stream.text.writer(file) as document:
-            for line in string.getvalue():
+            for line in string_builder.getvalue():
                 document.write(line)
     return True
 

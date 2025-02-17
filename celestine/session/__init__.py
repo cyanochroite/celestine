@@ -90,7 +90,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> A:
     bank.interface = load.module(INTERFACE, default.interface())
     hold = default.application()
     bank.application = load.module(APPLICATION, default.application())
-    bank.application.name = hold
+    setattr(bank.application, "name", hold)
 
     magic = Magic(argument_list, exit_on_error)
 
