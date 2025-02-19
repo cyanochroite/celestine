@@ -72,6 +72,8 @@ class Abstract:
         return result
 
     def __getattr__(self, name: S) -> S:
+        result = getattr(self.package, name)
+        return result
         if name in self.exempt:
             result = getattr(self.package, name)
         else:

@@ -1,6 +1,5 @@
 """"""
 
-from celestine.data import wrapper
 from celestine.package.pygame.abstract import Surface
 from celestine.typed import (
     TZ2,
@@ -11,13 +10,11 @@ from celestine.typed import (
 )
 
 
-@wrapper(__name__)
 def frombuffer(buffer: Y, size: TZ2, format_: S, **star: R) -> Surface:
     """"""
     raise NotImplementedError(buffer, size, format_)
 
 
-@wrapper(__name__)
 def load(filename: P, **star: R) -> Surface:
     """"""
     raise NotImplementedError(filename)

@@ -1,9 +1,6 @@
 """"""
 
-from celestine.data import (
-    wrap,
-    wrapper,
-)
+from celestine.data import wrap
 from celestine.typed import (
     N,
     R,
@@ -11,7 +8,6 @@ from celestine.typed import (
 )
 
 
-@wrapper(__name__)
 class ImagePalette:
     """"""
 

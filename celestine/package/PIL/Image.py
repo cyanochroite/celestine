@@ -1,10 +1,7 @@
 """"""
 
 from celestine import bank
-from celestine.data import (
-    wrap,
-    wrapper,
-)
+from celestine.data import wrap
 from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.typed import (
     LS,
@@ -51,39 +48,32 @@ class Resampling:
     NEAREST = 6
 
 
-@wrapper(__name__)
 class Image:
     """"""
 
     mode: S
 
-    @wrapper(__name__)
     def convert(self, mode: S, matrix: N, dither: "Dither") -> K:
         """"""
         raise NotImplementedError(self, mode, matrix, dither)
 
-    @wrapper(__name__)
     def getdata(self, im: K, box: TZ4) -> L[Z] | L[TZ3]:
         """"""
         raise NotImplementedError(self, im, box)
 
     @property
-    @wrapper(__name__)
     def height(self) -> Z:
         """"""
         raise NotImplementedError(self)
 
-    @wrapper(__name__)
     def paste(self, im: K, box: TZ4) -> K:
         """"""
         raise NotImplementedError(self, im, box)
 
-    @wrapper(__name__)
     def putpalette(self, data: LZ, rawmode: S) -> N:
         """"""
         raise NotImplementedError(self, data, rawmode)
 
-    @wrapper(__name__)
     def quantize(self, *, palette, **star: R) -> Y:
         """"""
         ignore(self)
@@ -91,30 +81,25 @@ class Image:
         result = wrap(colors=255, palette=palette, **star)
         return result
 
-    @wrapper(__name__)
     def resize(self, size: TZ2, resample: Resampling) -> K:
         """"""
         raise NotImplementedError(self, size, resample)
 
     @property
-    @wrapper(__name__)
     def size(self) -> TZ2:
         """"""
         raise NotImplementedError(self)
 
-    @wrapper(__name__)
     def tobytes(self) -> Y:
         """"""
         raise NotImplementedError(self)
 
     @property
-    @wrapper(__name__)
     def width(self) -> Z:
         """"""
         raise NotImplementedError(self)
 
 
-@wrapper(__name__)
 def new(mode: S, size: TZ2, **star: R) -> Image:
     """"""
     color = 0
@@ -122,7 +107,6 @@ def new(mode: S, size: TZ2, **star: R) -> Image:
     return result
 
 
-@wrapper(__name__)
 # pylint: disable-next=redefined-builtin
 def open(path: P, **star: R) -> Image:
     """"""
@@ -133,7 +117,6 @@ def open(path: P, **star: R) -> Image:
     return result
 
 
-@wrapper(__name__)
 def registered_extensions() -> LS:
     """"""
     raise NotImplementedError()

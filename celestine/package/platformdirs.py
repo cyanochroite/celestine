@@ -1,9 +1,6 @@
 """A package for determining appropriate platform-specific dirs."""
 
-from celestine.data import (
-    wrap,
-    wrapper,
-)
+from celestine.data import wrap
 from celestine.package import Abstract
 from celestine.typed import (
     R,
@@ -15,7 +12,6 @@ class Package(Abstract):
     """"""
 
 
-@wrapper(__name__)
 def user_data_dir(**star: R) -> S:
     """"""
     result = wrap(
