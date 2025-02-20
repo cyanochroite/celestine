@@ -6,6 +6,7 @@ import math
 from celestine import bank
 from celestine.data.notational_systems import BRAILLE_PATTERNS
 from celestine.data.palette import (
+    COLOR_PAIRS,
     curses_table,
     pillow_table,
 )
@@ -244,10 +245,10 @@ class Window(Window_):
 
         self.canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
 
-        for index in range(255):
+        for index in range(COLOR_PAIRS):
             red, green, blue = curses_table[index]
             curses.init_color(index + 16, red, green, blue)
-            curses.init_pair(index + 1, index + 16, 16)
+            curses.init_pair(index + 16, index + 16, 16)
 
 
 def brightness(image: PIL.Image.Image) -> PIL.Image.Image:
@@ -298,12 +299,12 @@ def dot_y(world: Plane) -> GZ:
 def hue(image: PIL.Image.Image) -> GZ:
     """"""
     pixels = image.quantize(
-        colors=255,
+        colors=COLOR_PAIRS,
         palette=palette_image,
     )
     colors = pixels.getdata()
     for color in colors:
-        result = curses.color_pair(color + 1)
+        result = curses.color_pair(color + 16)
         yield result
 
 
