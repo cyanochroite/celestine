@@ -13,6 +13,7 @@ from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import (
     PIL,
     curses,
@@ -83,7 +84,11 @@ class Element(Element_, Abstract):
             self.canvas.addstr(y_dot, x_dot, self.path.name)
             return
 
-        image = PIL.Image.open(self.path)
+        image = PIL.Image.open(
+            fp=path,
+            mode=LATIN_SMALL_LETTER_R,
+            formats=bank.window.formats(),
+        )
         image = image.convert(mode="RGB")
 
         #
@@ -241,8 +246,8 @@ class Window(Window_):
 
         for index in range(255):
             red, green, blue = curses_table[index]
-            curses.init_color(index, red, green, blue)
-            curses.init_pair(index, index, 0)
+            curses.init_color(index + 16, red, green, blue)
+            curses.init_pair(index + 1, index + 16, 16)
 
 
 def brightness(image: PIL.Image.Image) -> PIL.Image.Image:
@@ -294,14 +299,11 @@ def hue(image: PIL.Image.Image) -> GZ:
     """"""
     pixels = image.quantize(
         colors=255,
-        method=None,
-        kmeans=0,
         palette=palette_image,
-        dither=PIL.Image.Dither.FLOYDSTEINBERG,
     )
     colors = pixels.getdata()
     for color in colors:
-        result = curses.color_pair(color)
+        result = curses.color_pair(color + 1)
         yield result
 
 

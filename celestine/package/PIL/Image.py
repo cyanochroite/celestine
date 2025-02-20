@@ -1,8 +1,5 @@
 """"""
 
-from celestine import bank
-from celestine.data import wrap
-from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.typed import (
     LS,
     LZ,
@@ -17,7 +14,6 @@ from celestine.typed import (
     S,
     Y,
     Z,
-    ignore,
 )
 
 
@@ -74,12 +70,9 @@ class Image:
         """"""
         raise NotImplementedError(self, data, rawmode)
 
-    def quantize(self, *, palette, **star: R) -> Y:
+    def quantize(self, *, colors: Z, palette: K, **star: R) -> Y:
         """"""
-        ignore(self)
-        # TODO local class not being called
-        result = wrap(colors=255, palette=palette, **star)
-        return result
+        raise NotImplementedError(self, colors, palette, star)
 
     def resize(self, size: TZ2, resample: Resampling) -> K:
         """"""
@@ -102,19 +95,13 @@ class Image:
 
 def new(mode: S, size: TZ2, **star: R) -> Image:
     """"""
-    color = 0
-    result = wrap(mode, size, color, **star)
-    return result
+    raise NotImplementedError(mode, size, **star)
 
 
 # pylint: disable-next=redefined-builtin
-def open(path: P, **star: R) -> Image:
+def open(*, fp: P, mode: S, formats: LS, **star: R) -> Image:
     """"""
-    fp = path
-    mode = LATIN_SMALL_LETTER_R
-    formats = bank.window.formats()
-    result = wrap(fp, mode, formats, **star)
-    return result
+    raise NotImplementedError(fp, mode, formats, **star)
 
 
 def registered_extensions() -> LS:

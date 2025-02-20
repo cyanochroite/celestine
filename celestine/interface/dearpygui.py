@@ -5,6 +5,7 @@ from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import (
     PIL,
     dearpygui,
@@ -99,7 +100,11 @@ class Element(Element_, Abstract):
         photo: LF = []
 
         if PIL and itertools:
-            image = PIL.Image.open(self.path)
+            image = PIL.Image.open(
+                fp=path,
+                mode=LATIN_SMALL_LETTER_R,
+                formats=bank.window.formats(),
+            )
             image.resize(self.area.local.size)
             data = image.getdata()
             flat = itertools.flatten(data)

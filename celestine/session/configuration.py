@@ -60,7 +60,13 @@ class Configuration:
     def __init__(self) -> N:
         """"""
         if bool(platformdirs):
-            user_data_dir = platformdirs.user_data_dir()
+            user_data_dir = platformdirs.user_data_dir(
+                appname="celestine",
+                appauthor=False,
+                version=None,
+                roaming=False,
+                ensure_exists=True,
+            )
             self.path = pathlib.Path(user_data_dir)
         else:
             self.path = load.pathway_root()

@@ -1,6 +1,5 @@
 """Terminal handling for character-cell displays."""
 
-from celestine.data import wrap
 from celestine.package import Abstract
 from celestine.typed import (
     A,
@@ -22,20 +21,17 @@ start_color: A
 
 def color_pair(pair_number: Z, **star: R) -> Z:
     """"""
-    result = wrap(pair_number + 1, **star)
-    return result
+    raise NotImplementedError(pair_number, **star)
 
 
 def init_color(color_number: Z, r: Z, g: Z, b: Z, **star: R) -> N:
     """"""
-    result = wrap(color_number + 16, r, g, b, **star)
-    return result
+    raise NotImplementedError(color_number, r, g, b, star)
 
 
 def init_pair(pair_number: Z, fg: Z, bg: Z, **star: R) -> N:
     """"""
-    result = wrap(pair_number + 1, fg + 16, bg + 16, **star)
-    return result
+    raise NotImplementedError(pair_number, fg, bg, star)
 
 
 class Window:

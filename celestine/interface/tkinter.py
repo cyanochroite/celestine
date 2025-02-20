@@ -7,6 +7,7 @@ from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import (
     PIL,
     tkinter,
@@ -94,7 +95,11 @@ class Element(Element_, Abstract):
         """"""
         self.path = path
         if bool(PIL):
-            image = PIL.Image.open(self.path)
+            image = PIL.Image.open(
+                fp=path,
+                mode=LATIN_SMALL_LETTER_R,
+                formats=bank.window.formats(),
+            )
             image = image.convert(mode="RGB")
             image_size = self.image_size(image.size)
             image = image.resize(image_size.size.value)

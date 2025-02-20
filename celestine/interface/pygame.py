@@ -10,6 +10,7 @@ from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import (
     PIL,
     pygame,
@@ -99,7 +100,11 @@ class Element(Element_, Abstract):
         self.image.fill((0, 0, 0))
 
         if bool(PIL):
-            image = PIL.Image.open(self.path)
+            image = PIL.Image.open(
+                fp=path,
+                mode=LATIN_SMALL_LETTER_R,
+                formats=bank.window.formats(),
+            )
             buffer = image.tobytes()
             size = image.size
             format_ = image.mode
