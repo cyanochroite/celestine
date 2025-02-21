@@ -17,6 +17,7 @@ from celestine.literal import (
     SPACE,
 )
 from celestine.typed import (
+    A,
     B,
     M,
 )
@@ -83,7 +84,13 @@ def _help_formatter(language: M) -> TYPE[argparse.HelpFormatter]:
         implementation detail.
         """
 
-        def add_usage(self, usage, actions, groups, prefix=None):
+        def add_usage(
+            self,
+            usage: A,
+            actions: A,
+            groups: A,
+            prefix: A = None,
+        ):
             string = io.StringIO()
             string.write(language.SESSION_PARSER_USAGE)
             string.write(COLON)
@@ -101,7 +108,7 @@ def _parser(language: M) -> TYPE[argparse.ArgumentParser]:
     class Parser(argparse.ArgumentParser):
         """Object for parsing command line strings into objects."""
 
-        def error(self, message):
+        def error(self, message: A):
             """
             Prints a usage message and exits.
 
@@ -121,7 +128,7 @@ def _parser(language: M) -> TYPE[argparse.ArgumentParser]:
             value = string.getvalue()
             self.exit(2, value)
 
-        def parse_args(self, args=None, namespace=None):
+        def parse_args(self, args: A = None, namespace: A = None):  # type: ignore[override]
             args, argv = self.parse_known_args(args, namespace)
             if argv:
                 string = io.StringIO()
@@ -135,7 +142,7 @@ def _parser(language: M) -> TYPE[argparse.ArgumentParser]:
                 self.error(value)
             return args
 
-        def _check_value(self, action, value):
+        def _check_value(self, action: A, value: A):
             # converted value must be one of the choices (if specified)
 
             if not action.choices:

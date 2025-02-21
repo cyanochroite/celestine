@@ -51,7 +51,7 @@ class Tk:
 class PhotoImage:
     """"""
 
-    def height(self) -> K:
+    def height(self) -> Z:
         """"""
         raise NotImplementedError(self)
 

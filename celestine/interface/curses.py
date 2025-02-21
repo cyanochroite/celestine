@@ -25,10 +25,13 @@ from celestine.typed import (
     LS,
     B,
     K,
+    L,
     N,
     P,
     R,
     S,
+    Z,
+    cast,
     ignore,
     override,
 )
@@ -264,7 +267,8 @@ def brightness(image: PIL.Image.Image) -> PIL.Image.Image:
     """
     convert = image.convert("1")
     data = convert.getdata()
-    binary = (pixel // 255 for pixel in data)
+    flat = cast(L[Z], data)
+    binary = (pixel // 255 for pixel in flat)
     count = sum(binary)
     length = image.width * image.height
     ratio = count / length
@@ -302,7 +306,7 @@ def hue(image: PIL.Image.Image) -> GZ:
         colors=COLOR_PAIRS,
         palette=palette_image,
     )
-    colors = pixels.getdata()
+    colors = cast(L[Z], pixels.getdata())
     for color in colors:
         result = curses.color_pair(color + 16)
         yield result
@@ -310,7 +314,7 @@ def hue(image: PIL.Image.Image) -> GZ:
 
 def luma(image: PIL.Image.Image) -> GS:
     """"""
-    pixels = image.getdata()
+    pixels = cast(L[Z], image.getdata())
     width, height = image.size
     for range_y in range(0, height, 4):
         for range_x in range(0, width, 2):

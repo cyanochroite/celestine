@@ -95,15 +95,15 @@ class Element(Element_, Abstract):
         """"""
         self.path = path
         if bool(PIL):
-            image = PIL.Image.open(
+            pil_image = PIL.Image.open(
                 fp=path,
                 mode=LATIN_SMALL_LETTER_R,
                 formats=bank.window.formats(),
             )
-            image = image.convert(mode="RGB")
-            image_size = self.image_size(image.size)
-            image = image.resize(image_size.size.value)
-            pil_photo = PIL.ImageTk.PhotoImage(image=image)
+            pil_image = pil_image.convert("RGB")
+            image_size = self.image_size(pil_image.size)
+            pil_image = pil_image.resize(image_size.size.value)
+            pil_photo = PIL.ImageTk.PhotoImage(image=pil_image)
             self.item.configure(image=pil_photo)
             self.item.image = pil_photo
             return
@@ -120,7 +120,7 @@ class Element(Element_, Abstract):
         new_size = Dyad(new_width, new_height)
 
         if new_width < old_width:
-            change = cast(Dyad[Z], math.ceil(old_size / new_size))
+            change = math.ceil(old_size / new_size)
             image = photo.subsample(change.one, change.two)
         else:
             change = cast(Dyad[Z], math.floor(new_size / old_size))
