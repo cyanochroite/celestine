@@ -4,8 +4,6 @@ import unittest
 
 from celestine import load
 from celestine.data import call
-from celestine.data.directory import APPLICATION
-from celestine.literal import CELESTINE
 from celestine.typed import (
     B,
     R,
@@ -15,7 +13,7 @@ from celestine.typed import (
 @call
 def test(**star: R) -> B:
     """Run the unittest library."""
-    module = load.module(APPLICATION, "make", "test")
+    module = load.module("application", "make", "test")
     top = load.pathway()
     files = load.walk_python(top, [], [])
     paths = [file for file in files if file.stem.endswith("test")]
@@ -34,7 +32,7 @@ def test(**star: R) -> B:
     unittest.main(
         module,
         None,
-        [CELESTINE],
+        ["celestine"],
         None,
         unittest.defaultTestLoader,
         False,
