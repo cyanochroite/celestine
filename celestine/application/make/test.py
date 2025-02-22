@@ -2,38 +2,20 @@
 
 import unittest
 
-from celestine import (
-    language,
-    load,
-)
-from celestine.data import (
-    call,
-    draw,
-)
+from celestine import load
+from celestine.data import call
 from celestine.data.directory import APPLICATION
-from celestine.interface import View
 from celestine.literal import CELESTINE
-from celestine.session.session import SuperSession
 from celestine.typed import (
     B,
-    N,
     R,
 )
 
-ERROR = "error"
-MODULE = "module"
-TARGET = "_test.py"
-TESTS = "test"
-
-
-class Session(SuperSession):
-    """"""
-
 
 @call
-def code(**star: R) -> B:
+def test(**star: R) -> B:
     """Run the unittest library."""
-    module = load.module(APPLICATION, TESTS)
+    module = load.module(APPLICATION, "make", "test")
     top = load.pathway()
     files = load.walk_python(top, [], [])
     paths = [file for file in files if file.stem.endswith("test")]
@@ -60,18 +42,7 @@ def code(**star: R) -> B:
         False,
         True,
         True,
-        ERROR,
+        "error",
     )
 
     return True
-
-
-@draw
-def main(view: View) -> N:
-    """"""
-    with view.zone("main") as line:
-        line.button(
-            "button",
-            "code",
-            text=language.TRANSLATOR_MAIN_BUTTON,
-        )

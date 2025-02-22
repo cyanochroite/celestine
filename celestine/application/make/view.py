@@ -30,3 +30,14 @@ def main(view: View) -> N:
             "licence",
             text=language.CLEAN_MAIN_LICENCE,
         )
+    with view.span("main_foot") as line:
+        line.button(
+            "main_L",
+            "test",
+            text="test",
+        )
+        line.button(
+            "main_R",
+            "licence",
+            text="unused",
+        )
