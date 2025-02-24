@@ -128,7 +128,7 @@ def _parser(language: M) -> TYPE[argparse.ArgumentParser]:
             value = string.getvalue()
             self.exit(2, value)
 
-        def parse_args(self, args: A = None, namespace: A = None):  # type: ignore[override]
+        def parse_args(self, args: A = None, namespace: A = None):
             args, argv = self.parse_known_args(args, namespace)
             if argv:
                 string = io.StringIO()

@@ -31,18 +31,18 @@ def main(view: View) -> N:
             text=language.CLEAN_MAIN_VERSION,
         )
         line.button(
-            "main_R",
-            "licence",
-            text=language.CLEAN_MAIN_LICENCE,
+            "main_R1",
+            "unicode",
+            text="Unicode Normalize",
         )
     with view.span("main_foot") as line:
         line.button(
-            "main_L",
+            "main_L1",
             "test",
             text="test",
         )
         line.button(
-            "main_R",
-            "licence",
+            "main_R1",
+            "none",
             text="unused",
         )
