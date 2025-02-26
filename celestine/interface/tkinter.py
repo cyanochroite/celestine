@@ -132,7 +132,7 @@ class Element(Element_, Abstract):
     def update_text(self, text: S) -> N:
         """"""
         self.text = text
-        self.item.config(text=text)
+        self.item.configure(text=text)
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)

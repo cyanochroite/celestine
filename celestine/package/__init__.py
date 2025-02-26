@@ -6,9 +6,7 @@ from celestine import load
 from celestine.typed import (
     LS,
     VS,
-    A,
     B,
-    D,
     M,
     N,
     P,
@@ -21,8 +19,6 @@ from celestine.typed import (
 class Abstract:
     """"""
 
-    local: D[S, A]  # TODO: Not ANY
-    exempt: D[S, A]  # TODO: Not ANY
     name: S
     package: M | N
 
@@ -74,57 +70,10 @@ class Abstract:
     def __getattr__(self, name: S) -> S:
         result = getattr(self.package, name)
         return result
-        if name in self.exempt:
-            result = getattr(self.package, name)
-        else:
-            result = self.local.get(name)
-        if not result:
-            message = f"'{self.name}' object has no attribute '{name}'"
-            raise AttributeError(message)
-        return result
-
-    def functions(self) -> N:
-        """"""
-        local: D[S, A] = {}
-        exempt: D[S, A] = {}
-        base = f"celestine.package.{self.name}"
-        modules = load.walk_package(base)
-        for module in modules:
-            var = vars(module)
-            local.update(var)
-            annotations = var.get("__annotations__", {})
-            exempt.update(annotations)
-
-        def test(value: S) -> B:
-            name = repr(value)
-            class_ = name.startswith("<class ")
-            function_ = name.startswith("<function ")
-            module_ = name.startswith("<module ")
-            important = class_ or function_ or module_
-
-            child = self.name in name
-
-            abstract = "abstract" in name and module_
-            package = "Package" in name
-            excluded = abstract or package
-
-            result = important and child and not excluded
-            result = True  # Try disable of function filter.
-            return result
-
-        items = local.items()
-        self.local = {key: value for key, value in items if test(value)}
-        self.exempt = exempt
 
     def __init__(self, *, pypi: VS = None, **star: R) -> N:
         self.name = self.__module__.rsplit(".", maxsplit=1)[-1]
         self.pypi = pypi or self.name
-        if self.name == "blender":
-            #  TODO: Remove this bypass once blender is working.
-            self.local = {}
-            self.exempt = {}
-        else:
-            self.functions()
 
         try:
             self.package = load.package(self.pypi)

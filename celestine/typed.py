@@ -23,7 +23,7 @@ Q: collections.abc.Sequence
 R: typing.Any  # Future star type.
 S: str
 T: typing.Tuple
-U: typing.Any  # Unused  # Union?
+U: typing.Unpack
 V: typing.Optional  # Void like type.
 W: typing.Any  # Unused  # self.data()? warp?
 X: typing.TypeVar("X")  # Primary type variable.
@@ -52,6 +52,7 @@ from typing import Tuple as T
 from typing import Type as TY
 from typing import TypedDict as TD
 from typing import TypeVar as TV
+from typing import Unpack as U
 from typing import (
     cast,
     override,
@@ -267,4 +268,4 @@ class Struct:
     data = property(_get, _set, _del)
 
 
-ignore(IT, Protocol, Q, cast, override)
+ignore(IT, Protocol, Q, U, cast, override)
