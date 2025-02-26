@@ -3,6 +3,7 @@
 from celestine.package import Abstract
 from celestine.typed import (
     TD,
+    UN,
     K,
     N,
     R,
@@ -10,6 +11,64 @@ from celestine.typed import (
     U,
     Z,
 )
+
+
+class _TypedConfigure(TD):
+    """"""
+
+    bg: S
+    image: "PhotoImage"
+    text: S
+
+
+class _TypedFrame(TD):
+    """"""
+
+    bg: S
+    height: Z
+    padx: Z
+    pady: Z
+    width: Z
+
+
+type _Window = U["Frame", "Tk"]
+
+
+class Button:
+    """"""
+
+    def configure(self, **star: UN[_TypedConfigure]) -> N:
+        """"""
+        raise NotImplementedError(self, star)
+
+    def place_forget(self) -> N:
+        """"""
+        raise NotImplementedError(self)
+
+    def __init__(self, window: _Window) -> N:
+        raise NotImplementedError(self, window)
+
+
+class Frame:
+    """"""
+
+    def __init__(self, window: _Window, **star: UN[_TypedFrame]) -> N:
+        raise NotImplementedError(self, window, star)
+
+
+class Label:
+    """"""
+
+    def configure(self, **star: UN[_TypedConfigure]) -> N:
+        """"""
+        raise NotImplementedError(self)
+
+    def place_forget(self) -> N:
+        """"""
+        raise NotImplementedError(self)
+
+    def __init__(self, window: _Window) -> N:
+        raise NotImplementedError(self, window)
 
 
 class Package(Abstract):
@@ -43,14 +102,13 @@ class PhotoImage:
 class Tk:
     """"""
 
-    def config(self, *, bg: S) -> N:
+    def configure(self, **star: UN[_TypedConfigure]) -> N:
         """Widthxheight±x±y."""
-        raise NotImplementedError(self, bg)
+        raise NotImplementedError(self, star)
 
-    # pylint: disable-next=invalid-name
-    def geometry(self, newGeometry: S) -> N:
+    def geometry(self, new_geometry: S, /) -> N:
         """Widthxheight±x±y."""
-        raise NotImplementedError(self, newGeometry)
+        raise NotImplementedError(self, new_geometry)
 
     def mainloop(self) -> N:
         """"""
@@ -67,57 +125,3 @@ class Tk:
     def title(self, string: S) -> N:
         """"""
         raise NotImplementedError(self, string)
-
-
-class _Configure(TD):
-    """"""
-
-    image: PhotoImage
-    text: S
-
-
-class _Frame(TD):
-    """"""
-
-    bg: S
-    height: Z
-    padx: Z
-    pady: Z
-    width: Z
-
-
-class Button:
-    """"""
-
-    def configure(self, **star: U[_Configure]) -> N:
-        """"""
-        raise NotImplementedError(self, star)
-
-    def place_forget(self) -> N:
-        """"""
-        raise NotImplementedError(self)
-
-    def __init__(self, window: K) -> N:
-        raise NotImplementedError(self, window)
-
-
-class Frame:
-    """"""
-
-    def __init__(self, window: K, **star: U[_Frame]) -> N:
-        raise NotImplementedError(self, window, star)
-
-
-class Label:
-    """"""
-
-    def configure(self, **star: U[_Configure]) -> N:
-        """"""
-        raise NotImplementedError(self)
-
-    def place_forget(self) -> N:
-        """"""
-        raise NotImplementedError(self)
-
-    def __init__(self, window: K) -> N:
-        raise NotImplementedError(self, window)

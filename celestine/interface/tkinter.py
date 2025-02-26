@@ -215,4 +215,4 @@ class Window(Window_):
         self.canvas.geometry("1900x1000")
         self.canvas.minsize(640, 480)
         self.canvas.maxsize(3840, 2160)
-        self.canvas.config(bg="blue")
+        self.canvas.configure(bg="blue")

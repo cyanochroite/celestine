@@ -2,7 +2,6 @@
 
 import itertools
 import math
-import typing
 
 from celestine.literal import (
     COMMA,
@@ -30,16 +29,17 @@ from celestine.typed import (
     S,
     Struct,
     T,
+    U,
     Z,
     cast,
     ignore,
     override,
 )
 
-type Number = typing.Union["Cardinal", F, Z]
+type Number = U["Cardinal", F, Z]
 type Unary = C[[Number], Number]
 type Binary = C[[Number, Number], Number]
-type Nomad = typing.Union[Number, Q[F], Q[Z]]
+type Nomad = U[Number, Q[F], Q[Z]]
 
 
 class Round:
