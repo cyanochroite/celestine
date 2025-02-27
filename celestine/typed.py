@@ -45,6 +45,7 @@ from typing import Any as A
 from typing import Dict as D
 from typing import List as L
 from typing import Literal
+from typing import NotRequired as NR
 from typing import Optional as V
 from typing import Protocol
 from typing import Self as K
@@ -269,4 +270,4 @@ class Struct:
     data = property(_get, _set, _del)
 
 
-ignore(IT, Protocol, Q, U, UN, cast, override)
+ignore(IT, Protocol, NR, Q, U, UN, cast, override)

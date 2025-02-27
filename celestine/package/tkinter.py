@@ -2,11 +2,12 @@
 
 from celestine.package import Abstract
 from celestine.typed import (
+    NR,
     TD,
     UN,
     K,
     N,
-    R,
+    P,
     S,
     U,
     Z,
@@ -29,6 +30,14 @@ class _TypedFrame(TD):
     padx: Z
     pady: Z
     width: Z
+
+
+class _TypedPhoto(TD):
+    """"""
+
+    file: NR[P]
+    height: NR[Z]
+    width: NR[Z]
 
 
 type _Window = U["Frame", "Tk"]
@@ -61,7 +70,7 @@ class Label:
 
     def configure(self, **star: UN[_TypedConfigure]) -> N:
         """"""
-        raise NotImplementedError(self)
+        raise NotImplementedError(self, star)
 
     def place_forget(self) -> N:
         """"""
@@ -94,7 +103,7 @@ class PhotoImage:
         """"""
         raise NotImplementedError(self, x, y)
 
-    def __init__(self, **star: R) -> N:
+    def __init__(self, **star: UN[_TypedPhoto]) -> N:
         """"""
         raise NotImplementedError(self, star)
 

@@ -25,11 +25,10 @@ class Package(Abstract):
         """
         ignore(self)
 
-        # TODO: This is breaking the language files. Find out why.
-        files = load.walk_python(path, [], ["language"])
+        files = load.walk_python(path, [], [])
 
         file = map(str, files)
-        argv = [*file, "--py311-plus"]
+        argv = [*file, "--py313-plus"]
         package.main(argv)
 
     @override
