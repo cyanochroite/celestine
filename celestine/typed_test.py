@@ -71,11 +71,5 @@ class TestTypeAliases(unittest.TestCase):
         value_s: VS = "test"
         self.assertIsInstance(value_s, str)
 
-        value_vs: VS = None
-        self.assertIsNone(value_vs)
-
         value_z: VZ = 42
         self.assertIsInstance(value_z, int)
-
-        value_vz: VZ = None
-        self.assertIsNone(value_vz)

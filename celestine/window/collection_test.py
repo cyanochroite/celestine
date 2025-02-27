@@ -81,16 +81,16 @@ class TestLine(unittest.TestCase):
         line = Line(0, 10)
 
         # Test inside
-        self.assertTrue(5 in line)
-        self.assertTrue(2.5 in line)
+        self.assertIn(5, line)
+        self.assertIn(2.5, line)
 
         # Test boundaries
-        self.assertTrue(0 in line)
-        self.assertTrue(10 in line)
+        self.assertIn(0, line)
+        self.assertIn(10, line)
 
         # Test outside
-        self.assertFalse(-1 in line)
-        self.assertFalse(11 in line)
+        self.assertNotIn(-1, line)
+        self.assertNotIn(11, line)
 
     def test_initialization(self) -> N:
         """"""
