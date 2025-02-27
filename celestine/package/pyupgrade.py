@@ -28,7 +28,7 @@ class Package(Abstract):
         files = load.walk_python(path, [], [])
 
         file = map(str, files)
-        argv = [*file, "--py313-plus"]
+        argv = [*file, "--py312-plus"]
         package.main(argv)
 
     @override

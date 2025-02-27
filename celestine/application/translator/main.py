@@ -5,12 +5,11 @@ import os.path
 import shutil
 import uuid
 
-import requests
-
 from celestine import (
     bank,
     load,
 )
+from celestine.package import requests
 
 from .data import (
     LANGUAGE,
