@@ -132,6 +132,9 @@ RIGHT_CURLY_BRACKET = chr(125)
 TILDE = chr(126)
 DELETE = chr(127)
 
+LINE_SEPARATOR = chr(8232)
+PARAGRAPH_SEPARATOR = chr(8233)
+
 ########################################################################
 
 FUNCTION = string(

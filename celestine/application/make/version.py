@@ -1,32 +1,17 @@
 """Run a bunch of auto formaters."""
 
 import datetime
-import io
 
 from celestine import (
     load,
     regex,
     stream,
 )
-from celestine.data import (
-    call,
-    normalize,
-)
-from celestine.package import (
-    autoflake,
-    black,
-    isort,
-    pydocstringformatter,
-    pyupgrade,
-)
+from celestine.data import call
 from celestine.typed import (
     B,
-    N,
     R,
-    S,
 )
-
-PACKAGE = "package"
 
 array = [
     (
@@ -34,22 +19,14 @@ array = [
             "CITATION.cff",
         ],
         [
-            "version: YYYY.MM.DD",
             "date-released: 'YYYY-0M-0D'",
+            "version: YYYY.MM.DD",
         ],
     ),
     (
         [
-            "pyproject.toml",
-        ],
-        [
-            'version = "YYYY.MM.DD"',
-        ],
-    ),
-    (
-        [
-            "celestine",
             "__init__.py",
+            "celestine",
         ],
         [
             '"version": (YYYY, MM, DD),',
@@ -66,8 +43,8 @@ array = [
     ),
     (
         [
-            "documentation",
             "conf.py",
+            "documentation",
         ],
         [
             'copyright = "YYYY, mem_dixy"',
@@ -75,44 +52,15 @@ array = [
             'version = "YYYY.MM.DD"',
         ],
     ),
+    (
+        [
+            "pyproject.toml",
+        ],
+        [
+            'version = "YYYY.MM.DD"',
+        ],
+    ),
 ]
-
-
-def run(name: S) -> N:
-    """"""
-    module = load.module(PACKAGE, name)
-    linter = module.Linter(name)
-    linter.run()
-
-
-@call
-def clean(**star: R) -> B:
-    """"""
-    pyupgrade.run()
-    pydocstringformatter.run()
-    autoflake.run()
-    isort.run()
-    black.run()
-    return True
-
-
-@call
-def licence(**star: R) -> B:
-    """"""
-    location = load.pathway("licence")
-    files = load.walk_file(location, [], [])
-    for file in files:
-        string_builder = io.StringIO()
-        with stream.text.reader(file) as lines:
-            for line in lines:
-                character = normalize.characters(line)
-                wrap = normalize.wrap_text(character)
-                for text in wrap:
-                    string_builder.write(text)
-        with stream.text.writer(file) as document:
-            for line in string_builder.getvalue():
-                document.write(line)
-    return True
 
 
 @call

@@ -23,5 +23,5 @@ def user_data_dir(
 ) -> S:
     """"""
     raise NotImplementedError(
-        appname, appauthor, version, roaming, ensure_exists, **star
+        appname, appauthor, version, roaming, ensure_exists
     )

@@ -12,6 +12,7 @@ from celestine.typed import (
     P,
     R,
     S,
+    V,
     Y,
     Z,
 )
@@ -49,13 +50,13 @@ class Image:
 
     mode: S
 
-    def convert(self, mode: S, matrix: N, dither: "Dither") -> K:
+    def convert(self, mode: S, *, dither: V[Dither] = None) -> K:
         """"""
-        raise NotImplementedError(self, mode, matrix, dither)
+        raise NotImplementedError(self, mode, dither)
 
-    def getdata(self, im: K, box: TZ4) -> L[Z] | L[TZ3]:
+    def getdata(self) -> L[Z] | L[TZ3]:
         """"""
-        raise NotImplementedError(self, im, box)
+        raise NotImplementedError(self)
 
     @property
     def height(self) -> Z:
@@ -66,17 +67,17 @@ class Image:
         """"""
         raise NotImplementedError(self, im, box)
 
-    def putpalette(self, data: LZ, rawmode: S) -> N:
+    def putpalette(self, data: LZ) -> N:
         """"""
-        raise NotImplementedError(self, data, rawmode)
+        raise NotImplementedError(self, data)
 
-    def quantize(self, *, colors: Z, palette: K, **star: R) -> Y:
+    def quantize(self, *, colors: Z, palette: K, **star: R) -> K:
         """"""
         raise NotImplementedError(self, colors, palette, star)
 
-    def resize(self, size: TZ2, resample: Resampling) -> K:
+    def resize(self, size: TZ2) -> K:
         """"""
-        raise NotImplementedError(self, size, resample)
+        raise NotImplementedError(self, size)
 
     @property
     def size(self) -> TZ2:

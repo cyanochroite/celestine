@@ -74,9 +74,8 @@ class TestCardinal(unittest.TestCase):
         c1 = Dyad(1.0, 2.0)
         c2 = Dyad(2.0, 3.0)
 
-        self.assertTrue(c1 < c2)
-        self.assertFalse(c1 > c2)
-        self.assertTrue(c1 <= c2)
+        self.assertLess(c1, c2)
+        self.assertLessEqual(c1, c2)
 
     def test_conversions(self) -> N:
         """"""

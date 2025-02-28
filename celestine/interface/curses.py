@@ -4,8 +4,8 @@ import itertools
 import math
 
 from celestine import bank
-from celestine.data.notational_systems import BRAILLE_PATTERNS
 from celestine.data.palette import (
+    COLOR_PAIRS,
     curses_table,
     pillow_table,
 )
@@ -22,12 +22,14 @@ from celestine.typed import (
     GS,
     GZ,
     LS,
+    LZ,
     B,
     K,
     N,
     P,
     R,
     S,
+    cast,
     ignore,
     override,
 )
@@ -244,10 +246,10 @@ class Window(Window_):
 
         self.canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
 
-        for index in range(255):
+        for index in range(COLOR_PAIRS):
             red, green, blue = curses_table[index]
             curses.init_color(index + 16, red, green, blue)
-            curses.init_pair(index + 1, index + 16, 16)
+            curses.init_pair(index + 16, index + 16, 16)
 
 
 def brightness(image: PIL.Image.Image) -> PIL.Image.Image:
@@ -263,7 +265,8 @@ def brightness(image: PIL.Image.Image) -> PIL.Image.Image:
     """
     convert = image.convert("1")
     data = convert.getdata()
-    binary = (pixel // 255 for pixel in data)
+    flat = cast(LZ, data)
+    binary = (pixel // 255 for pixel in flat)
     count = sum(binary)
     length = image.width * image.height
     ratio = count / length
@@ -298,32 +301,52 @@ def dot_y(world: Plane) -> GZ:
 def hue(image: PIL.Image.Image) -> GZ:
     """"""
     pixels = image.quantize(
-        colors=255,
+        colors=COLOR_PAIRS,
         palette=palette_image,
     )
-    colors = pixels.getdata()
+    colors = cast(LZ, pixels.getdata())
     for color in colors:
-        result = curses.color_pair(color + 1)
+        result = curses.color_pair(color + 16)
         yield result
 
 
 def luma(image: PIL.Image.Image) -> GS:
-    """"""
-    pixels = image.getdata()
+    """
+    Tranlate image into Braille Patterns.
+
+    Website: https://en.wikipedia.org/wiki/Braille_Patterns
+    Section: Identifying, naming and ordering
+    """
+    data = image.getdata()
+    pixels = cast(LZ, data)
+
     width, height = image.size
-    for range_y in range(0, height, 4):
-        for range_x in range(0, width, 2):
-            braille = 0
-            for offset_y in range(4):
-                for offset_x in range(2):
-                    index_x = range_x + offset_x
-                    index_y = range_y + offset_y
-                    index = index_y * width + index_x
-                    try:
-                        pixel = 1 if pixels[index] > 127 else 0
-                    except IndexError:
-                        pixel = 0
-                    braille <<= 1
-                    braille |= pixel
-            result = BRAILLE_PATTERNS[braille]
-            yield result
+    length = width * height
+
+    dots = [
+        width + width + width + 1,
+        width + width + width + 0,
+        width + width + 1,
+        width + 1,
+        1,
+        width + width + 0,
+        width + 0,
+        0,
+    ]
+
+    for index in range(length):
+        index_x = index % width
+        index_y = index // width
+        if index_x % 2 or index_y % 4:
+            continue
+
+        pattern = 0
+        for dot in dots:
+            pattern <<= 1
+            pixel = index + dot
+            if pixels[pixel] > 127:
+                pattern |= 1
+
+        braille = 0x2800 + pattern
+        result = chr(braille)
+        yield result

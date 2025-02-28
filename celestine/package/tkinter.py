@@ -2,34 +2,122 @@
 
 from celestine.package import Abstract
 from celestine.typed import (
-    A,
+    NR,
+    TD,
+    UN,
     K,
     N,
-    R,
+    P,
     S,
+    U,
     Z,
 )
 
-Button: A
-Frame: A
-Label: A
+
+class _TypedConfigure(TD):
+    """"""
+
+    bg: S
+    image: "PhotoImage"
+    text: S
+
+
+class _TypedFrame(TD):
+    """"""
+
+    bg: S
+    height: Z
+    padx: Z
+    pady: Z
+    width: Z
+
+
+class _TypedPhoto(TD):
+    """"""
+
+    file: NR[P]
+    height: NR[Z]
+    width: NR[Z]
+
+
+type _Window = U["Frame", "Tk"]
+
+
+class Button:
+    """"""
+
+    def configure(self, **star: UN[_TypedConfigure]) -> N:
+        """"""
+        raise NotImplementedError(self, star)
+
+    def place_forget(self) -> N:
+        """"""
+        raise NotImplementedError(self)
+
+    def __init__(self, window: _Window) -> N:
+        raise NotImplementedError(self, window)
+
+
+class Frame:
+    """"""
+
+    def __init__(self, window: _Window, **star: UN[_TypedFrame]) -> N:
+        raise NotImplementedError(self, window, star)
+
+
+class Label:
+    """"""
+
+    def configure(self, **star: UN[_TypedConfigure]) -> N:
+        """"""
+        raise NotImplementedError(self, star)
+
+    def place_forget(self) -> N:
+        """"""
+        raise NotImplementedError(self)
+
+    def __init__(self, window: _Window) -> N:
+        raise NotImplementedError(self, window)
 
 
 class Package(Abstract):
     """"""
 
 
+class PhotoImage:
+    """"""
+
+    def height(self) -> Z:
+        """"""
+        raise NotImplementedError(self)
+
+    def subsample(self, x: Z, y: Z) -> K:
+        """"""
+        raise NotImplementedError(self, x, y)
+
+    def width(self) -> Z:
+        """"""
+        raise NotImplementedError(self)
+
+    def zoom(self, x: Z, y: Z) -> K:
+        """"""
+        raise NotImplementedError(self, x, y)
+
+    def __init__(self, **star: UN[_TypedPhoto]) -> N:
+        """"""
+        raise NotImplementedError(self, star)
+
+
 class Tk:
     """"""
 
-    def config(self, *, bg: S) -> N:
+    def configure(self, **star: UN[_TypedConfigure]) -> N:
         """Widthxheight±x±y."""
-        raise NotImplementedError(self, bg)
+        raise NotImplementedError(self, star)
 
-    # pylint: disable-next=invalid-name
-    def geometry(self, newGeometry: S) -> N:
+    def geometry(self, new_geometry: S, /) -> N:
         """Widthxheight±x±y."""
-        raise NotImplementedError(self, newGeometry)
+        raise NotImplementedError(self, new_geometry)
 
     def mainloop(self) -> N:
         """"""
@@ -46,27 +134,3 @@ class Tk:
     def title(self, string: S) -> N:
         """"""
         raise NotImplementedError(self, string)
-
-
-class PhotoImage:
-    """"""
-
-    def height(self) -> K:
-        """"""
-        raise NotImplementedError(self)
-
-    def subsample(self, x: Z, y: Z) -> K:
-        """"""
-        raise NotImplementedError(self, x, y)
-
-    def width(self) -> Z:
-        """"""
-        raise NotImplementedError(self)
-
-    def zoom(self, x: Z, y: Z) -> K:
-        """"""
-        raise NotImplementedError(self, x, y)
-
-    def __init__(self, **star: R) -> N:
-        """"""
-        raise NotImplementedError(self, star)
