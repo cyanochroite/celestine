@@ -16,6 +16,7 @@ from celestine.typed import (
     N,
     R,
     S,
+    ignore,
 )
 
 
@@ -26,6 +27,7 @@ class Session(SuperSession):
 @call
 def cow(*, say: S, **star: R) -> B:
     """"""
+    ignore(star)
     talk = language.DEMO_COW_TALK
     print(talk, say)
     return True
@@ -34,6 +36,7 @@ def cow(*, say: S, **star: R) -> B:
 @call
 def dog(**star: R) -> B:
     """"""
+    ignore(star)
     item = bank.window.find("zero_title")
     if item.hidden:
         item.show()
@@ -45,6 +48,7 @@ def dog(**star: R) -> B:
 @call
 def cat(**star: R) -> B:
     """"""
+    ignore(star)
     item = bank.window.find("zero_body")
     if item.hidden:
         item.show()
@@ -148,3 +152,6 @@ def two(view: View) -> N:
             "zero",
             text=language.DEMO_TWO_NEXT,
         )
+
+
+ignore(Session, cat, cow, dog, one, two, zero)
