@@ -19,8 +19,8 @@ from celestine.literal import (
 from celestine.typed import (
     A,
     B,
-    ignore,
     M,
+    ignore,
 )
 
 from .data import Parsers
