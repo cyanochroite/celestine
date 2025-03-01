@@ -9,6 +9,7 @@ from celestine.typed import (
     B,
     N,
     R,
+    ignore,
 )
 
 bl_info = {
@@ -69,3 +70,6 @@ def unregister() -> N:
     """
     load.module("bank")
     load.instance("interface", "blender", "unregister")
+
+
+ignore(bl_info, main, register, unregister)

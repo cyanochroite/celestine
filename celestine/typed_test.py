@@ -15,35 +15,6 @@ from celestine.typed import (
 )
 
 
-class TestTypedFunctions(unittest.TestCase):
-    """"""
-
-    def test_ignore(self) -> N:
-        """"""
-        # Test with different argument types
-        self.assertIsNone(ignore())  # type: ignore[func-returns-value]
-
-        self.assertIsNone(ignore(1))  # type: ignore[func-returns-value]
-
-        self.assertIsNone(
-            ignore("str", 123, True)  # type: ignore[func-returns-value]
-        )
-
-    def test_string(self) -> N:
-        """"""
-        # Test basic string joining
-        self.assertEqual(string("a", "b", "c"), "abc")
-
-        # Test empty strings
-        self.assertEqual(string("", "", ""), "")
-
-        # Test single string
-        self.assertEqual(string("test"), "test")
-
-        # Test empty input
-        self.assertEqual(string(), "")
-
-
 class TestTypeAliases(unittest.TestCase):
     """"""
 
@@ -73,3 +44,35 @@ class TestTypeAliases(unittest.TestCase):
 
         value_z: VZ = 42
         self.assertIsInstance(value_z, int)
+
+
+class TestTypedFunctions(unittest.TestCase):
+    """"""
+
+    def test_ignore(self) -> N:
+        """"""
+        # Test with different argument types
+        self.assertIsNone(ignore())  # type: ignore[func-returns-value]
+
+        self.assertIsNone(ignore(1))  # type: ignore[func-returns-value]
+
+        self.assertIsNone(
+            ignore("str", 123, True)  # type: ignore[func-returns-value]
+        )
+
+    def test_string(self) -> N:
+        """"""
+        # Test basic string joining
+        self.assertEqual(string("a", "b", "c"), "abc")
+
+        # Test empty strings
+        self.assertEqual(string("", "", ""), "")
+
+        # Test single string
+        self.assertEqual(string("test"), "test")
+
+        # Test empty input
+        self.assertEqual(string(), "")
+
+
+ignore(TestTypeAliases, TestTypedFunctions)

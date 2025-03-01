@@ -234,3 +234,14 @@ binary = Binary(directory)
 compress = Compress(directory)
 module = Module(project_path)
 text = Text(directory)
+
+ignore(
+    MAXIMUM_LINE_LENGTH,
+    Newline,
+    SECTION_BREAK,
+    binary,
+    compress,
+    module,
+    project_root,
+    text,
+)

@@ -7,6 +7,7 @@ from celestine.typed import (
     D,
     N,
     S,
+    ignore,
 )
 
 
@@ -39,3 +40,6 @@ def report(view: View) -> N:
     for tag, text in train.items():
         with view.zone("body") as line:
             line.label(tag, text=text)
+
+
+ignore(report)

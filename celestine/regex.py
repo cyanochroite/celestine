@@ -2,7 +2,19 @@
 
 import re
 
-from celestine.typed import S
+from celestine.typed import (
+    S,
+    ignore,
+)
+
+
+def match(pattern: S, string: S) -> S:
+    """"""
+    _match = re.match(pattern, string)
+    if not _match:
+        raise ValueError(_match)
+    result = _match[1]
+    return result
 
 
 def replace(pattern: S, repl: S, string: S) -> S:
@@ -13,10 +25,4 @@ def replace(pattern: S, repl: S, string: S) -> S:
     return result
 
 
-def match(pattern: S, string: S) -> S:
-    """"""
-    _match = re.match(pattern, string)
-    if not _match:
-        raise ValueError(_match)
-    result = _match[1]
-    return result
+ignore(match, replace)
