@@ -7,12 +7,14 @@ from celestine.data import call
 from celestine.typed import (
     B,
     R,
+    ignore,
 )
 
 
 @call
 def test(**star: R) -> B:
     """Run the unittest library."""
+    ignore(star)
     module = load.module("application", "make", "test")
     top = load.pathway()
     files = load.walk_python(top, [], [])
@@ -44,3 +46,6 @@ def test(**star: R) -> B:
     )
 
     return True
+
+
+ignore(test)

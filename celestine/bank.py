@@ -1,24 +1,24 @@
 """Package wide global variables."""
 
 from celestine.typed import (
-    LS,
+    ANY,
     A,
     C,
     L,
-    M,
     N,
-    P,
     T,
+    ignore,
 )
 
 #  These types might not be right.
-application: M
-attribute: LS
-configuration: P
-directory: P
-interface: M
-language: M
-window: A  # Window
+application: ANY = None  # M
+attribute: ANY = None  # LS
+configuration: ANY = None  # P
+directory: ANY = None  # P
+interface: ANY = None  # M
+language: ANY = None  # M
+window: ANY = None  # Window
+
 
 _queue: L[T[C[..., N], A, A]] = []
 
@@ -33,3 +33,16 @@ def dequeue() -> N:
     for action, argument, star in _queue:
         action(argument, **star)
     _queue.clear()
+
+
+ignore(
+    application,
+    attribute,
+    configuration,
+    dequeue,
+    directory,
+    interface,
+    language,
+    queue,
+    window,
+)

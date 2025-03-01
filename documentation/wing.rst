@@ -26,14 +26,13 @@ Unused Symbols
 
 Show Import Not Used Warnings = True
 Show Variable Not Used Warnings = True
-Show Argument Not Used Warnings = False
-# False positive: "Argument not used." on "abc.abstractmethod".
+Show Argument Not Used Warnings = True
 
 
 Variables Not Used Configuration
 """"""""""""""""""""""""""""""""
 
-Always Show Globals Not Used in File = False
+Always Show Globals Not Used in File = True
 Show Extra Unpacked Variables Not Used = True
 Use Regular Expressions to Identify Variables Intentionally Not Used = True
 
@@ -41,8 +40,8 @@ Use Regular Expressions to Identify Variables Intentionally Not Used = True
 Values
 ''''''
 
-_
-star
+
+**blank**
 
 
 External Checkers
@@ -112,7 +111,7 @@ Run after opening file = True
 
 Maximum File Size (KB) = 1000
 
-Command Line = ${WING:PYTHON} -m pylint --msg-template="{path}:{line}:{column}: {msg_id} {msg} ({symbol})" --ignored-argument-names="_|star"
+Command Line = ${WING:PYTHON} -m pylint --msg-template="{path}:{line}:{column}: {msg_id} {msg} ({symbol})"
 
 Include Pylint Errors = True
 

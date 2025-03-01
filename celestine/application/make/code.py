@@ -22,9 +22,22 @@ from celestine.typed import (
     N,
     R,
     S,
+    ignore,
 )
 
 PACKAGE = "package"
+
+
+@call
+def clean(**star: R) -> B:
+    """"""
+    ignore(star)
+    pyupgrade.run()
+    pydocstringformatter.run()
+    autoflake.run()
+    isort.run()
+    black.run()
+    return True
 
 
 def run(name: S) -> N:
@@ -35,19 +48,9 @@ def run(name: S) -> N:
 
 
 @call
-def clean(**star: R) -> B:
-    """"""
-    pyupgrade.run()
-    pydocstringformatter.run()
-    autoflake.run()
-    isort.run()
-    black.run()
-    return True
-
-
-@call
 def unicode(**star: R) -> B:
     """"""
+    ignore(star)
     path = load.pathway()
     include = [
         ".py",
@@ -73,3 +76,6 @@ def unicode(**star: R) -> B:
             for line in string_builder.getvalue():
                 document.write(line)
     return True
+
+
+ignore(clean, run, unicode)

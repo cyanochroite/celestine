@@ -246,10 +246,11 @@ class Element(Element_, Abstract):
     @override
     def build(self, canvas: A, **star: R) -> N:
         """"""
+        global data
         if star.get("first"):
             if self.action or self.goto:
-                data = f"button: {self.text}"
-                self.keep = basic.text(self.name, canvas, data)
+                _data = f"button: {self.text}"
+                self.keep = basic.text(self.name, canvas, _data)
             elif self.text:
                 self.keep = basic.text(self.name, canvas, self.text)
             else:

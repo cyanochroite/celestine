@@ -20,6 +20,7 @@ from celestine.typed import (
     A,
     B,
     M,
+    ignore,
 )
 
 from .data import Parsers
@@ -91,13 +92,14 @@ def _help_formatter(language: M) -> TYPE[argparse.HelpFormatter]:
             groups: A,
             prefix: A = None,
         ):
+            ignore(prefix)
             string = io.StringIO()
             string.write(language.SESSION_PARSER_USAGE)
             string.write(COLON)
             string.write(SPACE)
 
-            prefix = string.getvalue()
-            super().add_usage(usage, actions, groups, prefix)
+            _prefix = string.getvalue()
+            super().add_usage(usage, actions, groups, _prefix)
 
     return HelpFormatter
 

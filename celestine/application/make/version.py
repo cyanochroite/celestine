@@ -11,8 +11,10 @@ from celestine.data import call
 from celestine.typed import (
     B,
     R,
+    ignore,
 )
 
+DIGIT = r"\d\d?"
 array = [
     (
         [
@@ -66,6 +68,7 @@ array = [
 @call
 def version(**star: R) -> B:
     """"""
+    ignore(star)
     date = datetime.datetime.now(datetime.UTC)
 
     year = str(date.year)
@@ -87,9 +90,9 @@ def version(**star: R) -> B:
             pattern = pattern.replace("0D", "DD")
 
             pattern = pattern.replace("(", r"\(")
-            pattern = pattern.replace("YY", r"\d\d?")
-            pattern = pattern.replace("MM", r"\d\d?")
-            pattern = pattern.replace("DD", r"\d\d?")
+            pattern = pattern.replace("YY", DIGIT)
+            pattern = pattern.replace("MM", DIGIT)
+            pattern = pattern.replace("DD", DIGIT)
             pattern = pattern.replace(")", r"\)")
 
             repl = key
@@ -104,3 +107,6 @@ def version(**star: R) -> B:
 
         stream.text.save(text, file)
     return True
+
+
+ignore(version)

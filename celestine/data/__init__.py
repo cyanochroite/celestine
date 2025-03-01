@@ -2,6 +2,7 @@
 
 from celestine.interface import View
 from celestine.typed import (
+    ANY,
     B,
     N,
     Protocol,
@@ -12,8 +13,8 @@ from celestine.typed import (
 class Code(Protocol):
     """Type for code functions."""
 
-    def __call__(self, **star: R) -> B:
-        raise NotImplementedError(self, star)
+    def __call__(self, *data: ANY, **star: R) -> B:
+        raise NotImplementedError(self, data, star)
 
 
 class Draw(Protocol):

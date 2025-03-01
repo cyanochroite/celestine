@@ -4,7 +4,10 @@ from celestine import language
 from celestine.data import draw
 from celestine.interface import View
 from celestine.session.session import SuperSession
-from celestine.typed import N
+from celestine.typed import (
+    N,
+    ignore,
+)
 
 
 class Session(SuperSession):
@@ -46,3 +49,6 @@ def main(view: View) -> N:
             "none",
             text="unused",
         )
+
+
+ignore(Session, main)
