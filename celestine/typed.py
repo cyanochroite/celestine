@@ -67,6 +67,7 @@ class Star(TD):
     # TODO: Figure out how to map this to the R type.
 
 
+type ANY = A
 type B = bool
 type F = float
 type J = object

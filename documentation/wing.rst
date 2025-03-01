@@ -42,7 +42,6 @@ Values
 ''''''
 
 _
-star
 
 
 External Checkers
@@ -112,7 +111,7 @@ Run after opening file = True
 
 Maximum File Size (KB) = 1000
 
-Command Line = ${WING:PYTHON} -m pylint --msg-template="{path}:{line}:{column}: {msg_id} {msg} ({symbol})" --ignored-argument-names="_|star"
+Command Line = ${WING:PYTHON} -m pylint --msg-template="{path}:{line}:{column}: {msg_id} {msg} ({symbol})" --ignored-argument-names="_"
 
 Include Pylint Errors = True
 

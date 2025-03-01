@@ -12,7 +12,7 @@ from typing import (
 
 from celestine import load
 from celestine.typed import (
-    A,
+    ANY,
     B,
     N,
     P,
@@ -21,7 +21,7 @@ from celestine.typed import (
     override,
 )
 
-type Flie = IO[A]
+type Flie = IO[ANY]
 type Lzma = lzma.LZMAFile | TextIO
 type Path = P | S
 
