@@ -98,6 +98,7 @@ class Abstract(Tree):
 
     def click(self, point: Point, **star: R) -> B:
         """"""
+        ignore(star)
         if self.hidden:
             return False
 
@@ -122,6 +123,7 @@ class Abstract(Tree):
 
     def draw(self, **star: R) -> B:
         """"""
+        ignore(star)
         return not self.hidden
 
     def hide(self) -> N:
@@ -130,11 +132,12 @@ class Abstract(Tree):
 
     def can_build(self, **star: R) -> B:
         """"""
-        ignore(self)
+        ignore(self, star)
         return True
 
     def build(self, canvas: A, **star: R) -> N:
         """"""
+        ignore(star)
         self.canvas = canvas
 
     def show(self) -> N:
@@ -477,6 +480,7 @@ class Window(Tree):
 
     def turn(self, page: S, **star: R) -> N:
         """"""
+        ignore(star)
         key = f"{self.page.name}::{page}"
         view = self.view.get(key)
         if not view:
@@ -533,3 +537,6 @@ class Window(Tree):
         self.view = Dictionary()
         self.element_item = element_item
         self.page = View("", element_item, parent=None)
+
+
+ignore(Element, Window)

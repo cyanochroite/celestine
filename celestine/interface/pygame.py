@@ -94,6 +94,7 @@ class Element(Element_, Abstract):
 
     def update_image(self, path: P, **star: R) -> N:
         """"""
+        ignore(star)
         self.path = path
 
         # reset image
@@ -260,3 +261,6 @@ class Window(Window_):
         file_path = load.asset("cascadia_code_regular.otf")
         size = 40
         self.font = pygame.font.Font(file_path, size)
+
+
+ignore(Window)

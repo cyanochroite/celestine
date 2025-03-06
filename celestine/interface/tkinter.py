@@ -1,7 +1,5 @@
 """"""
 
-import math
-
 from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
@@ -20,15 +18,14 @@ from celestine.typed import (
     P,
     R,
     S,
-    Z,
-    cast,
     ignore,
     override,
 )
-from celestine.window.collection import (
-    Area,
+from celestine.window.cardinal import (
     Dyad,
+    Round,
 )
+from celestine.window.collection import Area
 
 
 class Abstract(Abstract_):
@@ -93,6 +90,7 @@ class Element(Element_, Abstract):
 
     def update_image(self, path: P, **star: R) -> N:
         """"""
+        ignore(star)
         self.path = path
         if bool(PIL):
             pil_image = PIL.Image.open(
@@ -120,10 +118,12 @@ class Element(Element_, Abstract):
         new_size = Dyad(new_width, new_height)
 
         if new_width < old_width:
-            change = math.ceil(old_size / new_size)
+            change = old_size / new_size
+            change = change.inplace(Round.positive)
             image = photo.subsample(change.one, change.two)
         else:
-            change = cast(Dyad[Z], math.floor(new_size / old_size))
+            change = new_size / old_size
+            change = change.inplace(Round.negative)
             image = photo.zoom(change.one, change.two)
 
         self.item.configure(image=image)
@@ -145,6 +145,7 @@ class View(View_, Abstract):
     @override
     def build(self, canvas: A, **star: R) -> N:
         """"""
+        ignore(star)
         self.canvas = tkinter.Frame(
             canvas,
             padx=0,
@@ -216,3 +217,6 @@ class Window(Window_):
         self.canvas.minsize(640, 480)
         self.canvas.maxsize(3840, 2160)
         self.canvas.configure(bg="blue")
+
+
+ignore(Window)

@@ -80,6 +80,7 @@ class Element(Element_, Abstract):
 
     def update_image(self, path: P, **star: R) -> N:
         """"""
+        ignore(star)
         self.path = path
         if not bool(PIL):
             (x_dot, y_dot) = self.area.world.origin
@@ -350,3 +351,6 @@ def luma(image: PIL.Image.Image) -> GS:
         braille = 0x2800 + pattern
         result = chr(braille)
         yield result
+
+
+ignore(Window)

@@ -19,8 +19,8 @@ class _TypedConfigure(TD):
     """"""
 
     bg: S
-    image: "PhotoImage"
-    text: S
+    image: NR["PhotoImage"]
+    text: NR[S]
 
 
 class _TypedFrame(TD):

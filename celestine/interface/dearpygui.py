@@ -41,6 +41,7 @@ class Element(Element_, Abstract):
 
         callback(self, sender, app_data, user_data)
         """
+        ignore(_)
         self.click(self.area.world.centroid)
         bank.dequeue()
 
@@ -55,6 +56,7 @@ class Element(Element_, Abstract):
         channels = image[2]
         photo = image[3]
         """
+        ignore(star)
         super().build(canvas)
 
         if self.action or self.goto:
@@ -101,7 +103,7 @@ class Element(Element_, Abstract):
 
         if PIL and itertools:
             image = PIL.Image.open(
-                fp=path,
+                fp=self.path,
                 mode=LATIN_SMALL_LETTER_R,
                 formats=bank.window.formats(),
             )
@@ -117,6 +119,7 @@ class Element(Element_, Abstract):
             width, height = self.area.local.size
             length = width * height
             for _ in range(length):
+                ignore(_)
                 photo.append(0)
                 photo.append(0.25)
                 photo.append(0.5)
@@ -180,6 +183,7 @@ class Window(Window_):
     @override
     def build(self, **star: R) -> N:
         """"""
+        ignore(star)
         for name, item in self.items():
             item.canvas = dearpygui.window(tag=name)
             with item.canvas:
@@ -189,6 +193,7 @@ class Window(Window_):
     @override
     def turn(self, page: S, **star: R) -> N:
         """"""
+        ignore(star)
         super().turn(page)
 
         tag = self.page.name
@@ -196,6 +201,7 @@ class Window(Window_):
 
     @override
     def run(self) -> N:
+        ignore(self)
         super().run()
         dearpygui.setup_dearpygui()
         dearpygui.show_viewport(minimized=False, maximized=False)
@@ -210,7 +216,7 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.build(1280, 1080)
+        self.area = Area.fast(1280, 1080)
         self.tag = "window"
 
         self.canvas = None
@@ -236,3 +242,6 @@ class Window(Window_):
             decorated=True,
             clear_color=(0, 0, 0),
         )
+
+
+ignore(Window)
