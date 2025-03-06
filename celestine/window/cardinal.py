@@ -110,6 +110,18 @@ class Math(Struct):
         return result
 
     @staticmethod
+    def radd(one: Number, two: Number) -> Number:
+        """"""
+        result = two + one
+        return result
+
+    @staticmethod
+    def rsub(one: Number, two: Number) -> Number:
+        """"""
+        result = two - one
+        return result
+
+    @staticmethod
     def sub(one: Number, two: Number) -> Number:
         """"""
         result = one - two
@@ -257,6 +269,7 @@ class Cardinal(Struct):
         return result
 
     def __new__(cls, *_: A) -> K:
+        ignore(_)
         new = super().__new__(cls)
         name = repr(cls)
         index = name.rindex(FULL_STOP) + 1
@@ -276,7 +289,7 @@ class Cardinal(Struct):
         return result
 
     def __radd__(self, other: Nomad) -> K:
-        result = self._arithmetic(Math.add, other)
+        result = self._arithmetic(Math.radd, other)
         return result
 
     def __repr__(self):
@@ -293,7 +306,7 @@ class Cardinal(Struct):
         return result
 
     def __rsub__(self, other: Nomad) -> K:
-        result = self._arithmetic(Math.sub, other)
+        result = self._arithmetic(Math.rsub, other)
         return result
 
     def __rtruediv__(self, other: Nomad) -> K:
@@ -451,3 +464,6 @@ class Tetrad[X](Cardinal):
         return super().__new__(cls, one, two, tri, tet)
 
     data = property(_get, _set, _del)
+
+
+ignore(Monad, Dyad, Triad, Tetrad)

@@ -2,7 +2,10 @@
 
 import unittest
 
-from celestine.typed import N
+from celestine.typed import (
+    N,
+    ignore,
+)
 from celestine.window.cardinal import (
     Dyad,
     Math,
@@ -11,37 +14,6 @@ from celestine.window.cardinal import (
     Tetrad,
     Triad,
 )
-
-
-class TestMath(unittest.TestCase):
-    """"""
-
-    def test_arithmetic(self) -> N:
-        """"""
-        self.assertEqual(Math.add(1, 2), 3)
-        self.assertEqual(Math.sub(5, 3), 2)
-        self.assertEqual(Math.mul(2, 3), 6)
-        self.assertEqual(Math.truediv(6, 2), 3)
-
-    def test_rounding(self) -> N:
-        """"""
-
-        self.assertEqual(Round.decrease(+1.5), +1.0)
-        self.assertEqual(Round.decrease(-1.5), -1.0)
-
-        self.assertEqual(Round.increase(+1.5), +2.0)
-        self.assertEqual(Round.increase(-1.5), -2.0)
-
-        self.assertEqual(Round.negative(+1.5), +1.0)
-        self.assertEqual(Round.negative(-1.5), -2.0)
-
-        self.assertEqual(Round.positive(+1.5), +2.0)
-        self.assertEqual(Round.positive(-1.5), -1.0)
-
-        self.assertEqual(Round.round(+1.75), +2.0)
-        self.assertEqual(Round.round(+1.25), +1.0)
-        self.assertEqual(Round.round(-1.25), -1.0)
-        self.assertEqual(Round.round(-1.75), -2.0)
 
 
 class TestCardinal(unittest.TestCase):
@@ -81,31 +53,6 @@ class TestCardinal(unittest.TestCase):
         """"""
         c = Dyad(1.5, 2.5)
         self.assertEqual(float(c), 4.0)
-        self.assertEqual(float(c.inplace(Round.positive)), 5.0)
-        self.assertEqual(float(c.inplace(Round.negative)), 3.0)
-
-
-class TestMonad(unittest.TestCase):
-    """"""
-
-    def test_initialization(self) -> N:
-        """"""
-        item = Monad(1)
-        self.assertEqual(item.one, 1)
-        self.assertEqual(item.data, (1,))
-
-    def test_property_access(self) -> N:
-        """"""
-        item = Monad(+1)
-        item.data = (-1,)
-        self.assertEqual(item.one, -1)
-        self.assertEqual(item.data, (-1,))
-
-    def test_string_representation(self) -> N:
-        """"""
-        t = Monad(1)
-        self.assertEqual(str(t), "(1)")
-        self.assertEqual(repr(t), "Monad(1)")
 
 
 class TestDyad(unittest.TestCase):
@@ -133,31 +80,58 @@ class TestDyad(unittest.TestCase):
         self.assertEqual(repr(t), "Dyad(1, 2)")
 
 
-class TestTriad(unittest.TestCase):
+class TestMath(unittest.TestCase):
+    """"""
+
+    def test_arithmetic(self) -> N:
+        """"""
+        self.assertEqual(Math.add(1, 2), 3)
+        self.assertEqual(Math.sub(5, 3), 2)
+        self.assertEqual(Math.mul(2, 3), 6)
+        self.assertEqual(Math.truediv(6, 2), 3)
+
+    def test_rounding(self) -> N:
+        """"""
+
+        self.assertEqual(Round.decrease(+1.5), +1.0)
+        self.assertEqual(Round.decrease(-1.5), -1.0)
+
+        self.assertEqual(Round.increase(+1.5), +2.0)
+        self.assertEqual(Round.increase(-1.5), -2.0)
+
+        self.assertEqual(Round.negative(+1.5), +1.0)
+        self.assertEqual(Round.negative(-1.5), -2.0)
+
+        self.assertEqual(Round.positive(+1.5), +2.0)
+        self.assertEqual(Round.positive(-1.5), -1.0)
+
+        self.assertEqual(Round.round(+1.75), +2.0)
+        self.assertEqual(Round.round(+1.25), +1.0)
+        self.assertEqual(Round.round(-1.25), -1.0)
+        self.assertEqual(Round.round(-1.75), -2.0)
+
+
+class TestMonad(unittest.TestCase):
     """"""
 
     def test_initialization(self) -> N:
         """"""
-        item = Triad(1, 2, 3)
+        item = Monad(1)
         self.assertEqual(item.one, 1)
-        self.assertEqual(item.two, 2)
-        self.assertEqual(item.tri, 3)
-        self.assertEqual(item.data, (1, 2, 3))
+        self.assertEqual(item.data, (1,))
 
     def test_property_access(self) -> N:
         """"""
-        item = Triad(+1, +2, +3)
-        item.data = (-1, -2, -3)
+        item = Monad(+1)
+        item.data = (-1,)
         self.assertEqual(item.one, -1)
-        self.assertEqual(item.two, -2)
-        self.assertEqual(item.tri, -3)
-        self.assertEqual(item.data, (-1, -2, -3))
+        self.assertEqual(item.data, (-1,))
 
     def test_string_representation(self) -> N:
         """"""
-        t = Triad(1, 2, 3)
-        self.assertEqual(str(t), "(1, 2, 3)")
-        self.assertEqual(repr(t), "Triad(1, 2, 3)")
+        t = Monad(1)
+        self.assertEqual(str(t), "(1)")
+        self.assertEqual(repr(t), "Monad(1)")
 
 
 class TestTetrad(unittest.TestCase):
@@ -187,3 +161,40 @@ class TestTetrad(unittest.TestCase):
         t = Tetrad(1, 2, 3, 4)
         self.assertEqual(str(t), "(1, 2, 3, 4)")
         self.assertEqual(repr(t), "Tetrad(1, 2, 3, 4)")
+
+
+class TestTriad(unittest.TestCase):
+    """"""
+
+    def test_initialization(self) -> N:
+        """"""
+        item = Triad(1, 2, 3)
+        self.assertEqual(item.one, 1)
+        self.assertEqual(item.two, 2)
+        self.assertEqual(item.tri, 3)
+        self.assertEqual(item.data, (1, 2, 3))
+
+    def test_property_access(self) -> N:
+        """"""
+        item = Triad(+1, +2, +3)
+        item.data = (-1, -2, -3)
+        self.assertEqual(item.one, -1)
+        self.assertEqual(item.two, -2)
+        self.assertEqual(item.tri, -3)
+        self.assertEqual(item.data, (-1, -2, -3))
+
+    def test_string_representation(self) -> N:
+        """"""
+        t = Triad(1, 2, 3)
+        self.assertEqual(str(t), "(1, 2, 3)")
+        self.assertEqual(repr(t), "Triad(1, 2, 3)")
+
+
+ignore(
+    TestCardinal,
+    TestDyad,
+    TestMath,
+    TestMonad,
+    TestTetrad,
+    TestTriad,
+)

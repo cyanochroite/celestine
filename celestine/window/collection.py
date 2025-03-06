@@ -227,3 +227,6 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
     def __ior__(self, other: K) -> K:
         self.dictionary.update(other.dictionary)
         return self
+
+
+ignore(Area, Dictionary)

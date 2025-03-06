@@ -72,6 +72,7 @@ class Abstract:
         return result
 
     def __init__(self, *, pypi: VS = None, **star: R) -> N:
+        ignore(star)
         self.name = self.__module__.rsplit(".", maxsplit=1)[-1]
         self.pypi = pypi or self.name
 
@@ -86,3 +87,6 @@ class Abstract:
             install = f"Install with 'pip install {self.pypi}'."
             message = f"{found} {install}"
             print(message)
+
+
+ignore(Abstract)

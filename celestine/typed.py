@@ -60,13 +60,6 @@ from typing import (
     override,
 )
 
-
-class Star(TD):
-    """The global Star object."""
-
-    # TODO: Figure out how to map this to the R type.
-
-
 type ANY = A
 type B = bool
 type F = float
@@ -305,7 +298,6 @@ ignore(
     override,
     Protocol,
     Q,
-    Star,
     string,
     Struct,
     TA1,
@@ -317,6 +309,7 @@ ignore(
     TB2,
     TB3,
     TB4,
+    TD,
     TF,
     TF1,
     TF2,

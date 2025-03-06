@@ -11,6 +11,7 @@ from celestine.typed import (
     S,
     U,
     Z,
+    ignore,
 )
 
 
@@ -134,3 +135,6 @@ class Tk:
     def title(self, string: S) -> N:
         """"""
         raise NotImplementedError(self, string)
+
+
+ignore(Button, Frame, Label, Package, Tk)
