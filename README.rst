@@ -42,19 +42,15 @@ Note that Blender is an isolated environment, so other packages can not be used 
 Project Update
 ^^^^^^^^^^^^^^
 
-In this release, curses is back online.
-Tkinter, Curses, and Pygame should all have a functioning image viewer.
-For the best results, use Pygame.
-[MacOS is having trouble with tkinter and Windows wont run curses natively.]
+It is recommended to install the Pillow package for the best results.
 
-On Windows, it is recommended to install the Pillow package for the best results.
+Known issues:
+DearPyGui is almost online, but the image viewer needs some more work.
+MacOS is having trouble with tkinter and Windows wont run curses natively.
 
-On MacOS, it is recommended to NOT install the Pillow package because of an unknown issue with the wrapper class. 
+Blender is now the only interface not working right now.
 Blender support is something I still care about, but it is going to take a lot of work to fix it.
-The only real issue is that I need to wait until Blender has Python 3.12 before I can work on it again.
-
-I might drop support for DearPyGui because that is what the package author seems to be doing.
-Though I could replace it with their new package, pilotlight.
+I need to wait until Blender has Python 3.12 before I can work on it again.
 
 
 Commands

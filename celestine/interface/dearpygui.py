@@ -13,7 +13,7 @@ from celestine.package import (
 from celestine.typed import (
     LF,
     LS,
-    A,
+    VS,
     N,
     P,
     R,
@@ -26,6 +26,20 @@ from celestine.window.collection import Area
 
 class Abstract(Abstract_):
     """"""
+
+    @override
+    def hide(self) -> N:
+        """"""
+        ignore(self)
+        super().hide()
+        dearpygui.hide_item(self.name)
+
+    @override
+    def show(self) -> N:
+        """"""
+        ignore(self)
+        super().show()
+        dearpygui.show_item(self.name)
 
 
 class Element(Element_, Abstract):
@@ -46,7 +60,7 @@ class Element(Element_, Abstract):
         bank.dequeue()
 
     @override
-    def build(self, canvas: A, **star: R) -> N:
+    def build(self, parent: S, **star: R) -> N:
         """
         Draw the image to screen.
 
@@ -57,13 +71,14 @@ class Element(Element_, Abstract):
         photo = image[3]
         """
         ignore(star)
-        super().build(canvas)
+        super().build(parent)
 
         if self.action or self.goto:
             dearpygui.add_button(
                 callback=self.callback,
                 label=self.text,
                 tag=self.name,
+                parent=parent,
                 pos=self.area.world.origin.value,
             )
             return
@@ -72,6 +87,7 @@ class Element(Element_, Abstract):
             dearpygui.add_text(
                 f" {self.text}",  # extra space hack to fix margin error
                 tag=self.name,
+                parent=parent,
                 pos=self.area.world.origin.value,
             )
             return
@@ -84,6 +100,7 @@ class Element(Element_, Abstract):
             dearpygui.add_dynamic_texture(
                 default_value=photo,
                 height=height,
+                parent=parent,
                 tag=self.name,
                 width=width,
             )
@@ -91,6 +108,7 @@ class Element(Element_, Abstract):
         dearpygui.add_image(
             self.name,
             tag=f"{self.name}-base",
+            parent=parent,
             pos=self.area.local.origin,
         )
 
@@ -140,22 +158,11 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def hide(self) -> N:
+    def build(self, parent: VS, **star: R) -> N:
         """"""
-        super().hide()
-        try:
-            dearpygui.hide_item(self.name)
-        except SystemError:
-            pass
-
-    @override
-    def show(self) -> N:
-        """"""
-        super().show()
-        try:
-            dearpygui.show_item(self.name)
-        except SystemError:
-            pass
+        ignore(star)
+        self.canvas = dearpygui.add_group(parent=parent, tag=self.name)
+        super().build(self.name)
 
 
 class Window(Window_):
@@ -184,20 +191,9 @@ class Window(Window_):
     def build(self, **star: R) -> N:
         """"""
         ignore(star)
-        for name, item in self.items():
-            item.canvas = dearpygui.window(tag=name)
-            with item.canvas:
-                dearpygui.configure_item(item.name, show=False)
-                item.build(None)
-
-    @override
-    def turn(self, page: S, **star: R) -> N:
-        """"""
-        ignore(star)
-        super().turn(page)
-
-        tag = self.page.name
-        dearpygui.set_primary_window(tag, True)
+        self.canvas = dearpygui.add_window(tag=self.name)
+        dearpygui.set_primary_window(self.name, True)
+        super().build()
 
     @override
     def run(self) -> N:
