@@ -11,9 +11,9 @@ from celestine.package import (
     dearpygui,
 )
 from celestine.typed import (
+    ANY,
     LF,
     LS,
-    VS,
     N,
     P,
     R,
@@ -60,7 +60,7 @@ class Element(Element_, Abstract):
         bank.dequeue()
 
     @override
-    def build(self, parent: S, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """
         Draw the image to screen.
 
@@ -115,7 +115,6 @@ class Element(Element_, Abstract):
     @override
     def reimage(self, path: P, **star: R) -> N:
         """"""
-
         photo: list[float] = self.load(path)
         dearpygui.set_value(self.name, photo)
         super().reimage(path, **star)
@@ -171,11 +170,11 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def build(self, parent: VS, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
         ignore(star)
         self.canvas = dearpygui.add_group(parent=parent, tag=self.name)
-        super().build(self.name)
+        super().build(self.canvas)
 
 
 class Window(Window_):
@@ -201,12 +200,12 @@ class Window(Window_):
         ]
 
     @override
-    def build(self, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
         ignore(star)
         self.canvas = dearpygui.add_window(tag=self.name)
         dearpygui.set_primary_window(self.name, True)
-        super().build()
+        super().build(self.canvas)
 
     @override
     def run(self) -> N:

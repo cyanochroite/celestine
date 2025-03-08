@@ -11,9 +11,8 @@ from celestine.package import (
     tkinter,
 )
 from celestine.typed import (
+    ANY,
     LS,
-    A,
-    K,
     N,
     P,
     R,
@@ -31,7 +30,7 @@ from celestine.window.collection import Area
 class Abstract(Abstract_):
     """"""
 
-    def place(self, item: A) -> N:
+    def place(self, item: ANY) -> N:
         """"""
         width, height = self.area.local.size
         dot_x, dot_y = self.area.local.origin
@@ -53,7 +52,7 @@ class Element(Element_, Abstract):
         self.item.place_forget()
 
     @override
-    def build(self, canvas: A, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
         # TODO: self.area.local.size.value
         self.image = tkinter.PhotoImage(
@@ -69,12 +68,12 @@ class Element(Element_, Abstract):
         # Change everything to button and disable if no action?
         if self.action or self.goto:
             star.update(command=callback)
-            self.item = tkinter.Button(canvas, **star)
+            self.item = tkinter.Button(parent, **star)
         else:
-            self.item = tkinter.Label(canvas, **star)
+            self.item = tkinter.Label(parent, **star)
         self.place(self.item)
 
-        super().build(canvas, **star)
+        super().build(parent, **star)
 
     @override
     def show(self) -> N:
@@ -129,8 +128,8 @@ class Element(Element_, Abstract):
         self.item.configure(text=text)
         super().retext(text, **star)
 
-    def __init__(self, name: S, parent: K, **star: R) -> N:
-        super().__init__(name, parent, **star)
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(name, **star)
         self.photo = None
 
 
@@ -138,11 +137,11 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def build(self, canvas: A, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
         ignore(star)
         self.canvas = tkinter.Frame(
-            canvas,
+            parent,
             padx=0,
             pady=0,
             bg="yellow",

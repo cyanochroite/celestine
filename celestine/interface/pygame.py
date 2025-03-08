@@ -16,10 +16,9 @@ from celestine.package import (
     pygame,
 )
 from celestine.typed import (
+    ANY,
     LS,
-    A,
     B,
-    K,
     N,
     P,
     R,
@@ -64,7 +63,7 @@ class Element(Element_, Abstract):
 
         dest = self.area.world.origin.value
 
-        def render(source: A) -> N:
+        def render(source: ANY) -> N:
             """"""
             if source:
                 self.canvas.blit(source, dest)
@@ -75,7 +74,7 @@ class Element(Element_, Abstract):
         return True
 
     @override
-    def build(self, canvas: A, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
         self.color = (255, 0, 255)
         # self.warp("font")
@@ -84,7 +83,7 @@ class Element(Element_, Abstract):
         size = self.area.local.size.value
         self.image = pygame.Surface(size)
 
-        super().build(canvas, **star)
+        super().build(parent, **star)
 
     @override
     def reimage(self, path: P, **star: R) -> N:
@@ -129,8 +128,8 @@ class Element(Element_, Abstract):
         self.text_item = self.font.render(text, antialias, color)
         super().retext(text, **star)
 
-    def __init__(self, name: S, parent: K, **star: R) -> N:
-        super().__init__(name, parent, **star)
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(name, **star)
         self.color = (0, 0, 0)
         self.font = pygame.font.Font()
         self.text_item = pygame.Surface((0, 0))
@@ -148,9 +147,9 @@ class Window(Window_):
     font: pygame.font.Font
 
     @override
-    def build(self, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
-        super().build(font=self.font, **star)
+        super().build(parent, font=self.font, **star)
 
     @override
     def draw(self, **star: R) -> N:

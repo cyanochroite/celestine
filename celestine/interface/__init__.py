@@ -6,11 +6,11 @@ import pathlib
 
 from celestine import bank
 from celestine.typed import (
+    ANY,
     BF,
     IT,
     LS,
     TZ2,
-    A,
     B,
     D,
     K,
@@ -36,7 +36,7 @@ from celestine.window.container import (
 )
 
 
-class Tree(Object, collections.abc.MutableMapping[S, A]):
+class Tree(Object, collections.abc.MutableMapping[S, ANY]):
     """"""
 
     children: D[S, K]
@@ -77,17 +77,15 @@ class Tree(Object, collections.abc.MutableMapping[S, A]):
     def __len__(self) -> Z:
         return len(self.children)
 
-    def __setitem__(self, key: S, value: A) -> N:
+    def __setitem__(self, key: S, value: ANY) -> N:
         self.children[key] = value
 
 
 class Abstract(Tree):
     """"""
 
-    parent: K
-
     area: Area
-    canvas: A
+    canvas: ANY
     hidden: B
 
     action: S  # The action to perform when the user clicks the button.
@@ -130,15 +128,10 @@ class Abstract(Tree):
         """"""
         self.hidden = True
 
-    def can_build(self, **star: R) -> B:
-        """"""
-        ignore(self, star)
-        return True
-
-    def build(self, canvas: A, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
         ignore(star)
-        self.canvas = canvas
+        self.canvas = parent
 
     def show(self) -> N:
         """"""
@@ -162,9 +155,8 @@ class Abstract(Tree):
         result.center(target)
         return result
 
-    def __init__(self, name: S, parent: K, **star: R) -> N:
+    def __init__(self, name: S, **star: R) -> N:
         super().__init__(name, **star)
-        self.parent = parent
         self.area = Area.fast(0, 0)
         self.canvas = None
         self.hidden = False
@@ -192,13 +184,13 @@ class Abstract(Tree):
 class Element(Abstract):
     """"""
 
-    image: A
-    item: A
+    image: ANY
+    item: ANY
 
     @override
-    def build(self, canvas: A, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
-        super().build(canvas, **star)
+        super().build(parent, **star)
 
         if self.path:
             self.reimage(self.path)
@@ -216,8 +208,8 @@ class Element(Abstract):
         ignore(star)
         self.text = text
 
-    def __init__(self, name: S, parent: K, **star: R) -> N:
-        super().__init__(name, parent, **star)
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(name, **star)
         self.image = None
         self.item = None
 
@@ -251,10 +243,11 @@ class View(Abstract):
         return True
 
     @override
-    def build(self, canvas: A, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
+        super().build(parent, **star)
         for value in self.values():
-            value.build(canvas, **star)
+            value.build(parent, **star)
 
     @override
     def spot(self, area: Area) -> N:
@@ -312,7 +305,6 @@ class View(Abstract):
                 name,
                 self.element_item,
                 mode=mode,
-                parent=self,
                 **star,
             )
         )
@@ -328,7 +320,12 @@ class View(Abstract):
     def __enter__(self) -> K:
         return self
 
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
+    def __exit__(
+        self,
+        exc_type: ANY,
+        exc_value: ANY,
+        traceback: ANY,
+    ) -> BF:
         ignore(self)
         if exc_type or exc_value or traceback:
             print("ERROR", exc_type, exc_value, traceback)
@@ -337,7 +334,7 @@ class View(Abstract):
     def __init__(
         self,
         name: S,
-        element_item: D[S, A],
+        element_item: D[S, ANY],
         *,
         mode: Zone = Zone.NONE,
         **star: R,
@@ -360,7 +357,6 @@ class View(Abstract):
         self.set(
             self._element(
                 name,
-                self,
                 **star,
             )
         )
@@ -393,10 +389,10 @@ class Window(Tree):
 
     page: View
     main: S
-    code: Dictionary[A]  # function
+    code: Dictionary[ANY]  # function
     view: Dictionary[View]
 
-    canvas: A
+    canvas: ANY
 
     @classmethod
     def extension(cls) -> LS:
@@ -480,7 +476,6 @@ class Window(Tree):
                 name,
                 self.element_item,
                 mode=Zone.DROP,
-                parent=self,
                 **star,
             )
         )
@@ -494,10 +489,10 @@ class Window(Tree):
         for value in self.values():
             value.draw(**star)
 
-    def build(self, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
         for value in self.values():
-            value.build(self.canvas, **star)
+            value.build(parent, **star)
 
     def turn(self, page: S, **star: R) -> N:
         """"""
@@ -542,7 +537,7 @@ class Window(Tree):
     def run(self) -> N:
         """"""
         self.spot(self.area)
-        self.build()
+        self.build(self.canvas)
 
         for value in self.values():
             value.hide()
@@ -550,14 +545,14 @@ class Window(Tree):
         self.page.name = self.main
         self.turn(self.main)
 
-    def __init__(self, element_item: D[S, A], **star: R) -> N:
+    def __init__(self, element_item: D[S, ANY], **star: R) -> N:
         super().__init__("window", **star)
         self.main = ""
         self.area = Area.fast(0, 0)
         self.code = Dictionary()
         self.view = Dictionary()
         self.element_item = element_item
-        self.page = View("", element_item, parent=None)
+        self.page = View("", element_item)
 
 
 ignore(Element, Window)

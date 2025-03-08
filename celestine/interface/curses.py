@@ -24,7 +24,6 @@ from celestine.typed import (
     LS,
     LZ,
     B,
-    K,
     N,
     P,
     R,
@@ -133,8 +132,8 @@ class Element(Element_, Abstract):
                 continue  # TODO: figure out why last pixel causes ERROR
             self.canvas.addstr(y_dot, x_dot, text, extra)
 
-    def __init__(self, name: S, parent: K, **star: R) -> N:
-        super().__init__(name, parent, **star)
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(name, **star)
         self.photo = None
         self.cache = PIL.Image.Image()
         self.color = PIL.Image.Image()
