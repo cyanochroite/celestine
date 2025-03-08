@@ -74,14 +74,15 @@ class Element(Element_, Abstract):
             return True
 
         if self.path:
-            self.update_image(self.path)
+            self.reimage(self.path)
 
         return True
 
-    def update_image(self, path: P, **star: R) -> N:
+    @override
+    def reimage(self, path: P, **star: R) -> N:
         """"""
-        ignore(star)
-        self.path = path
+        super().reimage(path, **star)
+
         if not bool(PIL):
             (x_dot, y_dot) = self.area.world.origin
             self.canvas.addstr(y_dot, x_dot, self.path.name)

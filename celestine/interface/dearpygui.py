@@ -112,7 +112,20 @@ class Element(Element_, Abstract):
             pos=self.area.local.origin,
         )
 
-    def load(self) -> LF:
+    @override
+    def reimage(self, path: P, **star: R) -> N:
+        """"""
+
+        photo: list[float] = self.load(path)
+        dearpygui.set_value(self.name, photo)
+        super().reimage(path, **star)
+
+    @override
+    def retext(self, text: S, **star: R) -> N:
+        """"""
+        super().retext(text, **star)
+
+    def load(self, path: P) -> LF:
         """"""
 
         itertools = None

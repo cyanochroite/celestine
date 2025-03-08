@@ -77,8 +77,6 @@ class Element(Element_, Abstract):
     @override
     def build(self, canvas: A, **star: R) -> N:
         """"""
-        super().build(canvas, **star)
-
         self.color = (255, 0, 255)
         # self.warp("font")
         self.font = star.pop("font")
@@ -86,17 +84,11 @@ class Element(Element_, Abstract):
         size = self.area.local.size.value
         self.image = pygame.Surface(size)
 
-        if self.path:
-            self.update_image(self.path)
+        super().build(canvas, **star)
 
-        if self.text:
-            self.update_text(self.text)
-
-    def update_image(self, path: P, **star: R) -> N:
+    @override
+    def reimage(self, path: P, **star: R) -> N:
         """"""
-        ignore(star)
-        self.path = path
-
         # reset image
         self.image.fill((0, 0, 0))
 
@@ -126,12 +118,16 @@ class Element(Element_, Abstract):
         dest = image_size.origin.value
         self.image.blit(source, dest)
 
-    def update_text(self, text: S) -> N:
+        super().reimage(path, **star)
+
+    @override
+    def retext(self, text: S, **star: R) -> N:
         """"""
         self.text = text
         antialias = True
         color = self.color
         self.text_item = self.font.render(text, antialias, color)
+        super().retext(text, **star)
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)

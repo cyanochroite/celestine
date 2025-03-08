@@ -195,6 +195,27 @@ class Element(Abstract):
     image: A
     item: A
 
+    @override
+    def build(self, canvas: A, **star: R) -> N:
+        """"""
+        super().build(canvas, **star)
+
+        if self.path:
+            self.reimage(self.path)
+
+        if self.text:
+            self.retext(self.text)
+
+    def reimage(self, path: P, **star: R) -> N:
+        """"""
+        ignore(star)
+        self.path = path
+
+    def retext(self, text: S, **star: R) -> N:
+        """"""
+        ignore(star)
+        self.text = text
+
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
         self.image = None

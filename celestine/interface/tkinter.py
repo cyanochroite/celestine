@@ -55,8 +55,6 @@ class Element(Element_, Abstract):
     @override
     def build(self, canvas: A, **star: R) -> N:
         """"""
-        super().build(canvas, **star)
-
         # TODO: self.area.local.size.value
         self.image = tkinter.PhotoImage(
             width=200,
@@ -76,11 +74,7 @@ class Element(Element_, Abstract):
             self.item = tkinter.Label(canvas, **star)
         self.place(self.item)
 
-        if self.path:
-            self.update_image(self.path)
-
-        if self.text:
-            self.update_text(self.text)
+        super().build(canvas, **star)
 
     @override
     def show(self) -> N:
@@ -88,10 +82,9 @@ class Element(Element_, Abstract):
         super().show()
         self.place(self.item)
 
-    def update_image(self, path: P, **star: R) -> N:
+    @override
+    def reimage(self, path: P, **star: R) -> N:
         """"""
-        ignore(star)
-        self.path = path
         if bool(PIL):
             pil_image = PIL.Image.open(
                 fp=path,
@@ -104,35 +97,37 @@ class Element(Element_, Abstract):
             pil_photo = PIL.ImageTk.PhotoImage(image=pil_image)
             self.item.configure(image=pil_photo)
             self.item.image = pil_photo
-            return
-
-        photo = tkinter.PhotoImage(file=self.path)
-
-        old_width = photo.width()
-        old_height = photo.height()
-
-        image_size = self.image_size((old_width, old_height))
-        new_width, new_height = image_size.size
-
-        old_size = Dyad(old_width, old_height)
-        new_size = Dyad(new_width, new_height)
-
-        if new_width < old_width:
-            change = old_size / new_size
-            change = change.inplace(Round.positive)
-            image = photo.subsample(change.one, change.two)
         else:
-            change = new_size / old_size
-            change = change.inplace(Round.negative)
-            image = photo.zoom(change.one, change.two)
+            photo = tkinter.PhotoImage(file=path)
 
-        self.item.configure(image=image)
-        self.item.image = image
+            old_width = photo.width()
+            old_height = photo.height()
 
-    def update_text(self, text: S) -> N:
+            image_size = self.image_size((old_width, old_height))
+            new_width, new_height = image_size.size
+
+            old_size = Dyad(old_width, old_height)
+            new_size = Dyad(new_width, new_height)
+
+            if new_width < old_width:
+                change = old_size / new_size
+                change = change.inplace(Round.positive)
+                image = photo.subsample(change.one, change.two)
+            else:
+                change = new_size / old_size
+                change = change.inplace(Round.negative)
+                image = photo.zoom(change.one, change.two)
+
+                self.item.configure(image=image)
+                self.item.image = image
+
+        super().reimage(path, **star)
+
+    @override
+    def retext(self, text: S, **star: R) -> N:
         """"""
-        self.text = text
         self.item.configure(text=text)
+        super().retext(text, **star)
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
