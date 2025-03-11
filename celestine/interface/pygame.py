@@ -19,6 +19,7 @@ from celestine.typed import (
     ANY,
     LS,
     B,
+    D,
     N,
     P,
     R,
@@ -74,16 +75,17 @@ class Element(Element_, Abstract):
         return True
 
     @override
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
+        self.parent = parent
         self.color = (255, 0, 255)
         # self.warp("font")
-        self.font = star.pop("font")
+        self.font = star.get("font", None)
 
         size = self.area.local.size.value
         self.image = pygame.Surface(size)
 
-        super().build(parent, **star)
+        super().build(parent, star)
 
     @override
     def reimage(self, path: P, **star: R) -> N:
@@ -138,23 +140,33 @@ class Element(Element_, Abstract):
 class View(View_, Abstract):
     """"""
 
+    @override
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
+        """"""
+        self.item = parent
+        self.parent = parent
+        star |= {}
+
 
 class Window(Window_):
     """"""
 
     area: Area
-    parent: pygame.Surface
     font: pygame.font.Font
+    item: pygame.Surface
+    star: R
 
     @override
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        super().build(parent, font=self.font, **star)
+        self.item = pygame.display.set_mode(self.area.world.size.value)
+        self.parent = parent
+        star |= {"font": self.font}
 
     @override
     def draw(self, **star: R) -> N:
         """"""
-        self.parent.fill((0, 0, 0))
+        self.item.fill((0, 0, 0))
 
         super().draw(font=self.font, **star)
 
@@ -245,9 +257,6 @@ class Window(Window_):
         }
         super().__init__(element, **star)
         self.area = Area.fast(1920, 1080)
-
-        value = self.area.world.size.value
-        self.parent = pygame.display.set_mode(value)
 
         caption = bank.language.APPLICATION_TITLE
         pygame.display.set_caption(caption)

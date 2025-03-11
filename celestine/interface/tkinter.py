@@ -139,8 +139,7 @@ class View(View_, Abstract):
     @override
     def build(self, parent: ANY, **star: R) -> N:
         """"""
-        ignore(star)
-        self.parent = tkinter.Frame(
+        child = tkinter.Frame(
             parent,
             padx=0,
             pady=0,
@@ -148,8 +147,8 @@ class View(View_, Abstract):
             width=1920,
             height=1080,
         )
-        self.place(self.parent)
-        super().build(self.parent)
+        self.place(child)
+        super().build(child, **star)
 
     @override
     def hide(self) -> N:

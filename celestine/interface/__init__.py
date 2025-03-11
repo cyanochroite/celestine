@@ -86,7 +86,8 @@ class Abstract(Tree):
 
     area: Area
     hidden: B
-    parent: ANY
+    item: ANY  # The cached object that is being drawn.
+    parent: ANY  # The object to draw ourself into.
 
     action: S  # The action to perform when the user clicks the button.
     fit: Image  # The way the image scales to fit the view space.
@@ -128,10 +129,9 @@ class Abstract(Tree):
         """"""
         self.hidden = True
 
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        ignore(star)
-        self.parent = parent
+        raise NotImplementedError(self, parent, star)
 
     def show(self) -> N:
         """"""
@@ -158,8 +158,9 @@ class Abstract(Tree):
     def __init__(self, name: S, **star: R) -> N:
         super().__init__(name, **star)
         self.area = Area.fast(0, 0)
-        self.parent = None
         self.hidden = False
+        self.item = None
+        self.parent = None
 
         self.star = star
 
@@ -188,9 +189,9 @@ class Element(Abstract):
     item: ANY
 
     @override
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        super().build(parent, **star)
+        ignore(parent, star)
 
         if self.path:
             self.reimage(self.path)
@@ -243,11 +244,9 @@ class View(Abstract):
         return True
 
     @override
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        super().build(parent, **star)
-        for value in self.values():
-            value.build(parent, **star)
+        raise NotImplementedError(self, parent, star)
 
     @override
     def spot(self, area: Area) -> N:
@@ -392,7 +391,7 @@ class Window(Tree):
     code: Dictionary[ANY]  # function
     view: Dictionary[View]
 
-    parent: ANY
+    item: ANY
 
     @classmethod
     def extension(cls) -> LS:
@@ -489,10 +488,15 @@ class Window(Tree):
         for value in self.values():
             value.draw(**star)
 
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        for value in self.values():
-            value.build(parent, **star)
+        raise NotImplementedError(self, parent, star)
+
+    def builder(self, item, parent, star: D[S, ANY]) -> N:
+        """"""
+        item.build(parent, star)
+        for value in item.values():
+            self.builder(value, self.item, star)
 
     def turn(self, page: S, **star: R) -> N:
         """"""
@@ -537,7 +541,7 @@ class Window(Tree):
     def run(self) -> N:
         """"""
         self.spot(self.area)
-        self.build(self.parent)
+        self.builder(self, None, {})
 
         for value in self.values():
             value.hide()
@@ -553,6 +557,7 @@ class Window(Tree):
         self.view = Dictionary()
         self.element_item = element_item
         self.page = View("", element_item)
+        self.item = None
 
 
 ignore(Element, Window)
