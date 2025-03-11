@@ -256,7 +256,7 @@ class Element(Element_, Abstract):
                 # image
                 image = data.image.load(self.path)
                 material = UV.image(self.name, image)
-                plane = basic.image(self.name, self.canvas, image.size)
+                plane = basic.image(self.name, self.parent, image.size)
 
                 plane.body.data.materials.append(material)
                 self.keep = plane
@@ -281,8 +281,8 @@ class View(View_, Abstract):
     def build(self, parent: ANY, **star: R) -> N:
         """"""
         if star.get("first"):
-            if canvas:
-                link = canvas.children.link
+            if parent:
+                link = parent.children.link
             else:
                 link = bpy.context.scene.collection.children.link
 
@@ -386,7 +386,7 @@ class Window(Window_):
         self.call = call
         self.star = star
 
-        self.canvas = None
+        self.parent = None
 
         ######
 

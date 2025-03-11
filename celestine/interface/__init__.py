@@ -85,8 +85,8 @@ class Abstract(Tree):
     """"""
 
     area: Area
-    canvas: ANY
     hidden: B
+    parent: ANY
 
     action: S  # The action to perform when the user clicks the button.
     fit: Image  # The way the image scales to fit the view space.
@@ -131,7 +131,7 @@ class Abstract(Tree):
     def build(self, parent: ANY, **star: R) -> N:
         """"""
         ignore(star)
-        self.canvas = parent
+        self.parent = parent
 
     def show(self) -> N:
         """"""
@@ -158,7 +158,7 @@ class Abstract(Tree):
     def __init__(self, name: S, **star: R) -> N:
         super().__init__(name, **star)
         self.area = Area.fast(0, 0)
-        self.canvas = None
+        self.parent = None
         self.hidden = False
 
         self.star = star
@@ -392,7 +392,7 @@ class Window(Tree):
     code: Dictionary[ANY]  # function
     view: Dictionary[View]
 
-    canvas: ANY
+    parent: ANY
 
     @classmethod
     def extension(cls) -> LS:
@@ -537,7 +537,7 @@ class Window(Tree):
     def run(self) -> N:
         """"""
         self.spot(self.area)
-        self.build(self.canvas)
+        self.build(self.parent)
 
         for value in self.values():
             value.hide()

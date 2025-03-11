@@ -173,8 +173,8 @@ class View(View_, Abstract):
     def build(self, parent: ANY, **star: R) -> N:
         """"""
         ignore(star)
-        self.canvas = dearpygui.add_group(parent=parent, tag=self.name)
-        super().build(self.canvas)
+        self.parent = dearpygui.add_group(parent=parent, tag=self.name)
+        super().build(self.parent)
 
 
 class Window(Window_):
@@ -203,9 +203,9 @@ class Window(Window_):
     def build(self, parent: ANY, **star: R) -> N:
         """"""
         ignore(star)
-        self.canvas = dearpygui.add_window(tag=self.name)
+        self.parent = dearpygui.add_window(tag=self.name)
         dearpygui.set_primary_window(self.name, True)
-        super().build(self.canvas)
+        super().build(self.parent)
 
     @override
     def run(self) -> N:
@@ -227,7 +227,7 @@ class Window(Window_):
         self.area = Area.fast(1280, 1080)
         self.tag = "window"
 
-        self.canvas = None
+        self.parent = None
 
         title = bank.language.APPLICATION_TITLE
         dearpygui.create_context()

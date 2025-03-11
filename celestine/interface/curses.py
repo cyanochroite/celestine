@@ -66,10 +66,10 @@ class Element(Element_, Abstract):
         x, y = self.area.world.origin.value
 
         # text
-        canvas = star.pop("canvas")
+        parent = star.pop("parent")
 
         if self.text:
-            canvas.addstr(y, x, self.text)
+            parent.addstr(y, x, self.text)
             return True
 
         if self.path:
@@ -84,7 +84,7 @@ class Element(Element_, Abstract):
 
         if not bool(PIL):
             (x_dot, y_dot) = self.area.world.origin
-            self.canvas.addstr(y_dot, x_dot, self.path.name)
+            self.parent.addstr(y_dot, x_dot, self.path.name)
             return
 
         image = PIL.Image.open(
@@ -130,7 +130,7 @@ class Element(Element_, Abstract):
         for x_dot, y_dot, text, extra in button:
             if x_dot == size.one and y_dot == size.two:
                 continue  # TODO: figure out why last pixel causes ERROR
-            self.canvas.addstr(y_dot, x_dot, text, extra)
+            self.parent.addstr(y_dot, x_dot, text, extra)
 
     def __init__(self, name: S, **star: R) -> N:
         super().__init__(name, **star)
@@ -149,11 +149,11 @@ class Window(Window_):
     @override
     def draw(self, **star: R) -> N:
         """"""
-        self.canvas.erase()
-        super().draw(canvas=self.canvas, **star)
+        self.parent.erase()
+        super().draw(parent=self.parent, **star)
 
         self.stdscr.noutrefresh()
-        self.canvas.noutrefresh()
+        self.parent.noutrefresh()
         curses.doupdate()
 
     @override
@@ -245,7 +245,7 @@ class Window(Window_):
         self.cord_x = 0.5
         self.cord_y = 0.5
 
-        self.canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
+        self.parent = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
 
         for index in range(COLOR_PAIRS):
             red, green, blue = curses_table[index]

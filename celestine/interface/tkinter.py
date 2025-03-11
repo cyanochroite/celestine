@@ -140,7 +140,7 @@ class View(View_, Abstract):
     def build(self, parent: ANY, **star: R) -> N:
         """"""
         ignore(star)
-        self.canvas = tkinter.Frame(
+        self.parent = tkinter.Frame(
             parent,
             padx=0,
             pady=0,
@@ -148,20 +148,20 @@ class View(View_, Abstract):
             width=1920,
             height=1080,
         )
-        self.place(self.canvas)
-        super().build(self.canvas)
+        self.place(self.parent)
+        super().build(self.parent)
 
     @override
     def hide(self) -> N:
         """"""
         super().hide()
-        self.canvas.place_forget()
+        self.parent.place_forget()
 
     @override
     def show(self) -> N:
         """"""
         super().show()
-        self.place(self.canvas)
+        self.place(self.parent)
 
 
 class Window(Window_):
@@ -186,12 +186,12 @@ class Window(Window_):
     @override
     def run(self) -> N:
         super().run()
-        self.canvas.mainloop()
+        self.parent.mainloop()
 
     @override
     def turn(self, page: S, **star: R) -> N:
         super().turn(page, **star)
-        self.page.canvas.tkraise()
+        self.page.parent.tkraise()
 
     @override
     def __init__(self, **star: R) -> N:
@@ -204,13 +204,13 @@ class Window(Window_):
         self.area = Area.fast(1280, 1080)
         self.area = Area.fast(1200, 1000)
 
-        self.canvas = tkinter.Tk()
-        self.canvas.title(bank.language.APPLICATION_TITLE)
-        self.canvas.geometry("1920x1080")
-        self.canvas.geometry("1900x1000")
-        self.canvas.minsize(640, 480)
-        self.canvas.maxsize(3840, 2160)
-        self.canvas.configure(bg="blue")
+        self.parent = tkinter.Tk()
+        self.parent.title(bank.language.APPLICATION_TITLE)
+        self.parent.geometry("1920x1080")
+        self.parent.geometry("1900x1000")
+        self.parent.minsize(640, 480)
+        self.parent.maxsize(3840, 2160)
+        self.parent.configure(bg="blue")
 
 
 ignore(Window)

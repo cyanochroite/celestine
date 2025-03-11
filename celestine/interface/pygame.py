@@ -66,7 +66,7 @@ class Element(Element_, Abstract):
         def render(source: ANY) -> N:
             """"""
             if source:
-                self.canvas.blit(source, dest)
+                self.parent.blit(source, dest)
 
         render(self.image)
         render(self.text_item)
@@ -143,7 +143,7 @@ class Window(Window_):
     """"""
 
     area: Area
-    canvas: pygame.Surface
+    parent: pygame.Surface
     font: pygame.font.Font
 
     @override
@@ -154,7 +154,7 @@ class Window(Window_):
     @override
     def draw(self, **star: R) -> N:
         """"""
-        self.canvas.fill((0, 0, 0))
+        self.parent.fill((0, 0, 0))
 
         super().draw(font=self.font, **star)
 
@@ -247,7 +247,7 @@ class Window(Window_):
         self.area = Area.fast(1920, 1080)
 
         value = self.area.world.size.value
-        self.canvas = pygame.display.set_mode(value)
+        self.parent = pygame.display.set_mode(value)
 
         caption = bank.language.APPLICATION_TITLE
         pygame.display.set_caption(caption)
