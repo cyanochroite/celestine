@@ -140,13 +140,6 @@ class Element(Element_, Abstract):
 class View(View_, Abstract):
     """"""
 
-    @override
-    def build(self, parent: ANY, star: D[S, ANY]) -> N:
-        """"""
-        self.item = parent
-        self.parent = parent
-        star |= {}
-
 
 class Window(Window_):
     """"""

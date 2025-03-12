@@ -131,7 +131,9 @@ class Abstract(Tree):
 
     def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        raise NotImplementedError(self, parent, star)
+        self.item = parent
+        self.parent = parent
+        star |= {}
 
     def show(self) -> N:
         """"""
@@ -191,6 +193,7 @@ class Element(Abstract):
     @override
     def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
+        # Put this in builder. Remove all abstract build.
         ignore(parent, star)
 
         if self.path:
@@ -218,7 +221,6 @@ class Element(Abstract):
 class View(Abstract):
     """"""
 
-    item: D[S, Abstract]
     width: Z
     height: Z
     element_item: D[S, Abstract]
@@ -242,11 +244,6 @@ class View(Abstract):
             value.draw(**star)
 
         return True
-
-    @override
-    def build(self, parent: ANY, star: D[S, ANY]) -> N:
-        """"""
-        raise NotImplementedError(self, parent, star)
 
     @override
     def spot(self, area: Area) -> N:
@@ -393,6 +390,11 @@ class Window(Tree):
 
     item: ANY
 
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
+        """"""
+        self.item = parent
+        star |= {}
+
     @classmethod
     def extension(cls) -> LS:
         """"""
@@ -488,11 +490,7 @@ class Window(Tree):
         for value in self.values():
             value.draw(**star)
 
-    def build(self, parent: ANY, star: D[S, ANY]) -> N:
-        """"""
-        raise NotImplementedError(self, parent, star)
-
-    def builder(self, item, parent, star: D[S, ANY]) -> N:
+    def builder(self, item: ANY, parent: ANY, star: D[S, ANY]) -> N:
         """"""
         item.build(parent, star)
         for value in item.values():

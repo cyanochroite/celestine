@@ -24,6 +24,9 @@ from celestine.typed import (
     LS,
     LZ,
     B,
+    D,
+    S,
+    ANY,
     N,
     P,
     R,
@@ -146,14 +149,21 @@ class View(View_, Abstract):
 class Window(Window_):
     """"""
 
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
+        """"""
+        ignore(parent)
+        (size_y, size_x) = self.stdscr.getmaxyx()
+        self.item = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
+        star |= {}
+
     @override
     def draw(self, **star: R) -> N:
         """"""
-        self.parent.erase()
-        super().draw(parent=self.parent, **star)
+        self.item.erase()
+        super().draw(parent=self.item, **star)
 
         self.stdscr.noutrefresh()
-        self.parent.noutrefresh()
+        self.item.noutrefresh()
         curses.doupdate()
 
     @override
@@ -244,8 +254,6 @@ class Window(Window_):
         self.area = Area(plane, plane)
         self.cord_x = 0.5
         self.cord_y = 0.5
-
-        self.parent = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
 
         for index in range(COLOR_PAIRS):
             red, green, blue = curses_table[index]
