@@ -177,7 +177,7 @@ class View(View_, Abstract):
         super().build(self.parent)
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
     @override

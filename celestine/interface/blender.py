@@ -314,7 +314,7 @@ class View(View_, Abstract):
         self.dictionary = bpy.data.collections
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
     @override

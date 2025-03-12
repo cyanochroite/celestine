@@ -163,7 +163,7 @@ class View(View_, Abstract):
         self.place(self.parent)
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
     @override

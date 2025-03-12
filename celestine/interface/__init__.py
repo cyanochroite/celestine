@@ -95,6 +95,12 @@ class Abstract(Tree):
     path: P  # The path to the image to use as a background.
     text: S  # Text that describes the purpose of the button's action.
 
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
+        """"""
+        self.item = parent
+        self.parent = parent
+        star |= {}
+
     def click(self, point: Point, **star: R) -> B:
         """"""
         ignore(star)
@@ -129,20 +135,6 @@ class Abstract(Tree):
         """"""
         self.hidden = True
 
-    def build(self, parent: ANY, star: D[S, ANY]) -> N:
-        """"""
-        self.item = parent
-        self.parent = parent
-        star |= {}
-
-    def show(self) -> N:
-        """"""
-        self.hidden = False
-
-    def spot(self, area: Area) -> N:
-        """"""
-        self.area = area
-
     def image_size(self, size: TZ2, scale: TZ2 = (1, 1)) -> Plane:
         """"""
         result = Plane.create(*size)
@@ -156,6 +148,14 @@ class Abstract(Tree):
 
         result.center(target)
         return result
+
+    def show(self) -> N:
+        """"""
+        self.hidden = False
+
+    def spot(self, area: Area) -> N:
+        """"""
+        self.area = area
 
     def __init__(self, name: S, **star: R) -> N:
         super().__init__(name, **star)
@@ -189,18 +189,6 @@ class Element(Abstract):
 
     image: ANY
     item: ANY
-
-    @override
-    def build(self, parent: ANY, star: D[S, ANY]) -> N:
-        """"""
-        # Put this in builder. Remove all abstract build.
-        ignore(parent, star)
-
-        if self.path:
-            self.reimage(self.path)
-
-        if self.text:
-            self.retext(self.text)
 
     def reimage(self, path: P, **star: R) -> N:
         """"""
@@ -380,7 +368,7 @@ class View(Abstract):
         self.element(name, text=text, **star)
 
 
-class Window(Tree):
+class Window(Abstract):
     """"""
 
     page: View
@@ -389,11 +377,6 @@ class Window(Tree):
     view: Dictionary[View]
 
     item: ANY
-
-    def build(self, parent: ANY, star: D[S, ANY]) -> N:
-        """"""
-        self.item = parent
-        star |= {}
 
     @classmethod
     def extension(cls) -> LS:
@@ -485,14 +468,23 @@ class Window(Tree):
     # star might not be needed for all functions
     # but it will stay for now for ease of itegration later
 
-    def draw(self, **star: R) -> N:
+    def draw(self, **star: R) -> B:
         """"""
         for value in self.values():
             value.draw(**star)
 
+        return True
+
     def builder(self, item: ANY, parent: ANY, star: D[S, ANY]) -> N:
         """"""
         item.build(parent, star)
+
+        if item.path:
+            item.reimage(item.path)
+
+        if item.text:
+            item.retext(item.text)
+
         for value in item.values():
             self.builder(value, self.item, star)
 
@@ -512,10 +504,15 @@ class Window(Tree):
     ###############
     # No star functions
 
-    def click(self, point: Point) -> N:
+    @override
+    def click(self, point: Point, **star: R) -> B:
         """"""
+        ignore(star)
+
         for value in self.values():
             value.click(point)
+
+        return True
 
     def spot(self, area: Area) -> N:
         """"""
@@ -555,7 +552,6 @@ class Window(Tree):
         self.view = Dictionary()
         self.element_item = element_item
         self.page = View("", element_item)
-        self.item = None
 
 
 ignore(Element, Window)

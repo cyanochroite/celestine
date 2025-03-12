@@ -77,15 +77,13 @@ class Element(Element_, Abstract):
     @override
     def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        self.parent = parent
+        super().build(parent, star)
         self.color = (255, 0, 255)
         # self.warp("font")
         self.font = star.get("font", None)
 
         size = self.area.local.size.value
         self.image = pygame.Surface(size)
-
-        super().build(parent, star)
 
     @override
     def reimage(self, path: P, **star: R) -> N:
@@ -141,7 +139,7 @@ class View(View_, Abstract):
     """"""
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
     area: Area
@@ -152,18 +150,20 @@ class Window(Window_):
     @override
     def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
+        super().build(parent, star)
         self.item = pygame.display.set_mode(self.area.world.size.value)
-        self.parent = parent
         star |= {"font": self.font}
 
     @override
-    def draw(self, **star: R) -> N:
+    def draw(self, **star: R) -> B:
         """"""
         self.item.fill((0, 0, 0))
 
         super().draw(font=self.font, **star)
 
         pygame.display.flip()
+
+        return True
 
     @override
     @classmethod

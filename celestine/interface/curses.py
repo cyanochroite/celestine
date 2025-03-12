@@ -19,14 +19,13 @@ from celestine.package import (
     curses,
 )
 from celestine.typed import (
+    ANY,
     GS,
     GZ,
     LS,
     LZ,
     B,
     D,
-    S,
-    ANY,
     N,
     P,
     R,
@@ -146,18 +145,17 @@ class View(View_, Abstract):
     """"""
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
     def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        ignore(parent)
+        super().build(parent, star)
         (size_y, size_x) = self.stdscr.getmaxyx()
         self.item = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
-        star |= {}
 
     @override
-    def draw(self, **star: R) -> N:
+    def draw(self, **star: R) -> B:
         """"""
         self.item.erase()
         super().draw(parent=self.item, **star)
@@ -165,6 +163,7 @@ class Window(Window_):
         self.stdscr.noutrefresh()
         self.item.noutrefresh()
         curses.doupdate()
+        return True
 
     @override
     @classmethod
