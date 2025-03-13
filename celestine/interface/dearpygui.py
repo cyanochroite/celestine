@@ -14,6 +14,7 @@ from celestine.typed import (
     ANY,
     LF,
     LS,
+    D,
     N,
     P,
     R,
@@ -60,7 +61,7 @@ class Element(Element_, Abstract):
         bank.dequeue()
 
     @override
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """
         Draw the image to screen.
 
@@ -70,9 +71,7 @@ class Element(Element_, Abstract):
         channels = image[2]
         photo = image[3]
         """
-        ignore(star)
-        super().build(parent)
-
+        super().build(parent, star)
         if self.action or self.goto:
             dearpygui.add_button(
                 callback=self.callback,
@@ -142,18 +141,10 @@ class Element(Element_, Abstract):
             flat = itertools.flatten(data)
             photo = list(map(lambda pixel: float(pixel / 255), flat))
         else:
-            image = dearpygui.load_image(self.path)
+            file = str(path)
+            image = dearpygui.load_image(file)
             photo = image[3]
-            # Unable to figure out how to avoid crashing application.
-            # So just paint a boring blue image instead.
-            width, height = self.area.local.size
-            length = width * height
-            for _ in range(length):
-                ignore(_)
-                photo.append(0)
-                photo.append(0.25)
-                photo.append(0.5)
-                photo.append(1)
+
         return photo
 
     @override
@@ -170,11 +161,10 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        ignore(star)
-        self.parent = dearpygui.add_group(parent=parent, tag=self.name)
-        super().build(self.parent)
+        super().build(parent, star)
+        self.item = dearpygui.add_group(parent=parent, tag=self.name)
 
 
 class Window(Window_, Abstract):
@@ -200,12 +190,11 @@ class Window(Window_, Abstract):
         ]
 
     @override
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        ignore(star)
-        self.parent = dearpygui.add_window(tag=self.name)
+        super().build(parent, star)
+        self.item = dearpygui.add_window(tag=self.name)
         dearpygui.set_primary_window(self.name, True)
-        super().build(self.parent)
 
     @override
     def run(self) -> N:
