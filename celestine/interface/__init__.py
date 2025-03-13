@@ -477,7 +477,8 @@ class Window(Abstract):
 
     def builder(self, item: ANY, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        item.build(parent, star)
+        deep = star.copy()
+        item.build(parent, deep)
 
         if item.path:
             item.reimage(item.path)
@@ -486,7 +487,7 @@ class Window(Abstract):
             item.retext(item.text)
 
         for value in item.values():
-            self.builder(value, self.item, star)
+            self.builder(value, item.item, deep)
 
     def turn(self, page: S, **star: R) -> N:
         """"""

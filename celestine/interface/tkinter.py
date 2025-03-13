@@ -13,6 +13,7 @@ from celestine.package import (
 from celestine.typed import (
     ANY,
     LS,
+    D,
     N,
     P,
     R,
@@ -52,8 +53,10 @@ class Element(Element_, Abstract):
         self.item.place_forget()
 
     @override
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
+        super().build(parent, star)
+
         # TODO: self.area.local.size.value
         self.image = tkinter.PhotoImage(
             width=200,
@@ -72,8 +75,6 @@ class Element(Element_, Abstract):
         else:
             self.item = tkinter.Label(parent, **star)
         self.place(self.item)
-
-        super().build(parent, **star)
 
     @override
     def show(self) -> N:
@@ -137,9 +138,10 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        child = tkinter.Frame(
+        super().build(parent, star)
+        self.item = tkinter.Frame(
             parent,
             padx=0,
             pady=0,
@@ -147,24 +149,35 @@ class View(View_, Abstract):
             width=1920,
             height=1080,
         )
-        self.place(child)
-        super().build(child, **star)
+        self.place(self.item)
 
     @override
     def hide(self) -> N:
         """"""
         super().hide()
-        self.parent.place_forget()
+        self.item.place_forget()
 
     @override
     def show(self) -> N:
         """"""
         super().show()
-        self.place(self.parent)
+        self.place(self.item)
 
 
 class Window(Window_, Abstract):
     """"""
+
+    @override
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
+        """"""
+        super().build(parent, star)
+        self.item = tkinter.Tk()
+        self.item.title(bank.language.APPLICATION_TITLE)
+        self.item.geometry("1920x1080")
+        self.item.geometry("1900x1000")
+        self.item.minsize(640, 480)
+        self.item.maxsize(3840, 2160)
+        self.item.configure(bg="blue")
 
     @override
     @classmethod
@@ -185,12 +198,12 @@ class Window(Window_, Abstract):
     @override
     def run(self) -> N:
         super().run()
-        self.parent.mainloop()
+        self.item.mainloop()
 
     @override
     def turn(self, page: S, **star: R) -> N:
         super().turn(page, **star)
-        self.page.parent.tkraise()
+        self.page.item.tkraise()
 
     @override
     def __init__(self, **star: R) -> N:
@@ -202,14 +215,6 @@ class Window(Window_, Abstract):
         super().__init__(element, **star)
         self.area = Area.fast(1280, 1080)
         self.area = Area.fast(1200, 1000)
-
-        self.parent = tkinter.Tk()
-        self.parent.title(bank.language.APPLICATION_TITLE)
-        self.parent.geometry("1920x1080")
-        self.parent.geometry("1900x1000")
-        self.parent.minsize(640, 480)
-        self.parent.maxsize(3840, 2160)
-        self.parent.configure(bg="blue")
 
 
 ignore(Window)
