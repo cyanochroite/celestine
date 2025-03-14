@@ -10,6 +10,12 @@ from celestine.package import (
     PIL,
     dearpygui,
 )
+from celestine.window.collection import (
+    Area,
+    Line,
+    Plane,
+    Point,
+)
 from celestine.typed import (
     ANY,
     LF,
@@ -79,8 +85,8 @@ class Element(Element_, Abstract):
         super().build(parent, star)
 
         width, height = self.area.local.size.value
-        width = 200
-        height = 200
+        # width = 200
+        # height = 200
         length = width * height
 
         texture_data = []
@@ -125,22 +131,37 @@ class Element(Element_, Abstract):
             # TODO: IMPORTANT! Change all others for check here.
             return
 
-        texture_data = []
-        if bool(PIL):
-            pil_image = PIL.Image.open(
-                fp=path,
-                mode=LATIN_SMALL_LETTER_R,
-                formats=bank.window.formats(),
-            )
-            pil_image = pil_image.convert("RGBA")
-            image_size = self.image_size(pil_image.size)
-            # pil_image = pil_image.resize(image_size.size.value)
-            pil_image = pil_image.resize((200, 200))
-            for pixel in pil_image.getdata():
-                for colour in pixel:
-                    texture_data.append(colour / 255)
-        else:
+        if not bool(PIL):
             return
+
+        texture_data = []
+
+        image = PIL.Image.open(
+            fp=path,
+            mode=LATIN_SMALL_LETTER_R,
+            formats=bank.window.formats(),
+        )
+        image = image.convert(mode="RGBA")
+        image_size = self.image_size(image.size)
+        image = image.resize(image_size.size.value)
+        # image = image.resize((200, 200))
+
+        def work(plane: Plane, size: Point, mode: S) -> PIL.Image.Image:
+            """"""
+            plane = plane.round()
+            cache = PIL.Image.new(mode, size.value)
+            im = image.resize(plane.size.value)
+            box = plane.value
+            cache.paste(im, box)
+            return cache
+
+        target = Plane.create(*self.area.world.size)
+        target *= (2, 4)
+        image = work(image_size, target.size, "RGBA")
+
+        for pixel in image.getdata():
+            for colour in pixel:
+                texture_data.append(colour / 255)
 
         dearpygui.set_value(f"_{self.name}", texture_data)
         super().reimage(path, **star)
