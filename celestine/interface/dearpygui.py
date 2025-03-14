@@ -61,6 +61,11 @@ class Element(Element_, Abstract):
         bank.dequeue()
 
     @override
+    def unbuild(self, parent: ANY, star: D[S, ANY]) -> N:
+        """"""
+        dpg.delete_item(self.name)
+
+    @override
     def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """
         Draw the image to screen.
@@ -87,26 +92,25 @@ class Element(Element_, Abstract):
             tag=f"_{self.name}",
         )
 
-        if self.action or self.goto:
-            dearpygui.add_image_button(
-                callback=self.callback,
-                label=self.text,
-                tag=self.name,
-                texture_tag=f"_{self.name}",
-                parent=parent,
-                pos=self.area.world.origin.value,
-            )
-            return
+        star.update(label=f" {self.text}")
+        star.update(tag=self.name)
+        star.update(parent=parent)
+        star.update(pos=self.area.world.origin.value)
 
-        if self.text:
-            dearpygui.add_image(
-                label=f" {self.text}",  # extra space hack to fix margin error
-                tag=self.name,
-                texture_tag=f"_{self.name}",
-                parent=parent,
-                pos=self.area.world.origin.value,
-            )
-            return
+        if not self.text:
+            star.update(texture_tag=f"_{self.name}")
+
+        if self.action or self.goto:
+            star.update(callback=self.callback)
+            if self.text:
+                self.item = dearpygui.add_button(**star)
+            else:
+                self.item = dearpygui.add_image_button(**star)
+        else:
+            if self.text:
+                self.item = dearpygui.add_text(self.text, **star)
+            else:
+                self.item = dearpygui.add_image(**star)
 
         return
         # image
@@ -167,21 +171,17 @@ class Element(Element_, Abstract):
             photo = image[3]
 
             width, height = self.area.local.size
-            length = width * height * 0
-            for _ in range(length):
-                ignore(_)
-                photo.append(0)
-                photo.append(0.25)
-                photo.append(0.5)
-                photo.append(1)
+            width = 100
+            height = 100
+            length = width * height
 
             texture_data = []
-            for i in range(100 * 100):
-                texture_data.append(0)
-                texture_data.append(0.25)
-                texture_data.append(0.5)
+            for i in range(length):
                 texture_data.append(1)
-            dearpygui.set_value(self.name, texture_data)
+                texture_data.append(0.75)
+                texture_data.append(0.25)
+                texture_data.append(1)
+            dearpygui.set_value(f"_{self.name}", texture_data)
         return photo
 
     @override
