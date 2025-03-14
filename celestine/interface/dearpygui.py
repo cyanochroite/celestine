@@ -78,15 +78,21 @@ class Element(Element_, Abstract):
         """
         super().build(parent, star)
 
+        width, height = self.area.local.size.value
+        width = 200
+        height = 200
+        length = width * height
+
         texture_data = []
-        for i in range(100 * 100):
+        for i in range(length):
             texture_data.append(0)
             texture_data.append(0.25)
             texture_data.append(0.5)
             texture_data.append(1)
+
         dearpygui.add_dynamic_texture(
-            100,
-            100,
+            width,
+            height,
             texture_data,
             parent="__demo_texture_container",
             tag=f"_{self.name}",
@@ -112,77 +118,37 @@ class Element(Element_, Abstract):
             else:
                 self.item = dearpygui.add_image(**star)
 
-        return
-        # image
-        photo = self.load()
-        width, height = self.area.local.size
-
-        with dearpygui.texture_registry(show=False):
-            dearpygui.add_dynamic_texture(
-                default_value=photo,
-                height=height,
-                parent=parent,
-                tag=self.name,
-                width=width,
-            )
-
-        # dpg.add_image_button("__de_1", width=100, height=100)
-        dearpygui.add_image(
-            self.name,
-            tag=f"{self.name}-base",
-            parent=parent,
-            pos=self.area.local.origin,
-            width=100,
-            height=100,
-        )
-
     @override
     def reimage(self, path: P, **star: R) -> N:
         """"""
-        photo: list[float] = self.load(path)
-        dearpygui.set_value(self.name, photo)
+        if not path:
+            # TODO: IMPORTANT! Change all others for check here.
+            return
+
+        texture_data = []
+        if bool(PIL):
+            pil_image = PIL.Image.open(
+                fp=path,
+                mode=LATIN_SMALL_LETTER_R,
+                formats=bank.window.formats(),
+            )
+            pil_image = pil_image.convert("RGBA")
+            image_size = self.image_size(pil_image.size)
+            # pil_image = pil_image.resize(image_size.size.value)
+            pil_image = pil_image.resize((200, 200))
+            for pixel in pil_image.getdata():
+                for colour in pixel:
+                    texture_data.append(colour / 255)
+        else:
+            return
+
+        dearpygui.set_value(f"_{self.name}", texture_data)
         super().reimage(path, **star)
 
     @override
     def retext(self, text: S, **star: R) -> N:
         """"""
         super().retext(text, **star)
-
-    def load(self, path: P) -> LF:
-        """"""
-
-        itertools = None
-
-        photo: LF = []
-
-        if PIL and itertools and False:
-            image = PIL.Image.open(
-                fp=self.path,
-                mode=LATIN_SMALL_LETTER_R,
-                formats=bank.window.formats(),
-            )
-            image.resize(self.area.local.size)
-            data = image.getdata()
-            flat = itertools.flatten(data)
-            photo = list(map(lambda pixel: float(pixel / 255), flat))
-        else:
-            file = str(path)
-            image = dearpygui.load_image(file)
-            photo = image[3]
-
-            width, height = self.area.local.size
-            width = 100
-            height = 100
-            length = width * height
-
-            texture_data = []
-            for i in range(length):
-                texture_data.append(1)
-                texture_data.append(0.75)
-                texture_data.append(0.25)
-                texture_data.append(1)
-            dearpygui.set_value(f"_{self.name}", texture_data)
-        return photo
 
     @override
     def update(self, path: P, **star: R) -> N:
