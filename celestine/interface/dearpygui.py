@@ -72,25 +72,43 @@ class Element(Element_, Abstract):
         photo = image[3]
         """
         super().build(parent, star)
+
+        texture_data = []
+        for i in range(100 * 100):
+            texture_data.append(0)
+            texture_data.append(0.25)
+            texture_data.append(0.5)
+            texture_data.append(1)
+        dearpygui.add_dynamic_texture(
+            100,
+            100,
+            texture_data,
+            parent="__demo_texture_container",
+            tag=f"_{self.name}",
+        )
+
         if self.action or self.goto:
-            dearpygui.add_button(
+            dearpygui.add_image_button(
                 callback=self.callback,
                 label=self.text,
                 tag=self.name,
+                texture_tag=f"_{self.name}",
                 parent=parent,
                 pos=self.area.world.origin.value,
             )
             return
 
         if self.text:
-            dearpygui.add_text(
-                f" {self.text}",  # extra space hack to fix margin error
+            dearpygui.add_image(
+                label=f" {self.text}",  # extra space hack to fix margin error
                 tag=self.name,
+                texture_tag=f"_{self.name}",
                 parent=parent,
                 pos=self.area.world.origin.value,
             )
             return
 
+        return
         # image
         photo = self.load()
         width, height = self.area.local.size
@@ -104,11 +122,14 @@ class Element(Element_, Abstract):
                 width=width,
             )
 
+        # dpg.add_image_button("__de_1", width=100, height=100)
         dearpygui.add_image(
             self.name,
             tag=f"{self.name}-base",
             parent=parent,
             pos=self.area.local.origin,
+            width=100,
+            height=100,
         )
 
     @override
@@ -130,7 +151,7 @@ class Element(Element_, Abstract):
 
         photo: LF = []
 
-        if PIL and itertools:
+        if PIL and itertools and False:
             image = PIL.Image.open(
                 fp=self.path,
                 mode=LATIN_SMALL_LETTER_R,
@@ -145,6 +166,22 @@ class Element(Element_, Abstract):
             image = dearpygui.load_image(file)
             photo = image[3]
 
+            width, height = self.area.local.size
+            length = width * height * 0
+            for _ in range(length):
+                ignore(_)
+                photo.append(0)
+                photo.append(0.25)
+                photo.append(0.5)
+                photo.append(1)
+
+            texture_data = []
+            for i in range(100 * 100):
+                texture_data.append(0)
+                texture_data.append(0.25)
+                texture_data.append(0.5)
+                texture_data.append(1)
+            dearpygui.set_value(self.name, texture_data)
         return photo
 
     @override
@@ -195,6 +232,10 @@ class Window(Window_, Abstract):
         super().build(parent, star)
         self.item = dearpygui.add_window(tag=self.name)
         dearpygui.set_primary_window(self.name, True)
+
+        dearpygui.add_texture_registry(
+            label="Demo Texture Container", tag="__demo_texture_container"
+        )
 
     @override
     def run(self) -> N:
