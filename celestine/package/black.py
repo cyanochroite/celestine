@@ -26,3 +26,6 @@ class Package(Abstract):
 
 def run() -> N:
     """"""
+
+
+ignore(Package, run)

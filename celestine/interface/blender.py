@@ -17,10 +17,9 @@ from celestine.package.blender.data.collection import _collection
 from celestine.package.blender.mesh import basic
 from celestine.package.blender.mesh.quadrilateral import Diamond
 from celestine.typed import (
+    ANY,
     LS,
-    A,
     B,
-    K,
     N,
     R,
     S,
@@ -205,7 +204,7 @@ class Abstract(Abstract_):
             item.hide_viewport = False
 
     @override
-    def build(self, canvas: A, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
         if star.get("first"):
             self.render()
@@ -214,10 +213,10 @@ class Abstract(Abstract_):
             item = self.dictionary.get(self.name)
             self.hidden = item.hide_render
 
-        super().build(canvas, **star)
+        super().build(parent, **star)
 
-    def __init__(self, name: S, parent: K, **star: R) -> N:
-        super().__init__(name, parent, **star)
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(name, **star)
         self.dictionary = bpy.data.objects
 
 
@@ -225,18 +224,18 @@ class Mouse(Abstract):
     """Should everyone get this?"""
 
     @override
-    def build(self, canvas: A, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
         if star.get("first"):
             diamond = Diamond()
             diamond.build(self.mesh)
 
-        super().build(canvas, **star)
+        super().build(parent, **star)
 
     def __init__(self, mesh) -> N:
         self.mesh = mesh.soul
         self.text = "mouse"
-        super().__init__("mouse", parent=None)
+        super().__init__("mouse")
         self.keep = mesh
 
 
@@ -244,25 +243,25 @@ class Element(Element_, Abstract):
     """"""
 
     @override
-    def build(self, canvas: A, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
         global data
         if star.get("first"):
             if self.action or self.goto:
                 _data = f"button: {self.text}"
-                self.keep = basic.text(self.name, canvas, _data)
+                self.keep = basic.text(self.name, parent, _data)
             elif self.text:
-                self.keep = basic.text(self.name, canvas, self.text)
+                self.keep = basic.text(self.name, parent, self.text)
             else:
                 # image
                 image = data.image.load(self.path)
                 material = UV.image(self.name, image)
-                plane = basic.image(self.name, self.canvas, image.size)
+                plane = basic.image(self.name, self.parent, image.size)
 
                 plane.body.data.materials.append(material)
                 self.keep = plane
 
-        super().build(canvas, **star)
+        super().build(parent, **star)
 
     def update(self, image: S, **star: R) -> B:
         """"""
@@ -279,19 +278,18 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def build(self, canvas: A, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
         if star.get("first"):
-            if canvas:
-                link = canvas.children.link
+            if parent:
+                link = parent.children.link
             else:
                 link = bpy.context.scene.collection.children.link
 
             collection = data.collection(self.name)
             link(collection.soul)
-            canvas = collection
 
-        super().build(canvas, **star)
+        super().build(parent, **star)
 
     @override
     def hide(self) -> N:
@@ -316,14 +314,14 @@ class View(View_, Abstract):
         self.dictionary = bpy.data.collections
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
     @override
-    def build(self, **star: R) -> N:
+    def build(self, parent: ANY, **star: R) -> N:
         """"""
         first = self.call == "build"
-        super().build(first=first, **star)
+        super().build(parent, first=first, **star)
 
     @override
     @classmethod
@@ -388,7 +386,7 @@ class Window(Window_):
         self.call = call
         self.star = star
 
-        self.canvas = None
+        self.parent = None
 
         ######
 

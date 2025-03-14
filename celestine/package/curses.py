@@ -9,6 +9,7 @@ from celestine.typed import (
     R,
     S,
     Z,
+    ignore,
 )
 
 
@@ -114,3 +115,20 @@ def noecho() -> N:
 def start_color() -> N:
     """"""
     raise NotImplementedError()
+
+
+ignore(
+    Package,
+    cbreak,
+    color_pair,
+    doupdate,
+    echo,
+    endwin,
+    initscr,
+    init_color,
+    init_pair,
+    newwin,
+    nocbreak,
+    noecho,
+    start_color,
+)

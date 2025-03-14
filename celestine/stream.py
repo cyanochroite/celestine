@@ -1,6 +1,5 @@
 """Central place for loading and importing external files."""
 
-import abc
 import enum
 import lzma
 import os
@@ -87,7 +86,7 @@ class Newline(enum.StrEnum):
     UNTRANSLATED = ""
 
 
-class File(abc.ABC):
+class File:
     """"""
 
     directory: P
@@ -112,22 +111,24 @@ class File(abc.ABC):
         with self.reader(*path) as file:
             return file.read()
 
-    @abc.abstractmethod
     def reader(self, *path: Path) -> Flie:
         """"""
-        ignore(self, path)
-        raise NotImplementedError()
+        return open(
+            self._file(True, *path),
+            Mode.READ_TEXT,
+        )
 
     def save(self, data: S, *path: Path) -> N:
         """"""
         with self.writer(*path) as file:
             file.write(data)
 
-    @abc.abstractmethod
     def writer(self, *path: Path) -> Flie:
         """"""
-        ignore(self, path)
-        raise NotImplementedError()
+        return open(
+            self._file(False, *path),
+            Mode.WRITE_TEXT,
+        )
 
     def __init__(self, path: P) -> N:
         self.directory = path

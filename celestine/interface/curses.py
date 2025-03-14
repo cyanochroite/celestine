@@ -19,12 +19,13 @@ from celestine.package import (
     curses,
 )
 from celestine.typed import (
+    ANY,
     GS,
     GZ,
     LS,
     LZ,
     B,
-    K,
+    D,
     N,
     P,
     R,
@@ -67,23 +68,25 @@ class Element(Element_, Abstract):
         x, y = self.area.world.origin.value
 
         # text
-        canvas = star.pop("canvas")
+        parent = star.pop("parent")
 
         if self.text:
-            canvas.addstr(y, x, self.text)
+            parent.addstr(y, x, self.text)
             return True
 
         if self.path:
-            self.update_image(self.path)
+            self.reimage(self.path)
 
         return True
 
-    def update_image(self, path: P, **star: R) -> N:
+    @override
+    def reimage(self, path: P, **star: R) -> N:
         """"""
-        self.path = path
+        super().reimage(path, **star)
+
         if not bool(PIL):
             (x_dot, y_dot) = self.area.world.origin
-            self.canvas.addstr(y_dot, x_dot, self.path.name)
+            self.parent.addstr(y_dot, x_dot, self.path.name)
             return
 
         image = PIL.Image.open(
@@ -101,23 +104,12 @@ class Element(Element_, Abstract):
 
         image = brightness(image)
 
-        def work(plane: Plane, size: Point, mode: S) -> PIL.Image.Image:
-            """"""
-            plane = plane.round()
-            result = PIL.Image.new(mode, size.value)
-            im = image.resize(plane.size.value)
-            box = plane.value
-            result.paste(im, box)
-            return result
-
-        #
-
         target = Plane.create(*self.area.world.size)
         target *= (2, 4)
-        cache = work(image_size, target.size, "1")
+        cache = self.imagin(image, image_size, target.size, "1")
 
         plane = image_size / (2, 4)
-        cat = work(plane, self.area.world.size, "RGB")
+        cat = self.imagin(image, plane, self.area.world.size, "RGB")
         self.render(cache, cat)
 
     def render(self, one: PIL.Image.Image, two: PIL.Image.Image) -> N:
@@ -129,10 +121,10 @@ class Element(Element_, Abstract):
         for x_dot, y_dot, text, extra in button:
             if x_dot == size.one and y_dot == size.two:
                 continue  # TODO: figure out why last pixel causes ERROR
-            self.canvas.addstr(y_dot, x_dot, text, extra)
+            self.parent.addstr(y_dot, x_dot, text, extra)
 
-    def __init__(self, name: S, parent: K, **star: R) -> N:
-        super().__init__(name, parent, **star)
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(name, **star)
         self.photo = None
         self.cache = PIL.Image.Image()
         self.color = PIL.Image.Image()
@@ -142,18 +134,25 @@ class View(View_, Abstract):
     """"""
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
-    @override
-    def draw(self, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        self.canvas.erase()
-        super().draw(canvas=self.canvas, **star)
+        super().build(parent, star)
+        (size_y, size_x) = self.stdscr.getmaxyx()
+        self.item = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
+
+    @override
+    def draw(self, **star: R) -> B:
+        """"""
+        self.item.erase()
+        super().draw(parent=self.item, **star)
 
         self.stdscr.noutrefresh()
-        self.canvas.noutrefresh()
+        self.item.noutrefresh()
         curses.doupdate()
+        return True
 
     @override
     @classmethod
@@ -243,8 +242,6 @@ class Window(Window_):
         self.area = Area(plane, plane)
         self.cord_x = 0.5
         self.cord_y = 0.5
-
-        self.canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
 
         for index in range(COLOR_PAIRS):
             red, green, blue = curses_table[index]
@@ -350,3 +347,6 @@ def luma(image: PIL.Image.Image) -> GS:
         braille = 0x2800 + pattern
         result = chr(braille)
         yield result
+
+
+ignore(Window)

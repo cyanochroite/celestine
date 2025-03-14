@@ -93,7 +93,7 @@ def see(caller: S, **star: R) -> B:
     window = bank.window
     source = window.find(caller)
     destination = window.find("photo")
-    destination.update_image(source.path)
+    destination.reimage(source.path)
     return True
 
 
@@ -110,7 +110,7 @@ def setup(**star: R) -> B:
     try:
         for value in grid.values():
             image = next(images)
-            value.update_image(image)
+            value.reimage(image)
     except StopIteration:
         pass
 

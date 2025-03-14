@@ -11,9 +11,9 @@ from celestine.package import (
     dearpygui,
 )
 from celestine.typed import (
-    LF,
+    ANY,
     LS,
-    A,
+    D,
     N,
     P,
     R,
@@ -21,11 +21,28 @@ from celestine.typed import (
     ignore,
     override,
 )
-from celestine.window.collection import Area
+from celestine.window.collection import (
+    Area,
+    Plane,
+)
 
 
 class Abstract(Abstract_):
     """"""
+
+    @override
+    def hide(self) -> N:
+        """"""
+        ignore(self)
+        super().hide()
+        dearpygui.hide_item(self.name)
+
+    @override
+    def show(self) -> N:
+        """"""
+        ignore(self)
+        super().show()
+        dearpygui.show_item(self.name)
 
 
 class Element(Element_, Abstract):
@@ -41,11 +58,17 @@ class Element(Element_, Abstract):
 
         callback(self, sender, app_data, user_data)
         """
+        ignore(_)
         self.click(self.area.world.centroid)
         bank.dequeue()
 
     @override
-    def build(self, canvas: A, **star: R) -> N:
+    def unbuild(self, parent: ANY, star: D[S, ANY]) -> N:
+        """"""
+        dpg.delete_item(self.name)
+
+    @override
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """
         Draw the image to screen.
 
@@ -55,73 +78,82 @@ class Element(Element_, Abstract):
         channels = image[2]
         photo = image[3]
         """
-        super().build(canvas)
+        super().build(parent, star)
 
-        if self.action or self.goto:
-            dearpygui.add_button(
-                callback=self.callback,
-                label=self.text,
-                tag=self.name,
-                pos=self.area.world.origin.value,
-            )
-            return
+        width, height = self.area.world.size.value
+        length = width * height
 
-        if self.text:
-            dearpygui.add_text(
-                f" {self.text}",  # extra space hack to fix margin error
-                tag=self.name,
-                pos=self.area.world.origin.value,
-            )
-            return
+        texture_data = []
+        for i in range(length):
+            texture_data.append(0)
+            texture_data.append(0.25)
+            texture_data.append(0.5)
+            texture_data.append(1)
 
-        # image
-        photo = self.load()
-        width, height = self.area.local.size
-
-        with dearpygui.texture_registry(show=False):
-            dearpygui.add_dynamic_texture(
-                default_value=photo,
-                height=height,
-                tag=self.name,
-                width=width,
-            )
-
-        dearpygui.add_image(
-            self.name,
-            tag=f"{self.name}-base",
-            pos=self.area.local.origin,
+        dearpygui.add_dynamic_texture(
+            width,
+            height,
+            texture_data,
+            parent="__demo_texture_container",
+            tag=f"_{self.name}",
         )
 
-    def load(self) -> LF:
-        """"""
+        star.update(label=f" {self.text}")
+        star.update(tag=self.name)
+        star.update(parent=parent)
+        star.update(pos=self.area.world.origin.value)
 
-        itertools = None
+        if not self.text:
+            star.update(texture_tag=f"_{self.name}")
 
-        photo: LF = []
-
-        if PIL and itertools:
-            image = PIL.Image.open(
-                fp=path,
-                mode=LATIN_SMALL_LETTER_R,
-                formats=bank.window.formats(),
-            )
-            image.resize(self.area.local.size)
-            data = image.getdata()
-            flat = itertools.flatten(data)
-            photo = list(map(lambda pixel: float(pixel / 255), flat))
+        if self.action or self.goto:
+            star.update(callback=self.callback)
+            if self.text:
+                self.item = dearpygui.add_button(**star)
+            else:
+                self.item = dearpygui.add_image_button(**star)
         else:
-            image = dearpygui.load_image(self.path)
-            photo = image[3]
-            # Unable to figure out how to avoid crashing application.
-            # So just paint a boring blue image instead.
-            width, height = self.area.local.size
-            length = width * height
-            for _ in range(length):
-                photo.append(0)
-                photo.append(0.25)
-                photo.append(0.5)
-                photo.append(1)
-        return photo
+            if self.text:
+                self.item = dearpygui.add_text(self.text, **star)
+            else:
+                self.item = dearpygui.add_image(**star)
+
+    @override
+    def reimage(self, path: P, **star: R) -> N:
+        """"""
+        if not path:
+            # TODO: IMPORTANT! Change all others for check here.
+            return
+
+        if not bool(PIL):
+            return
+
+        texture_data = []
+
+        image = PIL.Image.open(
+            fp=path,
+            mode=LATIN_SMALL_LETTER_R,
+            formats=bank.window.formats(),
+        )
+        image = image.convert(mode="RGBA")
+        image_size = self.image_size(image.size)
+        image = image.resize(image_size.size.value)
+
+        target = Plane.create(*self.area.world.size)
+        image = self.imagin(image, image_size, target.size, "RGBA")
+
+        for pixel in image.getdata():
+            for colour in pixel:
+                # TODO: This returns a TZ4
+                texture_data.append(colour / 255)
+
+        dearpygui.set_value(f"_{self.name}", texture_data)
+        super().reimage(path, **star)
+
+    @override
+    def retext(self, text: S, **star: R) -> N:
+        """"""
+        super().retext(text, **star)
 
     @override
     def update(self, path: P, **star: R) -> N:
@@ -137,25 +169,13 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def hide(self) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        super().hide()
-        try:
-            dearpygui.hide_item(self.name)
-        except SystemError:
-            pass
-
-    @override
-    def show(self) -> N:
-        """"""
-        super().show()
-        try:
-            dearpygui.show_item(self.name)
-        except SystemError:
-            pass
+        super().build(parent, star)
+        self.item = dearpygui.add_group(parent=parent, tag=self.name)
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
     @override
@@ -178,24 +198,20 @@ class Window(Window_):
         ]
 
     @override
-    def build(self, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        for name, item in self.items():
-            item.canvas = dearpygui.window(tag=name)
-            with item.canvas:
-                dearpygui.configure_item(item.name, show=False)
-                item.build(None)
+        super().build(parent, star)
+        self.item = dearpygui.add_window(tag=self.name)
+        dearpygui.set_primary_window(self.name, True)
 
-    @override
-    def turn(self, page: S, **star: R) -> N:
-        """"""
-        super().turn(page)
-
-        tag = self.page.name
-        dearpygui.set_primary_window(tag, True)
+        dearpygui.add_texture_registry(
+            label="Demo Texture Container",
+            tag="__demo_texture_container",
+        )
 
     @override
     def run(self) -> N:
+        ignore(self)
         super().run()
         dearpygui.setup_dearpygui()
         dearpygui.show_viewport(minimized=False, maximized=False)
@@ -210,10 +226,10 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.build(1280, 1080)
+        self.area = Area.fast(1280, 1080)
         self.tag = "window"
 
-        self.canvas = None
+        self.parent = None
 
         title = bank.language.APPLICATION_TITLE
         dearpygui.create_context()
@@ -236,3 +252,6 @@ class Window(Window_):
             decorated=True,
             clear_color=(0, 0, 0),
         )
+
+
+ignore(Window)

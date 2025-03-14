@@ -2,6 +2,8 @@
 
 import enum
 
+from celestine.typed import ignore
+
 
 class Call(enum.Enum):
     """"""
@@ -9,6 +11,13 @@ class Call(enum.Enum):
     NONE = enum.auto()
     VIEW = enum.auto()
     WORK = enum.auto()
+
+
+class Image(enum.Enum):
+    """"""
+
+    FILL = enum.auto()
+    FULL = enum.auto()
 
 
 class Zone(enum.Enum):
@@ -20,8 +29,4 @@ class Zone(enum.Enum):
     SPAN = enum.auto()
 
 
-class Image(enum.Enum):
-    """"""
-
-    FILL = enum.auto()
-    FULL = enum.auto()
+ignore(Call, Image, Zone)
