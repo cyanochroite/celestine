@@ -104,23 +104,12 @@ class Element(Element_, Abstract):
 
         image = brightness(image)
 
-        def work(plane: Plane, size: Point, mode: S) -> PIL.Image.Image:
-            """"""
-            plane = plane.round()
-            result = PIL.Image.new(mode, size.value)
-            im = image.resize(plane.size.value)
-            box = plane.value
-            result.paste(im, box)
-            return result
-
-        #
-
         target = Plane.create(*self.area.world.size)
         target *= (2, 4)
-        cache = work(image_size, target.size, "1")
+        cache = self.imagin(image, image_size, target.size, "1")
 
         plane = image_size / (2, 4)
-        cat = work(plane, self.area.world.size, "RGB")
+        cat = self.imagin(image, plane, self.area.world.size, "RGB")
         self.render(cache, cat)
 
     def render(self, one: PIL.Image.Image, two: PIL.Image.Image) -> N:

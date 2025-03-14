@@ -10,15 +10,8 @@ from celestine.package import (
     PIL,
     dearpygui,
 )
-from celestine.window.collection import (
-    Area,
-    Line,
-    Plane,
-    Point,
-)
 from celestine.typed import (
     ANY,
-    LF,
     LS,
     D,
     N,
@@ -28,7 +21,10 @@ from celestine.typed import (
     ignore,
     override,
 )
-from celestine.window.collection import Area
+from celestine.window.collection import (
+    Area,
+    Plane,
+)
 
 
 class Abstract(Abstract_):
@@ -84,9 +80,7 @@ class Element(Element_, Abstract):
         """
         super().build(parent, star)
 
-        width, height = self.area.local.size.value
-        # width = 200
-        # height = 200
+        width, height = self.area.world.size.value
         length = width * height
 
         texture_data = []
@@ -144,23 +138,13 @@ class Element(Element_, Abstract):
         image = image.convert(mode="RGBA")
         image_size = self.image_size(image.size)
         image = image.resize(image_size.size.value)
-        # image = image.resize((200, 200))
-
-        def work(plane: Plane, size: Point, mode: S) -> PIL.Image.Image:
-            """"""
-            plane = plane.round()
-            cache = PIL.Image.new(mode, size.value)
-            im = image.resize(plane.size.value)
-            box = plane.value
-            cache.paste(im, box)
-            return cache
 
         target = Plane.create(*self.area.world.size)
-        target *= (2, 4)
-        image = work(image_size, target.size, "RGBA")
+        image = self.imagin(image, image_size, target.size, "RGBA")
 
         for pixel in image.getdata():
             for colour in pixel:
+                # TODO: This returns a TZ4
                 texture_data.append(colour / 255)
 
         dearpygui.set_value(f"_{self.name}", texture_data)
@@ -221,7 +205,8 @@ class Window(Window_, Abstract):
         dearpygui.set_primary_window(self.name, True)
 
         dearpygui.add_texture_registry(
-            label="Demo Texture Container", tag="__demo_texture_container"
+            label="Demo Texture Container",
+            tag="__demo_texture_container",
         )
 
     @override

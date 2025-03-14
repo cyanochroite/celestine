@@ -5,6 +5,7 @@ import math
 import pathlib
 
 from celestine import bank
+from celestine.package import PIL
 from celestine.typed import (
     ANY,
     BF,
@@ -189,6 +190,22 @@ class Element(Abstract):
 
     image: ANY
     item: ANY
+
+    def imagin(
+        self,
+        image: PIL.Image.Image,
+        plane: Plane,
+        size: Point,
+        mode: S,
+    ) -> PIL.Image.Image:
+        """"""
+        ignore(self)
+        plane = plane.round()
+        result = PIL.Image.new(mode, size.value)
+        im = image.resize(plane.size.value)
+        box = plane.value
+        result.paste(im, box)
+        return result
 
     def reimage(self, path: P, **star: R) -> N:
         """"""
