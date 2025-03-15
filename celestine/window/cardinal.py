@@ -2,6 +2,7 @@
 
 import itertools
 import math
+import typing
 
 from celestine.literal import (
     COMMA,
@@ -11,12 +12,12 @@ from celestine.literal import (
     SPACE,
     string,
 )
-from typing import TypeAlias
 from celestine.typed import (
     TS,
     TS1,
     TS2,
     TS3,
+    ANY,
     TS4,
     VZ,
     A,
@@ -37,10 +38,10 @@ from celestine.typed import (
     override,
 )
 
-Number :TypeAlias = U["Cardinal", F, Z]
-Unary :TypeAlias  = C[[Number], Number]
-Binary :TypeAlias  = C[[Number, Number], Number]
-Nomad  :TypeAlias = U[Number, Q[F], Q[Z]]
+Number: typing.TypeAlias = U["Cardinal", F, Z]
+Unary: typing.TypeAlias = C[[Number], Number]
+Binary: typing.TypeAlias = C[[Number, Number], Number]
+Nomad: typing.TypeAlias = U[Number, Q[F], Q[Z]]
 
 
 class Round:
@@ -191,10 +192,6 @@ class Cardinal(Struct):
         result = self.inplace(Round.positive)
         return result
 
-    def __del__(self) -> N:
-        super().__del__()
-        del self.name
-
     def __eq__(self, other: object) -> B:
         if not isinstance(other, Cardinal):
             return False
@@ -333,42 +330,42 @@ class Cardinal(Struct):
         return result
 
 
-class Monad[X](Cardinal):
+class Monad(Cardinal):
     """"""
 
     __slots__: TS1 = ("one",)
 
-    one: X
+    one: ANY
 
     @override
     def _del(self) -> N:
         del self.one
 
     @override
-    def _get(self) -> T[X]:
+    def _get(self) -> T[ANY]:
         return (self.one,)
 
     @override
-    def _set(self, value: T[X]) -> N:
+    def _set(self, value: T[ANY]) -> N:
         self.one = value[0]
 
-    def __init__(self, one: X) -> N:
+    def __init__(self, one: ANY) -> N:
         ignore(self)
         super().__init__(one)
 
-    def __new__(cls, one: X) -> K:
+    def __new__(cls, one: ANY) -> K:
         return super().__new__(cls, one)
 
     data = property(_get, _set, _del)
 
 
-class Dyad[X](Cardinal):
+class Dyad(Cardinal):
     """"""
 
     __slots__: TS2 = ("one", "two")
 
-    one: X
-    two: X
+    one: ANY
+    two: ANY
 
     @override
     def _del(self) -> N:
@@ -376,32 +373,32 @@ class Dyad[X](Cardinal):
         del self.two
 
     @override
-    def _get(self) -> T[X, X]:
+    def _get(self) -> T[ANY, ANY]:
         return (self.one, self.two)
 
     @override
-    def _set(self, value: T[X, X]) -> N:
+    def _set(self, value: T[ANY, ANY]) -> N:
         self.one = value[0]
         self.two = value[1]
 
-    def __init__(self, one: X, two: X) -> N:
+    def __init__(self, one: ANY, two: ANY) -> N:
         ignore(self)
         super().__init__(one, two)
 
-    def __new__(cls, one: X, two: X) -> K:
+    def __new__(cls, one: ANY, two: ANY) -> K:
         return super().__new__(cls, one, two)
 
     data = property(_get, _set, _del)
 
 
-class Triad[X](Cardinal):
+class Triad(Cardinal):
     """"""
 
     __slots__: TS3 = ("one", "two", "tri")
 
-    one: X
-    two: X
-    tri: X
+    one: ANY
+    two: ANY
+    tri: ANY
 
     @override
     def _del(self) -> N:
@@ -410,34 +407,34 @@ class Triad[X](Cardinal):
         del self.tri
 
     @override
-    def _get(self) -> T[X, X, X]:
+    def _get(self) -> T[ANY, ANY, ANY]:
         return (self.one, self.two, self.tri)
 
     @override
-    def _set(self, value: T[X, X, X]) -> N:
+    def _set(self, value: T[ANY, ANY, ANY]) -> N:
         self.one = value[0]
         self.two = value[1]
         self.tri = value[2]
 
-    def __init__(self, one: X, two: X, tri: X) -> N:
+    def __init__(self, one: ANY, two: ANY, tri: ANY) -> N:
         ignore(self)
         super().__init__(one, two, tri)
 
-    def __new__(cls, one: X, two: X, tri: X) -> K:
+    def __new__(cls, one: ANY, two: ANY, tri: ANY) -> K:
         return super().__new__(cls, one, two, tri)
 
     data = property(_get, _set, _del)
 
 
-class Tetrad[X](Cardinal):
+class Tetrad(Cardinal):
     """"""
 
     __slots__: TS4 = ("one", "two", "tri", "tet")
 
-    one: X
-    two: X
-    tri: X
-    tet: X
+    one: ANY
+    two: ANY
+    tri: ANY
+    tet: ANY
 
     @override
     def _del(self) -> N:
@@ -447,21 +444,21 @@ class Tetrad[X](Cardinal):
         del self.tet
 
     @override
-    def _get(self) -> T[X, X, X, X]:
+    def _get(self) -> T[ANY, ANY, ANY, ANY]:
         return (self.one, self.two, self.tri, self.tet)
 
     @override
-    def _set(self, value: T[X, X, X, X]) -> N:
+    def _set(self, value: T[ANY, ANY, ANY, ANY]) -> N:
         self.one = value[0]
         self.two = value[1]
         self.tri = value[2]
         self.tet = value[3]
 
-    def __init__(self, one: X, two: X, tri: X, tet: X) -> N:
+    def __init__(self, one: ANY, two: ANY, tri: ANY, tet: ANY) -> N:
         ignore(self)
         super().__init__(one, two, tri, tet)
 
-    def __new__(cls, one: X, two: X, tri: X, tet: X) -> K:
+    def __new__(cls, one: ANY, two: ANY, tri: ANY, tet: ANY) -> K:
         return super().__new__(cls, one, two, tri, tet)
 
     data = property(_get, _set, _del)

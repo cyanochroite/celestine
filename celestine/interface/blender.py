@@ -376,7 +376,7 @@ class Window(Window_, Abstract):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.build(35, 20)
+        self.area = Area.fast(35, 20)
 
         self.dictionary = bpy.data.collections  # From View?
 

@@ -3,6 +3,7 @@
 import importlib
 import re
 
+from celestine.interface.blender import Window
 from celestine import (
     bank,
     load,
@@ -126,7 +127,8 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> A:
     bank.attribute = session2
     bank.directory = session1.directory
     bank.interface = load.module(INTERFACE, session1.interface)
-    bank.window = bank.interface.Window(**star)
+
+    bank.window = Window(**star)
 
     set_lang()
 

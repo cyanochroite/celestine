@@ -253,9 +253,6 @@ class Struct:
     def _set(self, value: TA) -> N:
         ignore(self, value)
 
-    def __del__(self) -> N:
-        del self.data
-
     def __init__(self, *data: A) -> N:
         ignore(self)
         self.data = data
