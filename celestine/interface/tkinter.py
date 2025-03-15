@@ -7,7 +7,6 @@ from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import (
-    PIL,
     tkinter,
 )
 from celestine.typed import (
@@ -85,41 +84,28 @@ class Element(Element_, Abstract):
     @override
     def reimage(self, path: P, **star: R) -> N:
         """"""
-        if bool(PIL):
-            pil_image = PIL.Image.open(
-                fp=path,
-                mode=LATIN_SMALL_LETTER_R,
-                formats=bank.window.formats(),
-            )
-            pil_image = pil_image.convert("RGB")
-            image_size = self.image_size(pil_image.size)
-            pil_image = pil_image.resize(image_size.size.value)
-            pil_photo = PIL.ImageTk.PhotoImage(image=pil_image)
-            self.item.configure(image=pil_photo)
-            self.item.image = pil_photo
+        photo = tkinter.PhotoImage(file=path)
+
+        old_width = photo.width()
+        old_height = photo.height()
+
+        image_size = self.image_size((old_width, old_height))
+        new_width, new_height = image_size.size
+
+        old_size = Dyad(old_width, old_height)
+        new_size = Dyad(new_width, new_height)
+
+        if new_width < old_width:
+            change = old_size / new_size
+            change = change.inplace(Round.positive)
+            image = photo.subsample(change.one, change.two)
         else:
-            photo = tkinter.PhotoImage(file=path)
+            change = new_size / old_size
+            change = change.inplace(Round.negative)
+            image = photo.zoom(change.one, change.two)
 
-            old_width = photo.width()
-            old_height = photo.height()
-
-            image_size = self.image_size((old_width, old_height))
-            new_width, new_height = image_size.size
-
-            old_size = Dyad(old_width, old_height)
-            new_size = Dyad(new_width, new_height)
-
-            if new_width < old_width:
-                change = old_size / new_size
-                change = change.inplace(Round.positive)
-                image = photo.subsample(change.one, change.two)
-            else:
-                change = new_size / old_size
-                change = change.inplace(Round.negative)
-                image = photo.zoom(change.one, change.two)
-
-                self.item.configure(image=image)
-                self.item.image = image
+            self.item.configure(image=image)
+            self.item.image = image
 
         super().reimage(path, **star)
 

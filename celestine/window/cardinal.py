@@ -11,6 +11,7 @@ from celestine.literal import (
     SPACE,
     string,
 )
+from typing import TypeAlias
 from celestine.typed import (
     TS,
     TS1,
@@ -36,10 +37,10 @@ from celestine.typed import (
     override,
 )
 
-type Number = U["Cardinal", F, Z]
-type Unary = C[[Number], Number]
-type Binary = C[[Number, Number], Number]
-type Nomad = U[Number, Q[F], Q[Z]]
+Number :TypeAlias = U["Cardinal", F, Z]
+Unary :TypeAlias  = C[[Number], Number]
+Binary :TypeAlias  = C[[Number, Number], Number]
+Nomad  :TypeAlias = U[Number, Q[F], Q[Z]]
 
 
 class Round:

@@ -1,5 +1,6 @@
 """Central place for loading and importing external files."""
 
+from typing import TypeAlias
 import enum
 import lzma
 import os
@@ -20,9 +21,9 @@ from celestine.typed import (
     override,
 )
 
-type Flie = IO[ANY]
-type Lzma = lzma.LZMAFile | TextIO
-type Path = P | S
+Flie:TypeAlias = IO[ANY]
+Lzma:TypeAlias = lzma.LZMAFile | TextIO
+Path:TypeAlias = P | S
 
 MAXIMUM_LINE_LENGTH = 72
 SECTION_BREAK = "######################################################\

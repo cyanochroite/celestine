@@ -1,5 +1,6 @@
 """"""
 
+from typing import TypeAlias
 from celestine.typed import (
     TZ3,
     C,
@@ -14,9 +15,9 @@ from celestine.window.cardinal import (
     Triad,
 )
 
-type Pixel = Triad[F] | Triad[Z]
-type Pixels = L[TZ3]
-type Make = G[Pixel, N, N]
+Pixel:TypeAlias = Triad[F] | Triad[Z]
+Pixels:TypeAlias = L[TZ3]
+Make:TypeAlias = G[Pixel, N, N]
 
 
 def _pixels() -> Make:
