@@ -55,104 +55,108 @@ from typing import TypedDict as TD
 from typing import TypeVar as TV
 from typing import Union as U
 from typing import Unpack as UN
+from typing import TypeAlias
 from typing import (
     cast,
-    override,
 )
 
-type ANY = A
-type B = bool
-type F = float
-type J = object
-type N = None
-type R = A
-type S = str
+ANY: TypeAlias = A
+B: TypeAlias = bool
+F: TypeAlias = float
+J: TypeAlias = object
+N: TypeAlias = None
+R: TypeAlias = A
+S: TypeAlias = str
 X = TV("X")
-type Y = bytes
-type Z = int
+Y: TypeAlias = bytes
+Z: TypeAlias = int
 
 
-type BF = Literal[False]
-type BT = Literal[True]
+BF: TypeAlias = Literal[False]
+BT: TypeAlias = Literal[True]
 
-type CA = C[..., A]
-type CN = C[[N], N]
+CA: TypeAlias = C[..., A]
+CN: TypeAlias = C[[N], N]
 
-type DA = D[S, A]
-type DB = D[S, B]
-type DF = D[S, F]
-type DM = D[S, M]
-type DP = D[S, P]
-type DS = D[S, S]
-type DZ = D[S, Z]
+DA: TypeAlias = D[S, A]
+DB: TypeAlias = D[S, B]
+DF: TypeAlias = D[S, F]
+DM: TypeAlias = D[S, M]
+DP: TypeAlias = D[S, P]
+DS: TypeAlias = D[S, S]
+DZ: TypeAlias = D[S, Z]
 
-type GA = G[A, N, N]
-type GB = G[B, N, N]
-type GF = G[F, N, N]
-type GM = G[M, N, N]
-type GP = G[P, N, N]
-type GS = G[S, N, N]
-type GZ = G[Z, N, N]
+GA: TypeAlias = G[A, N, N]
+GB: TypeAlias = G[B, N, N]
+GF: TypeAlias = G[F, N, N]
+GM: TypeAlias = G[M, N, N]
+GP: TypeAlias = G[P, N, N]
+GS: TypeAlias = G[S, N, N]
+GZ: TypeAlias = G[Z, N, N]
 
-type LA = L[A]
-type LB = L[B]
-type LF = L[F]
-type LM = L[M]
-type LP = L[P]
-type LS = L[S]
-type LZ = L[Z]
-
-
-type TA = T[A, ...]
-type TA1 = T[A]
-type TA2 = T[A, A]
-type TA3 = T[A, A, A]
-type TA4 = T[A, A, A, A]
-
-type TB = T[B, ...]
-type TB1 = T[B]
-type TB2 = T[B, B]
-type TB3 = T[B, B, B]
-type TB4 = T[B, B, B, B]
-
-type TF = T[F, ...]
-type TF1 = T[F]
-type TF2 = T[F, F]
-type TF3 = T[F, F, F]
-type TF4 = T[F, F, F, F]
-
-type TM = T[M, ...]
-type TM1 = T[M]
-type TM2 = T[M, M]
-type TM3 = T[M, M, M]
-type TM4 = T[M, M, M, M]
-
-type TP = T[P, ...]
-type TP1 = T[P]
-type TP2 = T[P, P]
-type TP3 = T[P, P, P]
-type TP4 = T[P, P, P, P]
-
-type TS = T[S, ...]
-type TS1 = T[S]
-type TS2 = T[S, S]
-type TS3 = T[S, S, S]
-type TS4 = T[S, S, S, S]
-
-type TZ = T[Z, ...]
-type TZ1 = T[Z]
-type TZ2 = T[Z, Z]
-type TZ3 = T[Z, Z, Z]
-type TZ4 = T[Z, Z, Z, Z]
+LA: TypeAlias = L[A]
+LB: TypeAlias = L[B]
+LF: TypeAlias = L[F]
+LM: TypeAlias = L[M]
+LP: TypeAlias = L[P]
+LS: TypeAlias = L[S]
+LZ: TypeAlias = L[Z]
 
 
-type VA = V[A]
-type VB = V[B]
-type VF = V[F]
-type VM = V[M]
-type VP = V[P]
-type VS = V[S]
-type VZ = V[Z]
+TA: TypeAlias = T[A, ...]
+TA1: TypeAlias = T[A]
+TA2: TypeAlias = T[A, A]
+TA3: TypeAlias = T[A, A, A]
+TA4: TypeAlias = T[A, A, A, A]
+
+TB: TypeAlias = T[B, ...]
+TB1: TypeAlias = T[B]
+TB2: TypeAlias = T[B, B]
+TB3: TypeAlias = T[B, B, B]
+TB4: TypeAlias = T[B, B, B, B]
+
+TF: TypeAlias = T[F, ...]
+TF1: TypeAlias = T[F]
+TF2: TypeAlias = T[F, F]
+TF3: TypeAlias = T[F, F, F]
+TF4: TypeAlias = T[F, F, F, F]
+
+TM: TypeAlias = T[M, ...]
+TM1: TypeAlias = T[M]
+TM2: TypeAlias = T[M, M]
+TM3: TypeAlias = T[M, M, M]
+TM4: TypeAlias = T[M, M, M, M]
+
+TP: TypeAlias = T[P, ...]
+TP1: TypeAlias = T[P]
+TP2: TypeAlias = T[P, P]
+TP3: TypeAlias = T[P, P, P]
+TP4: TypeAlias = T[P, P, P, P]
+
+TS: TypeAlias = T[S, ...]
+TS1: TypeAlias = T[S]
+TS2: TypeAlias = T[S, S]
+TS3: TypeAlias = T[S, S, S]
+TS4: TypeAlias = T[S, S, S, S]
+
+TZ: TypeAlias = T[Z, ...]
+TZ1: TypeAlias = T[Z]
+TZ2: TypeAlias = T[Z, Z]
+TZ3: TypeAlias = T[Z, Z, Z]
+TZ4: TypeAlias = T[Z, Z, Z, Z]
+
+
+VA: TypeAlias = V[A]
+VB: TypeAlias = V[B]
+VF: TypeAlias = V[F]
+VM: TypeAlias = V[M]
+VP: TypeAlias = V[P]
+VS: TypeAlias = V[S]
+VZ: TypeAlias = V[Z]
+
+
+def override(_) -> A:
+    pass
 
 
 def ignore(*_: A) -> N:

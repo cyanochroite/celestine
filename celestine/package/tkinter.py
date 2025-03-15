@@ -1,6 +1,7 @@
 """Python interface to Tcl/Tk."""
 
 from celestine.package import Abstract
+from typing import TypeAlias
 from celestine.typed import (
     NR,
     TD,
@@ -41,7 +42,7 @@ class _TypedPhoto(TD):
     width: NR[Z]
 
 
-type _Window = U["Frame", "Tk"]
+_Window: TypeAlias = U["Frame", "Tk"]
 
 
 class Button:
