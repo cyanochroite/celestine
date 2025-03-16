@@ -332,102 +332,102 @@ class Cardinal(Struct):
         return result
 
 
-class Monad[X](Cardinal):
+class Monad(Cardinal):
     """"""
 
     __slots__: TS1 = ("one",)
 
-    one: X
+    one: A
 
     def _del(self) -> N:
         del self.one
 
-    def _get(self) -> T[X]:
+    def _get(self) -> T[A]:
         return (self.one,)
 
-    def _set(self, value: T[X]) -> N:
+    def _set(self, value: T[A]) -> N:
         self.one = value[0]
 
-    def __init__(self, one: X) -> N:
+    def __init__(self, one: A) -> N:
         ignore(self)
         super().__init__(one)
 
-    def __new__(cls, one: X) -> K:
+    def __new__(cls, one: A) -> K:
         return super().__new__(cls, one)
 
     data = property(_get, _set, _del)
 
 
-class Dyad[X](Cardinal):
+class Dyad(Cardinal):
     """"""
 
     __slots__: TS2 = ("one", "two")
 
-    one: X
-    two: X
+    one: A
+    two: A
 
     def _del(self) -> N:
         del self.one
         del self.two
 
-    def _get(self) -> T[X, X]:
+    def _get(self) -> T[A, A]:
         return (self.one, self.two)
 
-    def _set(self, value: T[X, X]) -> N:
+    def _set(self, value: T[A, A]) -> N:
         self.one = value[0]
         self.two = value[1]
 
-    def __init__(self, one: X, two: X) -> N:
+    def __init__(self, one: A, two: A) -> N:
         ignore(self)
         super().__init__(one, two)
 
-    def __new__(cls, one: X, two: X) -> K:
+    def __new__(cls, one: A, two: A) -> K:
         return super().__new__(cls, one, two)
 
     data = property(_get, _set, _del)
 
 
-class Triad[X](Cardinal):
+class Triad(Cardinal):
     """"""
 
     __slots__: TS3 = ("one", "two", "tri")
 
-    one: X
-    two: X
-    tri: X
+    one: A
+    two: A
+    tri: A
 
     def _del(self) -> N:
         del self.one
         del self.two
         del self.tri
 
-    def _get(self) -> T[X, X, X]:
+    def _get(self) -> T[A, A, A]:
         return (self.one, self.two, self.tri)
 
-    def _set(self, value: T[X, X, X]) -> N:
+    def _set(self, value: T[A, A, A]) -> N:
         self.one = value[0]
         self.two = value[1]
         self.tri = value[2]
 
-    def __init__(self, one: X, two: X, tri: X) -> N:
+    def __init__(self, one: A, two: A, tri: A) -> N:
         ignore(self)
         super().__init__(one, two, tri)
 
-    def __new__(cls, one: X, two: X, tri: X) -> K:
+    def __new__(cls, one: A, two: A, tri: A) -> K:
         return super().__new__(cls, one, two, tri)
 
     data = property(_get, _set, _del)
 
 
-class Tetrad[X](Cardinal):
+class Tetrad(Cardinal):
     """"""
 
     __slots__: TS4 = ("one", "two", "tri", "tet")
 
-    one: X
-    two: X
-    tri: X
-    tet: X
+    one: A
+    two: A
+    tri: A
+    tet: A
 
     def _del(self) -> N:
         del self.one
@@ -435,20 +435,20 @@ class Tetrad[X](Cardinal):
         del self.tri
         del self.tet
 
-    def _get(self) -> T[X, X, X, X]:
+    def _get(self) -> T[A, A, A, A]:
         return (self.one, self.two, self.tri, self.tet)
 
-    def _set(self, value: T[X, X, X, X]) -> N:
+    def _set(self, value: T[A, A, A, A]) -> N:
         self.one = value[0]
         self.two = value[1]
         self.tri = value[2]
         self.tet = value[3]
 
-    def __init__(self, one: X, two: X, tri: X, tet: X) -> N:
+    def __init__(self, one: A, two: A, tri: A, tet: A) -> N:
         ignore(self)
         super().__init__(one, two, tri, tet)
 
-    def __new__(cls, one: X, two: X, tri: X, tet: X) -> K:
+    def __new__(cls, one: A, two: A, tri: A, tet: A) -> K:
         return super().__new__(cls, one, two, tri, tet)
 
     data = property(_get, _set, _del)

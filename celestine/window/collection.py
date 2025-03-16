@@ -25,7 +25,7 @@ from celestine.typed import (
 from celestine.window.cardinal import Dyad
 
 
-class Point(Dyad[F]):
+class Point(Dyad):
     """"""
 
     @property
@@ -37,7 +37,7 @@ class Point(Dyad[F]):
         return result
 
 
-class Line(Dyad[F]):
+class Line(Dyad):
     """"""
 
     @property
@@ -63,7 +63,7 @@ class Line(Dyad[F]):
         super().__init__(minimum, maximum)
 
 
-class Plane(Dyad[Line]):
+class Plane(Dyad):
     """"""
 
     def center(self, other: K) -> N:
@@ -160,10 +160,10 @@ class Area(Object):
         return result
 
 
-class Dictionary[X](collections.abc.MutableMapping[S, A]):
+class Dictionary(collections.abc.MutableMapping[S, A]):
     """"""
 
-    dictionary: D[S, X]
+    dictionary: D[S, A]
 
     def copy(self) -> K:
         """"""
@@ -188,7 +188,7 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
         return result
 
     @classmethod
-    def make(cls, dictionary: V[D[S, X]] = None) -> K:
+    def make(cls, dictionary: V[D[S, A]] = None) -> K:
         """"""
         return cls(dictionary)
 
@@ -196,12 +196,12 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
         index = self.key(key)
         del self.dictionary[index]
 
-    def __getitem__(self, key: S) -> X:
+    def __getitem__(self, key: S) -> A:
         index = self.key(key)
         result = self.dictionary[index]
         return result
 
-    def __init__(self, dictionary: V[D[S, X]] = None) -> N:
+    def __init__(self, dictionary: V[D[S, A]] = None) -> N:
         self.dictionary = dictionary or {}
 
     def __iter__(self) -> IT[S]:
@@ -210,7 +210,7 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
     def __len__(self) -> Z:
         return len(self.dictionary)
 
-    def __setitem__(self, key: S, value: X) -> N:
+    def __setitem__(self, key: S, value: A) -> N:
         index = self.key(key)
         self.dictionary[index] = value
 

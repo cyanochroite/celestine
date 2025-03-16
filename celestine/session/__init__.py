@@ -2,6 +2,7 @@
 
 import importlib
 import re
+from typing import TypeAlias
 
 from celestine import (
     bank,
@@ -32,7 +33,7 @@ from .magic import Magic
 
 this = load.module(PACKAGE)
 
-type Decorator = D[S, C[..., A]]
+Decorator: TypeAlias = D[S, C[..., A]]
 
 
 def decorators(*path: S) -> D[S, Decorator]:
