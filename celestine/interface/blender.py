@@ -20,8 +20,8 @@ from celestine.typed import (
     ANY,
     LS,
     B,
-    N,
     D,
+    N,
     R,
     S,
     ignore,
@@ -223,7 +223,7 @@ class Abstract(Abstract_):
 class Mouse(Abstract):
     """Should everyone get this?"""
 
-    def build(self, parent: ANY,  star: D[S, ANY]) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
         if star.get("first"):
             diamond = Diamond()
@@ -318,10 +318,10 @@ class View(View_, Abstract):
 class Window(Window_, Abstract):
     """"""
 
-    def build(self, parent: ANY,  star: D[S, ANY]) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
         first = self.call == "build"
-        star.update(first = first)
+        star.update(first=first)
         super().build(parent, star)
 
     @classmethod
@@ -354,6 +354,13 @@ class Window(Window_, Abstract):
         bpy.context.scene.celestine.page = page
 
     def run(self) -> N:
+        # TODO fix the tag referencing system.
+        page = bpy.context.scene.celestine.page
+        if page != "main":
+            if "." not in page:
+                page = f"celestine.application.demo.{page}"
+            self.main = page
+
         super().run()
 
         if self.call == "build":
