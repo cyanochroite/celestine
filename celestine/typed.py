@@ -51,14 +51,12 @@ from typing import Protocol
 from typing import Self as K
 from typing import Tuple as T
 from typing import Type as TY
+from typing import TypeAlias
 from typing import TypedDict as TD
 from typing import TypeVar as TV
 from typing import Union as U
 from typing import Unpack as UN
-from typing import TypeAlias
-from typing import (
-    cast,
-)
+from typing import cast
 
 ANY: TypeAlias = A
 B: TypeAlias = bool
@@ -155,23 +153,6 @@ VS: TypeAlias = V[S]
 VZ: TypeAlias = V[Z]
 
 
-
-class Override(Protocol):
-    """Type for code functions."""
-
-    def __call__(self, *data: ANY, **star: ANY) -> ANY:
-        raise NotImplementedError(self, data, star)
-
-
-def override(function: Override) -> Override:
-    """"""
-
-    def decorator(*data: ANY, **star: ANY) -> ANY:
-        return function(*data, **star)
-
-    return decorator
-
-
 def ignore(*_: A) -> N:
     """An empty function used to hide unused variable warnings."""
     cast(ANY, _)
@@ -266,6 +247,9 @@ class Struct:
     def _set(self, value: TA) -> N:
         ignore(self, value)
 
+    def __del__(self) -> N:
+        del self.data
+
     def __init__(self, *data: A) -> N:
         ignore(self)
         self.data = data
@@ -309,7 +293,6 @@ ignore(
     LZ,
     NR,
     Object,
-    override,
     Protocol,
     Q,
     string,

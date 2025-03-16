@@ -5,6 +5,7 @@ import math
 import pathlib
 
 from celestine import bank
+from celestine.package import PIL
 from celestine.typed import (
     ANY,
     BF,
@@ -21,7 +22,6 @@ from celestine.typed import (
     S,
     Z,
     ignore,
-    override,
 )
 from celestine.window.collection import (
     Area,
@@ -190,6 +190,22 @@ class Element(Abstract):
     image: ANY
     item: ANY
 
+    def imagin(
+        self,
+        image: PIL.Image.Image,
+        plane: Plane,
+        size: Point,
+        mode: S,
+    ) -> PIL.Image.Image:
+        """"""
+        ignore(self)
+        plane = plane.round()
+        result = PIL.Image.new(mode, size.value)
+        im = image.resize(plane.size.value)
+        box = plane.value
+        result.paste(im, box)
+        return result
+
     def reimage(self, path: P, **star: R) -> N:
         """"""
         ignore(star)
@@ -222,7 +238,6 @@ class View(Abstract):
 
         return True
 
-    @override
     def draw(self, **star: R) -> B:
         """"""
         if self.hidden:
@@ -233,7 +248,6 @@ class View(Abstract):
 
         return True
 
-    @override
     def spot(self, area: Area) -> N:
         """"""
         super().spot(area)
@@ -505,7 +519,6 @@ class Window(Abstract):
     ###############
     # No star functions
 
-    @override
     def click(self, point: Point, **star: R) -> B:
         """"""
         ignore(star)

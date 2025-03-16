@@ -10,7 +10,6 @@ from celestine.literal import (
 from celestine.typed import (
     IT,
     A,
-    ANY,
     B,
     D,
     F,
@@ -19,15 +18,14 @@ from celestine.typed import (
     Object,
     S,
     T,
-    TS2,
     V,
     Z,
     ignore,
 )
-from celestine.window.cardinal import Dyad, Cardinal
+from celestine.window.cardinal import Dyad
 
 
-class Point(Dyad):
+class Point(Dyad[F]):
     """"""
 
     @property
@@ -39,26 +37,8 @@ class Point(Dyad):
         return result
 
 
-class Line(Cardinal):
+class Line(Dyad[F]):
     """"""
-
-    __slots__: TS2 = ("one", "two")
-
-    def _del(self) -> N:
-        del self.one
-        del self.two
-
-    def _get(self) -> T[ANY, ANY]:
-        return (self.one, self.two)
-
-    def _set(self, value: T[ANY, ANY]) -> N:
-        self.one = value[0]
-        self.two = value[1]
-
-    def __new__(cls, one: ANY, two: ANY) -> K:
-        return super().__new__(cls, one, two)
-
-    data = property(_get, _set, _del)
 
     @property
     def length(self) -> Z:
@@ -78,33 +58,13 @@ class Line(Cardinal):
 
     def __init__(self, one: F, two: F) -> N:
         ignore(self)
-        self.one = one
-        self.two = two
         minimum = min(one, two)
         maximum = max(one, two)
         super().__init__(minimum, maximum)
 
 
-class Plane(Cardinal):
+class Plane(Dyad[Line]):
     """"""
-
-    __slots__: TS2 = ("one", "two")
-
-    def _del(self) -> N:
-        del self.one
-        del self.two
-
-    def _get(self) -> T[ANY, ANY]:
-        return (self.one, self.two)
-
-    def _set(self, value: T[ANY, ANY]) -> N:
-        self.one = value[0]
-        self.two = value[1]
-
-    def __new__(cls, one: ANY, two: ANY) -> K:
-        return super().__new__(cls, one, two)
-
-    data = property(_get, _set, _del)
 
     def center(self, other: K) -> N:
         """"""
@@ -200,10 +160,10 @@ class Area(Object):
         return result
 
 
-class Dictionary(collections.abc.MutableMapping[S, A]):
+class Dictionary[X](collections.abc.MutableMapping[S, A]):
     """"""
 
-    dictionary: D[S, ANY]
+    dictionary: D[S, X]
 
     def copy(self) -> K:
         """"""
@@ -228,7 +188,7 @@ class Dictionary(collections.abc.MutableMapping[S, A]):
         return result
 
     @classmethod
-    def make(cls, dictionary: V[D[S, ANY]] = None) -> K:
+    def make(cls, dictionary: V[D[S, X]] = None) -> K:
         """"""
         return cls(dictionary)
 
@@ -236,12 +196,12 @@ class Dictionary(collections.abc.MutableMapping[S, A]):
         index = self.key(key)
         del self.dictionary[index]
 
-    def __getitem__(self, key: S) -> ANY:
+    def __getitem__(self, key: S) -> X:
         index = self.key(key)
         result = self.dictionary[index]
         return result
 
-    def __init__(self, dictionary: V[D[S, ANY]] = None) -> N:
+    def __init__(self, dictionary: V[D[S, X]] = None) -> N:
         self.dictionary = dictionary or {}
 
     def __iter__(self) -> IT[S]:
@@ -250,7 +210,7 @@ class Dictionary(collections.abc.MutableMapping[S, A]):
     def __len__(self) -> Z:
         return len(self.dictionary)
 
-    def __setitem__(self, key: S, value: ANY) -> N:
+    def __setitem__(self, key: S, value: X) -> N:
         index = self.key(key)
         self.dictionary[index] = value
 

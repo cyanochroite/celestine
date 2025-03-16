@@ -1,7 +1,8 @@
 """Python interface to Tcl/Tk."""
 
-from celestine.package import Abstract
 from typing import TypeAlias
+
+from celestine.package import Abstract
 from celestine.typed import (
     NR,
     TD,

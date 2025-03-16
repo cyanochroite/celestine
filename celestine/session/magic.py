@@ -1,6 +1,7 @@
 """"""
 
 import argparse
+from typing import TypeAlias
 
 from celestine import (
     bank,
@@ -17,7 +18,6 @@ from celestine.session.argument import (
     Positional,
 )
 from celestine.session.data import Values
-from typing import TypeAlias
 from celestine.typed import (
     DA,
     LS,
@@ -55,7 +55,7 @@ TRANSLATE_THIS = "unrecognized arguments"
 
 # ADI: typing.TypeAlias = typing.Iterable[typing.Tuple[str, Argument]]
 # APD: TA = D[U[Argument, T[Argument]], U[AP, AG]]
-APD : TypeAlias = D[A, A]
+APD: TypeAlias = D[A, A]
 
 
 class Magic:
@@ -195,6 +195,10 @@ class Magic:
         return self
 
     def __exit__(self, *_):
+        save = bool(getattr(self.args, Values.CONFIGURATION, NONE))
+        save = True
+        if save:
+            bank.configuration.save()
         return False
 
     def __init__(self, argument_list: LS, exit_on_error: B) -> N:

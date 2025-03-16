@@ -24,7 +24,6 @@ from celestine.typed import (
     R,
     S,
     ignore,
-    override,
 )
 from celestine.window.collection import (
     Area,
@@ -185,7 +184,6 @@ class Abstract(Abstract_):
         self.keep.location = (x_dot, y_dot, 0)
         self.keep.rotation = (180, 0, 0)
 
-    @override
     def hide(self) -> N:
         """"""
         super().hide()
@@ -194,7 +192,6 @@ class Abstract(Abstract_):
             item.hide_render = True
             item.hide_viewport = True
 
-    @override
     def show(self) -> N:
         """"""
         super().show()
@@ -203,7 +200,6 @@ class Abstract(Abstract_):
             item.hide_render = False
             item.hide_viewport = False
 
-    @override
     def build(self, parent: ANY, **star: R) -> N:
         """"""
         if star.get("first"):
@@ -223,7 +219,6 @@ class Abstract(Abstract_):
 class Mouse(Abstract):
     """Should everyone get this?"""
 
-    @override
     def build(self, parent: ANY, **star: R) -> N:
         """"""
         if star.get("first"):
@@ -242,7 +237,6 @@ class Mouse(Abstract):
 class Element(Element_, Abstract):
     """"""
 
-    @override
     def build(self, parent: ANY, **star: R) -> N:
         """"""
         global data
@@ -277,7 +271,6 @@ class Element(Element_, Abstract):
 class View(View_, Abstract):
     """"""
 
-    @override
     def build(self, parent: ANY, **star: R) -> N:
         """"""
         if star.get("first"):
@@ -291,7 +284,6 @@ class View(View_, Abstract):
 
         super().build(parent, **star)
 
-    @override
     def hide(self) -> N:
         """"""
         super().hide()
@@ -300,7 +292,6 @@ class View(View_, Abstract):
             item.hide_render = True
             item.hide_viewport = True
 
-    @override
     def show(self) -> N:
         """"""
         super().show()
@@ -317,13 +308,11 @@ class View(View_, Abstract):
 class Window(Window_, Abstract):
     """"""
 
-    @override
     def build(self, parent: ANY, **star: R) -> N:
         """"""
         first = self.call == "build"
         super().build(parent, first=first, **star)
 
-    @override
     @classmethod
     def extension(cls) -> LS:
         """"""
@@ -348,13 +337,11 @@ class Window(Window_, Abstract):
             ".webp",
         ]
 
-    @override
     def turn(self, page: S, **star: R) -> N:
         """"""
         super().turn(page, **star)
         bpy.context.scene.celestine.page = page
 
-    @override
     def run(self) -> N:
         super().run()
 
@@ -376,7 +363,7 @@ class Window(Window_, Abstract):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.fast(35, 20)
+        self.area = Area.build(35, 20)
 
         self.dictionary = bpy.data.collections  # From View?
 

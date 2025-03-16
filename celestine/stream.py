@@ -1,6 +1,5 @@
 """Central place for loading and importing external files."""
 
-from typing import TypeAlias
 import enum
 import lzma
 import os
@@ -8,6 +7,7 @@ import pathlib
 from typing import (
     IO,
     TextIO,
+    TypeAlias,
 )
 
 from celestine import load
@@ -18,12 +18,11 @@ from celestine.typed import (
     P,
     S,
     ignore,
-    override,
 )
 
-Flie:TypeAlias = IO[ANY]
-Lzma:TypeAlias = lzma.LZMAFile | TextIO
-Path:TypeAlias = P | S
+Flie: TypeAlias = IO[ANY]
+Lzma: TypeAlias = lzma.LZMAFile | TextIO
+Path: TypeAlias = P | S
 
 MAXIMUM_LINE_LENGTH = 72
 SECTION_BREAK = "######################################################\
@@ -138,7 +137,6 @@ class File:
 class Binary(File):
     """"""
 
-    @override
     def reader(self, *path: Path) -> Flie:
         """"""
         return open(
@@ -147,7 +145,6 @@ class Binary(File):
             Buffering.OFF,
         )
 
-    @override
     def writer(self, *path: Path) -> Flie:
         """"""
         return open(
@@ -160,7 +157,6 @@ class Binary(File):
 class Compress(File):
     """"""
 
-    @override
     def reader(self, *path: Path) -> Lzma:
         """"""
         return lzma.open(
@@ -168,7 +164,6 @@ class Compress(File):
             Mode.READ_BINARY,
         )
 
-    @override
     def writer(self, *path: Path) -> Lzma:
         """"""
         return lzma.open(
@@ -183,7 +178,6 @@ class Compress(File):
 class Text(File):
     """"""
 
-    @override
     def reader(self, *path: Path) -> Flie:
         """"""
         return open(
@@ -194,7 +188,6 @@ class Text(File):
             Errors.STRICT,
         )
 
-    @override
     def writer(self, *path: Path) -> Flie:
         """"""
         return open(
@@ -209,7 +202,6 @@ class Text(File):
 class Module(Text):
     """"""
 
-    @override
     def reader(self, *path: Path) -> Flie:
         """"""
         ignore(self)
@@ -217,7 +209,6 @@ class Module(Text):
         file = load.python(*paths)
         return super().reader(file)
 
-    @override
     def writer(self, *path: Path) -> Flie:
         """"""
         ignore(self)

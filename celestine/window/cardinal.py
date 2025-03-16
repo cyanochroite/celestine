@@ -17,7 +17,6 @@ from celestine.typed import (
     TS1,
     TS2,
     TS3,
-    ANY,
     TS4,
     VZ,
     A,
@@ -35,7 +34,6 @@ from celestine.typed import (
     Z,
     cast,
     ignore,
-    override,
 )
 
 Number: typing.TypeAlias = U["Cardinal", F, Z]
@@ -192,6 +190,10 @@ class Cardinal(Struct):
         result = self.inplace(Round.positive)
         return result
 
+    def __del__(self) -> N:
+        super().__del__()
+        del self.name
+
     def __eq__(self, other: object) -> B:
         if not isinstance(other, Cardinal):
             return False
@@ -330,135 +332,123 @@ class Cardinal(Struct):
         return result
 
 
-class Monad(Cardinal):
+class Monad[X](Cardinal):
     """"""
 
     __slots__: TS1 = ("one",)
 
-    one: ANY
+    one: X
 
-    @override
     def _del(self) -> N:
         del self.one
 
-    @override
-    def _get(self) -> T[ANY]:
+    def _get(self) -> T[X]:
         return (self.one,)
 
-    @override
-    def _set(self, value: T[ANY]) -> N:
+    def _set(self, value: T[X]) -> N:
         self.one = value[0]
 
-    def __init__(self, one: ANY) -> N:
+    def __init__(self, one: X) -> N:
         ignore(self)
         super().__init__(one)
 
-    def __new__(cls, one: ANY) -> K:
+    def __new__(cls, one: X) -> K:
         return super().__new__(cls, one)
 
     data = property(_get, _set, _del)
 
 
-class Dyad(Cardinal):
+class Dyad[X](Cardinal):
     """"""
 
     __slots__: TS2 = ("one", "two")
 
-    one: ANY
-    two: ANY
+    one: X
+    two: X
 
-    @override
     def _del(self) -> N:
         del self.one
         del self.two
 
-    @override
-    def _get(self) -> T[ANY, ANY]:
+    def _get(self) -> T[X, X]:
         return (self.one, self.two)
 
-    @override
-    def _set(self, value: T[ANY, ANY]) -> N:
+    def _set(self, value: T[X, X]) -> N:
         self.one = value[0]
         self.two = value[1]
 
-    def __init__(self, one: ANY, two: ANY) -> N:
+    def __init__(self, one: X, two: X) -> N:
         ignore(self)
         super().__init__(one, two)
 
-    def __new__(cls, one: ANY, two: ANY) -> K:
+    def __new__(cls, one: X, two: X) -> K:
         return super().__new__(cls, one, two)
 
     data = property(_get, _set, _del)
 
 
-class Triad(Cardinal):
+class Triad[X](Cardinal):
     """"""
 
     __slots__: TS3 = ("one", "two", "tri")
 
-    one: ANY
-    two: ANY
-    tri: ANY
+    one: X
+    two: X
+    tri: X
 
-    @override
     def _del(self) -> N:
         del self.one
         del self.two
         del self.tri
 
-    @override
-    def _get(self) -> T[ANY, ANY, ANY]:
+    def _get(self) -> T[X, X, X]:
         return (self.one, self.two, self.tri)
 
-    @override
-    def _set(self, value: T[ANY, ANY, ANY]) -> N:
+    def _set(self, value: T[X, X, X]) -> N:
         self.one = value[0]
         self.two = value[1]
         self.tri = value[2]
 
-    def __init__(self, one: ANY, two: ANY, tri: ANY) -> N:
+    def __init__(self, one: X, two: X, tri: X) -> N:
         ignore(self)
         super().__init__(one, two, tri)
 
-    def __new__(cls, one: ANY, two: ANY, tri: ANY) -> K:
+    def __new__(cls, one: X, two: X, tri: X) -> K:
         return super().__new__(cls, one, two, tri)
 
     data = property(_get, _set, _del)
 
 
-class Tetrad(Cardinal):
+class Tetrad[X](Cardinal):
     """"""
 
     __slots__: TS4 = ("one", "two", "tri", "tet")
 
-    one: ANY
-    two: ANY
-    tri: ANY
-    tet: ANY
+    one: X
+    two: X
+    tri: X
+    tet: X
 
-    @override
     def _del(self) -> N:
         del self.one
         del self.two
         del self.tri
         del self.tet
 
-    @override
-    def _get(self) -> T[ANY, ANY, ANY, ANY]:
+    def _get(self) -> T[X, X, X, X]:
         return (self.one, self.two, self.tri, self.tet)
 
-    @override
-    def _set(self, value: T[ANY, ANY, ANY, ANY]) -> N:
+    def _set(self, value: T[X, X, X, X]) -> N:
         self.one = value[0]
         self.two = value[1]
         self.tri = value[2]
         self.tet = value[3]
 
-    def __init__(self, one: ANY, two: ANY, tri: ANY, tet: ANY) -> N:
+    def __init__(self, one: X, two: X, tri: X, tet: X) -> N:
         ignore(self)
         super().__init__(one, two, tri, tet)
 
-    def __new__(cls, one: ANY, two: ANY, tri: ANY, tet: ANY) -> K:
+    def __new__(cls, one: X, two: X, tri: X, tet: X) -> K:
         return super().__new__(cls, one, two, tri, tet)
 
     data = property(_get, _set, _del)
