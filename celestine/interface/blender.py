@@ -21,6 +21,7 @@ from celestine.typed import (
     LS,
     B,
     N,
+    D,
     R,
     S,
     ignore,
@@ -200,7 +201,7 @@ class Abstract(Abstract_):
             item.hide_render = False
             item.hide_viewport = False
 
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
         if star.get("first"):
             self.render()
@@ -209,7 +210,7 @@ class Abstract(Abstract_):
             item = self.dictionary.get(self.name)
             self.hidden = item.hide_render
 
-        super().build(parent, **star)
+        super().build(parent, star)
 
     def __init__(self, name: S, **star: R) -> N:
         super().__init__(name, **star)
@@ -219,13 +220,13 @@ class Abstract(Abstract_):
 class Mouse(Abstract):
     """Should everyone get this?"""
 
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY,  star: D[S, ANY]) -> N:
         """"""
         if star.get("first"):
             diamond = Diamond()
-            diamond.build(self.mesh)
+            diamond.make(self.mesh)
 
-        super().build(parent, **star)
+        super().build(parent, star)
 
     def __init__(self, mesh) -> N:
         self.mesh = mesh.soul
@@ -237,7 +238,7 @@ class Mouse(Abstract):
 class Element(Element_, Abstract):
     """"""
 
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
         global data
         if star.get("first"):
@@ -255,7 +256,7 @@ class Element(Element_, Abstract):
                 plane.body.data.materials.append(material)
                 self.keep = plane
 
-        super().build(parent, **star)
+        super().build(parent, star)
 
     def update(self, image: S, **star: R) -> B:
         """"""
@@ -271,7 +272,7 @@ class Element(Element_, Abstract):
 class View(View_, Abstract):
     """"""
 
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
         if star.get("first"):
             if parent:
@@ -282,7 +283,7 @@ class View(View_, Abstract):
             collection = data.collection(self.name)
             link(collection.soul)
 
-        super().build(parent, **star)
+        super().build(parent, star)
 
     def hide(self) -> N:
         """"""
@@ -308,10 +309,11 @@ class View(View_, Abstract):
 class Window(Window_, Abstract):
     """"""
 
-    def build(self, parent: ANY, **star: R) -> N:
+    def build(self, parent: ANY,  star: D[S, ANY]) -> N:
         """"""
         first = self.call == "build"
-        super().build(parent, first=first, **star)
+        star.update(first = first)
+        super().build(parent, star)
 
     @classmethod
     def extension(cls) -> LS:
@@ -426,7 +428,7 @@ class Window(Window_, Abstract):
         mesh.location = (0, 0, -1)
 
         self.mouse = Mouse(mesh)
-        self.mouse.build(collection, first=True)
+        self.mouse.build(collection, {"first": True})
 
         @classmethod
         def bind(cls, collection, name, soul):
