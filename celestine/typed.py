@@ -155,8 +155,21 @@ VS: TypeAlias = V[S]
 VZ: TypeAlias = V[Z]
 
 
-def override(_) -> A:
-    pass
+
+class Override(Protocol):
+    """Type for code functions."""
+
+    def __call__(self, *data: ANY, **star: ANY) -> ANY:
+        raise NotImplementedError(self, data, star)
+
+
+def override(function: Override) -> Override:
+    """"""
+
+    def decorator(*data: ANY, **star: ANY) -> ANY:
+        return function(*data, **star)
+
+    return decorator
 
 
 def ignore(*_: A) -> N:
