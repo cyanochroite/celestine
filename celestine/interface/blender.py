@@ -180,6 +180,8 @@ class Abstract(Abstract_):
 
     def render(self) -> N:
         """"""
+        if not self.keep:
+            return
         (x_dot, y_dot) = self.area.world.centroid
         # child sets mesh and then calls this
         self.keep.location = (x_dot, y_dot, 0)
@@ -215,6 +217,7 @@ class Abstract(Abstract_):
     def __init__(self, name: S, **star: R) -> N:
         super().__init__(name, **star)
         self.dictionary = bpy.data.objects
+        self.keep = None
 
 
 class Mouse(Abstract):
@@ -274,6 +277,7 @@ class View(View_, Abstract):
 
     def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
+        collection = None
         if star.get("first"):
             if parent:
                 link = parent.children.link
@@ -282,8 +286,13 @@ class View(View_, Abstract):
 
             collection = data.collection(self.name)
             link(collection.soul)
+            self.item = collection
 
         super().build(parent, star)
+
+        if star.get("first"):
+            # Got to fix super.build to avoid the double setter.
+            self.item = collection
 
     def hide(self) -> N:
         """"""
@@ -404,8 +413,8 @@ class Window(Window_, Abstract):
             data.texture.remove(texture)
 
         collection = data.collection("window")
-        bpy.context.scene.collection.children.link(collection.soul)
 
+        bpy.context.scene.collection.children.link(collection.soul)
         camera = data.camera("camera", collection)
         camera.location = (+17.5, +10.0, -60.0)
         camera.rotation = (180, 0, 0)
@@ -421,12 +430,11 @@ class Window(Window_, Abstract):
         starlight.angle = 0.0
 
         click = data.collection("click")
-        bpy.context.scene.collection.children.link(click.soul)
         click.soul.hide_select = False
 
+        bpy.context.scene.collection.children.link(click.soul)
         mesh = data.mesh("mouse", click)
         mesh.location = (0, 0, -1)
-
         self.mouse = Mouse(mesh)
         self.mouse.build(collection, {"first": True})
 
@@ -437,12 +445,14 @@ class Window(Window_, Abstract):
             collection.objects.link(body)
             return cls(body, soul)
 
+        # Ensure main screen has the right rendering flag set.
         for area in bpy.context.screen.areas:
             if area.type == "VIEW_3D":
                 for space in area.spaces:
                     if space.type == "VIEW_3D":
                         space.shading.type = "RENDERED"
 
+        # I think this just deletes all the old stuff from last session.
         for window in bpy.context.window_manager.windows:
             screen = window.screen
             for area in screen.areas:
@@ -456,6 +466,7 @@ class Window(Window_, Abstract):
                             temp_override["region"] = region
                             space = area.spaces[0]
 
+        #  I think this turns camera on so we can see the world.
         if self.call == "build":
             with bpy.context.temp_override(**temp_override):
                 bpy.ops.view3d.view_camera()
