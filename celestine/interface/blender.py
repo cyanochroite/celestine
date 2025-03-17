@@ -1,6 +1,6 @@
 """"""
 
-import bpy  # TODO IMPORT
+import bpy
 
 import celestine
 from celestine import bank
@@ -31,12 +31,19 @@ from celestine.window.collection import (
     Point,
 )
 
+# from celestine.package import bpy
+
+
 COLLECTION = _collection
 
 INTERFACE = "interface"
 BLENDER = "blender"
 PACKAGE = "package"
 PREFERENCES = "preferences"
+
+
+class Context:
+    """Type bpy_struct, Context."""
 
 
 def main(call: B, **star: R) -> N:
@@ -50,13 +57,13 @@ def main(call: B, **star: R) -> N:
     celestine.main(argv, exit_on_error, call=call, **star)
 
 
-class celestine_click(bpy.types.Operator):
+class CelestineClick(bpy.types.Operator):
     """"""
 
     bl_label = "Mouse Click"
     bl_idname = "celestine.click"
 
-    def execute(self, context):
+    def execute(self, context):  #  bpy_struct, Context
         """"""
         ignore(self)
         mouse = (obj for obj in bpy.data.objects if obj.name == "mouse")
@@ -70,7 +77,7 @@ class celestine_click(bpy.types.Operator):
         return {"FINISHED"}
 
 
-class celestine_main(bpy.types.Panel):
+class CelestineMain(bpy.types.Panel):
     """"""
 
     bl_category = "celestine"
@@ -107,7 +114,7 @@ class celestine_main(bpy.types.Panel):
         """"""
 
 
-class celestine_begin(bpy.types.Operator):
+class CelestineBegin(bpy.types.Operator):
     """"""
 
     bl_description = "whati ti do"
@@ -129,7 +136,7 @@ class celestine_begin(bpy.types.Operator):
         return {"FINISHED"}
 
 
-class celestine_finish(bpy.types.Operator):
+class CelestineFinish(bpy.types.Operator):
     """"""
 
     bl_label = "Shutdown"
@@ -147,18 +154,18 @@ class celestine_finish(bpy.types.Operator):
 def register():
     """"""
     preferences.register()
-    bpy.utils.register_class(celestine_begin)
-    bpy.utils.register_class(celestine_finish)
-    bpy.utils.register_class(celestine_click)
-    bpy.utils.register_class(celestine_main)
+    bpy.utils.register_class(CelestineBegin)
+    bpy.utils.register_class(CelestineFinish)
+    bpy.utils.register_class(CelestineClick)
+    bpy.utils.register_class(CelestineMain)
 
 
 def unregister():
     """"""
-    bpy.utils.unregister_class(celestine_main)
-    bpy.utils.unregister_class(celestine_click)
-    bpy.utils.unregister_class(celestine_finish)
-    bpy.utils.unregister_class(celestine_begin)
+    bpy.utils.unregister_class(CelestineMain)
+    bpy.utils.unregister_class(CelestineClick)
+    bpy.utils.unregister_class(CelestineFinish)
+    bpy.utils.unregister_class(CelestineBegin)
     preferences.unregister()
 
 

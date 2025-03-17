@@ -1,8 +1,10 @@
 """"""
 
-import bpy  # pylint: disable=import-error
+import bpy
 
 from celestine.literal import CELESTINE
+
+# from celestine.package import bpy
 
 
 def content():
