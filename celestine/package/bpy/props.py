@@ -1,20 +1,55 @@
 """"""
 
+from celestine.package.bpy.types import (
+    ID,
+    PropertyGroup,
+)
 from celestine.typed import (
+    NR,
+    TD,
+    UN,
+    B,
     N,
-    R,
+    S,
+    Z,
 )
 
 
-class StringProperty:
+class _Bool(TD):
     """"""
 
-    def init(self, **star: R) -> N:
-        pass
+    default: B
+    description: S
+    name: S
+
+
+class _Pointer(TD):
+    """"""
+
+    type: ID | PropertyGroup
+
+
+class _String(TD):
+    """"""
+
+    default: NR[S]
+    description: S
+    maxlen: NR[Z]
+    name: S
+    subtype: NR[S]
 
 
 class BoolProperty:
     """"""
 
-    def init(self, **star: R) -> N:
-        pass
+    def __init__(self, **star: UN[_Bool]) -> N:
+        """"""
+        raise NotImplementedError(self, star)
+
+
+class StringProperty:
+    """"""
+
+    def __init__(self, **star: UN[_String]) -> N:
+        """"""
+        raise NotImplementedError(self, star)

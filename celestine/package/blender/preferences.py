@@ -9,6 +9,13 @@ from celestine.literal import CELESTINE
 
 def content():
     """"""
+    bpy.context
+    bpy.context.preferences
+    bpy.context.preferences.addons
+    bpy.context.preferences.addons[CELESTINE]
+    bpy.context.preferences.addons[CELESTINE].preferences
+    bpy.context.preferences.addons[CELESTINE].preferences
+
     return bpy.context.preferences.addons[CELESTINE].preferences
 
 
