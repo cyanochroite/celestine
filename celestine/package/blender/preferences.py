@@ -1,22 +1,15 @@
 """"""
 
-import bpy
+# import bpy
 
 from celestine.literal import CELESTINE
-
-# from celestine.package import bpy
+from celestine.package import bpy
 
 
 def content():
     """"""
-    bpy.context
-    bpy.context.preferences
-    bpy.context.preferences.addons
-    bpy.context.preferences.addons[CELESTINE]
-    bpy.context.preferences.addons[CELESTINE].preferences
-    bpy.context.preferences.addons[CELESTINE].preferences
-
-    return bpy.context.preferences.addons[CELESTINE].preferences
+    result = bpy.context.preferences.addons[CELESTINE].preferences
+    return result
 
 
 class CelestineAddonPreferences(bpy.types.AddonPreferences):
