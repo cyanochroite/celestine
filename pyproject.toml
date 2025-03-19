@@ -10,7 +10,7 @@ authors = [
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)",
+    "License :: OSI Approved :: The Unlicense (Unlicense)",
     "Natural Language :: Bulgarian",
     "Natural Language :: Croatian",
     "Natural Language :: Czech",
@@ -175,4 +175,3 @@ typeCheckingMode = "strict"
 [tool.setuptools.package-data]
 celestine = ["py.typed"]
 "celestine.data" = ["*.gif", "*.jpg", "*.otf", "*.png"]
-"celestine.licence" = ["*.txt"]
