@@ -1,12 +1,14 @@
 """"""
 
+from collections.abc import Collection
+
 from celestine.typed import (
-    GE,
-    SELF,
-    TA,
-    A,
+    GZ,
     B,
     D,
+    F,
+    G,
+    K,
     N,
     R,
     S,
@@ -14,158 +16,270 @@ from celestine.typed import (
     Z,
 )
 
-AXIS: TA = GE[T[Z, Z], N, N]
+
+class Point:
+    """"""
+
+    _one: F
+    _two: F
+
+    @property
+    def one(self) -> F:
+        """"""
+        return self._one
+
+    @property
+    def two(self) -> F:
+        """"""
+        return self._two
+
+    @property
+    def value(self) -> T[Z, Z]:
+        """"""
+        return (int(self._one), int(self._two))
+
+    def __init__(self, _one: F, _two: F) -> N:
+        self._one = _one
+        self._two = _two
+
+    def __iter__(self) -> GZ:
+        yield self._one
+        yield self._two
+
+    def __sub__(self, other: K) -> K:
+        one = self._one - other._one
+        two = self._two - other._two
+        return type(self)(one, two)
+
+    def __truediv__(self, other: K) -> K:
+        one = self._one / other._one
+        two = self._two / other._two
+        return type(self)(one, two)
+
+    def __repr__(self):
+        return f"Point({repr(self._one)}, {repr(self._two)})"
+
+    def __str__(self):
+        return f"({str(self._one)}, {str(self._two)})"
+
+
+class Line:
+    """"""
+
+    minimum: Z
+    maximum: Z
+
+    @classmethod
+    def clone(cls, self: K) -> K:
+        """"""
+        return cls(self.minimum, self.maximum)
+
+    def copy(self) -> K:
+        """"""
+        return self.clone(self)
+
+    @property
+    def length(self) -> Z:
+        """"""
+        return self.maximum - self.minimum
+
+    @property
+    def midpoint(self) -> Z:
+        """"""
+        return (self.minimum + self.maximum) // 2
+
+    def __contains__(self, item: Z) -> B:
+        return self.minimum <= item <= self.maximum
+
+    def __iadd__(self, other: Z) -> K:
+        self.minimum += other
+        self.maximum += other
+        return self
+
+    def __imul__(self, other: Z) -> K:
+        self.minimum *= other
+        self.maximum *= other
+        return self
+
+    def __init__(self, minimum: Z, maximum: Z) -> N:
+        self.minimum = min(minimum, maximum)
+        self.maximum = max(minimum, maximum)
+
+    def __isub__(self, other: Z) -> K:
+        self.minimum -= other
+        self.maximum -= other
+        return self
+
+    def __repr__(self):
+        return f"Line({repr(self.minimum)}, {repr(self.maximum)})"
+
+    def __str__(self):
+        return f"({str(self.minimum)}, {str(self.maximum)})"
+
+
+class Plane:
+    """"""
+
+    _one: Line
+    _two: Line
+
+    @property
+    def one(self) -> Line:
+        """"""
+        return self._one
+
+    @property
+    def two(self) -> Line:
+        """"""
+        return self._two
+
+    def center(self, other: K) -> N:
+        """"""
+        self += other.centroid - self.centroid
+
+    @property
+    def centroid(self) -> Point:
+        """"""
+        _one = self._one.midpoint
+        _two = self._two.midpoint
+        return Point(_one, _two)
+
+    def copy(self) -> K:
+        """"""
+        return Plane(self._one, self._two)
+
+    @property
+    def value(self) -> T[Z, Z, Z, Z]:
+        """"""
+        xmin = int(self._one.minimum)
+        ymin = int(self._two.minimum)
+        xmax = int(self._one.maximum)
+        ymax = int(self._two.maximum)
+        return (xmin, ymin, xmax, ymax)
+
+    @classmethod
+    def make(cls, width: Z, height: Z) -> K:
+        """"""
+        _one = Line(0, width)
+        _two = Line(0, height)
+        return cls(_one, _two)
+
+    @property
+    def origin(self) -> Point:
+        """"""
+        return Point(self._one.minimum, self._two.minimum)
+
+    def scale_to_max(self, other: K) -> K:
+        """"""
+        self *= max(other.size / self.size)
+        return self
+
+    def scale_to_min(self, other: K) -> K:
+        """"""
+        self *= min(other.size / self.size)
+        return self
+
+    @property
+    def size(self) -> Point:
+        """"""
+        return Point(self._one.length, self._two.length)
+
+    def __contains__(self, item: Point) -> B:
+        _one = item.one in self._one
+        _two = item.two in self._two
+        return _one and _two
+
+    def __iadd__(self, other: Point) -> K:
+        self._one += other.one
+        self._two += other.two
+        return self
+
+    def __imul__(self, other: Z) -> K:
+        self._one *= other
+        self._two *= other
+        return self
+
+    def __init__(self, _one: Line, _two: Line) -> N:
+        self._one = _one.copy()
+        self._two = _two.copy()
+
+    def __isub__(self, other: Point) -> K:
+        self._one -= other.one
+        self._two -= other.two
+        return self
+
+    def __repr__(self):
+        return f"Plane({repr(self._one)}, {repr(self._two)})"
+
+    def __str__(self):
+        return f"({str(self._one)}, {str(self._two)})"
+
+
+class Area:
+    """"""
+
+    local: Plane
+    world: Plane
+
+    def __contains__(self, item: Point) -> B:
+        return item in self.world
+
+    @classmethod
+    def make(cls, width: Z, height: Z) -> K:
+        """"""
+        local = Plane.make(width, height)
+        world = Plane.make(width, height)
+        return cls(local, world)
+
+    def __init__(self, local: Plane, world: Plane) -> N:
+        self.local = local.copy()
+        self.world = world.copy()
+
+    def __repr__(self):
+        return f"Area({self.local}, {self.world})"
+
+    def __str__(self):
+        return f"({self.local}, {self.world})"
 
 
 class Object:
     """"""
 
-    def __init__(self, **star) -> N:
-        """Make sure object does not get the star parameter."""
+    def __init__(self, **star: R) -> N:
+        """This does not pass the star parameter to the real object."""
         super().__init__()
 
 
-class Point:
-    """Screen cordinates."""
-
-    point_x: Z
-    point_y: Z
-
-    def __init__(self, point_x: Z, point_y: Z) -> N:
-        self.point_x = abs(point_x)
-        self.point_y = abs(point_y)
-
-
-class Rectangle:
+class Tree(Object, Collection[K]):
     """"""
 
-    left: Z
-    upper: Z
-    right: Z
-    lower: Z
+    children: D[S, K]
 
-    def copy(self, other: SELF) -> N:
-        """Copy the values from another object."""
-        self.left = other.left
-        self.upper = other.upper
-        self.right = other.right
-        self.lower = other.lower
-
-    def within(self, dot_x: Z, dot_y: Z) -> B:
-        """Test that click inside us."""
-        test_x = self.left <= dot_x <= self.right
-        test_y = self.upper <= dot_y <= self.lower
-        return test_x and test_y
-
-    @property
-    def origin(self) -> T[Z, Z]:
+    def get(self, name: S) -> K:
         """"""
-        return (self.left, self.upper)
+        result = self.children[name]
+        return result
 
-    @property
-    def size(self) -> T[Z, Z]:
+    def set(self, item: K) -> K:
         """"""
-        return (self.right - self.left, self.lower - self.upper)
-
-    @property
-    def value(self) -> T[Z, Z, Z, Z]:
-        """"""
-        return (self.left, self.upper, self.right, self.lower)
-
-    def __init__(self, left: Z, upper: Z, right: Z, lower: Z) -> N:
-        """"""
-        self.left = left
-        self.upper = upper
-        self.right = right
-        self.lower = lower
-
-
-class Item(Object):
-    """"""
-
-    area: Rectangle
-    canvas: A
-    name: S  # The key to use to find this in the window dictionary.
-    hidden: B
-
-    def draw(self, ring, **star) -> N:
-        """"""
-        if self.hidden:
-            return
-
-    def make(self, ring, **star) -> N:
-        """"""
-
-    def poke(self, ring: R, x_dot: Z, y_dot: Z, **star) -> N:
-        """"""
-        if self.hidden:
-            return False
-
-        return self.area.within(x_dot, y_dot)
-
-    def spot(self, area: Rectangle) -> N:
-        """"""
-        raise NotImplementedError(area)
-
-    def __init__(
-        self, canvas: A, name: S, area: Rectangle, **star
-    ) -> N:
-        super().__init__(**star)
-        self.area = Rectangle(*area.value)
-        self.canvas = canvas
-        self.name = name
-        self.hidden = False
-
-
-class Collection(Object):
-    """"""
-
-    item: D[S, Item]
-
-    def item_get(self, name: S) -> Item:
-        """"""
-        return self.item[name]
-
-    def item_set(self, name: S, item: Item) -> Item:
-        """"""
-        self.item[name] = item
+        self.children[item.name] = item
         return item
 
-    def load(self, name: S) -> Item:
-        """"""
-        return self.item[name]
+    def __bool__(self) -> B:
+        return True
 
-    def save(self, item: Item) -> N:
-        """"""
-        self.item[item.name] = item
+    def __contains__(self, item: S) -> B:
+        contains = item in self.children
+        return contains
 
-    def __init__(self, **star) -> N:
-        self.item = {}
+    def __init__(self, **star: R) -> N:
+        self.children = {}
         super().__init__(**star)
 
-    def __iter__(self) -> GE[T[S, Item], N, N]:
-        """"""
-        yield from self.item.items()
+    def __iter__(self) -> G[T[S, K], N, N]:
+        items = self.children.items()
+        yield from items
 
-
-class Collection2:
-    """"""
-
-    item: D[S, Item]
-
-    def children(self) -> GE[Item, N, N]:
-        """"""
-        for _, item in self.item.items():
-            yield item
-
-    def get(self, name: S) -> Item:
-        """"""
-        return self.item[name]
-
-    def set(self, name: S, item: Item) -> Item:
-        """"""
-        self.item[name] = item
-        return item
-
-    def __init__(self) -> N:
-        self.item = {}
+    def __len__(self) -> Z:
+        length = len(self.children)
+        return length

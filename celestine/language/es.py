@@ -62,15 +62,15 @@ CURSES_EXIT = "Pulse la tecla ESC para salir."
 
 DEMO_COW_TALK = "Soy una vaca parlante."
 
-DEMO_MAIN_ACTION = "Saluda a la vaca."
+DEMO_ZERO_ACTION = "Saluda a la vaca."
 
 DEMO_MAIN_NEXT = "Vaya a la página dos."
 
 DEMO_MAIN_PAST = "Vaya a la página uno."
 
-DEMO_MAIN_SAY = "Hola humano."
+DEMO_ZERO_SAY = "Hola humano."
 
-DEMO_MAIN_TITLE = "Página principal."
+DEMO_ZERO_TITLE = "Página principal."
 
 DEMO_ONE_ACTION = "Alimenta a la vaca."
 

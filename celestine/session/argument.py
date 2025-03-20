@@ -1,15 +1,19 @@
 """"""
 
+from abc import abstractmethod
+
+from celestine.literal import (
+    HYPHEN_MINUS,
+    NONE,
+    QUESTION_MARK,
+)
+from celestine.session.data import Actions
 from celestine.typed import (
     LS,
     B,
     N,
+    R,
     S,
-)
-from celestine.unicode import (
-    HYPHEN_MINUS,
-    NONE,
-    QUESTION_MARK,
 )
 
 from .attribute import (
@@ -20,11 +24,6 @@ from .attribute import (
     Nargs,
     Version,
 )
-from .data import (
-    HELP,
-    STORE_TRUE,
-    VERSION,
-)
 from .hash import HashClass
 
 
@@ -32,7 +31,11 @@ class Argument(HashClass, Attribute):
     """Abstract class."""
 
     def __init__(
-        self, argument: B, attribute: B, fallback: S, **star
+        self,
+        argument: B,
+        attribute: B,
+        fallback: S,
+        **star: R,
     ) -> N:
         """"""
         super().__init__(**star)
@@ -40,9 +43,9 @@ class Argument(HashClass, Attribute):
         self.attribute = attribute
         self.fallback = fallback
 
-    def key(self, _: S) -> LS:
+    @abstractmethod
+    def key(self, name: S) -> LS:
         """"""
-        return []
 
 
 class Flag(Argument):
@@ -142,10 +145,10 @@ class InformationConfiguration(Information):
     """"""
 
     # pylint: disable-next=redefined-builtin
-    def __init__(self, help) -> N:
+    def __init__(self, help: S) -> N:
         """"""
         super().__init__(
-            action=STORE_TRUE,
+            action=Actions.STORE_TRUE,
             help=help,
         )
 
@@ -157,7 +160,7 @@ class InformationHelp(Information):
     def __init__(self, help: S) -> N:
         """"""
         super().__init__(
-            action=HELP,
+            action=Actions.HELP,
             help=help,
         )
 
@@ -169,6 +172,6 @@ class InformationVersion(Information, Version):
     def __init__(self, help: S) -> N:
         """"""
         super().__init__(
-            action=VERSION,
+            action=Actions.VERSION,
             help=help,
         )

@@ -3,18 +3,29 @@
 import io
 import math
 
+from celestine import bank
+from celestine.data.notational_systems import BRAILLE_PATTERNS
+from celestine.interface import Abstract as Abstract_
+from celestine.interface import Element as Element_
+from celestine.interface import View as View_
+from celestine.interface import Window as Window_
+from celestine.literal import LINE_FEED
+from celestine.package import (
+    curses,
+    pillow,
+)
 from celestine.typed import (
+    B,
     N,
     R,
+    override,
 )
-from celestine.unicode import LINE_FEED
-from celestine.unicode.notational_systems import BRAILLE_PATTERNS
-from celestine.window import Window as window
-from celestine.window.collection import Rectangle
-from celestine.window.element import Abstract as Abstract_
-from celestine.window.element import Button as Button_
-from celestine.window.element import Image as Image_
-from celestine.window.element import Label as Label_
+from celestine.window.collection import (
+    Area,
+    Line,
+    Plane,
+    Point,
+)
 
 color_index = 8  # skip the 8 reserved colors
 color_table = {}
@@ -24,7 +35,6 @@ COLORS = 15
 
 def get_colors(curses, image):
     """Fails after being called 16 times."""
-
     global color_index
     global color_table
 
@@ -64,23 +74,17 @@ class Abstract(Abstract_):
         """
         self.canvas.addstr(y_dot - 1, x_dot - 1, text, *extra)
 
-    def render(self, item, **star):
+    def render(self, item, **star: R) -> N:
         """"""
+        if self.hidden:
+            return
+
         text = item
-        (x_dot, y_dot) = self.area.origin
+        (x_dot, y_dot) = self.area.origin.int
         self.add_string(x_dot, y_dot, text)
 
 
-class Button(Abstract, Button_):
-    """"""
-
-    def draw(self, ring: R, **star):
-        """"""
-        item = f"button:{self.data}"
-        self.render(item, **star)
-
-
-class Image(Abstract, Image_):
+class Element(Element_, Abstract):
     """"""
 
     def output(self):
@@ -125,13 +129,12 @@ class Image(Abstract, Image_):
         value = value[0:-1]
         return value.split(LINE_FEED)
 
-    def render(self, ring, item, **star):
+    def render(self, item, **star: R):
         """"""
-        curses = ring.package.curses
 
-        (x_dot, y_dot) = self.area.origin
+        (x_dot, y_dot) = self.area.world.origin
 
-        if not ring.package.pillow:
+        if not pillow:
             self.add_string(
                 x_dot,
                 y_dot,
@@ -163,17 +166,15 @@ class Image(Abstract, Image_):
 
             index_y += 1
 
-    def draw(self, ring: R, **star):
+    def draw_old(self, **star: R):
         """"""
-        curses = ring.package.curses
-        pillow = ring.package.pillow
 
         if not pillow:
-            self.render(ring, self.path.name, **star)
+            self.render(self.path.name, **star)
             return
 
-        self.cache = pillow.image_load(self.path)
-        self.color = pillow.image_clone(self.cache)
+        self.cache = pillow.open(self.path)
+        self.color = self.cache.copy()
 
         # Crop box.
         source_length_x = self.cache.image.width
@@ -204,37 +205,73 @@ class Image(Abstract, Image_):
         get_colors(curses, self.color.image)
 
         item = self.output()
-        self.render(ring, item, **star)
+        self.render(item, **star)
 
-
-class Label(Abstract, Label_):
-    """"""
-
-    def draw(self, ring: R, **star):
+    def draw(self, **star: R):
         """"""
-        item = f"label:{self.data}"
+
+        if not pillow:
+            self.render(self.path.name, **star)
+            return
+
+        self.cache = self.image
+        self.color = self.cache.copy()
+
+        # Crop box.
+        source_length_x = self.cache.image.width
+        source_length_y = self.cache.image.height
+
+        length_x, length_y = self.area.world.size
+
+        target_length_x = length_x * 2
+        target_length_y = length_y * 4
+
+        source_length = Plane.make(source_length_x, source_length_y)
+        target_length = Plane.make(target_length_x, target_length_y)
+
+        source_length.scale_to_min(target_length)
+        box = source_length.size
+        # Done.
+
+        self.color.brightwing()
+
+        # self.cache.resize(target_length.size, box)
+        # self.color.resize(self.area.size, box)
+        self.cache.resize(target_length.size)
+        self.color.resize(self.area.local.size)
+
+        self.color.quantize()
+
+        self.cache.convert_to_mono()
+        self.color.convert_to_color()
+
+        get_colors(curses, self.color.image)
+
+        item = self.output()
         self.render(item, **star)
 
 
-class Window(window):
+class View(View_, Abstract):
     """"""
 
-    def draw(self, ring: R, **star):
+
+class Window(Window_):
+    """"""
+
+    @override
+    def draw(self, **star: R) -> B:
         """"""
-        curses = self.ring.package.curses
 
         # Do normal draw stuff.
-        # self.setup(self.page)
 
-        canvas = self.page.canvas
-        canvas.erase()
+        self.canvas.erase()
         # canvas = curses.window(*self.area.value)
 
-        super().draw(ring, **star)
+        super().draw(**star)
 
         self.stdscr.noutrefresh()
         self.background.noutrefresh()
-        canvas.noutrefresh()
+        self.canvas.noutrefresh()
         curses.doupdate()
 
         # Reset the global color counter.
@@ -243,56 +280,54 @@ class Window(window):
         color_index = 8
         color_table = {}
 
+    @override
     def extension(self):
         """"""
-        if self.ring.package.pillow:
-            return self.ring.package.pillow.extension()
+        if pillow:
+            return pillow.extension()
 
         return []
 
+    @override
     def setup(self, name):
         """"""
-        curses = self.ring.package.curses
-        return curses.window(*self.area.value)
 
+        return curses.window(*self.area.int)
+
+    @override
     def __enter__(self):
         super().__enter__()
 
-        curses = self.ring.package.curses
-
-        self.stdscr = curses.initscr()
-        curses.noecho()
-        curses.cbreak()
-        self.stdscr.keypad(1)
-        curses.start_color()
-
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.full = Rectangle(0, 0, size_x, size_y)
+        self.full = Plane.make(size_x, size_y)
 
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
 
         header_box = (0, 0, size_x, 1)
         header = curses.subwindow(self.background, *header_box)
-        header.addstr(0, 1, self.ring.language.APPLICATION_TITLE)
+        header.addstr(0, 1, bank.language.APPLICATION_TITLE)
 
         footer_box = (0, size_y - 1, size_x, 1)
         footer = curses.subwindow(self.background, *footer_box)
-        footer.addstr(0, 1, self.ring.language.CURSES_EXIT)
+        footer.addstr(0, 1, bank.language.CURSES_EXIT)
 
         #
-        area = Rectangle(1, 1, size_x - 2, size_y - 2)
-        self.area = area
+        # TODO check why repeat code from init
+        plane = Plane(
+            Line(1, size_x - 2),
+            Line(1, size_y - 2),
+        )
+        self.area = Area(plane, plane)
 
         return self
 
+    @override
     def __exit__(self, exc_type, exc_value, traceback):
         super().__exit__(exc_type, exc_value, traceback)
 
-        curses = self.ring.package.curses
-
         while True:
-            self.ring.event.work()
+            bank.dequeue()
             event = self.stdscr.getch()
             match event:
                 case 258 | 259 | 260 | 261 as key:
@@ -316,7 +351,7 @@ class Window(window):
                 case curses.KEY_EXIT:
                     break
                 case curses.KEY_CLICK:
-                    self.page.poke(self.ring, self.cord_x, self.cord_y)
+                    self.page.click(Point(self.cord_x, self.cord_y))
 
         self.stdscr.keypad(0)
         curses.echo()
@@ -324,29 +359,34 @@ class Window(window):
         curses.endwin()
         return False
 
-    def __init__(self, ring: R, **star) -> N:
+    @override
+    def __init__(self, **star: R) -> N:
         element = {
-            "button": Button,
-            "image": Image,
-            "label": Label,
+            "element": Element,
+            "view": View,
+            "window": self,
         }
 
-        curses = ring.package.curses
-
         self.stdscr = curses.initscr()
+
         curses.noecho()
         curses.cbreak()
         self.stdscr.keypad(1)
         curses.start_color()
 
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.full = Rectangle(0, 0, size_x, size_y)
+        self.full = Plane.make(size_x, size_y)
 
         self.background = curses.window(0, 0, size_x, size_y)
         self.background.box()
 
-        area = Rectangle(1, 1, size_x - 2, size_y - 2)
-
-        super().__init__(ring, self.background, element, area, **star)
+        super().__init__(element, **star)
+        plane = Plane(
+            Line(1, size_x - 2),
+            Line(1, size_y - 2),
+        )
+        self.area = Area(plane, plane)
         self.cord_x = 0.5
         self.cord_y = 0.5
+
+        self.canvas = self.background

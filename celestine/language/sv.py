@@ -62,15 +62,15 @@ CURSES_EXIT = "Tryck på ESC-tangenten för att avsluta."
 
 DEMO_COW_TALK = "Jag är en talande ko."
 
-DEMO_MAIN_ACTION = "Hälsa på kon."
+DEMO_ZERO_ACTION = "Hälsa på kon."
 
 DEMO_MAIN_NEXT = "Gå till sidan två."
 
 DEMO_MAIN_PAST = "Gå till sida ett."
 
-DEMO_MAIN_SAY = "Hej människa."
+DEMO_ZERO_SAY = "Hej människa."
 
-DEMO_MAIN_TITLE = "Huvudsidan är."
+DEMO_ZERO_TITLE = "Huvudsidan är."
 
 DEMO_ONE_ACTION = "Foder koen."
 

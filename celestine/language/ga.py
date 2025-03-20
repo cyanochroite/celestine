@@ -66,15 +66,15 @@ CURSES_EXIT = "Brúigh an eochair CEBC chun imeacht."
 
 DEMO_COW_TALK = "Is bó chainte mé."
 
-DEMO_MAIN_ACTION = "Beannú don bhó."
+DEMO_ZERO_ACTION = "Beannú don bhó."
 
 DEMO_MAIN_NEXT = "Téigh go leathanach a dó."
 
 DEMO_MAIN_PAST = "Téigh go leathanach a haon."
 
-DEMO_MAIN_SAY = "Dia duit an duine."
+DEMO_ZERO_SAY = "Dia duit an duine."
 
-DEMO_MAIN_TITLE = "Príomhleathanach an leathanaigh."
+DEMO_ZERO_TITLE = "Príomhleathanach an leathanaigh."
 
 DEMO_ONE_ACTION = "Beathaigh an bhó."
 

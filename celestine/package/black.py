@@ -2,19 +2,21 @@
 
 import sys
 
+from celestine.package import Abstract
 from celestine.typed import (
-    MT,
+    CN,
+    M,
     N,
     S,
 )
 
-from . import Abstract
+run: CN
 
 
 class Package(Abstract):
     """"""
 
-    def main(self, package: MT, path: S) -> N:
+    def main(self, package: M, path: S) -> N:
         """"""
         sys.argv.append(path)
         package.patched_main()

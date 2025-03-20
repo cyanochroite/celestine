@@ -1,11 +1,31 @@
 """Python Imaging Library (Fork)."""
 
-import math
+import random
 
 from celestine import load
-from celestine.typed import LS
+from celestine.package import Abstract
+from celestine.typed import (
+    LS,
+    LZ,
+    TA,
+    A,
+    K,
+    N,
+    P,
+    R,
+    S,
+    T,
+    Z,
+)
+from celestine.window.collection import (
+    Plane,
+    Point,
+)
 
-from . import Abstract
+IMAGE: TA = A
+extension: LS
+open: A  # pylint: disable=redefined-builtin
+ImageTk: A
 
 ########################################################################
 
@@ -13,15 +33,18 @@ COLORS = 15  # int(255 - 8 / 16)
 
 
 class Image:
+    """"""
+
+    image: IMAGE
+
     def brightwing(self):
         """
         Brightwing no like the dark colors.
 
         Make image bright.
         """
-        pillow = self.ring.package.pillow
 
-        def brighter(pixel):
+        def brighter(pixel: Z) -> Z:
             invert = (255 - pixel) / 255
             boost = invert * 64
             shift = pixel + boost
@@ -32,184 +55,136 @@ class Image:
 
         bands = (hue, saturation, new_value)
 
-        self.image = pillow.Image.merge("HSV", bands).convert("RGB")
+        merge = self.package.Image.merge("HSV", bands)
+        self.image = merge.convert("RGB")
 
-    def convert(self, mode):
+    @classmethod
+    def clone(cls, self: K) -> K:
         """"""
-        pillow = self.ring.package.pillow
+        image = self.image.copy()
+        return cls(image, self.package)
 
+    def convert(self, mode: S) -> N:
+        """"""
         matrix = None  # Unused default.
-        dither = pillow.Image.Dither.FLOYDSTEINBERG
-        palette = pillow.Image.Palette.WEB  # Unused default.
+        dither = self.package.Image.Dither.FLOYDSTEINBERG
+        palette = self.package.Image.Palette.WEB  # Unused default.
         colors = 256  # Unused default.
 
         hold = self.image.convert(mode, matrix, dither, palette, colors)
         self.image = hold
 
-    def convert_to_alpha(self):
+    def convert_to_alpha(self) -> N:
         """"""
         self.convert("RGBA")
 
-    def convert_to_color(self):
+    def convert_to_color(self) -> N:
         """"""
         self.convert("RGB")
 
-    def convert_to_mono(self):
+    def convert_to_mono(self) -> N:
         """"""
-
         self.convert("1")
 
-    def getdata(self):
+    def copy(self) -> K:
+        """"""
+        return self.clone(self)
+
+    def getdata(self) -> LZ:
+        """"""
         return self.image.getdata()
-
-    def resize(self, size, box=None):
-        """"""
-        pillow = self.ring.package.pillow
-
-        size_x, size_y = size
-
-        size_x = max(1, round(size_x))
-        size_y = max(1, round(size_y))
-
-        size = (size_x, size_y)
-        resample = pillow.Image.Resampling.LANCZOS
-        reducing_gap = None
-
-        hold = self.image.resize(size, resample, box, reducing_gap)
-        self.image = hold
-
-    def scale_to_any(self, area, crop=False):
-        """"""
-        (size_x, size_y) = self.size
-        (area_x, area_y) = area
-
-        down_x = math.floor(area_y * size_x / size_y)
-        down_y = math.floor(area_x * size_y / size_x)
-
-        if crop:
-            best_x = max(area_x, down_x)
-            best_y = max(area_y, down_y)
-        else:
-            best_x = min(area_x, down_x)
-            best_y = min(area_y, down_y)
-
-        return (best_x, best_y)
-
-    def scale_to_fit(self, area):
-        """"""
-        pillow = self.ring.package.pillow
-
-        (size_x, size_y) = self.size
-        (area_x, area_y) = area
-
-        down_x = math.floor(area_y * size_x / size_y)
-        down_y = math.floor(area_x * size_y / size_x)
-
-        best_x = min(area_x, down_x)
-        best_y = min(area_y, down_y)
-
-        self.image = self.image.resize(
-            size=(best_x, best_y),
-            resample=pillow.Image.Resampling.LANCZOS,
-            box=None,
-            reducing_gap=None,
-        )
-
-    def scale_to_fill(self, area):
-        """"""
-        pillow = self.ring.package.pillow
-
-        (size_x, size_y) = self.size
-        (area_x, area_y) = area
-
-        down_x = math.floor(area_y * size_x / size_y)
-        down_y = math.floor(area_x * size_y / size_x)
-
-        best_x = max(area_x, down_x)
-        best_y = max(area_y, down_y)
-
-        length_x = round(area_x / best_x * size_x)
-        length_y = round(area_y / best_y * size_y)
-
-        offset_x = round((size_x - length_x) / 2)
-        offset_y = round((size_y - length_y) / 2)
-        cutoff_x = offset_x + length_x
-        cutoff_y = offset_y + length_y
-
-        self.image = self.image.resize(
-            size=(area_x, area_y),
-            resample=pillow.Image.Resampling.LANCZOS,
-            box=(offset_x, offset_y, cutoff_x, cutoff_y),
-            reducing_gap=None,
-        )
 
     @property
     def size(self):
         """"""
         return self.image.size
 
+    def resize(self, point: Point) -> N:
+        """"""
+        size = point.value
+        resample = self.package.Image.Resampling.LANCZOS
+        box = None
+        reducing_gap = None
+        self.image = self.image.resize(
+            size,
+            resample,
+            box,
+            reducing_gap,
+        )
+
+    def paste(self, image: K, plane: Plane) -> N:
+        """"""
+        im = image.image
+        box = plane.value
+        mask = None
+        self.image.paste(im, box, mask)
+
     def quantize(self):
         """"""
-        pillow = self.ring.package.pillow
-
         # Median Cut only works in RGB mode.
         self.convert_to_color()
 
         colors = COLORS
-        method = pillow.Image.Quantize.MEDIANCUT
+        method = self.package.Image.Quantize.MEDIANCUT
         kmeans = 0
         palette = None
-        dither = pillow.Image.Dither.FLOYDSTEINBERG
+        dither = self.package.Image.Dither.FLOYDSTEINBERG
+        quantize = self.image.quantize
+        self.image = quantize(colors, method, kmeans, palette, dither)
 
-        self.image = self.image.quantize(
-            colors, method, kmeans, palette, dither
-        )
-
-    def __init__(self, ring, /, image, **star):
-        self.ring = ring
+    def __init__(self, image: IMAGE, package: A, **star: R):
         self.image = image
+        self.package = package
 
 
 class Package(Abstract):
     """"""
 
-    def image_clone(self, item):
+    def new(self, size: T[Z, Z]) -> Image:
         """"""
-        image = item.image.copy()
-        new = Image(self.ring, image)
-        return new
-
-    def image_load(self, path):
-        """"""
-        pillow = self.ring.package.pillow
-
-        mode = "r"
-        formats = None
-        image = pillow.Image.open(path, mode, formats)
-
-        # Highest mode for median cut.
         mode = "RGBA"
-        matrix = None
-        dither = pillow.Image.Dither.NONE
-        palette = pillow.Image.Palette.ADAPTIVE
-        colors = 256
-        image = image.convert(mode, matrix, dither, palette, colors)
+        color = (250, 250, 0, 250)
+        color = (
+            random.randint(0, 255),
+            random.randint(0, 255),
+            random.randint(0, 255),
+            255,
+        )
 
-        new = Image(self.ring, image)
-        return new
+        image = self.package.Image.new(mode, size, color)
+
+        item = Image(image, self.package)
+        return item
+
+    def open(self, path: P) -> Image:
+        """"""
+        file = self.package.Image.open(
+            fp=path,
+            mode="r",
+            formats=None,
+        )
+
+        image = file.convert(
+            mode="RGBA",
+            matrix=None,
+            dither=self.package.Image.Dither.NONE,
+            palette=self.package.Image.Palette.ADAPTIVE,
+            colors=256,
+        )
+
+        item = Image(image, self.package)
+        return item
 
     def extension(self) -> LS:
         """"""
-        pillow = self.ring.package.pillow
-
-        dictionary = pillow.Image.registered_extensions()
+        dictionary = self.package.Image.registered_extensions()
         items = dictionary.items()
-        values = pillow.Image.OPEN
+        values = self.package.Image.OPEN
         result = [key for key, value in items if value in values]
         result.sort()
         return result
 
-    def __init__(self, ring, /, name, **star):
-        super().__init__(ring, name, pypi="PIL")
+    def __init__(self, **star: R) -> N:
+        super().__init__(pypi="PIL")
         if self.package:
             setattr(self, "ImageTk", load.package("PIL", "ImageTk"))

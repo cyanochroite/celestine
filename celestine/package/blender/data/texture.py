@@ -1,4 +1,5 @@
 """Blender type is bpy.types.Texture."""
+
 from .spawn import _imaginary
 
 
@@ -86,7 +87,8 @@ class _noise(_texture):
     """
     Noise – Procedural.
 
-    Random noise, gives a different result every time, for every frame, for every pixel.
+    Random noise, gives a different result every time, for every frame,
+    for every pixel.
     """
 
     type_ = "NOISE"

@@ -1,24 +1,32 @@
 """"""
 
-from celestine.typed import (
-    N,
-    R,
-)
-from celestine.window.container import View
+from celestine import language
+from celestine.data import draw
+from celestine.interface import View
+from celestine.typed import N
 
 
-def main(ring: R, view: View) -> N:
+@draw
+def main(view: View) -> N:
     """"""
-    language = view.ring.language
-    with view.zone("main_head") as line:
-        line.new("main_title", text=language.CLEAN_MAIN_TITLE)
-        line.new(
-            "main_action", text=language.CLEAN_MAIN_CLEAN, code="clean"
+    with view.span("main_head") as line:
+        line.label(
+            "main_title",
+            text=language.CLEAN_MAIN_TITLE,
         )
-    with view.zone("main_body") as line:
-        line.new(
-            "main_L", text=language.CLEAN_MAIN_VERSION, code="version"
+        line.button(
+            "main_action",
+            "clean",
+            text=language.CLEAN_MAIN_CLEAN,
         )
-        line.new(
-            "main_R", text=language.CLEAN_MAIN_LICENCE, code="licence"
+    with view.span("main_body") as line:
+        line.button(
+            "main_L",
+            "version",
+            text=language.CLEAN_MAIN_VERSION,
+        )
+        line.button(
+            "main_R",
+            "licence",
+            text=language.CLEAN_MAIN_LICENCE,
         )

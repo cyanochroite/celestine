@@ -66,15 +66,15 @@ CURSES_EXIT = "Πατήστε το πλήκτρο ESC για έξοδο."
 
 DEMO_COW_TALK = "Είμαι μια αγελάδα που μιλάει."
 
-DEMO_MAIN_ACTION = "Χαιρετήστε την αγελάδα."
+DEMO_ZERO_ACTION = "Χαιρετήστε την αγελάδα."
 
 DEMO_MAIN_NEXT = "Μεταβείτε στη δεύτερη σελίδα."
 
 DEMO_MAIN_PAST = "Μεταβείτε στην πρώτη σελίδα."
 
-DEMO_MAIN_SAY = "Γεια σας ανθρώπινη."
+DEMO_ZERO_SAY = "Γεια σας ανθρώπινη."
 
-DEMO_MAIN_TITLE = "Κύρια σελίδα."
+DEMO_ZERO_TITLE = "Κύρια σελίδα."
 
 DEMO_ONE_ACTION = "Τροφοδοτήστε την αγελάδα."
 

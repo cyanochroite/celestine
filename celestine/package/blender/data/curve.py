@@ -1,4 +1,5 @@
 """Blender type is bpy.types.Curve."""
+
 from .spawn import _text
 
 

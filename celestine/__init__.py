@@ -1,48 +1,37 @@
 """"""
 
 from celestine import load
-from celestine.data import (
-    BLENDER,
-    INTERFACE,
-    REGISTER,
-    UNREGISTER,
-)
-from celestine.session import begin_session
 from celestine.typed import (
     LS,
     B,
     N,
+    R,
 )
 
 bl_info = {
-    "name": "celestine",
+    "name": "Célestine",
     "description": "A python framework for desktop applications.",
     "author": "mem_dixy",
-    "version": (2023, 9, 30),
-    "blender": (3, 3, 0),
-    "location": "View3D > Properties > Object Properties > celestine",
+    "version": (2024, 6, 9),
+    "blender": (4, 1, 0),
+    "location": "View3D > Properties > Object Properties > Célestine",
     "warning": "",
     "support": "COMMUNITY",
     "doc_url": "https://celestine.readthedocs.io/en/latest/",
-    "tracker_url": "https://github.com/mem-dixy/celestine/",
+    "tracker_url": "https://github.com/mem-dixy/celestine/issues",
     "category": "3D View",
 }
 
 
-def main(argument_list: LS, exit_on_error: B, **star) -> N:
-    """Run the main program."""
+def main(argument_list: LS, exit_on_error: B, **star: R) -> N:
+    """Initialize the packages and then run the main program."""
+    package = load.module("package")
+    for name in load.argument("package"):
+        value = load.instance("package", name, "Package")
+        setattr(package, name, value)
 
-    session = begin_session(argument_list, exit_on_error)
-
-    window = session.interface.Window(session, **star)
-    session.window = window
-
-    with window:
-        for name, function in session.code.items():
-            window.code(name, function)
-
-        for name, function in session.view.items():
-            window.view(name, function)
+    begin_main = load.function("session", "begin_main")
+    begin_main(argument_list, exit_on_error, **star)
 
 
 def register() -> N:
@@ -52,7 +41,8 @@ def register() -> N:
     This is a function which only runs when enabling the add-on,
     this means the module can be loaded without activating the add-on.
     """
-    load.redirect(INTERFACE, BLENDER, REGISTER)
+    load.module("bank")
+    load.instance("interface", "blender", "register")
 
 
 def unregister() -> N:
@@ -62,4 +52,5 @@ def unregister() -> N:
     This is a function to unload anything setup by register,
     this is called when the add-on is disabled.
     """
-    load.redirect(INTERFACE, BLENDER, UNREGISTER)
+    load.module("bank")
+    load.instance("interface", "blender", "unregister")

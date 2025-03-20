@@ -1,7 +1,12 @@
+project = "Célestine"
 author = "mem_dixy"
-copyright = "2023, mem_dixy"
-html_theme = 'alabaster'
+copyright = "2024, mem_dixy"
+version = "2024.6.9"
+release = "2024.6.9"
+
 keep_warnings = True
-project = "celestine"
-release = "2023.09.03"
-version = "2023.9.30"
+
+html_theme = "alabaster"
+
+html_logo = "logo.png"
+html_favicon = "favicon.ico"

@@ -15,24 +15,23 @@ dictionary[instance] = "test"
 print(dictionary[Test]) -> "test"
 """
 
-
-from celestine.typed import (
-    OBJ,
-    B,
-    S,
-    Z,
-)
-from celestine.unicode import (
+from celestine.literal import (
     APOSTROPHE,
     FULL_STOP,
     SPACE,
+)
+from celestine.typed import (
+    B,
+    J,
+    S,
+    Z,
 )
 
 
 class HashMetaClass(type):
     """"""
 
-    def __eq__(cls, other: OBJ) -> B:
+    def __eq__(cls, other: J) -> B:
         return str(cls) == str(other)
 
     def __hash__(cls) -> Z:

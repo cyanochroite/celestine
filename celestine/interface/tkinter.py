@@ -1,31 +1,35 @@
 """"""
 
-
+from celestine import bank
+from celestine.interface import Abstract as Abstract_
+from celestine.interface import Element as Element_
+from celestine.interface import View as View_
+from celestine.interface import Window as Window_
+from celestine.package import (
+    pillow,
+    tkinter,
+)
 from celestine.typed import (
-    CA,
+    BF,
+    LS,
+    A,
     N,
     P,
     R,
     S,
+    override,
 )
-from celestine.window import Window as Window_
-from celestine.window.collection import Rectangle
-from celestine.window.element import Abstract as Abstract_
-from celestine.window.element import Button as Button_
-from celestine.window.element import Image as Image_
-from celestine.window.element import Label as Label_
+from celestine.window.collection import Area
 
 
 class Abstract(Abstract_):
     """"""
 
-    def render(self, item: CA, *, ring: R, **star) -> N:
+    def place(self, item: A) -> N:
         """"""
-        self.item = item(self.canvas, **star)
-
-        width, height = self.area.size
-        dot_x, dot_y = self.area.origin
-        self.item.place(
+        width, height = self.area.local.size
+        dot_x, dot_y = self.area.local.origin
+        item.place(
             x=dot_x,
             y=dot_y,
             width=width,
@@ -33,76 +37,110 @@ class Abstract(Abstract_):
         )
 
 
-class Button(Abstract, Button_):
+class Element(Element_, Abstract):
     """"""
 
-    def callback(self) -> N:
+    @override
+    def make(self, canvas: A, **star: R) -> N:
         """"""
-        self.call(self.action, **self.argument)
 
-    def make(self, ring: R, **star) -> N:
+        super().make(canvas)
+
+        def callback() -> N:
+            """"""
+            self.click(self.area.world.centroid)
+            bank.dequeue()
+
+        # if not super().make(canvas):
+        #    return False
+
+        # if not super().draw(**star):
+        #    return False
+
+        if self.path:
+            self.image2 = tkinter.PhotoImage(file=self.path)
+            star.update(image=self.image2)
+
+        if self.text:
+            star.update(text=self.text)
+
+        if self.action or self.goto:
+            star.update(command=callback)
+            self.item = tkinter.Button(canvas, **star)
+        else:
+            star.update(fg="blue")
+            star.update(height=4)
+            star.update(text=self.text)
+            star.update(width=100)
+            self.item = tkinter.Label(canvas, **star)
+
+        self.place(self.item)
+
+    def update(self, path: P, **star: R) -> N:
         """"""
-        tkinter = ring.package.tkinter
-
-        item = tkinter.Button
-        star.update(command=self.callback)
-        star.update(text=f"button:{self.data}")
-        self.render(item, ring=ring, **star)
-
-
-class Image(Abstract, Image_):
-    """"""
-
-    def make(self, ring: R, **star) -> N:
-        """"""
-        tkinter = ring.package.tkinter
-
-        self.image = tkinter.PhotoImage(file=self.path)
-        star.update(image=self.image)
-
-        item = tkinter.Label
-        self.render(item, ring=ring, **star)
-
-    def update(self, ring: R, path: P, **star) -> N:
-        """"""
-        super().update(ring, path)
-        tkinter = ring.package.tkinter
-        pillow = ring.package.pillow
+        super().update(path)
 
         if pillow:
-            image = pillow.image_load(self.path)
-            size = self.resize(image.size)
-            image.resize(size)
-            self.image = pillow.ImageTk.PhotoImage(image=image.image)
+            image = self.image.image
+            self.image2 = pillow.ImageTk.PhotoImage(image=image)
         else:
-            self.image = tkinter.PhotoImage(file=self.path)
+            # breaks other stuff elsewere
+            self.image2 = tkinter.PhotoImage(file=self.path)
 
-        self.item.configure(image=self.image)
-        self.item.image = self.image
+        self.item.configure(image=self.image2)
+        self.item.image = self.image2
+
+    @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+        self.item.place_forget()
+
+    @override
+    def show(self) -> N:
+        """"""
+        super().show()
+        self.place(self.item)
 
 
-class Label(Abstract, Label_):
+class View(View_, Abstract):
     """"""
 
-    def make(self, ring: R, **star) -> N:
+    @override
+    def make(self, canvas: A) -> N:
         """"""
-        tkinter = ring.package.tkinter
+        self.canvas = tkinter.Frame(
+            canvas,
+            padx=0,
+            pady=0,
+            bg="yellow",
+            width=1920,
+            height=1080,
+        )
+        self.place(self.canvas)
+        super().make(self.canvas)
 
-        item = tkinter.Label
-        star.update(fg="blue")
-        star.update(height=4)
-        star.update(text=f"label:{self.data}")
-        star.update(width=100)
-        self.render(item, ring=ring, **star)
+    @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+        self.canvas.place_forget()
+
+    @override
+    def show(self) -> N:
+        """"""
+        super().show()
+        self.place(self.canvas)
 
 
 class Window(Window_):
     """"""
 
-    def extension(self):
+    @override
+    def extension(self) -> LS:
         """"""
-        if self.ring.package.pillow:
-            return self.ring.package.pillow.extension()
+        if pillow:
+            return pillow.extension()
 
         return [
             ".pbm",
@@ -113,43 +151,30 @@ class Window(Window_):
             ".png",
         ]
 
-    def setup(self, name: S) -> N:
-        """"""
-        tkinter = self.ring.package.tkinter
-
-        canvas = tkinter.Frame(
-            self.canvas,
-            padx=5,
-            pady=5,
-            bg="skyblue",
-            width=1920,
-            height=1080,
-        )
-        canvas.place(x=0, y=0)
-        return canvas
-
-    def turn(self, page, **star):
+    @override
+    def turn(self, page: S, **star: R) -> N:
         super().turn(page, **star)
         self.page.canvas.tkraise()
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    @override
+    def __exit__(self, exc_type: A, exc_value: A, traceback) -> BF:
         super().__exit__(exc_type, exc_value, traceback)
         self.canvas.mainloop()
         return False
 
-    def __init__(self, ring: R, **star) -> N:
+    @override
+    def __init__(self, **star: R) -> N:
         element = {
-            "button": Button,
-            "image": Image,
-            "label": Label,
+            "element": Element,
+            "view": View,
+            "window": self,
         }
-        area = Rectangle(0, 0, 1280, 1080)
+        super().__init__(element, **star)
+        self.area = Area.make(1280, 1080)
 
-        canvas = ring.package.tkinter.Tk()
-        canvas.title(ring.language.APPLICATION_TITLE)
-        canvas.geometry("1920x1080")
-        canvas.minsize(640, 480)
-        canvas.maxsize(3840, 2160)
-        canvas.config(bg="blue")
-
-        super().__init__(ring, canvas, element, area, **star)
+        self.canvas = tkinter.Tk()
+        self.canvas.title(bank.language.APPLICATION_TITLE)
+        self.canvas.geometry("1920x1080")
+        self.canvas.minsize(640, 480)
+        self.canvas.maxsize(3840, 2160)
+        self.canvas.config(bg="blue")

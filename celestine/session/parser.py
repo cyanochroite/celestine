@@ -2,15 +2,11 @@
 
 import argparse
 import io
+from typing import Type as TYPE
 
-from celestine.data import CELESTINE
-from celestine.typed import (
-    MT,
-    TY,
-    B,
-)
-from celestine.unicode import (
+from celestine.literal import (
     APOSTROPHE,
+    CELESTINE,
     COLON,
     COMMA,
     HYPHEN_MINUS,
@@ -20,13 +16,16 @@ from celestine.unicode import (
     RIGHT_PARENTHESIS,
     SPACE,
 )
+from celestine.typed import (
+    B,
+    M,
+)
 
-from .data import ERROR
+from .data import Parsers
 
 
-def parser(language: MT, exit_on_error: B) -> argparse.ArgumentParser:
+def parser(language: M, exit_on_error: B) -> argparse.ArgumentParser:
     """A basic parser with overloaded functions for text translation."""
-
     return _parser(language)(
         prog=CELESTINE,
         usage=None,  # Default.
@@ -37,14 +36,14 @@ def parser(language: MT, exit_on_error: B) -> argparse.ArgumentParser:
         prefix_chars=HYPHEN_MINUS,  # Default
         fromfile_prefix_chars=None,  # Default.
         argument_default=None,  # Default.
-        conflict_handler=ERROR,  # Default.
+        conflict_handler=Parsers.ERROR,  # Default.
         add_help=False,
         allow_abbrev=True,  # Default.
         exit_on_error=exit_on_error,
     )
 
 
-def _argument_error(_: MT) -> TY[argparse.ArgumentError]:
+def _argument_error(_: M) -> TYPE[argparse.ArgumentError]:
     """A basic parser with overloaded functions for text translation."""
 
     class ArgumentError(argparse.ArgumentError):
@@ -70,7 +69,7 @@ def _argument_error(_: MT) -> TY[argparse.ArgumentError]:
     return ArgumentError
 
 
-def _help_formatter(language: MT) -> TY[argparse.HelpFormatter]:
+def _help_formatter(language: M) -> TYPE[argparse.HelpFormatter]:
     """A basic parser with overloaded functions for text translation."""
 
     class HelpFormatter(argparse.HelpFormatter):
@@ -96,7 +95,7 @@ def _help_formatter(language: MT) -> TY[argparse.HelpFormatter]:
     return HelpFormatter
 
 
-def _parser(language: MT) -> TY[argparse.ArgumentParser]:
+def _parser(language: M) -> TYPE[argparse.ArgumentParser]:
     """A basic parser with overloaded functions for text translation."""
 
     class Parser(argparse.ArgumentParser):
@@ -109,7 +108,6 @@ def _parser(language: MT) -> TY[argparse.ArgumentParser]:
             If you override this in a subclass, it should not return.
             It should either exit or raise an exception.
             """
-
             string = io.StringIO()
             string.write(self.prog)
             string.write(COLON)

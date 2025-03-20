@@ -1,33 +1,27 @@
 """"""
 
-from celestine.data import VERSION_NUMBER
+from celestine.literal import VERSION_NUMBER
 from celestine.session.data import (
-    ACTION,
-    CHOICES,
-    HELP,
-    NARGS,
-    VERSION,
+    Actions,
+    Attributes,
 )
 from celestine.typed import (
+    DA,
     LS,
-    TA,
-    A,
-    D,
     N,
+    R,
     S,
 )
-
-AT: TA = D[S, A]
 
 
 class Attribute:
     """"""
 
-    def dictionary(self) -> AT:
+    def dictionary(self) -> DA:
         """"""
         return {}
 
-    def __init__(self, **star) -> N:
+    def __init__(self, **star: R) -> N:
         """"""
         super().__init__(**star)
 
@@ -35,11 +29,11 @@ class Attribute:
 class Action(Attribute):
     """"""
 
-    def dictionary(self) -> AT:
+    def dictionary(self) -> DA:
         """"""
-        return super().dictionary() | {ACTION: self.action}
+        return super().dictionary() | {Attributes.ACTION: self.action}
 
-    def __init__(self, *, action: S, **star) -> N:
+    def __init__(self, *, action: S, **star: R) -> N:
         """"""
         self.action = action
         super().__init__(**star)
@@ -48,11 +42,11 @@ class Action(Attribute):
 class Choices(Attribute):
     """"""
 
-    def dictionary(self) -> AT:
+    def dictionary(self) -> DA:
         """"""
-        return super().dictionary() | {CHOICES: self.choices}
+        return super().dictionary() | {Attributes.CHOICES: self.choices}
 
-    def __init__(self, *, choices: LS, **star) -> N:
+    def __init__(self, *, choices: LS, **star: R) -> N:
         """"""
         self.choices = choices
         super().__init__(**star)
@@ -61,12 +55,12 @@ class Choices(Attribute):
 class Help(Attribute):
     """"""
 
-    def dictionary(self) -> AT:
+    def dictionary(self) -> DA:
         """"""
-        return super().dictionary() | {HELP: self.help}
+        return super().dictionary() | {Attributes.HELP: self.help}
 
     # pylint: disable-next=redefined-builtin
-    def __init__(self, *, help: S, **star) -> N:
+    def __init__(self, *, help: S, **star: R) -> N:
         """"""
         self.help = help
         super().__init__(**star)
@@ -75,11 +69,11 @@ class Help(Attribute):
 class Nargs(Attribute):
     """"""
 
-    def dictionary(self) -> AT:
+    def dictionary(self) -> DA:
         """"""
-        return super().dictionary() | {NARGS: self.nargs}
+        return super().dictionary() | {Attributes.NARGS: self.nargs}
 
-    def __init__(self, *, nargs: S, **star) -> N:
+    def __init__(self, *, nargs: S, **star: R) -> N:
         """"""
         self.nargs = nargs
         super().__init__(**star)
@@ -88,6 +82,6 @@ class Nargs(Attribute):
 class Version(Attribute):
     """"""
 
-    def dictionary(self) -> AT:
+    def dictionary(self) -> DA:
         """"""
-        return super().dictionary() | {VERSION: VERSION_NUMBER}
+        return super().dictionary() | {Actions.VERSION: VERSION_NUMBER}

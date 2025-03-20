@@ -1,8 +1,12 @@
 """A Python utility / library to sort Python imports."""
 
-from celestine.typed import LS
+from celestine.package import Abstract
+from celestine.typed import (
+    CN,
+    LS,
+)
 
-from . import Abstract
+run: CN
 
 
 class Package(Abstract):

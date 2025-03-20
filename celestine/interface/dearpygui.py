@@ -1,52 +1,49 @@
 """"""
 
-from celestine.typed import (
-    N,
-    R,
+from celestine import bank
+from celestine.interface import Abstract as Abstract_
+from celestine.interface import Element as Element_
+from celestine.interface import View as View_
+from celestine.interface import Window as Window_
+from celestine.package import (
+    dearpygui,
+    pillow,
 )
-from celestine.window import Window as Window_
-from celestine.window.collection import Rectangle
-from celestine.window.element import Abstract as Abstract_
-from celestine.window.element import Button as Button_
-from celestine.window.element import Image as Image_
-from celestine.window.element import Label as Label_
+from celestine.typed import (
+    LF,
+    LS,
+    A,
+    N,
+    P,
+    R,
+    S,
+    override,
+)
+from celestine.window.collection import Area
 
 
 class Abstract(Abstract_):
     """"""
 
 
-class Button(Abstract, Button_):
-    """"""
-
-    def callback(self, *_):
-        """
-        The object callback.
-
-        callback(self, sender, app_data, user_data)
-        """
-        self.call(self.action, **self.argument)
-
-    def make(self, ring, **star):
-        """"""
-        dearpygui = ring.package.dearpygui
-
-        dearpygui.add_button(
-            callback=self.callback,
-            label=self.data,
-            tag=self.name,
-            pos=self.area.origin,
-        )
-
-
-class Image(Abstract, Image_):
+class Element(Element_, Abstract):
     """
     Manages image objects.
 
     delete_item(...)
     """
 
-    def make(self, ring, **star):
+    def callback(self, *_) -> N:
+        """
+        The object callback.
+
+        callback(self, sender, app_data, user_data)
+        """
+        self.click(self.area.world.centroid)
+        bank.dequeue()
+
+    @override
+    def make(self, canvas: A, **star: R) -> N:
         """
         Draw the image to screen.
 
@@ -56,15 +53,28 @@ class Image(Abstract, Image_):
         channels = image[2]
         photo = image[3]
         """
+        super().make(canvas)
 
-        dearpygui = ring.package.dearpygui
+        if self.action or self.goto:
+            dearpygui.add_button(
+                callback=self.callback,
+                label=self.text,
+                tag=self.name,
+                pos=self.area.world.origin.value,
+            )
+            return
 
-        path = str(self.path)
-        image = dearpygui.load_image(path)
-        width = image[0]
-        height = image[1]
-        # channels = image[2]
-        photo = image[3]
+        if self.text:
+            dearpygui.add_text(
+                f" {self.text}",  # extra space hack to fix margin error
+                tag=self.name,
+                pos=self.area.world.origin.value,
+            )
+            return
+
+        # image
+        photo = self.load()
+        width, height = self.area.local.size
 
         with dearpygui.texture_registry(show=False):
             dearpygui.add_dynamic_texture(
@@ -77,43 +87,73 @@ class Image(Abstract, Image_):
         dearpygui.add_image(
             self.name,
             tag=f"{self.name}-base",
-            pos=self.area.origin,
+            pos=self.area.local.origin,
         )
 
-    def update(self, ring: R, image, **star):
+    def load(self) -> LF:
         """"""
-        dearpygui = ring.package.dearpygui
-        super().update(ring, image, **star)
 
-        path = str(self.path)
-        image = dearpygui.load_image(path)
-        # width = image[0]
-        # height = image[1]
-        # channels = image[2]
-        photo = image[3]
+        itertools = None
+
+        photo: LF = []
+
+        if pillow and itertools:
+            image = pillow.open(self.path)
+            image.resize(self.area.local.size)
+            data = image.getdata()
+            flat = itertools.flatten(data)
+            photo = list(map(lambda pixel: float(pixel / 255), flat))
+        else:
+            image = dearpygui.load_image(self.path)
+            photo = image[3]
+            # Unable to figure out how to avoid crashing application.
+            # So just paint a boring blue image instead.
+            width, height = self.area.local.size
+            length = width * height
+            for _ in range(length):
+                photo.append(0)
+                photo.append(0.25)
+                photo.append(0.5)
+                photo.append(1)
+        return photo
+
+    @override
+    def update(self, path: P, **star: R) -> N:
+        """"""
+        super().update(path, **star)
+
+        photo: list[float] = self.load()
 
         dearpygui.set_value(self.name, photo)
 
 
-class Label(Abstract, Label_):
+class View(View_, Abstract):
     """"""
 
-    def make(self, ring, **star):
+    @override
+    def hide(self) -> N:
         """"""
+        super().hide()
+        try:
+            dearpygui.hide_item(self.name)
+        except SystemError:
+            pass
 
-        dearpygui = ring.package.dearpygui
-
-        dearpygui.add_text(
-            f" {self.data}",  # extra space hack to fix margin error
-            tag=self.name,
-            pos=self.area.origin,
-        )
+    @override
+    def show(self) -> N:
+        """"""
+        super().show()
+        try:
+            dearpygui.show_item(self.name)
+        except SystemError:
+            pass
 
 
 class Window(Window_):
     """"""
 
-    def extension(self):
+    @override
+    def extension(self) -> LS:
         """"""
         return [
             ".jpg",
@@ -129,39 +169,30 @@ class Window(Window_):
             ".pnm",
         ]
 
-    def make(self, ring, **star):
-        dearpygui = ring.package.dearpygui
-        for name, item in self.item.items():
+    @override
+    def make(self, **star: R) -> N:
+        """"""
+        for name, item in self:
+            item.canvas = dearpygui.window(tag=name)
             with item.canvas:
                 dearpygui.configure_item(item.name, show=False)
-                item.make(ring)
+                item.make(None)
 
-    def setup(self, name):
+    @override
+    def turn(self, page: S, **star: R) -> N:
         """"""
-        dearpygui = self.ring.package.dearpygui
-        canvas = dearpygui.window(tag=name)
-        return canvas
-
-    def turn(self, page, **star):
-        """"""
-        dearpygui = self.ring.package.dearpygui
-
-        dearpygui.hide_item(self.page.name)
-
-        super().turn(page, **star)
+        super().turn(page)
 
         tag = self.page.name
-        dearpygui.show_item(tag)
         dearpygui.set_primary_window(tag, True)
 
+    @override
     def __enter__(self):
         super().__enter__()
 
-        dearpygui = self.ring.package.dearpygui
-
-        title = self.ring.language.APPLICATION_TITLE
+        title = bank.language.APPLICATION_TITLE
         dearpygui.create_context()
-        width, height = self.area.origin
+        width, height = self.area.world.size
         dearpygui.create_viewport(
             title=title,
             small_icon="celestine_small.ico",
@@ -182,9 +213,9 @@ class Window(Window_):
         )
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    @override
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A):
         super().__exit__(exc_type, exc_value, traceback)
-        dearpygui = self.ring.package.dearpygui
 
         dearpygui.setup_dearpygui()
         dearpygui.show_viewport(minimized=False, maximized=False)
@@ -192,13 +223,15 @@ class Window(Window_):
         dearpygui.destroy_context()
         return False
 
-    def __init__(self, ring: R, **star) -> N:
+    @override
+    def __init__(self, **star: R) -> N:
         element = {
-            "button": Button,
-            "image": Image,
-            "label": Label,
+            "element": Element,
+            "view": View,
+            "window": self,
         }
-        area = Rectangle(0, 0, 960, 640)
-        canvas = None
-        super().__init__(ring, canvas, element, area, **star)
+        super().__init__(element, **star)
+        self.area = Area.make(1280, 1080)
         self.tag = "window"
+
+        self.canvas = None

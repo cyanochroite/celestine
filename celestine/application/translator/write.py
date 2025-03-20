@@ -3,15 +3,9 @@
 import io
 import keyword
 
-from celestine.file import (
-    module_save,
-    normalize,
-)
-from celestine.typed import (
-    N,
-    S,
-)
-from celestine.unicode import (
+from celestine import stream
+from celestine.data import normalize
+from celestine.literal import (
     EQUALS_SIGN,
     FULL_STOP,
     INFORMATION_SEPARATOR_FOUR,
@@ -21,6 +15,12 @@ from celestine.unicode import (
     QUOTATION_MARK,
     SPACE,
 )
+from celestine.typed import (
+    DS,
+    GS,
+    N,
+    S,
+)
 
 from .data import (
     INIT,
@@ -28,12 +28,10 @@ from .data import (
     LANGUAGE_NAME_ENGLISH,
     LANGUAGE_NAME_NATIVE,
     LANGUAGE_TAG_ISO,
-    TABLE,
-    YIELD_TEXT,
 )
 
 
-def dictionary_to_string(dictionary: TABLE) -> YIELD_TEXT:
+def dictionary_to_string(dictionary: DS) -> GS:
     """Prepares the dictionary to be written to a file."""
     dictionary_items = dictionary.items()
     sorted_items = sorted(dictionary_items)
@@ -55,7 +53,7 @@ def dictionary_to_string(dictionary: TABLE) -> YIELD_TEXT:
         yield from QUOTATION_MARK
         yield from INFORMATION_SEPARATOR_FOUR
 
-        character = normalize.character(expression)
+        character = normalize.characters(expression)
         whitespace = normalize.whitespace(character)
         quotation = normalize.quotation(whitespace)
         punctuation = normalize.punctuation(quotation)
@@ -66,7 +64,7 @@ def dictionary_to_string(dictionary: TABLE) -> YIELD_TEXT:
         yield from LINE_SEPARATOR
 
 
-def language_file(translation: TABLE, overridden: TABLE) -> YIELD_TEXT:
+def language_file(translation: DS, overridden: DS) -> GS:
     """Print translations first then print overridden values."""
     lookup = translation | overridden
     yield from QUOTATION_MARK
@@ -102,11 +100,11 @@ def make_init_file():
 
     value = string.getvalue()
     width = normalize.wrap(value)
-    module_save(width, LANGUAGE, INIT)
+    stream.Module.save(width, LANGUAGE, INIT)
 
 
-def save_language(translation: TABLE, overridden: TABLE, *path: S) -> N:
+def save_language(translation: DS, overridden: DS, *path: S) -> N:
     """Save a language file to disk."""
     file = language_file(translation, overridden)
     string = normalize.wrap(file)
-    module_save(string, *path)
+    stream.Module.save(string, *path)

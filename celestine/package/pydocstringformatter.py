@@ -1,21 +1,24 @@
 """A tool to automatically format Python docstrings."""
+
 import os
 import sys
 
 from celestine import load
+from celestine.package import Abstract
 from celestine.typed import (
-    MT,
+    CN,
+    M,
     N,
     S,
 )
 
-from . import Abstract
+run: CN
 
 
 class Package(Abstract):
     """"""
 
-    def main(self, package: MT, path: S) -> N:
+    def main(self, package: M, path: S) -> N:
         """
         This package is troublesome.
 
@@ -23,11 +26,10 @@ class Package(Abstract):
         Exclude argument simply does not work.
         Manually feeding it files works.
         """
-
         location = os.getcwd()
         os.chdir(sys.path[0])
 
-        files = load.many.python(path, [], ["unicode"])
+        files = load.walk_python(path, [], [])
 
         file = map(str, files)
         argv = [*file]

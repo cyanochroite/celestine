@@ -2,23 +2,23 @@
 
 import io
 
-from celestine.file import module_open
-from celestine.file.data import SECTION_BREAK
-from celestine.typed import S
-from celestine.unicode import (
+from celestine import stream
+from celestine.data.alphabet2 import UNICODE
+from celestine.literal import (
     LINE_FEED,
     REVERSE_SOLIDUS,
 )
-from celestine.unicode.alphabet2 import UNICODE
+from celestine.typed import (
+    GS,
+    S,
+)
 
-from .data import YIELD_TEXT
 
-
-def fix_line_split(*path: S) -> YIELD_TEXT:
+def fix_line_split(*path: S) -> GS:
     """"""
     skip = False
 
-    document = module_open(*path)
+    document = stream.module.load(*path)
     for string in document:
         for character in string:
             if character not in UNICODE:
@@ -36,6 +36,7 @@ def fix_line_split(*path: S) -> YIELD_TEXT:
 
 
 def make_dictionary(document):
+    """"""
     dictionary = {}
 
     lines = document.split(LINE_FEED)
@@ -54,10 +55,8 @@ def make_dictionary(document):
 
 def open_language(*path):
     """Convert a dictionary to a string and save it to a file."""
-
     text = fix_line_split(*path)
     lines = read_new_lines(text)
-    # normal = normalize(lines)
     normal = lines
 
     string = io.StringIO()
@@ -66,7 +65,7 @@ def open_language(*path):
 
     value = string.getvalue()
 
-    split = value.split(SECTION_BREAK)
+    split = value.split(stream.SECTION_BREAK)
 
     head = make_dictionary(split[0])
     body = make_dictionary(split[-1])
@@ -74,7 +73,7 @@ def open_language(*path):
     return (head, body)
 
 
-def read_new_lines(string: S) -> YIELD_TEXT:
+def read_new_lines(string: S) -> GS:
     """"""
 
     buffer = io.StringIO()

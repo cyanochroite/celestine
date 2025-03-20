@@ -1,4 +1,5 @@
 """Blender type is bpy.types.Material."""
+
 from .spawn import _imaginary
 
 

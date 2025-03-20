@@ -1,25 +1,25 @@
 """The View page."""
 
-
-from celestine.typed import (
-    N,
-    R,
-)
-from celestine.window.container import View
+from celestine import language
+from celestine.data import draw
+from celestine.interface import View
+from celestine.typed import N
 
 
-def main(ring: R, view: View) -> N:
+@draw
+def main(view: View) -> N:
     """"""
     with view.zone("main") as line:
         line.new(
             "main_A",
-            text=ring.language.TRANSLATOR_MAIN_BUTTON,
+            text=language.TRANSLATOR_MAIN_BUTTON,
             code="translate",
         )
 
 
 # TODO: Add report functionality back in, and make it better.
-def report(ring: R, view: View) -> N:
+@draw
+def report(view: View) -> N:
     """"""
     with view.zone("head") as line:
         line.new("title", text="Page main")
@@ -27,9 +27,9 @@ def report(ring: R, view: View) -> N:
 
     line.new(
         "main_action",
-        text=ring.language.TRANSLATOR_REPORT_BUTTON,
+        text=language.TRANSLATOR_REPORT_BUTTON,
         code="train",
-        page=ring,
+        page=hold,
     )
 
     for tag, text in train.items():

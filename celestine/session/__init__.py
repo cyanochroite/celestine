@@ -1,117 +1,140 @@
 """"""
 
+import importlib
 
-from celestine import load
-from celestine.data.directory import (
+from celestine import (
+    bank,
+    load,
+)
+from celestine.literal import (
     APPLICATION,
+    CELESTINE,
     INTERFACE,
     LANGUAGE,
+    PACKAGE,
 )
-from celestine.package import Package
 from celestine.typed import (
-    CA,
     LS,
     A,
     B,
-    L,
     N,
     R,
-    Ring,
-    T,
+    S,
 )
 
+from . import default
 from .magic import Magic
 
+this = load.module(PACKAGE)
 
-class Event:
+
+def set_lang():
     """"""
-
-    event: L[T[CA, A, A]]
-
-    def new(self, call, action, argument):
-        """Add to event que and call function at end of update."""
-        hold = (call, action, argument)
-        self.event.append(hold)
-
-    def work(self) -> N:
-        """"""
-        if not self.event:
-            return
-
-        for event in self.event:
-            call = event[0]
-            one = event[1]
-            two = event[2]
-            call(one, **two)
-
-        self.event = []
-
-    def __init__(self, ring):
-        self.ring = ring
-        self.event = []
+    # monkeypatch in the language
+    language = load.package(CELESTINE, LANGUAGE)
+    for key, value in vars(bank.language).items():
+        setattr(language, key, value)
 
 
-def begin_session(argument_list: LS, exit_on_error: B) -> R:
-    """"""
+def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> A:
+    """
+    First load Language so human can read errors.
+
+    Then load Interface so human see errors the way they want.
+    """
+
+    bank.configuration = load.instance(
+        "session",
+        "configuration",
+        "Configuration",
+    )
+
+    # The order here matters.
+    bank.language = load.module(LANGUAGE, default.language())
+    set_lang()
+    bank.interface = load.module(INTERFACE, default.interface())
+    hold = default.application()
+    bank.application = load.module(APPLICATION, default.application())
+    bank.application.name = hold
 
     magic = Magic(argument_list, exit_on_error)
 
     with magic:
         magic.parse(LANGUAGE)
+        set_lang()
         magic.parse(INTERFACE)
         magic.parse(APPLICATION)
 
+        method = load.method("Configuration", "session", "session")
+        magic.get_parser([method], True)
+        path = method.configuration
+        bank.configuration.load(path)
+
+        magic.parse(LANGUAGE)
+        set_lang()
+        magic.parse(INTERFACE)
+        magic.parse(APPLICATION)
+
+        session = importlib.import_module("celestine.session.session")
+        importlib.reload(session)
+
         session1 = load.method("Session", "session", "session")
-        session2 = load.method(
-            "Session", APPLICATION, magic.core.application.name
-        )
+        name = bank.application.name
+        session2 = load.method("Session", APPLICATION, name)
         session3 = load.method("Information", "session", "session")
 
         magic.get_parser([session1, session2, session3], False)
 
     # Save values to session object.
-    application = magic.core.application.name
-    session = Ring()
+    bank.application = load.module(APPLICATION, session1.application)
+    bank.attribute = session2
+    bank.directory = session1.directory
+    bank.interface = load.module(INTERFACE, session1.interface)
+    bank.window = bank.interface.Window(**star)
 
-    session.application = load.module(APPLICATION, session1.application)
+    set_lang()
 
-    session.attribute = session2
-
-    code = load.module(APPLICATION, application, "code")
-    session.code = load.functions(code)
-
-    session.interface = load.module(INTERFACE, session1.interface)
-
-    session.language = load.module(LANGUAGE, session1.language)
-
-    session.main = session1.main
-
-    session.package = Package(session)
-
-    session.window = None
-
-    session.event = Event(session)
-
-    view = load.module(APPLICATION, application, "view")
-    session.view = load.functions(view)
-
-    return session
+    return bank.window, bank.application.name
 
 
-"""
-importer notes.
+def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
+    """"""
+    window, application = begin_session(
+        argument_list,
+        exit_on_error,
+        **star,
+    )
 
-language.py is all you need for 1 language.
-language/__init__.py can be used instead.
+    decorators = load.decorators(APPLICATION, application)
+    call = decorators.get("call", {})
+    draw = decorators.get("draw", {})
+    main = decorators.get("main", {})
+    draw |= main
 
-Not recomended to use both. However, note that
-language/__init__.py takes priority over language.py
+    def find_main() -> S:
+        """Finds @main or 'def main' or any @draw."""
+        try:
+            return next(iter(main))
+        except StopIteration:
+            pass
 
-Must have at least one of these.
-Recomend using directory version so you can add more languages.
-Error messages will assume this version.
+        if draw.get("main"):
+            return "main"
 
-if you have more then 1 language you must use language/__init__.py
-"""
+        try:
+            return next(iter(draw))
+        except StopIteration:
+            pass
 
-"""Configuration information will show your saved stuff."""
+        raise Warning("There is nothing to draw.")
+
+    with window:
+        window.main = find_main()
+
+        for name, function in call.items():
+            window.code[name] = function
+
+        for name, function in draw.items():
+            view = window.drop(name)
+            function(view)
+            window.view[name] = view

@@ -1,31 +1,53 @@
 """"""
-from celestine.load.many import file
+
+from celestine import (
+    bank,
+    load,
+)
+from celestine.data import call
 from celestine.typed import (
     LP,
     LS,
-    A,
-    N,
+    B,
     P,
     R,
+    S,
 )
 
 
-def find_image(ring: R, directory: P) -> LP:
+def find_image(directory: P) -> LP:
     """"""
     path = directory
-    include = ring.window.extension()
+    include = bank.window.extension()
     exclude: LS = []
-    files = list(file(path, include, exclude))
+    files = list(load.walk_file(path, include, exclude))
     return files
 
 
-def setup(*, ring: R, window: A, **star) -> N:
+@call
+def setup(**star: R) -> B:
     """"""
-    directory = ring.attribute.directory
-    find = find_image(ring, directory)
+    window = bank.window.page
+    directory = bank.directory
+    find = find_image(directory)
     images = iter(find)
 
-    grid = window.load("grid")
-    for _, item in grid.item.items():
-        image = next(images)
-        item.update(ring, image)
+    grid = window.get("grid")
+    try:
+        for _, item in grid:
+            image = next(images)
+            item.update(image)
+    except StopIteration:
+        pass
+
+    return True
+
+
+@call
+def see(caller: S, **star: R) -> B:
+    """"""
+    window = bank.window
+    source = window.find(caller)
+    destination = window.find("photo")
+    destination.update(source.path)
+    return True

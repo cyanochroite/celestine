@@ -1,20 +1,19 @@
 """"""
 
 from celestine import load
-from celestine.data.directory import (
+from celestine.literal import (
     APPLICATION,
     INTERFACE,
     LANGUAGE,
 )
 from celestine.typed import (
-    MT,
+    M,
     S,
 )
 
 
-def module(path: S, *items: S) -> MT:
+def module(path: S, *items: S) -> M:
     """Return a default application."""
-
     for item in items:
         try:
             load.module(path, item)
@@ -22,12 +21,11 @@ def module(path: S, *items: S) -> MT:
             return item
         except ModuleNotFoundError:
             pass
-
-    raise RuntimeError("Failed to load any module from list.")
-    # raise RuntimeError(language.message)
+    raise ModuleNotFoundError("Failed to load any module from list.")
 
 
 def application():
+    """"""
     return module(
         APPLICATION,
         "demo",
@@ -35,6 +33,7 @@ def application():
 
 
 def interface():
+    """"""
     return module(
         INTERFACE,
         "tkinter",
@@ -46,6 +45,7 @@ def interface():
 
 
 def language():
+    """"""
     # Sorted list of languages by number of native speakers in Europe.
     # English and French were manually placed at the top of the list.
     return module(

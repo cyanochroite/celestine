@@ -1,4 +1,5 @@
 """Application for translating text to other languages."""
+
 import os
 import os.path
 import shutil
@@ -6,7 +7,10 @@ import uuid
 
 import requests
 
-from celestine import load
+from celestine import (
+    bank,
+    load,
+)
 
 from .data import (
     LANGUAGE,
@@ -24,9 +28,8 @@ from .write import (
 )
 
 
-def parser_magic(ring, source):
+def parser_magic(source):
     """Do all parser stuff here."""
-
     all_languages = {}
 
     azure_to_iso = {}
@@ -44,14 +47,13 @@ def parser_magic(ring, source):
         all_languages[language] = {}
         all_languages[language]["name"] = language
         all_languages[language]["skip"] = body
-        # all_languages[language]["work"] = {}
 
-        # ring because we skipped translator
+        # hold because we skipped translator
         all_languages[language]["work"] = head
 
     source_list = load.dictionary(LANGUAGE, source)
     for name, value in source_list.items():
-        items = post(ring, dest_code, value)
+        items = post(dest_code, value)
         for item in items:
             translations = item[TRANSLATIONS]
             for translation in translations:
@@ -65,7 +67,6 @@ def parser_magic(ring, source):
 
 def reset():
     """Remove the directory and rebuild it."""
-
     path = load.pathway.pathway(LANGUAGE)
     if os.path.islink(path):
         raise RuntimeError
@@ -76,27 +77,26 @@ def reset():
     os.mkdir(path)
 
 
-def post(ring, code, text):
+def post(code, text):
     """Generate a post request."""
-    translator = Translator(ring.attribute)
+    translator = Translator(bank.attribute)
     url = translator.endpoint()
     data = None
     json = [{TEXT: text}]
     headers = translator.header(str(uuid.uuid4()))
-    params = translator.parameter(code)
+    params = Translator.parameter(code)
     request = requests.post(
         url, data, json, headers=headers, params=params
     )
     return request.json()
 
 
-def do_translate(ring):
+def do_translate():
     """Translate the language files."""
-
     # Add ability to choose master language file.
     source = "en"
 
-    dictionary = parser_magic(ring, source)
+    dictionary = parser_magic(source)
 
     reset()
 

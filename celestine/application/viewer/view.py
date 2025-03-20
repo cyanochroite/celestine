@@ -1,35 +1,36 @@
 """"""
 
-
-from celestine import load
-from celestine.typed import (
-    N,
-    R,
-)
+from celestine import language
+from celestine.data import draw
+from celestine.interface import View
+from celestine.typed import N
 from celestine.window.container import (
     Image,
-    View,
     Zone,
 )
 
-NULL = load.pathway.asset("null.png")
-NULL = load.pathway.asset("32.png")
 
-
-def picture(ring: R, view: View) -> N:
+@draw
+def picture(view: View) -> N:
     """"""
-    view.new("photo", path=NULL, mode=Image.FULL)
+    view.element("photo", fit=Image.FILL, goto="main")
 
 
-def main(ring: R, view: View) -> N:
+@draw
+def main(view: View) -> N:
     """"""
-    view.new(
+    view.button(
         "load",
-        text=ring.language.VIEWER_MAIN_BUTTON,
-        code="setup",
-        window=view,
+        "setup",
+        text=language.VIEWER_MAIN_BUTTON,
     )
     with view.zone("grid", row=2, col=4, mode=Zone.GRID) as grid:
         for name, _ in grid:
-            grid.new(name, path=NULL, mode=Image.FILL)
-            # grid.new(name, path=NULL, mode=Image.FILL, call="picture")
+            # grid.image(name, path=r"D:\done\unknown.png")
+            grid.element(
+                name,
+                action="see",
+                path=r"D:\done\unknown.png",
+                fit=Image.FILL,
+                goto="picture",
+            )

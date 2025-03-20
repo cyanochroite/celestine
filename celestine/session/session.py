@@ -1,54 +1,58 @@
 """"""
 
-from typing import TypeAlias as TA
+import collections.abc
 
-from celestine import load
-from celestine.data.directory import (
+from celestine import (
+    bank,
+    language,
+    load,
+)
+from celestine.literal import (
     APPLICATION,
+    CONFIGURATION,
+    DIRECTORY,
     INTERFACE,
     LANGUAGE,
+    NONE,
 )
-from celestine.load import function
 from celestine.session.argument import (
     Customization,
     InformationConfiguration,
     InformationHelp,
     InformationVersion,
+    Optional,
     Positional,
 )
+from celestine.session.data import (
+    Actions,
+    Values,
+)
 from celestine.typed import (
-    IT,
-    MT,
-    D,
+    DA,
+    TA,
+    A,
+    M,
     S,
     T,
 )
 
 from . import default
-from .argument import Argument
-from .data import (
-    CONFIGURATION,
-    HELP,
-    MAIN,
-    VERSION,
-)
 
-AD: TA = D[S, Argument]
-AI: TA = IT[T[S, Argument]]
+AI: TA = collections.abc.Iterable[T[S, A]]
 
 
 class SuperSession:
     """"""
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> DA:
         """"""
         return {}
 
     @classmethod
-    def items(cls, core) -> AI:
+    def items(cls) -> AI:
         """"""
-        dictionary = cls.dictionary(core)
+        dictionary = cls.dictionary()
         return dictionary.items()
 
 
@@ -56,17 +60,17 @@ class Information(SuperSession):
     """"""
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> DA:
         """"""
-        return super().dictionary(core) | {
-            CONFIGURATION: InformationConfiguration(
-                core.language.ARGUMENT_HELP_HELP,
+        return super().dictionary() | {
+            "save": InformationConfiguration(
+                language.ARGUMENT_HELP_HELP,
             ),
-            HELP: InformationHelp(
-                core.language.ARGUMENT_HELP_HELP,
+            Actions.HELP: InformationHelp(
+                language.ARGUMENT_HELP_HELP,
             ),
-            VERSION: InformationVersion(
-                core.language.ARGUMENT_VERSION_HELP,
+            Actions.VERSION: InformationVersion(
+                language.ARGUMENT_VERSION_HELP,
             ),
         }
 
@@ -78,16 +82,48 @@ class Dictionary(SuperSession):
 class Application(Dictionary):
     """"""
 
-    application: MT
+    application: M
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> DA:
         """"""
-        return super().dictionary(core) | {
+        return super().dictionary() | {
             APPLICATION: Customization(
                 default.application(),
-                core.language.ARGUMENT_INTERFACE_HELP,
-                load.pathway.argument(APPLICATION),
+                language.ARGUMENT_INTERFACE_HELP,
+                load.argument(APPLICATION),
+            ),
+        }
+
+
+class Configuration(Dictionary):
+    """"""
+
+    configuration: M
+
+    @classmethod
+    def dictionary(cls) -> DA:
+        """"""
+        return super().dictionary() | {
+            CONFIGURATION: Optional(
+                default.application(),
+                language.ARGUMENT_INTERFACE_HELP,
+            ),
+        }
+
+
+class Directory(Dictionary):
+    """"""
+
+    directory: M
+
+    @classmethod
+    def dictionary(cls) -> DA:
+        """"""
+        return super().dictionary() | {
+            DIRECTORY: Optional(
+                default.application(),
+                language.ARGUMENT_INTERFACE_HELP,
             ),
         }
 
@@ -95,16 +131,16 @@ class Application(Dictionary):
 class Interface(Dictionary):
     """"""
 
-    interface: MT
+    interface: M
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> DA:
         """"""
-        return super().dictionary(core) | {
+        return super().dictionary() | {
             INTERFACE: Customization(
                 default.interface(),
-                core.language.ARGUMENT_INTERFACE_HELP,
-                load.pathway.argument(INTERFACE),
+                language.ARGUMENT_INTERFACE_HELP,
+                load.argument(INTERFACE),
             ),
         }
 
@@ -112,32 +148,38 @@ class Interface(Dictionary):
 class Language(Dictionary):
     """"""
 
-    language: MT
+    language: M
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> DA:
         """"""
-        return super().dictionary(core) | {
+        return super().dictionary() | {
             LANGUAGE: Customization(
                 default.language(),
-                core.language.ARGUMENT_LANGUAGE_HELP,
-                load.pathway.argument(LANGUAGE),
+                language.ARGUMENT_LANGUAGE_HELP,
+                load.argument(LANGUAGE),
             ),
         }
 
 
-class Session(Application, Interface, Language):
+class Session(
+    Application,
+    Configuration,
+    Directory,
+    Interface,
+    Language,
+):
     """"""
 
     main: S
 
     @classmethod
-    def dictionary(cls, core) -> AD:
+    def dictionary(cls) -> DA:
         """"""
-        return super().dictionary(core) | {
-            MAIN: Positional(
-                "main",
-                core.language.ARGUMENT_LANGUAGE_HELP,
-                function.function_page(core.application),
+        return super().dictionary() | {
+            Values.MAIN: Positional(
+                NONE,
+                language.ARGUMENT_LANGUAGE_HELP,
+                load.function_page(bank.application),
             ),
         }

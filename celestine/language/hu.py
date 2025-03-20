@@ -64,15 +64,15 @@ CURSES_EXIT = "A kilépéshez nyomja meg az ESC billentyűt."
 
 DEMO_COW_TALK = "Beszélő tehén vagyok."
 
-DEMO_MAIN_ACTION = "Üdvözöld a tehenet."
+DEMO_ZERO_ACTION = "Üdvözöld a tehenet."
 
 DEMO_MAIN_NEXT = "Ugrás a második oldalra."
 
 DEMO_MAIN_PAST = "Ugrás az első oldalra."
 
-DEMO_MAIN_SAY = "Helló ember."
+DEMO_ZERO_SAY = "Helló ember."
 
-DEMO_MAIN_TITLE = "Oldal fő."
+DEMO_ZERO_TITLE = "Oldal fő."
 
 DEMO_ONE_ACTION = "Táplálja a tehenet."
 

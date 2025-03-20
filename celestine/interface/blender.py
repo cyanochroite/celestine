@@ -3,35 +3,35 @@
 import bpy  # pylint: disable=import-error
 
 import celestine
-from celestine import load
+from celestine import bank
+from celestine.interface import Abstract as Abstract_
+from celestine.interface import Element as Element_
+from celestine.interface import View as View_
+from celestine.interface import Window as Window_
 from celestine.package.blender import (
     UV,
     data,
     preferences,
 )
 from celestine.package.blender.data.collection import _collection
-from celestine.package.blender.mesh import (
-    basic,
-    quadrilateral,
-)
+from celestine.package.blender.mesh import basic
 from celestine.package.blender.mesh.quadrilateral import Diamond
 from celestine.typed import (
+    LS,
+    A,
     B,
-    F,
+    K,
     N,
     R,
     S,
-    T,
+    override,
 )
-from celestine.window import Window as Window_
-from celestine.window.collection import Rectangle
-from celestine.window.element import Abstract as Abstract_
-from celestine.window.element import Button as Button_
-from celestine.window.element import Image as Image_
-from celestine.window.element import Label as Label_
+from celestine.window.collection import (
+    Area,
+    Point,
+)
 
 COLLECTION = _collection
-
 
 INTERFACE = "interface"
 BLENDER = "blender"
@@ -39,7 +39,7 @@ PACKAGE = "package"
 PREFERENCES = "preferences"
 
 
-def main(call: B, **star) -> N:
+def main(call: B, **star: R) -> N:
     """Run the main program."""
     content = preferences.content()
     argument = f"-i blender {content.argument}"
@@ -63,7 +63,8 @@ class celestine_click(bpy.types.Operator):
 
         x_dot = mouse.location.x
         y_dot = mouse.location.y
-        main("poke", x_dot=x_dot, y_dot=y_dot)
+        point = Point(x_dot, y_dot)
+        main("click", point=point)
 
         return {"FINISHED"}
 
@@ -75,7 +76,7 @@ class celestine_main(bpy.types.Panel):
     bl_context = "object"
     bl_description = "Celestine Tab"
     bl_idname = "OBJECT_PT_celestine"
-    bl_label = "celestine"
+    bl_label = "Célestine"
     bl_options = {"HEADER_LAYOUT_EXPAND"}
     bl_order = 0
     bl_owner_id = ""
@@ -119,7 +120,6 @@ class celestine_begin(bpy.types.Operator):
         print("begin")
         car = bpy.context.preferences.addons["celestine"].preferences
         data.begin()
-        Image.begin()
         preferences.begin()
         car.ready = True
 
@@ -138,7 +138,6 @@ class celestine_finish(bpy.types.Operator):
         """"""
         print("finish")
         preferences.finish()
-        Image.finish()
         data.finish()
         return {"FINISHED"}
 
@@ -177,96 +176,93 @@ def context():
 class Abstract(Abstract_):
     """"""
 
-    def center_float(self) -> T[F, F]:
-        """"""
-        x_dot = self.area.left + self.area.right
-        y_dot = self.area.upper + self.area.lower
-
-        x_dot /= 2
-        y_dot /= 2
-        return (x_dot, y_dot)
-
     def render(self) -> N:
         """"""
-        (x_dot, y_dot) = self.center_float()
+        (x_dot, y_dot) = self.area.world.centroid
         # child sets mesh and then calls this
-        self.item.location = (x_dot, y_dot, 0)
-        self.item.rotation = (180, 0, 0)
+        self.keep.location = (x_dot, y_dot, 0)
+        self.keep.rotation = (180, 0, 0)
+
+    @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+        item = bpy.data.objects.get(self.name)
+        if item:
+            item.hide_render = True
+            item.hide_viewport = True
+
+    @override
+    def show(self) -> N:
+        """"""
+        super().show()
+        item = bpy.data.objects.get(self.name)
+        if item:
+            item.hide_render = False
+            item.hide_viewport = False
+
+    @override
+    def make(self, canvas: A, **star: R) -> N:
+        """"""
+        if star.get("first"):
+            self.render()
+
+        else:
+            item = self.dictionary.get(self.name)
+            self.hidden = item.hide_render
+
+        super().make(canvas, **star)
+
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
+        self.dictionary = bpy.data.objects
 
 
 class Mouse(Abstract):
-    """"""
+    """Should everyone get this?"""
 
-    def __init__(self, collection, mesh) -> N:
+    @override
+    def make(self, canvas: A, **star: R) -> N:
+        """"""
+        if star.get("first"):
+            diamond = Diamond()
+            diamond.make(self.mesh)
+
+        super().make(canvas, **star)
+
+    def __init__(self, mesh) -> N:
         self.mesh = mesh.soul
         self.text = "mouse"
-        super().__init__(collection, "mouse")
-        self.item = mesh
-
-    def draw(self) -> N:
-        """"""
-
-        diamond = Diamond()
-        diamond.make(self.mesh)
-
-        self.render()
+        super().__init__("mouse", parent=None)
+        self.keep = mesh
 
 
-class Button(Abstract, Button_):
+class Element(Element_, Abstract):
     """"""
 
-    def make(self, ring: R, **star) -> N:
+    @override
+    def make(self, canvas: A, **star: R) -> N:
         """"""
+        if star.get("first"):
+            if self.action or self.goto:
+                data = f"button: {self.text}"
+                self.keep = basic.text(self.name, canvas, data)
+            elif self.text:
+                self.keep = basic.text(self.name, canvas, self.text)
+            else:
+                # image
+                image = data.image.load(self.path)
+                material = UV.image(self.name, image)
+                plane = basic.image(self.name, self.canvas, image.size)
 
-        width = len(self.data) / 4
-        height = 1 / 20
+                plane.body.data.materials.append(material)
+                self.keep = plane
 
-        plane = quadrilateral.plane(self.canvas, self.data)
-        plane.scale = (width, height, 1)
+        super().make(canvas, **star)
 
-        text = basic.text(self.canvas, self.data, self.data)
-        text.scale = (1 / width, 1 / height, 1)
-        text.location = (-width / 4, -height, 0.1)
-
-        text.parent = plane
-
-        self.item = plane
-        self.render()
-
-
-class Image(Abstract, Image_):
-    """"""
-
-    default: data.image
-
-    @classmethod
-    def begin(cls):
+    def update(self, image: S, **star: R) -> B:
         """"""
-        name = "null.png"
-        path = load.pathway.asset(name)
-        cls.default = data.image.load(path)
-
-    @classmethod
-    def finish(cls):
-        """"""
-        item = cls.default
-        data.image.remove(item)
-        cls.default = None
-
-    def make(self, ring: R, **star) -> N:
-        """"""
-
-        image = data.image.load(self.path)
-        material = UV.image(self.name, image)
-        plane = basic.image(self.canvas, self.name, image.size)
-
-        plane.body.data.materials.append(material)
-        self.item = plane
-        self.render()
-
-    def update(self, ring: R, image: S, **star) -> B:
-        """"""
-        super().update(ring, image, **star)
+        super().update(image, **star)
 
         material = bpy.data.materials[self.name]
         node = material.node_tree.nodes["Image Texture"]
@@ -275,19 +271,58 @@ class Image(Abstract, Image_):
         return True
 
 
-class Label(Abstract, Label_):
+class View(View_, Abstract):
     """"""
 
-    def make(self, ring: R, **star) -> N:
+    @override
+    def make(self, canvas: A, **star: R) -> N:
         """"""
-        self.item = basic.text(self.canvas, self.data, self.data)
-        self.render()
+        if star.get("first"):
+            if canvas:
+                link = canvas.children.link
+            else:
+                link = bpy.context.scene.collection.children.link
+
+            collection = data.collection(self.name)
+            link(collection.soul)
+            canvas = collection
+
+        super().make(canvas, **star)
+
+    @override
+    def hide(self) -> N:
+        """"""
+        super().hide()
+        item = bpy.data.collections.get(self.name)
+        if item:
+            item.hide_render = True
+            item.hide_viewport = True
+
+    @override
+    def show(self) -> N:
+        """"""
+        super().show()
+        item = bpy.data.collections.get(self.name)
+        if item:
+            item.hide_render = False
+            item.hide_viewport = False
+
+    def __init__(self, name, element, **star: R) -> N:
+        super().__init__(name, element, **star)
+        self.dictionary = bpy.data.collections
 
 
 class Window(Window_):
     """"""
 
-    def extension(self):
+    @override
+    def make(self, **star: R) -> N:
+        """"""
+        first = self.call == "make"
+        super().make(first=first, **star)
+
+    @override
+    def extension(self) -> LS:
         """"""
         return [
             ".bmp",
@@ -309,32 +344,13 @@ class Window(Window_):
             ".webp",
         ]
 
-    def setup(self, name):
+    @override
+    def turn(self, page: S, **star: R) -> N:
         """"""
-        collection = data.collection.make(name)
-        collection.hide()
-        return collection
-
-    def turn(self, page, **star):
-        """"""
-
-        old_item = None
-        new_item = None
-
-        for name, item in bpy.data.collections.items():
-            if name == bpy.context.scene.celestine.page:
-                old_item = item
-            if name == page:
-                new_item = item
-
-        old_item.hide_render = True
-        old_item.hide_viewport = True
-
-        new_item.hide_render = False
-        new_item.hide_viewport = False
-
+        super().turn(page, **star)
         bpy.context.scene.celestine.page = page
 
+    @override
     def __enter__(self):
         if self.call is None:
             print("THIS IS BEST RUN AS A BLENDER ADD-ONS")
@@ -362,15 +378,16 @@ class Window(Window_):
         for texture in bpy.data.textures:
             data.texture.remove(texture)
 
-        collection = data.collection.make("window")
+        collection = data.collection("window")
+        bpy.context.scene.collection.children.link(collection.soul)
 
-        camera = data.camera.make(collection, "camera")
+        camera = data.camera("camera", collection)
         camera.location = (+17.5, +10.0, -60.0)
         camera.rotation = (180, 0, 0)
         camera.ortho_scale = +35.0
         camera.type = "ORTHO"
 
-        starlight = data.light.sun.make(collection, "light")
+        starlight = data.light.sun("light", collection)
         starlight.rotation = (180, 0, 0)
         starlight.energy = 10.0
         starlight.diffuse_factor = 1.0
@@ -378,14 +395,15 @@ class Window(Window_):
         starlight.volume_factor = 1.0
         starlight.angle = 0.0
 
-        click = data.collection.make("click")
+        click = data.collection("click")
+        bpy.context.scene.collection.children.link(click.soul)
         click.soul.hide_select = False
 
-        mesh = data.mesh.make(click, "mouse")
+        mesh = data.mesh("mouse", click)
         mesh.location = (0, 0, -1)
 
-        self.mouse = Mouse(collection, mesh)
-        self.mouse.draw()
+        self.mouse = Mouse(mesh)
+        self.mouse.make(collection, first=True)
 
         @classmethod
         def bind(cls, collection, name, soul):
@@ -394,45 +412,63 @@ class Window(Window_):
             collection.objects.link(body)
             return cls(body, soul)
 
-        override = context()
-        bpy.ops.view3d.toggle_shading(override, type="RENDERED")
+        for area in bpy.context.screen.areas:
+            if area.type == "VIEW_3D":
+                for space in area.spaces:
+                    if space.type == "VIEW_3D":
+                        space.shading.type = "RENDERED"
+
+        for window in bpy.context.window_manager.windows:
+            screen = window.screen
+            for area in screen.areas:
+                if area.type == "VIEW_3D":
+                    for region in area.regions:
+                        if region.type == "WINDOW":
+                            temp_override = bpy.context.copy()
+                            temp_override["window"] = window
+                            temp_override["screen"] = screen
+                            temp_override["area"] = area
+                            temp_override["region"] = region
+                            space = area.spaces[0]
 
         if self.call == "make":
-            bpy.ops.view3d.view_camera(override)
+            with bpy.context.temp_override(**temp_override):
+                bpy.ops.view3d.view_camera()
 
         return self
 
+    @override
     def __exit__(self, exc_type, exc_value, traceback):
-        if self.call is None:
-            pass
-        elif self.call != "make":
-            self.spot(self.area)
+        super().__exit__(exc_type, exc_value, traceback)
 
-            page = bpy.context.scene.celestine.page
-            item = self._view.get(page)
-            item.hidden = False
-
-            call = getattr(self, self.call)
-            call(self.ring, **self.star)
-
-            self.ring.event.work()
+        if self.call == "make":
             return False
 
-        super().__exit__(exc_type, exc_value, traceback)
+        page = bpy.context.scene.celestine.page
+        self.page = self.view[page]
+
+        call = getattr(self, self.call)
+        call(**self.star)
+
+        bank.dequeue()
+
         return False
 
-    def __init__(self, ring: R, *, call=None, **star) -> N:
+    def __init__(self, *, call=None, **star: R) -> N:
         element = {
-            "button": Button,
-            "image": Image,
-            "label": Label,
+            "element": Element,
+            "view": View,
+            "window": self,
         }
-        area = Rectangle(0, 0, 20, 20)
-        canvas = None
-        super().__init__(ring, canvas, element, area, **star)
+        super().__init__(element, **star)
+        self.area = Area.make(35, 20)
+
+        self.dictionary = bpy.data.collections  # From View?
 
         self.frame = None
         self.mouse = None
 
         self.call = call
         self.star = star
+
+        self.canvas = None

@@ -272,3 +272,143 @@ D	zero	+-
 +-----+---+---+---+---+
 | D   | A | B | C | D |
 +-----+---+---+---+---+
+
+
+# -a viewer main -l en -d D:/size/
+
+# the competition:
+# cengal
+# pysimplegui
+# bottle
+# masonite
+
+
+# Merge Code and View files. Mark Code functions. Scan all files in app.
+# sys.meta_path.append(DebugFileLoader) # importer
+
+# package name ref:
+# Glue
+# Bottle
+
+# zipapp on pypi
+# python -x importtime -c "filename"
+
+
+# decorator   __call__
+
+
+# split stream into load and save
+# unicode file can use builtin to save space
+
+
+# if __spec__.name == "__main__":
+#    celestine.main(__spec__.origin)
+
+
+
+"""
+importer notes.
+
+language.py is all you need for 1 language.
+language/__init__.py can be used instead.
+
+Not recomended to use both. However, note that
+language/__init__.py takes priority over language.py
+
+Must have at least one of these.
+Recomend using directory version so you can add more languages.
+Error messages will assume this version.
+
+if you have more then 1 language you must use language/__init__.py
+"""
+
+"""Configuration information will show your saved stuff."""
+
+
+"This needs a major redo. But for now, load essentials then load all."
+# LANGUAGE, what user speek
+# INTERFACE, the gui program
+# APPLICATION, what program to run
+# WHALE, # location of configuration file
+# DIRECTORY, curent working directory of application: security
+
+
+
+Root modules should have minimal dependecies.
+root data package causing a lot of problems
+remove repeated data of load and data
+
+
+session\init
+application\clean\code
+configuration self.path
+application\tests\data
+translator\data
+viewer\data
+session\data
+main
+
+Pink
+
+300
+100
+**
+
+Midnight Blue
+#191970
+240
+63.50
+26.86
+
+Celeste
+#B2FFFF
+180
+30.20
+100.00
+
+
+Dark Magenta
+#8B008B
+300
+100.00
+54.51
+
+Sky Magenta
+#CF71AF
+
+
+Ultra Pink
+Hex triplet	#FF6FFF
+
+
+ToDo
+Interfaces are dependent on Pillow. Give them a fallback implementation.
+
+make has star for blender first
+draw has star for pygame Font
+
+blender
+extension
+make
+turn
+
+curses
+draw
+extension
+make
+setup
+
+dearpygui
+extension
+make
+turn
+
+pygame
+draw
+extension
+make
+
+tkinter
+extension
+make
+turn

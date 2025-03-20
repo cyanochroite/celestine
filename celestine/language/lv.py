@@ -61,15 +61,15 @@ CURSES_EXIT = "Nospiediet taustiņu ESC, lai izietu."
 
 DEMO_COW_TALK = "Es esmu runājoša govs."
 
-DEMO_MAIN_ACTION = "Sveiciniet govi."
+DEMO_ZERO_ACTION = "Sveiciniet govi."
 
 DEMO_MAIN_NEXT = "Doties uz otro lappusi."
 
 DEMO_MAIN_PAST = "Doties uz pirmo lappusi."
 
-DEMO_MAIN_SAY = "Sveiks, cilvēks."
+DEMO_ZERO_SAY = "Sveiks, cilvēks."
 
-DEMO_MAIN_TITLE = "Lapas galvenais."
+DEMO_ZERO_TITLE = "Lapas galvenais."
 
 DEMO_ONE_ACTION = "Barojiet govi."
 

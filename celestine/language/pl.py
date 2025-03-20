@@ -62,15 +62,15 @@ CURSES_EXIT = "Naciśnij ESC, aby wyjść."
 
 DEMO_COW_TALK = "Jestem gadającą krową."
 
-DEMO_MAIN_ACTION = "Pozdrów krowę."
+DEMO_ZERO_ACTION = "Pozdrów krowę."
 
 DEMO_MAIN_NEXT = "Przejdź do strony drugiej."
 
 DEMO_MAIN_PAST = "Przejdź do strony pierwszej."
 
-DEMO_MAIN_SAY = "Witaj człowieku."
+DEMO_ZERO_SAY = "Witaj człowieku."
 
-DEMO_MAIN_TITLE = "Strona główna."
+DEMO_ZERO_TITLE = "Strona główna."
 
 DEMO_ONE_ACTION = "Nakarm krowę."
 

@@ -1,4 +1,5 @@
 """Blender type is bpy.types.Light."""
+
 from .spawn import _real
 
 

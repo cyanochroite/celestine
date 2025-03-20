@@ -63,15 +63,15 @@ CURSES_EXIT = "Väljumiseks vajutage paoklahvi (ESC)."
 
 DEMO_COW_TALK = "Ma olen rääkiv lehm."
 
-DEMO_MAIN_ACTION = "Tervitage lehma."
+DEMO_ZERO_ACTION = "Tervitage lehma."
 
 DEMO_MAIN_NEXT = "Minge teisele leheküljele."
 
 DEMO_MAIN_PAST = "Minge esimesele lehele."
 
-DEMO_MAIN_SAY = "Tere, inimene."
+DEMO_ZERO_SAY = "Tere, inimene."
 
-DEMO_MAIN_TITLE = "Lehekülje põhi."
+DEMO_ZERO_TITLE = "Lehekülje põhi."
 
 DEMO_ONE_ACTION = "Söötke lehm."
 

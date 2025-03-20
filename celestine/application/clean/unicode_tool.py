@@ -4,20 +4,20 @@ This is a modified main file, so might not run as application.
 Converts the Unicode text file into a python dictionary.
 Was run from the project root.
 """
-import os
-import sys
 
-sys.path[0] = os.path.dirname(sys.path[0])
+import io
 
-
-from celestine import load
-from celestine.file import (
-    module_save,
-    text_load,
+from celestine import (
+    load,
+    stream,
+)
+from celestine.typed import (
+    GS,
+    S,
 )
 
 
-def work(document):
+def work(document: S) -> GS:
     for line in document:
         strip = line.strip()
         split = strip.split(";")
@@ -45,18 +45,19 @@ def work(document):
 
         yield text
 
+        # TODO check indent of stuff below
 
-file = load.pathwayway("UnicodeData.txt")
+        file = load.pathway("UnicodeData.txt")
 
-def read_stream(lines: GE[S, N, N]) -> S:
-    string = io.StringIO()
-    for line in lines:
-        string.write(line)
+        def read_stream(lines: GS) -> S:
+            string = io.StringIO()
+            for line in lines:
+                string.write(line)
 
-    value = string.getvalue()
-    return value
+            value = string.getvalue()
+            return value
 
-with text_load(file) as lines:
-    load = read_stream(lines)
-    text = work(load)
-module_save(text, "unicode")
+        with stream.text.reader(file) as lines:
+            loaded = read_stream(lines)
+            text = work(loaded)
+        stream.module.save(text, "unicode")

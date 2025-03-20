@@ -61,15 +61,15 @@ CURSES_EXIT = "Stisknutím klávesy ESC ukončete program."
 
 DEMO_COW_TALK = "Jsem mluvící kráva."
 
-DEMO_MAIN_ACTION = "Pozdravte krávu."
+DEMO_ZERO_ACTION = "Pozdravte krávu."
 
 DEMO_MAIN_NEXT = "Přejděte na druhou stránku."
 
 DEMO_MAIN_PAST = "Přejděte na první stránku."
 
-DEMO_MAIN_SAY = "Ahoj člověče."
+DEMO_ZERO_SAY = "Ahoj člověče."
 
-DEMO_MAIN_TITLE = "Hlavní stránka."
+DEMO_ZERO_TITLE = "Hlavní stránka."
 
 DEMO_ONE_ACTION = "Krmte krávu."
 

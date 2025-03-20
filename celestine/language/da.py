@@ -60,15 +60,15 @@ CURSES_EXIT = "Tryk på ESC-tasten for at afslutte."
 
 DEMO_COW_TALK = "Jeg er en talende ko."
 
-DEMO_MAIN_ACTION = "Hils på koen."
+DEMO_ZERO_ACTION = "Hils på koen."
 
 DEMO_MAIN_NEXT = "Gå til side to."
 
 DEMO_MAIN_PAST = "Gå til side et."
 
-DEMO_MAIN_SAY = "Hej menneske."
+DEMO_ZERO_SAY = "Hej menneske."
 
-DEMO_MAIN_TITLE = "Hovedside på siden."
+DEMO_ZERO_TITLE = "Hovedside på siden."
 
 DEMO_ONE_ACTION = "Foder koen."
 

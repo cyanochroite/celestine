@@ -22,7 +22,8 @@ class Translator:
             "X-ClientTraceId": trace,
         }
 
-    def parameter(self, language):
+    @staticmethod
+    def parameter(language):
         """Return the parameter."""
         return {
             "api-version": "3.0",

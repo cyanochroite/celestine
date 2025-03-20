@@ -41,10 +41,14 @@ https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#c
 
 coverage
 ^^^^^^^^
-# test code used
-python -m coverage run --source=celestine/application/unittest --module pytest --verbose
+python -m coverage run --source=celestine --module pytest --verbose
+python -m coverage report --show-missing
+python -m coverage html
 
-python -m coverage run --source=tests --module pytest --verbose
+# test code used
+python -m coverage run --source=celestine/application/tests --module pytest --verbose
+
+python -m coverage run --source=celestine/tests --module pytest --verbose
 python -m coverage report --show-missing
 python -m coverage html
 

@@ -1,96 +1,97 @@
 """"""
 
-from celestine import load
+import enum
+
+from celestine import (
+    bank,
+    load,
+)
+from celestine.interface import Abstract as Abstract_
+from celestine.interface import Element as Element_
+from celestine.interface import View as View_
+from celestine.interface import Window as Window_
+from celestine.package import pygame
 from celestine.typed import (
+    BF,
     LS,
+    A,
+    B,
+    K,
+    M,
     N,
     R,
+    S,
+    override,
 )
-from celestine.window import Window as Window_
-from celestine.window.collection import Rectangle
-from celestine.window.element import Abstract as Abstract_
-from celestine.window.element import Button as Button_
-from celestine.window.element import Image as Image_
-from celestine.window.element import Label as Label_
+from celestine.window.collection import (
+    Area,
+    Point,
+)
+
+
+class Mouse(enum.IntEnum):
+    """Values returned by mouse click."""
+
+    PRIMARY = 1
+    MIDDLE = 2
+    SECONDARY = 3
+    SCROLL_UP = 4
+    SCROLL_DOWN = 5
+    TERTIARY = 6
+    QUATERNARY = 7
 
 
 class Abstract(Abstract_):
     """"""
 
-    def render(self, item, **star):
-        """"""
-        self.canvas.blit(item, self.area.origin)
 
-
-class Button(Abstract, Button_):
+class Element(Element_, Abstract):
     """"""
 
-    def draw(self, ring: R, *, font, **star):
+    image: M
+
+    def draw(self, **star: R) -> B:
         """"""
+        font = star.pop("font")
 
-        text = f"Button{self.data}"
+        if not super().draw(**star):
+            return False
 
-        item = font.render(text, True, (255, 255, 255))
-        self.render(item, **star)
+        origin = self.area.world.origin.value
+
+        image = pygame.image.fromstring(
+            self.image.image.tobytes(),
+            self.image.image.size,
+            self.image.image.mode,
+        )
+        self.canvas.blit(image, origin)
+
+        text = font.render(self.text, True, (255, 0, 255))
+        self.canvas.blit(text, origin)
+        return True
+
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
+        self.path = star.pop("path", "")
 
 
-class Label(Abstract, Label_):
+class View(View_, Abstract):
     """"""
-
-    def draw(self, ring: R, *, font, **star):
-        """"""
-
-        item = font.render(self.data, True, (255, 255, 255))
-        self.render(item, **star)
-
-
-class Image(Abstract, Image_):
-    """"""
-
-    def draw(self, ring: R, *, mode="hi", **star):
-        """"""
-
-        pillow = ring.package.pillow
-        pygame = ring.package.pygame
-
-        # do we call parent or some other function to get this right?
-        # maybe call super, which does nothing but set name
-        size = self.area.size
-
-        if mode == "one":
-            pass
-
-        if pillow:
-            image = pillow.image_load(self.path)
-            # image.scale_to_fit(self.area.size)
-            image.scale_to_fill(self.area.size)
-            image = pygame.image.fromstring(
-                image.image.tobytes(),
-                image.image.size,
-                image.image.mode,
-            )
-        else:
-            image = pygame.image.load(self.path)
-            image = image.convert_alpha()
-            size = self.resize((image.get_width(), image.get_height()))
-            image = pygame.transform.scale(image, size)
-
-        self.render(image, **star)
 
 
 class Window(Window_):
     """"""
 
-    def draw(self, ring: R, **star):
+    @override
+    def draw(self, **star: R) -> N:
         """"""
-        pygame = self.ring.package.pygame
-
         self.canvas.fill((0, 0, 0))
 
-        super().draw(ring, font=self.font, **star)
+        super().draw(font=self.font, **star)
 
         pygame.display.flip()
 
+    @override
     def extension(self) -> LS:
         return [
             ".bmp",
@@ -118,59 +119,64 @@ class Window(Window_):
             ".png",
         ]
 
-    def __enter__(self):
-        pygame = self.ring.package.pygame
+    @override
+    def __enter__(self) -> K:
+        super().__enter__()
 
-        def set_caption():
-            caption = self.ring.language.APPLICATION_TITLE
+        def set_caption() -> N:
+            caption = bank.language.APPLICATION_TITLE
             pygame.display.set_caption(caption)
 
-        def set_font():
+        def set_font() -> N:
             pygame.font.init()
-            file_path = load.pathway.asset("cascadia_code_regular.otf")
+            file_path = load.asset("cascadia_code_regular.otf")
             size = 40
             self.font = pygame.font.Font(file_path, size)
 
-        def set_icon():
+        set_caption()
+        set_font()
+
+        return self
+
+    @override
+    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
+        super().__exit__(exc_type, exc_value, traceback)
+
+        def set_icon() -> N:
             path = "icon.png"
-            asset = load.pathway.asset(path)
+            asset = load.asset(path)
             image = pygame.image.load(asset)
             icon = image.convert_alpha()
             pygame.display.set_icon(icon)
 
-        super().__enter__()
         set_icon()
-        set_caption()
-        set_font()
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        super().__exit__(exc_type, exc_value, traceback)
-
-        pygame = self.ring.package.pygame
 
         while True:
-            self.ring.event.work()
+            bank.dequeue()
             event = pygame.event.wait()
             match event.type:
                 case pygame.QUIT:
                     break
                 case pygame.MOUSEBUTTONDOWN:
-                    # TODO: This triggers on all mouse buttons
-                    # including scroll wheel! That is bad.
-                    (x_dot, y_dot) = pygame.mouse.get_pos()
-                    self.poke(self.ring, x_dot, y_dot)
+                    if event.button == Mouse.PRIMARY:
+                        self.click(Point(*pygame.mouse.get_pos()))
+                case _:
+                    pass
 
         pygame.quit()
         return False
 
-    def __init__(self, ring: R, **star) -> N:
+    @override
+    def __init__(self, **star: R) -> N:
         element = {
-            "button": Button,
-            "image": Image,
-            "label": Label,
+            "element": Element,
+            "view": View,
+            "window": self,
         }
-        area = Rectangle(0, 0, 1280, 960)
-        canvas = ring.package.pygame.display.set_mode(area.size)
-        super().__init__(ring, canvas, element, area, **star)
+        super().__init__(element, **star)
+        self.area = Area.make(1280, 960)
+        self.area = Area.make(1920, 1080)
         self.font = None
+
+        value = self.area.world.size.value
+        self.canvas = pygame.display.set_mode(value)

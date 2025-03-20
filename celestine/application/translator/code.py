@@ -1,17 +1,23 @@
 """The Code page."""
 
 from celestine import load
+from celestine.data import call
+from celestine.typed import (
+    B,
+    R,
+)
 
 from .main import do_translate
 
 
-def translate(*, ring, **star):
+@call
+def translate() -> B:
     """Translate the language files."""
+    do_translate()
 
-    do_translate(ring)
 
-
-def train():
+@call
+def train(**star: R) -> B:
     """The main function."""
     minimum = {}
     maximum = {}

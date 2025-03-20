@@ -1,9 +1,12 @@
 """"""
 
 import argparse
-import dataclasses
 
-from celestine import load
+from celestine import (
+    bank,
+    load,
+)
+from celestine.literal import NONE
 from celestine.session.argument import (
     Application,
     Customization,
@@ -13,24 +16,36 @@ from celestine.session.argument import (
     Optional,
     Positional,
 )
-from celestine.session.data import CONFIGURATION
+from celestine.session.data import Values
 from celestine.typed import (
+    DA,
     LS,
-    MT,
     TA,
     A,
     B,
     D,
     L,
     N,
+    S,
 )
-from celestine.unicode import NONE
 
-from . import default
-from .configuration import Configuration
 from .data import SESSION
 from .parser import parser as make_parser
-from .session import Session as SessionParse
+
+
+class SessionParse:
+    """Typing info only.
+
+    Reflecting Session from Session
+    """
+
+    main: S
+
+    @classmethod
+    def dictionary(cls) -> DA:
+        """"""
+        return {}
+
 
 ERROR = "error"
 INIT = "__init__"
@@ -44,25 +59,10 @@ APD: TA = D[A, A]
 class Magic:
     """"""
 
-    @dataclasses.dataclass
-    class Core:
-        """"""
-
-        application: MT
-        interface: MT
-        language: MT
-
-        def __setattr__(self, name, value):
-            module = load.module(name, value)
-            module.name = value
-            super().__setattr__(name, module)
-
-    core: Core
     args: argparse.Namespace
     parser: argparse.ArgumentParser
 
     argument_list: LS
-    configuration: Configuration
     exit_on_error: B
 
     def get_parser(self, attributes: L[SessionParse], known: B) -> N:
@@ -76,7 +76,6 @@ class Magic:
         Parses the arguments with provided attributes.
         Adds the parsed objects to class objects
         """
-
         self._make_parser()
 
         self._add_argument(attributes)
@@ -85,18 +84,21 @@ class Magic:
 
         self._add_attribute(attributes)
 
-    def parse(self, name) -> N:
+    def parse(self, name: S) -> N:
         """Quickly parse important attributes."""
         method = load.method(name.capitalize(), SESSION, SESSION)
         self.get_parser([method], True)
-        setattr(self.core, name, getattr(method, name))
+        value = getattr(method, name)
+        module = load.module(name, value)
+        module.name = value
+        setattr(bank, name, module)
 
     ###
 
     def _make_argument_group(self) -> APD:
         """"""
 
-        language = self.core.language
+        language = bank.language
 
         application = self.parser.add_argument_group(
             title=language.ARGUMENT_APPLICATION_TITLE,
@@ -141,7 +143,7 @@ class Magic:
 
         for session in sessions:
             # TODO: Make class instance for less weird classmethods
-            for name, argument in session.items(self.core):
+            for name, argument in session.items():
                 if not argument.argument:
                     continue
                 parser = arguments[argument]
@@ -151,14 +153,14 @@ class Magic:
 
     def _add_attribute(self, sessions: list[SessionParse]) -> N:
         """"""
-        section = self.core.application.name
+        section = bank.application.name
         for session in sessions:
-            for option, argument in session.items(self.core):
+            for option, argument in session.items():
                 if not argument.attribute:
                     continue
 
                 override = getattr(self.args, option, NONE)
-                database = self.configuration.get(section, option)
+                database = bank.configuration.get(section, option)
                 fallback = argument.fallback
 
                 value = override or database or fallback
@@ -166,13 +168,13 @@ class Magic:
 
                 if override:
                     # Prepare for saving override values.
-                    self.configuration.set(section, option, override)
+                    bank.configuration.set(section, option, override)
 
     ######
 
     def _make_parser(self):
         """"""
-        language = self.core.language
+        language = bank.language
         exit_on_error = self.exit_on_error
         self.parser = make_parser(language, exit_on_error)
 
@@ -187,13 +189,14 @@ class Magic:
             self.args = parser.parse_args(argument_list)
 
     def __enter__(self):
-        self.configuration.load()
+        bank.configuration.load()
         return self
 
     def __exit__(self, *_):
-        save = bool(getattr(self.args, CONFIGURATION, NONE))
+        save = bool(getattr(self.args, Values.CONFIGURATION, NONE))
+        save = True
         if save:
-            self.configuration.save()
+            bank.configuration.save()
         return False
 
     def __init__(self, argument_list: LS, exit_on_error: B) -> N:
@@ -201,11 +204,4 @@ class Magic:
         self.parser = argparse.ArgumentParser()
 
         self.argument_list = argument_list
-        self.configuration = Configuration()
         self.exit_on_error = exit_on_error
-
-        self.core = self.Core(
-            default.application(),
-            default.interface(),
-            default.language(),
-        )

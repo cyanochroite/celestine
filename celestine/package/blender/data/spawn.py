@@ -1,4 +1,5 @@
 """"""
+
 import math
 
 import bpy
@@ -26,6 +27,12 @@ class _imaginary:
             item, do_unlink=True, do_id_user=True, do_ui_user=True
         )
 
+    def __init__(self, name):
+        soul = self.new(name)
+
+        self.__dict__["name"] = name
+        self.__dict__["soul"] = soul
+
 
 class _real(_imaginary):
     """Objects that exist in the real world."""
@@ -38,28 +45,28 @@ class _real(_imaginary):
             collection.objects.link(body)
         return cls(body, soul)
 
-    @classmethod
-    def make(cls, collection, name):
-        """Create a new soul and give it a body."""
-        soul = cls.new(name)
-        return cls.bind(collection, name, soul)
+    def __init__(self, name, collection):
+        soul = self.new(name)
+        body = bpy.data.objects.new(name, soul)
+        if collection:
+            collection.objects.link(body)
 
-    def __init__(self, body, soul):
+        self.__dict__["name"] = name
         self.__dict__["body"] = body
         self.__dict__["soul"] = soul
 
     def __getattr__(self, name):
         match name:
             case "location":
-                getattr(self.body, name)
+                return getattr(self.body, name)
             case "parent":
-                getattr(self.body, name)
+                return getattr(self.body, name)
             case "rotation_euler":
-                getattr(self.body, name)
+                return getattr(self.body, name)
             case "scale":
-                getattr(self.body, name)
+                return getattr(self.body, name)
             case _:
-                getattr(self.soul, name)
+                return getattr(self.soul, name)
 
     def __setattr__(self, name, value):
         match name:
@@ -89,8 +96,12 @@ class _text(_real):
         soul.body = text
         return soul
 
-    @classmethod
-    def make(cls, collection, name, text):
+    def __init__(self, name, collection, text):
         """Create a new soul and give it a body."""
-        soul = cls.new(name, text)
-        return cls.bind(collection, name, soul)
+        soul = self.new(name, text)
+        body = bpy.data.objects.new(name, soul)
+        if collection:
+            collection.objects.link(body)
+
+        self.__dict__["body"] = body
+        self.__dict__["soul"] = soul

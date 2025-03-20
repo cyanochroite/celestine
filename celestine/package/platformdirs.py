@@ -2,33 +2,24 @@
 
 import pathlib
 
-from . import Abstract
+from celestine.package import Abstract
+from celestine.typed import P
 
-try:
-    import platformdirs
-
-    appname = "celestine"
-    appauthor = "celestine"
-    version = None
-    roaming = False
-    multipath = False
-    opinion = False
-    ensure_exists = True
-
-    directory = pathlib.Path(
-        platformdirs.user_data_dir(
-            appname,
-            appauthor,
-            version,
-            roaming,
-            ensure_exists,
-        )
-    )
-except ModuleNotFoundError:
-    import os
-
-    directory = pathlib.Path(os.getcwd())
+directory: P
 
 
 class Package(Abstract):
     """"""
+
+    @property
+    def directory(self) -> P:
+        """"""
+        directory = self.package.user_data_dir(
+            appname="celestine",
+            appauthor=False,
+            version=None,
+            roaming=False,
+            ensure_exists=True,
+        )
+        path = pathlib.Path(directory)
+        return path

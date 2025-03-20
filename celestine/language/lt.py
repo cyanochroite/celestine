@@ -63,15 +63,15 @@ CURSES_EXIT = "Paspauskite klavišą ESC, kad išeitumėte."
 
 DEMO_COW_TALK = "Aš esu kalbanti karvė."
 
-DEMO_MAIN_ACTION = "Pasveikinkite karvę."
+DEMO_ZERO_ACTION = "Pasveikinkite karvę."
 
 DEMO_MAIN_NEXT = "Eiti į antrą puslapį."
 
 DEMO_MAIN_PAST = "Eiti į pirmą puslapį."
 
-DEMO_MAIN_SAY = "Sveiki, žmogau."
+DEMO_ZERO_SAY = "Sveiki, žmogau."
 
-DEMO_MAIN_TITLE = "Puslapis pagrindinis."
+DEMO_ZERO_TITLE = "Puslapis pagrindinis."
 
 DEMO_ONE_ACTION = "Pašalinkite karvę."
 
