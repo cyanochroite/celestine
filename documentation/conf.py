@@ -1,7 +1,7 @@
 author = "mem_dixy"
-copyright = "2022, mem_dixy"
+copyright = "2023, mem_dixy"
 html_theme = 'alabaster'
 keep_warnings = True
 project = "celestine"
-release = "0.4.0"
-version = "0.4"
+release = "2023.09.03"
+version = "2023.9.30"

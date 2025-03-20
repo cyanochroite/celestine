@@ -30,6 +30,8 @@ Translator
 
 ``celestine -a translator``
 
+Requires ``requests``?
+
 This uses `Microsoft Azure`_ to translate text found in the ``language`` files into the official languages of the European Union.
 There are `other languages`_ available, but managing 24 is already a lot!
 
@@ -59,7 +61,7 @@ What this is not:
 - This is not a photo downloader.
 - This is not a mobile application.
 
-View a very small amount of pictures at once. 
+View a very small amount of pictures at once.
 
 +------+-------------+-----------+-------------------------------+
 | Flag | Long Flag   | Argument  | Information                   |

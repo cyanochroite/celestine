@@ -1,4 +1,6 @@
 """
+A custom hash function for special classes.
+
 Make it so class objects and class instances map to the same slot in a
 dictionary. Essentially this is just a weird fancy Enum.
 
@@ -13,29 +15,36 @@ dictionary[instance] = "test"
 print(dictionary[Test]) -> "test"
 """
 
-from celestine.typed import B
-from celestine.typed import I
-from celestine.typed import S
-from celestine.typed import SELF
 
-from celestine.unicode import APOSTROPHE
-from celestine.unicode import FULL_STOP
-from celestine.unicode import SPACE
+from celestine.typed import (
+    OBJ,
+    B,
+    S,
+    Z,
+)
+from celestine.unicode import (
+    APOSTROPHE,
+    FULL_STOP,
+    SPACE,
+)
 
 
 class HashMetaClass(type):
     """"""
 
-    def __eq__(cls, other: SELF) -> B:
-        """This seems to always be called even on class instances."""
+    def __eq__(cls, other: OBJ) -> B:
         return str(cls) == str(other)
 
-    def __hash__(cls) -> I:
+    def __hash__(cls) -> Z:
         """"""
         return hash(str(cls))
 
     def __str__(cls) -> S:
-        """<class 'celestine.session.argument.Argument'>"""
+        """
+        Build the string representation.
+
+        <class 'celestine.session.argument.Argument'>
+        """
         string = super().__str__()
         (_, _, after) = string.rpartition(FULL_STOP)
         (before, _, _) = after.partition(APOSTROPHE)
@@ -45,16 +54,16 @@ class HashMetaClass(type):
 class HashClass(metaclass=HashMetaClass):
     """"""
 
-    def __eq__(self, other: SELF) -> B:
-        """This might never be called but wont hurt to keep it."""
-        return str(self) == str(other)
-
-    def __hash__(self) -> I:
+    def __hash__(self) -> Z:
         """"""
         return hash(str(self))
 
     def __str__(self) -> S:
-        """<celestine.session.argument.Argument object at 0x00000000>"""
+        """
+        Build the string representation.
+
+        <celestine.session.argument.Argument object at 0x00000000>
+        """
         string = super().__str__()
         (_, _, after) = string.rpartition(FULL_STOP)
         (before, _, _) = after.partition(SPACE)

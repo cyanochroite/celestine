@@ -1,7 +1,7 @@
 """Application for translating text to other languages."""
 
 
-class Translator():
+class Translator:
     """A translator."""
 
     def __init__(self, attribute):

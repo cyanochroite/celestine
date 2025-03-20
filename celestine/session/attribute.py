@@ -1,31 +1,35 @@
 """"""
 
-from typing import TypeAlias as TA
-
-from celestine.text import VERSION_NUMBER
-
-from celestine.typed import A
-from celestine.typed import D
-from celestine.typed import L
-from celestine.typed import N
-from celestine.typed import S
-
-from .text import ACTION
-from .text import CHOICES
-from .text import HELP
-from .text import NARGS
-from .text import VERSION
-
+from celestine.data import VERSION_NUMBER
+from celestine.session.data import (
+    ACTION,
+    CHOICES,
+    HELP,
+    NARGS,
+    VERSION,
+)
+from celestine.typed import (
+    LS,
+    TA,
+    A,
+    D,
+    N,
+    S,
+)
 
 AT: TA = D[S, A]
 
 
-class Attribute():
+class Attribute:
     """"""
 
     def dictionary(self) -> AT:
         """"""
         return {}
+
+    def __init__(self, **star) -> N:
+        """"""
+        super().__init__(**star)
 
 
 class Action(Attribute):
@@ -35,10 +39,10 @@ class Action(Attribute):
         """"""
         return super().dictionary() | {ACTION: self.action}
 
-    def __init__(self, action: S, **kwargs) -> N:
+    def __init__(self, *, action: S, **star) -> N:
         """"""
-        super().__init__(**kwargs)
         self.action = action
+        super().__init__(**star)
 
 
 class Choices(Attribute):
@@ -48,10 +52,10 @@ class Choices(Attribute):
         """"""
         return super().dictionary() | {CHOICES: self.choices}
 
-    def __init__(self, choices: L[S], **kwargs) -> N:
+    def __init__(self, *, choices: LS, **star) -> N:
         """"""
-        super().__init__(**kwargs)
         self.choices = choices
+        super().__init__(**star)
 
 
 class Help(Attribute):
@@ -61,10 +65,11 @@ class Help(Attribute):
         """"""
         return super().dictionary() | {HELP: self.help}
 
-    def __init__(self, help: S, **kwargs) -> N:  # pylint: disable=W0622
+    # pylint: disable-next=redefined-builtin
+    def __init__(self, *, help: S, **star) -> N:
         """"""
-        super().__init__(**kwargs)
         self.help = help
+        super().__init__(**star)
 
 
 class Nargs(Attribute):
@@ -74,10 +79,10 @@ class Nargs(Attribute):
         """"""
         return super().dictionary() | {NARGS: self.nargs}
 
-    def __init__(self, nargs: S, **kwargs) -> N:
+    def __init__(self, *, nargs: S, **star) -> N:
         """"""
-        super().__init__(**kwargs)
         self.nargs = nargs
+        super().__init__(**star)
 
 
 class Version(Attribute):
@@ -86,7 +91,3 @@ class Version(Attribute):
     def dictionary(self) -> AT:
         """"""
         return super().dictionary() | {VERSION: VERSION_NUMBER}
-
-    def __init__(self, **kwargs) -> N:
-        """"""
-        super().__init__(**kwargs)

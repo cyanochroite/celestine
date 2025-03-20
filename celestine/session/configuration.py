@@ -1,74 +1,79 @@
 """"""
 
 import configparser
+import os
 
 from celestine import load
+from celestine.data import CELESTINE
+from celestine.file import text_save
+from celestine.file.data import UTF_8
+from celestine.typed import (
+    N,
+    S,
+)
+from celestine.unicode import (
+    EQUALS_SIGN,
+    NONE,
+    POUND_SIGN,
+)
 
-from celestine.text.directory import APPLICATION
-from celestine.text.stream import UTF_8
-from celestine.text.stream import WRITE_TEXT
-
-from celestine.typed import N
-from celestine.typed import S
-
-from celestine.unicode import EQUALS_SIGN
-from celestine.unicode import NONE
-from celestine.unicode import POUND_SIGN
-
-from .text import FILE
+from .data import FILE
 
 
-class Configuration():
-    """parse configuration stuff."""
-
-    def __init__(self) -> N:
-        """"""
-        self.path = load.pathway(FILE)
-
-        self.configuration = configparser.ConfigParser(
-            delimiters=(EQUALS_SIGN),
-            comment_prefixes=(POUND_SIGN),
-            strict=True,
-            empty_lines_in_values=False,
-            default_section=APPLICATION,
-        )
-
-    def load(self) -> N:
-        """Load the configuration file."""
-        self.configuration.read(self.path, encoding=UTF_8)
-
-    def save(self) -> N:
-        """Save the configuration file."""
-        with open(self.path, WRITE_TEXT, encoding=UTF_8) as file:
-            self.configuration.write(file, True)
+class Configuration:
+    """Parse configuration stuff."""
 
     def get(self, section: S, option: S) -> S:
         """"""
-        has_section = self.configuration.has_section(section)
+        return self.configuration.get(section, option, fallback=NONE)
 
-        if option == APPLICATION:
-            section = APPLICATION
+    def load(self) -> N:
+        """Load the configuration file."""
+        filenames = self.path
+        encoding = UTF_8
+        self.configuration.read(filenames, encoding)
 
-        if section == APPLICATION:
-            has_section = True
-
-        if has_section:
-            if self.configuration.has_option(section, option):
-                return self.configuration[section][option]
-
-        return NONE
+    def save(self) -> N:
+        """Save the configuration file."""
+        configuration = self.configuration
+        with text_save(self.path) as fileobject:
+            space_around_delimiters = True
+            configuration.write(fileobject, space_around_delimiters)
 
     def set(self, section: S, option: S, value: S) -> N:
         """"""
-        has_section = self.configuration.has_section(section)
-
-        if option == APPLICATION:
-            section = APPLICATION
-
-        if section == APPLICATION:
-            has_section = True
-
-        if not has_section:
+        if not self.configuration.has_section(section):
             self.configuration.add_section(section)
 
         self.configuration[section][option] = value
+
+    def __init__(self) -> N:
+        """"""
+        module = load.module("package", "platformdirs")
+        path = os.path.join(module.directory, FILE)
+        self.path = path
+
+        defaults = None  # Default.
+        dict_type = dict  # Default.
+        allow_no_value = False  # Default.
+        delimiters = EQUALS_SIGN
+        comment_prefixes = POUND_SIGN
+        inline_comment_prefixes = None  # Default.
+        strict = True  # Important.
+        empty_lines_in_values = False
+        default_section = CELESTINE
+        interpolation = configparser.BasicInterpolation()  # Default.
+        converters = {}  # Default.
+        self.configuration = configparser.ConfigParser(
+            defaults,
+            dict_type,
+            allow_no_value,
+            delimiters=delimiters,
+            comment_prefixes=comment_prefixes,
+            inline_comment_prefixes=inline_comment_prefixes,
+            strict=strict,
+            empty_lines_in_values=empty_lines_in_values,
+            default_section=default_section,
+            interpolation=interpolation,
+            converters=converters,
+        )

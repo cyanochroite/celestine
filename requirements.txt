@@ -1,1 +1,2 @@
---requirement requirements/pip.txt
+Pillow >= 10.0.0
+more-itertools >= 10.0.0

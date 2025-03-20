@@ -157,7 +157,6 @@ celestine.rtfd.io
 
 
 
-
 PACKAGE
 python -m pip install --upgrade pip
 python -m pip install --upgrade build
@@ -178,31 +177,14 @@ python -m pip install celestine
 
 INSTALL
 pip install pytest
-pip install coverage
 
 
 
 SHELL COMMAND
 # quick test
 python -m pytest
-
-# test code used
-python -m coverage run --source=celestine/application/unittest --module pytest --verbose
-
-python -m coverage run --source=tests --module pytest --verbose
-python -m coverage report --show-missing
-python -m coverage html
-
-# source code used by test code
-python -m coverage run --module pytest --verbose celestine/application/unittest
-python -m coverage report --show-missing
-python -m coverage html
-
-# source code used
-python -m coverage run --source=celestine --module pytest --verbose celestine/application/unittest
-python -m coverage report --show-missing
-python -m coverage html
-
+python -m unittest
+python -m pyright
 
 
 

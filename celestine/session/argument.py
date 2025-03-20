@@ -1,39 +1,46 @@
 """"""
 
-from celestine.typed import B
-from celestine.typed import L
-from celestine.typed import N
-from celestine.typed import S
+from celestine.typed import (
+    LS,
+    B,
+    N,
+    S,
+)
+from celestine.unicode import (
+    HYPHEN_MINUS,
+    NONE,
+    QUESTION_MARK,
+)
 
-from celestine.unicode import HYPHEN_MINUS
-from celestine.unicode import NONE
-from celestine.unicode import QUESTION_MARK
-
-from .attribute import Action
-from .attribute import Attribute
-from .attribute import Choices
-from .attribute import Help
-from .attribute import Nargs
-from .attribute import Version
-
+from .attribute import (
+    Action,
+    Attribute,
+    Choices,
+    Help,
+    Nargs,
+    Version,
+)
+from .data import (
+    HELP,
+    STORE_TRUE,
+    VERSION,
+)
 from .hash import HashClass
-
-from .text import HELP
-from .text import STORE_TRUE
-from .text import VERSION
 
 
 class Argument(HashClass, Attribute):
-    """abstract class"""
+    """Abstract class."""
 
-    def __init__(self, argument: B, attribute: B, fallback: S, **kwargs) -> N:
+    def __init__(
+        self, argument: B, attribute: B, fallback: S, **star
+    ) -> N:
         """"""
-        super().__init__(**kwargs)
+        super().__init__(**star)
         self.argument = argument
         self.attribute = attribute
         self.fallback = fallback
 
-    def key(self, _: S) -> L[S]:
+    def key(self, _: S) -> LS:
         """"""
         return []
 
@@ -41,7 +48,7 @@ class Argument(HashClass, Attribute):
 class Flag(Argument):
     """"""
 
-    def key(self, name: S) -> L[S]:
+    def key(self, name: S) -> LS:
         """"""
         return [
             NONE.join((HYPHEN_MINUS, name[0])),
@@ -52,7 +59,7 @@ class Flag(Argument):
 class Name(Argument):
     """"""
 
-    def key(self, name: S) -> L[S]:
+    def key(self, name: S) -> LS:
         """"""
         return [name]
 
@@ -75,12 +82,12 @@ class Customization(Flag, Help, Choices):
     """"""
 
     # pylint: disable-next=redefined-builtin
-    def __init__(self, help: S, choices: L[S]) -> N:
+    def __init__(self, fallback: S, help: S, choices: LS) -> N:
         """"""
         super().__init__(
             argument=bool(choices),
             attribute=True,
-            fallback=NONE,
+            fallback=fallback,
             help=help,
             choices=choices,
         )
@@ -90,7 +97,7 @@ class Positional(Name, Help, Choices, Nargs):
     """"""
 
     # pylint: disable-next=redefined-builtin
-    def __init__(self, fallback: S, help: S, choices: L[S]) -> N:
+    def __init__(self, fallback: S, help: S, choices: LS) -> N:
         """"""
         super().__init__(
             argument=True,
@@ -116,7 +123,7 @@ class Optional(Flag, Help):
         )
 
 
-class Information (Flag, Action, Help):
+class Information(Flag, Action, Help):
     """"""
 
     # pylint: disable-next=redefined-builtin

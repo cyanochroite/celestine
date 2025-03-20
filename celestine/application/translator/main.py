@@ -1,76 +1,72 @@
 """Application for translating text to other languages."""
-from celestine.application.translator.parser import word_wrap_dictionary
-from .text import UTF_8
-from .text import WRITE
-from celestine.application.translator.file import save_dictionary
-from celestine.application.translator.text import LANGUAGE
-from celestine.application.translator.parser import dictionary_to_file
-from .text import LANGUAGE
-
-import uuid
+import os
 import os.path
 import shutil
+import uuid
+
 import requests
 
 from celestine import load
-from celestine.application.translator.translator import Translator
 
-INIT = "__init__"
+from .data import (
+    LANGUAGE,
+    LANGUAGE_TAG_AZURE,
+    LANGUAGE_TAG_ISO,
+    TEXT,
+    TO,
+    TRANSLATIONS,
+)
+from .read import open_language
+from .translator import Translator
+from .write import (
+    make_init_file,
+    save_language,
+)
 
 
-TRANSLATION = "translation"
-
-
-SESSION = "session"
-TRANSLATIONS = "translations"
-TEXT = "text"
-TO = "to"
-
-LANGUAGE_TAG_AZURE = "LANGUAGE_TAG_AZURE"
-LANGUAGE_TAG_ISO = "LANGUAGE_TAG_ISO"
-
-
-def parser_magic(session):
+def parser_magic(ring, source):
     """Do all parser stuff here."""
-    dictionary = {}
+
+    all_languages = {}
+
     azure_to_iso = {}
-    override = {}
-    code = []
+    dest_code = []
 
-    dir_translation = load.argument(TRANSLATION)
-    for translation in dir_translation:
-        wow = load.dictionary(TRANSLATION, translation)
+    language_list = load.pathway.argument(LANGUAGE)
+    for language in language_list:
+        head, body = open_language(LANGUAGE, language)
 
-        key = wow[LANGUAGE_TAG_AZURE]
-        value = wow[LANGUAGE_TAG_ISO]
+        key = body[LANGUAGE_TAG_AZURE]
+        value = body[LANGUAGE_TAG_ISO]
         azure_to_iso[key] = value
-        code.append(key)
+        dest_code.append(key)
 
-        override[translation] = wow
-        dictionary[translation] = {}
+        all_languages[language] = {}
+        all_languages[language]["name"] = language
+        all_languages[language]["skip"] = body
+        # all_languages[language]["work"] = {}
 
-    thelist = load.dictionary("translation", "__init__")
-    # thelist = {}
-    for name, value in thelist.items():
+        # ring because we skipped translator
+        all_languages[language]["work"] = head
 
-        items = post(session, code, value)
+    source_list = load.dictionary(LANGUAGE, source)
+    for name, value in source_list.items():
+        items = post(ring, dest_code, value)
         for item in items:
             translations = item[TRANSLATIONS]
             for translation in translations:
                 text = translation[TEXT]
                 goto = translation[TO]
-                key = azure_to_iso[goto]
-                dictionary[key][name] = text
+                language = azure_to_iso[goto]
+                all_languages[language]["work"][name] = text
 
-    for translation in dir_translation:
-        dictionary[translation] |= override[translation]
-
-    return dictionary
+    return all_languages
 
 
 def reset():
     """Remove the directory and rebuild it."""
-    path = load.pathway(LANGUAGE)
+
+    path = load.pathway.pathway(LANGUAGE)
     if os.path.islink(path):
         raise RuntimeError
 
@@ -80,39 +76,36 @@ def reset():
     os.mkdir(path)
 
 
-def save_item(dictionarys):
-    """Save the items."""
-    translations = load.argument(TRANSLATION)
-    for translation in translations:
-        dictionary = dictionarys[translation]
-        save_dictionary(dictionary, LANGUAGE, translation)
-
-
-def post(session, code, text):
+def post(ring, code, text):
     """Generate a post request."""
-    translator = Translator(session.attribute)
+    translator = Translator(ring.attribute)
     url = translator.endpoint()
     data = None
     json = [{TEXT: text}]
     headers = translator.header(str(uuid.uuid4()))
     params = translator.parameter(code)
-    request = requests.post(url, data, json, headers=headers, params=params)
+    request = requests.post(
+        url, data, json, headers=headers, params=params
+    )
     return request.json()
 
 
-def _translate(session):
-    """def main"""
+def do_translate(ring):
+    """Translate the language files."""
 
-    dictionary = parser_magic(session)
+    # Add ability to choose master language file.
+    source = "en"
+
+    dictionary = parser_magic(ring, source)
 
     reset()
 
-    # have way to provide default language?
-    save_dictionary(dictionary["en"], LANGUAGE, INIT)
+    make_init_file()
 
-    for (key, value) in dictionary.items():
-        save_dictionary(value, LANGUAGE, key)
+    for key, value in dictionary.items():
+        translation = value["work"]
+        overridden = value["skip"]
+        save_language(translation, overridden, LANGUAGE, key)
 
     print(dictionary)
     print("done")
-
