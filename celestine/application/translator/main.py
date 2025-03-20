@@ -51,7 +51,8 @@ def parser_magic(source):
         # hold because we skipped translator
         all_languages[language]["work"] = head
 
-    source_list = load.dictionary(LANGUAGE, source)
+    module = load.module(LANGUAGE, source)
+    source_list = load.dictionary(module)
     for name, value in source_list.items():
         items = post(dest_code, value)
         for item in items:

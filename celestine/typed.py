@@ -1,142 +1,270 @@
-"""Define types here."""
+"""
+Define types here.
 
-# TODO: Replace all this with 'type' after python 3.12 and mypy support.
+Generator[YieldType, SendType, ReturnType]
 
-import io
-import pathlib
-import sys
-import types
-import typing
+A: typing.Any
+B: bool
+C: collections.abc.Callable  # Callable[[int], str]
+D: typing.Dict
+E: typing.Any  # Unused  # Enum?
+F: float
+G: collections.abc.Generator
+H: typing.Any  # Unused  # Hash?
+I: typing.Any  # Ambiguous variable name.
+J: object
+K: typing.Self
+L: typing.List
+M: types.ModuleType
+N: None
+O: typing.Any  # Ambiguous variable name.
+P: pathlib.Path
+Q: collections.abc.Sequence
+R: typing.Any  # Future star type.
+S: str
+T: typing.Tuple
+U: typing.Any  # Unused  # Union?
+V: typing.Optional  # Void like type.
+W: typing.Any  # Unused  # self.data()? warp?
+X: typing.TypeVar("X")  # Primary type variable.
+Y: bytes
+Z: int  # Set of Integers Symbol ℤ.
+"""
+
+# pylint: disable=invalid-name
+
+
+import abc
 from collections.abc import Callable as C
 from collections.abc import Generator as G
+from collections.abc import Iterator as IT
+from collections.abc import Sequence as Q
+from pathlib import Path as P
+from types import ModuleType as M
+from typing import Any as A
 from typing import Dict as D
 from typing import List as L
 from typing import Literal
-from typing import Optional as V  # Void
+from typing import Optional as V
+from typing import Protocol
+from typing import Self as K
 from typing import Tuple as T
-from typing import TypeAlias as TA
-
-#  TODO: Remove after Python 3.10.
-_version = sys.version.split(".")
-_major = _version[0]
-_minor = _version[1]
-if _major == "3" and _minor == "10":
-    K: TA = typing.Any  # Python 3.10 fix.
-else:
-    from typing import Self as K
+from typing import Type as TY
+from typing import TypedDict as TD
+from typing import TypeVar as TV
+from typing import (
+    cast,
+    override,
+)
 
 
-class Star(typing.TypedDict):
+class Star(TD):
     """The global Star object."""
 
     # TODO: Figure out how to map this to the R type.
 
 
-A: TA = typing.Any
-B: TA = bool
-# C: TA = collections.abc.Callable
-# D: TA = typing.Dict
-# E: TA = typing.Any  # Unused
-F: TA = float
-# G: TA = collections.abc.Generator
-# H: TA = typing.Any  # Unused
-# I: TA = typing.Any  # Ambiguous variable name.
-J: TA = object
-# K: TA = typing.Self  # "Self" is not valid in this context.
-# L: TA = typing.List
-M: TA = types.ModuleType
-N: TA = None
-# O: TA = typing.Any  # Ambiguous variable name.
-P: TA = pathlib.Path
-# Q: TA = typing.Any  # Unused
-R: TA = typing.Any  # Star.
-S: TA = str
-# T: TA = typing.Tuple
-# U: TA = typing.Any  # Unused  # Union?
-# V: TA = typing.Any  # Unused
-# W: TA = typing.Any  # Unused
-# X: TA = typing.Any  # Unused
-# Y: TA = typing.Any  # Unused
-Z: TA = int  # Set of Integers Symbol ℤ.
+type B = bool
+type F = float
+type J = object
+type N = None
+type R = A
+type S = str
+X = TV("X")
+type Y = bytes
+type Z = int
 
 
-BF: TA = Literal[False]
-BT: TA = Literal[True]
+type BF = Literal[False]
+type BT = Literal[True]
 
-CN: TA = C[[N], N]
+type CA = C[..., A]
+type CN = C[[N], N]
 
-DA: TA = D[S, A]
-DB: TA = D[S, B]
-DF: TA = D[S, F]
-DM: TA = D[S, M]
-DP: TA = D[S, P]
-DS: TA = D[S, S]
-DZ: TA = D[S, Z]
+type DA = D[S, A]
+type DB = D[S, B]
+type DF = D[S, F]
+type DM = D[S, M]
+type DP = D[S, P]
+type DS = D[S, S]
+type DZ = D[S, Z]
 
-# Generator[YieldType, SendType, ReturnType]
-GA: TA = G[A, N, N]
-GB: TA = G[B, N, N]
-GF: TA = G[F, N, N]
-GM: TA = G[M, N, N]
-GP: TA = G[P, N, N]
-GS: TA = G[S, N, N]
-GZ: TA = G[Z, N, N]
+type GA = G[A, N, N]
+type GB = G[B, N, N]
+type GF = G[F, N, N]
+type GM = G[M, N, N]
+type GP = G[P, N, N]
+type GS = G[S, N, N]
+type GZ = G[Z, N, N]
 
-LA: TA = L[A]
-LB: TA = L[B]
-LF: TA = L[F]
-LM: TA = L[M]
-LP: TA = L[P]
-LS: TA = L[S]
-LZ: TA = L[Z]
-
-VA: TA = V[A]
-VB: TA = V[B]
-VF: TA = V[F]
-VM: TA = V[M]
-VP: TA = V[P]
-VS: TA = V[S]
-VZ: TA = V[Z]
+type LA = L[A]
+type LB = L[B]
+type LF = L[F]
+type LM = L[M]
+type LP = L[P]
+type LS = L[S]
+type LZ = L[Z]
 
 
-def ignore(_: A) -> N:
+type TA = T[A, ...]
+type TA1 = T[A]
+type TA2 = T[A, A]
+type TA3 = T[A, A, A]
+type TA4 = T[A, A, A, A]
+
+type TB = T[B, ...]
+type TB1 = T[B]
+type TB2 = T[B, B]
+type TB3 = T[B, B, B]
+type TB4 = T[B, B, B, B]
+
+type TF = T[F, ...]
+type TF1 = T[F]
+type TF2 = T[F, F]
+type TF3 = T[F, F, F]
+type TF4 = T[F, F, F, F]
+
+type TM = T[M, ...]
+type TM1 = T[M]
+type TM2 = T[M, M]
+type TM3 = T[M, M, M]
+type TM4 = T[M, M, M, M]
+
+type TP = T[P, ...]
+type TP1 = T[P]
+type TP2 = T[P, P]
+type TP3 = T[P, P, P]
+type TP4 = T[P, P, P, P]
+
+type TS = T[S, ...]
+type TS1 = T[S]
+type TS2 = T[S, S]
+type TS3 = T[S, S, S]
+type TS4 = T[S, S, S, S]
+
+type TZ = T[Z, ...]
+type TZ1 = T[Z]
+type TZ2 = T[Z, Z]
+type TZ3 = T[Z, Z, Z]
+type TZ4 = T[Z, Z, Z, Z]
+
+
+type VA = V[A]
+type VB = V[B]
+type VF = V[F]
+type VM = V[M]
+type VP = V[P]
+type VS = V[S]
+type VZ = V[Z]
+
+
+def ignore(*_: A) -> N:
     """An empty function used to hide unused variable warnings."""
 
 
-def override(function: A) -> A:
-    """Used so earlier Python wont fail when using @override."""
-    # TODO: Remove this once we drop Python 3.11.
-    return function
-
-
-def string(*characters: S) -> S:
+def string(*iterable: S) -> S:
     """A simple utility for joining together a series of strings."""
-    buffer = io.StringIO()
-    for character in characters:
-        buffer.write(character)
-    value = buffer.getvalue()
-    return value
+    return "".join(iterable)
 
 
-# TODO: Remove this once we drop Python 3.11.
-class _Fix:
+class Object(abc.ABC):
     """"""
 
-    def _override(self) -> N:
+    star: D[S, R]
+
+    def copy(self) -> K:
         """"""
+        return self.echo(self)
+
+    @property
+    def data(self) -> LA:
+        """"""
+        ignore(self)
+        result: LA = []
+        return result
+
+    @classmethod
+    def echo(cls, self: K) -> K:
+        """"""
+        return cls(*self.data, **self.star)
+
+    @classmethod
+    def make(cls, *data: A, **star: R) -> K:
+        """"""
+        return cls(*data, **star)
+
+    def pull(self, name: S, _cast: TY[A] = str, default: A = None) -> A:
+        """Extracts keyword arguments from star object and returns."""
+        try:
+            pop = self.star.pop(name)
+            value = _cast(pop)
+        except KeyError:
+            value = default
+        return value
+
+    def warp(self, name: S, _cast: TY[A] = str, default: A = None) -> N:
+        """Extracts keyword arguments from star object and saves."""
+        try:
+            pop = self.star.pop(name)
+            value = _cast(pop)
+        except KeyError:
+            value = default
+        setattr(self, name, value)
+
+    def __init__(self, *data: A, **star: R) -> N:
+        ignore(self, data)
+        super().__init__()
+        self.star = star
 
 
-class _ImportNotUsed(_Fix):
+class Struct:
     """"""
 
-    @override
-    def _override(self) -> N:
-        # TODO: Remove this once we drop Python 3.11.
-        print(override)
+    __slots__: TS = ()
 
-    def _self(self) -> K:
+    def copy(self) -> K:
         """"""
-        return self
+        data = self.data
+        result = self.__class__(*data)
+        return result
 
-    def _tuple(self) -> T[Z, Z]:
-        return (0, 0)
+    @classmethod
+    def echo(cls, self: K) -> K:
+        """"""
+        data = self.data
+        result = cls(*data)
+        return result
+
+    @classmethod
+    def make(cls, *data: A) -> K:
+        """"""
+        result = cls(*data)
+        return result
+
+    def _del(self) -> N:
+        ignore(self)
+
+    def _get(self) -> TA:
+        ignore(self)
+        return ()
+
+    def _set(self, value: TA) -> N:
+        ignore(self, value)
+
+    def __del__(self) -> N:
+        del self.data
+
+    def __init__(self, *data: A) -> N:
+        ignore(self)
+        self.data = data
+
+    def __iter__(self) -> GA:
+        yield from self.data
+
+    def __reversed__(self) -> GA:
+        yield from reversed(self.data)
+
+    data = property(_get, _set, _del)
+
+
+ignore(IT, Protocol, Q, cast, override)

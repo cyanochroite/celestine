@@ -1,25 +1,33 @@
 """"""
 
+import math
+
 from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.package import (
-    pillow,
+    PIL,
     tkinter,
 )
 from celestine.typed import (
-    BF,
     LS,
     A,
+    K,
     N,
     P,
     R,
     S,
+    Z,
+    cast,
+    ignore,
     override,
 )
-from celestine.window.collection import Area
+from celestine.window.collection import (
+    Area,
+    Dyad,
+)
 
 
 class Abstract(Abstract_):
@@ -41,60 +49,40 @@ class Element(Element_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def hide(self) -> N:
         """"""
+        super().hide()
+        self.item.place_forget()
 
-        super().make(canvas)
+    @override
+    def build(self, canvas: A, **star: R) -> N:
+        """"""
+        super().build(canvas, **star)
+
+        # TODO: self.area.local.size.value
+        self.image = tkinter.PhotoImage(
+            width=200,
+            height=200,
+        )
 
         def callback() -> N:
             """"""
             self.click(self.area.world.centroid)
             bank.dequeue()
 
-        # if not super().make(canvas):
-        #    return False
-
-        # if not super().draw(**star):
-        #    return False
-
-        if self.path:
-            self.image2 = tkinter.PhotoImage(file=self.path)
-            star.update(image=self.image2)
-
-        if self.text:
-            star.update(text=self.text)
-
+        # Change everything to button and disable if no action?
         if self.action or self.goto:
             star.update(command=callback)
             self.item = tkinter.Button(canvas, **star)
         else:
-            star.update(fg="blue")
-            star.update(height=4)
-            star.update(text=self.text)
-            star.update(width=100)
             self.item = tkinter.Label(canvas, **star)
-
         self.place(self.item)
 
-    def update(self, path: P, **star: R) -> N:
-        """"""
-        super().update(path)
+        if self.path:
+            self.update_image(self.path)
 
-        if pillow:
-            image = self.image.image
-            self.image2 = pillow.ImageTk.PhotoImage(image=image)
-        else:
-            # breaks other stuff elsewere
-            self.image2 = tkinter.PhotoImage(file=self.path)
-
-        self.item.configure(image=self.image2)
-        self.item.image = self.image2
-
-    @override
-    def hide(self) -> N:
-        """"""
-        super().hide()
-        self.item.place_forget()
+        if self.text:
+            self.update_text(self.text)
 
     @override
     def show(self) -> N:
@@ -102,12 +90,55 @@ class Element(Element_, Abstract):
         super().show()
         self.place(self.item)
 
+    def update_image(self, path: P, **star: R) -> N:
+        """"""
+        self.path = path
+        if bool(PIL):
+            image = PIL.Image.open(self.path)
+            image = image.convert(mode="RGB")
+            image_size = self.image_size(image.size)
+            image = image.resize(image_size.size.value)
+            pil_photo = PIL.ImageTk.PhotoImage(image=image)
+            self.item.configure(image=pil_photo)
+            self.item.image = pil_photo
+            return
+
+        photo = tkinter.PhotoImage(file=self.path)
+
+        old_width = photo.width()
+        old_height = photo.height()
+
+        image_size = self.image_size((old_width, old_height))
+        new_width, new_height = image_size.size
+
+        old_size = Dyad(old_width, old_height)
+        new_size = Dyad(new_width, new_height)
+
+        if new_width < old_width:
+            change = cast(Dyad[Z], math.ceil(old_size / new_size))
+            image = photo.subsample(change.one, change.two)
+        else:
+            change = cast(Dyad[Z], math.floor(new_size / old_size))
+            image = photo.zoom(change.one, change.two)
+
+        self.item.configure(image=image)
+        self.item.image = image
+
+    def update_text(self, text: S) -> N:
+        """"""
+        self.text = text
+        self.item.config(text=text)
+
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
+        self.photo = None
+
 
 class View(View_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
         self.canvas = tkinter.Frame(
             canvas,
@@ -118,7 +149,7 @@ class View(View_, Abstract):
             height=1080,
         )
         self.place(self.canvas)
-        super().make(self.canvas)
+        super().build(self.canvas)
 
     @override
     def hide(self) -> N:
@@ -137,30 +168,30 @@ class Window(Window_):
     """"""
 
     @override
-    def extension(self) -> LS:
-        """"""
-        if pillow:
-            return pillow.extension()
+    @classmethod
+    def extension(cls) -> LS:
+        ignore(cls)
+        if bool(PIL):
+            return super().extension()
 
         return [
-            ".pbm",
+            # ".pbm",
             ".pgm",
             ".ppm",
-            ".pnm",
+            # ".pnm",
             ".gif",
             ".png",
         ]
 
     @override
+    def run(self) -> N:
+        super().run()
+        self.canvas.mainloop()
+
+    @override
     def turn(self, page: S, **star: R) -> N:
         super().turn(page, **star)
         self.page.canvas.tkraise()
-
-    @override
-    def __exit__(self, exc_type: A, exc_value: A, traceback) -> BF:
-        super().__exit__(exc_type, exc_value, traceback)
-        self.canvas.mainloop()
-        return False
 
     @override
     def __init__(self, **star: R) -> N:
@@ -170,11 +201,13 @@ class Window(Window_):
             "window": self,
         }
         super().__init__(element, **star)
-        self.area = Area.make(1280, 1080)
+        self.area = Area.fast(1280, 1080)
+        self.area = Area.fast(1200, 1000)
 
         self.canvas = tkinter.Tk()
         self.canvas.title(bank.language.APPLICATION_TITLE)
         self.canvas.geometry("1920x1080")
+        self.canvas.geometry("1900x1000")
         self.canvas.minsize(640, 480)
         self.canvas.maxsize(3840, 2160)
         self.canvas.config(bg="blue")

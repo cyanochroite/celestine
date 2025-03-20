@@ -2,6 +2,7 @@
 
 import configparser
 import os
+import pathlib
 
 from celestine import (
     load,
@@ -58,8 +59,9 @@ class Configuration:
 
     def __init__(self) -> N:
         """"""
-        if platformdirs:
-            self.path = platformdirs.directory
+        if bool(platformdirs):
+            user_data_dir = platformdirs.user_data_dir()
+            self.path = pathlib.Path(user_data_dir)
         else:
             self.path = load.pathway_root()
 

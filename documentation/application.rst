@@ -25,6 +25,7 @@ Change screens with two whole buttons.
 
 ``celestine -a demo``
 
+
 Translator
 **********
 
@@ -48,6 +49,7 @@ There are `other languages`_ available, but managing 24 is already a lot!
 .. _`Microsoft Azure`: https://learn.microsoft.com/en-us/azure/cognitive-services/translator/quickstart-translator?tabs=python
 .. _`other languages`: https://learn.microsoft.com/en-us/azure/cognitive-services/translator/language-support
 
+
 Viewer
 ******
 
@@ -68,4 +70,3 @@ View a very small amount of pictures at once.
 +======+=============+===========+===============================+
 | -d   | --directory | DIRECTORY | A system path to a directory. |
 +------+-------------+-----------+-------------------------------+
-

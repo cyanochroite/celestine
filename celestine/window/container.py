@@ -3,6 +3,14 @@
 import enum
 
 
+class Call(enum.Enum):
+    """"""
+
+    NONE = enum.auto()
+    VIEW = enum.auto()
+    WORK = enum.auto()
+
+
 class Zone(enum.Enum):
     """"""
 
@@ -17,11 +25,3 @@ class Image(enum.Enum):
 
     FILL = enum.auto()
     FULL = enum.auto()
-
-
-class Call(enum.Enum):
-    """"""
-
-    NONE = enum.auto()
-    VIEW = enum.auto()
-    WORK = enum.auto()

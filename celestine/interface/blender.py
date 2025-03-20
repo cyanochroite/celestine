@@ -24,6 +24,7 @@ from celestine.typed import (
     N,
     R,
     S,
+    ignore,
     override,
 )
 from celestine.window.collection import (
@@ -58,6 +59,7 @@ class celestine_click(bpy.types.Operator):
 
     def execute(self, context):
         """"""
+        ignore(self)
         mouse = (obj for obj in bpy.data.objects if obj.name == "mouse")
         mouse = next(mouse)
 
@@ -116,14 +118,14 @@ class celestine_begin(bpy.types.Operator):
 
     def execute(self, _):
         """"""
-
+        ignore(self)
         print("begin")
         car = bpy.context.preferences.addons["celestine"].preferences
         data.begin()
         preferences.begin()
         car.ready = True
 
-        main("make")
+        main("build")
 
         return {"FINISHED"}
 
@@ -136,6 +138,7 @@ class celestine_finish(bpy.types.Operator):
 
     def execute(self, _):
         """"""
+        ignore(self)
         print("finish")
         preferences.finish()
         data.finish()
@@ -202,7 +205,7 @@ class Abstract(Abstract_):
             item.hide_viewport = False
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
         if star.get("first"):
             self.render()
@@ -211,7 +214,7 @@ class Abstract(Abstract_):
             item = self.dictionary.get(self.name)
             self.hidden = item.hide_render
 
-        super().make(canvas, **star)
+        super().build(canvas, **star)
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
@@ -222,13 +225,13 @@ class Mouse(Abstract):
     """Should everyone get this?"""
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
         if star.get("first"):
             diamond = Diamond()
-            diamond.make(self.mesh)
+            diamond.build(self.mesh)
 
-        super().make(canvas, **star)
+        super().build(canvas, **star)
 
     def __init__(self, mesh) -> N:
         self.mesh = mesh.soul
@@ -241,7 +244,7 @@ class Element(Element_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
         if star.get("first"):
             if self.action or self.goto:
@@ -258,7 +261,7 @@ class Element(Element_, Abstract):
                 plane.body.data.materials.append(material)
                 self.keep = plane
 
-        super().make(canvas, **star)
+        super().build(canvas, **star)
 
     def update(self, image: S, **star: R) -> B:
         """"""
@@ -275,7 +278,7 @@ class View(View_, Abstract):
     """"""
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
         if star.get("first"):
             if canvas:
@@ -287,7 +290,7 @@ class View(View_, Abstract):
             link(collection.soul)
             canvas = collection
 
-        super().make(canvas, **star)
+        super().build(canvas, **star)
 
     @override
     def hide(self) -> N:
@@ -316,14 +319,16 @@ class Window(Window_):
     """"""
 
     @override
-    def make(self, **star: R) -> N:
+    def build(self, **star: R) -> N:
         """"""
-        first = self.call == "make"
-        super().make(first=first, **star)
+        first = self.call == "build"
+        super().build(first=first, **star)
 
     @override
-    def extension(self) -> LS:
+    @classmethod
+    def extension(cls) -> LS:
         """"""
+        ignore(cls)
         return [
             ".bmp",
             ".sgi",
@@ -351,15 +356,47 @@ class Window(Window_):
         bpy.context.scene.celestine.page = page
 
     @override
-    def __enter__(self):
+    def run(self) -> N:
+        super().run()
+
+        if self.call == "build":
+            return
+
+        page = bpy.context.scene.celestine.page
+        self.page = self.view[page]
+
+        call = getattr(self, self.call)
+        call(**self.star)
+
+        bank.dequeue()
+
+    def __init__(self, *, call=None, **star: R) -> N:
+        element = {
+            "element": Element,
+            "view": View,
+            "window": self,
+        }
+        super().__init__(element, **star)
+        self.area = Area.build(35, 20)
+
+        self.dictionary = bpy.data.collections  # From View?
+
+        self.frame = None
+        self.mouse = None
+
+        self.call = call
+        self.star = star
+
+        self.canvas = None
+
+        ######
+
         if self.call is None:
             print("THIS IS BEST RUN AS A BLENDER ADD-ONS")
             register()
             data.begin()
-        elif self.call != "make":
-            return self
-
-        super().__enter__()
+        elif self.call != "build":
+            return
 
         for camera in bpy.data.cameras:
             data.camera.remove(camera)
@@ -403,7 +440,7 @@ class Window(Window_):
         mesh.location = (0, 0, -1)
 
         self.mouse = Mouse(mesh)
-        self.mouse.make(collection, first=True)
+        self.mouse.build(collection, first=True)
 
         @classmethod
         def bind(cls, collection, name, soul):
@@ -431,44 +468,6 @@ class Window(Window_):
                             temp_override["region"] = region
                             space = area.spaces[0]
 
-        if self.call == "make":
+        if self.call == "build":
             with bpy.context.temp_override(**temp_override):
                 bpy.ops.view3d.view_camera()
-
-        return self
-
-    @override
-    def __exit__(self, exc_type, exc_value, traceback):
-        super().__exit__(exc_type, exc_value, traceback)
-
-        if self.call == "make":
-            return False
-
-        page = bpy.context.scene.celestine.page
-        self.page = self.view[page]
-
-        call = getattr(self, self.call)
-        call(**self.star)
-
-        bank.dequeue()
-
-        return False
-
-    def __init__(self, *, call=None, **star: R) -> N:
-        element = {
-            "element": Element,
-            "view": View,
-            "window": self,
-        }
-        super().__init__(element, **star)
-        self.area = Area.make(35, 20)
-
-        self.dictionary = bpy.data.collections  # From View?
-
-        self.frame = None
-        self.mouse = None
-
-        self.call = call
-        self.star = star
-
-        self.canvas = None

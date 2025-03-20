@@ -1,6 +1,5 @@
 """"""
 
-# from celestine.application.viewer.core import os
 import os
 
 from celestine import language
@@ -9,6 +8,7 @@ from celestine.session.session import SuperSession
 from celestine.typed import (
     DA,
     S,
+    ignore,
 )
 
 
@@ -20,6 +20,7 @@ class Session(SuperSession):
     @classmethod
     def dictionary(cls) -> DA:
         """"""
+        ignore(cls)
         return super().dictionary() | {
             "output": Optional(
                 os.getcwd(),

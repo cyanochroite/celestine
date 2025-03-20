@@ -22,7 +22,7 @@ class Session(SuperSession):
     directory: S
 
     @classmethod
-    def dictionary(cls, core) -> DA:
+    def dictionary(cls) -> DA:
         """"""
         return {
             KEY: Optional(

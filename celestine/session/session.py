@@ -29,16 +29,14 @@ from celestine.session.data import (
 )
 from celestine.typed import (
     DA,
-    TA,
     A,
     M,
     S,
     T,
+    ignore,
 )
 
 from . import default
-
-AI: TA = collections.abc.Iterable[T[S, A]]
 
 
 class SuperSession:
@@ -47,10 +45,11 @@ class SuperSession:
     @classmethod
     def dictionary(cls) -> DA:
         """"""
+        ignore(cls)
         return {}
 
     @classmethod
-    def items(cls) -> AI:
+    def items(cls) -> collections.abc.Iterable[T[S, A]]:
         """"""
         dictionary = cls.dictionary()
         return dictionary.items()
@@ -62,6 +61,7 @@ class Information(SuperSession):
     @classmethod
     def dictionary(cls) -> DA:
         """"""
+        ignore(cls)
         return super().dictionary() | {
             "save": InformationConfiguration(
                 language.ARGUMENT_HELP_HELP,
@@ -87,6 +87,7 @@ class Application(Dictionary):
     @classmethod
     def dictionary(cls) -> DA:
         """"""
+        ignore(cls)
         return super().dictionary() | {
             APPLICATION: Customization(
                 default.application(),
@@ -104,6 +105,7 @@ class Configuration(Dictionary):
     @classmethod
     def dictionary(cls) -> DA:
         """"""
+        ignore(cls)
         return super().dictionary() | {
             CONFIGURATION: Optional(
                 default.application(),
@@ -120,6 +122,7 @@ class Directory(Dictionary):
     @classmethod
     def dictionary(cls) -> DA:
         """"""
+        ignore(cls)
         return super().dictionary() | {
             DIRECTORY: Optional(
                 default.application(),
@@ -136,6 +139,7 @@ class Interface(Dictionary):
     @classmethod
     def dictionary(cls) -> DA:
         """"""
+        ignore(cls)
         return super().dictionary() | {
             INTERFACE: Customization(
                 default.interface(),
@@ -153,6 +157,7 @@ class Language(Dictionary):
     @classmethod
     def dictionary(cls) -> DA:
         """"""
+        ignore(cls)
         return super().dictionary() | {
             LANGUAGE: Customization(
                 default.language(),
@@ -176,6 +181,7 @@ class Session(
     @classmethod
     def dictionary(cls) -> DA:
         """"""
+        ignore(cls)
         return super().dictionary() | {
             Values.MAIN: Positional(
                 NONE,

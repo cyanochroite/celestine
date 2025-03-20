@@ -1,10 +1,12 @@
 Célestine
 #########
+
 .. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
-   :target: https://celestine.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
-.. image:: https://img.shields.io/github/repo-size/mem-dixy/celestine
+   :target: https://celestine.readthedocs.io/en/latest/?badge=latest
+.. image:: https://img.shields.io/github/repo-size/cyanochroite/celestine
    :alt: GitHub repo size
+   :target: https://github.com/cyanochroite/celestine
 .. image:: https://img.shields.io/pypi/v/celestine
    :alt: PyPI - Version
    :target: https://pypi.org/project/celestine/
@@ -14,8 +16,13 @@ Célestine
 .. image:: https://img.shields.io/badge/calver-YYYY.MM.DD-22bfda.svg
    :alt: Calendar Versioning
    :target: https://calver.org/
-.. image:: https://app.deepsource.com/gh/mem-dixy/celestine.svg/?label=active+issues&show_trend=false&token=1MUQkPi-6MM_PMqnaWrAJ6c7
-  :target: https://app.deepsource.com/gh/mem-dixy/celestine/
+.. image:: https://app.deepsource.com/gh/cyanochroite/celestine.svg/?label=active+issues&show_trend=false&token=1MUQkPi-6MM_PMqnaWrAJ6c7
+   :alt: Deep Source
+   :target: https://app.deepsource.com/gh/cyanochroite/celestine/
+.. image:: https://sonarcloud.io/api/project_badges/measure?project=cyanochroite_celestine&metric=alert_status
+   :alt: Quality Gate Status
+   :target: https://sonarcloud.io/summary/new_code?id=cyanochroite_celestine
+
 
 A python framework for desktop applications.
 Featuring support for multiple graphical user interfaces.
@@ -24,41 +31,43 @@ Localized for members of the European Union.
 
 About
 *****
+
 The only requirement is Python.
 However, you can install additional packages for extended functionality.
 
 This has also been designed to run as a `Blender Add-on`_!
 Note that Blender is an isolated environment, so other packages can not be used with it.
 
+
 Project Update
 ^^^^^^^^^^^^^^
-It seems that every release is broken in some form or another.
-My plan of "just fix everything and then release it" has not been working out.
-My new realization is that, since this is still in Alpha, it is okay that it is not perfect.
-So I'm going to be releasing it "AS IS" for a while until Beta, where everything should be functioning as expected.
-(The idea being that pushing out a semi-working package is better then leaving up a totaly broken package.)
 
-Curently "pillow" and "platformdirs" are required dependencies because I have not made the workarounds yet.
-Blender just dropped support for Python 3.10 and so I am going to be as well.
-I would have liked to have a functioning Python 3.10 version so anyone who downloads this wont get errors, but it just hasn't happened yet.
+In this release, curses is back online.
+Tkinter, Curses, and Pygame should all have a functioning image viewer.
+For the best results, use Pygame.
+[MacOS is having trouble with tkinter and Windows wont run curses natively.]
 
-In todays build, only pygame and tkinter are fully functional, using the "demo" and "viewer" applications.
-(Unless there is another issue with the font file, then pygame wont work.)
-Blender fails because it can't find the Pillow package, and it was having issues drawing images properly anyways.
-Curses was having issues with windows-curses for a while, so I have not worked on it recently.
-The DearPyGui Package seems to be nearly abandoned so I have not spent the time keeping it up to date.
+On Windows, it is recommended to install the Pillow package for the best results.
 
+On MacOS, it is recommended to NOT install the Pillow package because of an unknown issue with the wrapper class. 
+Blender support is something I still care about, but it is going to take a lot of work to fix it.
+The only real issue is that I need to wait until Blender has Python 3.12 before I can work on it again.
 
-.. _`Blender Add-on`: https://docs.blender.org/manual/en/latest/editors/preferences/addons.html
+I might drop support for DearPyGui because that is what the package author seems to be doing.
+Though I could replace it with their new package, pilotlight.
 
 
 Commands
 ********
 
+Command line arguments to use when launching the application.
+
 
 Applications
 ^^^^^^^^^^^^
+
 Built in application to try out.
+[The Translator application is probably broken.]
 
 +-------------+-------------------------+------------------------------------------------------------------+
 | Application | Command                 | Information                                                      |
@@ -77,6 +86,10 @@ Caution: By default the viewer application will try to load every image it finds
 
 Graphical User Interfaces
 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[Blender is not working because the current version of Blender still runs on Python 3.11.]
+[DearPyGui is not working because I have not kept up its maintenance either.]
+
 +--------------+------------------------------+--------------+
 | Interface    | Source                       | Command      |
 +==============+==============================+==============+
@@ -94,6 +107,9 @@ Graphical User Interfaces
 
 Natural Languages
 ^^^^^^^^^^^^^^^^^
+
+[These translations might only be partially working because I have not updated them in a while.]
+
 +------------+------------------+---------+
 | Language   | Translation [4]_ | Command |
 +============+==================+=========+
@@ -149,6 +165,9 @@ Natural Languages
 
 Optional Dependencies
 *********************
+
+[Right now the Pillow package is almost required since I have not tested the non Pillow paths very much.]
+
 +------------------------+---------------------------------------------------+
 | Package                | Description                                       |
 +========================+===================================================+
@@ -162,8 +181,32 @@ Optional Dependencies
 +------------------------+---------------------------------------------------+
 
 
+Project Links
+*************
+
+* `Documentation <https://celestine.readthedocs.io/>`_
+* `Email <celestine@cyanochroite.com>`_
+* `Libraries.io <https://libraries.io/pypi/celestine>`_
+* `PyPI <https://pypi.org/project/celestine/>`_
+* `Source <https://github.com/cyanochroite/celestine>`_
+* `Tracker <https://github.com/cyanochroite/celestine/issues>`_
+* `Discord <https://discord.gg/aNmDWPXd7B>`_
+
+
+Disclosures
+***********
+
+* This project is Free and Open Source software.
+* This project used Microsoft Copilot to aid in its development.
+* This project used Microsoft Azure Translator for its language translations.
+* We do not solicit or accept any financial contributions.
+* We do not use, support, or endorse any form of cryptocurrency.
+* Any claims of fundraising activities (for this project) are fraudulent.
+
+
 Licences
-********
+^^^^^^^^
+
 The licence for :code:`Cascadia Code` is the
 `SIL Open Font License <https://scripts.sil.org/OFL>`_.
 
@@ -171,15 +214,15 @@ The licence for :code:`celestine` is the
 `European Union Public Licence <https://eupl.eu/>`_.
 
 
-Project Links
-*************
-* `Discord <https://discord.gg/aNmDWPXd7B>`_
-* `Documentation <https://celestine.readthedocs.io/>`_
-* `Email <mem_dixy@pm.me>`_
-* `Libraries.io <https://libraries.io/pypi/celestine>`_
-* `PyPI <https://pypi.org/project/celestine/>`_
-* `Source <https://github.com/mem-dixy/celestine>`_
-* `Tracker <https://github.com/mem-dixy/celestine/issues>`_
+Footnotes
+*********
+
+.. [1] Blender interface can only be run when this is installed as a Blender addon.
+.. [2] Windows does not come with Curses.
+.. [3] Not always installed. Espically on Linix.
+.. [4] Language files were translated from English using the Microsoft Azure Translator.
+.. [5] Package only needed on Windows. Unix and Linix already have Curses.
+
 
 .. _`dearpygui`: https://pypi.org/project/dearpygui/
 .. _`pillow`: https://pypi.org/project/Pillow/
@@ -190,12 +233,4 @@ Project Links
 .. _`tkinter`: https://docs.python.org/3/library/tk.html
 
 .. _`blender`: https://www.blender.org/
-
-
-Footnotes
-*********
-.. [1] Blender interface can only be run when this is installed as a Blender addon.
-.. [2] Windows does not come with Curses.
-.. [3] Not always installed. Espically on Linix.
-.. [4] Language files were translated from English using the Microsoft Azure Translator.
-.. [5] Package only needed on Windows. Unix and Linix already have Curses.
+.. _`Blender Add-on`: https://docs.blender.org/manual/en/latest/editors/preferences/addons.html

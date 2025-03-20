@@ -5,7 +5,7 @@ requires = ["setuptools >= 61.0.0"]
 
 [project]
 authors = [
-    {name = "mem_dixy", email = "mem_dixy@pm.me"},
+    {name = "Marian Molyneux", email = "celestine@cyanochroite.com"},
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -37,9 +37,8 @@ classifiers = [
     "Natural Language :: Spanish",
     "Natural Language :: Swedish",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+#    "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
     "Topic :: Software Development :: User Interfaces",
     "Typing :: Typed",
@@ -66,8 +65,8 @@ keywords = [
     "image-viewer",
 ]
 readme = "README.rst"
-requires-python = ">=3.10"
-version = "2024.6.9"
+requires-python = ">=3.12"
+version = "2025.2.17"
 
 
 [project.optional-dependencies]
@@ -103,13 +102,12 @@ gui = [
     "windows-curses; platform_system=='Windows'",
 ]
 
-[project.urls]
-Changelog = "https://github.com/mem-dixy/celestine/blob/main/changelog.rst"
-Discord = "https://discord.gg/aNmDWPXd7B"
-Documentation = "https://celestine.readthedocs.io/"
-Source = "https://github.com/mem-dixy/celestine"
-Tracker = "https://github.com/mem-dixy/celestine/issues"
 
+[project.urls]
+Documentation = "https://celestine.readthedocs.io/"
+Source = "https://github.com/cyanochroite/celestine"
+Tracker = "https://github.com/cyanochroite/celestine/issues"
+Discord = "https://discord.gg/aNmDWPXd7B"
 
 
 [tool.autoflake]
@@ -123,9 +121,9 @@ remove-unused-variables = true
 [tool.black]
 line_length = 72
 target-version = [
-    "py310",
     "py311",
     "py312",
+    "py313",
 ]
 
 
@@ -162,10 +160,9 @@ style = ["pep257"]
 write = true
 
 
-
 [tool.pylint.main]
 disable = "empty-docstring, too-few-public-methods"
-ignored-argument-names = "_|cls|star|self"
+ignored-argument-names = "_|star"
 
 
 [tool.pylint.format]

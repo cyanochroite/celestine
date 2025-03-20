@@ -1,6 +1,7 @@
 """"""
 
 import importlib
+import re
 
 from celestine import (
     bank,
@@ -9,6 +10,7 @@ from celestine import (
 from celestine.literal import (
     APPLICATION,
     CELESTINE,
+    FULL_STOP,
     INTERFACE,
     LANGUAGE,
     PACKAGE,
@@ -17,15 +19,48 @@ from celestine.typed import (
     LS,
     A,
     B,
+    C,
+    D,
     N,
     R,
     S,
 )
+from celestine.window.collection import Dictionary
 
 from . import default
 from .magic import Magic
 
 this = load.module(PACKAGE)
+
+type Decorator = D[S, C[..., A]]
+
+
+def decorators(*path: S) -> D[S, Decorator]:
+    """Load all decorated functions from all modules found in path."""
+    result: D[S, Decorator] = {}
+
+    pattern = re.compile(r"<function (\w+)\.")
+
+    base = FULL_STOP.join(path)
+    walked = load.walk_package(base)
+    for _module in walked:
+        items = vars(_module).items()
+
+        for key, value in items:
+            match = pattern.match(repr(value))
+
+            if not match:
+                continue
+
+            name = match[1]
+
+            if name not in result:
+                result[name] = {}
+
+            item = FULL_STOP.join((base, key))
+            result[name][item] = value
+
+    return result
 
 
 def set_lang():
@@ -55,7 +90,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> A:
     bank.interface = load.module(INTERFACE, default.interface())
     hold = default.application()
     bank.application = load.module(APPLICATION, default.application())
-    bank.application.name = hold
+    setattr(bank.application, "name", hold)
 
     magic = Magic(argument_list, exit_on_error)
 
@@ -105,10 +140,10 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
         **star,
     )
 
-    decorators = load.decorators(APPLICATION, application)
-    call = decorators.get("call", {})
-    draw = decorators.get("draw", {})
-    main = decorators.get("main", {})
+    decorator = decorators(CELESTINE, APPLICATION, application)
+    call = decorator.get("call", {})
+    draw = decorator.get("draw", {})
+    main = decorator.get("main", {})
     draw |= main
 
     def find_main() -> S:
@@ -118,8 +153,9 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
         except StopIteration:
             pass
 
-        if draw.get("main"):
-            return "main"
+        for key in draw:
+            if "main" in key:
+                return key
 
         try:
             return next(iter(draw))
@@ -128,13 +164,20 @@ def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
 
         raise Warning("There is nothing to draw.")
 
-    with window:
-        window.main = find_main()
+    window.main = find_main()
 
-        for name, function in call.items():
-            window.code[name] = function
+    _code: Decorator = {}
+    _view: Decorator = {}
 
-        for name, function in draw.items():
-            view = window.drop(name)
-            function(view)
-            window.view[name] = view
+    for name, function in call.items():
+        _code[name] = function
+
+    for name, function in draw.items():
+        view = window.drop(name)
+        function(view)
+        _view[name] = view
+
+    # TODO init this better?
+    window.code = Dictionary(_code)
+    window.view = Dictionary(_view)
+    window.run()

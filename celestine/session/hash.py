@@ -25,6 +25,7 @@ from celestine.typed import (
     J,
     S,
     Z,
+    ignore,
 )
 
 
@@ -44,6 +45,7 @@ class HashMetaClass(type):
 
         <class 'celestine.session.argument.Argument'>
         """
+        ignore(cls)
         string = super().__str__()
         (_, _, after) = string.rpartition(FULL_STOP)
         (before, _, _) = after.partition(APOSTROPHE)
@@ -63,6 +65,7 @@ class HashClass(metaclass=HashMetaClass):
 
         <celestine.session.argument.Argument object at 0x00000000>
         """
+        ignore(self)
         string = super().__str__()
         (_, _, after) = string.rpartition(FULL_STOP)
         (before, _, _) = after.partition(SPACE)

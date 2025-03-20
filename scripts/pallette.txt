@@ -1,0 +1,110 @@
+""""""
+
+import colorsys
+import math
+
+import PIL
+import PIL.Image
+
+type F = float
+type Z = int
+type TZ3 = (int, int, int)
+
+
+def hsv_to_rgb(hue: F, saturation: F, value: F) -> TZ3:
+    """"""
+    channels = colorsys.hsv_to_rgb(hue, saturation, value)
+
+    def convert(channel: Z) -> Z:
+        """"""
+        color = channels[channel]
+        number = color * 255
+        result = round(number)
+        return result
+
+    red = convert(0)
+    green = convert(1)
+    blue = convert(2)
+    result = (red, green, blue)
+    return result
+
+
+colours = set()
+
+for index in range(16):
+    value = index / 15
+    color = hsv_to_rgb(0.0, 0.0, value)
+    colours.add(color)
+
+for values in range(1, 5):
+    value = math.sqrt(values / 4)
+
+    for saturations in range(1, 5):
+        saturation = math.sqrt(saturations / 4)
+        # saturation = saturations / 4
+
+        options = values * 6
+        for hues in range(0, options):
+            hue = hues / options
+            color = hsv_to_rgb(hue, saturation, value)
+            colours.add(color)
+
+
+print(len(colours))
+for colour in colours:
+    print(colour)
+
+# colours.remove((0, 0, 0))
+# colours.remove((255, 0, 0))
+# colours.remove((0, 255, 0))
+# colours.remove((0, 0, 255))
+# colours.remove((255, 255, 0))
+# colours.remove((255, 0, 255))
+# colours.remove((0, 255, 255))
+# colours.remove((255, 255, 255))
+
+print(len(colours))
+
+
+colours = list(colours)
+colours.sort()
+
+image = PIL.Image.new("RGB", (1024, 1024))
+for y in range(1024):
+    for x in range(1024):
+        xx = x // 4
+        yy = y // 4
+        colour = colours[xx]
+        image.putpixel((x, y), colour)
+
+image.show()
+
+image = PIL.Image.new("RGB", (864, 864))
+for y in range(864):
+    for x in range(864):
+        xx = x // 4
+        yy = y // 4
+        color = (
+            (xx % 6) * 42,
+            ((xx // 6) % 6) * 42,
+            (xx // 36) * 42,
+        )
+        image.putpixel((x, y), color)
+
+image.show()
+
+
+00 = '⠀⠀⠀⠀⠀⠀⠀⡐⠌⢔⢐⠡⢂⢊⢮⣚⢮⣚⢮⡚⡮⠀⠠⠀⠠⠀⠄⠀'
+01 = '⠀⠀⠀⠀⠀⠀⠀⡐⠅⢅⠢⠡⡑⡐⣕⢮⢪⡪⡎⣞⢜⢀⠁⡀⠁⠄⠂⠁'
+02 = '⠀⠀⠀⠀⠀⠀⠀⡐⢅⢑⠌⢌⠢⠨⡪⡎⡧⡳⣹⢸⢕⠠⠀⠄⠂⠐⠀⠂'
+03 = '⠀⠀⠀⠀⠀⠀⠀⡐⡡⢂⠪⢐⠡⡑⣝⢜⡎⡧⡳⡕⣗⠀⠂⠐⠈⢀⠁⠄'
+04 = '⠀⠀⠀⠀⠀⠀⠀⡐⠔⡁⡪⢐⠡⢂⢧⢳⢹⢜⢮⢺⡸⠀⢈⠠⠈⢀⠠⠀'
+05 = '⠀⠀⠀⠀⠀⠀⠀⡐⢅⠢⢂⠕⡈⡂⡧⣫⢺⢜⢎⡇⡧⠁⠠⠀⠐⢀⠠⠀'
+06 = '⠀⠀⠀⠀⠀⠀⠀⡐⠔⡡⠡⡂⠪⡐⡵⣱⢣⡫⡮⡪⡧⢁⠐⢈⠠⠀⠄⠂'
+07 = '⡯⣺⣝⣞⢽⡺⣝⢌⠎⡜⢌⢪⢊⢆⣿⣟⣿⣻⣟⣿⣻⣿⣿⣿⣿⣿⣿⣿'
+08 = '⡯⣞⢮⡺⡵⣫⢾⠰⡑⡅⢇⠕⡌⡆⣿⣽⣯⣷⣿⣽⣟⣿⣿⣿⣿⣿⣿⣿'
+09 = '⡽⣪⢗⡯⡯⣳⣫⠪⡪⡘⡔⢕⠱⡨⣿⣳⡿⣾⢷⡿⣾⣿⣿⣿⣿⣿⣿⣿'
+10 = '⡯⣞⢽⣪⢯⢞⣞⢜⠰⡑⢜⠌⡎⢜⣾⣻⣟⣿⣻⣟⣯⣿⣿⣿⣿⣿⣿⣿'
+11 = '⡽⣪⢯⡺⣝⡵⣳⢡⠣⡱⡡⢣⠪⡢⡿⣯⣿⣽⢷⣟⣿⣿⣿⣿⣿⣿⣿⣿'
+12 = '⢯⣳⡫⣯⡺⣝⣞⠔⡕⡑⡜⢔⢱⠨⣿⣻⡾⣯⣿⣯⣷⣿⣿⣿⣿⣿⣿⣿'
+13 = '⡯⣺⣪⢗⡽⣺⣪⠪⡂⡇⡪⡊⢆⢣⢿⣻⣟⣿⢾⡷⣟⣿⣿⣿⣿⣿⣿⣿'

@@ -1,31 +1,34 @@
 """"""
 
+import collections.abc
 import math
+import pathlib
 
 from celestine import bank
-from celestine.literal import NONE
-from celestine.package import pillow
 from celestine.typed import (
     BF,
+    IT,
     LS,
+    TZ2,
     A,
     B,
     D,
     K,
     N,
+    Object,
     P,
     R,
     S,
     Z,
+    ignore,
     override,
 )
 from celestine.window.collection import (
     Area,
+    Dictionary,
     Line,
-    Object,
     Plane,
     Point,
-    Tree,
 )
 from celestine.window.container import (
     Image,
@@ -33,21 +36,64 @@ from celestine.window.container import (
 )
 
 
-class Abstract(Object):
+class Tree(Object, collections.abc.MutableMapping[S, A]):
     """"""
 
-    item: A  # The object that the window system interacts with.
+    children: D[S, K]
+    name: S  # The key to use to find this in the window dictionary.
+
+    def find(self, name: S) -> K:
+        """"""
+        for key, value in self.items():
+            if key == name:
+                return value
+            try:
+                return value.find(name)
+            except AttributeError:
+                pass
+            except KeyError:
+                pass
+        raise KeyError(name)
+
+    def set(self, item: K) -> K:
+        """"""
+        self.children[item.name] = item
+        return item
+
+    def __delitem__(self, key: S) -> N:
+        del self.children[key]
+
+    def __getitem__(self, key: S) -> K:
+        return self.children[key]
+
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(**star)
+        self.name = name
+        self.children = {}
+
+    def __iter__(self) -> IT[S]:
+        return iter(self.children)
+
+    def __len__(self) -> Z:
+        return len(self.children)
+
+    def __setitem__(self, key: S, value: A) -> N:
+        self.children[key] = value
+
+
+class Abstract(Tree):
+    """"""
+
     parent: K
 
     area: Area
     canvas: A
     hidden: B
-    name: S  # The key to use to find this in the window dictionary.
 
     action: S  # The action to perform when the user clicks the button.
     fit: Image  # The way the image scales to fit the view space.
     goto: S  # The page to go to when clicked.
-    path: S  # The path to the image to use as a background.
+    path: P  # The path to the image to use as a background.
     text: S  # Text that describes the purpose of the button's action.
 
     def click(self, point: Point, **star: R) -> B:
@@ -59,35 +105,35 @@ class Abstract(Object):
             return False
 
         if self.action:
-            action = bank.window.work
-            argument = self.action
-            star = self.star | {"caller": self.name}
-            bank.queue(action, argument, star)
+            bank.queue(
+                bank.window.work,
+                self.action,
+                self.star | {"caller": self.name},
+            )
 
         if self.goto:
-            action = bank.window.turn
-            argument = self.goto
-            star = self.star | {}
-            bank.queue(action, argument, star)
+            bank.queue(
+                bank.window.turn,
+                self.goto,
+                self.star | {},
+            )
 
         return True
 
     def draw(self, **star: R) -> B:
         """"""
-        if self.hidden:
-            return False
-
-        return True
+        return not self.hidden
 
     def hide(self) -> N:
         """"""
         self.hidden = True
 
-    def can_make(self, **star: R) -> B:
+    def can_build(self, **star: R) -> B:
         """"""
+        ignore(self)
         return True
 
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
         self.canvas = canvas
 
@@ -99,36 +145,44 @@ class Abstract(Object):
         """"""
         self.area = area
 
+    def image_size(self, size: TZ2, scale: TZ2 = (1, 1)) -> Plane:
+        """"""
+        result = Plane.create(*size)
+        target = Plane.create(*self.area.world.size)
+        target *= scale
+
+        if self.fit == Image.FILL:
+            result.scale_to_min(target)
+        elif self.fit == Image.FULL:
+            result.scale_to_max(target)
+
+        result.center(target)
+        return result
+
     def __init__(self, name: S, parent: K, **star: R) -> N:
-        super().__init__(**star)
+        super().__init__(name, **star)
         self.parent = parent
-        self.area = Area.make(0, 0)
+        self.area = Area.fast(0, 0)
         self.canvas = None
         self.hidden = False
-        self.name = name
-        self.item = None
 
         self.star = star
 
         # Contains all remaining keyword arguments.
 
-        def warp(name: S, default: S = NONE) -> N:
-            value = star.pop(name, default)
-            setattr(self, name, value)
-
-        warp("action")
+        self.warp("action")
         # The action to perform when the user triggers the button.
 
-        warp("fit", Image.FILL)
+        self.warp("fit", Image, Image.FILL)
         # The way the image scales to fit the view space.
 
-        warp("goto")
+        self.warp("goto")
         # The page to go to when clicked.
 
-        warp("path")
+        self.warp("path", pathlib.Path)
         # The path to the image to use as a background.
 
-        warp("text")
+        self.warp("text")
         # Text that describes the purpose of the button's action.
 
 
@@ -136,98 +190,47 @@ class Element(Abstract):
     """"""
 
     image: A
-
-    @override
-    def make(self, canvas: A, **star: R) -> N:
-        """"""
-        size = self.area.world.size.value
-        blender_mode = False
-        if pillow and not blender_mode:
-            self.image = pillow.new(size)
-        else:
-            self.image = None
-
-        super().make(canvas, **star)
-
-    def draw(self, **star: R) -> B:
-        """"""
-        if not super().draw():
-            return False
-
-        #  TODO: Check if other types want this here.
-        if self.path:
-            self.update(self.path)
-
-        return True
-
-    def update(self, path: P, **star: R) -> N:
-        """"""
-        self.path = path
-
-        image = pillow.open(self.path)
-
-        curent = Plane.make(image.image.width, image.image.height)
-        target = Plane.make(*self.area.world.size.value)
-
-        match self.fit:
-            case Image.FILL:
-                result = curent.scale_to_min(target)
-            case Image.FULL:
-                result = curent.scale_to_max(target)
-
-        result.center(target)
-
-        image.resize(result.size)
-        self.image.paste(image, result)
+    item: A
 
     def __init__(self, name: S, parent: K, **star: R) -> N:
         super().__init__(name, parent, **star)
         self.image = None
+        self.item = None
 
 
-class View(Abstract, Tree):
+class View(Abstract):
     """"""
 
     item: D[S, Abstract]
     width: Z
     height: Z
-    element_item: D[S, A]
-
-    def find(self, name: S) -> N | Abstract:
-        """"""
-        for key, value in self:
-            if key == name:
-                return value
-            if not getattr(value, "find", False):
-                continue
-            item = value.find(name)
-            if item:
-                return item
-        return None
+    element_item: D[S, Abstract]
 
     def click(self, point: Point, **star: R) -> B:
         if not super().click(point, **star):
             return False
 
-        for _, item in self:
-            item.click(point)
+        for value in self.values():
+            value.click(point)
 
         return True
 
     @override
-    def draw(self, **star: R) -> N:
+    def draw(self, **star: R) -> B:
         """"""
         if self.hidden:
-            return
+            return False
 
-        for _, item in self:
-            item.draw(**star)
+        for value in self.values():
+            value.draw(**star)
+
+        return True
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """"""
-        for _, item in self:
-            item.make(canvas, **star)
+        for value in self.values():
+            value.build(canvas, **star)
 
     @override
     def spot(self, area: Area) -> N:
@@ -250,18 +253,18 @@ class View(Abstract, Tree):
                 partition_y = 1
 
         index = 0
-        for _, item in self:
+        for value in self.values():
             this = self.area.world
 
             one = Line(0, 1)
             one += index % partition_x
             one *= this.one.length // partition_x
-            one += this.one.minimum
+            one += this.one.one
 
             two = Line(0, 1)
             two += min(index // partition_x, partition_y - 1)
             two *= this.two.length // partition_y
-            two += this.two.minimum
+            two += this.two.one
 
             world = Plane(one, two)
 
@@ -269,7 +272,7 @@ class View(Abstract, Tree):
             local -= area.world.origin
 
             rectangle = Area(local, world)
-            item.spot(rectangle)
+            value.spot(rectangle)
             index += 1
 
     def zone(
@@ -302,6 +305,7 @@ class View(Abstract, Tree):
         return self
 
     def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> BF:
+        ignore(self)
         if exc_type or exc_value or traceback:
             print("ERROR", exc_type, exc_value, traceback)
         return False
@@ -312,31 +316,20 @@ class View(Abstract, Tree):
         element_item: D[S, A],
         *,
         mode: Zone = Zone.NONE,
-        row: Z = 0,
-        col: Z = 0,
         **star: R,
     ) -> N:
-        #
+        super().__init__(name, **star)
+        row = self.pull("row", int, 0)
+        col = self.pull("col", int, 0)
+
         self.element_item = element_item
         self._element = element_item["element"]
         self._view = element_item["view"]
         self._window = element_item["window"]
 
-        super().__init__(name, **star)
-
         self.width = col
         self.height = row
         self.mode = mode
-
-        for range_y in range(row):
-            for range_x in range(col):
-                name = f"{self.name}_{range_x}-{range_y}"
-                self.set(
-                    Abstract(
-                        name,
-                        self,
-                    )
-                )
 
     def element(self, name: S, **star: R) -> N:
         """"""
@@ -376,13 +369,15 @@ class Window(Tree):
 
     page: View
     main: S
-    code: D[S, A]  # function
-    view: D[S, View]
+    code: Dictionary[A]  # function
+    view: Dictionary[View]
 
     canvas: A
 
-    def extension(self) -> LS:
+    @classmethod
+    def extension(cls) -> LS:
         """"""
+        ignore(cls)
         return [
             ".bmp",
             ".sgi",
@@ -409,11 +404,52 @@ class Window(Tree):
             ".png",
         ]
 
-    def drop(
-        self,
-        name: S,
-        **star: R,
-    ) -> K:
+    @classmethod
+    def formats(cls) -> LS:
+        """Pillow Image Formats."""
+        ignore(cls)
+        return [
+            "BLP",
+            "BMP",
+            "BUFR",
+            "CUR",
+            "DCX",
+            "DDS",
+            "DIB",
+            "EPS",
+            "FITS",
+            "FLI",
+            "FTEX",
+            "GBR",
+            "GIF",
+            "GRIB",
+            "HDF5",
+            "ICNS",
+            "ICO",
+            "IM",
+            "IPTC",
+            "JPEG",
+            "JPEG2000",
+            "MPEG",
+            "MSP",
+            "PCD",
+            "PCX",
+            "PIXAR",
+            "PNG",
+            "PPM",
+            "PSD",
+            "QOI",
+            "SGI",
+            "SUN",
+            "TGA",
+            "TIFF",
+            "WEBP",
+            "WMF",
+            "XBM",
+            "XPM",
+        ]
+
+    def drop(self, name: S, **star: R) -> Tree:
         """"""
         return self.set(
             self.element_item["view"](
@@ -431,17 +467,18 @@ class Window(Tree):
 
     def draw(self, **star: R) -> N:
         """"""
-        for _, item in self:
-            item.draw(**star)
+        for value in self.values():
+            value.draw(**star)
 
-    def make(self, **star: R) -> N:
+    def build(self, **star: R) -> N:
         """"""
-        for _, item in self:
-            item.make(self.canvas, **star)
+        for value in self.values():
+            value.build(self.canvas, **star)
 
     def turn(self, page: S, **star: R) -> N:
         """"""
-        view = self.view.get(page)
+        key = f"{self.page.name}::{page}"
+        view = self.view.get(key)
         if not view:
             return
 
@@ -455,58 +492,44 @@ class Window(Tree):
 
     def click(self, point: Point) -> N:
         """"""
-        for _, item in self:
-            item.click(point)
-
-    def find(self, name: S) -> N | Abstract:
-        """"""
-        for key, value in self:
-            if key == name:
-                return value
-            item = value.find(name)
-            if item:
-                return item
-        raise KeyError(name)
+        for value in self.values():
+            value.click(point)
 
     def spot(self, area: Area) -> N:
         """"""
         self.area = area
-        for _, item in self:
-            item.spot(area)
+        for value in self.values():
+            value.spot(area)
 
     ###############
 
     def work(self, code: S, **star: R) -> N:
         """"""
-        caller = self.code.get(code)
+        key = f"{self.page.name}::{code}"
+        caller = self.code.get(key)
         if not caller:
             return
 
         caller(**star)
+        # TODO: Sometimes this is called when nothing is changed.
         self.draw(**star)
 
-    def __enter__(self) -> K:
-        return self
-
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A) -> B:
-        if exc_type or exc_value or traceback:
-            print(exc_type, exc_value, traceback)
-
+    def run(self) -> N:
+        """"""
         self.spot(self.area)
-        self.make()
+        self.build()
 
-        for _, item in self:
-            item.hide()
+        for value in self.values():
+            value.hide()
 
+        self.page.name = self.main
         self.turn(self.main)
 
-        return False
-
     def __init__(self, element_item: D[S, A], **star: R) -> N:
-        super().__init__(**star)
+        super().__init__("window", **star)
         self.main = ""
-        self.area = Area.make(0, 0)
-        self.code = {}
-        self.view = {}
+        self.area = Area.fast(0, 0)
+        self.code = Dictionary()
+        self.view = Dictionary()
         self.element_item = element_item
         self.page = View("", element_item, parent=None)

@@ -33,7 +33,7 @@ LINE_SEPARATOR = chr(8232)
 PARAGRAPH_SEPARATOR = chr(8233)
 
 
-def wrap(string: S) -> GS:
+def wrap(string: GS | S) -> GS:
     """
     Wrap long lines by breaking on punctiation or spaces.
 
@@ -149,7 +149,7 @@ def wrap(string: S) -> GS:
     yield from buffer.read(count)
 
 
-def wrap_text(string: S) -> GS:
+def wrap_text(string: GS | S) -> GS:
     """"""
     buffer = io.StringIO()
 

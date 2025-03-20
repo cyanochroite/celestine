@@ -24,13 +24,16 @@ def main(view: View) -> N:
         "setup",
         text=language.VIEWER_MAIN_BUTTON,
     )
-    with view.zone("grid", row=2, col=4, mode=Zone.GRID) as grid:
-        for name, _ in grid:
-            # grid.image(name, path=r"D:\done\unknown.png")
-            grid.element(
-                name,
-                action="see",
-                path=r"D:\done\unknown.png",
-                fit=Image.FILL,
-                goto="picture",
-            )
+    name = "grid"
+    row = 2
+    col = 4
+    with view.zone(name, row=row, col=col, mode=Zone.GRID) as grid:
+        for range_y in range(row):
+            for range_x in range(col):
+                key = f"{name}_{range_x}-{range_y}"
+                grid.element(
+                    key,
+                    action="see",
+                    fit=Image.FULL,
+                    goto="picture",
+                )

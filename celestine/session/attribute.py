@@ -11,6 +11,7 @@ from celestine.typed import (
     N,
     R,
     S,
+    ignore,
 )
 
 
@@ -19,10 +20,12 @@ class Attribute:
 
     def dictionary(self) -> DA:
         """"""
+        ignore(self)
         return {}
 
     def __init__(self, **star: R) -> N:
         """"""
+        ignore(self)
         super().__init__(**star)
 
 
@@ -84,4 +87,5 @@ class Version(Attribute):
 
     def dictionary(self) -> DA:
         """"""
+        ignore(self)
         return super().dictionary() | {Actions.VERSION: VERSION_NUMBER}

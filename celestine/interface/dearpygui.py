@@ -6,8 +6,8 @@ from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.package import (
+    PIL,
     dearpygui,
-    pillow,
 )
 from celestine.typed import (
     LF,
@@ -17,6 +17,7 @@ from celestine.typed import (
     P,
     R,
     S,
+    ignore,
     override,
 )
 from celestine.window.collection import Area
@@ -43,7 +44,7 @@ class Element(Element_, Abstract):
         bank.dequeue()
 
     @override
-    def make(self, canvas: A, **star: R) -> N:
+    def build(self, canvas: A, **star: R) -> N:
         """
         Draw the image to screen.
 
@@ -53,7 +54,7 @@ class Element(Element_, Abstract):
         channels = image[2]
         photo = image[3]
         """
-        super().make(canvas)
+        super().build(canvas)
 
         if self.action or self.goto:
             dearpygui.add_button(
@@ -97,8 +98,8 @@ class Element(Element_, Abstract):
 
         photo: LF = []
 
-        if pillow and itertools:
-            image = pillow.open(self.path)
+        if PIL and itertools:
+            image = PIL.Image.open(self.path)
             image.resize(self.area.local.size)
             data = image.getdata()
             flat = itertools.flatten(data)
@@ -153,8 +154,10 @@ class Window(Window_):
     """"""
 
     @override
-    def extension(self) -> LS:
+    @classmethod
+    def extension(cls) -> LS:
         """"""
+        ignore(cls)
         return [
             ".jpg",
             ".jpeg",
@@ -170,13 +173,13 @@ class Window(Window_):
         ]
 
     @override
-    def make(self, **star: R) -> N:
+    def build(self, **star: R) -> N:
         """"""
-        for name, item in self:
+        for name, item in self.items():
             item.canvas = dearpygui.window(tag=name)
             with item.canvas:
                 dearpygui.configure_item(item.name, show=False)
-                item.make(None)
+                item.build(None)
 
     @override
     def turn(self, page: S, **star: R) -> N:
@@ -187,8 +190,25 @@ class Window(Window_):
         dearpygui.set_primary_window(tag, True)
 
     @override
-    def __enter__(self):
-        super().__enter__()
+    def run(self) -> N:
+        super().run()
+        dearpygui.setup_dearpygui()
+        dearpygui.show_viewport(minimized=False, maximized=False)
+        dearpygui.start_dearpygui()
+        dearpygui.destroy_context()
+
+    @override
+    def __init__(self, **star: R) -> N:
+        element = {
+            "element": Element,
+            "view": View,
+            "window": self,
+        }
+        super().__init__(element, **star)
+        self.area = Area.build(1280, 1080)
+        self.tag = "window"
+
+        self.canvas = None
 
         title = bank.language.APPLICATION_TITLE
         dearpygui.create_context()
@@ -211,27 +231,3 @@ class Window(Window_):
             decorated=True,
             clear_color=(0, 0, 0),
         )
-        return self
-
-    @override
-    def __exit__(self, exc_type: A, exc_value: A, traceback: A):
-        super().__exit__(exc_type, exc_value, traceback)
-
-        dearpygui.setup_dearpygui()
-        dearpygui.show_viewport(minimized=False, maximized=False)
-        dearpygui.start_dearpygui()
-        dearpygui.destroy_context()
-        return False
-
-    @override
-    def __init__(self, **star: R) -> N:
-        element = {
-            "element": Element,
-            "view": View,
-            "window": self,
-        }
-        super().__init__(element, **star)
-        self.area = Area.make(1280, 1080)
-        self.tag = "window"
-
-        self.canvas = None

@@ -1,23 +1,33 @@
 """"""
 
-import io
+import itertools
 import math
 
 from celestine import bank
 from celestine.data.notational_systems import BRAILLE_PATTERNS
+from celestine.data.palette import (
+    curses_table,
+    pillow_table,
+)
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
-from celestine.literal import LINE_FEED
 from celestine.package import (
+    PIL,
     curses,
-    pillow,
 )
 from celestine.typed import (
+    GS,
+    GZ,
+    LS,
     B,
+    K,
     N,
+    P,
     R,
+    S,
+    ignore,
     override,
 )
 from celestine.window.collection import (
@@ -27,228 +37,98 @@ from celestine.window.collection import (
     Point,
 )
 
-color_index = 8  # skip the 8 reserved colors
-color_table = {}
+# Color pair 0 is hard-wired to white on black, and cannot be changed.
+# 0:black, 1:red, 2:green, 3:yellow,
+# 4:blue, 5:magenta, 6:cyan, and 7:white
 
-COLORS = 15
 
-
-def get_colors(curses, image):
-    """Fails after being called 16 times."""
-    global color_index
-    global color_table
-
-    colors = image.getcolors()
-    for color in colors:
-        (count, pixel) = color
-        (red, green, blue) = pixel
-
-        red *= 1000
-        green *= 1000
-        blue *= 1000
-
-        red //= 255
-        green //= 255
-        blue //= 255
-
-        if red >= 920 or green >= 920 or blue >= 920:
-            pass
-            # print(red, green, blue)
-        curses.init_color(color_index, red, green, blue)
-        curses.init_pair(color_index, color_index, 0)
-
-        color_table[pixel] = color_index
-        color_index += 1
+if bool(PIL):
+    palette_image = PIL.Image.new("P", (16, 16))
+    pillow_palette = list(itertools.chain.from_iterable(pillow_table))
+    palette_image.putpalette(pillow_palette)
 
 
 class Abstract(Abstract_):
     """"""
 
-    def add_string(self, x_dot, y_dot, text, *extra):
-        """
-        Curses swaps x and y.
-
-        Also minus the window border to get local location.
-
-        Text length need be size-1 long.
-        """
-        self.canvas.addstr(y_dot - 1, x_dot - 1, text, *extra)
-
-    def render(self, item, **star: R) -> N:
-        """"""
-        if self.hidden:
-            return
-
-        text = item
-        (x_dot, y_dot) = self.area.origin.int
-        self.add_string(x_dot, y_dot, text)
-
 
 class Element(Element_, Abstract):
     """"""
 
-    def output(self):
-        width, height = self.cache.size
-
-        pixels = list(self.cache.getdata())
-        string = io.StringIO()
-
-        def shift(offset_x, offset_y):
-            nonlocal braille
-            nonlocal range_x
-            nonlocal range_y
-
-            index_x = range_x + offset_x
-            index_y = range_y + offset_y
-
-            index = index_y * width + index_x
-            pixel = pixels[index] // 255
-
-            braille <<= 1
-            braille |= pixel
-
-        for range_y in range(0, height, 4):
-            for range_x in range(0, width, 2):
-                braille = 0
-
-                shift(0, 0)
-                shift(1, 0)
-                shift(0, 1)
-                shift(1, 1)
-                shift(0, 2)
-                shift(1, 2)
-                shift(0, 3)
-                shift(1, 3)
-
-                text = BRAILLE_PATTERNS[braille]
-                string.write(text)
-
-            string.write(LINE_FEED)
-
-        value = string.getvalue()
-        value = value[0:-1]
-        return value.split(LINE_FEED)
-
-    def render(self, item, **star: R):
+    @override
+    def draw(self, **star: R) -> B:
         """"""
+        if not super().draw(**star):
+            return False
 
-        (x_dot, y_dot) = self.area.world.origin
+        x, y = self.area.world.origin.value
 
-        if not pillow:
-            self.add_string(
-                x_dot,
-                y_dot,
-                item,
-            )
+        # text
+        canvas = star.pop("canvas")
+
+        if self.text:
+            canvas.addstr(y, x, self.text)
+            return True
+
+        if self.path:
+            self.update_image(self.path)
+
+        return True
+
+    def update_image(self, path: P, **star: R) -> N:
+        """"""
+        self.path = path
+        if not bool(PIL):
+            (x_dot, y_dot) = self.area.world.origin
+            self.canvas.addstr(y_dot, x_dot, self.path.name)
             return
 
-        color = list(self.color.getdata())
+        image = PIL.Image.open(self.path)
+        image = image.convert(mode="RGB")
 
-        index_y = 0
-        for row_text in item:
-            index_x = 0
-            for col_text in row_text:
-                width, height = self.color.size
-                index = index_y * width + index_x
+        #
 
-                (red, green, blue) = color[index]
-                table = color_table[(red, green, blue)]
-                extra = curses.color_pair(table)
+        image_size = self.image_size(image.size, (2, 4))
 
-                self.add_string(
-                    x_dot + index_x,
-                    y_dot + index_y,
-                    col_text,
-                    extra,
-                )
+        image = image.resize(image_size.size.value)
 
-                index_x += 1
+        image = brightness(image)
 
-            index_y += 1
+        def work(plane: Plane, size: Point, mode: S) -> PIL.Image.Image:
+            """"""
+            plane = plane.round()
+            result = PIL.Image.new(mode, size.value)
+            im = image.resize(plane.size.value)
+            box = plane.value
+            result.paste(im, box)
+            return result
 
-    def draw_old(self, **star: R):
+        #
+
+        target = Plane.create(*self.area.world.size)
+        target *= (2, 4)
+        cache = work(image_size, target.size, "1")
+
+        plane = image_size / (2, 4)
+        cat = work(plane, self.area.world.size, "RGB")
+        self.render(cache, cat)
+
+    def render(self, one: PIL.Image.Image, two: PIL.Image.Image) -> N:
         """"""
+        size = self.area.local.size.copy()
+        size -= (1, 1)
+        world = self.area.world
+        button = zip(dot_x(world), dot_y(world), luma(one), hue(two))
+        for x_dot, y_dot, text, extra in button:
+            if x_dot == size.one and y_dot == size.two:
+                continue  # TODO: figure out why last pixel causes ERROR
+            self.canvas.addstr(y_dot, x_dot, text, extra)
 
-        if not pillow:
-            self.render(self.path.name, **star)
-            return
-
-        self.cache = pillow.open(self.path)
-        self.color = self.cache.copy()
-
-        # Crop box.
-        source_length_x = self.cache.image.width
-        source_length_y = self.cache.image.height
-
-        length_x, length_y = self.area.size
-
-        target_length_x = length_x * 2
-        target_length_y = length_y * 4
-
-        source_length = (source_length_x, source_length_y)
-        target_length = (target_length_x, target_length_y)
-
-        box = self.crop(source_length, target_length)
-        # Done.
-
-        self.color.brightwing()
-
-        target_length = (target_length_x, target_length_y)
-        self.cache.resize(target_length, box)
-        self.color.resize(self.area.size, box)
-
-        self.color.quantize()
-
-        self.cache.convert_to_mono()
-        self.color.convert_to_color()
-
-        get_colors(curses, self.color.image)
-
-        item = self.output()
-        self.render(item, **star)
-
-    def draw(self, **star: R):
-        """"""
-
-        if not pillow:
-            self.render(self.path.name, **star)
-            return
-
-        self.cache = self.image
-        self.color = self.cache.copy()
-
-        # Crop box.
-        source_length_x = self.cache.image.width
-        source_length_y = self.cache.image.height
-
-        length_x, length_y = self.area.world.size
-
-        target_length_x = length_x * 2
-        target_length_y = length_y * 4
-
-        source_length = Plane.make(source_length_x, source_length_y)
-        target_length = Plane.make(target_length_x, target_length_y)
-
-        source_length.scale_to_min(target_length)
-        box = source_length.size
-        # Done.
-
-        self.color.brightwing()
-
-        # self.cache.resize(target_length.size, box)
-        # self.color.resize(self.area.size, box)
-        self.cache.resize(target_length.size)
-        self.color.resize(self.area.local.size)
-
-        self.color.quantize()
-
-        self.cache.convert_to_mono()
-        self.color.convert_to_color()
-
-        get_colors(curses, self.color.image)
-
-        item = self.output()
-        self.render(item, **star)
+    def __init__(self, name: S, parent: K, **star: R) -> N:
+        super().__init__(name, parent, **star)
+        self.photo = None
+        self.cache = PIL.Image.Image()
+        self.color = PIL.Image.Image()
 
 
 class View(View_, Abstract):
@@ -259,105 +139,77 @@ class Window(Window_):
     """"""
 
     @override
-    def draw(self, **star: R) -> B:
+    def draw(self, **star: R) -> N:
         """"""
-
-        # Do normal draw stuff.
-
         self.canvas.erase()
-        # canvas = curses.window(*self.area.value)
-
-        super().draw(**star)
+        super().draw(canvas=self.canvas, **star)
 
         self.stdscr.noutrefresh()
-        self.background.noutrefresh()
         self.canvas.noutrefresh()
         curses.doupdate()
 
-        # Reset the global color counter.
-        global color_index
-        global color_table
-        color_index = 8
-        color_table = {}
-
     @override
-    def extension(self):
+    @classmethod
+    def extension(cls) -> LS:
         """"""
-        if pillow:
-            return pillow.extension()
+        ignore(cls)
+
+        if bool(PIL):
+            return PIL.Image.registered_extensions()
 
         return []
 
     @override
-    def setup(self, name):
-        """"""
-
-        return curses.window(*self.area.int)
-
-    @override
-    def __enter__(self):
-        super().__enter__()
+    def run(self) -> N:
+        super().run()
 
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.full = Plane.make(size_x, size_y)
 
-        self.background = curses.window(0, 0, size_x, size_y)
-        self.background.box()
-
-        header_box = (0, 0, size_x, 1)
-        header = curses.subwindow(self.background, *header_box)
+        header = self.stdscr.subwin(0, size_x, 0, 0)
         header.addstr(0, 1, bank.language.APPLICATION_TITLE)
+        header.refresh()
 
-        footer_box = (0, size_y - 1, size_x, 1)
-        footer = curses.subwindow(self.background, *footer_box)
+        footer = self.stdscr.subwin(1, size_x, size_y - 1, 0)
         footer.addstr(0, 1, bank.language.CURSES_EXIT)
+        footer.refresh()
 
-        #
-        # TODO check why repeat code from init
-        plane = Plane(
-            Line(1, size_x - 2),
-            Line(1, size_y - 2),
-        )
-        self.area = Area(plane, plane)
-
-        return self
-
-    @override
-    def __exit__(self, exc_type, exc_value, traceback):
-        super().__exit__(exc_type, exc_value, traceback)
+        def move():
+            size_x, size_y = self.area.local.size
+            self.cord_x %= size_x
+            self.cord_y %= size_y
+            self.stdscr.move(
+                math.floor(1 + self.cord_y),
+                math.floor(1 + self.cord_x),
+            )
 
         while True:
             bank.dequeue()
             event = self.stdscr.getch()
             match event:
-                case 258 | 259 | 260 | 261 as key:
-                    match key:
-                        case curses.KEY_UP:
-                            self.cord_y -= 1
-                        case curses.KEY_DOWN:
-                            self.cord_y += 1
-                        case curses.KEY_LEFT:
-                            self.cord_x -= 1
-                        case curses.KEY_RIGHT:
-                            self.cord_x += 1
-
-                    size_x, size_y = self.full.size
-                    self.cord_x %= size_x
-                    self.cord_y %= size_y
-                    self.stdscr.move(
-                        math.floor(self.cord_y),
-                        math.floor(self.cord_x),
-                    )
-                case curses.KEY_EXIT:
+                case 27:  # ESCAPE
                     break
-                case curses.KEY_CLICK:
-                    self.page.click(Point(self.cord_x, self.cord_y))
+                case 32:  # SPACE
+                    point = Point(self.cord_x, self.cord_y)
+                    self.page.click(point)
+                case 258:  # KEY_DOWN
+                    self.cord_y += 1
+                    move()
+                case 259:  # KEY_UP
+                    self.cord_y -= 1
+                    move()
+                case 260:  # KEY_LEFT
+                    self.cord_x -= 1
+                    move()
+                case 261:  # KEY_RIGHT
+                    self.cord_x += 1
+                    move()
+                case _:
+                    pass
 
-        self.stdscr.keypad(0)
-        curses.echo()
+        self.stdscr.keypad(False)
         curses.nocbreak()
+        curses.echo()
         curses.endwin()
-        return False
 
     @override
     def __init__(self, **star: R) -> N:
@@ -366,27 +218,110 @@ class Window(Window_):
             "view": View,
             "window": self,
         }
+        super().__init__(element, **star)
 
         self.stdscr = curses.initscr()
-
         curses.noecho()
         curses.cbreak()
-        self.stdscr.keypad(1)
+        self.stdscr.keypad(True)
         curses.start_color()
 
+        self.stdscr.box()
+
         (size_y, size_x) = self.stdscr.getmaxyx()
-        self.full = Plane.make(size_x, size_y)
-
-        self.background = curses.window(0, 0, size_x, size_y)
-        self.background.box()
-
-        super().__init__(element, **star)
         plane = Plane(
-            Line(1, size_x - 2),
-            Line(1, size_y - 2),
+            Line(0, size_x - 2),
+            Line(0, size_y - 2),
         )
         self.area = Area(plane, plane)
         self.cord_x = 0.5
         self.cord_y = 0.5
 
-        self.canvas = self.background
+        self.canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
+
+        for index in range(255):
+            red, green, blue = curses_table[index]
+            curses.init_color(index, red, green, blue)
+            curses.init_pair(index, index, 0)
+
+
+def brightness(image: PIL.Image.Image) -> PIL.Image.Image:
+    """
+    Makes dark images brighter.
+
+    If less then 1/3 of pixels are bright, brighten the image up to x3.
+    Otherwise, brighten the image by x1, which does nothing.
+
+    factor: 1 + max(0, 1 / 3 - 0) * 6 = 3
+    factor: 1 + max(0, 1 / 3 - 1 / 3) * 6 = 1
+    factor: 1 + max(0, 1 / 3 - 1) * 6 = 1
+    """
+    convert = image.convert("1")
+    data = convert.getdata()
+    binary = (pixel // 255 for pixel in data)
+    count = sum(binary)
+    length = image.width * image.height
+    ratio = count / length
+    factor = 1 + max(0, 1 / 3 - ratio) * 6
+    enhance = PIL.ImageEnhance.Brightness(image)
+    result = enhance.enhance(factor)
+    return result
+
+
+def dot_x(world: Plane) -> GZ:
+    """"""
+    width, height = world.size.value
+    length = width * height
+    offset = int(world.origin.one)
+    for index in range(length):
+        local = index % width
+        result = local + offset
+        yield result
+
+
+def dot_y(world: Plane) -> GZ:
+    """"""
+    width, height = world.size.value
+    length = width * height
+    offset = int(world.origin.two)
+    for index in range(length):
+        local = index // width
+        result = local + offset
+        yield result
+
+
+def hue(image: PIL.Image.Image) -> GZ:
+    """"""
+    pixels = image.quantize(
+        colors=255,
+        method=None,
+        kmeans=0,
+        palette=palette_image,
+        dither=PIL.Image.Dither.FLOYDSTEINBERG,
+    )
+    colors = pixels.getdata()
+    for color in colors:
+        result = curses.color_pair(color)
+        yield result
+
+
+def luma(image: PIL.Image.Image) -> GS:
+    """"""
+    pixels = image.getdata()
+    width, height = image.size
+    for range_y in range(0, height, 4):
+        for range_x in range(0, width, 2):
+            braille = 0
+            for offset_y in range(4):
+                for offset_x in range(2):
+                    index_x = range_x + offset_x
+                    index_y = range_y + offset_y
+                    index = index_y * width + index_x
+                    try:
+                        pixel = 1 if pixels[index] > 127 else 0
+                    except IndexError:
+                        pixel = 0
+                    braille <<= 1
+                    braille |= pixel
+            result = BRAILLE_PATTERNS[braille]
+            yield result

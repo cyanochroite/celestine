@@ -4,19 +4,25 @@ import sys
 
 from celestine.package import Abstract
 from celestine.typed import (
-    CN,
     M,
     N,
-    S,
+    P,
+    ignore,
+    override,
 )
-
-run: CN
 
 
 class Package(Abstract):
     """"""
 
-    def main(self, package: M, path: S) -> N:
+    @override
+    def main(self, package: M, path: P) -> N:
         """"""
-        sys.argv.append(path)
+        ignore(self)
+        root = str(path)
+        sys.argv.append(root)
         package.patched_main()
+
+
+def run() -> N:
+    """"""
