@@ -1,4 +1,5 @@
 import argparse
+import importlib
 
 from celestine.data.exit import EXIT
 
@@ -7,8 +8,8 @@ def import_package(package, module):
     __import__(".".join(["celestine", "package", package, module]))
 
 
-def import_module(module):
-    __import__(".".join(["celestine", "module", module]))
+def import_module(package, module):
+    return importlib.import_module(".".join(["celestine", package, module]))
 
 
 class Package():
@@ -51,38 +52,17 @@ def _import(module):
         return False
 
 
-DEARPYGUI = "DEARPYGUI"
-DESKTOP = "DESKTOP"
-FILE = "FILE"
-PILLOW = "PILLOW"
-PROGRAM = "PROGRAM"
-TERMINAL = "TERMINAL"
-TKINTER = "TKINTER"
-UNITTEST = "UNITTEST"
-VERIFICATION = "VERIFICATION"
-
-
-FILE = "file"
-PILLOW = "pillow"
-PROGRAM = "program"
-
-UNITTEST = "unittest"
-
 
 DEARPYGUI = "dearpygui"
-DESKTOP = "desktop"
-FILE = "file"
 PILLOW = "pillow"
-PROGRAM = "program"
-TERMINAL = "terminal"
 TKINTER = "tkinter"
 UNITTEST = "unittest"
-VERIFICATION = "verification"
 
-
+MAIN = "main"
 VERIFY = "verify"
+
+CURSES = "curses"
 DEARPYGUI = "dearpygui"
-DESKTOP = "desktop"
 TERMINAL = "terminal"
 TKINTER = "tkinter"
 
@@ -96,12 +76,16 @@ PACKAGE = {
 
 
 MODE = [
-    DEARPYGUI,
-    TERMINAL,
-    TKINTER,
+    MAIN,
     VERIFY
 ]
 
+GUI = [
+    DEARPYGUI,
+    CURSES,
+    TERMINAL,
+    TKINTER
+]
 __version__ = "0.1.2.3"
 
 
@@ -131,11 +115,10 @@ class Window():
 
 
 def main():
-    #raise MissingPackageError()
-
     parser = argparse.ArgumentParser(
         prog="celestine"
     )
+    
     parser.add_argument(
         "-p", "--package",
         action="store_true",
@@ -144,9 +127,22 @@ def main():
 
     parser.add_argument(
         "-m", "--mode",
-        default=TERMINAL,
+        default=MAIN,
         choices=MODE,
         help="Choose a mode to opperate in."
+    )
+
+    parser.add_argument(
+        "-g", "--gui",
+        default=TERMINAL,
+        choices=GUI,
+        help="Choose a mode to opperate in."
+    )
+
+    parser.add_argument(
+        "ignore",
+        nargs="*",
+        help="Ignore."
     )
 
     parse = parser.parse_args()
@@ -156,13 +152,8 @@ def main():
     if mode == VERIFY:
         return EXIT.TEST
 
-    if mode == TERMINAL:
-        import_module(mode)
+    module = import_module("gui", parse.gui)
+    window = module.Window()
+    window.run()
 
-    if mode == DEARPYGUI or mode == TKINTER:
-        import_package(mode, "main")
-    
     return EXIT.SUCCESS
-
-
-

@@ -407,7 +407,7 @@ print("done")
 
 
 ###########################
-import celestine.star.main
+import celestine.core.star
 
 
 import dearpygui
