@@ -11,6 +11,7 @@ Célestine
     dependencies
     interface
     changelog
+    pypi/modules
 
 - About_
 - Goals_

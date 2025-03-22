@@ -10,7 +10,6 @@ authors = [
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: The Unlicense (Unlicense)",
     "Natural Language :: Bulgarian",
     "Natural Language :: Croatian",
     "Natural Language :: Czech",
@@ -105,7 +104,6 @@ gui = [
 Documentation = "https://celestine.readthedocs.io/"
 Source = "https://github.com/cyanochroite/celestine"
 Tracker = "https://github.com/cyanochroite/celestine/issues"
-Discord = "https://discord.gg/aNmDWPXd7B"
 
 
 [tool.autoflake]
