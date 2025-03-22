@@ -10,8 +10,8 @@ python:
         - requirements: requirements.txt
 
 sphinx:
-    builder: dirhtml
-    configuration: documentation/conf.py
+    builder: html
+    configuration: readthedocs/conf.py
     fail_on_warning: true
 
 version: 2

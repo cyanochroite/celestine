@@ -42,10 +42,9 @@ Note that Blender is an isolated environment, so other packages can not be used 
 Project Update
 ^^^^^^^^^^^^^^
 
-It is recommended to install the Pillow package for the best results.
+Images work best when the Pillow package is installed.
 
 Known issues:
-DearPyGui is almost online, but the image viewer needs some more work.
 MacOS is having trouble with tkinter and Windows wont run curses natively.
 
 Blender is now the only interface not working right now.
@@ -84,7 +83,6 @@ Graphical User Interfaces
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 [Blender is not working because the current version of Blender still runs on Python 3.11.]
-[DearPyGui is not working because I have not kept up its maintenance either.]
 
 +--------------+------------------------------+--------------+
 | Interface    | Source                       | Command      |
