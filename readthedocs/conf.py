@@ -22,8 +22,8 @@ version = "2025.2.17"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "sphinx.ext.apidoc",
-    "sphinx.ext.autodoc",
+#    "sphinx.ext.apidoc",
+#    "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
 ]
 
