@@ -77,6 +77,14 @@ celestine.package.pyupgrade module
    :show-inheritance:
    :undoc-members:
 
+celestine.package.requests module
+---------------------------------
+
+.. automodule:: celestine.package.requests
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 celestine.package.tkinter module
 --------------------------------
 

@@ -44,14 +44,6 @@ celestine.data.normalize module
    :show-inheritance:
    :undoc-members:
 
-celestine.data.notational\_systems module
------------------------------------------
-
-.. automodule:: celestine.data.notational_systems
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
 celestine.data.palette module
 -----------------------------
 
