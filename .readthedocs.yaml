@@ -3,12 +3,6 @@ build:
     tools:
         python: "3.11"
 
-formats: []
-
-python:
-    install:
-        - requirements: requirements.txt
-
 sphinx:
     builder: html
     configuration: readthedocs/conf.py
