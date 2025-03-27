@@ -1,10 +1,10 @@
 autoflake
-black
+black >= 24.3.0
 blender-stubs
 build
 coverage
 dearpygui
-flake8
+flake8 >= 5.0.4
 isort
 pillow >= 10.0.0
 pip
@@ -13,11 +13,11 @@ pydocstringformatter
 pygame
 pylint
 pyright
-pytest
+pytest >= 7.4.4
 pyupgrade
-requests
+requests >= 2.31.0
 ruff
-Sphinx
-twine
-types-requests
+sphinx >= 5.3.0
+twine >= 4.0.2
+types-requests >= 2.31.0.20231231
 windows-curses
