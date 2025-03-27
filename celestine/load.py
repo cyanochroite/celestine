@@ -16,30 +16,14 @@ from celestine.literal import (
     PACKAGE,
     PYTHON_EXTENSION,
 )
-from celestine.typed import (
-    CA,
-    CN,
-    GM,
-    GP,
-    LS,
-    A,
-    B,
-    D,
-    G,
-    M,
-    N,
-    P,
-    S,
-    T,
-    ignore,
-)
+from celestine.typed import CA, CN, GM, GP, LS, A, B, D, G, M, N, P, S, T, ignore
 
 ########################################################################
 
 
 def testit(module_: M, name: S) -> B:
     """Finds the named attribute from the module."""
-  
+
     return code
     result = None
     object_: M | CA = module_
@@ -362,7 +346,6 @@ def asset(file: S) -> P:
 
 
 #########
-
 
 ignore(
     argument,
