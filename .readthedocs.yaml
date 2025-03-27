@@ -1,0 +1,17 @@
+build:
+    os: ubuntu-22.04
+    tools:
+        python: "3.11"
+
+formats: []
+
+python:
+    install:
+        - requirements: requirements.txt
+
+sphinx:
+    builder: dirhtml
+    configuration: documentation/conf.py
+    fail_on_warning: true
+
+version: 2

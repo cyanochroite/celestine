@@ -1,0 +1,194 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools >= 40.9.0",
+    "wheel",
+]
+
+
+[project]
+authors = [
+    {name = "mem_dixy", email = "celestine@mem-dixy.ch"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)",
+    "Natural Language :: Bulgarian",
+    "Natural Language :: Croatian",
+    "Natural Language :: Czech",
+    "Natural Language :: Danish",
+    "Natural Language :: Dutch",
+    "Natural Language :: English",
+    "Natural Language :: Finnish",
+    "Natural Language :: French",
+    "Natural Language :: German",
+    "Natural Language :: Greek",
+    "Natural Language :: Hungarian",
+    "Natural Language :: Irish",
+    "Natural Language :: Italian",
+    "Natural Language :: Latvian",
+    "Natural Language :: Lithuanian",
+    "Natural Language :: Polish",
+    "Natural Language :: Portuguese",
+    "Natural Language :: Romanian",
+    "Natural Language :: Slovak",
+    "Natural Language :: Slovenian",
+    "Natural Language :: Spanish",
+    "Natural Language :: Swedish",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Multimedia :: Graphics :: Viewers",
+    "Typing :: Typed",
+]
+dependencies = [
+    "more-itertools >= 9.0.0",
+    "Pillow >= 9.0.0",
+    "platformdirs >= 3.0.0",
+]
+description = "A simple image viewer."
+maintainers = [
+    {name = "mem_dixy", email = "mem_dixy@pm.me"},
+]
+name = "celestine"
+keywords = [
+    "python",
+    "application",
+    "wrapper",
+    "framework",
+    "localization",
+    "cross-platform",
+    "offline",
+    "desktop",
+    "celestine",
+    "image-viewer",
+]
+readme = "README.rst"
+requires-python = ">=3.10"
+version = "2023.9.30"
+
+
+# [project.entry-points."spam.magical"]
+# tomatoes = "spam:main_tomatoes"
+
+
+# [project.gui-scripts]
+# spam-gui = "spam:main_gui"
+
+
+[project.optional-dependencies]
+application = [
+    "requests",
+]
+distribution = [
+    "build",
+    "pip",
+    "twine",
+]
+documentation = [
+    "Sphinx",
+]
+macOS = [
+    "dearpygui",
+    "pygame",
+]
+stubs = [
+    "blender-stubs",
+    "types-requests",
+]
+validation = [
+    "black",
+    "coverage",
+    "flake8",
+    "isort",
+    "mypy",
+    "pycodestyle",
+    "pylint",
+    "pyright",
+]
+Windows = [
+    "dearpygui",
+    "pygame",
+    "windows-curses",
+]
+
+
+[project.urls]
+Discord = "https://discord.gg/aNmDWPXd7B"
+Documentation = "https://celestine.readthedocs.io/"
+Source = "https://github.com/mem-dixy/celestine"
+Tracker = "https://github.com/mem-dixy/celestine/issues"
+
+
+
+[tool.autoflake]
+exclude = ["unicode"]
+in-place = true
+recursive = true
+remove-all-unused-imports = true
+remove-duplicate-keys = true
+remove-unused-variables = true
+
+
+[tool.black]
+extend-exclude = "unicode"
+line_length = 72
+safe = true
+target-version = [
+    "py311",
+]
+
+
+[tool.isort]
+extend_skip = ["unicode"]
+force_grid_wrap = 2
+line_ending = "\r\n"
+line_length = 72
+profile = "black"
+py_version = 310
+remove_redundant_aliases = true
+
+
+[tool.mypy]
+no_namespace_packages = true
+show_column_numbers = true
+
+
+[tool.pydocstringformatter]
+beginning-quotes = true
+capitalize-first-letter = true
+closing-quotes = true
+final-period = true
+linewrap-full-docstring = true
+max-line-length = 75  # Length should be 72 but it clipped too soon.
+max-summary-lines = 1
+numpydoc-name-type-spacing = false
+numpydoc-section-hyphen-length = false
+numpydoc-section-order = false
+numpydoc-section-spacing = false
+quotes-type = true
+split-summary-body = true
+strip-whitespaces = true
+style = ["pep257"]
+write = true
+
+
+
+[tool.pylint.main]
+disable = "empty-docstring, too-few-public-methods"
+ignored-argument-names = "_|cls|ring|star|self"
+
+
+[tool.pylint.format]
+expected-line-ending-format = "CRLF"
+max-line-length = 72
+
+
+[tool.pyright]
+typeCheckingMode = "strict"
