@@ -1,2 +1,23 @@
-Pillow >= 10.0.0
-more-itertools >= 10.0.0
+autoflake
+black
+blender-stubs
+build
+coverage
+dearpygui
+flake8
+isort
+pillow >= 10.0.0
+pip
+platformdirs >= 4.0.0
+pydocstringformatter
+pygame
+pylint
+pyright
+pytest
+pyupgrade
+requests
+ruff
+Sphinx
+twine
+types-requests
+windows-curses
