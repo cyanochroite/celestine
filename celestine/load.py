@@ -37,6 +37,21 @@ from celestine.typed import (
 ########################################################################
 
 
+def testit(module_: M, name: S) -> B:
+    """Finds the named attribute from the module."""
+  
+    return code
+    result = None
+    object_: M | CA = module_
+    items = name.split(FULL_STOP)
+    for item in items:
+        result = getattr(object_, item)
+        object_ = result
+    if not result:
+        raise AttributeError(module_, name)
+    return result
+
+
 def attribute(module_: M, name: S) -> CA:
     """Finds the named attribute from the module."""
     result = None

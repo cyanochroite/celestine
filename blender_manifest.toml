@@ -1,0 +1,45 @@
+schema_version = "1.0.0"
+
+blender_version_min = "4.2.0"
+id = "celestine"
+
+# License conforming to https://spdx.org/licenses/ (use "SPDX: prefix)
+# https://docs.blender.org/manual/en/dev/advanced/extensions/licenses.html
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
+
+maintainer = "Marian Molyneux <celestine@cyanochroite.com>"
+name = "Célestine"
+
+#One-line short description, up to 64 characters - cannot end with punctuation.
+tagline = "A python framework for desktop applications. Featuring support for multiple graphical user interfaces. Supports all languages of the European Union."
+
+type = "add-on"
+
+#Version of the extension - must follow semantic versioning.
+version = "2025.1.1"
+
+
+
+
+website = "https://github.com/cyanochroite/celestine"
+copyright = 2025 Marian Molyneux
+tags = ["3D View", "Development"]
+
+
+wheels = [
+    "./wheels/celestine-2025.2.17-py3-none-any.whl",
+]
+
+
+[permissions]
+network = "Used for translating language files"
+files = "Checks, modifies, and validates its own source code"
+
+[build]
+paths_exclude_pattern = [
+    "__pycache__/",
+    "/.git/",
+    "/*.zip",
+]
