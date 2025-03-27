@@ -1,0 +1,5 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+# https://docs.snyk.io/manage-risk/policies/the-.snyk-file#use-the-.snyk-file-with-snyk-open-source
+version: v1.25.0
+language-settings: 
+  python: "3.11"
