@@ -1,0 +1,180 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools >= 61.0.0"]
+
+
+[project]
+authors = [
+    {name = "Marian Molyneux", email = "celestine@cyanochroite.com"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+#   "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)",
+    "Natural Language :: Bulgarian",
+    "Natural Language :: Croatian",
+    "Natural Language :: Czech",
+    "Natural Language :: Danish",
+    "Natural Language :: Dutch",
+    "Natural Language :: English",
+#   "Natural Language :: Estonian",
+    "Natural Language :: Finnish",
+    "Natural Language :: French",
+    "Natural Language :: German",
+    "Natural Language :: Greek",
+    "Natural Language :: Hungarian",
+    "Natural Language :: Irish",
+    "Natural Language :: Italian",
+    "Natural Language :: Latvian",
+    "Natural Language :: Lithuanian",
+#   "Natural Language :: Maltese",
+    "Natural Language :: Polish",
+    "Natural Language :: Portuguese",
+    "Natural Language :: Romanian",
+    "Natural Language :: Slovak",
+    "Natural Language :: Slovenian",
+    "Natural Language :: Spanish",
+    "Natural Language :: Swedish",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.12",
+#    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Software Development :: User Interfaces",
+    "Typing :: Typed",
+]
+dependencies = [
+    "Pillow >= 10.0.0",
+    "platformdirs >= 4.0.0",
+]
+description = "A python framework for desktop applications."
+maintainers = [
+    {name = "mem_dixy", email = "mem_dixy@pm.me"},
+]
+name = "celestine"
+keywords = [
+    "python",
+    "application",
+    "wrapper",
+    "framework",
+    "localization",
+    "cross-platform",
+    "offline",
+    "desktop",
+    "celestine",
+    "image-viewer",
+]
+readme = "README.rst"
+requires-python = ">=3.12"
+version = "2025.2.17"
+
+
+[project.optional-dependencies]
+build = [
+    "blender-stubs",
+    "build",
+    "coverage",
+    "flake8",
+    "mypy",
+    "pip",
+    "pycodestyle",
+    "pylint",
+    "pyright",
+    "pytest",
+    "ruff",
+    "Sphinx",
+    "twine",
+    "types-requests",
+]
+clean = [
+    "autoflake",
+    "black",
+    "isort",
+    "pydocstringformatter",
+    "pyupgrade",
+]
+demo = [
+    "requests",
+]
+gui = [
+    "dearpygui",
+    "pygame",
+    "windows-curses; platform_system=='Windows'",
+]
+
+
+[project.urls]
+Documentation = "https://celestine.readthedocs.io/"
+Source = "https://github.com/cyanochroite/celestine"
+Tracker = "https://github.com/cyanochroite/celestine/issues"
+Discord = "https://discord.gg/aNmDWPXd7B"
+
+
+[tool.autoflake]
+in-place = true
+recursive = true
+remove-all-unused-imports = true
+remove-duplicate-keys = true
+remove-unused-variables = true
+
+
+[tool.black]
+line_length = 72
+target-version = [
+    "py311",
+    "py312",
+    "py313",
+]
+
+
+[tool.isort]
+force_grid_wrap = 2
+line_ending = "\r\n"
+line_length = 72
+profile = "black"
+py_version = 312
+remove_redundant_aliases = true
+
+
+[tool.mypy]
+no_namespace_packages = true
+show_column_numbers = true
+
+
+[tool.pydocstringformatter]
+beginning-quotes = true
+capitalize-first-letter = true
+closing-quotes = true
+final-period = true
+linewrap-full-docstring = true
+max-line-length = 75  # Length should be 72 but it clipped too soon.
+max-summary-lines = 1
+numpydoc-name-type-spacing = false
+numpydoc-section-hyphen-length = false
+numpydoc-section-order = false
+numpydoc-section-spacing = false
+quotes-type = true
+split-summary-body = true
+strip-whitespaces = true
+style = ["pep257"]
+write = true
+
+
+[tool.pylint.main]
+disable = "empty-docstring, too-few-public-methods"
+ignored-argument-names = "_|star"
+
+
+[tool.pylint.format]
+expected-line-ending-format = "CRLF"
+max-line-length = 72
+
+
+[tool.pyright]
+typeCheckingMode = "strict"
+
+
+[tool.setuptools.package-data]
+celestine = ["py.typed"]
+"celestine.data" = ["*.gif", "*.jpg", "*.otf", "*.png"]
+"celestine.licence" = ["*.txt"]

@@ -1,0 +1,23 @@
+autoflake
+black >= 24.3.0
+blender-stubs
+build
+coverage
+dearpygui
+flake8 >= 5.0.4
+isort
+pillow >= 10.0.0
+pip
+platformdirs >= 4.0.0
+pydocstringformatter
+pygame
+pylint
+pyright
+pytest >= 7.4.4
+pyupgrade
+requests >= 2.31.0
+ruff
+sphinx >= 5.3.0
+twine >= 4.0.2
+types-requests >= 2.31.0.20231231
+windows-curses
