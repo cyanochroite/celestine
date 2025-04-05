@@ -7,6 +7,7 @@ from celestine.session.session import SuperSession
 from celestine.typed import (
     DA,
     S,
+    ignore,
 )
 
 from .data import (
@@ -24,6 +25,7 @@ class Session(SuperSession):
     @classmethod
     def dictionary(cls) -> DA:
         """"""
+        ignore(cls)
         return {
             KEY: Optional(
                 NONE,

@@ -1,6 +1,5 @@
 """"""
 
-from celestine.data import wrapper
 from celestine.package.PIL.Image import Image
 from celestine.typed import (
     F,
@@ -9,7 +8,6 @@ from celestine.typed import (
 )
 
 
-@wrapper(__name__)
 class Brightness:
     """
     Adjust image brightness.
@@ -19,7 +17,6 @@ class Brightness:
     A factor of 1.0 gives the original image.
     """
 
-    @wrapper(__name__)
     def enhance(self, factor: F) -> Image:
         """Returns an enhanced image."""
         raise NotImplementedError(self, factor)
@@ -29,7 +26,6 @@ class Brightness:
         raise NotImplementedError(self, image)
 
 
-@wrapper(__name__)
 class Color:
     """
     Adjust image color balance.
@@ -40,7 +36,6 @@ class Color:
     A factor of 1.0 gives the original image.
     """
 
-    @wrapper(__name__)
     def enhance(self, factor: F) -> Image:
         """Returns an enhanced image."""
         raise NotImplementedError(self, factor)
@@ -50,7 +45,6 @@ class Color:
         raise NotImplementedError(self, image)
 
 
-@wrapper(__name__)
 class Contrast:
     """
     Adjust image contrast.
@@ -61,7 +55,6 @@ class Contrast:
     A factor of 1.0 gives the original image.
     """
 
-    @wrapper(__name__)
     def enhance(self, factor: F) -> Image:
         """Returns an enhanced image."""
         raise NotImplementedError(self, factor)
@@ -71,7 +64,6 @@ class Contrast:
         raise NotImplementedError(self, image)
 
 
-@wrapper(__name__)
 class Sharpness:
     """
     Adjust image sharpness.
@@ -82,7 +74,6 @@ class Sharpness:
     and a factor of 2.0 gives a sharpened image.
     """
 
-    @wrapper(__name__)
     def enhance(self, factor: F) -> Image:
         """Returns an enhanced image."""
         raise NotImplementedError(self, factor)

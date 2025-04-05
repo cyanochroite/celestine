@@ -1,13 +1,12 @@
 """A package for determining appropriate platform-specific dirs."""
 
-from celestine.data import (
-    wrap,
-    wrapper,
-)
 from celestine.package import Abstract
 from celestine.typed import (
+    B,
+    N,
     R,
     S,
+    ignore,
 )
 
 
@@ -15,15 +14,19 @@ class Package(Abstract):
     """"""
 
 
-@wrapper(__name__)
-def user_data_dir(**star: R) -> S:
+def user_data_dir(
+    appname: S,
+    appauthor: B,
+    version: N,
+    roaming: B,
+    ensure_exists: B,
+    **star: R,
+) -> S:
     """"""
-    result = wrap(
-        appname="celestine",
-        appauthor=False,
-        version=None,
-        roaming=False,
-        ensure_exists=True,
-        **star,
+    ignore(star)
+    raise NotImplementedError(
+        appname, appauthor, version, roaming, ensure_exists
     )
-    return result
+
+
+ignore(Package, user_data_dir)

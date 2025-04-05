@@ -138,6 +138,8 @@ VIEWER_MAIN_BUTTON = "Load images in directory."
 
 VIEWER_SESSION_DIRECTORY = "A path to a directory containing images."
 
+NEW_TEST = "The test string to see if it is working."
+
 name = "en"
 
 ########################################################################

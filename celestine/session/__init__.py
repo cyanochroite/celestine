@@ -16,13 +16,10 @@ from celestine.literal import (
     PACKAGE,
 )
 from celestine.typed import (
-    LS,
     A,
-    B,
     C,
     D,
     N,
-    R,
     S,
 )
 from celestine.window.collection import Dictionary
@@ -71,7 +68,7 @@ def set_lang():
         setattr(language, key, value)
 
 
-def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> A:
+def begin_session() -> A:
     """
     First load Language so human can read errors.
 
@@ -92,7 +89,7 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> A:
     bank.application = load.module(APPLICATION, default.application())
     setattr(bank.application, "name", hold)
 
-    magic = Magic(argument_list, exit_on_error)
+    magic = Magic()
 
     with magic:
         magic.parse(LANGUAGE)
@@ -125,20 +122,16 @@ def begin_session(argument_list: LS, exit_on_error: B, **star: R) -> A:
     bank.attribute = session2
     bank.directory = session1.directory
     bank.interface = load.module(INTERFACE, session1.interface)
-    bank.window = bank.interface.Window(**star)
+    bank.window = bank.interface.Window()
 
     set_lang()
 
     return bank.window, bank.application.name
 
 
-def begin_main(argument_list: LS, exit_on_error: B, **star: R) -> N:
+def begin_main() -> N:
     """"""
-    window, application = begin_session(
-        argument_list,
-        exit_on_error,
-        **star,
-    )
+    window, application = begin_session()
 
     decorator = decorators(CELESTINE, APPLICATION, application)
     call = decorator.get("call", {})

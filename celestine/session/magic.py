@@ -1,12 +1,16 @@
 """"""
 
 import argparse
+import sys
 
 from celestine import (
     bank,
     load,
 )
-from celestine.literal import NONE
+from celestine.literal import (
+    CELESTINE,
+    NONE,
+)
 from celestine.session.argument import (
     Application,
     Customization,
@@ -19,7 +23,6 @@ from celestine.session.argument import (
 from celestine.session.data import Values
 from celestine.typed import (
     DA,
-    LS,
     A,
     B,
     D,
@@ -30,7 +33,6 @@ from celestine.typed import (
 )
 
 from .data import SESSION
-from .parser import parser as make_parser
 
 
 class SessionParse:
@@ -63,9 +65,6 @@ class Magic:
     args: argparse.Namespace
     parser: argparse.ArgumentParser
 
-    argument_list: LS
-    exit_on_error: B
-
     def get_parser(self, attributes: L[SessionParse], known: B) -> N:
         """
         All parser magic happens here.
@@ -77,7 +76,10 @@ class Magic:
         Parses the arguments with provided attributes.
         Adds the parsed objects to class objects
         """
-        self._make_parser()
+        self.parser = argparse.ArgumentParser(
+            prog=CELESTINE,
+            add_help=False,
+        )
 
         self._add_argument(attributes)
 
@@ -173,16 +175,10 @@ class Magic:
 
     ######
 
-    def _make_parser(self):
-        """"""
-        language = bank.language
-        exit_on_error = self.exit_on_error
-        self.parser = make_parser(language, exit_on_error)
-
     def _parse_args(self, known: B) -> N:
         """"""
         parser = self.parser
-        argument_list = self.argument_list
+        argument_list = sys.argv[1:]
 
         if known:
             self.args = parser.parse_known_args(argument_list)[0]
@@ -200,9 +196,6 @@ class Magic:
             bank.configuration.save()
         return False
 
-    def __init__(self, argument_list: LS, exit_on_error: B) -> N:
+    def __init__(self) -> N:
         self.args = argparse.Namespace()
         self.parser = argparse.ArgumentParser()
-
-        self.argument_list = argument_list
-        self.exit_on_error = exit_on_error

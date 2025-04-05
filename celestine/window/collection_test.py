@@ -2,47 +2,15 @@
 
 import unittest
 
-from celestine.typed import N
+from celestine.typed import (
+    N,
+    ignore,
+)
 from celestine.window.collection import (
     Line,
     Plane,
     Point,
 )
-
-
-class TestPoint(unittest.TestCase):
-    """"""
-
-    def test_value_positive_numbers(self) -> N:
-        """"""
-        point = Point(1.0, 2.0)
-        self.assertEqual(point.value, (1, 2))
-
-    def test_value_negative_numbers(self) -> N:
-        """"""
-        point = Point(-1.0, -2.0)
-        self.assertEqual(point.value, (-1, -2))
-
-    def test_value_zero(self) -> N:
-        """"""
-        point = Point(0.0, 0.0)
-        self.assertEqual(point.value, (0, 0))
-
-    def test_value_mixed_numbers(self) -> N:
-        """"""
-        point = Point(-1.0, 2.0)
-        self.assertEqual(point.value, (-1, 2))
-
-    def test_float_conversion(self) -> N:
-        """"""
-        point = Point(1.7, 2.3)
-        self.assertEqual(point.value, (1, 2))
-
-    def test_initialization_order(self) -> N:
-        """"""
-        point = Point(5.0, 3.0)
-        self.assertEqual(point.one, 5.0)
-        self.assertEqual(point.two, 3.0)
 
 
 class TestLine(unittest.TestCase):
@@ -81,16 +49,16 @@ class TestLine(unittest.TestCase):
         line = Line(0, 10)
 
         # Test inside
-        self.assertTrue(5 in line)
-        self.assertTrue(2.5 in line)
+        self.assertIn(5, line)
+        self.assertIn(2.5, line)
 
         # Test boundaries
-        self.assertTrue(0 in line)
-        self.assertTrue(10 in line)
+        self.assertIn(0, line)
+        self.assertIn(10, line)
 
         # Test outside
-        self.assertFalse(-1 in line)
-        self.assertFalse(11 in line)
+        self.assertNotIn(-1, line)
+        self.assertNotIn(11, line)
 
     def test_initialization(self) -> N:
         """"""
@@ -165,13 +133,13 @@ class TestPlane(unittest.TestCase):
     def test_contains(self) -> N:
         """"""
         # Test point inside
-        self.assertTrue(Point(5, 5) in self.plane)
+        self.assertIn(Point(5, 5), self.plane)
         # Test point on boundary
-        self.assertTrue(Point(0, 0) in self.plane)
-        self.assertTrue(Point(10, 10) in self.plane)
+        self.assertIn(Point(0, 0), self.plane)
+        self.assertIn(Point(10, 10), self.plane)
         # Test point outside
-        self.assertFalse(Point(11, 11) in self.plane)
-        self.assertFalse(Point(-1, -1) in self.plane)
+        self.assertNotIn(Point(11, 11), self.plane)
+        self.assertNotIn(Point(-1, -1), self.plane)
 
     def test_edge_cases(self) -> N:
         """"""
@@ -182,3 +150,41 @@ class TestPlane(unittest.TestCase):
         # Negative dimensions should be normalized
         neg_plane = Plane(Line(-5, 5), Line(-5, 5))
         self.assertEqual(neg_plane.size.value, (10, 10))
+
+
+class TestPoint(unittest.TestCase):
+    """"""
+
+    def test_value_positive_numbers(self) -> N:
+        """"""
+        point = Point(1.0, 2.0)
+        self.assertEqual(point.value, (1, 2))
+
+    def test_value_negative_numbers(self) -> N:
+        """"""
+        point = Point(-1.0, -2.0)
+        self.assertEqual(point.value, (-1, -2))
+
+    def test_value_zero(self) -> N:
+        """"""
+        point = Point(0.0, 0.0)
+        self.assertEqual(point.value, (0, 0))
+
+    def test_value_mixed_numbers(self) -> N:
+        """"""
+        point = Point(-1.0, 2.0)
+        self.assertEqual(point.value, (-1, 2))
+
+    def test_float_conversion(self) -> N:
+        """"""
+        point = Point(1.7, 2.3)
+        self.assertEqual(point.value, (1, 2))
+
+    def test_initialization_order(self) -> N:
+        """"""
+        point = Point(5.0, 3.0)
+        self.assertEqual(point.one, 5.0)
+        self.assertEqual(point.two, 3.0)
+
+
+ignore(TestLine, TestPlane, TestPoint)

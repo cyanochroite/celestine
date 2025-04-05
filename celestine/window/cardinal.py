@@ -2,7 +2,6 @@
 
 import itertools
 import math
-import typing
 
 from celestine.literal import (
     COMMA,
@@ -30,16 +29,17 @@ from celestine.typed import (
     S,
     Struct,
     T,
+    U,
     Z,
     cast,
     ignore,
     override,
 )
 
-type Number = typing.Union["Cardinal", F, Z]
+type Number = U["Cardinal", F, Z]
 type Unary = C[[Number], Number]
 type Binary = C[[Number, Number], Number]
-type Nomad = typing.Union[Number, Q[F], Q[Z]]
+type Nomad = U[Number, Q[F], Q[Z]]
 
 
 class Round:
@@ -107,6 +107,18 @@ class Math(Struct):
     def pos(one: Number) -> Number:
         """"""
         result = +one
+        return result
+
+    @staticmethod
+    def radd(one: Number, two: Number) -> Number:
+        """"""
+        result = two + one
+        return result
+
+    @staticmethod
+    def rsub(one: Number, two: Number) -> Number:
+        """"""
+        result = two - one
         return result
 
     @staticmethod
@@ -257,6 +269,7 @@ class Cardinal(Struct):
         return result
 
     def __new__(cls, *_: A) -> K:
+        ignore(_)
         new = super().__new__(cls)
         name = repr(cls)
         index = name.rindex(FULL_STOP) + 1
@@ -276,7 +289,7 @@ class Cardinal(Struct):
         return result
 
     def __radd__(self, other: Nomad) -> K:
-        result = self._arithmetic(Math.add, other)
+        result = self._arithmetic(Math.radd, other)
         return result
 
     def __repr__(self):
@@ -293,7 +306,7 @@ class Cardinal(Struct):
         return result
 
     def __rsub__(self, other: Nomad) -> K:
-        result = self._arithmetic(Math.sub, other)
+        result = self._arithmetic(Math.rsub, other)
         return result
 
     def __rtruediv__(self, other: Nomad) -> K:
@@ -451,3 +464,6 @@ class Tetrad[X](Cardinal):
         return super().__new__(cls, one, two, tri, tet)
 
     data = property(_get, _set, _del)
+
+
+ignore(Monad, Dyad, Triad, Tetrad)

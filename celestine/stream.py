@@ -1,6 +1,5 @@
 """Central place for loading and importing external files."""
 
-import abc
 import enum
 import lzma
 import os
@@ -12,7 +11,7 @@ from typing import (
 
 from celestine import load
 from celestine.typed import (
-    A,
+    ANY,
     B,
     N,
     P,
@@ -21,7 +20,7 @@ from celestine.typed import (
     override,
 )
 
-type Flie = IO[A]
+type Flie = IO[ANY]
 type Lzma = lzma.LZMAFile | TextIO
 type Path = P | S
 
@@ -87,7 +86,7 @@ class Newline(enum.StrEnum):
     UNTRANSLATED = ""
 
 
-class File(abc.ABC):
+class File:
     """"""
 
     directory: P
@@ -112,22 +111,24 @@ class File(abc.ABC):
         with self.reader(*path) as file:
             return file.read()
 
-    @abc.abstractmethod
     def reader(self, *path: Path) -> Flie:
         """"""
-        ignore(self, path)
-        raise NotImplementedError()
+        return open(
+            self._file(True, *path),
+            Mode.READ_TEXT,
+        )
 
     def save(self, data: S, *path: Path) -> N:
         """"""
         with self.writer(*path) as file:
             file.write(data)
 
-    @abc.abstractmethod
     def writer(self, *path: Path) -> Flie:
         """"""
-        ignore(self, path)
-        raise NotImplementedError()
+        return open(
+            self._file(False, *path),
+            Mode.WRITE_TEXT,
+        )
 
     def __init__(self, path: P) -> N:
         self.directory = path
@@ -234,3 +235,14 @@ binary = Binary(directory)
 compress = Compress(directory)
 module = Module(project_path)
 text = Text(directory)
+
+ignore(
+    MAXIMUM_LINE_LENGTH,
+    Newline,
+    SECTION_BREAK,
+    binary,
+    compress,
+    module,
+    project_root,
+    text,
+)

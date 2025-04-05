@@ -1,11 +1,5 @@
 """"""
 
-from celestine import bank
-from celestine.data import (
-    wrap,
-    wrapper,
-)
-from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.typed import (
     LS,
     LZ,
@@ -18,9 +12,9 @@ from celestine.typed import (
     P,
     R,
     S,
+    V,
     Y,
     Z,
-    ignore,
 )
 
 
@@ -51,89 +45,66 @@ class Resampling:
     NEAREST = 6
 
 
-@wrapper(__name__)
 class Image:
     """"""
 
     mode: S
 
-    @wrapper(__name__)
-    def convert(self, mode: S, matrix: N, dither: "Dither") -> K:
+    def convert(self, mode: S, *, dither: V[Dither] = None) -> K:
         """"""
-        raise NotImplementedError(self, mode, matrix, dither)
+        raise NotImplementedError(self, mode, dither)
 
-    @wrapper(__name__)
-    def getdata(self, im: K, box: TZ4) -> L[Z] | L[TZ3]:
+    def getdata(self) -> L[Z] | L[TZ3]:
         """"""
-        raise NotImplementedError(self, im, box)
+        raise NotImplementedError(self)
 
     @property
-    @wrapper(__name__)
     def height(self) -> Z:
         """"""
         raise NotImplementedError(self)
 
-    @wrapper(__name__)
     def paste(self, im: K, box: TZ4) -> K:
         """"""
         raise NotImplementedError(self, im, box)
 
-    @wrapper(__name__)
-    def putpalette(self, data: LZ, rawmode: S) -> N:
+    def putpalette(self, data: LZ) -> N:
         """"""
-        raise NotImplementedError(self, data, rawmode)
+        raise NotImplementedError(self, data)
 
-    @wrapper(__name__)
-    def quantize(self, *, palette, **star: R) -> Y:
+    def quantize(self, *, colors: Z, palette: K, **star: R) -> K:
         """"""
-        ignore(self)
-        # TODO local class not being called
-        result = wrap(colors=255, palette=palette, **star)
-        return result
+        raise NotImplementedError(self, colors, palette, star)
 
-    @wrapper(__name__)
-    def resize(self, size: TZ2, resample: Resampling) -> K:
+    def resize(self, size: TZ2) -> K:
         """"""
-        raise NotImplementedError(self, size, resample)
+        raise NotImplementedError(self, size)
 
     @property
-    @wrapper(__name__)
     def size(self) -> TZ2:
         """"""
         raise NotImplementedError(self)
 
-    @wrapper(__name__)
     def tobytes(self) -> Y:
         """"""
         raise NotImplementedError(self)
 
     @property
-    @wrapper(__name__)
     def width(self) -> Z:
         """"""
         raise NotImplementedError(self)
 
 
-@wrapper(__name__)
 def new(mode: S, size: TZ2, **star: R) -> Image:
     """"""
-    color = 0
-    result = wrap(mode, size, color, **star)
-    return result
+    raise NotImplementedError(mode, size, **star)
 
 
-@wrapper(__name__)
 # pylint: disable-next=redefined-builtin
-def open(path: P, **star: R) -> Image:
+def open(*, fp: P, mode: S, formats: LS, **star: R) -> Image:
     """"""
-    fp = path
-    mode = LATIN_SMALL_LETTER_R
-    formats = bank.window.formats()
-    result = wrap(fp, mode, formats, **star)
-    return result
+    raise NotImplementedError(fp, mode, formats, **star)
 
 
-@wrapper(__name__)
 def registered_extensions() -> LS:
     """"""
     raise NotImplementedError()

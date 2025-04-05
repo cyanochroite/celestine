@@ -31,6 +31,7 @@ from celestine.typed import (
     P,
     S,
     T,
+    ignore,
 )
 
 ########################################################################
@@ -343,3 +344,25 @@ def asset(file: S) -> P:
     item = importlib.resources.files(data).joinpath(file)
     result = pathlib.Path(str(item))
     return result
+
+
+#########
+
+
+ignore(
+    argument,
+    asset,
+    attempt,
+    attribute,
+    dictionary,
+    function_page,
+    instance,
+    method,
+    module_fallback,
+    module_to_name,
+    package_dependency,
+    pathway_root,
+    python,
+    safe_path,
+    walk_package,
+)

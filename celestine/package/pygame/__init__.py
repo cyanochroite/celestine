@@ -1,6 +1,5 @@
 """Python Game Development."""
 
-from celestine.data import wrapper
 from celestine.package import Abstract
 from celestine.package.pygame import (
     display,
@@ -33,7 +32,6 @@ class Rect:
     """"""
 
 
-@wrapper(__name__)
 def quit(**star: R) -> N:  # pylint: disable=redefined-builtin
     """"""
     raise NotImplementedError()

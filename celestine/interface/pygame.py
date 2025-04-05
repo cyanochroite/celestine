@@ -10,15 +10,16 @@ from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import (
     PIL,
     pygame,
 )
 from celestine.typed import (
+    ANY,
     LS,
-    A,
     B,
-    K,
+    D,
     N,
     P,
     R,
@@ -63,10 +64,10 @@ class Element(Element_, Abstract):
 
         dest = self.area.world.origin.value
 
-        def render(source: A) -> N:
+        def render(source: ANY) -> N:
             """"""
             if source:
-                self.canvas.blit(source, dest)
+                self.parent.blit(source, dest)
 
         render(self.image)
         render(self.text_item)
@@ -74,32 +75,28 @@ class Element(Element_, Abstract):
         return True
 
     @override
-    def build(self, canvas: A, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        super().build(canvas, **star)
-
+        super().build(parent, star)
         self.color = (255, 0, 255)
         # self.warp("font")
-        self.font = star.pop("font")
+        self.font = star.get("font", None)
 
         size = self.area.local.size.value
         self.image = pygame.Surface(size)
 
-        if self.path:
-            self.update_image(self.path)
-
-        if self.text:
-            self.update_text(self.text)
-
-    def update_image(self, path: P, **star: R) -> N:
+    @override
+    def reimage(self, path: P, **star: R) -> N:
         """"""
-        self.path = path
-
         # reset image
         self.image.fill((0, 0, 0))
 
         if bool(PIL):
-            image = PIL.Image.open(self.path)
+            image = PIL.Image.open(
+                fp=path,
+                mode=LATIN_SMALL_LETTER_R,
+                formats=bank.window.formats(),
+            )
             buffer = image.tobytes()
             size = image.size
             format_ = image.mode
@@ -120,15 +117,19 @@ class Element(Element_, Abstract):
         dest = image_size.origin.value
         self.image.blit(source, dest)
 
-    def update_text(self, text: S) -> N:
+        super().reimage(path, **star)
+
+    @override
+    def retext(self, text: S, **star: R) -> N:
         """"""
         self.text = text
         antialias = True
         color = self.color
         self.text_item = self.font.render(text, antialias, color)
+        super().retext(text, **star)
 
-    def __init__(self, name: S, parent: K, **star: R) -> N:
-        super().__init__(name, parent, **star)
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(name, **star)
         self.color = (0, 0, 0)
         self.font = pygame.font.Font()
         self.text_item = pygame.Surface((0, 0))
@@ -138,26 +139,31 @@ class View(View_, Abstract):
     """"""
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
     area: Area
-    canvas: pygame.Surface
     font: pygame.font.Font
+    item: pygame.Surface
+    star: R
 
     @override
-    def build(self, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        super().build(font=self.font, **star)
+        super().build(parent, star)
+        self.item = pygame.display.set_mode(self.area.world.size.value)
+        star |= {"font": self.font}
 
     @override
-    def draw(self, **star: R) -> N:
+    def draw(self, **star: R) -> B:
         """"""
-        self.canvas.fill((0, 0, 0))
+        self.item.fill((0, 0, 0))
 
         super().draw(font=self.font, **star)
 
         pygame.display.flip()
+
+        return True
 
     @override
     @classmethod
@@ -219,7 +225,7 @@ class Window(Window_):
             icon = image.convert_alpha()
             pygame.display.set_icon(icon)
 
-        set_icon()
+        # set_icon()
 
         while True:
             bank.dequeue()
@@ -236,22 +242,21 @@ class Window(Window_):
         pygame.quit()
 
     @override
-    def __init__(self, **star: R) -> N:
+    def __init__(self) -> N:
         element = {
             "element": Element,
             "view": View,
             "window": self,
         }
-        super().__init__(element, **star)
+        super().__init__(element)
         self.area = Area.fast(1920, 1080)
-
-        value = self.area.world.size.value
-        self.canvas = pygame.display.set_mode(value)
 
         caption = bank.language.APPLICATION_TITLE
         pygame.display.set_caption(caption)
 
         pygame.font.init()
-        file_path = load.asset("cascadia_code_regular.otf")
-        size = 40
-        self.font = pygame.font.Font(file_path, size)
+        size = 64
+        self.font = pygame.font.Font(None, size)
+
+
+ignore(Window)

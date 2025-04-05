@@ -4,8 +4,8 @@ import itertools
 import math
 
 from celestine import bank
-from celestine.data.notational_systems import BRAILLE_PATTERNS
 from celestine.data.palette import (
+    COLOR_PAIRS,
     curses_table,
     pillow_table,
 )
@@ -13,20 +13,24 @@ from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
 from celestine.interface import Window as Window_
+from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import (
     PIL,
     curses,
 )
 from celestine.typed import (
+    ANY,
     GS,
     GZ,
     LS,
+    LZ,
     B,
-    K,
+    D,
     N,
     P,
     R,
     S,
+    cast,
     ignore,
     override,
 )
@@ -64,26 +68,32 @@ class Element(Element_, Abstract):
         x, y = self.area.world.origin.value
 
         # text
-        canvas = star.pop("canvas")
+        parent = star.pop("parent")
 
         if self.text:
-            canvas.addstr(y, x, self.text)
+            parent.addstr(y, x, self.text)
             return True
 
         if self.path:
-            self.update_image(self.path)
+            self.reimage(self.path)
 
         return True
 
-    def update_image(self, path: P, **star: R) -> N:
+    @override
+    def reimage(self, path: P, **star: R) -> N:
         """"""
-        self.path = path
+        super().reimage(path, **star)
+
         if not bool(PIL):
             (x_dot, y_dot) = self.area.world.origin
-            self.canvas.addstr(y_dot, x_dot, self.path.name)
+            self.parent.addstr(y_dot, x_dot, self.path.name)
             return
 
-        image = PIL.Image.open(self.path)
+        image = PIL.Image.open(
+            fp=path,
+            mode=LATIN_SMALL_LETTER_R,
+            formats=bank.window.formats(),
+        )
         image = image.convert(mode="RGB")
 
         #
@@ -94,23 +104,12 @@ class Element(Element_, Abstract):
 
         image = brightness(image)
 
-        def work(plane: Plane, size: Point, mode: S) -> PIL.Image.Image:
-            """"""
-            plane = plane.round()
-            result = PIL.Image.new(mode, size.value)
-            im = image.resize(plane.size.value)
-            box = plane.value
-            result.paste(im, box)
-            return result
-
-        #
-
         target = Plane.create(*self.area.world.size)
         target *= (2, 4)
-        cache = work(image_size, target.size, "1")
+        cache = self.imagin(image, image_size, target.size, "1")
 
         plane = image_size / (2, 4)
-        cat = work(plane, self.area.world.size, "RGB")
+        cat = self.imagin(image, plane, self.area.world.size, "RGB")
         self.render(cache, cat)
 
     def render(self, one: PIL.Image.Image, two: PIL.Image.Image) -> N:
@@ -122,10 +121,10 @@ class Element(Element_, Abstract):
         for x_dot, y_dot, text, extra in button:
             if x_dot == size.one and y_dot == size.two:
                 continue  # TODO: figure out why last pixel causes ERROR
-            self.canvas.addstr(y_dot, x_dot, text, extra)
+            self.parent.addstr(y_dot, x_dot, text, extra)
 
-    def __init__(self, name: S, parent: K, **star: R) -> N:
-        super().__init__(name, parent, **star)
+    def __init__(self, name: S, **star: R) -> N:
+        super().__init__(name, **star)
         self.photo = None
         self.cache = PIL.Image.Image()
         self.color = PIL.Image.Image()
@@ -135,18 +134,25 @@ class View(View_, Abstract):
     """"""
 
 
-class Window(Window_):
+class Window(Window_, Abstract):
     """"""
 
-    @override
-    def draw(self, **star: R) -> N:
+    def build(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        self.canvas.erase()
-        super().draw(canvas=self.canvas, **star)
+        super().build(parent, star)
+        (size_y, size_x) = self.stdscr.getmaxyx()
+        self.item = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
+
+    @override
+    def draw(self, **star: R) -> B:
+        """"""
+        self.item.erase()
+        super().draw(parent=self.item, **star)
 
         self.stdscr.noutrefresh()
-        self.canvas.noutrefresh()
+        self.item.noutrefresh()
         curses.doupdate()
+        return True
 
     @override
     @classmethod
@@ -212,13 +218,13 @@ class Window(Window_):
         curses.endwin()
 
     @override
-    def __init__(self, **star: R) -> N:
+    def __init__(self) -> N:
         element = {
             "element": Element,
             "view": View,
             "window": self,
         }
-        super().__init__(element, **star)
+        super().__init__(element)
 
         self.stdscr = curses.initscr()
         curses.noecho()
@@ -237,12 +243,10 @@ class Window(Window_):
         self.cord_x = 0.5
         self.cord_y = 0.5
 
-        self.canvas = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
-
-        for index in range(255):
+        for index in range(COLOR_PAIRS):
             red, green, blue = curses_table[index]
-            curses.init_color(index, red, green, blue)
-            curses.init_pair(index, index, 0)
+            curses.init_color(index + 16, red, green, blue)
+            curses.init_pair(index + 16, index + 16, 16)
 
 
 def brightness(image: PIL.Image.Image) -> PIL.Image.Image:
@@ -258,7 +262,8 @@ def brightness(image: PIL.Image.Image) -> PIL.Image.Image:
     """
     convert = image.convert("1")
     data = convert.getdata()
-    binary = (pixel // 255 for pixel in data)
+    flat = cast(LZ, data)
+    binary = (pixel // 255 for pixel in flat)
     count = sum(binary)
     length = image.width * image.height
     ratio = count / length
@@ -293,35 +298,55 @@ def dot_y(world: Plane) -> GZ:
 def hue(image: PIL.Image.Image) -> GZ:
     """"""
     pixels = image.quantize(
-        colors=255,
-        method=None,
-        kmeans=0,
+        colors=COLOR_PAIRS,
         palette=palette_image,
-        dither=PIL.Image.Dither.FLOYDSTEINBERG,
     )
-    colors = pixels.getdata()
+    colors = cast(LZ, pixels.getdata())
     for color in colors:
-        result = curses.color_pair(color)
+        result = curses.color_pair(color + 16)
         yield result
 
 
 def luma(image: PIL.Image.Image) -> GS:
-    """"""
-    pixels = image.getdata()
+    """
+    Tranlate image into Braille Patterns.
+
+    Website: https://en.wikipedia.org/wiki/Braille_Patterns
+    Section: Identifying, naming and ordering
+    """
+    data = image.getdata()
+    pixels = cast(LZ, data)
+
     width, height = image.size
-    for range_y in range(0, height, 4):
-        for range_x in range(0, width, 2):
-            braille = 0
-            for offset_y in range(4):
-                for offset_x in range(2):
-                    index_x = range_x + offset_x
-                    index_y = range_y + offset_y
-                    index = index_y * width + index_x
-                    try:
-                        pixel = 1 if pixels[index] > 127 else 0
-                    except IndexError:
-                        pixel = 0
-                    braille <<= 1
-                    braille |= pixel
-            result = BRAILLE_PATTERNS[braille]
-            yield result
+    length = width * height
+
+    dots = [
+        width + width + width + 1,
+        width + width + width + 0,
+        width + width + 1,
+        width + 1,
+        1,
+        width + width + 0,
+        width + 0,
+        0,
+    ]
+
+    for index in range(length):
+        index_x = index % width
+        index_y = index // width
+        if index_x % 2 or index_y % 4:
+            continue
+
+        pattern = 0
+        for dot in dots:
+            pattern <<= 1
+            pixel = index + dot
+            if pixels[pixel] > 127:
+                pattern |= 1
+
+        braille = 0x2800 + pattern
+        result = chr(braille)
+        yield result
+
+
+ignore(Window)

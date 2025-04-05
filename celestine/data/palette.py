@@ -29,7 +29,7 @@ def _pixels() -> Make:
                 minimum = min(pixel)
                 chroma = maximum - minimum
                 total = red + green + blue
-                if total % 4 == 0 or total % 9 == 4 or chroma == 0:
+                if total % 4 == 0 or total % 15 == 0 or chroma == 0:
                     result = pixel / 8
                     yield result
 
@@ -62,3 +62,4 @@ def _table(function: C[[Pixel], Pixel]) -> Pixels:
 
 curses_table = _table(_curses)
 pillow_table = _table(_pillow)
+COLOR_PAIRS = len(curses_table)

@@ -24,5 +24,6 @@ class Package(Abstract):
 
     def __init__(self, **star: R) -> N:
         super().__init__(pypi="PIL")
-        if self.package and bool(tkinter):
+        self.attribute("ImageEnhance")
+        if bool(tkinter):
             self.attribute("ImageTk")

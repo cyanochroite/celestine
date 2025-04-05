@@ -23,7 +23,7 @@ Q: collections.abc.Sequence
 R: typing.Any  # Future star type.
 S: str
 T: typing.Tuple
-U: typing.Any  # Unused  # Union?
+U: typing.Union
 V: typing.Optional  # Void like type.
 W: typing.Any  # Unused  # self.data()? warp?
 X: typing.TypeVar("X")  # Primary type variable.
@@ -45,6 +45,7 @@ from typing import Any as A
 from typing import Dict as D
 from typing import List as L
 from typing import Literal
+from typing import NotRequired as NR
 from typing import Optional as V
 from typing import Protocol
 from typing import Self as K
@@ -52,18 +53,14 @@ from typing import Tuple as T
 from typing import Type as TY
 from typing import TypedDict as TD
 from typing import TypeVar as TV
+from typing import Union as U
+from typing import Unpack as UN
 from typing import (
     cast,
     override,
 )
 
-
-class Star(TD):
-    """The global Star object."""
-
-    # TODO: Figure out how to map this to the R type.
-
-
+type ANY = A
 type B = bool
 type F = float
 type J = object
@@ -160,6 +157,7 @@ type VZ = V[Z]
 
 def ignore(*_: A) -> N:
     """An empty function used to hide unused variable warnings."""
+    cast(ANY, _)
 
 
 def string(*iterable: S) -> S:
@@ -267,4 +265,84 @@ class Struct:
     data = property(_get, _set, _del)
 
 
-ignore(IT, Protocol, Q, cast, override)
+ignore(
+    ANY,
+    BF,
+    BT,
+    CA,
+    cast,
+    CN,
+    DA,
+    DB,
+    DF,
+    DM,
+    DP,
+    DS,
+    DZ,
+    GB,
+    GF,
+    GM,
+    GP,
+    GS,
+    GZ,
+    IT,
+    J,
+    LB,
+    LF,
+    LM,
+    LP,
+    LS,
+    LZ,
+    NR,
+    Object,
+    override,
+    Protocol,
+    Q,
+    string,
+    Struct,
+    TA1,
+    TA2,
+    TA3,
+    TA4,
+    TB,
+    TB1,
+    TB2,
+    TB3,
+    TB4,
+    TD,
+    TF,
+    TF1,
+    TF2,
+    TF3,
+    TF4,
+    TM,
+    TM1,
+    TM2,
+    TM3,
+    TM4,
+    TP,
+    TP1,
+    TP2,
+    TP3,
+    TP4,
+    TS1,
+    TS2,
+    TS3,
+    TS4,
+    TZ,
+    TZ1,
+    TZ2,
+    TZ3,
+    TZ4,
+    U,
+    UN,
+    VA,
+    VB,
+    VF,
+    VM,
+    VP,
+    VS,
+    VZ,
+    X,
+    Y,
+)

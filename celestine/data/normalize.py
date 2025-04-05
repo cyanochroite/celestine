@@ -133,7 +133,6 @@ def wrap(string: GS | S) -> GS:
 
         if character == LINE_FEED:
             buffer.seek(0, io.SEEK_SET)
-            # yield from buffer.read(count)
 
             candy = buffer.read(count)
             yield from candy
