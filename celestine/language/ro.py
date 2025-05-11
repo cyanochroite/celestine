@@ -92,21 +92,6 @@ DEMO_TWO_SAY = "La revedere omule."
 
 DEMO_TWO_TITLE = "Pagina a doua."
 
-LANGUAGE = "\
-UE are 24 de limbi oficiale: \
-bulgară, cehă, croată, daneză, engleză, estonă, finlandeză, franceză, \
-germană, greacă, irlandeză, italiană, letonă, lituaniană, maghiară, \
-malteză, polonă, portugheză, română, slovacă, slovenă, \
-spaniolă și suedeză."
-
-LANGUAGE_NAME_ENGLISH = "Engleză"
-
-LANGUAGE_NAME_NATIVE = "Engleză"
-
-LANGUAGE_TAG_AZURE = "En"
-
-LANGUAGE_TAG_ISO = "En"
-
 SCAN_MAIN_BUTTON = "Acest buton nu face nimic."
 
 SCAN_MAIN_TITLE = "Viitorul proiect de scanare de securitate"
@@ -138,8 +123,6 @@ VIEWER_MAIN_BUTTON = "Încărcați imagini în director."
 
 VIEWER_SESSION_DIRECTORY = "\
 O cale către un director care conține imagini."
-
-name = "En"
 
 ########################################################################
 

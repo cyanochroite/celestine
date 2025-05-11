@@ -5,40 +5,55 @@ This module does not import modules in the usual way.
 This is done so that this module does not depend on any other module.
 That way other modules can use whatever imports they want freely.
 This is so the packages directory can be loaded in and setup properly.
-That way other modules can
 """
 
 import importlib
 import os
-import pathlib
+import pkgutil
 import sys
 
-
-def packages() -> None:
-    """
-    Initialize all packages in the package directory.
-
-    The package name will be an attribute of 'celestine.package'.
-    If the package is not installed, it will be set to 'False'.
-    """
-    package = importlib.import_module("celestine.package")
-    locations = __spec__.submodule_search_locations or []
-    for location in locations:
-        directory = pathlib.Path(location, "package")
-        with os.scandir(directory) as folder:
-            for file in folder:
-                path = pathlib.Path(file.path)
-                name = path.stem
-                if not name[0].isalpha():
-                    continue
-                load = f"celestine.package.{name}"
-                module = importlib.import_module(load)
-                attribute = getattr(module, "Package")
-                value = attribute()
-                setattr(package, name, value)
+from celestine.typed import (
+    N,
+    S,
+)
 
 
-def main() -> None:
+def init(root: S) -> N:
+    """"""
+    sys_stdout = sys.stdout
+    with open(os.devnull, "w", encoding="utf-8") as stdout:
+        sys.stdout = stdout
+
+        locations = ["package", "language", "interface"]
+        for location in locations:
+            name = f"{root}.{location}"
+            try:
+                module = importlib.import_module(name)
+            except ModuleNotFoundError:
+                return
+
+            spec = module.__spec__
+            if not spec:
+                return
+
+            path = spec.submodule_search_locations
+            modules = pkgutil.iter_modules(path)
+
+            for info in modules:
+                _name = f"{name}.{info.name}:Self"
+                try:
+                    value = pkgutil.resolve_name(_name)
+                    setattr(module, info.name, value())
+                except AttributeError:
+                    pass
+
+    sys.stdout = sys_stdout
+
+
+init(__package__)
+
+
+def main(*names: S) -> N:
     """
     Initialize the packages and then run the main program.
 
@@ -46,18 +61,15 @@ def main() -> None:
     So we change the output stream to hide any messages
     a package may print when being imported.
     """
-    sys_stdout = sys.stdout
-
-    with open(os.devnull, "w", encoding="utf-8") as stdout:
-        sys.stdout = stdout
-        packages()
-
-    sys.stdout = sys_stdout
+    for name in names:
+        init(name)
 
     session = importlib.import_module("celestine.session")
-    begin_main = getattr(session, "begin_main")
-    begin_main()
+    run = getattr(session, "run")
+    run(names[0])
 
 
-if __name__ == "__main__":
-    main()
+# names order important
+# load first module
+# go through the spec locations next
+# try to find each package thing

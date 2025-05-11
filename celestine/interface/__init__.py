@@ -470,16 +470,16 @@ class Window(Abstract):
             "XPM",
         ]
 
-    def drop(self, name: S, **star: R) -> Tree:
+    def drop(self, name: S, **star: R) -> View:
         """"""
-        return self.set(
-            self.element_item["view"](
-                name,
-                self.element_item,
-                mode=Zone.DROP,
-                **star,
-            )
+        view = self.element_item["view"](
+            name,
+            self.element_item,
+            mode=Zone.DROP,
+            **star,
         )
+        self.set(view)
+        return view
 
     ###############
     # star might not be needed for all functions

@@ -340,7 +340,7 @@ def argument(*path: S) -> LS:
 
 def asset(file: S) -> P:
     """"""
-    data = "celestine.data"
+    data = "celestine.window.decorator"
     item = importlib.resources.files(data).joinpath(file)
     result = pathlib.Path(str(item))
     return result

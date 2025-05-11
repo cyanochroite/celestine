@@ -1,6 +1,6 @@
 """Python interface to Tcl/Tk."""
 
-from celestine.package import Abstract
+from celestine.package import Package
 from celestine.typed import (
     NR,
     TD,
@@ -81,10 +81,6 @@ class Label:
         raise NotImplementedError(self, window)
 
 
-class Package(Abstract):
-    """"""
-
-
 class PhotoImage:
     """"""
 
@@ -107,6 +103,10 @@ class PhotoImage:
     def __init__(self, **star: UN[_TypedPhoto]) -> N:
         """"""
         raise NotImplementedError(self, star)
+
+
+class Self(Package):
+    """"""
 
 
 class Tk:

@@ -1,7 +1,7 @@
 """Python Imaging Library (Fork)."""
 
 from celestine.package import (
-    Abstract,
+    Package,
     tkinter,
 )
 from celestine.package.PIL import (
@@ -19,7 +19,7 @@ from celestine.typed import (
 ignore(Image, ImageEnhance, ImagePalette, ImageTk)
 
 
-class Package(Abstract):
+class Self(Package):
     """"""
 
     def __init__(self, **star: R) -> N:

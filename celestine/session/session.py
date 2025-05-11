@@ -15,6 +15,7 @@ from celestine.literal import (
     LANGUAGE,
     NONE,
 )
+from celestine.session import default
 from celestine.session.argument import (
     Customization,
     InformationConfiguration,
@@ -35,8 +36,6 @@ from celestine.typed import (
     T,
     ignore,
 )
-
-from . import default
 
 
 class SuperSession:

@@ -92,21 +92,6 @@ DEMO_TWO_SAY = "Adjö människa."
 
 DEMO_TWO_TITLE = "Sida två."
 
-LANGUAGE = "\
-EU har 24 officiella språk: \
-bulgariska, danska, engelska, estniska, finska, franska, grekiska, \
-iriska, italienska, kroatiska, lettiska, litauiska, maltesiska, \
-nederländska, polska, portugisiska, rumänska, slovakiska, slovenska, \
-spanska, svenska, tjeckiska, tyska och ungerska."
-
-LANGUAGE_NAME_ENGLISH = "Engelska"
-
-LANGUAGE_NAME_NATIVE = "Engelska"
-
-LANGUAGE_TAG_AZURE = "sv"
-
-LANGUAGE_TAG_ISO = "sv"
-
 SCAN_MAIN_BUTTON = "Den här knappen gör ingenting."
 
 SCAN_MAIN_TITLE = "Framtida säkerhetsskanningsprojekt"
@@ -138,8 +123,6 @@ VIEWER_MAIN_BUTTON = "Ladda bilder i katalogen."
 
 VIEWER_SESSION_DIRECTORY = "\
 En sökväg till en katalog som innehåller bilder."
-
-name = "sv"
 
 ########################################################################
 

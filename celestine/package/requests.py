@@ -1,13 +1,13 @@
 """Removes unused imports and unused variables."""
 
-from celestine.package import Abstract
+from celestine.package import Package
 from celestine.typed import (
     N,
     ignore,
 )
 
 
-class Package(Abstract):
+class Self(Package):
     """"""
 
 

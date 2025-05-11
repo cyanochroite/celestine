@@ -176,6 +176,8 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
 
     def key(self, key: S) -> S:
         """Expands short keys to full keys."""
+        if KEY not in key:
+            return key
         result = NONE
         add = NONE
         one, two = key.split(KEY)

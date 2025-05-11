@@ -1,6 +1,6 @@
 """DearPyGui: A simple Python GUI Toolkit."""
 
-from celestine.package import Abstract
+from celestine.package import Package
 from celestine.typed import (
     A,
     N,
@@ -27,9 +27,14 @@ show_viewport: A
 start_dearpygui: A
 texture_registry: A
 window: A
+delete_item: A
+add_image_button: A
+add_texture_registry: A
+add_window: A
+add_group: A
 
 
-class Package(Abstract):
+class Self(Package):
     """"""
 
     @override

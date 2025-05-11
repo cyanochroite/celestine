@@ -32,7 +32,7 @@ from celestine.typed import (
     ignore,
 )
 
-from .data import SESSION
+SESSION = "session"
 
 
 class SessionParse:
@@ -93,7 +93,6 @@ class Magic:
         self.get_parser([method], True)
         value = getattr(method, name)
         module = load.module(name, value)
-        module.name = value
         setattr(bank, name, module)
 
     ###
@@ -156,7 +155,7 @@ class Magic:
 
     def _add_attribute(self, sessions: list[SessionParse]) -> N:
         """"""
-        section = bank.application.name
+        section = bank.application.__spec__.name
         for session in sessions:
             for option, argument in session.items():
                 if not argument.attribute:

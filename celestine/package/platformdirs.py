@@ -1,6 +1,6 @@
 """A package for determining appropriate platform-specific dirs."""
 
-from celestine.package import Abstract
+from celestine.package import Package
 from celestine.typed import (
     B,
     N,
@@ -10,7 +10,7 @@ from celestine.typed import (
 )
 
 
-class Package(Abstract):
+class Self(Package):
     """"""
 
 

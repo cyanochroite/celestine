@@ -1,6 +1,6 @@
 """Terminal handling for character-cell displays."""
 
-from celestine.package import Abstract
+from celestine.package import Package
 from celestine.typed import (
     TZ2,
     B,
@@ -13,7 +13,7 @@ from celestine.typed import (
 )
 
 
-class Package(Abstract):
+class Self(Package):
     """"""
 
 

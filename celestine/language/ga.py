@@ -96,21 +96,6 @@ DEMO_TWO_SAY = "Slán an duine."
 
 DEMO_TWO_TITLE = "Leathanach a dó."
 
-LANGUAGE = "\
-Tá 24 theanga oifigiúla ag an Aontas Eorpach: \
-Bulgáiris, Cróitis, Seicis, Danmhairgis, Ollainnis, Béarla, Eastóinis, \
-Fionlainnis, Fraincis, Gearmáinis, Gréigis, Ungáiris, Gaeilge, \
-Iodáilis, Laitvis, Liotuáinis, Máltais, Polainnis, Portaingéilis, \
-Rómáinis, Slóvaicis, Slóivéinis, Spáinnis agus Sualainnis."
-
-LANGUAGE_NAME_ENGLISH = "Béarla"
-
-LANGUAGE_NAME_NATIVE = "Béarla"
-
-LANGUAGE_TAG_AZURE = "GA"
-
-LANGUAGE_TAG_ISO = "GA"
-
 SCAN_MAIN_BUTTON = "Ní dhéanann an cnaipe seo aon rud."
 
 SCAN_MAIN_TITLE = "Tionscadal Scan Slándála sa Todhchaí"
@@ -141,8 +126,6 @@ TRANSLATOR_SESSION_URL = "Suíomh na seirbhíse aistriúcháin."
 VIEWER_MAIN_BUTTON = "Luchtaigh íomhánna sa chomhadlann."
 
 VIEWER_SESSION_DIRECTORY = "Conair chuig eolaire ina bhfuil íomhánna."
-
-name = "GA"
 
 ########################################################################
 

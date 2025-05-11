@@ -4,7 +4,7 @@ import os
 import sys
 
 from celestine import load
-from celestine.package import Abstract
+from celestine.package import Package
 from celestine.typed import (
     M,
     N,
@@ -14,7 +14,7 @@ from celestine.typed import (
 )
 
 
-class Package(Abstract):
+class Self(Package):
     """"""
 
     @override

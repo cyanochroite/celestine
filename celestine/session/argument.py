@@ -7,16 +7,7 @@ from celestine.literal import (
     NONE,
     QUESTION_MARK,
 )
-from celestine.session.data import Actions
-from celestine.typed import (
-    LS,
-    B,
-    N,
-    R,
-    S,
-)
-
-from .attribute import (
+from celestine.session.attribute import (
     Action,
     Attribute,
     Choices,
@@ -24,7 +15,16 @@ from .attribute import (
     Nargs,
     Version,
 )
-from .hash import HashClass
+from celestine.session.data import Actions
+from celestine.session.hash import HashClass
+from celestine.typed import (
+    LS,
+    B,
+    N,
+    R,
+    S,
+    ignore,
+)
 
 
 class Argument(HashClass, Attribute):
@@ -46,6 +46,7 @@ class Argument(HashClass, Attribute):
     @abstractmethod
     def key(self, name: S) -> LS:
         """"""
+        raise NotImplementedError(self, name)
 
 
 class Flag(Argument):
@@ -53,6 +54,7 @@ class Flag(Argument):
 
     def key(self, name: S) -> LS:
         """"""
+        ignore(self)
         return [
             NONE.join((HYPHEN_MINUS, name[0])),
             NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name)),
@@ -64,6 +66,7 @@ class Name(Argument):
 
     def key(self, name: S) -> LS:
         """"""
+        ignore(self)
         return [name]
 
 
@@ -73,6 +76,7 @@ class Application(Flag, Help):
     # pylint: disable-next=redefined-builtin
     def __init__(self, fallback: S, help: S) -> N:
         """"""
+        ignore(self)
         super().__init__(
             argument=True,
             attribute=True,
@@ -87,6 +91,7 @@ class Customization(Flag, Help, Choices):
     # pylint: disable-next=redefined-builtin
     def __init__(self, fallback: S, help: S, choices: LS) -> N:
         """"""
+        ignore(self)
         super().__init__(
             argument=bool(choices),
             attribute=True,
@@ -102,6 +107,7 @@ class Positional(Name, Help, Choices, Nargs):
     # pylint: disable-next=redefined-builtin
     def __init__(self, fallback: S, help: S, choices: LS) -> N:
         """"""
+        ignore(self)
         super().__init__(
             argument=True,
             attribute=True,
@@ -118,6 +124,7 @@ class Optional(Flag, Help):
     # pylint: disable-next=redefined-builtin
     def __init__(self, fallback: S, help: S) -> N:
         """"""
+        ignore(self)
         super().__init__(
             argument=True,
             attribute=True,
@@ -132,6 +139,7 @@ class Information(Flag, Action, Help):
     # pylint: disable-next=redefined-builtin
     def __init__(self, action: S, help: S) -> N:
         """"""
+        ignore(self)
         super().__init__(
             argument=True,
             attribute=False,
@@ -147,6 +155,7 @@ class InformationConfiguration(Information):
     # pylint: disable-next=redefined-builtin
     def __init__(self, help: S) -> N:
         """"""
+        ignore(self)
         super().__init__(
             action=Actions.STORE_TRUE,
             help=help,
@@ -159,6 +168,7 @@ class InformationHelp(Information):
     # pylint: disable-next=redefined-builtin
     def __init__(self, help: S) -> N:
         """"""
+        ignore(self)
         super().__init__(
             action=Actions.HELP,
             help=help,
@@ -171,6 +181,7 @@ class InformationVersion(Information, Version):
     # pylint: disable-next=redefined-builtin
     def __init__(self, help: S) -> N:
         """"""
+        ignore(self)
         super().__init__(
             action=Actions.VERSION,
             help=help,

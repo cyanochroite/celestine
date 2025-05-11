@@ -96,22 +96,6 @@ DEMO_TWO_SAY = "Auf Wiedersehen, Mensch."
 
 DEMO_TWO_TITLE = "Seite zwei."
 
-LANGUAGE = "\
-Die EU verfügt über 24 Amtssprachen: \
-Bulgarisch, Dänisch, Deutsch, Englisch, Estnisch, Finnisch, \
-Französisch, Griechisch, Irisch, Italienisch, Kroatisch, Lettisch, \
-Litauisch, Maltesisch, Niederländisch, Polnisch, Portugiesisch, \
-Rumänisch, Schwedisch, Slowakisch, Slowenisch, \
-Spanisch und Ungarisch."
-
-LANGUAGE_NAME_ENGLISH = "Englisch"
-
-LANGUAGE_NAME_NATIVE = "Englisch"
-
-LANGUAGE_TAG_AZURE = "De"
-
-LANGUAGE_TAG_ISO = "De"
-
 SCAN_MAIN_BUTTON = "Diese Schaltfläche bewirkt nichts."
 
 SCAN_MAIN_TITLE = "Future Security Scan-Projekt"
@@ -144,8 +128,6 @@ VIEWER_MAIN_BUTTON = "Laden Sie Bilder in das Verzeichnis."
 
 VIEWER_SESSION_DIRECTORY = "\
 Ein Pfad zu einem Verzeichnis, das Bilder enthält."
-
-name = "De"
 
 ########################################################################
 

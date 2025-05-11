@@ -94,20 +94,6 @@ DEMO_TWO_SAY = "Viszlát ember."
 
 DEMO_TWO_TITLE = "Második oldal."
 
-LANGUAGE = "\
-Az EU-nak 24 hivatalos nyelve van: \
-angol, bolgár, cseh, dán, észt, finn, francia, görög, holland, horvát, \
-ír, lengyel, lett, litván, magyar, máltai, német, olasz, portugál, \
-román, spanyol, svéd, szlovák és szlovén."
-
-LANGUAGE_NAME_ENGLISH = "Angol"
-
-LANGUAGE_NAME_NATIVE = "Angol"
-
-LANGUAGE_TAG_AZURE = "En"
-
-LANGUAGE_TAG_ISO = "En"
-
 SCAN_MAIN_BUTTON = "Ez a gomb nem tesz semmit."
 
 SCAN_MAIN_TITLE = "Jövőbeli biztonsági vizsgálati projekt"
@@ -140,8 +126,6 @@ VIEWER_MAIN_BUTTON = "Képek betöltése a könyvtárba."
 
 VIEWER_SESSION_DIRECTORY = "\
 Egy képeket tartalmazó könyvtár elérési útja."
-
-name = "En"
 
 ########################################################################
 

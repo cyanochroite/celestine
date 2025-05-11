@@ -12,12 +12,14 @@ from celestine.package import (
 )
 from celestine.typed import (
     ANY,
+    LF,
     LS,
     D,
     N,
     P,
     R,
     S,
+    cast,
     ignore,
     override,
 )
@@ -52,7 +54,7 @@ class Element(Element_, Abstract):
     delete_item(...)
     """
 
-    def callback(self, *_) -> N:
+    def callback(self, *_: ANY) -> N:
         """
         The object callback.
 
@@ -62,10 +64,10 @@ class Element(Element_, Abstract):
         self.click(self.area.world.centroid)
         bank.dequeue()
 
-    @override
     def unbuild(self, parent: ANY, star: D[S, ANY]) -> N:
         """"""
-        dpg.delete_item(self.name)
+        ignore(parent, star)
+        dearpygui.delete_item(self.name)
 
     @override
     def build(self, parent: ANY, star: D[S, ANY]) -> N:
@@ -83,8 +85,8 @@ class Element(Element_, Abstract):
         width, height = self.area.world.size.value
         length = width * height
 
-        texture_data = []
-        for i in range(length):
+        texture_data: LF = []
+        for _ in range(length):
             texture_data.append(0)
             texture_data.append(0.25)
             texture_data.append(0.5)
@@ -118,7 +120,6 @@ class Element(Element_, Abstract):
             else:
                 self.item = dearpygui.add_image(**star)
 
-    @override
     def reimage(self, path: P, **star: R) -> N:
         """"""
         if not path:
@@ -128,7 +129,7 @@ class Element(Element_, Abstract):
         if not bool(PIL):
             return
 
-        texture_data = []
+        texture_data: LF = []
 
         image = PIL.Image.open(
             fp=path,
@@ -143,26 +144,13 @@ class Element(Element_, Abstract):
         image = self.imagin(image, image_size, target.size, "RGBA")
 
         for pixel in image.getdata():
-            for colour in pixel:
+            pixie = cast(LF, pixel)
+            for colour in pixie:
                 # TODO: This returns a TZ4
                 texture_data.append(colour / 255)
 
         dearpygui.set_value(f"_{self.name}", texture_data)
         super().reimage(path, **star)
-
-    @override
-    def retext(self, text: S, **star: R) -> N:
-        """"""
-        super().retext(text, **star)
-
-    @override
-    def update(self, path: P, **star: R) -> N:
-        """"""
-        super().update(path, **star)
-
-        photo: list[float] = self.load()
-
-        dearpygui.set_value(self.name, photo)
 
 
 class View(View_, Abstract):

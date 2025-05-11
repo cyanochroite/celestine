@@ -91,20 +91,6 @@ DEMO_TWO_SAY = "Ardievu cilvēkam."
 
 DEMO_TWO_TITLE = "Otrā lappuse."
 
-LANGUAGE = "\
-ES ir 24 oficiālās valodas: \
-angļu, bulgāru, čehu, dāņu, franču, grieķu, horvātu, igauņu, itāļu, \
-īru, latviešu, lietuviešu, maltiešu, poļu, portugāļu, rumāņu, slovāku, \
-slovēņu, somu, spāņu, ungāru, vācu un zviedru valoda."
-
-LANGUAGE_NAME_ENGLISH = "Angļu"
-
-LANGUAGE_NAME_NATIVE = "Angļu"
-
-LANGUAGE_TAG_AZURE = "En"
-
-LANGUAGE_TAG_ISO = "En"
-
 SCAN_MAIN_BUTTON = "Šī poga neko nedara."
 
 SCAN_MAIN_TITLE = "Nākotnes drošības skenēšanas projekts"
@@ -135,8 +121,6 @@ TRANSLATOR_SESSION_URL = "Tulkošanas dienesta atrašanās vieta."
 VIEWER_MAIN_BUTTON = "Ielādējiet attēlus direktorijā."
 
 VIEWER_SESSION_DIRECTORY = "Ceļš uz direktoriju, kurā ir attēli."
-
-name = "En"
 
 ########################################################################
 

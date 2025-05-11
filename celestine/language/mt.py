@@ -93,22 +93,6 @@ DEMO_TWO_SAY = "Addiju uman."
 
 DEMO_TWO_TITLE = "It-tieni paġna."
 
-LANGUAGE = "\
-L-UE għandha 24 lingwa uffiċjali: \
-il-Bulgaru, il-Kroat, iċ-Ċek, id-Daniż, l-Olandiż, l-Ingliż, \
-l-Estonjan, il-Finlandiż, il-Franċiż, il-Ġermaniż, il-Grieg, \
-l-Ungeriż, l-Irlandiż, it-Taljan, il-Latvjan, il-Litwan, il-Malti, \
-il-Pollakk, il-Portugiż, ir-Rumen, is-Slovakk, is-Sloven, \
-l-Ispanjol u l-Iżvediż."
-
-LANGUAGE_NAME_ENGLISH = "Ingliż"
-
-LANGUAGE_NAME_NATIVE = "Ingliż"
-
-LANGUAGE_TAG_AZURE = "En"
-
-LANGUAGE_TAG_ISO = "En"
-
 SCAN_MAIN_BUTTON = "Din il-buttuna ma tagħmel xejn."
 
 SCAN_MAIN_TITLE = "Proġett futur tal-Iskennjar tas-Sigurtà"
@@ -140,8 +124,6 @@ TRANSLATOR_SESSION_URL = "Il-post tas-servizz tat-traduzzjoni."
 VIEWER_MAIN_BUTTON = "Immaġnijiet tat-tagħbija fid-direttorju."
 
 VIEWER_SESSION_DIRECTORY = "Mogħdija għal direttorju li fih immaġini."
-
-name = "En"
 
 ########################################################################
 

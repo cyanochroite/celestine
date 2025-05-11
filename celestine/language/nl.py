@@ -94,20 +94,6 @@ DEMO_TWO_SAY = "Vaarwel mens."
 
 DEMO_TWO_TITLE = "Pagina twee."
 
-LANGUAGE = "\
-De EU heeft 24 officiële talen: \
-Bulgaars, Deens, Duits, Engels, Ests, Fins, Frans, Grieks, Hongaars, \
-Iers, Italiaans, Kroatisch, Lets, Litouws, Maltees, Pools, Portugees, \
-Roemeens, Sloveens, Slowaaks, Spaans, Tsjechisch en Zweeds."
-
-LANGUAGE_NAME_ENGLISH = "Engels"
-
-LANGUAGE_NAME_NATIVE = "Engels"
-
-LANGUAGE_TAG_AZURE = "Nl"
-
-LANGUAGE_TAG_ISO = "Nl"
-
 SCAN_MAIN_BUTTON = "Deze knop doet niets."
 
 SCAN_MAIN_TITLE = "Toekomstig beveiligingsscanproject"
@@ -138,8 +124,6 @@ TRANSLATOR_SESSION_URL = "De locatie van de vertaaldienst."
 VIEWER_MAIN_BUTTON = "Laad afbeeldingen in de directory."
 
 VIEWER_SESSION_DIRECTORY = "Een pad naar een map met afbeeldingen."
-
-name = "Nl"
 
 ########################################################################
 

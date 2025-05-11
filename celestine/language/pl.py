@@ -92,21 +92,6 @@ DEMO_TWO_SAY = "Żegnaj człowieku."
 
 DEMO_TWO_TITLE = "Strona druga."
 
-LANGUAGE = "\
-W UE obowiązują 24 języki urzędowe: \
-angielski, bułgarski, chorwacki, czeski, duński, estoński, fiński, \
-francuski, grecki, hiszpański, irlandzki, litewski, łotewski, \
-maltański, niderlandzki, niemiecki, polski, portugalski, rumuński, \
-słowacki, słoweński, szwedzki, węgierski i włoski."
-
-LANGUAGE_NAME_ENGLISH = "Angielski"
-
-LANGUAGE_NAME_NATIVE = "Angielski"
-
-LANGUAGE_TAG_AZURE = "En"
-
-LANGUAGE_TAG_ISO = "En"
-
 SCAN_MAIN_BUTTON = "Ten przycisk nic nie robi."
 
 SCAN_MAIN_TITLE = "Przyszły projekt skanowania bezpieczeństwa"
@@ -138,8 +123,6 @@ TRANSLATOR_SESSION_URL = "Lokalizacja usługi tłumaczeniowej."
 VIEWER_MAIN_BUTTON = "Załaduj obrazy do katalogu."
 
 VIEWER_SESSION_DIRECTORY = "Ścieżka do katalogu zawierającego obrazy."
-
-name = "En"
 
 ########################################################################
 

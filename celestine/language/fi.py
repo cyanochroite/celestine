@@ -93,21 +93,6 @@ DEMO_TWO_SAY = "Hyvästi ihminen."
 
 DEMO_TWO_TITLE = "Sivu kaksi."
 
-LANGUAGE = "\
-EU: ssa on 24 virallista kieltä: \
-bulgaria, englanti, espanja, hollanti, iiri, italia, kreikka, \
-kroaatti, latvia, liettua, malta, portugali, puola, ranska, romania, \
-ruotsi, saksa, slovakki, sloveeni, suomi, tanska, tšekki, \
-unkari ja viro."
-
-LANGUAGE_NAME_ENGLISH = "Englanti"
-
-LANGUAGE_NAME_NATIVE = "Englanti"
-
-LANGUAGE_TAG_AZURE = "fi"
-
-LANGUAGE_TAG_ISO = "fi"
-
 SCAN_MAIN_BUTTON = "Tämä painike ei tee mitään."
 
 SCAN_MAIN_TITLE = "Tulevaisuuden tietoturvatarkistusprojekti"
@@ -137,8 +122,6 @@ TRANSLATOR_SESSION_URL = "Käännöspalvelun sijainti."
 VIEWER_MAIN_BUTTON = "Lataa kuvat hakemistoon."
 
 VIEWER_SESSION_DIRECTORY = "Polku kuvia sisältävään hakemistoon."
-
-name = "fi"
 
 ########################################################################
 

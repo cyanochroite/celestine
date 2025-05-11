@@ -92,20 +92,6 @@ DEMO_TWO_SAY = "Adiós humano."
 
 DEMO_TWO_TITLE = "Página dos."
 
-LANGUAGE = "\
-La UE tiene 24 lenguas oficiales: \
-alemán, búlgaro, checo, croata, danés, eslovaco, esloveno, español, \
-estonio, finés, francés, griego, húngaro, inglés, irlandés, italiano, \
-letón, lituano, maltés, polaco, portugués, rumano y sueco."
-
-LANGUAGE_NAME_ENGLISH = "Inglés"
-
-LANGUAGE_NAME_NATIVE = "Inglés"
-
-LANGUAGE_TAG_AZURE = "en"
-
-LANGUAGE_TAG_ISO = "en"
-
 SCAN_MAIN_BUTTON = "Este botón no hace nada."
 
 SCAN_MAIN_TITLE = "Proyecto de análisis de seguridad futuro"
@@ -137,8 +123,6 @@ VIEWER_MAIN_BUTTON = "Cargar imágenes en el directorio."
 
 VIEWER_SESSION_DIRECTORY = "\
 Una ruta de acceso a un directorio que contiene imágenes."
-
-name = "en"
 
 ########################################################################
 

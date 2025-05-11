@@ -5,12 +5,11 @@ Add the parent directory to the path so we can find ourself.
 """
 
 import importlib
-import os
+import pathlib
 import sys
 
 if __name__ == "__main__":
-    PATH = sys.path[0]
-    parent = os.path.dirname(PATH)
-    sys.path.insert(0, parent)
+    path = pathlib.Path(sys.path[0])
+    sys.path.insert(0, str(path.parent))
     celestine = importlib.import_module("celestine")
-    celestine.main()
+    celestine.main("celestine.application")

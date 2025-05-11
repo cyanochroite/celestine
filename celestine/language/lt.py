@@ -93,21 +93,6 @@ DEMO_TWO_SAY = "Sudie, žmogau."
 
 DEMO_TWO_TITLE = "Antras puslapis."
 
-LANGUAGE = "\
-ES yra 24 oficialiosios kalbos: \
-airių, anglų, bulgarų, čekų, danų, estų, graikų, ispanų, italų, \
-kroatų, latvių, lenkų, lietuvių, maltiečių, olandų, portugalų, \
-prancūzų, rumunų, slovakų, slovėnų, suomių, švedų, \
-vengrų ir vokiečių."
-
-LANGUAGE_NAME_ENGLISH = "Anglų"
-
-LANGUAGE_NAME_NATIVE = "Anglų"
-
-LANGUAGE_TAG_AZURE = "En"
-
-LANGUAGE_TAG_ISO = "En"
-
 SCAN_MAIN_BUTTON = "Šis mygtukas nieko nedaro."
 
 SCAN_MAIN_TITLE = "Ateities saugos nuskaitymo projektas"
@@ -139,8 +124,6 @@ TRANSLATOR_SESSION_URL = "Vertimo tarnybos vieta."
 VIEWER_MAIN_BUTTON = "Įkelkite vaizdus į katalogą."
 
 VIEWER_SESSION_DIRECTORY = "Kelias į katalogą, kuriame yra vaizdų."
-
-name = "En"
 
 ########################################################################
 

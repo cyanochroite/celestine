@@ -90,21 +90,6 @@ DEMO_TWO_SAY = "Farvel menneske."
 
 DEMO_TWO_TITLE = "Side to."
 
-LANGUAGE = "\
-EU har 24 officielle sprog: \
-bulgarsk, dansk, engelsk, estisk, finsk, fransk, græsk, irsk, \
-italiensk, lettisk, litauisk, maltesisk, nederlandsk, polsk, \
-portugisisk, rumænsk, slovakisk, slovensk, spansk, svensk, tjekkisk, \
-tysk og ungarsk."
-
-LANGUAGE_NAME_ENGLISH = "Engelsk"
-
-LANGUAGE_NAME_NATIVE = "Engelsk"
-
-LANGUAGE_TAG_AZURE = "da"
-
-LANGUAGE_TAG_ISO = "da"
-
 SCAN_MAIN_BUTTON = "Denne knap gør intet."
 
 SCAN_MAIN_TITLE = "Fremtidigt sikkerhedsscanningsprojekt"
@@ -137,8 +122,6 @@ VIEWER_MAIN_BUTTON = "Indlæs billeder i biblioteket."
 
 VIEWER_SESSION_DIRECTORY = "\
 En sti til en mappe, der indeholder billeder."
-
-name = "da"
 
 ########################################################################
 

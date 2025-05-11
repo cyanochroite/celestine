@@ -13,51 +13,15 @@ from celestine.literal import (
     FULL_STOP,
     INTERFACE,
     LANGUAGE,
-    PACKAGE,
 )
+from celestine.session import default
+from celestine.session.magic import Magic
 from celestine.typed import (
     A,
-    C,
-    D,
+    M,
     N,
     S,
 )
-from celestine.window.collection import Dictionary
-
-from . import default
-from .magic import Magic
-
-this = load.module(PACKAGE)
-
-type Decorator = D[S, C[..., A]]
-
-
-def decorators(*path: S) -> D[S, Decorator]:
-    """Load all decorated functions from all modules found in path."""
-    result: D[S, Decorator] = {}
-
-    pattern = re.compile(r"<function (\w+)\.")
-
-    base = FULL_STOP.join(path)
-    walked = load.walk_package(base)
-    for _module in walked:
-        items = vars(_module).items()
-
-        for key, value in items:
-            match = pattern.match(repr(value))
-
-            if not match:
-                continue
-
-            name = match[1]
-
-            if name not in result:
-                result[name] = {}
-
-            item = FULL_STOP.join((base, key))
-            result[name][item] = value
-
-    return result
 
 
 def set_lang():
@@ -68,7 +32,7 @@ def set_lang():
         setattr(language, key, value)
 
 
-def begin_session() -> A:
+def begin_session(module: M, name: S) -> A:
     """
     First load Language so human can read errors.
 
@@ -85,9 +49,8 @@ def begin_session() -> A:
     bank.language = load.module(LANGUAGE, default.language())
     set_lang()
     bank.interface = load.module(INTERFACE, default.interface())
-    hold = default.application()
-    bank.application = load.module(APPLICATION, default.application())
-    setattr(bank.application, "name", hold)
+    bank.application = module
+    setattr(bank.application, "name", name)
 
     magic = Magic()
 
@@ -111,14 +74,14 @@ def begin_session() -> A:
         importlib.reload(session)
 
         session1 = load.method("Session", "session", "session")
-        name = bank.application.name
+        name = bank.application.__spec__.name.split(".")[-1]
         session2 = load.method("Session", APPLICATION, name)
         session3 = load.method("Information", "session", "session")
 
         magic.get_parser([session1, session2, session3], False)
 
     # Save values to session object.
-    bank.application = load.module(APPLICATION, session1.application)
+    bank.application = module
     bank.attribute = session2
     bank.directory = session1.directory
     bank.interface = load.module(INTERFACE, session1.interface)
@@ -126,51 +89,36 @@ def begin_session() -> A:
 
     set_lang()
 
-    return bank.window, bank.application.name
+    return bank.window
 
 
-def begin_main() -> N:
-    """"""
-    window, application = begin_session()
+def run(base: S) -> N:
+    """
+    Initializes and runs the main 'window' object.
 
-    decorator = decorators(CELESTINE, APPLICATION, application)
-    call = decorator.get("call", {})
-    draw = decorator.get("draw", {})
-    main = decorator.get("main", {})
-    draw |= main
+    Imports the package found from loading 'base'.
+    Goes through all modules and gathers all the decorators.
+    When finished, the window object will be setup and good to go.
+    """
+    module = importlib.import_module(base)
+    window = begin_session(module, base)
 
-    def find_main() -> S:
-        """Finds @main or 'def main' or any @draw."""
-        try:
-            return next(iter(main))
-        except StopIteration:
-            pass
+    pattern = re.compile(r"<function (\w+)\.<locals>\.decorator")
+    walked = load.walk_package(base)
 
-        for key in draw:
-            if "main" in key:
-                return key
+    for module in walked:
+        dictionary = vars(module)
+        items = dictionary.items()
 
-        try:
-            return next(iter(draw))
-        except StopIteration:
-            pass
+        for variable, decorator in items:
+            string = repr(decorator)
+            match = pattern.match(string)
 
-        raise Warning("There is nothing to draw.")
+            if not match:
+                continue
 
-    window.main = find_main()
+            iterable = (base, variable)
+            name = FULL_STOP.join(iterable)
+            decorator(window, name)
 
-    _code: Decorator = {}
-    _view: Decorator = {}
-
-    for name, function in call.items():
-        _code[name] = function
-
-    for name, function in draw.items():
-        view = window.drop(name)
-        function(view)
-        _view[name] = view
-
-    # TODO init this better?
-    window.code = Dictionary(_code)
-    window.view = Dictionary(_view)
     window.run()

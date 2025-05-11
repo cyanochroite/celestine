@@ -39,6 +39,7 @@ from collections.abc import Callable as C
 from collections.abc import Generator as G
 from collections.abc import Iterator as IT
 from collections.abc import Sequence as Q
+from importlib.machinery import ModuleSpec as MS
 from pathlib import Path as P
 from types import ModuleType as M
 from typing import Any as A
@@ -144,6 +145,48 @@ type TZ1 = T[Z]
 type TZ2 = T[Z, Z]
 type TZ3 = T[Z, Z, Z]
 type TZ4 = T[Z, Z, Z, Z]
+
+type LTA = L[TA]
+type LTA1 = L[TA1]
+type LTA2 = L[TA2]
+type LTA3 = L[TA3]
+type LTA4 = L[TA4]
+
+type LTB = L[TB]
+type LTB1 = L[TB1]
+type LTB2 = L[TB2]
+type LTB3 = L[TB3]
+type LTB4 = L[TB4]
+
+type LTF = L[TF]
+type LTF1 = L[TF1]
+type LTF2 = L[TF2]
+type LTF3 = L[TF3]
+type LTF4 = L[TF4]
+
+type LTM = L[TM]
+type LTM1 = L[TM1]
+type LTM2 = L[TM2]
+type LTM3 = L[TM3]
+type LTM4 = L[TM4]
+
+type LTP = L[TP]
+type LTP1 = L[TP1]
+type LTP2 = L[TP2]
+type LTP3 = L[TP3]
+type LTP4 = L[TP4]
+
+type LTS = L[TS]
+type LTS1 = L[TS1]
+type LTS2 = L[TS2]
+type LTS3 = L[TS3]
+type LTS4 = L[TS4]
+
+type LTZ = L[TZ]
+type LTZ1 = L[TZ1]
+type LTZ2 = L[TZ2]
+type LTZ3 = L[TZ3]
+type LTZ4 = L[TZ4]
 
 
 type VA = V[A]
@@ -265,84 +308,4 @@ class Struct:
     data = property(_get, _set, _del)
 
 
-ignore(
-    ANY,
-    BF,
-    BT,
-    CA,
-    cast,
-    CN,
-    DA,
-    DB,
-    DF,
-    DM,
-    DP,
-    DS,
-    DZ,
-    GB,
-    GF,
-    GM,
-    GP,
-    GS,
-    GZ,
-    IT,
-    J,
-    LB,
-    LF,
-    LM,
-    LP,
-    LS,
-    LZ,
-    NR,
-    Object,
-    override,
-    Protocol,
-    Q,
-    string,
-    Struct,
-    TA1,
-    TA2,
-    TA3,
-    TA4,
-    TB,
-    TB1,
-    TB2,
-    TB3,
-    TB4,
-    TD,
-    TF,
-    TF1,
-    TF2,
-    TF3,
-    TF4,
-    TM,
-    TM1,
-    TM2,
-    TM3,
-    TM4,
-    TP,
-    TP1,
-    TP2,
-    TP3,
-    TP4,
-    TS1,
-    TS2,
-    TS3,
-    TS4,
-    TZ,
-    TZ1,
-    TZ2,
-    TZ3,
-    TZ4,
-    U,
-    UN,
-    VA,
-    VB,
-    VF,
-    VM,
-    VP,
-    VS,
-    VZ,
-    X,
-    Y,
-)
+ignore(IT, MS, NR, override, Protocol, Q, TD, U, UN)

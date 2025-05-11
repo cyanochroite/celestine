@@ -92,22 +92,6 @@ DEMO_TWO_SAY = "Zbohom človek."
 
 DEMO_TWO_TITLE = "Strana druhá."
 
-LANGUAGE = "\
-EÚ má 24 úradných jazykov: \
-angličtina, bulharčina, čeština, dánčina, estónčina, fínčina, \
-francúzština, gréčtina, holandčina, chorvátčina, írčina, litovčina, \
-lotyština, maďarčina, maltčina, nemčina, poľština, portugalčina, \
-rumunčina, slovenčina, slovinčina, španielčina, \
-švédčina a taliančina."
-
-LANGUAGE_NAME_ENGLISH = "Angličtina"
-
-LANGUAGE_NAME_NATIVE = "Angličtina"
-
-LANGUAGE_TAG_AZURE = "En"
-
-LANGUAGE_TAG_ISO = "En"
-
 SCAN_MAIN_BUTTON = "Toto tlačidlo nerobí nič."
 
 SCAN_MAIN_TITLE = "Budúci projekt bezpečnostnej kontroly"
@@ -137,8 +121,6 @@ TRANSLATOR_SESSION_URL = "Sídlo prekladateľskej služby."
 VIEWER_MAIN_BUTTON = "Načítajte obrázky do adresára."
 
 VIEWER_SESSION_DIRECTORY = "Cesta k adresáru obsahujúcemu obrázky."
-
-name = "En"
 
 ########################################################################
 

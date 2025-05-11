@@ -95,22 +95,6 @@ DEMO_TWO_SAY = "Zbogom človek."
 
 DEMO_TWO_TITLE = "Druga stran."
 
-LANGUAGE = "\
-EU ima 24 uradnih jezikov: \
-bolgarščino, hrvaščino, češčino, danščino, nizozemščino, angleščino, \
-estonščino, finščino, francoščino, nemščino, grščino, madžarščino, \
-irščino, italijanščino, latvijščino, litovščino, malteščino, \
-poljščino, portugalščino, romunščino, slovaščino, slovenščino, \
-španščino in švedščino."
-
-LANGUAGE_NAME_ENGLISH = "Angleščina"
-
-LANGUAGE_NAME_NATIVE = "Angleščina"
-
-LANGUAGE_TAG_AZURE = "sl"
-
-LANGUAGE_TAG_ISO = "sl"
-
 SCAN_MAIN_BUTTON = "Ta gumb ne naredi ničesar."
 
 SCAN_MAIN_TITLE = "Prihodnji projekt varnostnega pregleda"
@@ -142,8 +126,6 @@ TRANSLATOR_SESSION_URL = "Lokacija prevajalske storitve."
 VIEWER_MAIN_BUTTON = "Naložite slike v imenik."
 
 VIEWER_SESSION_DIRECTORY = "Pot do imenika, ki vsebuje slike."
-
-name = "sl"
 
 ########################################################################
 

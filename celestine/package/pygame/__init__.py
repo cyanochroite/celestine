@@ -1,6 +1,6 @@
 """Python Game Development."""
 
-from celestine.package import Abstract
+from celestine.package import Package
 from celestine.package.pygame import (
     display,
     event,
@@ -24,12 +24,13 @@ MOUSEBUTTONDOWN: Z
 QUIT: Z
 
 
-class Package(Abstract):
-    """"""
-
 
 class Rect:
     """"""
+
+class Self(Package):
+    """"""
+
 
 
 def quit(**star: R) -> N:  # pylint: disable=redefined-builtin

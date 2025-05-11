@@ -4,11 +4,6 @@ from celestine import (
     bank,
     language,
 )
-from celestine.data import (
-    call,
-    draw,
-    main,
-)
 from celestine.interface import View
 from celestine.session.session import SuperSession
 from celestine.typed import (
@@ -17,6 +12,11 @@ from celestine.typed import (
     R,
     S,
     ignore,
+)
+from celestine.window.decorator import (
+    call,
+    draw,
+    main,
 )
 
 

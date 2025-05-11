@@ -2,10 +2,7 @@
 
 import enum
 
-from celestine import (
-    bank,
-    load,
-)
+from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
 from celestine.interface import View as View_
@@ -79,8 +76,8 @@ class Element(Element_, Abstract):
         """"""
         super().build(parent, star)
         self.color = (255, 0, 255)
-        # self.warp("font")
-        self.font = star.get("font", None)
+        default = pygame.font.Font(None, 12)
+        self.font = star.get("font", default)
 
         size = self.area.local.size.value
         self.image = pygame.Surface(size)
@@ -217,15 +214,6 @@ class Window(Window_, Abstract):
     @override
     def run(self) -> N:
         super().run()
-
-        def set_icon() -> N:
-            path = "icon.png"
-            asset = load.asset(path)
-            image = pygame.image.load(asset)
-            icon = image.convert_alpha()
-            pygame.display.set_icon(icon)
-
-        # set_icon()
 
         while True:
             bank.dequeue()

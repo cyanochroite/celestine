@@ -1,6 +1,6 @@
 """A Python utility / library to sort Python imports."""
 
-from celestine.package import Abstract
+from celestine.package import Package
 from celestine.typed import (
     LS,
     N,
@@ -9,7 +9,7 @@ from celestine.typed import (
 )
 
 
-class Package(Abstract):
+class Self(Package):
     """"""
 
     @override

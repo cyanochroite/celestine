@@ -91,21 +91,6 @@ DEMO_TWO_SAY = "Goodbye human."
 
 DEMO_TWO_TITLE = "Page two."
 
-LANGUAGE = "\
-The EU has 24 official languages: \
-Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, \
-French, German, Greek, Hungarian, Irish, Italian, Latvian, Lithuanian, \
-Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian, \
-Spanish and Swedish."
-
-LANGUAGE_NAME_ENGLISH = "English"
-
-LANGUAGE_NAME_NATIVE = "English"
-
-LANGUAGE_TAG_AZURE = "en"
-
-LANGUAGE_TAG_ISO = "en"
-
 SCAN_MAIN_BUTTON = "This button does nothing."
 
 SCAN_MAIN_TITLE = "Future Security Scan Project"
@@ -137,8 +122,6 @@ TRANSLATOR_SESSION_URL = "The location of the translation service."
 VIEWER_MAIN_BUTTON = "Load images in directory."
 
 VIEWER_SESSION_DIRECTORY = "A path to a directory containing images."
-
-name = "en"
 
 ########################################################################
 

@@ -16,7 +16,7 @@ from celestine.typed import (
 )
 
 
-class Abstract:
+class Package:
     """"""
 
     name: S
@@ -52,7 +52,7 @@ class Abstract:
 
         argv = sys.argv
 
-        path = load.project_path()
+        path = load.project_root()
         root = str(path)
         sys.argv = [root, root]
         try:
@@ -90,4 +90,4 @@ class Abstract:
             print(message)
 
 
-ignore(Abstract)
+ignore(Package)
