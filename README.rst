@@ -1,7 +1,7 @@
 Célestine
 #########
 
-.. image:: https://readthedocs.org/projects/celestine/badge/?version=latest
+.. image:: https://readthedocs.org/projects/celestine/badge/?version=main
    :alt: Documentation Status
    :target: https://celestine.readthedocs.io/en/latest/?badge=latest
 .. image:: https://img.shields.io/github/repo-size/cyanochroite/celestine
