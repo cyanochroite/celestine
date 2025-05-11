@@ -12,48 +12,35 @@ import os
 import pkgutil
 import sys
 
-from celestine.typed import (
-    N,
-    S,
-)
 
-
-def init(root: S) -> N:
+def init(base: str | None) -> None:
     """"""
-    sys_stdout = sys.stdout
-    with open(os.devnull, "w", encoding="utf-8") as stdout:
-        sys.stdout = stdout
+    root = f"{base}." if base else ""
+    locations = ["package", "language", "interface"]
+    for location in locations:
+        name = f"{root}{location}"
+        try:
+            module = importlib.import_module(name)
+        except ModuleNotFoundError:
+            return
 
-        locations = ["package", "language", "interface"]
-        for location in locations:
-            name = f"{root}.{location}"
+        spec = module.__spec__
+        if not spec:
+            return
+
+        path = spec.submodule_search_locations
+        modules = pkgutil.iter_modules(path)
+
+        for info in modules:
+            _name = f"{name}.{info.name}:Self"
             try:
-                module = importlib.import_module(name)
-            except ModuleNotFoundError:
-                return
-
-            spec = module.__spec__
-            if not spec:
-                return
-
-            path = spec.submodule_search_locations
-            modules = pkgutil.iter_modules(path)
-
-            for info in modules:
-                _name = f"{name}.{info.name}:Self"
-                try:
-                    value = pkgutil.resolve_name(_name)
-                    setattr(module, info.name, value())
-                except AttributeError:
-                    pass
-
-    sys.stdout = sys_stdout
+                value = pkgutil.resolve_name(_name)
+                setattr(module, info.name, value())
+            except AttributeError:
+                pass
 
 
-init(__package__)
-
-
-def main(*names: S) -> N:
+def main(*names: str | None) -> None:
     """
     Initialize the packages and then run the main program.
 
@@ -62,14 +49,18 @@ def main(*names: S) -> N:
     a package may print when being imported.
     """
     for name in names:
-        init(name)
+        if name:
+            init(name)
 
     session = importlib.import_module("celestine.session")
-    run = getattr(session, "run")
-    run(names[0])
+    session.run(names[0])
 
 
-# names order important
-# load first module
-# go through the spec locations next
-# try to find each package thing
+# Change the output stream to hide the pygame loading message.
+sys_stdout = sys.stdout
+
+with open(os.devnull, "w", encoding="utf-8") as stdout:
+    sys.stdout = stdout
+    init(__package__)
+
+sys.stdout = sys_stdout

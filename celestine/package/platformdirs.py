@@ -23,9 +23,8 @@ def user_data_dir(
     **star: R,
 ) -> S:
     """"""
-    ignore(star)
     raise NotImplementedError(
-        appname, appauthor, version, roaming, ensure_exists
+        appname, appauthor, version, roaming, ensure_exists, star
     )
 
 

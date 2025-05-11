@@ -24,13 +24,12 @@ MOUSEBUTTONDOWN: Z
 QUIT: Z
 
 
-
 class Rect:
     """"""
 
+
 class Self(Package):
     """"""
-
 
 
 def quit(**star: R) -> N:  # pylint: disable=redefined-builtin

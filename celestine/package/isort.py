@@ -13,7 +13,7 @@ class Self(Package):
     """"""
 
     @override
-    def module(self) -> LS:
+    def submodule(self) -> LS:
         """"""
         ignore(self)
         return ["main"]

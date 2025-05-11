@@ -230,7 +230,7 @@ def whitespace(string: S) -> GS:
     Allow line breaks after punctuation.
     """
     previous = None
-    whitespace = None
+    _whitespace = None
 
     for character in string:
         if character in unicode_identifier:
@@ -242,13 +242,13 @@ def whitespace(string: S) -> GS:
                 yield from INFORMATION_SEPARATOR_THREE
             elif previous in unicode_identifier:
                 # Preserve space between words.
-                if whitespace:
+                if _whitespace:
                     yield from SPACE
                     yield from INFORMATION_SEPARATOR_ONE
 
-        whitespace = character in unicode_whitespace
+        _whitespace = character in unicode_whitespace
 
-        if not whitespace:
+        if not _whitespace:
             yield from character
             previous = character
 

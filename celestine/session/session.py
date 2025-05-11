@@ -31,7 +31,6 @@ from celestine.session.data import (
 from celestine.typed import (
     DA,
     A,
-    M,
     S,
     T,
     ignore,
@@ -81,8 +80,6 @@ class Dictionary(SuperSession):
 class Application(Dictionary):
     """"""
 
-    application: M
-
     @classmethod
     def dictionary(cls) -> DA:
         """"""
@@ -99,8 +96,6 @@ class Application(Dictionary):
 class Configuration(Dictionary):
     """"""
 
-    configuration: M
-
     @classmethod
     def dictionary(cls) -> DA:
         """"""
@@ -115,8 +110,6 @@ class Configuration(Dictionary):
 
 class Directory(Dictionary):
     """"""
-
-    directory: M
 
     @classmethod
     def dictionary(cls) -> DA:
@@ -133,8 +126,6 @@ class Directory(Dictionary):
 class Interface(Dictionary):
     """"""
 
-    interface: M
-
     @classmethod
     def dictionary(cls) -> DA:
         """"""
@@ -150,8 +141,6 @@ class Interface(Dictionary):
 
 class Language(Dictionary):
     """"""
-
-    language: M
 
     @classmethod
     def dictionary(cls) -> DA:

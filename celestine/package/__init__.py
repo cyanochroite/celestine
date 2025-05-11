@@ -35,7 +35,7 @@ class Package:
         sys.argv.append(root)
         package.main()
 
-    def module(self) -> LS:
+    def submodule(self) -> LS:
         """The 'import PACKAGE.MODULE' name."""
         ignore(self)
         return []
@@ -56,8 +56,8 @@ class Package:
         root = str(path)
         sys.argv = [root, root]
         try:
-            module = load.package(self.name, *self.module())
-            self.main(module, path)
+            submodule = load.package(self.name, *self.submodule())
+            self.main(submodule, path)
         except SystemExit as exception:
             if terminate:
                 raise exception

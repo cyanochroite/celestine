@@ -32,7 +32,7 @@ class Self(Package):
         package.main(argv)
 
     @override
-    def module(self) -> LS:
+    def submodule(self) -> LS:
         """"""
         ignore(self)
         return ["_main"]

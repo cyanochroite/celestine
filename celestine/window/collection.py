@@ -163,7 +163,7 @@ class Area(Object):
 class Dictionary[X](collections.abc.MutableMapping[S, A]):
     """"""
 
-    dictionary: D[S, X]
+    mapping: D[S, X]
 
     def copy(self) -> K:
         """"""
@@ -172,7 +172,7 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
     @classmethod
     def echo(cls, self: K) -> K:
         """"""
-        return cls(self.dictionary)
+        return cls(self.mapping)
 
     def key(self, key: S) -> S:
         """Expands short keys to full keys."""
@@ -184,50 +184,50 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
         names = one.split(FULL_STOP)
         for name in names:
             result = add + two
-            if result in self.dictionary:
+            if result in self.mapping:
                 break
             add += name + FULL_STOP
         return result
 
     @classmethod
-    def make(cls, dictionary: V[D[S, X]] = None) -> K:
+    def make(cls, mapping: V[D[S, X]] = None) -> K:
         """"""
-        return cls(dictionary)
+        return cls(mapping)
 
     def __delitem__(self, key: S) -> N:
         index = self.key(key)
-        del self.dictionary[index]
+        del self.mapping[index]
 
     def __getitem__(self, key: S) -> X:
         index = self.key(key)
-        result = self.dictionary[index]
+        result = self.mapping[index]
         return result
 
-    def __init__(self, dictionary: V[D[S, X]] = None) -> N:
-        self.dictionary = dictionary or {}
+    def __init__(self, mapping: V[D[S, X]] = None) -> N:
+        self.mapping = mapping or {}
 
     def __iter__(self) -> IT[S]:
-        return iter(self.dictionary)
+        return iter(self.mapping)
 
     def __len__(self) -> Z:
-        return len(self.dictionary)
+        return len(self.mapping)
 
     def __setitem__(self, key: S, value: X) -> N:
         index = self.key(key)
-        self.dictionary[index] = value
+        self.mapping[index] = value
 
     def __or__(self, other: K) -> K:
-        result = self.make(self.dictionary)
-        result.dictionary.update(other.dictionary)
+        result = self.make(self.mapping)
+        result.mapping.update(other.mapping)
         return result
 
     def __ror__(self, other: K) -> K:
-        result = self.make(other.dictionary)
-        result.dictionary.update(self.dictionary)
+        result = self.make(other.mapping)
+        result.mapping.update(self.mapping)
         return result
 
     def __ior__(self, other: K) -> K:
-        self.dictionary.update(other.dictionary)
+        self.mapping.update(other.mapping)
         return self
 
 

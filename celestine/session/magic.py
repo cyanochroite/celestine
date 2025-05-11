@@ -146,7 +146,7 @@ class Magic:
         for session in sessions:
             # TODO: Make class instance for less weird classmethods
             for name, argument in session.items():
-                if not argument.argument:
+                if not argument.arguments:
                     continue
                 parser = arguments[argument]
                 args = argument.key(name)
@@ -190,7 +190,6 @@ class Magic:
 
     def __exit__(self, *_):
         save = bool(getattr(self.args, Values.CONFIGURATION, NONE))
-        save = True
         if save:
             bank.configuration.save()
         return False

@@ -32,14 +32,14 @@ class Argument(HashClass, Attribute):
 
     def __init__(
         self,
-        argument: B,
+        arguments: B,
         attribute: B,
         fallback: S,
         **star: R,
     ) -> N:
         """"""
         super().__init__(**star)
-        self.argument = argument
+        self.arguments = arguments
         self.attribute = attribute
         self.fallback = fallback
 
@@ -78,7 +78,7 @@ class Application(Flag, Help):
         """"""
         ignore(self)
         super().__init__(
-            argument=True,
+            arguments=True,
             attribute=True,
             fallback=fallback,
             help=help,
@@ -93,7 +93,7 @@ class Customization(Flag, Help, Choices):
         """"""
         ignore(self)
         super().__init__(
-            argument=bool(choices),
+            arguments=bool(choices),
             attribute=True,
             fallback=fallback,
             help=help,
@@ -109,7 +109,7 @@ class Positional(Name, Help, Choices, Nargs):
         """"""
         ignore(self)
         super().__init__(
-            argument=True,
+            arguments=True,
             attribute=True,
             fallback=fallback,
             help=help,
@@ -126,7 +126,7 @@ class Optional(Flag, Help):
         """"""
         ignore(self)
         super().__init__(
-            argument=True,
+            arguments=True,
             attribute=True,
             fallback=fallback,
             help=help,
@@ -141,7 +141,7 @@ class Information(Flag, Action, Help):
         """"""
         ignore(self)
         super().__init__(
-            argument=True,
+            arguments=True,
             attribute=False,
             fallback=NONE,
             action=action,

@@ -28,23 +28,23 @@ FILE = "celestine.ini"
 class Configuration:
     """Parse configuration stuff."""
 
-    configuration: configparser.ConfigParser
+    parser: configparser.ConfigParser
     path: P
     save_it_file: stream.Text
 
     def get(self, section: S, option: S) -> S:
         """"""
-        return self.configuration.get(section, option, fallback=NONE)
+        return self.parser.get(section, option, fallback=NONE)
 
     def load(self, path: VP = None) -> N:
         """Load the configuration file."""
         filenames = path or self.path
         encoding = stream.Encoding.UTF_8.value
-        self.configuration.read(filenames, encoding)
+        self.parser.read(filenames, encoding)
 
     def save(self) -> N:
         """Save the configuration file."""
-        configuration = self.configuration
+        configuration = self.parser
         path = os.path.join(self.path, FILE)
         with self.save_it_file.writer(path) as fileobject:
             space_around_delimiters = True
@@ -52,10 +52,10 @@ class Configuration:
 
     def set(self, section: S, option: S, value: S) -> N:
         """"""
-        if not self.configuration.has_section(section):
-            self.configuration.add_section(section)
+        if not self.parser.has_section(section):
+            self.parser.add_section(section)
 
-        self.configuration[section][option] = value
+        self.parser[section][option] = value
 
     def __init__(self) -> N:
         """"""
@@ -72,7 +72,7 @@ class Configuration:
             self.path = load.pathway_root()
 
         self.save_it_file = stream.Text(self.path)
-        self.configuration = configparser.ConfigParser(
+        self.parser = configparser.ConfigParser(
             defaults=None,
             dict_type=dict,
             allow_no_value=False,

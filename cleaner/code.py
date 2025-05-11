@@ -66,8 +66,6 @@ def unicode(**star: R) -> B:
         with stream.text.reader(file) as lines:
             for line in lines:
                 wrap = lines
-                # character = normalize.characters(line)
-                # wrap = normalize.wrap_text(character)
                 for text in wrap:
                     string_builder.write(text)
         with stream.text.writer(file) as document:
