@@ -1,0 +1,11 @@
+build:
+  os: "ubuntu-24.04"
+  tools:
+    python: "3.11"
+
+sphinx:
+  builder: "html"
+  configuration: "readthedocs/conf.py"
+  fail_on_warning: true
+
+version: 2
