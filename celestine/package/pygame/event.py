@@ -3,6 +3,7 @@
 from celestine.typed import (
     R,
     Z,
+    ignore,
 )
 
 
@@ -16,3 +17,6 @@ class Event:
 def wait(**star: R) -> Event:
     """"""
     raise NotImplementedError()
+
+
+ignore(wait)

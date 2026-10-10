@@ -20,7 +20,6 @@ from celestine.typed import (
     N,
     S,
 )
-from celestine.window.decorator import normalize
 from translator.data import (
     INIT,
     LANGUAGE,
@@ -28,6 +27,11 @@ from translator.data import (
     LANGUAGE_NAME_NATIVE,
     LANGUAGE_TAG_ISO,
 )
+
+
+def normalize(text: S) -> S:
+    """"""
+    return text
 
 
 def dictionary_to_string(dictionary: DS) -> GS:
@@ -38,9 +42,9 @@ def dictionary_to_string(dictionary: DS) -> GS:
         if not identifier.isidentifier():
             raise ValueError("Not a valid identifier.")
         if keyword.iskeyword(identifier):
-            raise ValueError("This word is a keyword.")
+            raise ValueError("This join is a keyword.")
         if keyword.issoftkeyword(identifier):
-            raise ValueError("This word is a soft keyword.")
+            raise ValueError("This join is a soft keyword.")
 
         yield from LINE_FEED
         yield from LINE_SEPARATOR
@@ -87,17 +91,17 @@ def language_file(translation: DS, overridden: DS) -> GS:
 
 def make_init_file():
     """Create the package __init__ file."""
-    string = io.StringIO()
-    string.write(QUOTATION_MARK)
-    string.write(QUOTATION_MARK)
-    string.write(QUOTATION_MARK)
-    string.write(QUOTATION_MARK)
-    string.write(QUOTATION_MARK)
-    string.write(QUOTATION_MARK)
-    string.write(LINE_FEED)
-    string.write(LINE_SEPARATOR)
+    text = io.StringIO()
+    text.write(QUOTATION_MARK)
+    text.write(QUOTATION_MARK)
+    text.write(QUOTATION_MARK)
+    text.write(QUOTATION_MARK)
+    text.write(QUOTATION_MARK)
+    text.write(QUOTATION_MARK)
+    text.write(LINE_FEED)
+    text.write(LINE_SEPARATOR)
 
-    value = string.getvalue()
+    value = text.getvalue()
     width = normalize.wrap(value)
     stream.Module.save(width, LANGUAGE, INIT)
 
@@ -105,5 +109,5 @@ def make_init_file():
 def save_language(translation: DS, overridden: DS, *path: S) -> N:
     """Save a language file to disk."""
     file = language_file(translation, overridden)
-    string = normalize.wrap(file)
-    stream.Module.save(string, *path)
+    text = normalize.wrap(file)
+    stream.Module.save(text, *path)

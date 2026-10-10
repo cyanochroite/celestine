@@ -3,7 +3,10 @@
 from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
-from celestine.interface import View as View_
+from celestine.interface import (
+    Plane,
+    Point,
+)
 from celestine.interface import Window as Window_
 from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import (
@@ -11,8 +14,9 @@ from celestine.package import (
     tkinter,
 )
 from celestine.typed import (
-    ANY,
     LS,
+    A,
+    B,
     D,
     N,
     P,
@@ -25,21 +29,25 @@ from celestine.window.cardinal import (
     Dyad,
     Round,
 )
-from celestine.window.collection import Area
 
 
 class Abstract(Abstract_):
     """"""
 
-    def place(self, item: ANY) -> N:
+    @override
+    def build(self, parent: A, star: D[S, A]) -> N:
         """"""
-        width, height = self.area.local.size
-        dot_x, dot_y = self.area.local.origin
-        item.place(
-            x=dot_x,
-            y=dot_y,
-            width=width,
-            height=height,
+        super().build(parent, star)
+        if parent:
+            self.canvas = parent.canvas
+
+    def place(self) -> N:
+        """"""
+        self.canvas.place(
+            x=self.area.x_min,
+            y=self.area.y_min,
+            width=self.area.x_len,
+            height=self.area.y_len,
         )
 
 
@@ -50,10 +58,10 @@ class Element(Element_, Abstract):
     def hide(self) -> N:
         """"""
         super().hide()
-        self.item.place_forget()
+        self.canvas.place_forget()
 
     @override
-    def build(self, parent: ANY, star: D[S, ANY]) -> N:
+    def build(self, parent: A, star: D[S, A]) -> N:
         """"""
         super().build(parent, star)
 
@@ -65,22 +73,22 @@ class Element(Element_, Abstract):
 
         def callback() -> N:
             """"""
-            self.click(self.area.world.centroid)
+            self.click(self.area.centroid)
             bank.dequeue()
 
         # Change everything to button and disable if no action?
         if self.action or self.goto:
             star.update(command=callback)
-            self.item = tkinter.Button(parent, **star)
+            self.canvas = tkinter.Button(self.canvas, **star)
         else:
-            self.item = tkinter.Label(parent, **star)
-        self.place(self.item)
+            self.canvas = tkinter.Label(self.canvas, **star)
+        self.place()
 
     @override
     def show(self) -> N:
         """"""
         super().show()
-        self.place(self.item)
+        self.place()
 
     @override
     def reimage(self, path: P, **star: R) -> N:
@@ -93,10 +101,10 @@ class Element(Element_, Abstract):
             )
             pil_image = pil_image.convert("RGB")
             image_size = self.image_size(pil_image.size)
-            pil_image = pil_image.resize(image_size.size.value)
+            pil_image = pil_image.resize(image_size.size.data)
             pil_photo = PIL.ImageTk.PhotoImage(image=pil_image)
-            self.item.configure(image=pil_photo)
-            self.item.image = pil_photo
+            self.canvas.configure(image=pil_photo)
+            self.canvas.image = pil_photo
         else:
             photo = tkinter.PhotoImage(file=path)
 
@@ -118,66 +126,67 @@ class Element(Element_, Abstract):
                 change = change.inplace(Round.negative)
                 image = photo.zoom(change.one, change.two)
 
-                self.item.configure(image=image)
-                self.item.image = image
+                self.canvas.configure(image=image)
+                self.canvas.image = image
 
         super().reimage(path, **star)
 
     @override
     def retext(self, text: S, **star: R) -> N:
         """"""
-        self.item.configure(text=text)
+        self.canvas.configure(text=text)
         super().retext(text, **star)
 
     def __init__(self, name: S, **star: R) -> N:
         super().__init__(name, **star)
         self.photo = None
 
-
-class View(View_, Abstract):
-    """"""
-
     @override
-    def build(self, parent: ANY, star: D[S, ANY]) -> N:
+    def build(self, parent: A, star: D[S, A]) -> N:
         """"""
         super().build(parent, star)
-        self.item = tkinter.Frame(
-            parent,
+        self.canvas = tkinter.Frame(
+            parent.canvas,
             padx=0,
             pady=0,
             bg="yellow",
             width=1920,
             height=1080,
         )
-        self.place(self.item)
+        self.place()
 
     @override
     def hide(self) -> N:
         """"""
         super().hide()
-        self.item.place_forget()
+        self.canvas.place_forget()
 
     @override
     def show(self) -> N:
         """"""
         super().show()
-        self.place(self.item)
+        self.place()
 
 
-class Window(Window_, Abstract):
+class Window(Window_, Element):
     """"""
 
     @override
-    def build(self, parent: ANY, star: D[S, ANY]) -> N:
+    @classmethod
+    def make(cls, *data: A, **star: R) -> Object:
         """"""
-        super().build(parent, star)
-        self.item = tkinter.Tk()
-        self.item.title(bank.language.APPLICATION_TITLE)
-        self.item.geometry("1920x1080")
-        self.item.geometry("1900x1000")
-        self.item.minsize(640, 480)
-        self.item.maxsize(3840, 2160)
-        self.item.configure(bg="blue")
+        return Element(*data, **star)
+
+    @override
+    def build(self, parent: A, star: D[S, A]) -> N:
+        """"""
+        self.canvas = tkinter.Tk()
+        self.canvas.title(bank.language.APPLICATION_TITLE)
+        self.canvas.geometry("1920x1080")
+        self.canvas.geometry("1900x1000")
+        self.canvas.minsize(640, 480)
+        self.canvas.maxsize(3840, 2160)
+        self.canvas.configure(bg="blue")
 
     @override
     @classmethod
@@ -198,23 +207,19 @@ class Window(Window_, Abstract):
     @override
     def run(self) -> N:
         super().run()
-        self.item.mainloop()
+        self.canvas.mainloop()
 
     @override
     def turn(self, page: S, **star: R) -> N:
         super().turn(page, **star)
-        self.page.item.tkraise()
+        # self.item.canvas.tkraise()
+        #  This might be able to be a draw call.
 
     @override
     def __init__(self) -> N:
-        element = {
-            "element": Element,
-            "view": View,
-            "window": self,
-        }
-        super().__init__(element)
-        self.area = Area.fast(1280, 1080)
-        self.area = Area.fast(1200, 1000)
+        super().__init__()
+        self.area = Plane.make(1280, 1080)
+        self.area = Plane.make(1200, 1000)
 
 
 ignore(Window)

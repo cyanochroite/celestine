@@ -1,12 +1,14 @@
 """"""
 
 from celestine import language
-from celestine.interface import View
+from celestine.interface import Element
 from celestine.session.session import SuperSession
-from celestine.typed import N
+from celestine.typed import (
+    N,
+    ignore,
+)
 from celestine.window.decorator import (
-    draw,
-    main,
+    view,
 )
 
 
@@ -14,10 +16,10 @@ class Session(SuperSession):
     """"""
 
 
-@main
-def zero(view: View) -> N:
+@view
+def zero(element: Element) -> N:
     """"""
-    with view.span("zero_head") as line:
+    with element.span("zero_head") as line:
         line.label(
             "zero_title",
             language.DEMO_ZERO_TITLE,
@@ -44,7 +46,7 @@ def zero(view: View) -> N:
             language.DEMO_ZERO_ACTION,
             say=language.DEMO_ZERO_SAY,
         )
-    with view.span("zero_body") as line:
+    with element.span("zero_body") as line:
         line.link(
             "zero_past",
             "one",
@@ -57,10 +59,10 @@ def zero(view: View) -> N:
         )
 
 
-@draw
-def one(view: View) -> N:
+@view
+def one(element: Element) -> N:
     """"""
-    with view.span("one_head") as line:
+    with element.span("one_head") as line:
         line.label(
             "one_title",
             text=language.DEMO_ONE_TITLE,
@@ -71,7 +73,7 @@ def one(view: View) -> N:
             text=language.DEMO_ONE_ACTION,
             say=language.DEMO_ONE_SAY,
         )
-    with view.span("one_body") as line:
+    with element.span("one_body") as line:
         line.link(
             "one_past",
             "zero",
@@ -84,10 +86,10 @@ def one(view: View) -> N:
         )
 
 
-@draw
-def two(view: View) -> N:
+@view
+def two(element: Element) -> N:
     """"""
-    with view.span("two_head") as line:
+    with element.span("two_head") as line:
         line.label(
             "two_title",
             language.DEMO_TWO_TITLE,
@@ -98,7 +100,7 @@ def two(view: View) -> N:
             text=language.DEMO_TWO_ACTION,
             say=language.DEMO_TWO_SAY,
         )
-    with view.span("two_body") as line:
+    with element.span("two_body") as line:
         line.link(
             "two_past",
             "one",
@@ -109,3 +111,6 @@ def two(view: View) -> N:
             "zero",
             text=language.DEMO_TWO_NEXT,
         )
+
+
+ignore(Session, zero, one, two)

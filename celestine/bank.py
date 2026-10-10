@@ -1,7 +1,6 @@
 """Package wide global variables."""
 
 from celestine.typed import (
-    ANY,
     A,
     C,
     L,
@@ -11,14 +10,13 @@ from celestine.typed import (
 )
 
 #  These types might not be right.
-application: ANY = None  # M
-attribute: ANY = None  # LS
-configuration: ANY = None  # P
-directory: ANY = None  # P
-interface: ANY = None  # M
-language: ANY = None  # M
-window: ANY = None  # Window
-
+application: A = None  # M
+attribute: A = None  # LS
+configuration: A = None  # P
+directory: A = None  # P
+interface: A = None  # M
+language: A = None  # M
+window: A = None  # Window
 
 _queue: L[T[C[..., N], A, A]] = []
 

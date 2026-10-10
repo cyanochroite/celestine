@@ -1,17 +1,18 @@
 """"""
 
 from celestine.interface import (
-    View,
+    Element,
     Window,
 )
 from celestine.typed import (
-    ANY,
+    A,
     B,
     C,
     N,
     Protocol,
     R,
     S,
+    ignore,
 )
 
 type Function = C[[Window, S], N]
@@ -20,15 +21,15 @@ type Function = C[[Window, S], N]
 class Call(Protocol):
     """Type for code functions."""
 
-    def __call__(self, *data: ANY, **star: R) -> B:
+    def __call__(self, *data: A, **star: R) -> B:
         raise NotImplementedError(self, data, star)
 
 
-class Draw(Protocol):
-    """Type for draw functions."""
+class View(Protocol):
+    """Type for view functions."""
 
-    def __call__(self, view: View) -> N:
-        raise NotImplementedError(self, view)
+    def __call__(self, element: Element) -> N:
+        raise NotImplementedError(self, element)
 
 
 def call(function: Call) -> Function:
@@ -40,18 +41,7 @@ def call(function: Call) -> Function:
     return decorator
 
 
-def draw(function: Draw) -> Function:
-    """"""
-
-    def decorator(window: Window, name: S) -> N:
-        _view(function, window, name)
-        if not window.main or "main" in name:
-            window.main = name
-
-    return decorator
-
-
-def main(function: Draw) -> Function:
+def view(function: View) -> Function:
     """"""
 
     def decorator(window: Window, name: S) -> N:
@@ -61,7 +51,10 @@ def main(function: Draw) -> Function:
     return decorator
 
 
-def _view(function: Draw, window: Window, name: S) -> N:
-    view = window.drop(name)
-    function(view)
-    window.view[name] = view
+def _view(function: View, window: Window, name: S) -> N:
+    views = window.drop(name)
+    function(views)
+    window.view[name] = views
+
+
+ignore(call, view)

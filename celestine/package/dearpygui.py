@@ -41,3 +41,6 @@ class Self(Package):
     def __init__(self, **star: R) -> N:
         ignore(self)
         super().__init__(pypi="dearpygui.dearpygui")
+
+
+ignore(Self)

@@ -4,6 +4,7 @@ from celestine.package.PIL.Image import Image
 from celestine.typed import (
     N,
     Z,
+    ignore,
 )
 
 
@@ -21,3 +22,6 @@ class PhotoImage:
     def __init__(self, image: Image) -> N:
         """"""
         raise NotImplementedError(self, image)
+
+
+ignore(PhotoImage)

@@ -9,14 +9,12 @@ from celestine.literal import (
     LEFT_PARENTHESIS,
     RIGHT_PARENTHESIS,
     SPACE,
-    string,
+    join,
 )
 from celestine.typed import (
+    IT,
+    TA,
     TS,
-    TS1,
-    TS2,
-    TS3,
-    TS4,
     VZ,
     A,
     B,
@@ -27,7 +25,6 @@ from celestine.typed import (
     N,
     Q,
     S,
-    Struct,
     T,
     U,
     Z,
@@ -82,13 +79,21 @@ class Round:
         return result
 
 
-class Math(Struct):
+class Math:
     """"""
+
+    __slots__: TS = ()
 
     @staticmethod
     def add(one: Number, two: Number) -> Number:
         """"""
         result = one + two
+        return result
+
+    @staticmethod
+    def floordiv(one: Number, two: Number) -> Number:
+        """"""
+        result = one // two
         return result
 
     @staticmethod
@@ -134,7 +139,7 @@ class Math(Struct):
         return result
 
 
-class Cardinal(Struct):
+class Cardinal:
     """"""
 
     __slots__: TS = ("name",)
@@ -153,6 +158,31 @@ class Cardinal(Struct):
         data = itertools.chain.from_iterable(iterable)
         skymap = map(binary, self.data, data)
         result = list(skymap)
+        return result
+
+    def copy(self) -> K:
+        """"""
+        data = self.data
+        result = self.__class__(*data)
+        return result
+
+    @classmethod
+    def echo(cls, self: K) -> K:
+        """"""
+        data = self.data
+        result = cls(*data)
+        return result
+
+    def inplace(self, unary: Unary) -> K:
+        """"""
+        data = self.unary(unary)
+        result = self.make(*data)
+        return result
+
+    @classmethod
+    def make(cls, *data: A) -> K:
+        """"""
+        result = cls(*data)
         return result
 
     def round(self, ndigits: VZ = None) -> K:
@@ -176,11 +206,15 @@ class Cardinal(Struct):
         self.data = self.binary(binary, other)
         return self
 
-    def inplace(self, unary: Unary) -> K:
-        """"""
-        data = self.unary(unary)
-        result = self.make(*data)
-        return result
+    def _del(self) -> N:
+        ignore(self)
+
+    def _get(self) -> TA:
+        ignore(self)
+        return ()
+
+    def _set(self, value: TA) -> N:
+        ignore(self, value)
 
     def __add__(self, other: Nomad) -> K:
         result = self._arithmetic(Math.add, other)
@@ -191,8 +225,8 @@ class Cardinal(Struct):
         return result
 
     def __del__(self) -> N:
-        super().__del__()
         del self.name
+        del self.data
 
     def __eq__(self, other: object) -> B:
         if not isinstance(other, Cardinal):
@@ -207,12 +241,16 @@ class Cardinal(Struct):
         result = sum(data)
         return result
 
+    def __floordiv__(self, other: Nomad) -> K:
+        result = self._arithmetic(Math.floordiv, other)
+        return result
+
     def __floor__(self) -> K:
         result = self.inplace(Round.negative)
         return result
 
-    def __getitem__(self, key: S) -> A:
-        result = list(self.data)[int(key)]
+    def __getitem__(self, key: Z) -> A:
+        result = list(self.data)[key]
         return result
 
     def __ge__(self, other: Number) -> B:
@@ -237,13 +275,24 @@ class Cardinal(Struct):
         result = self._augmented(Math.add, other)
         return result
 
+    def __ifloordiv__(self, other: Nomad) -> K:
+        result = self._augmented(Math.floordiv, other)
+        return result
+
     def __imul__(self, other: Nomad) -> K:
         result = self._augmented(Math.mul, other)
         return result
 
+    def __init__(self, *data: A) -> N:
+        ignore(self)
+        self.data = data
+
     def __isub__(self, other: Nomad) -> K:
         result = self._augmented(Math.sub, other)
         return result
+
+    def __iter__(self) -> IT[A]:
+        return iter(self.data)
 
     def __itruediv__(self, other: Nomad) -> K:
         result = self._augmented(Math.truediv, other)
@@ -292,9 +341,16 @@ class Cardinal(Struct):
         result = self._arithmetic(Math.radd, other)
         return result
 
-    def __repr__(self):
+    def __repr__(self) -> S:
         data = self.__str__()
-        result = string(self.name, data)
+        result = join(self.name, data)
+        return result
+
+    def __reversed__(self) -> IT[A]:
+        return reversed(self.data)
+
+    def __rfloordiv__(self, other: Nomad) -> K:
+        result = self.__floordiv__(other)
         return result
 
     def __rmul__(self, other: Nomad) -> K:
@@ -313,10 +369,10 @@ class Cardinal(Struct):
         result = self.__truediv__(other)
         return result
 
-    def __str__(self):
-        comma = string(COMMA, SPACE)
+    def __str__(self) -> S:
+        comma = join(COMMA, SPACE)
         data = comma.join(map(repr, self.data))
-        result = string(LEFT_PARENTHESIS, data, RIGHT_PARENTHESIS)
+        result = join(LEFT_PARENTHESIS, data, RIGHT_PARENTHESIS)
         return result
 
     def __sub__(self, other: Nomad) -> K:
@@ -331,11 +387,13 @@ class Cardinal(Struct):
         result = self.inplace(Round.decrease)
         return result
 
+    data = property(_get, _set, _del)
+
 
 class Monad[X](Cardinal):
     """"""
 
-    __slots__: TS1 = ("one",)
+    __slots__: TS = ("one",)
 
     one: X
 
@@ -364,7 +422,7 @@ class Monad[X](Cardinal):
 class Dyad[X](Cardinal):
     """"""
 
-    __slots__: TS2 = ("one", "two")
+    __slots__: TS = ("one", "two")
 
     one: X
     two: X
@@ -396,7 +454,7 @@ class Dyad[X](Cardinal):
 class Triad[X](Cardinal):
     """"""
 
-    __slots__: TS3 = ("one", "two", "tri")
+    __slots__: TS = ("one", "two", "tri")
 
     one: X
     two: X
@@ -431,7 +489,7 @@ class Triad[X](Cardinal):
 class Tetrad[X](Cardinal):
     """"""
 
-    __slots__: TS4 = ("one", "two", "tri", "tet")
+    __slots__: TS = ("one", "two", "tri", "tet")
 
     one: X
     two: X

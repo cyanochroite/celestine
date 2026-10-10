@@ -7,6 +7,7 @@ from celestine.typed import (
     N,
     R,
     Z,
+    ignore,
 )
 
 
@@ -47,3 +48,6 @@ class Surface:
     def __init__(self, size: TZ2, **star: R) -> N:
         """"""
         raise NotImplementedError(self, size)
+
+
+ignore(Surface)

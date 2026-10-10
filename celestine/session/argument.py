@@ -6,6 +6,7 @@ from celestine.literal import (
     HYPHEN_MINUS,
     NONE,
     QUESTION_MARK,
+    join,
 )
 from celestine.session.attribute import (
     Action,
@@ -56,8 +57,8 @@ class Flag(Argument):
         """"""
         ignore(self)
         return [
-            NONE.join((HYPHEN_MINUS, name[0])),
-            NONE.join((HYPHEN_MINUS, HYPHEN_MINUS, name)),
+            join(HYPHEN_MINUS, name[0]),
+            join(HYPHEN_MINUS, HYPHEN_MINUS, name),
         ]
 
 
@@ -186,3 +187,14 @@ class InformationVersion(Information, Version):
             action=Actions.VERSION,
             help=help,
         )
+
+
+ignore(
+    Application,
+    Customization,
+    Positional,
+    Optional,
+    InformationConfiguration,
+    InformationHelp,
+    InformationVersion,
+)

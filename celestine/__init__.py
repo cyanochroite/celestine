@@ -12,8 +12,14 @@ import os
 import pkgutil
 import sys
 
+from celestine.typed import (
+    VS,
+    N,
+    ignore,
+)
 
-def init(base: str | None) -> None:
+
+def init(base: VS) -> N:
     """"""
     root = f"{base}." if base else ""
     locations = ["package", "language", "interface"]
@@ -40,20 +46,23 @@ def init(base: str | None) -> None:
                 pass
 
 
-def main(*names: str | None) -> None:
+def main(goto: VS = None, names: VS = None) -> N:
     """
     Initialize the packages and then run the main program.
 
-    Packages like pygame will print an anoying message on import.
+    Packages like pygame will print an annoying message on import.
     So we change the output stream to hide any messages
     a package may print when being imported.
     """
-    for name in names:
-        if name:
-            init(name)
+
+    if not goto:
+        goto = "application:demo:zero"
+
+    if not names:
+        names = __package__
 
     session = importlib.import_module("celestine.session")
-    session.run(names[0])
+    session.run(goto, names)
 
 
 # Change the output stream to hide the pygame loading message.
@@ -64,3 +73,8 @@ with open(os.devnull, "w", encoding="utf-8") as stdout:
     init(__package__)
 
 sys.stdout = sys_stdout
+
+
+ignore(
+    main,
+)

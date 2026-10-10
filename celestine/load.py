@@ -10,27 +10,21 @@ from celestine.literal import (
     CELESTINE,
     FULL_STOP,
     FUNCTION,
-    INIT,
     LOW_LINE,
-    NONE,
     PACKAGE,
     PYTHON_EXTENSION,
+    join,
 )
 from celestine.typed import (
     CA,
     CN,
-    GM,
-    GP,
     LS,
     A,
     B,
     D,
-    G,
     M,
-    N,
     P,
     S,
-    T,
     ignore,
 )
 
@@ -179,78 +173,6 @@ def function_page(module_: M) -> LS:
 ########################################################################
 
 
-def walk(*path: S) -> G[T[S, LS, LS], N, N]:
-    """Yields a 3-tuple (dirpath, dirnames, filenames)."""
-    top = pathlib.Path(*path)
-    topdown = True
-    onerror = None
-    followlinks = False
-    yield from os.walk(top, topdown, onerror, followlinks)
-
-
-def walk_file(path: P, include: LS, exclude: LS) -> GP:
-    """
-    Item 'name_exclude': a list of directory names to exclude.
-
-    Item 'suffix_include': a list of file name suffix to include
-    if none, it ignores it.
-    """
-    top = str(path)
-    included = set(include)
-    excluded = set(exclude)
-
-    for dirpath, dirnames, filenames in walk(top):
-        for dirname in dirnames:
-            if dirname in excluded:
-                dirnames.remove(dirname)
-
-        for filename in filenames:
-            path = pathlib.Path(dirpath, filename)
-            suffix = path.suffix.lower()
-            if not included or suffix in included:
-                yield path
-
-
-def walk_python(path: P, include: LS, exclude: LS) -> GP:
-    """"""
-    include = [".py", *include]
-    exclude = [
-        ".mypy_cache",
-        ".ruff_cache",
-        "__pycache__",
-        *exclude,
-    ]
-    yield from walk_file(path, include, exclude)
-
-
-def walk_package(base: S) -> GM:
-    """Load all decorated functions from all modules found in path."""
-    find = importlib.import_module(base)
-    spec = find.__spec__
-    if not spec:
-        raise NotImplementedError("Why is your spec None?")
-    if not spec.origin:
-        raise NotImplementedError("Why is your spec origin also None?")
-    spot = pathlib.Path(spec.origin)
-    if spot.stem != INIT:
-        yield find
-        return
-
-    root = spot.parent
-    walked = walk_python(root, [], [])
-    for file in walked:
-        with_name = file.with_name(file.stem)
-        # relative to what though?
-        relative_to = with_name.relative_to(root)
-        parts = relative_to.parts
-        strip = parts[:-1] if parts[-1] == INIT else parts
-        name = FULL_STOP.join((base, *strip))
-        yield importlib.import_module(name)
-
-
-########################################################################
-
-
 def project_root() -> P:
     """When running as a package, sys.path[0] is wrong."""
     result = pathlib.Path(os.curdir)
@@ -277,8 +199,8 @@ def safe_path(*path: S) -> P:
     """Might not be right be good for input from user."""
     root = project_path()
 
-    join: S = os.path.join(root, *path)
-    normcase: S = os.path.normcase(join)
+    make: S = os.path.join(root, *path)
+    normcase: S = os.path.normcase(make)
     normpath: S = os.path.normpath(normcase)
     realpath: S = os.path.realpath(normpath, strict=True)
 
@@ -308,8 +230,8 @@ def pathway_root(*path: S) -> P:
 def python(*path: S) -> P:
     """"""
     base = pathway(*path)
-    join = NONE.join([str(base), PYTHON_EXTENSION])
-    result = pathlib.Path(join)
+    make = join(str(base), PYTHON_EXTENSION)
+    result = pathlib.Path(make)
     return result
 
 
@@ -350,10 +272,10 @@ def asset(file: S) -> P:
 
 
 ignore(
+    attribute,
+    attempt,
     argument,
     asset,
-    attempt,
-    attribute,
     dictionary,
     function_page,
     instance,
@@ -364,5 +286,4 @@ ignore(
     pathway_root,
     python,
     safe_path,
-    walk_package,
 )

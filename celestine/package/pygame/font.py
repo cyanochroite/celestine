@@ -9,6 +9,7 @@ from celestine.typed import (
     N,
     R,
     S,
+    ignore,
 )
 
 
@@ -35,3 +36,6 @@ class Font:
 def init(**star: R) -> N:
     """"""
     raise NotImplementedError()
+
+
+ignore(Font, init)

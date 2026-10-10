@@ -20,6 +20,7 @@ from celestine.typed import (
     N,
     P,
     S,
+    ignore,
 )
 
 FILE = "celestine.ini"
@@ -85,3 +86,8 @@ class Configuration:
             interpolation=configparser.BasicInterpolation(),
             converters={},
         )
+
+
+ignore(
+    Configuration,
+)

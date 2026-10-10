@@ -118,7 +118,7 @@ def start_color() -> N:
 
 
 ignore(
-    Package,
+    Self,
     cbreak,
     color_pair,
     doupdate,
@@ -130,5 +130,4 @@ ignore(
     newwin,
     nocbreak,
     noecho,
-    start_color,
 )

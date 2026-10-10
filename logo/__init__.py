@@ -4,7 +4,7 @@ import math
 
 import celestine
 from celestine import language
-from celestine.interface import View
+from celestine.interface import Element
 from celestine.session.session import SuperSession
 from celestine.typed import (
     GS,
@@ -18,7 +18,7 @@ from celestine.typed import (
 )
 from celestine.window.decorator import (
     call,
-    draw,
+    view,
 )
 
 
@@ -61,12 +61,18 @@ def licence(**star: R) -> B:
     return True
 
 
-@draw
-def main(view: View) -> N:
+def main() -> N:
     """"""
-    with view.span("main_head") as line:
+    celestine.init(__package__)
+    celestine.main("logo:menu", __package__)
+
+
+@view
+def menu(element: Element) -> N:
+    """"""
+    with element.span("main_head") as line:
         line.label("main_title", text="Logo generation functions.")
-    with view.span("main_body") as line:
+    with element.span("main_body") as line:
         line.button(
             "main_L",
             "sizes",
@@ -170,7 +176,7 @@ def printer() -> GS:
     yield "<svg"
     yield '    width="100%"'
     yield '    height="100%"'
-    yield '    viewBox="0 0 4356 4356"'
+    yield '    elementBox="0 0 4356 4356"'
     yield '    version="1.1"'
     yield '    xmlns="http://www.w3.org/2000/svg"'
     yield '    xmlns:xlink="http://www.w3.org/1999/xlink"'
@@ -228,6 +234,4 @@ def sizes(**star: R) -> B:
     return True
 
 
-ignore(Session, licence, main, sizes)
-
-celestine.main(__package__)
+ignore(Session, licence, main, menu, sizes)

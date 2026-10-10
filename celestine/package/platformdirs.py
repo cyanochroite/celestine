@@ -28,4 +28,4 @@ def user_data_dir(
     )
 
 
-ignore(Package, user_data_dir)
+ignore(Self, user_data_dir)

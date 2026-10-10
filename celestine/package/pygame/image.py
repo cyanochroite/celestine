@@ -7,6 +7,7 @@ from celestine.typed import (
     R,
     S,
     Y,
+    ignore,
 )
 
 
@@ -18,3 +19,6 @@ def frombuffer(buffer: Y, size: TZ2, format_: S, **star: R) -> Surface:
 def load(filename: P, **star: R) -> Surface:
     """"""
     raise NotImplementedError(filename)
+
+
+ignore(frombuffer, load)

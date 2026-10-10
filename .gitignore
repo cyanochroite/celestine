@@ -1,0 +1,25 @@
+celestine.wpr
+celestine.wpu
+
+*.egg-info/
+*.ini
+dist/*
+doc/*
+example/*
+scripts/*
+
+# Wing private task files (not committed)
+.TASKS/
+
+.claude/
+.coverage
+.editorconfig
+.git/
+.idea/
+.mcp.json
+.mcp.metadata.json
+.mypy_cache/
+__pycache__/
+.ruff_cache/
+.venv/
+.vscode/

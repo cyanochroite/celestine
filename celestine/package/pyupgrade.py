@@ -25,7 +25,7 @@ class Self(Package):
         """
         ignore(self)
 
-        files = load.walk_python(path, [], [])
+        files = walk.python(path, [], [])
 
         file = map(str, files)
         argv = [*file, "--py312-plus"]
@@ -42,4 +42,4 @@ def run() -> N:
     """"""
 
 
-ignore(Package, run)
+ignore(Self, run)

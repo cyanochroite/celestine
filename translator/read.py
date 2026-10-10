@@ -11,7 +11,6 @@ from celestine.typed import (
     GS,
     S,
 )
-from celestine.window.decorator.alphabet2 import UNICODE
 
 
 def fix_line_split(*path: S) -> GS:
@@ -19,10 +18,10 @@ def fix_line_split(*path: S) -> GS:
     skip = False
 
     document = stream.module.load(*path)
-    for string in document:
-        for character in string:
-            if character not in UNICODE:
-                continue
+    for line in document:
+        for character in line:
+            # if character not in UNICODE:
+            #    continue
 
             if character == REVERSE_SOLIDUS:
                 skip = True
@@ -59,11 +58,11 @@ def open_language(*path):
     lines = read_new_lines(text)
     normal = lines
 
-    string = io.StringIO()
+    buffer = io.StringIO()
     for line in normal:
-        string.write(line)
+        buffer.write(line)
 
-    value = string.getvalue()
+    value = buffer.getvalue()
 
     split = value.split(stream.SECTION_BREAK)
 
@@ -73,13 +72,13 @@ def open_language(*path):
     return (head, body)
 
 
-def read_new_lines(string: S) -> GS:
+def read_new_lines(text: S) -> GS:
     """"""
 
     buffer = io.StringIO()
     count = 0
 
-    for character in string:
+    for character in text:
         count += buffer.write(character)
 
         if character == LINE_FEED:

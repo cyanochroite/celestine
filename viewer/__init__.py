@@ -7,8 +7,9 @@ from celestine import (
     bank,
     language,
     load,
+    walk,
 )
-from celestine.interface import View
+from celestine.interface import Element
 from celestine.session.argument import Optional
 from celestine.session.session import SuperSession
 from celestine.typed import (
@@ -28,7 +29,7 @@ from celestine.window.container import (
 )
 from celestine.window.decorator import (
     call,
-    draw,
+    view,
 )
 
 
@@ -54,22 +55,26 @@ def find_image(directory: P) -> LP:
     path = directory
     include = bank.window.extension()
     exclude: LS = []
-    files = list(load.walk_file(path, include, exclude))
+    files = list(walk.file(path, include, exclude))
     return files
 
 
-@draw
-def main(view: View) -> N:
+def main():
     """"""
-    view.button(
+    celestine.init(__package__)
+    celestine.main("viewer:run", __package__)
+
+
+@view
+def run(element: Element) -> N:
+    """"""
+    element.button(
         "load",
         "setup",
         text=language.VIEWER_MAIN_BUTTON,
     )
     name = "grid"
-    row = 2
-    col = 4
-    with view.zone(name, row=row, col=col, mode=Zone.GRID) as grid:
+    with element.zone(name, row=row, col=col, mode=Zone.GRID) as grid:
         for range_y in range(row):
             for range_x in range(col):
                 key = f"{name}_{range_x}-{range_y}"
@@ -81,10 +86,10 @@ def main(view: View) -> N:
                 )
 
 
-@draw
-def picture(view: View) -> N:
+@view
+def picture(element: Element) -> N:
     """"""
-    view.element("photo", fit=Image.FILL, goto="main")
+    element.element("photo", fit=Image.FILL, goto="run")
 
 
 @call
@@ -118,6 +123,4 @@ def setup(**star: R) -> B:
     return True
 
 
-ignore(Session, main, picture, see, setup)
-
-celestine.main(__package__)
+ignore(Session, main, picture, run, see, setup)

@@ -17,11 +17,8 @@ from celestine.typed import (
     ignore,
 )
 
-ignore(Surface, display, event, font, image, mouse, transform)
-
-
-MOUSEBUTTONDOWN: Z
-QUIT: Z
+MOUSEBUTTONDOWN: Z = 0
+QUIT: Z = 0
 
 
 class Rect:
@@ -35,3 +32,19 @@ class Self(Package):
 def quit(**star: R) -> N:  # pylint: disable=redefined-builtin
     """"""
     raise NotImplementedError()
+
+
+ignore(
+    display,
+    event,
+    font,
+    image,
+    mouse,
+    transform,
+    Surface,
+    MOUSEBUTTONDOWN,
+    QUIT,
+    Rect,
+    Self,
+    quit,
+)

@@ -15,4 +15,4 @@ def run() -> N:
     """"""
 
 
-ignore(Package, run)
+ignore(Self, run)

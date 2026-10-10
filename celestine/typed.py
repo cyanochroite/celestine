@@ -34,22 +34,33 @@ Z: int  # Set of Integers Symbol ℤ.
 # pylint: disable=invalid-name
 
 
-import abc
 from collections.abc import Callable as C
 from collections.abc import Generator as G
 from collections.abc import Iterator as IT
 from collections.abc import Sequence as Q
+from contextlib import AbstractContextManager as ACM
 from importlib.machinery import ModuleSpec as MS
+from lzma import LZMAFile
 from pathlib import Path as P
 from types import ModuleType as M
+from typing import (
+    IO,
+)
 from typing import Any as A
 from typing import Dict as D
 from typing import List as L
-from typing import Literal
+from typing import (
+    Literal,
+)
 from typing import NotRequired as NR
 from typing import Optional as V
-from typing import Protocol
+from typing import (
+    Protocol,
+)
 from typing import Self as K
+from typing import (
+    TextIO,
+)
 from typing import Tuple as T
 from typing import Type as TY
 from typing import TypedDict as TD
@@ -61,7 +72,6 @@ from typing import (
     override,
 )
 
-type ANY = A
 type B = bool
 type F = float
 type J = object
@@ -76,13 +86,20 @@ type Z = int
 type BF = Literal[False]
 type BT = Literal[True]
 
-type CA = C[..., A]
+type CA = C[[A], N]
+type CB = C[[B], N]
+type CF = C[[F], N]
+type CM = C[[M], N]
 type CN = C[[N], N]
+type CP = C[[P], N]
+type CS = C[[S], N]
+type CZ = C[[Z], N]
 
 type DA = D[S, A]
 type DB = D[S, B]
 type DF = D[S, F]
 type DM = D[S, M]
+type DN = D[S, N]
 type DP = D[S, P]
 type DS = D[S, S]
 type DZ = D[S, Z]
@@ -91,6 +108,7 @@ type GA = G[A, N, N]
 type GB = G[B, N, N]
 type GF = G[F, N, N]
 type GM = G[M, N, N]
+type GN = G[N, N, N]
 type GP = G[P, N, N]
 type GS = G[S, N, N]
 type GZ = G[Z, N, N]
@@ -99,6 +117,7 @@ type LA = L[A]
 type LB = L[B]
 type LF = L[F]
 type LM = L[M]
+type LN = L[N]
 type LP = L[P]
 type LS = L[S]
 type LZ = L[Z]
@@ -127,6 +146,12 @@ type TM1 = T[M]
 type TM2 = T[M, M]
 type TM3 = T[M, M, M]
 type TM4 = T[M, M, M, M]
+
+type TN = T[N, ...]
+type TN1 = T[N]
+type TN2 = T[N, N]
+type TN3 = T[N, N, N]
+type TN4 = T[N, N, N, N]
 
 type TP = T[P, ...]
 type TP1 = T[P]
@@ -170,6 +195,12 @@ type LTM2 = L[TM2]
 type LTM3 = L[TM3]
 type LTM4 = L[TM4]
 
+type LTN = L[TN]
+type LTN1 = L[TN1]
+type LTN2 = L[TN2]
+type LTN3 = L[TN3]
+type LTN4 = L[TN4]
+
 type LTP = L[TP]
 type LTP1 = L[TP1]
 type LTP2 = L[TP2]
@@ -193,119 +224,126 @@ type VA = V[A]
 type VB = V[B]
 type VF = V[F]
 type VM = V[M]
+type VN = V[N]
 type VP = V[P]
 type VS = V[S]
 type VZ = V[Z]
 
+type Digest = C[[], A]
+type Lzma = LZMAFile | TextIO
+type Open = IO[A]
+type Path = P | S
+type Load = C[[Open], A] | N
+type Save = C[[Open, S], N] | N
 
-def ignore(*_: A) -> N:
+
+def ignore(*_: A) -> A:
     """An empty function used to hide unused variable warnings."""
-    cast(ANY, _)
+    return _
 
 
-def string(*iterable: S) -> S:
-    """A simple utility for joining together a series of strings."""
-    return "".join(iterable)
-
-
-class Object(abc.ABC):
-    """"""
-
-    star: D[S, R]
-
-    def copy(self) -> K:
-        """"""
-        return self.echo(self)
-
-    @property
-    def data(self) -> LA:
-        """"""
-        ignore(self)
-        result: LA = []
-        return result
-
-    @classmethod
-    def echo(cls, self: K) -> K:
-        """"""
-        return cls(*self.data, **self.star)
-
-    @classmethod
-    def make(cls, *data: A, **star: R) -> K:
-        """"""
-        return cls(*data, **star)
-
-    def pull(self, name: S, _cast: TY[A] = str, default: A = None) -> A:
-        """Extracts keyword arguments from star object and returns."""
-        try:
-            pop = self.star.pop(name)
-            value = _cast(pop)
-        except KeyError:
-            value = default
-        return value
-
-    def warp(self, name: S, _cast: TY[A] = str, default: A = None) -> N:
-        """Extracts keyword arguments from star object and saves."""
-        try:
-            pop = self.star.pop(name)
-            value = _cast(pop)
-        except KeyError:
-            value = default
-        setattr(self, name, value)
-
-    def __init__(self, *data: A, **star: R) -> N:
-        ignore(self, data)
-        super().__init__()
-        self.star = star
-
-
-class Struct:
-    """"""
-
-    __slots__: TS = ()
-
-    def copy(self) -> K:
-        """"""
-        data = self.data
-        result = self.__class__(*data)
-        return result
-
-    @classmethod
-    def echo(cls, self: K) -> K:
-        """"""
-        data = self.data
-        result = cls(*data)
-        return result
-
-    @classmethod
-    def make(cls, *data: A) -> K:
-        """"""
-        result = cls(*data)
-        return result
-
-    def _del(self) -> N:
-        ignore(self)
-
-    def _get(self) -> TA:
-        ignore(self)
-        return ()
-
-    def _set(self, value: TA) -> N:
-        ignore(self, value)
-
-    def __del__(self) -> N:
-        del self.data
-
-    def __init__(self, *data: A) -> N:
-        ignore(self)
-        self.data = data
-
-    def __iter__(self) -> GA:
-        yield from self.data
-
-    def __reversed__(self) -> GA:
-        yield from reversed(self.data)
-
-    data = property(_get, _set, _del)
-
-
-ignore(IT, MS, NR, override, Protocol, Q, TD, U, UN)
+ignore(
+    ACM,
+    BF,
+    BT,
+    CA,
+    cast,
+    CB,
+    CF,
+    CM,
+    CN,
+    CP,
+    CS,
+    CZ,
+    DA,
+    DB,
+    DF,
+    DM,
+    DN,
+    DP,
+    DS,
+    DZ,
+    Digest,
+    GA,
+    GB,
+    GF,
+    GM,
+    GN,
+    GP,
+    GS,
+    GZ,
+    IT,
+    J,
+    K,
+    LA,
+    LB,
+    LF,
+    LM,
+    LN,
+    LP,
+    LS,
+    LTA,
+    LTA1,
+    LTA2,
+    LTA3,
+    LTA4,
+    LTB,
+    LTB1,
+    LTB2,
+    LTB3,
+    LTB4,
+    LTF,
+    LTF1,
+    LTF2,
+    LTF3,
+    LTF4,
+    LTM,
+    LTM1,
+    LTM2,
+    LTM3,
+    LTM4,
+    LTN,
+    LTN1,
+    LTN2,
+    LTN3,
+    LTN4,
+    LTP,
+    LTP1,
+    LTP2,
+    LTP3,
+    LTP4,
+    LTS,
+    LTS1,
+    LTS2,
+    LTS3,
+    LTS4,
+    LTZ,
+    LTZ1,
+    LTZ2,
+    LTZ3,
+    LTZ4,
+    LZ,
+    Lzma,
+    MS,
+    NR,
+    Open,
+    override,
+    Path,
+    Protocol,
+    Q,
+    R,
+    TD,
+    TY,
+    U,
+    UN,
+    VA,
+    VB,
+    VF,
+    VM,
+    VN,
+    VP,
+    VS,
+    VZ,
+    X,
+    Y,
+)

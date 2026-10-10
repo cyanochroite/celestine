@@ -6,7 +6,6 @@ import math
 from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
-from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.interface.curses.palette import (
     COLOR_PAIRS,
@@ -19,11 +18,11 @@ from celestine.package import (
     curses,
 )
 from celestine.typed import (
-    ANY,
     GS,
     GZ,
     LS,
     LZ,
+    A,
     B,
     D,
     N,
@@ -35,7 +34,6 @@ from celestine.typed import (
     override,
 )
 from celestine.window.collection import (
-    Area,
     Line,
     Plane,
     Point,
@@ -62,10 +60,10 @@ class Element(Element_, Abstract):
     @override
     def draw(self, **star: R) -> B:
         """"""
-        if not super().draw(**star):
+        if not super().draw_background(**star):
             return False
 
-        x, y = self.area.world.origin.value
+        x, y = self.area.world.value
 
         # text
         parent = star.pop("parent")
@@ -85,7 +83,7 @@ class Element(Element_, Abstract):
         super().reimage(path, **star)
 
         if not bool(PIL):
-            (x_dot, y_dot) = self.area.world.origin
+            x_dot, y_dot = self.area.origin
             self.parent.addstr(y_dot, x_dot, self.path.name)
             return
 
@@ -100,23 +98,23 @@ class Element(Element_, Abstract):
 
         image_size = self.image_size(image.size, (2, 4))
 
-        image = image.resize(image_size.size.value)
+        image = image.resize(image_size.size.data)
 
         image = brightness(image)
 
-        target = Plane.create(*self.area.world.size)
+        target = Plane.create(*self.area.size)
         target *= (2, 4)
         cache = self.imagin(image, image_size, target.size, "1")
 
         plane = image_size / (2, 4)
-        cat = self.imagin(image, plane, self.area.world.size, "RGB")
+        cat = self.imagin(image, plane, self.area.size, "RGB")
         self.render(cache, cat)
 
     def render(self, one: PIL.Image.Image, two: PIL.Image.Image) -> N:
         """"""
-        size = self.area.local.size.copy()
+        size = self.area.size.copy()
         size -= (1, 1)
-        world = self.area.world
+        world = self.area
         button = zip(dot_x(world), dot_y(world), luma(one), hue(two))
         for x_dot, y_dot, text, extra in button:
             if x_dot == size.one and y_dot == size.two:
@@ -130,24 +128,20 @@ class Element(Element_, Abstract):
         self.color = PIL.Image.Image()
 
 
-class View(View_, Abstract):
-    """"""
-
-
 class Window(Window_, Abstract):
     """"""
 
-    def build(self, parent: ANY, star: D[S, ANY]) -> N:
+    def build(self, parent: A, star: D[S, A]) -> N:
         """"""
         super().build(parent, star)
-        (size_y, size_x) = self.stdscr.getmaxyx()
+        size_y, size_x = self.stdscr.getmaxyx()
         self.item = self.stdscr.subwin(size_y - 2, size_x - 2, 1, 1)
 
     @override
     def draw(self, **star: R) -> B:
         """"""
         self.item.erase()
-        super().draw(parent=self.item, **star)
+        super().draw_background(parent=self.item, **star)
 
         self.stdscr.noutrefresh()
         self.item.noutrefresh()
@@ -169,7 +163,7 @@ class Window(Window_, Abstract):
     def run(self) -> N:
         super().run()
 
-        (size_y, size_x) = self.stdscr.getmaxyx()
+        size_y, size_x = self.stdscr.getmaxyx()
 
         header = self.stdscr.subwin(0, size_x, 0, 0)
         header.addstr(0, 1, bank.language.APPLICATION_TITLE)
@@ -234,12 +228,12 @@ class Window(Window_, Abstract):
 
         self.stdscr.box()
 
-        (size_y, size_x) = self.stdscr.getmaxyx()
+        size_y, size_x = self.stdscr.getmaxyx()
         plane = Plane(
             Line(0, size_x - 2),
             Line(0, size_y - 2),
         )
-        self.area = Area(plane, plane)
+        self.area = Plane(plane, plane)
         self.cord_x = 0.5
         self.cord_y = 0.5
 
@@ -275,7 +269,7 @@ def brightness(image: PIL.Image.Image) -> PIL.Image.Image:
 
 def dot_x(world: Plane) -> GZ:
     """"""
-    width, height = world.size.value
+    width, height = world.size.data
     length = width * height
     offset = int(world.origin.one)
     for index in range(length):
@@ -286,7 +280,7 @@ def dot_x(world: Plane) -> GZ:
 
 def dot_y(world: Plane) -> GZ:
     """"""
-    width, height = world.size.value
+    width, height = world.size.data
     length = width * height
     offset = int(world.origin.two)
     for index in range(length):

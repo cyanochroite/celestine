@@ -177,3 +177,9 @@ class Session(
                 load.function_page(bank.application),
             ),
         }
+
+
+ignore(
+    Information,
+    Session,
+)

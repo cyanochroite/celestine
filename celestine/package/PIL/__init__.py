@@ -1,9 +1,6 @@
 """Python Imaging Library (Fork)."""
 
-from celestine.package import (
-    Package,
-    tkinter,
-)
+from celestine.package import Package
 from celestine.package.PIL import (
     Image,
     ImageEnhance,
@@ -16,8 +13,6 @@ from celestine.typed import (
     ignore,
 )
 
-ignore(Image, ImageEnhance, ImagePalette, ImageTk)
-
 
 class Self(Package):
     """"""
@@ -25,5 +20,7 @@ class Self(Package):
     def __init__(self, **star: R) -> N:
         super().__init__(pypi="PIL")
         self.attribute("ImageEnhance")
-        if bool(tkinter):
-            self.attribute("ImageTk")
+        self.attribute("ImageTk")
+
+
+ignore(Image, ImageEnhance, ImagePalette, ImageTk, Self)

@@ -18,12 +18,31 @@ from translator.data import (
     TO,
     TRANSLATIONS,
 )
-from translator.read import open_language
 from translator.translator import Translator
 from translator.write import (
     make_init_file,
     save_language,
 )
+
+
+def open_language(*path):
+    """Convert a dictionary to a string and save it to a file."""
+    text = fix_line_split(*path)
+    lines = read_new_lines(text)
+    normal = lines
+
+    buffer = io.StringIO()
+    for line in normal:
+        buffer.write(line)
+
+    value = buffer.getvalue()
+
+    split = value.split(stream.SECTION_BREAK)
+
+    head = make_dictionary(split[0])
+    body = make_dictionary(split[-1])
+
+    return (head, body)
 
 
 def parser_magic(source):

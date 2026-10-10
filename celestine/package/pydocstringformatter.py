@@ -3,7 +3,9 @@
 import os
 import sys
 
-from celestine import load
+from celestine import (
+    walk,
+)
 from celestine.package import Package
 from celestine.typed import (
     M,
@@ -30,7 +32,7 @@ class Self(Package):
         location = os.getcwd()
         os.chdir(sys.path[0])
 
-        files = load.walk_python(path, [], [])
+        files = walk.python(path, [], [])
 
         file = map(str, files)
         argv = [*file]
@@ -43,4 +45,4 @@ def run() -> N:
     """"""
 
 
-ignore(Package, run)
+ignore(Self, run)

@@ -19,14 +19,16 @@ from celestine.typed import (
 class Package:
     """"""
 
+    module: M | N
     name: S
-    package: M | N
 
     def attribute(self, name: S) -> N:
         """"""
-        if self:
+        try:
             package = load.package(self.pypi, name)
-            setattr(self, name, package)
+        except ModuleNotFoundError:
+            package = None
+        setattr(self, name, package)
 
     def main(self, package: M, path: P) -> N:
         """"""
@@ -47,7 +49,7 @@ class Package:
         Catch the SystemExit calls that the package may throw.
         """
 
-        if not self.package:
+        if not self.module:
             return
 
         argv = sys.argv
@@ -65,11 +67,11 @@ class Package:
         sys.argv = argv
 
     def __bool__(self) -> B:
-        result = self.package is not None
+        result = self.module is not None
         return result
 
     def __getattr__(self, name: S) -> S:
-        result = getattr(self.package, name)
+        result = getattr(self.module, name)
         return result
 
     def __init__(self, *, pypi: VS = None, **star: R) -> N:
@@ -78,12 +80,12 @@ class Package:
         self.pypi = pypi or self.name
 
         try:
-            self.package = load.package(self.pypi)
+            self.module = load.package(self.pypi)
         except ValueError:
             #  Name was none.
-            self.package = None
+            self.module = None
         except ModuleNotFoundError:
-            self.package = None
+            self.module = None
             found = f"Package '{self.name}' not found."
             install = f"Install with 'pip install {self.pypi}'."
             message = f"{found} {install}"

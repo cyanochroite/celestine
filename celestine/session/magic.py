@@ -168,7 +168,7 @@ class Magic:
                 value = override or database or fallback
                 setattr(session, option, value)
 
-                if override:
+                if override and False:  # TODO turn back on.
                     # Prepare for saving override values.
                     bank.configuration.set(section, option, override)
 
@@ -197,3 +197,11 @@ class Magic:
     def __init__(self) -> N:
         self.args = argparse.Namespace()
         self.parser = argparse.ArgumentParser()
+
+
+ignore(
+    ERROR,
+    INIT,
+    TRANSLATE_THIS,
+    Magic,
+)

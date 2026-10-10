@@ -89,3 +89,12 @@ class Version(Attribute):
         """"""
         ignore(self)
         return super().dictionary() | {Actions.VERSION: VERSION_NUMBER}
+
+
+ignore(
+    Action,
+    Choices,
+    Help,
+    Nargs,
+    Version,
+)

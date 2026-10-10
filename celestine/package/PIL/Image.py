@@ -15,6 +15,7 @@ from celestine.typed import (
     V,
     Y,
     Z,
+    ignore,
 )
 
 
@@ -108,3 +109,6 @@ def open(*, fp: P, mode: S, formats: LS, **star: R) -> Image:
 def registered_extensions() -> LS:
     """"""
     raise NotImplementedError()
+
+
+ignore(Palette, Resampling, new, open, registered_extensions)

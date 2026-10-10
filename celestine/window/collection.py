@@ -1,70 +1,131 @@
 """"""
 
 import collections.abc
+import math
+import re
 
 from celestine.literal import (
-    FULL_STOP,
-    KEY,
     NONE,
+    VERTICAL_LINE,
 )
 from celestine.typed import (
     IT,
+    TS,
     A,
     B,
     D,
-    F,
+    G,
     K,
     N,
-    Object,
     S,
     T,
     V,
     Z,
     ignore,
 )
-from celestine.window.cardinal import Dyad
+from celestine.window.cardinal import (
+    Dyad,
+    Monad,
+)
 
 
-class Point(Dyad[F]):
+class Digit(Monad[Z]):
     """"""
 
-    @property
-    def value(self) -> T[Z, Z]:
+    def negative(self) -> N:
         """"""
-        one = int(self.one)
-        two = int(self.two)
-        result = (one, two)
-        return result
+        self.one = -abs(self.one)
 
-
-class Line(Dyad[F]):
-    """"""
-
-    @property
-    def length(self) -> Z:
+    def positive(self) -> N:
         """"""
-        result = int(self.two - self.one)
-        return result
+        self.one = +abs(self.one)
 
-    @property
-    def midpoint(self) -> F:
-        """"""
-        result = (self.one + self.two) / 2
-        return result
-
-    def __contains__(self, item: F) -> B:
-        result = self.one <= float(item) <= self.two
-        return result
-
-    def __init__(self, one: F, two: F) -> N:
+    def __init__(self, one: Z) -> N:
         ignore(self)
-        minimum = min(one, two)
-        maximum = max(one, two)
-        super().__init__(minimum, maximum)
+        super().__init__(one)
+
+
+class Point(Dyad[Digit]):
+    """"""
+
+    __slots__: TS = ()
+
+    @classmethod
+    def create(cls, width: Z, height: Z) -> K:
+        """"""
+        one = Digit(width)
+        two = Digit(height)
+        result = cls(one, two)
+        return result
+
+    def __init__(self, one: Digit, two: Digit) -> N:
+        ignore(self)
+        super().__init__(one, two)
+
+
+class Line(Dyad[Digit]):
+    """"""
+
+    __slots__: TS = ()
+
+    @classmethod
+    def create(cls, width: Z, height: Z) -> K:
+        """"""
+        one = Digit(width)
+        two = Digit(height)
+        result = cls(one, two)
+        return result
+
+    @property
+    def length(self) -> Digit:
+        """"""
+        result = self.two - self.one
+        result.positive()
+        result += 1
+        return result
+
+    @property
+    def midpoint(self) -> Digit:
+        """
+        Center point biased to the right.
+
+        (-4, -4) = (-5, -2) = -7 = -3.5 = -4 <<
+        (+0, +0) = (-1, +2) = +1 = +0.5 = +0 <<
+        (+4, +4) = (+3, +6) = +9 = +4.5 = +4 <<
+
+        (-5, -4) = (-6, -2) = -8 = -4.0 = -4 <<
+        (+0, +0) = (-1, +2) = +1 = +0.5 = +0 <<
+        (+3, +4) = (+2, +6) = +8 = +4.0 = +4 <<
+        """
+        one = self.one - 1
+        two = self.two + 2
+        tri = one + two
+        number = tri / 2
+        result = math.floor(number)
+        return result
+
+    def __contains__(self, item: Digit) -> B:
+        result = self.one <= item <= self.two
+        return result
+
+    def __init__(self, one: Digit, two: Digit) -> N:
+        ignore(self)
+        data = [one, two]
+        data.sort()
+        super().__init__(*data)
+
+    def __iter__(self) -> IT[Digit]:
+        def iterator() -> G[Digit, N, N]:
+            for index in range(self.one.one, self.two.one + 1):
+                yield Digit(index)
+
+        return iter(iterator())
 
 
 class Plane(Dyad[Line]):
     """"""
+
+    __slots__: TS = ()
 
     def center(self, other: K) -> N:
         """"""
@@ -79,22 +140,24 @@ class Plane(Dyad[Line]):
         result = Point(one, two)
         return result
 
-    @property
-    def value(self) -> T[Z, Z, Z, Z]:
-        """"""
-        xmin = int(self.one.one)
-        ymin = int(self.two.one)
-        xmax = int(self.one.two)
-        ymax = int(self.two.two)
-        result = (xmin, ymin, xmax, ymax)
-        return result
-
     @classmethod
     def create(cls, width: Z, height: Z) -> K:
         """"""
-        one = Line(0, width)
-        two = Line(0, height)
+        one = Line.create(0, width)
+        two = Line.create(0, height)
         result = cls(one, two)
+        return result
+
+    def index(self, point: Point) -> Digit:
+        """"""
+        orgin = point - self.origin
+        result = orgin.two.one * self.one.length + orgin.one.one
+        return result
+
+    @property
+    def length(self) -> Digit:
+        """"""
+        result = self.one.length * self.two.length
         return result
 
     @property
@@ -127,37 +190,13 @@ class Plane(Dyad[Line]):
         result = one and two
         return result
 
+    def __iter__(self) -> IT[Point]:
+        def iterator() -> G[Point, N, N]:
+            for two in self.two:
+                for one in self.one:
+                    yield Point(one, two)
 
-class Area(Object):
-    """"""
-
-    local: Plane
-    world: Plane
-
-    def __contains__(self, item: Point) -> B:
-        result = item in self.world
-        return result
-
-    @classmethod
-    def fast(cls, width: Z, height: Z) -> K:
-        """"""
-        local = Plane.create(width, height)
-        world = Plane.create(width, height)
-        result = cls(local, world)
-        return result
-
-    def __init__(self, local: Plane, world: Plane) -> N:
-        self.local = local.copy()
-        self.world = world.copy()
-        super().__init__(self.local, self.world)
-
-    def __repr__(self):
-        result = f"Area({self.local}, {self.world})"
-        return result
-
-    def __str__(self):
-        result = f"({self.local}, {self.world})"
-        return result
+        return iter(iterator())
 
 
 class Dictionary[X](collections.abc.MutableMapping[S, A]):
@@ -176,17 +215,17 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
 
     def key(self, key: S) -> S:
         """Expands short keys to full keys."""
-        if KEY not in key:
+        if VERTICAL_LINE not in key:
             return key
-        result = NONE
         add = NONE
-        one, two = key.split(KEY)
-        names = one.split(FULL_STOP)
+        result = NONE
+        one, two = key.split(VERTICAL_LINE)
+        names = re.split(r"(\w+)", one)
         for name in names:
+            add += name
             result = add + two
             if result in self.mapping:
                 break
-            add += name + FULL_STOP
         return result
 
     @classmethod
@@ -231,4 +270,4 @@ class Dictionary[X](collections.abc.MutableMapping[S, A]):
         return self
 
 
-ignore(Area, Dictionary)
+ignore(Plane, Dictionary)

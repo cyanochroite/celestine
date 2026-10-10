@@ -5,7 +5,6 @@ import enum
 from celestine import bank
 from celestine.interface import Abstract as Abstract_
 from celestine.interface import Element as Element_
-from celestine.interface import View as View_
 from celestine.interface import Window as Window_
 from celestine.literal import LATIN_SMALL_LETTER_R
 from celestine.package import (
@@ -13,9 +12,8 @@ from celestine.package import (
     pygame,
 )
 from celestine.typed import (
-    ANY,
     LS,
-    B,
+    A,
     D,
     N,
     P,
@@ -25,7 +23,7 @@ from celestine.typed import (
     override,
 )
 from celestine.window.collection import (
-    Area,
+    Plane,
     Point,
 )
 
@@ -54,32 +52,34 @@ class Element(Element_, Abstract):
     font: pygame.font.Font
 
     @override
-    def draw(self, **star: R) -> B:
+    def draw_foreground(self) -> N:
         """"""
-        if not super().draw(**star):
-            return False
+        data = self.area.origin.data
+        one = data[0].one
+        two = data[1].one
+        dest = (one, two)
 
-        dest = self.area.world.origin.value
-
-        def render(source: ANY) -> N:
+        def render(source: A) -> N:
             """"""
             if source:
+
                 self.parent.blit(source, dest)
 
         render(self.image)
         render(self.text_item)
 
-        return True
-
     @override
-    def build(self, parent: ANY, star: D[S, ANY]) -> N:
+    def build(self, parent: A, star: D[S, A]) -> N:
         """"""
         super().build(parent, star)
         self.color = (255, 0, 255)
         default = pygame.font.Font(None, 12)
         self.font = star.get("font", default)
 
-        size = self.area.local.size.value
+        data = self.area.size.data
+        one = data[0].one
+        two = data[1].one
+        size = (one, two)
         self.image = pygame.Surface(size)
 
     @override
@@ -104,14 +104,14 @@ class Element(Element_, Abstract):
         width = surface.get_width()
         height = surface.get_height()
 
-        # TODO got to figure out Area coordinates
+        # TODO got to figure out Plane coordinates
         # or cache this somehow
         image_size = self.image_size((width, height))
 
-        size = image_size.size.value
+        size = image_size.size.data
         source = pygame.transform.smoothscale(surface, size)
 
-        dest = image_size.origin.value
+        dest = image_size.origin.data
         self.image.blit(source, dest)
 
         super().reimage(path, **star)
@@ -132,35 +132,41 @@ class Element(Element_, Abstract):
         self.text_item = pygame.Surface((0, 0))
 
 
-class View(View_, Abstract):
-    """"""
-
-
 class Window(Window_, Abstract):
     """"""
 
-    area: Area
+    area: Plane
     font: pygame.font.Font
     item: pygame.Surface
     star: R
 
     @override
-    def build(self, parent: ANY, star: D[S, ANY]) -> N:
+    @classmethod
+    def make(cls, *data: A, **star: R) -> Object:
+        """"""
+        return Element(*data, **star)
+
+    @override
+    def build(self, parent: A, star: D[S, A]) -> N:
         """"""
         super().build(parent, star)
-        self.item = pygame.display.set_mode(self.area.world.size.value)
+        data = self.area.size.data
+        one = data[0].one
+        two = data[1].one
+        size = (one, two)
+        self.item = pygame.display.set_mode(size)
         star |= {"font": self.font}
 
     @override
-    def draw(self, **star: R) -> B:
+    def draw_background(self) -> N:
         """"""
         self.item.fill((0, 0, 0))
 
-        super().draw(font=self.font, **star)
-
+    @override
+    def draw_foreground(self) -> N:
+        """"""
+        ignore(self)
         pygame.display.flip()
-
-        return True
 
     @override
     @classmethod
@@ -214,30 +220,26 @@ class Window(Window_, Abstract):
     @override
     def run(self) -> N:
         super().run()
-
         while True:
             bank.dequeue()
+            self.draw(self)
             event = pygame.event.wait()
             match event.type:
                 case pygame.QUIT:
                     break
                 case pygame.MOUSEBUTTONDOWN:
                     if event.button == Mouse.PRIMARY:
-                        self.click(Point(*pygame.mouse.get_pos()))
+                        mouse_pos = pygame.mouse.get_pos()
+                        point = Point.create(*mouse_pos)
+                        self.clicker(self, point)
                 case _:
                     pass
-
         pygame.quit()
 
     @override
     def __init__(self) -> N:
-        element = {
-            "element": Element,
-            "view": View,
-            "window": self,
-        }
-        super().__init__(element)
-        self.area = Area.fast(1920, 1080)
+        super().__init__()
+        self.area = Plane.create(1920, 1080)
 
         caption = bank.language.APPLICATION_TITLE
         pygame.display.set_caption(caption)

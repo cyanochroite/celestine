@@ -137,4 +137,4 @@ class Tk:
         raise NotImplementedError(self, string)
 
 
-ignore(Button, Frame, Label, Package, Tk)
+ignore(Button, Frame, Label, PhotoImage, Self, Tk)

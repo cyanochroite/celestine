@@ -6,6 +6,7 @@ from celestine.typed import (
     N,
     R,
     S,
+    ignore,
 )
 
 
@@ -27,3 +28,6 @@ def set_icon(surface: Surface, **star: R) -> N:
 def set_mode(size: TZ2, **star: R) -> Surface:
     """"""
     raise NotImplementedError(size)
+
+
+ignore(flip, set_caption, set_icon, set_mode)

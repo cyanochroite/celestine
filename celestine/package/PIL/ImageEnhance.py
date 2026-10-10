@@ -5,6 +5,7 @@ from celestine.typed import (
     F,
     N,
     R,
+    ignore,
 )
 
 
@@ -81,3 +82,6 @@ class Sharpness:
     def __init__(self, image: Image, **star: R) -> N:
         """"""
         raise NotImplementedError(self, image)
+
+
+ignore(Brightness, Color, Contrast, Sharpness)

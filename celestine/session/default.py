@@ -6,7 +6,10 @@ from celestine.literal import (
     INTERFACE,
     LANGUAGE,
 )
-from celestine.typed import S
+from celestine.typed import (
+    S,
+    ignore,
+)
 
 
 def module(path: S, *items: S) -> S:
@@ -72,3 +75,6 @@ def language():
         "mt",  # Maltese Malti mt.
         "ga",  # Irish Gaeilge ga.
     )
+
+
+ignore(application, interface, language)

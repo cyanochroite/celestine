@@ -40,8 +40,8 @@ Use Regular Expressions to Identify Variables Intentionally Not Used = True
 Values
 ''''''
 
-
-**blank**
+_
+star
 
 
 External Checkers
@@ -63,9 +63,9 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 1000
+Maximum File Size (KB) = 500
 
-Command Line = ${WING:PYTHON} -m flake8
+Command Line = ${WING:PYTHON} -m flake8 --indent-size=4 --max-line-length=72
 
 Use Detected Indent Size = True
 
@@ -81,7 +81,7 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 1000
+Maximum File Size (KB) = 500
 
 Command Line = ${WING:PYTHON} -m mypy --show-column-numbers
 
@@ -95,7 +95,7 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 1000
+Maximum File Size (KB) = 500
 
 Command Line = ${WING:PYTHON} -m pycodestyle
 
@@ -109,9 +109,9 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 1000
+Maximum File Size (KB) = 500
 
-Command Line = ${WING:PYTHON} -m pylint --msg-template="{path}:{line}:{column}: {msg_id} {msg} ({symbol})"
+Command Line = ${WING:PYTHON} -m pylint "--msg-template={path}:{line}:{column}: {msg_id} {msg} ({symbol})" --ignored-argument-names=_|star
 
 Include Pylint Errors = True
 
@@ -129,24 +129,41 @@ Run after save = True
 
 Run after opening file = True
 
-Maximum File Size (KB) = 1000
+Maximum File Size (KB) = 500
 
 Command Line = ${WING:PYTHON} -m ruff check
+
+
+Advanced Configuration
+""""""""""""""""""""""
+
+Show Warnings in the Standard Library = True
+
+Show Warnings in site-packages = True
+
+Allow Comments to Disable Warnings = True
 
 
 Project Properties...
 *********************
 
-Python Path = A;B;C;D;E;F;
+Environment
+^^^^^^^^^^^
 
-A = C:/Users/USER/FOLDER
+Python Executable
+~~~~~~~~~~~~~~~~~
 
-B = C:/Program Files/Python312/Lib
+Command Line = True
+Path = /home/mem_dixy/applications/python/python
 
-C = C:/Program Files/Python312/DLLs
+Python Path = A:B:C:D:E:F
 
-D = C:/Users/USER/AppData/Roaming/Python/Python312/site-packages
+A = /run/media/system/data/celestine
 
-E = C:/Program Files/Python312
+B = /home/linuxbrew/.linuxbrew/lib/python3.14
 
-F = C:/Program Files/Python312/Lib/site-packages
+C = /home/linuxbrew/.linuxbrew/lib/python3.14/lib-dynload
+
+D = /home/mem_dixy/applications/python/lib/python3.14/site-packages
+
+E = /home/linuxbrew/.linuxbrew/opt/python-tk@3.14/libexec

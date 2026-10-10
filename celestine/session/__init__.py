@@ -6,13 +6,15 @@ import re
 from celestine import (
     bank,
     load,
+    walk,
 )
 from celestine.literal import (
     APPLICATION,
     CELESTINE,
-    FULL_STOP,
+    COLON,
     INTERFACE,
     LANGUAGE,
+    join,
 )
 from celestine.session import default
 from celestine.session.magic import Magic
@@ -21,6 +23,7 @@ from celestine.typed import (
     M,
     N,
     S,
+    ignore,
 )
 
 
@@ -92,7 +95,7 @@ def begin_session(module: M, name: S) -> A:
     return bank.window
 
 
-def run(base: S) -> N:
+def run(goto: S, base: S) -> N:
     """
     Initializes and runs the main 'window' object.
 
@@ -100,25 +103,32 @@ def run(base: S) -> N:
     Goes through all modules and gathers all the decorators.
     When finished, the window object will be setup and good to go.
     """
-    module = importlib.import_module(base)
-    window = begin_session(module, base)
+    module1 = importlib.import_module(base)
+    window = begin_session(module1, base)
 
     pattern = re.compile(r"<function (\w+)\.<locals>\.decorator")
-    walked = load.walk_package(base)
+    walked = walk.package(base)
 
     for module in walked:
         dictionary = vars(module)
         items = dictionary.items()
 
         for variable, decorator in items:
-            string = repr(decorator)
-            match = pattern.match(string)
+            yarn = repr(decorator)
+            match = pattern.match(yarn)
 
             if not match:
                 continue
 
-            iterable = (base, variable)
-            name = FULL_STOP.join(iterable)
-            decorator(window, name)
+            name = module.__spec__.name
+            key = join(name, COLON, variable)
+            decorator(window, key)
 
+    if goto:
+        window.main = goto
     window.run()
+
+
+ignore(
+    run,
+)
